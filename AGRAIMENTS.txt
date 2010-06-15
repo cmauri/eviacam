@@ -1,0 +1,8 @@
+- Aquest software ha estat desenvolupat gràcies al suport de la Seceretaría de Telecomunicacions i Societat de la Informació del Departament de Governació i Administracions Públiques de la Generalitat de Catalunya i a l'Associació Provincial de Paràlisi Cerebral de Tarragona (APPC).
+
+- Gràcies a tota la gent de l'APPC per la seva col·laboració en les proves i especialment als usuaris que han col·laborat activament, entre ells el Ruben, la Glòria, la Cristina i molts i molts altres. Gràcies a tots.
+
+----
+
+- With the support of: Seceretaría de Telecomunicacions i Societat de la Informació del Departament de Governació i Administracions Públiques de la Generalitat de Catalunya (Catalan govern) i a l'Associació Provincial de Paràlisi Cerebral (Provincial Cerebral Palsy Association) de Tarragona (APPC).
+- Thanks to all the people of the APPC, in special for Ruben, Glòria, Cristina and other and others.

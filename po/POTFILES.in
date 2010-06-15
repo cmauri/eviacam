@@ -1,0 +1,19 @@
+# List of source files containing translatable strings.
+#
+# NOTE: relative to top level directory, not "po" directory
+#
+src/wconfiguration.h
+src/wconfiguration.cpp
+src/wviacam.h
+src/clickwindow.cpp
+src/clickwindowtext.cpp
+src/clickwindowbitmap.cpp
+src/wabout.h
+src/viacamcontroller.cpp
+src/wabout.cpp
+src/wviacam.cpp
+src/clickwindow.h
+src/langnames-utf8.h
+wxcamwindow/capturethread.cpp
+wxcamwindow/camwindow.cpp
+

@@ -1,0 +1,200 @@
+AC_INIT(src/guiapp.cpp)
+AC_PREREQ(2.61)
+AM_CONFIG_HEADER(config.h)
+
+AM_INIT_AUTOMAKE([eviacam], 1.2.1)
+
+# Use libtool for building static libraries only
+#
+#AC_DISABLE_SHARED
+AC_ENABLE_SHARED
+AC_DISABLE_STATIC
+
+AC_PROG_LIBTOOL
+AM_PROG_LIBTOOL
+
+# Checks for programs.
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_CPP
+AC_PROG_AWK
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+AC_PROG_MKDIR_P
+
+ALL_LINGUAS="ca es gl it tr ast de oc fr"
+
+AM_GNU_GETTEXT([external])
+
+# Check debug mode
+AC_ARG_ENABLE(debug,
+[  --enable-debug    Turn on debugging],
+[case "${enableval}" in
+yes) debug=true ;;
+full) debug=true ;;
+no)  debug=false ;;
+*) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
+esac],[debug=false])
+AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
+
+
+# Checks for libraries.
+# FIXME: Replace `main' with a function of each library
+
+AC_CHECK_LIB([X11], [main])
+AC_CHECK_LIB([Xext], [main], , AC_MSG_ERROR([libXext is required.]) )
+AC_CHECK_LIB([Xtst], [main], , AC_MSG_ERROR([libXtst is required.]) )
+
+AC_CHECK_FUNCS([pow])
+AC_CHECK_FUNCS([sqrt])
+
+#AC_CHECK_LIB([cv], [main])
+#AC_CHECK_LIB([cvaux], [main])
+#AC_CHECK_LIB([cxcore], [main])
+#AC_CHECK_LIB([highgui], [main])
+#AC_CHECK_LIB([ml], [main])
+
+# -----------------       gtk+-2.0  --------------------
+# TODO: check if gtk-2.0-devel is really needed
+# Put this early on, since gtk may rely on it.
+AC_PATH_XTRA
+
+GTKCONFIG='pkg-config gtk+-2.0'
+AC_DEFUN([GTKTEST],
+[
+	AC_REQUIRE([AC_PROG_AWK])
+	AC_MSG_CHECKING([gdk version])
+	if gdkversion=`pkg-config gtk+-2.0 --modversion`; then
+		AC_MSG_RESULT([$gdkversion])
+	else
+		AC_MSG_RESULT([not found])
+		AC_MSG_ERROR([gtk+-2.0 is required.])
+	fi])
+
+# Call test func
+GTKTEST
+
+GTK_CPPFLAGS="`$GTKCONFIG --cflags`"
+GTK_LIBS="`$GTKCONFIG --libs`"
+
+# -----------------   gtk+-2.0      --------------------
+
+# -----------------       wxWidgets --------------------
+WXCONFIG=wx-config
+AC_ARG_WITH(wx-config,
+[[  --with-wx-config=FILE     Use the given path to wx-config when determining
+                            wxWidgets configuration; defaults to "wx-config"]],
+[
+    if test "$withval" != "yes" -a "$withval" != ""; then
+        WXCONFIG=$withval
+    fi
+])
+
+wxversion=0
+
+AC_DEFUN([WXTEST],
+[
+	AC_REQUIRE([AC_PROG_AWK])
+	AC_MSG_CHECKING([wxWidgets version])
+	if wxversion=`$WXCONFIG --version`; then
+		AC_MSG_RESULT([$wxversion])
+	else
+		AC_MSG_RESULT([not found])
+		AC_MSG_ERROR([wxWidgets is required. Try --with-wx-config.])
+	fi])
+
+# Call WXTEST func
+WXTEST
+
+# Verify minimus requires
+vers=`echo $wxversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
+if test -n "$vers" && test "$vers" -ge 2006003; then
+	if ! "$debug"; then
+		WX_CPPFLAGS="`$WXCONFIG --cppflags`"
+		WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
+		WX_LIBS="`$WXCONFIG --libs`"
+	else
+# Lines below are used to with to wx debug library
+#		WX_CPPFLAGS="`$WXCONFIG --debug=yes --cppflags`"
+#		WX_CXXFLAGS="`$WXCONFIG --debug=yes --cxxflags | sed -e 's/-fno-exceptions//'`"
+#		WX_LIBS="`$WXCONFIG --debug=yes --libs`"
+		WX_CPPFLAGS="`$WXCONFIG --cppflags`"
+		WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
+		WX_LIBS="`$WXCONFIG --libs`"
+	fi
+else
+	AC_MSG_ERROR([wxWidgets 2.6.3 or newer is required])
+fi
+# -----------------       wxWidgets --------------------
+
+# -----------------       opencv  --------------------
+OPENCVCONFIG='pkg-config opencv'
+AC_DEFUN([OPENCVTEST],
+[
+	AC_REQUIRE([AC_PROG_AWK])
+	AC_MSG_CHECKING([opencv version])
+	if opencvversion=`pkg-config opencv --modversion`; then
+		AC_MSG_RESULT([$opencvversion])
+	else
+		AC_MSG_RESULT([not found])
+		AC_MSG_ERROR([opencv is required.])
+	fi])
+
+# Call OPENCVTEST func
+OPENCVTEST
+# -----------------       opencv  --------------------
+
+# Checks for header files.
+AC_PATH_X
+AC_CHECK_HEADERS([float.h])
+AC_CHECK_HEADERS([sys/timeb.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_HEADER_STDBOOL
+AC_C_CONST
+AC_C_INLINE
+
+OPENCV_CPPFLAGS="`$OPENCVCONFIG --cflags`"
+OPENCV_LIBS="`$OPENCVCONFIG --libs`"
+
+COMPFLAGS="-Wall -fexceptions $WX_CPPFLAGS $OPENCV_CPPFLAGS $GTK_CPPFLAGS"
+
+
+if ! "$debug"; then
+	COMPFLAGS="$COMPFLAGS -DNDEBUG"
+fi
+
+CPPFLAGS="$CPPFLAGS $COMPFLAGS"
+CXXFLAGS="$CXXFLAGS $COMPFLAGS"
+LDFLAGS="$LDFLAGS --as-needed"
+
+AC_SUBST(WX_LIBS)
+AC_SUBST(OPENCV_LIBS)
+AC_SUBST(GTK_LIBS)
+
+# libtool variables
+Xsed="sed -e s/^X//"
+LTLIBOBJS=`echo X"$LIBOBJS"|\
+           [$Xsed -e "s,\.[^.]* ,.lo ,g;s,\.[^.]*$,.lo,"]`
+AC_SUBST(LTLIBOBJS)
+
+#LTALLOCA=`echo X"$ALLOCA"|[$Xsed -e "s,\.$[^.]*,.lo,g"]`
+#AC_SUBST(LTALLOCA)
+#BUILD_DATE=`LC_ALL="C" date`
+
+AC_OUTPUT(
+	[Makefile] 
+	[po/Makefile.in] 
+	[doc/Makefile] 
+	[wxutil/Makefile] 
+	[creavision/Makefile] 
+	[wxcamwindow/Makefile] 
+	[src/Makefile] 
+	[src/version.h]
+	[src/eviacam.desktop]
+	[rpm/Makefile]
+	[rpm/eviacam.spec]
+	[debian/changelog]
+	[win32/installer.iss]
+)

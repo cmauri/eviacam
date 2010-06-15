@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="eviacam"
+	ProjectGUID="{4C7EE63E-9BCD-4DBA-A0D3-075D3DBB2597}"
+	RootNamespace="src"
+	Keyword="Win32Proj">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)\bin"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\evicam"
+			ConfigurationType="1"
+			UseOfMFC="0"
+			UseOfATL="0"
+			CharacterSet="1"
+			DeleteExtensionsOnClean="*.dll;*.obj;*.ilk;*.pdb;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.bat;$(TargetPath)">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;..\wxutil;..\wxcamwindow;..\creavision"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;NOPCH;__WXMSW__;__WXDEBUG__"
+				MinimalRebuild="FALSE"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="TRUE"
+				UsePrecompiledHeader="0"
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="FALSE"
+				DebugInformationFormat="3"
+				CallingConvention="0"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="wxmsw28ud_richtext.lib wxmsw28ud_aui.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib cv.lib cvaux.lib cxcore.lib cxts.lib highgui.lib comctl32.lib rpcrt4.lib winmm.lib wxcamwindow.lib wxutil.lib dxguid.lib strmiids.lib uuid.lib STRMBASd.lib quartz.lib"
+				OutputFile="$(OutDir)/eviacam.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="TRUE"
+				AdditionalLibraryDirectories="&quot;$(CVPATH)\lib&quot;;&quot;$(WXWIN)\lib\vc_lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;;&quot;$(PSDK_DIR)\Samples\Multimedia\DirectShow\BaseClasses\WIN2000_DEBUG&quot;"
+				IgnoreAllDefaultLibraries="FALSE"
+				IgnoreDefaultLibraryNames="LIBCMTD;MSVCRT"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile="$(SolutionDir)$(ConfigurationName)/evicam.pdb"
+				SubSystem="2"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;$(FrameworkSDKDir)Bin\msvcp71.dll&quot; $(TargetDir)
+copy &quot;$(FrameworkSDKDir)Bin\msvcr71.dll&quot; $(TargetDir)
+copy &quot;$(CVPATH)\bin\CV100.DLL&quot; $(TargetDir)
+copy &quot;$(CVPATH)\bin\CXCORE100.DLL&quot; $(TargetDir)
+copy &quot;$(CVPATH)\bin\LIBGUIDE40.DLL&quot; $(TargetDir)
+copy &quot;$(CVPATH)\bin\HIGHGUI100.DLL&quot; $(TargetDir)
+"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"
+				CommandLine="mkdir $(TargetDir)ca
+mkdir $(TargetDir)es
+mkdir $(TargetDir)gl
+mkdir $(TargetDir)it
+mkdir $(TargetDir)tr
+mkdir $(TargetDir)de
+mkdir $(TargetDir)oc
+mkdir $(TargetDir)fr
+copy &quot;$(SolutionDir)..\po\ca.gmo&quot; $(TargetDir)ca\eviacam.mo
+copy &quot;$(SolutionDir)..\po\es.gmo&quot; $(TargetDir)es\eviacam.mo
+copy &quot;$(SolutionDir)..\po\gl.gmo&quot; $(TargetDir)gl\eviacam.mo
+copy &quot;$(SolutionDir)..\po\it.gmo&quot; $(TargetDir)it\eviacam.mo
+copy &quot;$(SolutionDir)..\po\tr.gmo&quot; $(TargetDir)tr\eviacam.mo
+copy &quot;$(SolutionDir)..\po\de.gmo&quot; $(TargetDir)de\eviacam.mo
+copy &quot;$(SolutionDir)..\po\oc.gmo&quot; $(TargetDir)oc\eviacam.mo
+copy &quot;$(SolutionDir)..\po\fr.gmo&quot; $(TargetDir)fr\eviacam.mo
+"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="$(WXWIN)\include"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)\bin"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\evicam"
+			ConfigurationType="1"
+			CharacterSet="1"
+			DeleteExtensionsOnClean="*.dll;*.obj;*.ilk;*.pdb;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.bat;$(TargetPath)">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;..\creavision;..\wxcamwindow;..\wxutil"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;NOPCH;__WXMSW__"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="TRUE"
+				UsePrecompiledHeader="0"
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="TRUE"
+				DebugInformationFormat="3"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="wxmsw28u_richtext.lib wxmsw28u_aui.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib cv.lib cvaux.lib cxcore.lib cxts.lib highgui.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib wxcamwindow.lib wxutil.lib STRMBASE.lib"
+				OutputFile="$(OutDir)/eviacam.exe"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;$(CVPATH)\lib&quot;;&quot;$(WXWIN)\lib\vc_lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;;&quot;$(PSDK_DIR)\Samples\Multimedia\DirectShow\BaseClasses\WIN2000_RETAIL&quot;"
+				GenerateDebugInformation="FALSE"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;$(FrameworkSDKDir)Bin\msvcp71.dll&quot; $(TargetDir)
+copy &quot;$(FrameworkSDKDir)Bin\msvcr71.dll&quot; $(TargetDir)
+copy &quot;$(CVPATH)\bin\CV100.DLL&quot; $(TargetDir)
+copy &quot;$(CVPATH)\bin\CXCORE100.DLL&quot; $(TargetDir)
+copy &quot;$(CVPATH)\bin\LIBGUIDE40.DLL&quot; $(TargetDir)
+copy &quot;$(CVPATH)\bin\HIGHGUI100.DLL&quot; $(TargetDir)
+&quot;$(PSDK_DIR)\Bin\mt.exe&quot; -manifest &quot;$(SolutionDir)\eViacam.exe.manifest&quot; -outputresource:&quot;$(TargetDir)\eViacam.exe&quot;;#1
+"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"
+				CommandLine="mkdir $(TargetDir)ca
+mkdir $(TargetDir)es
+mkdir $(TargetDir)gl
+mkdir $(TargetDir)it
+mkdir $(TargetDir)tr
+mkdir $(TargetDir)de
+mkdir $(TargetDir)oc
+mkdir $(TargetDir)fr
+copy &quot;$(SolutionDir)..\po\ca.gmo&quot; $(TargetDir)ca\eviacam.mo
+copy &quot;$(SolutionDir)..\po\es.gmo&quot; $(TargetDir)es\eviacam.mo
+copy &quot;$(SolutionDir)..\po\gl.gmo&quot; $(TargetDir)gl\eviacam.mo
+copy &quot;$(SolutionDir)..\po\it.gmo&quot; $(TargetDir)it\eviacam.mo
+copy &quot;$(SolutionDir)..\po\tr.gmo&quot; $(TargetDir)tr\eviacam.mo
+copy &quot;$(SolutionDir)..\po\de.gmo&quot; $(TargetDir)de\eviacam.mo
+copy &quot;$(SolutionDir)..\po\oc.gmo&quot; $(TargetDir)oc\eviacam.mo
+copy &quot;$(SolutionDir)..\po\fr.gmo&quot; $(TargetDir)fr\eviacam.mo
+"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="$(WXWIN)\include"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			<File
+				RelativePath=".\clickwindow.cpp">
+			</File>
+			<File
+				RelativePath=".\clickwindowbitmap.cpp">
+			</File>
+			<File
+				RelativePath=".\clickwindowcontroller.cpp">
+			</File>
+			<File
+				RelativePath=".\clickwindowtext.cpp">
+			</File>
+			<File
+				RelativePath=".\guiapp.cpp">
+			</File>
+			<File
+				RelativePath=".\motiontracker.cpp">
+			</File>
+			<File
+				RelativePath=".\mouseoutput.cpp">
+			</File>
+			<File
+				RelativePath=".\viacamcontroller.cpp">
+			</File>
+			<File
+				RelativePath=".\wabout.cpp">
+			</File>
+			<File
+				RelativePath=".\wconfiguration.cpp">
+			</File>
+			<File
+				RelativePath=".\wviacam.cpp">
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath=".\clickwindow.h">
+			</File>
+			<File
+				RelativePath=".\clickwindowbitmap.h">
+			</File>
+			<File
+				RelativePath=".\clickwindowcontroller.h">
+			</File>
+			<File
+				RelativePath=".\clickwindowtext.h">
+			</File>
+			<File
+				RelativePath=".\guiapp.h">
+			</File>
+			<File
+				RelativePath=".\langnames-utf16.h">
+			</File>
+			<File
+				RelativePath=".\motiontracker.h">
+			</File>
+			<File
+				RelativePath=".\mouseoutput.h">
+			</File>
+			<File
+				RelativePath=".\version.h">
+			</File>
+			<File
+				RelativePath=".\viacamcontroller.h">
+			</File>
+			<File
+				RelativePath=".\wabout.h">
+			</File>
+			<File
+				RelativePath=".\wconfiguration.h">
+			</File>
+			<File
+				RelativePath=".\wviacam.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			<File
+				RelativePath=".\gui.rc">
+			</File>
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

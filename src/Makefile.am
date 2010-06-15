@@ -1,0 +1,51 @@
+# these are the headers for your project
+noinst_HEADERS = clickwindowcontroller.h motiontracker.h wabout.h \
+	clickwindow.h clickwindowtext.h clickwindowbitmap.h \
+	mouseoutput.h wconfiguration.h guiapp.h viacamcontroller.h \
+	wviacam.h version.h langnames-utf8.h 
+
+dist_noinst_DATA= version.h.in langnames-utf16.h gui.pjd gui.rc eviacam.vcproj \
+	icons/on.xpm icons/eviacam.ico  icons/eviacam_mini.ico  \
+	icons/clickwindowoff.xpm  icons/help.xpm icons/preferences.xpm \
+	icons/clickwindow.xpm icons/keyboard.xpm icons/user.xpm \
+	icons/eviacam_mini.xpm icons/off.xpm \
+	icons/buttonDblLeftDisabled.xpm icons/buttonDblLeftLocked.xpm \
+	icons/buttonDblLeftSelectedLocked.xpm icons/buttonDblLeftSelected.xpm \
+	icons/buttonDblLeft.xpm icons/buttonDragDisabled.xpm icons/buttonDragLocked.xpm \
+	icons/buttonDragSelectedLocked.xpm icons/buttonDragSelected.xpm icons/buttonDrag.xpm \
+	icons/buttonHideMainWindow.xpm icons/buttonLeftDisabled.xpm icons/buttonLeftLocked.xpm \
+	icons/buttonLeftSelectedLocked.xpm icons/buttonLeftSelected.xpm icons/buttonLeft.xpm \
+	icons/buttonNoClickSelected.xpm icons/buttonNoClick.xpm \
+	icons/buttonRightDisabled.xpm icons/buttonRightLocked.xpm icons/buttonRightSelectedLocked.xpm \
+	icons/buttonRightSelected.xpm icons/buttonRight.xpm icons/buttonShowMainWindow.xpm
+
+EXTRA_DIST = eviacam.desktop icons/eviacam.xpm
+	
+desktopdir		=	$(datadir)/applications/
+desktop_DATA	=	eviacam.desktop
+
+pixmapdir		=	$(datadir)/pixmaps/
+pixmap_DATA	=	icons/eviacam.xpm
+
+#########################################################################
+# APPLICATION SECTION
+#########################################################################
+# this is the program that gets installed.  it's name is used for all
+# of the other Makefile.am variables
+bin_PROGRAMS = eviacam
+
+# the application source, library search path, and link libraries
+eviacam_SOURCES = guiapp.cpp wviacam.cpp viacamcontroller.cpp \
+	clickwindow.cpp clickwindowtext.cpp clickwindowbitmap.cpp \
+	clickwindowcontroller.cpp \
+	mouseoutput.cpp motiontracker.cpp wabout.cpp wconfiguration.cpp
+	
+eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
+eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11
+
+INCLUDES = -I$(top_srcdir)/creavision \
+	-I$(top_srcdir)/wxcamwindow -I$(top_srcdir)/wxutil
+
+eviacam_LDADD = $(top_builddir)/wxutil/libwxutil.la \
+		$(top_builddir)/creavision/libcreavision.la \
+		$(top_builddir)/wxcamwindow/libwxcamwindow.la

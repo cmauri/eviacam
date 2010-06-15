@@ -1,0 +1,10 @@
+#ifndef VERSION_H
+#define VERSION_H
+
+wxString GetAppVersion()
+{
+    wxString version(_T("@VERSION@"));
+    return version;
+}
+
+#endif

@@ -1,0 +1,68 @@
+2010-03	- Release 1.2.1
+* Added Occitan translation (thanks to Carles Garrigues)
+* Added Français translation (thanks to Sébastien Lecointre)
+* Bug fix (index out of bounds in crvcamera_cv.[h|cpp])
+* Fixed click window issues on linux amd64
+* Improved build compatibility (thanks to Anil Ozbek)
+
+2009-11-15 - Release 1.2
+* Added Deutsch translation. Thanks to Christian Bieder <chb09@ymail.com>.
+* Click Window enabled by default only on Windows.
+* Consecutive clicks disabled by default
+* Improved Click Window aesthetics and configuration dialog.
+* Added .manifest to .exe file for better compatibility on Windows XP/Vista/7
+* Inproved build support on Windows
+* Resolved a hairy floating point inconsistency that caused an strange dwell click
+  behaviour on Vista. 
+  
+2009-07-13 - Release 1.1
+* Added build support for OpenSUSE
+* Now stores track area settings
+* Enabled "Show locate face filter" option
+* Live video flipped around vertical axis to simulate mirror effect
+* Added support for WDM webcam based drivers and configuration dialog (Windows)
+* Added camera selection dialog
+* Onscreen keyboard command option moved to profile settings
+* Added Türkçe (Turkish) translation. Thanks to Anil Ozbek <ozbekanil@gmail.com>
+* Added Asturinu (Bable) translation (see README). Thanks to AluminiuM <aluminium@softastur.org>
+* Minor fixes and cleanup
+
+2009-05-04 - Release 1.0.1
+* Fixed more threading issues that causes GUI freezes under Linux 
+* Fixed sound support for Linux
+* Added build RPM support
+* Updates to build system: now builds for debian etch/lenny and fc10
+* Tested ok for x86_64 platform
+
+2009-04-22 - Release 1.0
+* Fixed threading issues that hang GUI under Linux (mousecontrol.cpp)
+* Fixed mouse control for full screen Direct Draw applications (mousecontrol.cpp)
+* Updated Galego and Italiano translations.
+* Debian package generation (see INSTALL)
+
+2009-03-05 - Release 1.0pre
+* Fixed several type cast in ./creavision/crvmisc.cpp that will break compatibility
+  for 64bit platforms. Thanks to "Samuel Thibault" <samuel.thibault@ens-lyon.org>   
+* Italiano translation. Thanks to Giuseppe Masciopinto <kktc.ags@gmail.com>
+* Galego translation. Thanks to "Miguel Bouzada" <mbouzada@gmail.com>
+* wxcamwindow/camwindow.[cpp|h] code cleanup.
+* Added toolbar.
+* Disabled wx error message in release mode.
+* Configuration dialog reorganization
+* Cosmetic changes
+* Added fast mode for the click window
+* Logarithmic scale for smoothing option
+* Windows ver.: workaround to enable capture at 30fps for some camera models.
+
+2009-01-20 - Release 0.9 
+
+* A lot of improvements
+  - Configuration dialog
+  - Catalan and Spanish translations
+  - Tray icon
+* Autotools cleanup
+* Many bug-fixes
+
+2008/12/30
+
+- First release 0.79beta

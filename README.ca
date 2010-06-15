@@ -1,0 +1,69 @@
+				---------------
+                                 Enable Viacam
+                                ---------------
+                                  
+             emulador de ratolí multi-plataforma a través de càmera web
+
+ Quant a
+=========
+
+Enable Viacam (aka eViacam) és un programa d'ordinador que substitueix la funcionalitat del ratolí permetent moure el punter a partir del moviment del cap. Funciona en un ordinador PC equipat amb una càmera web, sense elements addicionals. eViacam està basat en el programa Ratón Facial guardonat amb diversos premis. Funciona per entorns Linux i Windows.
+
+ Plataformes suportades
+========================
+
+GNU/Linux
+Windows 2000/XP/Vista
+
+ Instruccions 
+==============
+
+Primer cal haver instal·lat i configurar correctament la càmera web. És molt important configurar al càmera en mode d'exposició manual i ajustar aquest paràmetre per obtenir 25 fps o més de velocitat de captura. La majoría de càmeres modernes proporcionen fins a 30 fps. Consulti el manual de la càmera en cas necessari.
+
+NOTA PER LINUX: si utilitza una càmera suportada pel driver pwc (ex. algunes càmeres basades amb el chipset de Phillips com la Logitech Quickcam PRO 4000,  Creative Webcam 5 i d'altres) pot voler executar:
+
+setpwc -f 30
+
+abans d'executar eViacam per configurar la velocitat de captura. Comprovi que té permisos per accedir a la càmera.
+
+Un cop instal·lat executi evicam (evicam.exe per Windows). El programa s'ha d'obrir, detectar automàticament la càmera i mostrar la imatge en temps real.
+
+Situï la càmera per obtenir una imatge frontal del seu rostre. L'amplada d'aquest, a la imatge, ha de ser aproximadament un terç de l'amplada del quadre. Cal centrar el rectangle (blau) de seguiment al voltant del seu rostre movent la càmera o desplaçant el quadre amb el ratolí (click a la cantonada).
+
+Activi la opció per iniciar la funció de control des del menú Arxiu. Provi a moure el cap i observi el resultat. Pot ajustar la sensibilitat (velocitat eixos X i Y) a través del diàleg de configuració. Ha de poder fer arribar el punter a qualsevol lloc de la pantalla.
+
+Per fer clic només cal aturar el punter sobre la localització desitja. En uns instants es genera un clic de forma automàtica (aquest temps d'espera es pot ajustar des del diàleg de configuració). Utilitzi la finestra encastada de la part superior per tal d'escollir entre els diferents tipus de clic.
+
+ Llicència
+===========
+
+Enable Viacam es proporciona sota llicència GNU/GPL.
+
+Vegi l'arxiu COPYING per detalls sobre la la llicència.
+
+ Autor
+========
+ 
+Cesar Mauri Loba (cesar a crea-si punt com)
+Vegi l'arxiu AUTHORS més informació sobre altres contribucions.
+
+ Agraïments
+============
+
+- Aquest software ha estat desenvolupat gràcies al suport de la Seceretaría de Telecomunicacions i Societat de la Informació del Departament de Governació i Administracions Públiques de la Generalitat de Catalunya i a l'Associació Provincial de Paràlisi Cerebral de Tarragona (APPC).
+
+- Gràcies a tota la gent de l'APPC per la seva col·laboració en les proves i especialment als usuaris que han col·laborat activament, entre ells el Ruben, la Glòria, la Cristina i molts i molts altres. Gràcies a tots.
+
+ Enllaços
+==========
+
+http://viacam.org
+	- Enable Viacam website
+http://www.wxwidgets.org
+        - wxWidgets toolkit homepage
+http://sourceforge.net/projects/opencvlibrary/
+	- Open Computer Vision Library homepage
+http://www.innosetup.org
+
+http://www.crea-si.com
+	- CREA Software Systems site

@@ -1,0 +1,137 @@
+				---------------
+                                 Enable Viacam
+                                ---------------
+                                  
+              	a cross-platform webcam based mouse emulator
+
+ About
+=======
+
+Enable Viacam (aka eViacam) is a mouse replacement software that moves the 
+pointer as you move your head. It works on standard PCs equipped with a web 
+camera. No additional hardware is required. Based on the award winning Facial
+Mouse software. 
+
+ Supported platforms
+=====================
+
+GNU/Linux
+Windows 2000/XP/Vista
+
+ Instructions 
+==============
+
+First install and configure your web camera before using eViacam. It's very important to configure your camera in manual exposure mode and adjust this parameter to get about 25 fps or more. Most modern cameras can deliver 30fps. Please check your web camera manual when necessary.
+
+NOTE FOR LINUX: if you are using a camera supported by the pwc driver (e.g. these based on Phillips chipset like Logitech Quickcam PRO 4000,  Creative Webcam 5 and other) you may want to do:
+
+setpwc -f 30
+
+before running eViacam to set the frame rate. Also ensure the your user has permissions to access the camera
+
+Once installed run evicam (evicam.exe for Windows). The application should open, automatically detect your camera and begin streaming the live video. 
+
+Place the camera to get a frontal view of your face. The width of your face in the image should be a third of the width of the frame. Centre the tracking box around your face either moving the camera or displacing the on-screen blue box with the mouse (clicking at the corner).
+
+Enable the tracking function from the File menu. Try moving your head and see the result. You should adjust the sensitivity (X and Y axis speed) from the options dialog.  You should be able to reach all the screen area with the mouse pointer.
+
+For clicking simply stop the pointer over the desired position. In few moments a click will be generated automatically (you can adjust the dwell time in the options dialog). You can use the docked window at the top of the screen for selecting the different kinds of clicks.
+
+ Build instructions
+====================
+
+eViacam is built against wxWidgets and OpenCV libraries (among other 
+common ones, of course :) ).
+
+ Linux build
+--------------
+
+- Pre-requisites
+  ==============
+  
+  wxWidgets >= 2.6
+  opencv = 1.0
+  gtk+-2.0
+  
+- Building
+  ========
+  
+  ./configure
+  make
+  make install
+
+  See INSTALL for generic instructions on building.
+
+DEBIAN etch NOTE: you can use official wxWidgets packages with come with the distro to build eViacam. Only is needed to manually build opencv1. The best way of doing it is using the opencv debian source package.
+
+Ubuntu notes: in order to compile on Ubuntu (karmic) you need the following packages: libxext-dev, libxtst-dev, libgtk2.0-dev, libwxbase2.8-dev, libwxgtk2.8-dev, libhighgui-dev, libswscale-dev
+
+ Windows build
+---------------
+
+- Pre-requisites
+  ==============
+  
+  wxWidgets = 2.8
+  opencv = 1.0
+  Platform SDK (tested with PSDK-x86_WindowsServer2003_SP1(2005))
+  DirectX SDK 9.0 Update (February 2005) or later
+  
+- Building using Visual Studio 2003
+  =================================
+
+Build the \Microsoft Platform SDK\Samples\Multimedia\DirectShow\BaseClasses\
+I've tested with VS2003, but is also supposed to work for newer versions. 
+Visual Studio solution (.sln) is in win32/ directory. 
+You should set the following environment variables:
+
+	WXWIN to point to wxWidgets folder
+	CVPATH to point to opencv1 folder
+	PSDK_DIR to point the Platform SDK folder
+	
+Build as Release.
+	
+Once the program is compiled, you may wish to create the installer. 
+Inno Setup is used for installer generation on Windows.
+
+ Notes
+=======
+
+- Asturian (Bable) support
+
+The current stable version of wxWidgets (2.8.10, at July 2009) doesn't support 
+Asturian language yet, but it seems that support has been added to development
+version. So, if you want enable Asturian language support, you need the latest
+wxWidgets development snapshot and should uncomment the line before compiling
+	// #define ENABLE_ASTURIAN
+in both 
+	src/langnames-utf8.h
+	src/langnames-utf16.h	
+Note that these files use special enconding.
+	
+ License
+=========
+
+eViacam is released under the GNU/GPL license.
+
+See the COPYING file for details on program's licensing.
+
+ Author
+========
+ 
+Cesar Mauri Loba (cesar at crea-si dot com)
+Please see the AUTHORS file for information about other contributors.
+
+ Links
+=======
+http://viacam.org
+	- Enable Viacam website
+http://www.crea-si.com
+	- CREA Software Systems site
+
+http://www.wxwidgets.org
+        - wxWidgets toolkit homepage
+http://sourceforge.net/projects/opencvlibrary/
+	- Open Computer Vision Library homepage
+http://www.innosetup.org
+

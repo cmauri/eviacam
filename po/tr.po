@@ -1,0 +1,627 @@
+# translation of tr.po to Turkish
+# Copyright (C) YEAR Cesar Mauri Loba - CREA Software Systems
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Anıl Özbek <ozbekanil@gmail.com>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: tr\n"
+"Report-Msgid-Bugs-To: cesar@crea-si.com\n"
+"POT-Creation-Date: 2010-02-16 21:44+0100\n"
+"PO-Revision-Date: 2010-02-10 00:32+0200\n"
+"Last-Translator: Anıl Özbek <ozbekanil@gmail.com>\n"
+"Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/wconfiguration.h:78
+msgid "Configuration"
+msgstr "Yapılandırma"
+
+#: src/wconfiguration.cpp:281
+msgid "X axis speed"
+msgstr "X ekseni hızı"
+
+#: src/wconfiguration.cpp:286
+msgid "Sets response sensitivity for the X axis."
+msgstr "X ekseninin tepki hassasiyetini ayarlar."
+
+#: src/wconfiguration.cpp:289
+msgid "Y axis speed"
+msgstr "Y ekseni hızı"
+
+#: src/wconfiguration.cpp:294
+msgid "Sets response sensitivity for the Y axis."
+msgstr "Y ekseninin tepki hassasiyetini ayarlar."
+
+#: src/wconfiguration.cpp:297
+msgid "Acceleration"
+msgstr "Hızlanma"
+
+#: src/wconfiguration.cpp:302
+msgid ""
+"Sets pointer's acceleration.\n"
+"0 means no acceleration and\n"
+"5 maximum acceleration."
+msgstr ""
+"İşaretçinin hızlanmasını ayarlar.\n"
+"0 hiç hızlandırma olmadığını,\n"
+"5 ise en yüksek hızlandırma olduğunu gösterir."
+
+#: src/wconfiguration.cpp:305
+msgid "Smoothness"
+msgstr "Düzgünlük"
+
+#: src/wconfiguration.cpp:310
+msgid ""
+"Tremor reduction filter.\n"
+"0 means no filter and \n"
+"9 maximum filtering."
+msgstr ""
+"Sarsıntı azaltma filtresi.\n"
+"0 hiç filtreleme olmadığı,\n"
+"9 ise en yüksek filtreleme olduğunu gösterir."
+
+#: src/wconfiguration.cpp:313
+msgid "Easy stop"
+msgstr "Kolay durdurma"
+
+#: src/wconfiguration.cpp:318
+msgid ""
+"Minimum displacement (in pixels)\n"
+"to start moving pointer."
+msgstr ""
+"İşaretçiyi hareket ettirmek için\n"
+"en az yerdeğişim (piksel bazında)."
+
+#: src/wconfiguration.cpp:321
+msgid "Enabled at startup"
+msgstr "Başlangıçta aktifleştir"
+
+#: src/wconfiguration.cpp:324
+msgid ""
+"If checked the program automatically \n"
+"enables cursor control at startup."
+msgstr ""
+"eğer aktifleştirilirse program\n"
+"başlangıçta otomatik olarak işaretçi kontrolünü açacak."
+
+#: src/wconfiguration.cpp:327
+msgid "Motion"
+msgstr "Hareket"
+
+#: src/wconfiguration.cpp:333
+msgid "Dwell click"
+msgstr "Durarak tıklama"
+
+#: src/wconfiguration.cpp:338
+msgid "Dwell time (ds)"
+msgstr "Durarak tıklama süresi (ds)"
+
+#: src/wconfiguration.cpp:343
+msgid ""
+"Time to wait (deciseconds) \n"
+"before sending a click."
+msgstr ""
+"Tıklama göndermeden önce\n"
+"bekleme süresi (desisaniye)."
+
+#: src/wconfiguration.cpp:346
+msgid "Dwell area"
+msgstr "Durarak tıklama alanı"
+
+#: src/wconfiguration.cpp:351
+msgid ""
+"Maximum allowed displacement\n"
+"before restarting the dwell time\n"
+"countdown."
+msgstr ""
+"Durarak tıklama süresi başlamadan önce\n"
+"izin verilen en yüksek yerdeğişimi."
+
+#: src/wconfiguration.cpp:354
+msgid "Allow consecutive clicks"
+msgstr "Ardışık tıklamalara izin ver"
+
+#: src/wconfiguration.cpp:357
+msgid ""
+"Allows to send multiple clicks\n"
+"when the pointer is stopped."
+msgstr ""
+"İşaretçi durduğu zaman\n"
+"çoklu tıklama gönderimine izin verir."
+
+#: src/wconfiguration.cpp:360
+msgid "Beep on click"
+msgstr "Tıklamalarda bip sesi çıkar"
+
+#: src/wconfiguration.cpp:363
+msgid "Play sound when click generated."
+msgstr "Tıklama oluşturulduğunda ses çalar."
+
+#: src/wconfiguration.cpp:366
+msgid "Show click countdown"
+msgstr "Tıklama geri sayımını göster"
+
+#: src/wconfiguration.cpp:372
+msgid "Dwell click enabled"
+msgstr "Durarak tıklama etkinleştirildi"
+
+#: src/wconfiguration.cpp:375
+msgid ""
+"Enable/Disable automatic (dwell)\n"
+"click generation mechanism."
+msgstr ""
+"Otomatik (durarak) tıklama\n"
+"mekanizmasını aç/kapat."
+
+#: src/wconfiguration.cpp:378
+msgid "Click window"
+msgstr "Tıklama penceresi"
+
+#: src/wconfiguration.cpp:381
+msgid "Open Click Window at startup"
+msgstr "Başlangıçta Tıklama Penceresini aç"
+
+#: src/wconfiguration.cpp:384
+msgid ""
+"If checked the Click Window is automatically\n"
+"opened at program startup."
+msgstr ""
+"eğer aktifleştirilirse Tıklama Penceresi\n"
+"program çalışmaya başlarken otomatik olarak açılacak."
+
+#: src/wconfiguration.cpp:387
+msgid "Show Click Window"
+msgstr "Tıklama Penceresini Göster"
+
+#: src/wconfiguration.cpp:394
+msgid "Design:"
+msgstr "Tasarım:"
+
+#: src/wconfiguration.cpp:398
+msgid "Normal"
+msgstr "Normal"
+
+#: src/wconfiguration.cpp:399
+msgid "Thin"
+msgstr "İnce"
+
+#: src/wconfiguration.cpp:403
+msgid "Behaviour:"
+msgstr "Davranış:"
+
+#: src/wconfiguration.cpp:407
+msgid "Normal mode"
+msgstr "Normal kip"
+
+#: src/wconfiguration.cpp:408
+msgid "Fast mode"
+msgstr "Hızlı kip"
+
+#: src/wconfiguration.cpp:411
+msgid ""
+"Fast mode enables click type\n"
+"selection by hovering the mouse\n"
+"pointer over the click window\n"
+"buttons."
+msgstr ""
+"Hızlı kip tıklama penceresindeki\n"
+"düğmelerin üzerinden işaretçiyle\n"
+"geçerken seçilmesini sağlar."
+
+#: src/wconfiguration.cpp:414
+msgid "Click"
+msgstr "Tıklama"
+
+#: src/wconfiguration.cpp:420
+msgid "Face localization"
+msgstr "Yüz konumlandırma"
+
+#: src/wconfiguration.cpp:423
+msgid "Locate face automatically"
+msgstr "Yüzün yerini otomatik olarak bul"
+
+#: src/wconfiguration.cpp:426
+msgid ""
+"When enabled tries to automatically\n"
+"detect your face and center the\n"
+"tracking area."
+msgstr ""
+"Aktifleştirildiğinde program yüzünüzü\n"
+"otomatik olarak bulmayı ve izleme alanının ortasına\n"
+"yerleştirmeyi dener."
+
+#: src/wconfiguration.cpp:429
+msgid "Show locate face filter"
+msgstr "Yüz filtresini göster"
+
+#: src/wconfiguration.cpp:434
+msgid "On-screen keyboard command"
+msgstr "Ekran klavyesi komutu"
+
+#: src/wconfiguration.cpp:439
+msgid "Command to run an external on-screen keyboard application."
+msgstr "Harici bir ekran klavyesi yazılımını çalıştırmak için komut."
+
+#: src/wconfiguration.cpp:442
+msgid "Browse..."
+msgstr "Gözat..."
+
+#: src/wconfiguration.cpp:445
+msgid "Advanced"
+msgstr "Gelişmiş"
+
+#: src/wconfiguration.cpp:447
+msgid "Profile options"
+msgstr "Profil seçenekleri"
+
+#: src/wconfiguration.cpp:453
+msgid "Profile management"
+msgstr "Profil yönetimi"
+
+#: src/wconfiguration.cpp:458
+msgid "Select profile:"
+msgstr "Profil seç:"
+
+#: src/wconfiguration.cpp:460 src/wconfiguration.cpp:466
+msgid "Chooses desired active profile"
+msgstr "Kullanılmak istenen profil seçilir"
+
+#: src/wconfiguration.cpp:471 src/wconfiguration.cpp:1002
+msgid "Add profile"
+msgstr "Profil ekle"
+
+#: src/wconfiguration.cpp:474
+msgid "Delete profile"
+msgstr "Profili Sil"
+
+#: src/wconfiguration.cpp:477
+msgid "Selected camera"
+msgstr "Seçili kamera"
+
+#: src/wconfiguration.cpp:488
+msgid "Settings..."
+msgstr "&Ayarlar..."
+
+#: src/wconfiguration.cpp:491
+msgid "Change"
+msgstr "Değiştir"
+
+#: src/wconfiguration.cpp:496
+msgid "Language:"
+msgstr "Dil:"
+
+#: src/wconfiguration.cpp:503
+msgid "Run at system startup"
+msgstr "Sistem açılışında başla"
+
+#: src/wconfiguration.cpp:508
+msgid "General options"
+msgstr "Genel seçenekler"
+
+#: src/wconfiguration.cpp:515
+msgid "&OK"
+msgstr "&Tamam"
+
+#: src/wconfiguration.cpp:518
+msgid "&Cancel"
+msgstr "&İptal"
+
+#: src/wconfiguration.cpp:697
+msgid "Discard changes?"
+msgstr "Değişiklikler yoksayılsın mı?"
+
+#: src/wconfiguration.cpp:697 src/viacamcontroller.cpp:342
+msgid "eViacam warning"
+msgstr "eViacam uyarısı"
+
+#: src/wconfiguration.cpp:798
+msgid ""
+"This action will disable eViacam click generation.\n"
+"Are you sure?"
+msgstr ""
+"Bu hareket eViacam'ın tıklama üretmesini devre dışı bırakacaktır.\n"
+"Emin misiniz?"
+
+#: src/wconfiguration.cpp:925 src/wconfiguration.cpp:1105
+msgid "You should restart the application to apply this change"
+msgstr "Bu değişiklikleri uygulamak için yazılımı yeniden başlatmalısınız"
+
+#: src/wconfiguration.cpp:946
+msgid ""
+"Current profile has unsaved changes.\n"
+"Continue anyway?"
+msgstr ""
+"Şimdiki profil kaydedilmemiş değişikliklere sahip.\n"
+"Devam edilsin mi?"
+
+#: src/wconfiguration.cpp:952
+#, c-format
+msgid ""
+"This action will load %s profile settings.\n"
+"Are you sure you want to continue?"
+msgstr ""
+"Bu hareket %s profili ayarlarını yükleyecek.\n"
+"Devam etmek istediğinizden emin misiniz?"
+
+#: src/wconfiguration.cpp:983
+#, c-format
+msgid ""
+"This action will delete %s profile.\n"
+"Are you sure you want to continue?"
+msgstr ""
+"Bu hareket %s profilini silecek.\n"
+"Devam etmek istediğinizden emin misiniz?"
+
+#: src/wconfiguration.cpp:1002
+msgid "Enter new profile name"
+msgstr "Yeni profil ismini girin"
+
+#: src/wconfiguration.cpp:1013
+msgid "Profile already exists."
+msgstr "Profil zaten var."
+
+#: src/wconfiguration.cpp:1019
+msgid "Invalid profile name."
+msgstr "Geçersiz profil ismi"
+
+#: src/wconfiguration.cpp:1059 src/wconfiguration.cpp:1061
+msgid "Choose on-screen keyboard command"
+msgstr "Ekran klavyesi için komut seçin"
+
+#: src/wconfiguration.cpp:1059
+msgid "Executable files|*.exe"
+msgstr "Çalıştırılabilir dosyalar|*.exe"
+
+#: src/wviacam.h:71
+msgid "Enable Viacam"
+msgstr "Enable Viacam"
+
+#: src/clickwindowtext.cpp:140 src/clickwindowbitmap.cpp:220
+msgid "No click"
+msgstr "Tıklama yok"
+
+#: src/clickwindowtext.cpp:147
+msgid "#Left#"
+msgstr "#Sol#"
+
+#: src/clickwindowtext.cpp:151
+msgid "#Right#"
+msgstr "#Sağ#"
+
+#: src/clickwindowtext.cpp:155
+msgid "#Drag#"
+msgstr "#Sürükleme#"
+
+#: src/clickwindowtext.cpp:159
+msgid "#Double Click#"
+msgstr "#Çift tıklama#"
+
+#: src/clickwindowtext.cpp:163 src/clickwindowtext.cpp:323
+#: src/clickwindowbitmap.cpp:257 src/clickwindowbitmap.cpp:458
+msgid "Hide main window"
+msgstr "Ana pencereyi gizle"
+
+#: src/clickwindowtext.cpp:325 src/clickwindowbitmap.cpp:463
+msgid "Show main window"
+msgstr "Ana pencereyi göster"
+
+#: src/clickwindowbitmap.cpp:229
+msgid "Left"
+msgstr "Sol"
+
+#: src/clickwindowbitmap.cpp:236
+msgid "Right"
+msgstr "Sağ"
+
+#: src/clickwindowbitmap.cpp:243
+msgid "Drag"
+msgstr "Sürükleme"
+
+#: src/clickwindowbitmap.cpp:250
+msgid "Double Click"
+msgstr "Çift tıklama"
+
+#: src/wabout.h:51
+msgid "About Enable Viacam"
+msgstr "Enable Viacam Hakkında"
+
+#: src/viacamcontroller.cpp:129
+msgid "Not detected any camera. Aborting"
+msgstr "Kamera tespit edilmedi. İptal ediliyor"
+
+#: src/viacamcontroller.cpp:151
+msgid "Choose the camera to use"
+msgstr "Kullanılacak kamerayı seçin"
+
+#: src/viacamcontroller.cpp:167
+msgid ""
+"Can not initialize the camera.\n"
+"Perhaps is being used by other application."
+msgstr ""
+"Kamera başlatılamadı.\n"
+"Muhtemelen başka bir yazılımca kullanılıyor."
+
+#: src/viacamcontroller.cpp:342
+msgid ""
+"This action will disable eViacam.\n"
+"Are you sure?"
+msgstr ""
+"Bu hareket eViacam'ı devre dışı bırakacak.\n"
+"Emin misiniz?"
+
+#: src/viacamcontroller.cpp:375
+msgid ""
+"On-screen keyboard command not set.\n"
+"Please, configure it through options dialog."
+msgstr ""
+"Ekran klavyesi komutu ayarlanmadı.\n"
+"Seçenekler iletişim penceresinden ayarlayabilirsiniz."
+
+#: src/viacamcontroller.cpp:375 src/viacamcontroller.cpp:389
+#: wxcamwindow/capturethread.cpp:69
+msgid "eViacam error"
+msgstr "eViacam hatası"
+
+#: src/viacamcontroller.cpp:385
+#, c-format
+msgid ""
+"Can't execute on-screen keyboard program.\n"
+"Command %s failed.\n"
+"Please, configure it through options dialog."
+msgstr ""
+"Ekran klavyesi çalıştırılamadı.\n"
+"%s komutu başarısızlığa uğradı.\n"
+"Seçenekler iletişim penceresinden ayarları değiştirebilirsiniz."
+
+#: src/viacamcontroller.cpp:387
+msgid ""
+"\n"
+"\n"
+"On Windows Vista/7 several problems have been reported\n"
+"with the system's default on-screen keyboard (osk). These\n"
+"issues are under investigation. Meanwhile you might want\n"
+"to disable User Account Control (UAC) to avoid such problems\n"
+"or try another osk, e.g. Click-N-Type."
+msgstr ""
+"\n"
+"\n"
+"Windows Vista/7 üzerinde öntanımlı ekran klavyesi kullanımı sırasında\n"
+"çeşitli hataların oluştuğu raporlandı. Bu durumun nedenleri araştırılıyor.\n"
+"Bu süreç devam ederken bu tip hatalarla karşılaşmamak için\n"
+"Kullanıcı Hesap Yönetimi'ni devre dışı bırakmayı ya da Click-N-Type\n"
+"gibi farklı bir ekran klavyesi kullanmayı deneyebilirsiniz."
+
+#: src/wabout.cpp:142
+msgid "Close"
+msgstr "Kapat"
+
+#: src/wabout.cpp:148
+msgid "A cross platform webcam based mouse emulator"
+msgstr "Platform bağımsız ağ kamerası temelli fare emülatörü"
+
+#: src/wabout.cpp:150
+msgid ""
+"Released under GNU/GPL license. See license for details.<br>\n"
+"  With the support of: "
+msgstr ""
+"GNU/GPL lisansı ile yayımlanmıştır. Detaylar için lisans dosyasına bakınız.\n"
+"\n"
+" Destekleyenler:"
+
+#: src/wabout.cpp:153
+msgid "Contributions:"
+msgstr "Katkılar:"
+
+#: src/wviacam.cpp:216
+msgid "E&nable / Disable"
+msgstr "E&tkinleştir / Kapat"
+
+#: src/wviacam.cpp:218
+msgid "&Exit"
+msgstr "Çı&kış"
+
+#: src/wviacam.cpp:219
+msgid "&File"
+msgstr "&Dosya"
+
+#: src/wviacam.cpp:221
+msgid "&Click Window"
+msgstr "Tıklama &Penceresi"
+
+#: src/wviacam.cpp:223
+msgid "&Track face"
+msgstr "&Yüzü takip et"
+
+#: src/wviacam.cpp:225
+msgid "&Options..."
+msgstr "&Seçenekler..."
+
+#: src/wviacam.cpp:226
+msgid "&Configuration"
+msgstr "Y&apılandırma"
+
+#: src/wviacam.cpp:228
+msgid "&About..."
+msgstr "&Hakkında"
+
+#: src/wviacam.cpp:229
+msgid "&Help"
+msgstr "&Yardım"
+
+#: src/wviacam.cpp:236
+msgid "Enable"
+msgstr "Etkinleştir"
+
+#: src/wviacam.cpp:239
+msgid "Disable"
+msgstr "Kapat"
+
+#: src/wviacam.cpp:243 src/clickwindow.h:31
+msgid "Click Window"
+msgstr "Tıklama Penceresi"
+
+#: src/wviacam.cpp:246
+msgid "On-screen keyboard"
+msgstr "Ekran klavyesi"
+
+#: src/wviacam.cpp:250
+msgid "Options"
+msgstr "Seçenekler"
+
+#: src/wviacam.cpp:254
+msgid "Help"
+msgstr "Yardım"
+
+#: src/wviacam.cpp:261
+msgid ""
+"Frame rate meter. For proper function\n"
+"should be greater than 25 fps. Reduce\n"
+"the exposure time of your camera when\n"
+"necessary."
+msgstr ""
+"Kare değer metresi. Programı düzgünce\n"
+"kullanabilmek için 25 sbk'dan büyük olmalıdır.\n"
+"Gerektiğinde kameranızın pozlamasını azaltın."
+
+#: src/wviacam.cpp:358
+#, c-format
+msgid " %li fps (good)"
+msgstr " %li sbk (iyi)"
+
+#: src/wviacam.cpp:361
+#, c-format
+msgid " %li fps (could be improved)"
+msgstr " %li sbk (geliştirilebilir)"
+
+#: src/wviacam.cpp:364
+#, c-format
+msgid " %li fps (too low)"
+msgstr " %li sbk (çok yavaş)"
+
+#: src/wviacam.cpp:410
+msgid ""
+"This action will close the program.\n"
+"Are you sure?"
+msgstr ""
+"Bu hareket programı kapatacak.\n"
+"Emin misiniz?"
+
+#: src/langnames-utf8.h:29
+msgid "System default"
+msgstr "Sistem öntanımlıları"
+
+#: wxcamwindow/capturethread.cpp:69
+msgid "Camera not detected. Aborting"
+msgstr "Kamera tespit edilmedi. İptal ediliyor."
+
+#~ msgid "Startup"
+#~ msgstr "Başlangıç"
+
+#, fuzzy
+#~ msgid "Profiles allows storing several named sets of options."
+#~ msgstr "Profiller çeşitli isimlerde farklı ayarları kullanmanızı sağlar."
