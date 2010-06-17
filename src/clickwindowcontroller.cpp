@@ -123,7 +123,11 @@ CClickWindowController::EAction CClickWindowController::GetAction(long x, long y
 	if (m_enabled)
 	{
 		if (IsCursorOverWindow(x,y))
+#if defined(__WXMSW__)
 			retval= CClickWindowController::ACT_LEFT_UP;
+#else
+			retval= CClickWindowController::ACT_LEFT_CLICK;
+#endif
 		else
 		{
 			switch (m_currentButton)
@@ -149,7 +153,11 @@ CClickWindowController::EAction CClickWindowController::GetAction(long x, long y
 	else
 	{
 		if (IsCursorOverNoClickButton(x, y))
+#if defined(__WXMSW__)
 			retval= CClickWindowController::ACT_LEFT_UP;
+#else
+			retval= CClickWindowController::ACT_LEFT_CLICK;
+#endif
 	}	
 
 	//wxMutexGuiLeave();
