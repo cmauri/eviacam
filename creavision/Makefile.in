@@ -47,9 +47,9 @@ CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libcreavision_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
-am_libcreavision_la_OBJECTS = crvcamera.lo crvcamera_cv.lo crvcolor.lo \
-	crvgeomtry.lo crvhistogram.lo crvimage.lo crvmisc.lo \
-	crvskindetection.lo crvnormroi.lo
+am_libcreavision_la_OBJECTS = crvcamera.lo crvcamera_cv.lo \
+	crvcamera_v4l2.lo crvcolor.lo crvgeomtry.lo crvhistogram.lo \
+	crvimage.lo crvmisc.lo crvskindetection.lo crvnormroi.lo
 libcreavision_la_OBJECTS = $(am_libcreavision_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -199,8 +199,8 @@ target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_HEADERS = crvimage.h crvskindetection.h crvcamera.h \
-	crvcamera_cv.h crvcolor.h crvgeomtry.h \
-	crvmisc.h crvhistogram.h crvnormroi.h
+	crvcamera_cv.h crvcolor.h crvgeomtry.h pwc-ioctl.h \
+	crvmisc.h crvhistogram.h crvnormroi.h crvcamera_v4l2.h
 
 dist_noinst_DATA = crvcamera_wdm.cpp videoInput.cpp \
 	fixvfwfps/fixvfwfps.vcproj  fixvfwfps/main.cpp \
@@ -208,7 +208,7 @@ dist_noinst_DATA = crvcamera_wdm.cpp videoInput.cpp \
 
 libcreavision_la_LIBADD = $(OPENCV_LIBS)
 noinst_LTLIBRARIES = libcreavision.la
-libcreavision_la_SOURCES = crvcamera.cpp crvcamera_cv.cpp\
+libcreavision_la_SOURCES = crvcamera.cpp crvcamera_cv.cpp crvcamera_v4l2.cpp \
 	crvcolor.cpp crvgeomtry.cpp crvhistogram.cpp \
 	crvimage.cpp crvmisc.cpp crvskindetection.cpp \
 	crvnormroi.cpp
@@ -266,6 +266,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crvcamera.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crvcamera_cv.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crvcamera_v4l2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crvcolor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crvgeomtry.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/crvhistogram.Plo@am__quote@
