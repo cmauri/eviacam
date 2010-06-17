@@ -517,10 +517,8 @@ void WViacam::OnIconize( wxIconizeEvent& event )
 {
 	if (event.Iconized())
 	{
-#if defined(__WXMSW__)
+		// Cancel actual iconization and hide window.
 		Iconize (false);
-#endif
-		// TODO: hide window and show tray icon
 		Show(false);
 		event.Skip(false);
 	}
