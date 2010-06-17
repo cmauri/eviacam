@@ -113,7 +113,7 @@ void CViacamController::SetLanguage (const int id)
 #if defined(WIN32)
 #define CAM_CLASS CCameraWDM
 #else 
-#define CAM_CLASS CCameraV4L2
+#define CAM_CLASS CCameraCV
 #endif
 
 CCamera* CViacamController::SetUpCamera()
