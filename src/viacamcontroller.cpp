@@ -36,6 +36,8 @@
 #include "crvcamera_cv.h"
 #if defined(__WXMSW__)
 #include "crvcamera_wdm.h"
+#else
+#include "crvcamera_v4l2.h"
 #endif
 #include "clickwindow.h"
 #include "mouseoutput.h"
@@ -111,7 +113,7 @@ void CViacamController::SetLanguage (const int id)
 #if defined(WIN32)
 #define CAM_CLASS CCameraWDM
 #else 
-#define CAM_CLASS CCameraCV
+#define CAM_CLASS CCameraV4L2
 #endif
 
 CCamera* CViacamController::SetUpCamera()
