@@ -48,6 +48,9 @@ public:
 	void SetRelAcceleration2 (long delta0= 9999, float factor0= 1.0f,
 					long delta1= 9999, float factor1= 1.0f);
 
+	bool getEnabledRestrictedWorkingArea () { return m_enabledRestrictedWorkingArea; }
+	void setEnabledRestrictedWorkingArea (bool value) { m_enabledRestrictedWorkingArea = value; }
+
 
 	inline float GetRelDeltaThreshold () const;
 	inline void SetRelDeltaThreshold (float deltaThreshold);
@@ -94,6 +97,7 @@ private:
 	float m_fDx, m_fDy;
 	float m_minDeltaThreshold;
 	float m_dxant, m_dyant;
+	bool m_enabledRestrictedWorkingArea;
 
 	// Motion low pass filter (relative motion)
 	float m_actualMotionWeight;
