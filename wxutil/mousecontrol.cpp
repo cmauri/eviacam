@@ -181,7 +181,6 @@ void CMouseControl::SetWorkingArea (float leftPercent, float rightPercent, float
 
 void CMouseControl::RecomputeWorkingArea ()
 {
-
 	m_minScreenX=	(m_ScreenWidth - 
 					 (int) ((float) m_ScreenWidth * m_leftPercent)) / 2;
 	m_minScreenY=	(m_ScreenHeight - 
@@ -305,7 +304,7 @@ float CMouseControl::MovePointerRel (float dx, float dy)
 {
 	OnDisplayChanged ();
 
-//	long mouseX, mouseY, x, y, finalDx, finalDy;
+        long mouseX, mouseY;
 		
 	// Apply factors
 	dx*= m_fDx;
@@ -328,37 +327,17 @@ float CMouseControl::MovePointerRel (float dx, float dy)
 	if (-m_minDeltaThreshold < dx && dx < m_minDeltaThreshold) dx= 0.0f;
 	if (-m_minDeltaThreshold < dy && dy < m_minDeltaThreshold) dy= 0.0f;
 	
-	DoMovePointerRel ((long) (dx + 0.5f), (long) (dy + 0.5f));
-
-	// TODO: area limits
-/*
+        // TODO: area limits
 	GetPointerLocation (mouseX, mouseY);
-	x= mouseX; y= mouseY;
-	EnforceWorkingAreaLimits (x, y);
-	if (x!= mouseX || y!= mouseY) 
-	{
-		printf ("AKI\n");
-		DoMovePointerAbs (x, y);
-	}
-*/
+        
+        if (mouseX < m_minScreenX && dx < 0) { dx = 0;}
+        if (mouseX > m_maxScreenX && dx > 0) { dx = 0;}
+        if (mouseY < m_minScreenY && dy < 0) { dy = 0;}
+        if (mouseY > m_maxScreenY && dy > 0) { dy = 0;}
+        
+        DoMovePointerRel ((long) (dx + 0.5f), (long) (dy + 0.5f));
+        
 	return (float) sqrt((double)(dx * dx + dy * dy));
-
-	/*
-	// Map to screen coordinates
-	GetPointerLocation (mouseX, mouseY);
-	x= mouseX + (long) dx;
-	y= mouseY + (long) dy;
-
-	EnforceWorkingAreaLimits (x, y);
-
-	DoMovePointerAbs (x, y);
-
-	finalDx= mouseX - x;
-	finalDy= mouseY - y;
-
-	return (float) sqrt((double)(finalDx * finalDx + finalDy * finalDy));	
-	*/
-	
 }
 
 void CMouseControl::DoMovePointerAbs (long x, long y)
