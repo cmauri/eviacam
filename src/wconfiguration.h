@@ -47,6 +47,12 @@ class CViacamController;
 #define ID_SPINCTRL_SMOOTHNESS 10002
 #define ID_SPINCTRL_EASYSTOP 10003
 #define ID_CHECKBOX_ENABLE_AT_STARTUP 10023
+#define ID_PANEL_WORKSPACE 10061
+#define ID_CHECKBOX 10062
+#define ID_SPINCTRL_TOP_WORKSPACE 10063
+#define ID_SPINCTRL_LEFT_WORKSPACE 10064
+#define ID_SPINCTRL_RIGHT_WORKSPACE 10065
+#define ID_SPINCTRL_BOTTOM_WORKSPACE 10066
 #define ID_PANEL_CLICK 10024
 #define ID_SPINCTRL_DWELL_TIME 10005
 #define ID_SPINCTRL_DWELL_AREA 10004
@@ -223,6 +229,11 @@ private:
     wxSpinCtrl* m_spinSmoothness;
     wxSpinCtrl* m_spinEasyStop;
     wxCheckBox* m_chkEnabledAtStartup;
+    wxCheckBox* m_chkEnabledWorkingArea;
+    wxSpinCtrl* m_spin_top_workspace;
+    wxSpinCtrl* m_spin_left_workspace;
+    wxSpinCtrl* m_spin_right_workspace;
+    wxSpinCtrl* m_spin_bottom_workspace;
     wxSpinCtrl* m_spinDwellTime;
     wxSpinCtrl* m_spinDwellArea;
     wxCheckBox* m_chkAllowConsecutiveClick;
