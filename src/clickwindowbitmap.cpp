@@ -462,5 +462,6 @@ void CClickWindowBitmap::OnMainWindowShow ( wxShowEvent& event )
 		m_btnShowFrame->SetBitmapLabel(m_bmpButtonShowMainWindow);
 		m_btnShowFrame->SetToolTip(_("Show main window"));
 	}
-	event.Skip (false);
+	// Set to true to propagate events to the text mode clickwindow
+	event.Skip (true);
 }
