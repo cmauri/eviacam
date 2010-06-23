@@ -46,6 +46,7 @@
 #include <string.h>
 #include <math.h>
 #include "mousecontrol.h"
+#include <stdio.h>
 
 // Mouse actions
 #define MOUSE_MOVE_ABS	0x8000		// Absolute motion
@@ -61,7 +62,7 @@
 CMouseControl::CMouseControl (void* pDisplay)
 {
 	m_leftPercent= m_rightPercent= m_topPercent= m_bottomPercent= 1.0f;
-
+        
 	// Under Windows display parameter is ignored
 	#if defined(WIN32)
 	assert (pDisplay== NULL);
@@ -330,10 +331,12 @@ float CMouseControl::MovePointerRel (float dx, float dy)
         // TODO: area limits
 	GetPointerLocation (mouseX, mouseY);
         
-        if (mouseX < m_minScreenX && dx < 0) { dx = 0;}
-        if (mouseX > m_maxScreenX && dx > 0) { dx = 0;}
-        if (mouseY < m_minScreenY && dy < 0) { dy = 0;}
-        if (mouseY > m_maxScreenY && dy > 0) { dy = 0;}
+        if (m_enabledRestrictedWorkingArea) {
+            if (mouseX + (long) dx < m_minScreenX) { dx = m_minScreenX - mouseX; }
+            if (mouseX + (long) dx > m_maxScreenX) { dx = m_maxScreenX - mouseX; }
+            if (mouseY + (long) dy < m_minScreenY) { dy = m_minScreenY - mouseY; }
+            if (mouseY + (long) dy > m_maxScreenY) { dy = m_maxScreenY - mouseY; }
+        }
         
         DoMovePointerRel ((long) (dx + 0.5f), (long) (dy + 0.5f));
         

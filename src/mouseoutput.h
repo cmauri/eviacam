@@ -63,6 +63,21 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 
 	inline const EClickMode GetClickMode() const;
 	void SetClickMode(EClickMode mode);
+        
+        inline const unsigned long GetTopWorkspace() const;
+        inline void SetTopWorkspace(unsigned long value);
+        
+        inline const unsigned long GetLeftWorkspace() const;
+        inline void SetLeftWorkspace(unsigned long value);
+        
+        inline const unsigned long GetRightWorkspace() const;
+        inline void SetRightWorkspace(unsigned long value);
+        
+        inline const unsigned long GetBottomWorkspace() const;
+        inline void SetBottomWorkspace(unsigned long value);
+        
+        inline const bool GetRestrictedWorkingArea() const;
+        inline void SetRestrictedWorkingArea(bool value);
 
 	inline const bool GetConsecutiveClicksAllowed() const;
 	inline void SetConsecutiveClicksAllowed(bool value);
@@ -92,7 +107,9 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 
 	unsigned long m_xSpeed, m_ySpeed;
 	unsigned long m_acceleration;
+        unsigned long m_topWorkspace, m_leftWorkspace, m_rightWorkspace, m_bottomWorkspace;
  
+        bool m_restrictedWorkingArea;
 	bool m_enabled;
 	CDwellAction m_dwellAction;
 	EClickMode m_clickMode;
@@ -160,6 +177,70 @@ inline void CMouseOutput::SetEasyStopValue (unsigned long value)
 	if (value> 10) value= 10;
 	SetRelDeltaThreshold ( (float) value);
 }
+
+inline const unsigned long CMouseOutput::GetTopWorkspace() const
+{
+    return m_topWorkspace;
+}
+
+inline void CMouseOutput::SetTopWorkspace(unsigned long value)
+{
+    if (value > 50) value = 50;
+    m_topWorkspace = value;
+    SetTopPercent((float) (50 - m_topWorkspace) / 50);
+}
+
+
+inline const unsigned long CMouseOutput::GetLeftWorkspace() const
+{
+    return m_leftWorkspace;
+}
+
+inline void CMouseOutput::SetLeftWorkspace(unsigned long value)
+{
+    if (value > 50) value = 50;
+    m_leftWorkspace = value;
+    SetLeftPercent((float) (50 - m_leftWorkspace) / 50);
+}
+
+
+inline const unsigned long CMouseOutput::GetRightWorkspace() const
+{
+    return m_rightWorkspace;
+}
+
+inline void CMouseOutput::SetRightWorkspace(unsigned long value)
+{
+    if (value > 50) value = 50;
+    m_rightWorkspace = value;
+    SetRightPercent((float) (50 - m_rightWorkspace) / 50);
+}
+
+
+inline const unsigned long CMouseOutput::GetBottomWorkspace() const
+{
+    return m_bottomWorkspace;
+}
+
+inline void CMouseOutput::SetBottomWorkspace(unsigned long value)
+{
+    if (value > 50) value = 50;
+    m_bottomWorkspace = value;
+    SetBottomPercent((float) (50 - m_bottomWorkspace) / 50);
+}
+
+
+inline const bool CMouseOutput::GetRestrictedWorkingArea() const
+{
+    return m_restrictedWorkingArea;
+}
+
+inline void CMouseOutput::SetRestrictedWorkingArea(bool value)
+{
+    m_restrictedWorkingArea = value;
+    SetEnabledRestrictedWorkingArea(m_restrictedWorkingArea);
+}
+
 
 inline const bool CMouseOutput::GetConsecutiveClicksAllowed() const {
 	return m_consecutiveClicksAllowed;

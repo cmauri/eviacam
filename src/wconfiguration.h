@@ -48,7 +48,7 @@ class CViacamController;
 #define ID_SPINCTRL_EASYSTOP 10003
 #define ID_CHECKBOX_ENABLE_AT_STARTUP 10023
 #define ID_PANEL_WORKSPACE 10061
-#define ID_CHECKBOX 10062
+#define ID_CHECKBOX_WORKSPACE_LIMIT 10062
 #define ID_SPINCTRL_TOP_WORKSPACE 10063
 #define ID_SPINCTRL_LEFT_WORKSPACE 10064
 #define ID_SPINCTRL_RIGHT_WORKSPACE 10065
@@ -134,6 +134,21 @@ public:
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_AT_STARTUP
     void OnCheckboxEnableAtStartupClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_WORKSPACE_LIMIT
+    void OnCheckboxWorkspaceLimitClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_TOP_WORKSPACE
+    void OnSpinctrlTopWorkspaceUpdated( wxSpinEvent& event );
+
+    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_LEFT_WORKSPACE
+    void OnSpinctrlLeftWorkspaceUpdated( wxSpinEvent& event );
+
+    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_RIGHT_WORKSPACE
+    void OnSpinctrlRightWorkspaceUpdated( wxSpinEvent& event );
+
+    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_BOTTOM_WORKSPACE
+    void OnSpinctrlBottomWorkspaceUpdated( wxSpinEvent& event );
 
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_DWELL_TIME
     void OnSpinctrlDwellTimeUpdated( wxSpinEvent& event );
@@ -229,7 +244,7 @@ private:
     wxSpinCtrl* m_spinSmoothness;
     wxSpinCtrl* m_spinEasyStop;
     wxCheckBox* m_chkEnabledAtStartup;
-    wxCheckBox* m_chkEnabledWorkingArea;
+    wxCheckBox* m_chkEnabledWorkspace;
     wxSpinCtrl* m_spin_top_workspace;
     wxSpinCtrl* m_spin_left_workspace;
     wxSpinCtrl* m_spin_right_workspace;

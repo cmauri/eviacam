@@ -101,6 +101,16 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
 
     EVT_CHECKBOX( ID_CHECKBOX_ENABLE_AT_STARTUP, WConfiguration::OnCheckboxEnableAtStartupClick )
 
+    EVT_CHECKBOX( ID_CHECKBOX_WORKSPACE_LIMIT, WConfiguration::OnCheckboxWorkspaceLimitClick )
+
+    EVT_SPINCTRL( ID_SPINCTRL_TOP_WORKSPACE, WConfiguration::OnSpinctrlTopWorkspaceUpdated )
+
+    EVT_SPINCTRL( ID_SPINCTRL_LEFT_WORKSPACE, WConfiguration::OnSpinctrlLeftWorkspaceUpdated )
+
+    EVT_SPINCTRL( ID_SPINCTRL_RIGHT_WORKSPACE, WConfiguration::OnSpinctrlRightWorkspaceUpdated )
+
+    EVT_SPINCTRL( ID_SPINCTRL_BOTTOM_WORKSPACE, WConfiguration::OnSpinctrlBottomWorkspaceUpdated )
+
     EVT_SPINCTRL( ID_SPINCTRL_DWELL_TIME, WConfiguration::OnSpinctrlDwellTimeUpdated )
 
     EVT_SPINCTRL( ID_SPINCTRL_DWELL_AREA, WConfiguration::OnSpinctrlDwellAreaUpdated )
@@ -221,7 +231,7 @@ void WConfiguration::Init()
     m_spinSmoothness = NULL;
     m_spinEasyStop = NULL;
     m_chkEnabledAtStartup = NULL;
-    m_chkEnabledWorkingArea = NULL;
+    m_chkEnabledWorkspace = NULL;
     m_spin_top_workspace = NULL;
     m_spin_left_workspace = NULL;
     m_spin_right_workspace = NULL;
@@ -335,248 +345,264 @@ void WConfiguration::CreateControls()
     wxBoxSizer* itemBoxSizer20 = new wxBoxSizer(wxVERTICAL);
     itemPanel19->SetSizer(itemBoxSizer20);
 
-    m_chkEnabledWorkingArea = new wxCheckBox( itemPanel19, ID_CHECKBOX, _("Workspace limit"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_chkEnabledWorkingArea->SetValue(false);
+    m_chkEnabledWorkspace = new wxCheckBox( itemPanel19, ID_CHECKBOX_WORKSPACE_LIMIT, _("Workspace limit"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkEnabledWorkspace->SetValue(false);
     if (WConfiguration::ShowToolTips())
-        m_chkEnabledWorkingArea->SetToolTip(_("If checked the mouse workspace will be limited."));
-    itemBoxSizer20->Add(m_chkEnabledWorkingArea, 0, wxALIGN_LEFT|wxALL, 5);
+        m_chkEnabledWorkspace->SetToolTip(_("If checked the mouse workspace will be limited."));
+    itemBoxSizer20->Add(m_chkEnabledWorkspace, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer22 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer20->Add(itemBoxSizer22, 0, wxGROW|wxALL, 5);
-    wxGridSizer* itemGridSizer23 = new wxGridSizer(0, 2, 0, 0);
+    wxGridSizer* itemGridSizer23 = new wxGridSizer(0, 3, 0, 0);
     itemBoxSizer22->Add(itemGridSizer23, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     wxStaticText* itemStaticText24 = new wxStaticText( itemPanel19, wxID_STATIC, _("Top"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer23->Add(itemStaticText24, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemGridSizer23->Add(itemStaticText24, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_spin_top_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_TOP_WORKSPACE, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 0 );
     if (WConfiguration::ShowToolTips())
         m_spin_top_workspace->SetToolTip(_("Top limit workspace."));
+    m_spin_top_workspace->Enable(false);
     itemGridSizer23->Add(m_spin_top_workspace, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxGridSizer* itemGridSizer26 = new wxGridSizer(0, 2, 0, 100);
-    itemBoxSizer22->Add(itemGridSizer26, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxStaticText* itemStaticText26 = new wxStaticText( itemPanel19, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer23->Add(itemStaticText26, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
     wxGridSizer* itemGridSizer27 = new wxGridSizer(0, 2, 0, 0);
-    itemGridSizer26->Add(itemGridSizer27, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    wxStaticText* itemStaticText28 = new wxStaticText( itemPanel19, wxID_STATIC, _("Left"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer27->Add(itemStaticText28, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer22->Add(itemGridSizer27, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxGridSizer* itemGridSizer28 = new wxGridSizer(0, 3, 0, 0);
+    itemGridSizer27->Add(itemGridSizer28, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticText* itemStaticText29 = new wxStaticText( itemPanel19, wxID_STATIC, _("Left"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer28->Add(itemStaticText29, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_spin_left_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_LEFT_WORKSPACE, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 0 );
     if (WConfiguration::ShowToolTips())
         m_spin_left_workspace->SetToolTip(_("Left limit workspace."));
-    itemGridSizer27->Add(m_spin_left_workspace, 0, wxALIGN_CENTER_HORIZONTAL|wxGROW|wxALL, 5);
+    m_spin_left_workspace->Enable(false);
+    itemGridSizer28->Add(m_spin_left_workspace, 0, wxALIGN_CENTER_HORIZONTAL|wxGROW|wxALL, 5);
 
-    wxGridSizer* itemGridSizer30 = new wxGridSizer(0, 2, 0, 0);
-    itemGridSizer26->Add(itemGridSizer30, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    wxStaticText* itemStaticText31 = new wxStaticText( itemPanel19, wxID_STATIC, _("Right"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer30->Add(itemStaticText31, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticText* itemStaticText31 = new wxStaticText( itemPanel19, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer28->Add(itemStaticText31, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxGridSizer* itemGridSizer32 = new wxGridSizer(0, 3, 0, 0);
+    itemGridSizer27->Add(itemGridSizer32, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticText* itemStaticText33 = new wxStaticText( itemPanel19, wxID_STATIC, _("Right"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer32->Add(itemStaticText33, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_spin_right_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_RIGHT_WORKSPACE, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 0 );
     if (WConfiguration::ShowToolTips())
         m_spin_right_workspace->SetToolTip(_("Right limit workspace."));
-    itemGridSizer30->Add(m_spin_right_workspace, 0, wxALIGN_CENTER_HORIZONTAL|wxGROW|wxALL, 5);
+    m_spin_right_workspace->Enable(false);
+    itemGridSizer32->Add(m_spin_right_workspace, 0, wxALIGN_CENTER_HORIZONTAL|wxGROW|wxALL, 5);
 
-    wxGridSizer* itemGridSizer33 = new wxGridSizer(0, 2, 0, 0);
-    itemBoxSizer22->Add(itemGridSizer33, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-    wxStaticText* itemStaticText34 = new wxStaticText( itemPanel19, wxID_STATIC, _("Bottom"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer33->Add(itemStaticText34, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticText* itemStaticText35 = new wxStaticText( itemPanel19, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer32->Add(itemStaticText35, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxGridSizer* itemGridSizer36 = new wxGridSizer(0, 3, 0, 0);
+    itemBoxSizer22->Add(itemGridSizer36, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxStaticText* itemStaticText37 = new wxStaticText( itemPanel19, wxID_STATIC, _("Bottom"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer36->Add(itemStaticText37, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_spin_bottom_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_BOTTOM_WORKSPACE, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 0 );
     if (WConfiguration::ShowToolTips())
         m_spin_bottom_workspace->SetToolTip(_("Bottom limit workspace."));
-    itemGridSizer33->Add(m_spin_bottom_workspace, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_spin_bottom_workspace->Enable(false);
+    itemGridSizer36->Add(m_spin_bottom_workspace, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxStaticText* itemStaticText39 = new wxStaticText( itemPanel19, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer36->Add(itemStaticText39, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     itemNotebook4->AddPage(itemPanel19, _("Workspace"));
 
-    wxPanel* itemPanel36 = new wxPanel( itemNotebook4, ID_PANEL_CLICK, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    wxBoxSizer* itemBoxSizer37 = new wxBoxSizer(wxVERTICAL);
-    itemPanel36->SetSizer(itemBoxSizer37);
+    wxPanel* itemPanel40 = new wxPanel( itemNotebook4, ID_PANEL_CLICK, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxBoxSizer* itemBoxSizer41 = new wxBoxSizer(wxVERTICAL);
+    itemPanel40->SetSizer(itemBoxSizer41);
 
-    wxStaticBox* itemStaticBoxSizer38Static = new wxStaticBox(itemPanel36, wxID_ANY, _("Dwell click"));
-    wxStaticBoxSizer* itemStaticBoxSizer38 = new wxStaticBoxSizer(itemStaticBoxSizer38Static, wxVERTICAL);
-    itemBoxSizer37->Add(itemStaticBoxSizer38, 0, wxGROW|wxALL, 0);
-    wxFlexGridSizer* itemFlexGridSizer39 = new wxFlexGridSizer(0, 2, 0, 0);
-    itemStaticBoxSizer38->Add(itemFlexGridSizer39, 0, wxALIGN_LEFT|wxALL, 0);
-    wxStaticText* itemStaticText40 = new wxStaticText( itemPanel36, wxID_STATIC, _("Dwell time (ds)"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer39->Add(itemStaticText40, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticBox* itemStaticBoxSizer42Static = new wxStaticBox(itemPanel40, wxID_ANY, _("Dwell click"));
+    wxStaticBoxSizer* itemStaticBoxSizer42 = new wxStaticBoxSizer(itemStaticBoxSizer42Static, wxVERTICAL);
+    itemBoxSizer41->Add(itemStaticBoxSizer42, 0, wxGROW|wxALL, 0);
+    wxFlexGridSizer* itemFlexGridSizer43 = new wxFlexGridSizer(0, 2, 0, 0);
+    itemStaticBoxSizer42->Add(itemFlexGridSizer43, 0, wxALIGN_LEFT|wxALL, 0);
+    wxStaticText* itemStaticText44 = new wxStaticText( itemPanel40, wxID_STATIC, _("Dwell time (ds)"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer43->Add(itemStaticText44, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spinDwellTime = new wxSpinCtrl( itemPanel36, ID_SPINCTRL_DWELL_TIME, _T("2"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 2, 50, 2 );
+    m_spinDwellTime = new wxSpinCtrl( itemPanel40, ID_SPINCTRL_DWELL_TIME, _T("2"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 2, 50, 2 );
     if (WConfiguration::ShowToolTips())
         m_spinDwellTime->SetToolTip(_("Time to wait (deciseconds) \nbefore sending a click."));
-    itemFlexGridSizer39->Add(m_spinDwellTime, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer43->Add(m_spinDwellTime, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText42 = new wxStaticText( itemPanel36, wxID_STATIC, _("Dwell area"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer39->Add(itemStaticText42, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticText* itemStaticText46 = new wxStaticText( itemPanel40, wxID_STATIC, _("Dwell area"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer43->Add(itemStaticText46, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spinDwellArea = new wxSpinCtrl( itemPanel36, ID_SPINCTRL_DWELL_AREA, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 5, 0 );
+    m_spinDwellArea = new wxSpinCtrl( itemPanel40, ID_SPINCTRL_DWELL_AREA, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 5, 0 );
     if (WConfiguration::ShowToolTips())
         m_spinDwellArea->SetToolTip(_("Maximum allowed displacement\nbefore restarting the dwell time\ncountdown."));
-    itemFlexGridSizer39->Add(m_spinDwellArea, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer43->Add(m_spinDwellArea, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_chkAllowConsecutiveClick = new wxCheckBox( itemPanel36, ID_CHECKBOX_ALLOW_CONSECUTIVE, _("Allow consecutive clicks"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkAllowConsecutiveClick = new wxCheckBox( itemPanel40, ID_CHECKBOX_ALLOW_CONSECUTIVE, _("Allow consecutive clicks"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkAllowConsecutiveClick->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkAllowConsecutiveClick->SetToolTip(_("Allows to send multiple clicks\nwhen the pointer is stopped."));
-    itemStaticBoxSizer38->Add(m_chkAllowConsecutiveClick, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer42->Add(m_chkAllowConsecutiveClick, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_chkBeepOnClick = new wxCheckBox( itemPanel36, ID_CHECKBOX_BEEP_ON_CLICK, _("Beep on click"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkBeepOnClick = new wxCheckBox( itemPanel40, ID_CHECKBOX_BEEP_ON_CLICK, _("Beep on click"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkBeepOnClick->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkBeepOnClick->SetToolTip(_("Play sound when click generated."));
-    itemStaticBoxSizer38->Add(m_chkBeepOnClick, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer42->Add(m_chkBeepOnClick, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_chkShowClickCountdown = new wxCheckBox( itemPanel36, ID_CHECKBOX_SHOW_CLICK_COUNTDOWN, _("Show click countdown"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkShowClickCountdown = new wxCheckBox( itemPanel40, ID_CHECKBOX_SHOW_CLICK_COUNTDOWN, _("Show click countdown"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkShowClickCountdown->SetValue(false);
     m_chkShowClickCountdown->Enable(false);
-    itemStaticBoxSizer38->Add(m_chkShowClickCountdown, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer42->Add(m_chkShowClickCountdown, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_chkDwellClickEnabled = new wxCheckBox( itemPanel36, ID_CHECKBOX_ENABLE_DWELL, _("Dwell click enabled"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkDwellClickEnabled = new wxCheckBox( itemPanel40, ID_CHECKBOX_ENABLE_DWELL, _("Dwell click enabled"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkDwellClickEnabled->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkDwellClickEnabled->SetToolTip(_("Enable/Disable automatic (dwell)\nclick generation mechanism."));
-    itemStaticBoxSizer38->Add(m_chkDwellClickEnabled, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer42->Add(m_chkDwellClickEnabled, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxStaticBox* itemStaticBoxSizer48Static = new wxStaticBox(itemPanel36, wxID_ANY, _("Click window"));
-    wxStaticBoxSizer* itemStaticBoxSizer48 = new wxStaticBoxSizer(itemStaticBoxSizer48Static, wxVERTICAL);
-    itemBoxSizer37->Add(itemStaticBoxSizer48, 0, wxGROW|wxALL, 0);
-    m_chkOpenClickWinAtStartup = new wxCheckBox( itemPanel36, ID_CHECKBOX_CLICKWIN_AT_STARTUP, _("Open Click Window at startup"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticBox* itemStaticBoxSizer52Static = new wxStaticBox(itemPanel40, wxID_ANY, _("Click window"));
+    wxStaticBoxSizer* itemStaticBoxSizer52 = new wxStaticBoxSizer(itemStaticBoxSizer52Static, wxVERTICAL);
+    itemBoxSizer41->Add(itemStaticBoxSizer52, 0, wxGROW|wxALL, 0);
+    m_chkOpenClickWinAtStartup = new wxCheckBox( itemPanel40, ID_CHECKBOX_CLICKWIN_AT_STARTUP, _("Open Click Window at startup"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkOpenClickWinAtStartup->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkOpenClickWinAtStartup->SetToolTip(_("If checked the Click Window is automatically\nopened at program startup."));
-    itemStaticBoxSizer48->Add(m_chkOpenClickWinAtStartup, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer52->Add(m_chkOpenClickWinAtStartup, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_chkShowClickWin = new wxCheckBox( itemPanel36, ID_CHECKBOX_SHOW_CLICKWIN, _("Show Click Window"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkShowClickWin = new wxCheckBox( itemPanel40, ID_CHECKBOX_SHOW_CLICKWIN, _("Show Click Window"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkShowClickWin->SetValue(false);
-    itemStaticBoxSizer48->Add(m_chkShowClickWin, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer52->Add(m_chkShowClickWin, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxFlexGridSizer* itemFlexGridSizer51 = new wxFlexGridSizer(2, 2, 0, 0);
-    itemStaticBoxSizer48->Add(itemFlexGridSizer51, 0, wxALIGN_LEFT|wxALL, 0);
-    wxStaticText* itemStaticText52 = new wxStaticText( itemPanel36, wxID_STATIC, _("Design:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer51->Add(itemStaticText52, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxFlexGridSizer* itemFlexGridSizer55 = new wxFlexGridSizer(2, 2, 0, 0);
+    itemStaticBoxSizer52->Add(itemFlexGridSizer55, 0, wxALIGN_LEFT|wxALL, 0);
+    wxStaticText* itemStaticText56 = new wxStaticText( itemPanel40, wxID_STATIC, _("Design:"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer55->Add(itemStaticText56, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_cmbClickWindowDesignStrings;
     m_cmbClickWindowDesignStrings.Add(_("Normal"));
     m_cmbClickWindowDesignStrings.Add(_("Thin"));
-    m_cmbClickWindowDesign = new wxComboBox( itemPanel36, ID_COMBOBOX_DESIGN, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_cmbClickWindowDesignStrings, wxCB_READONLY );
-    itemFlexGridSizer51->Add(m_cmbClickWindowDesign, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
+    m_cmbClickWindowDesign = new wxComboBox( itemPanel40, ID_COMBOBOX_DESIGN, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_cmbClickWindowDesignStrings, wxCB_READONLY );
+    itemFlexGridSizer55->Add(m_cmbClickWindowDesign, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticText54 = new wxStaticText( itemPanel36, wxID_STATIC, _("Behaviour:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer51->Add(itemStaticText54, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticText* itemStaticText58 = new wxStaticText( itemPanel40, wxID_STATIC, _("Behaviour:"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer55->Add(itemStaticText58, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choClickWindowBehaviourStrings;
     m_choClickWindowBehaviourStrings.Add(_("Normal mode"));
     m_choClickWindowBehaviourStrings.Add(_("Fast mode"));
-    m_choClickWindowBehaviour = new wxChoice( itemPanel36, ID_CHOICE_BEHAVIOUR, wxDefaultPosition, wxDefaultSize, m_choClickWindowBehaviourStrings, 0 );
+    m_choClickWindowBehaviour = new wxChoice( itemPanel40, ID_CHOICE_BEHAVIOUR, wxDefaultPosition, wxDefaultSize, m_choClickWindowBehaviourStrings, 0 );
     if (WConfiguration::ShowToolTips())
         m_choClickWindowBehaviour->SetToolTip(_("Fast mode enables click type\nselection by hovering the mouse\npointer over the click window\nbuttons."));
-    itemFlexGridSizer51->Add(m_choClickWindowBehaviour, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer55->Add(m_choClickWindowBehaviour, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    itemNotebook4->AddPage(itemPanel36, _("Click"));
+    itemNotebook4->AddPage(itemPanel40, _("Click"));
 
-    wxPanel* itemPanel56 = new wxPanel( itemNotebook4, ID_PANEL_ADVANCED, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    wxBoxSizer* itemBoxSizer57 = new wxBoxSizer(wxVERTICAL);
-    itemPanel56->SetSizer(itemBoxSizer57);
+    wxPanel* itemPanel60 = new wxPanel( itemNotebook4, ID_PANEL_ADVANCED, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxBoxSizer* itemBoxSizer61 = new wxBoxSizer(wxVERTICAL);
+    itemPanel60->SetSizer(itemBoxSizer61);
 
-    wxStaticBox* itemStaticBoxSizer58Static = new wxStaticBox(itemPanel56, wxID_ANY, _("Face localization"));
-    wxStaticBoxSizer* itemStaticBoxSizer58 = new wxStaticBoxSizer(itemStaticBoxSizer58Static, wxVERTICAL);
-    itemBoxSizer57->Add(itemStaticBoxSizer58, 0, wxGROW|wxALL, 5);
-    m_chkAutoLocateFace = new wxCheckBox( itemPanel56, ID_CHECKBOX_AUTO_LOCATE_FACE, _("Locate face automatically"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticBox* itemStaticBoxSizer62Static = new wxStaticBox(itemPanel60, wxID_ANY, _("Face localization"));
+    wxStaticBoxSizer* itemStaticBoxSizer62 = new wxStaticBoxSizer(itemStaticBoxSizer62Static, wxVERTICAL);
+    itemBoxSizer61->Add(itemStaticBoxSizer62, 0, wxGROW|wxALL, 5);
+    m_chkAutoLocateFace = new wxCheckBox( itemPanel60, ID_CHECKBOX_AUTO_LOCATE_FACE, _("Locate face automatically"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkAutoLocateFace->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkAutoLocateFace->SetToolTip(_("When enabled tries to automatically\ndetect your face and center the\ntracking area."));
-    itemStaticBoxSizer58->Add(m_chkAutoLocateFace, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer62->Add(m_chkAutoLocateFace, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_chkShowAutoLocateFaceFilter = new wxCheckBox( itemPanel56, ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER, _("Show locate face filter"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkShowAutoLocateFaceFilter = new wxCheckBox( itemPanel60, ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER, _("Show locate face filter"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkShowAutoLocateFaceFilter->SetValue(false);
     m_chkShowAutoLocateFaceFilter->Enable(false);
-    itemStaticBoxSizer58->Add(m_chkShowAutoLocateFaceFilter, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer62->Add(m_chkShowAutoLocateFaceFilter, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxStaticBox* itemStaticBoxSizer61Static = new wxStaticBox(itemPanel56, wxID_ANY, _("On-screen keyboard command"));
-    wxStaticBoxSizer* itemStaticBoxSizer61 = new wxStaticBoxSizer(itemStaticBoxSizer61Static, wxVERTICAL);
-    itemBoxSizer57->Add(itemStaticBoxSizer61, 0, wxGROW|wxALL, 5);
-    m_txtOnScreenKeyboardCommand = new wxTextCtrl( itemPanel56, ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticBox* itemStaticBoxSizer65Static = new wxStaticBox(itemPanel60, wxID_ANY, _("On-screen keyboard command"));
+    wxStaticBoxSizer* itemStaticBoxSizer65 = new wxStaticBoxSizer(itemStaticBoxSizer65Static, wxVERTICAL);
+    itemBoxSizer61->Add(itemStaticBoxSizer65, 0, wxGROW|wxALL, 5);
+    m_txtOnScreenKeyboardCommand = new wxTextCtrl( itemPanel60, ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
     if (WConfiguration::ShowToolTips())
         m_txtOnScreenKeyboardCommand->SetToolTip(_("Command to run an external on-screen keyboard application."));
-    itemStaticBoxSizer61->Add(m_txtOnScreenKeyboardCommand, 0, wxGROW|wxALL, 5);
+    itemStaticBoxSizer65->Add(m_txtOnScreenKeyboardCommand, 0, wxGROW|wxALL, 5);
 
-    m_btntOnScreenKeyboardCommand = new wxButton( itemPanel56, ID_BUTTON_ONSCREENKEYBOARDCOMMAND, _("Browse..."), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticBoxSizer61->Add(m_btntOnScreenKeyboardCommand, 0, wxALIGN_LEFT|wxALL, 5);
+    m_btntOnScreenKeyboardCommand = new wxButton( itemPanel60, ID_BUTTON_ONSCREENKEYBOARDCOMMAND, _("Browse..."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticBoxSizer65->Add(m_btntOnScreenKeyboardCommand, 0, wxALIGN_LEFT|wxALL, 5);
 
-    itemNotebook4->AddPage(itemPanel56, _("Advanced"));
+    itemNotebook4->AddPage(itemPanel60, _("Advanced"));
 
     itemListbook3->AddPage(itemNotebook4, _("Profile options"), false, 0);
 
-    wxPanel* itemPanel64 = new wxPanel( itemListbook3, ID_PANEL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    wxBoxSizer* itemBoxSizer65 = new wxBoxSizer(wxVERTICAL);
-    itemPanel64->SetSizer(itemBoxSizer65);
+    wxPanel* itemPanel68 = new wxPanel( itemListbook3, ID_PANEL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxBoxSizer* itemBoxSizer69 = new wxBoxSizer(wxVERTICAL);
+    itemPanel68->SetSizer(itemBoxSizer69);
 
-    wxStaticBox* itemStaticBoxSizer66Static = new wxStaticBox(itemPanel64, wxID_ANY, _("Profile management"));
-    wxStaticBoxSizer* itemStaticBoxSizer66 = new wxStaticBoxSizer(itemStaticBoxSizer66Static, wxVERTICAL);
-    itemBoxSizer65->Add(itemStaticBoxSizer66, 0, wxGROW|wxALL, 5);
-    wxBoxSizer* itemBoxSizer67 = new wxBoxSizer(wxHORIZONTAL);
-    itemStaticBoxSizer66->Add(itemBoxSizer67, 0, wxGROW|wxALL, 0);
-    wxStaticText* itemStaticText68 = new wxStaticText( itemPanel64, wxID_STATIC, _("Select profile:"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticBox* itemStaticBoxSizer70Static = new wxStaticBox(itemPanel68, wxID_ANY, _("Profile management"));
+    wxStaticBoxSizer* itemStaticBoxSizer70 = new wxStaticBoxSizer(itemStaticBoxSizer70Static, wxVERTICAL);
+    itemBoxSizer69->Add(itemStaticBoxSizer70, 0, wxGROW|wxALL, 5);
+    wxBoxSizer* itemBoxSizer71 = new wxBoxSizer(wxHORIZONTAL);
+    itemStaticBoxSizer70->Add(itemBoxSizer71, 0, wxGROW|wxALL, 0);
+    wxStaticText* itemStaticText72 = new wxStaticText( itemPanel68, wxID_STATIC, _("Select profile:"), wxDefaultPosition, wxDefaultSize, 0 );
     if (WConfiguration::ShowToolTips())
-        itemStaticText68->SetToolTip(_("Chooses desired active profile"));
-    itemBoxSizer67->Add(itemStaticText68, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        itemStaticText72->SetToolTip(_("Chooses desired active profile"));
+    itemBoxSizer71->Add(itemStaticText72, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choProfileStrings;
-    m_choProfile = new wxChoice( itemPanel64, ID_CHOICE_PROFILE, wxDefaultPosition, wxDefaultSize, m_choProfileStrings, 0 );
+    m_choProfile = new wxChoice( itemPanel68, ID_CHOICE_PROFILE, wxDefaultPosition, wxDefaultSize, m_choProfileStrings, 0 );
     if (WConfiguration::ShowToolTips())
         m_choProfile->SetToolTip(_("Chooses desired active profile"));
-    itemBoxSizer67->Add(m_choProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer71->Add(m_choProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxBoxSizer* itemBoxSizer70 = new wxBoxSizer(wxHORIZONTAL);
-    itemStaticBoxSizer66->Add(itemBoxSizer70, 0, wxALIGN_RIGHT|wxALL, 0);
-    m_btnAddProfile = new wxButton( itemPanel64, ID_BUTTON_ADD_PROFILE, _("Add profile"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer70->Add(m_btnAddProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxBoxSizer* itemBoxSizer74 = new wxBoxSizer(wxHORIZONTAL);
+    itemStaticBoxSizer70->Add(itemBoxSizer74, 0, wxALIGN_RIGHT|wxALL, 0);
+    m_btnAddProfile = new wxButton( itemPanel68, ID_BUTTON_ADD_PROFILE, _("Add profile"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer74->Add(m_btnAddProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_btnDeleteProfile = new wxButton( itemPanel64, ID_BUTTON_DEL_PROFILE, _("Delete profile"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer70->Add(m_btnDeleteProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_btnDeleteProfile = new wxButton( itemPanel68, ID_BUTTON_DEL_PROFILE, _("Delete profile"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer74->Add(m_btnDeleteProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticBox* itemStaticBoxSizer73Static = new wxStaticBox(itemPanel64, wxID_ANY, _("Selected camera"));
-    wxStaticBoxSizer* itemStaticBoxSizer73 = new wxStaticBoxSizer(itemStaticBoxSizer73Static, wxVERTICAL);
-    itemBoxSizer65->Add(itemStaticBoxSizer73, 0, wxGROW|wxALL, 5);
-    wxBoxSizer* itemBoxSizer74 = new wxBoxSizer(wxVERTICAL);
-    itemStaticBoxSizer73->Add(itemBoxSizer74, 0, wxGROW|wxALL, 0);
-    m_txtSelectedCamera = new wxTextCtrl( itemPanel64, ID_TEXTCTRL_SELECTED_CAMERA, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
+    wxStaticBox* itemStaticBoxSizer77Static = new wxStaticBox(itemPanel68, wxID_ANY, _("Selected camera"));
+    wxStaticBoxSizer* itemStaticBoxSizer77 = new wxStaticBoxSizer(itemStaticBoxSizer77Static, wxVERTICAL);
+    itemBoxSizer69->Add(itemStaticBoxSizer77, 0, wxGROW|wxALL, 5);
+    wxBoxSizer* itemBoxSizer78 = new wxBoxSizer(wxVERTICAL);
+    itemStaticBoxSizer77->Add(itemBoxSizer78, 0, wxGROW|wxALL, 0);
+    m_txtSelectedCamera = new wxTextCtrl( itemPanel68, ID_TEXTCTRL_SELECTED_CAMERA, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
     m_txtSelectedCamera->Enable(false);
-    itemBoxSizer74->Add(m_txtSelectedCamera, 0, wxGROW|wxALL, 5);
+    itemBoxSizer78->Add(m_txtSelectedCamera, 0, wxGROW|wxALL, 5);
 
-    wxBoxSizer* itemBoxSizer76 = new wxBoxSizer(wxHORIZONTAL);
-    itemStaticBoxSizer73->Add(itemBoxSizer76, 0, wxALIGN_RIGHT|wxALL, 0);
-    m_btnCameraSettings = new wxButton( itemPanel64, ID_BUTTON_CAMERA_SETTINGS, _("Settings..."), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer76->Add(m_btnCameraSettings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxBoxSizer* itemBoxSizer80 = new wxBoxSizer(wxHORIZONTAL);
+    itemStaticBoxSizer77->Add(itemBoxSizer80, 0, wxALIGN_RIGHT|wxALL, 0);
+    m_btnCameraSettings = new wxButton( itemPanel68, ID_BUTTON_CAMERA_SETTINGS, _("Settings..."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer80->Add(m_btnCameraSettings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton78 = new wxButton( itemPanel64, ID_BUTTON_CHANGE_CAMERA, _("Change"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer76->Add(itemButton78, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButton82 = new wxButton( itemPanel68, ID_BUTTON_CHANGE_CAMERA, _("Change"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer80->Add(itemButton82, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxFlexGridSizer* itemFlexGridSizer79 = new wxFlexGridSizer(0, 2, 0, 0);
-    itemBoxSizer65->Add(itemFlexGridSizer79, 0, wxALIGN_LEFT|wxALL, 5);
-    wxStaticText* itemStaticText80 = new wxStaticText( itemPanel64, wxID_STATIC, _("Language:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer79->Add(itemStaticText80, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxFlexGridSizer* itemFlexGridSizer83 = new wxFlexGridSizer(0, 2, 0, 0);
+    itemBoxSizer69->Add(itemFlexGridSizer83, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText84 = new wxStaticText( itemPanel68, wxID_STATIC, _("Language:"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer83->Add(itemStaticText84, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choLanguageStrings;
-    m_choLanguage = new wxChoice( itemPanel64, ID_CHOICE_LANGUAGE, wxDefaultPosition, wxDefaultSize, m_choLanguageStrings, 0 );
-    itemFlexGridSizer79->Add(m_choLanguage, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_choLanguage = new wxChoice( itemPanel68, ID_CHOICE_LANGUAGE, wxDefaultPosition, wxDefaultSize, m_choLanguageStrings, 0 );
+    itemFlexGridSizer83->Add(m_choLanguage, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxCheckBox* itemCheckBox82 = new wxCheckBox( itemPanel64, ID_CHECKBOX_RUN_STARTUP, _("Run at system startup"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemCheckBox82->SetValue(false);
-    itemCheckBox82->Show(false);
-    itemFlexGridSizer79->Add(itemCheckBox82, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxCheckBox* itemCheckBox86 = new wxCheckBox( itemPanel68, ID_CHECKBOX_RUN_STARTUP, _("Run at system startup"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemCheckBox86->SetValue(false);
+    itemCheckBox86->Show(false);
+    itemFlexGridSizer83->Add(itemCheckBox86, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    itemListbook3->AddPage(itemPanel64, _("General options"), false, 1);
+    itemListbook3->AddPage(itemPanel68, _("General options"), false, 1);
 
     itemBoxSizer2->Add(itemListbook3, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxBoxSizer* itemBoxSizer83 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer83, 0, wxALIGN_RIGHT|wxALL, 5);
+    wxBoxSizer* itemBoxSizer87 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer2->Add(itemBoxSizer87, 0, wxALIGN_RIGHT|wxALL, 5);
 
-    wxButton* itemButton84 = new wxButton( itemDialog1, ID_BUTTON_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer83->Add(itemButton84, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButton88 = new wxButton( itemDialog1, ID_BUTTON_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer87->Add(itemButton88, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_btnCancel = new wxButton( itemDialog1, ID_BUTTON_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     m_btnCancel->Enable(false);
-    itemBoxSizer83->Add(m_btnCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer87->Add(m_btnCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 ////@end WConfiguration content construction
 }
@@ -639,6 +665,19 @@ void WConfiguration::InitializeData ()
 	m_spinAcceleration->SetValue (m_pViacamController->GetMouseOutput()->GetAcceleration());
 	m_spinSmoothness->SetValue (m_pViacamController->GetMouseOutput()->GetSmoothness());
 	m_spinEasyStop->SetValue (m_pViacamController->GetMouseOutput()->GetEasyStopValue());
+    
+    // Workspace
+    m_chkEnabledWorkspace->SetValue (m_pViacamController->GetMouseOutput()->GetRestrictedWorkingArea());
+    if (m_pViacamController->GetMouseOutput()->GetRestrictedWorkingArea()) {
+        m_spin_top_workspace->Enable(true);
+        m_spin_left_workspace->Enable(true);
+        m_spin_right_workspace->Enable(true);
+        m_spin_bottom_workspace->Enable(true);
+    }
+    m_spin_top_workspace->SetValue (m_pViacamController->GetMouseOutput()->GetTopWorkspace());
+    m_spin_left_workspace->SetValue (m_pViacamController->GetMouseOutput()->GetLeftWorkspace());
+    m_spin_right_workspace->SetValue (m_pViacamController->GetMouseOutput()->GetRightWorkspace());
+    m_spin_bottom_workspace->SetValue (m_pViacamController->GetMouseOutput()->GetBottomWorkspace());
 
 	// Clic
 	m_chkDwellClickEnabled->SetValue (m_pViacamController->GetMouseOutput()->GetClickMode()== CMouseOutput::DWELL);
@@ -1170,5 +1209,88 @@ void WConfiguration::OnButtonChangeCameraClick( wxCommandEvent& event )
 }
 
 
+/*!
+ * wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_TOP_WORKSPACE
+ */
 
+void WConfiguration::OnSpinctrlTopWorkspaceUpdated( wxSpinEvent& event )
+{
+    m_pViacamController->GetMouseOutput()->SetTopWorkspace(m_spin_top_workspace->GetValue());
+	event.Skip(false);
+	Changed ();
+}
+
+
+
+
+/*!
+ * wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_RIGHT_WORKSPACE
+ */
+
+void WConfiguration::OnSpinctrlRightWorkspaceUpdated( wxSpinEvent& event )
+{
+    m_pViacamController->GetMouseOutput()->SetRightWorkspace(m_spin_right_workspace->GetValue());
+	event.Skip(false);
+	Changed ();
+}
+
+
+
+
+
+/*!
+ * wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_LEFT_WORKSPACE
+ */
+
+void WConfiguration::OnSpinctrlLeftWorkspaceUpdated( wxSpinEvent& event )
+{
+    m_pViacamController->GetMouseOutput()->SetLeftWorkspace(m_spin_left_workspace->GetValue());
+	event.Skip(false);
+	Changed ();
+}
+
+
+/*!
+ * wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_BOTTOM_WORKSPACE
+ */
+
+void WConfiguration::OnSpinctrlBottomWorkspaceUpdated( wxSpinEvent& event )
+{
+    m_pViacamController->GetMouseOutput()->SetBottomWorkspace(m_spin_bottom_workspace->GetValue());
+	event.Skip(false);
+	Changed ();
+}
+
+
+/*!
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_WORKSPACE_LIMIT
+ */
+
+void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
+{
+    if(m_chkEnabledWorkspace->GetValue()) {
+        m_chkEnabledWorkspace->SetValue(false);
+        wxMessageDialog dlg (NULL, _("This action could make you lose control of the program. Are you sure?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
+        if (dlg.ShowModal()== wxID_YES)
+        {
+            //EndModal(ID_BUTTON_CANCEL);
+            m_chkEnabledWorkspace->SetValue(true);
+            m_pViacamController->GetMouseOutput()->SetRestrictedWorkingArea(m_chkEnabledWorkspace->GetValue());
+            m_spin_top_workspace->Enable(m_chkEnabledWorkspace->GetValue());
+            m_spin_left_workspace->Enable(m_chkEnabledWorkspace->GetValue());
+            m_spin_right_workspace->Enable(m_chkEnabledWorkspace->GetValue());
+            m_spin_bottom_workspace->Enable(m_chkEnabledWorkspace->GetValue());
+        }		
+	} else {
+        m_pViacamController->GetMouseOutput()->SetRestrictedWorkingArea(m_chkEnabledWorkspace->GetValue());
+        m_spin_top_workspace->Enable(m_chkEnabledWorkspace->GetValue());
+        m_spin_left_workspace->Enable(m_chkEnabledWorkspace->GetValue());
+        m_spin_right_workspace->Enable(m_chkEnabledWorkspace->GetValue());
+        m_spin_bottom_workspace->Enable(m_chkEnabledWorkspace->GetValue());
+    }
+
+    
+	event.Skip(false);
+	Changed ();
+}
 

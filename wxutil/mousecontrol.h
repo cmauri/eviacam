@@ -44,12 +44,15 @@ public:
 								  float width, float height);
 	void SetRelFactorX (float fDx) { m_fDx= fDx; }
 	void SetRelFactorY (float fDy) { m_fDy= fDy; }
+        void SetTopPercent (float topWorkspace) { m_topPercent = topWorkspace; }
+        void SetLeftPercent (float leftWorkspace) { m_leftPercent = leftWorkspace; }
+        void SetRightPercent (float rightWorkspace) { m_rightPercent = rightWorkspace; }
+        void SetBottomPercent (float bottomWorkspace) { m_bottomPercent = bottomWorkspace; }
 	void SetRelFactors (float fDx, float fDy) {	SetRelFactorX (fDx); SetRelFactorY (fDy); }
 	void SetRelAcceleration2 (long delta0= 9999, float factor0= 1.0f,
 					long delta1= 9999, float factor1= 1.0f);
 
-	bool getEnabledRestrictedWorkingArea () { return m_enabledRestrictedWorkingArea; }
-	void setEnabledRestrictedWorkingArea (bool value) { m_enabledRestrictedWorkingArea = value; }
+	void SetEnabledRestrictedWorkingArea (bool value) { m_enabledRestrictedWorkingArea = value; }
 
 
 	inline float GetRelDeltaThreshold () const;

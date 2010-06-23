@@ -35,6 +35,7 @@ CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController)
 	m_pClickWindowController= &pClickWindowController;
 	
 	m_enabled= false;
+        m_restrictedWorkingArea = false;
 
 	InitDefaults ();
 	   
