@@ -32,7 +32,12 @@ pixmap_DATA	=	icons/eviacam.xpm
 #########################################################################
 # this is the program that gets installed.  it's name is used for all
 # of the other Makefile.am variables
-bin_PROGRAMS = eviacam
+bin_PROGRAMS = eviacam eviacamloader
+
+eviacamloader_SOURCES = eviacamloader.c
+install-exec-hook:
+	chmod u+s $(DESTDIR)$(bindir)/eviacamloader
+
 
 # the application source, library search path, and link libraries
 eviacam_SOURCES = guiapp.cpp wviacam.cpp viacamcontroller.cpp \

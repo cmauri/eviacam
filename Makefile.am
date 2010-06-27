@@ -36,7 +36,6 @@ INCLUDES = \
 	-I$(top_srcdir)/creavision \
 	-I$(top_srcdir)/wxcamwindow
 
-
 maintainer-clean-local:
 	-rm -rf win32/Release
 	-rm -rf win32/Debug
