@@ -46,7 +46,6 @@
 #include <string.h>
 #include <math.h>
 #include "mousecontrol.h"
-#include <stdio.h>
 
 // Mouse actions
 #define MOUSE_MOVE_ABS	0x8000		// Absolute motion

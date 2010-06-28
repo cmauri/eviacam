@@ -181,6 +181,10 @@ void CMouseOutput::InitDefaults()
 	SetAcceleration (2);
 	SetSmoothness (5);
 	SetEasyStopValue (1);
+        SetTopWorkspace(1);
+        SetLeftWorkspace(1);
+        SetRightWorkspace(1);
+        SetBottomWorkspace(1);
 	SetClickMode (CMouseOutput::DWELL);
 	SetBeepOnClick (true);
 	SetConsecutiveClicksAllowed(false);
@@ -196,8 +200,13 @@ void CMouseOutput::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("ySpeed"), (long) GetYSpeed());
 	pConfObj->Write(_T("acceleration"), (long) GetAcceleration());
 	pConfObj->Write(_T("smoothness"), (long) GetSmoothness());
-	pConfObj->Write(_T("easyStop"), (long) GetEasyStopValue());
-	pConfObj->Write(_T("clickMode"), (long) GetClickMode());
+        pConfObj->Write(_T("easyStop"), (long) GetEasyStopValue());
+        pConfObj->Write(_T("enabledWorkspace"), (bool) GetRestrictedWorkingArea());
+        pConfObj->Write(_T("topWorkspace"), (long) GetTopWorkspace());
+        pConfObj->Write(_T("leftWorkspace"), (long) GetLeftWorkspace());
+        pConfObj->Write(_T("rightWorkspace"), (long) GetRightWorkspace());
+        pConfObj->Write(_T("bottomWorkspace"), (long) GetBottomWorkspace());	
+        pConfObj->Write(_T("clickMode"), (long) GetClickMode());
 	pConfObj->Write(_T("beepOnClick"), (bool) GetBeepOnClick());
 	pConfObj->Write(_T("consecutiveClicksAllowed"), (bool) GetConsecutiveClicksAllowed());
 	pConfObj->Write(_T("dwellTime"), (long) GetDwellTime());
@@ -218,6 +227,11 @@ void CMouseOutput::ReadProfileData(wxConfigBase* pConfObj)
 	if (pConfObj->Read(_T("acceleration"), &val)) SetAcceleration(val);
 	if (pConfObj->Read(_T("smoothness"), &val)) SetSmoothness(val);
 	if (pConfObj->Read(_T("easyStop"), &val)) SetEasyStopValue(val);
+        if (pConfObj->Read(_T("enabledWorkspace"), &val)) SetRestrictedWorkingArea(val);
+        if (pConfObj->Read(_T("topWorkspace"), &val)) SetTopWorkspace(val);
+        if (pConfObj->Read(_T("leftWorkspace"), &val)) SetLeftWorkspace(val);
+        if (pConfObj->Read(_T("rightWorkspace"), &val)) SetRightWorkspace(val);
+        if (pConfObj->Read(_T("bottomWorkspace"), &val)) SetBottomWorkspace(val);
 	if (pConfObj->Read(_T("clickMode"), &val)) SetClickMode((CMouseOutput::EClickMode) val);
 	pConfObj->Read(_T("beepOnClick"), &m_beepOnClick);	
 	pConfObj->Read(_T("consecutiveClicksAllowed"), &m_consecutiveClicksAllowed);

@@ -358,7 +358,7 @@ void WConfiguration::CreateControls()
     wxStaticText* itemStaticText24 = new wxStaticText( itemPanel19, wxID_STATIC, _("Top"), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridSizer23->Add(itemStaticText24, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spin_top_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_TOP_WORKSPACE, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 0 );
+    m_spin_top_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_TOP_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
     if (WConfiguration::ShowToolTips())
         m_spin_top_workspace->SetToolTip(_("Top limit workspace."));
     m_spin_top_workspace->Enable(false);
@@ -374,7 +374,7 @@ void WConfiguration::CreateControls()
     wxStaticText* itemStaticText29 = new wxStaticText( itemPanel19, wxID_STATIC, _("Left"), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridSizer28->Add(itemStaticText29, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spin_left_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_LEFT_WORKSPACE, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 0 );
+    m_spin_left_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_LEFT_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
     if (WConfiguration::ShowToolTips())
         m_spin_left_workspace->SetToolTip(_("Left limit workspace."));
     m_spin_left_workspace->Enable(false);
@@ -388,7 +388,7 @@ void WConfiguration::CreateControls()
     wxStaticText* itemStaticText33 = new wxStaticText( itemPanel19, wxID_STATIC, _("Right"), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridSizer32->Add(itemStaticText33, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spin_right_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_RIGHT_WORKSPACE, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 0 );
+    m_spin_right_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_RIGHT_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
     if (WConfiguration::ShowToolTips())
         m_spin_right_workspace->SetToolTip(_("Right limit workspace."));
     m_spin_right_workspace->Enable(false);
@@ -402,7 +402,7 @@ void WConfiguration::CreateControls()
     wxStaticText* itemStaticText37 = new wxStaticText( itemPanel19, wxID_STATIC, _("Bottom"), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridSizer36->Add(itemStaticText37, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spin_bottom_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_BOTTOM_WORKSPACE, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 0 );
+    m_spin_bottom_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_BOTTOM_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
     if (WConfiguration::ShowToolTips())
         m_spin_bottom_workspace->SetToolTip(_("Bottom limit workspace."));
     m_spin_bottom_workspace->Enable(false);
@@ -1273,7 +1273,6 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
         wxMessageDialog dlg (NULL, _("This action could make you lose control of the program. Are you sure?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
         if (dlg.ShowModal()== wxID_YES)
         {
-            //EndModal(ID_BUTTON_CANCEL);
             m_chkEnabledWorkspace->SetValue(true);
             m_pViacamController->GetMouseOutput()->SetRestrictedWorkingArea(m_chkEnabledWorkspace->GetValue());
             m_spin_top_workspace->Enable(m_chkEnabledWorkspace->GetValue());
