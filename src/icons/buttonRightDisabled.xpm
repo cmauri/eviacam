@@ -1,5 +1,5 @@
 /* XPM */
-static char *buttonRightDisabled[] = {
+static const char *buttonRightDisabled[] = {
 /* columns rows colors chars-per-pixel */
 "48 48 252 2",
 "   c #020208",

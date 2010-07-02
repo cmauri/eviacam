@@ -36,12 +36,12 @@ public:
 	CIplImage (IplImage *pImg);
 	CIplImage (	int width, int height, 
 				int depth= IPL_DEPTH_8U,  
-				char *pColorOrder= "GRAY");
+				const char *pColorOrder= "GRAY");
 	~CIplImage ();
 
 	// Creation/Initialization
 	bool Create (int width, int height, 
-				unsigned int depth= IPL_DEPTH_8U, char *pColorOrder= "GRAY", 
+				unsigned int depth= IPL_DEPTH_8U, const char *pColorOrder= "GRAY", 
 				int origin= IPL_ORIGIN_TL, int align= IPL_ALIGN_QWORD );
 
 	bool Import (IplImage *pImage, bool autodelete= false);

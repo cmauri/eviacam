@@ -1,5 +1,5 @@
 /* XPM */
-static char * help[] = {
+static const char * help[] = {
 "32 32 157 2",
 "   c None",
 ".  c #666666",

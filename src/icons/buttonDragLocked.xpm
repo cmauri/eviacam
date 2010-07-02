@@ -1,5 +1,5 @@
 /* XPM */
-static char *buttonDragLocked[] = {
+static const char *buttonDragLocked[] = {
 /* columns rows colors chars-per-pixel */
 "48 48 213 2",
 "   c #000000",

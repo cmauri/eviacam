@@ -1,5 +1,5 @@
 /* XPM */
-static char *buttonRightSelectedLocked[] = {
+static const char *buttonRightSelectedLocked[] = {
 /* columns rows colors chars-per-pixel */
 "48 48 256 2",
 "   c #1C1C2E",

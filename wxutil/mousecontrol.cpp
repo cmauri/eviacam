@@ -388,8 +388,8 @@ void CMouseControl::SendMouseCommand (long x, long y, int flags)
 	else
 	{
 		// Button press
-		bool is_press;
-		unsigned int button;
+		bool is_press= false;
+		unsigned int button= 0;;
 
 		switch (flags)
 		{		

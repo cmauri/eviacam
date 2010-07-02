@@ -43,7 +43,7 @@ CIplImage::CIplImage (IplImage *pImg)
 	Import (pImg);
 }
 
-CIplImage::CIplImage (int width, int height, int depth, char *pColorOrder)
+CIplImage::CIplImage (int width, int height, int depth, const char *pColorOrder)
 {
 	m_pIplImage= NULL;
 	m_importedImage= false;
@@ -51,7 +51,9 @@ CIplImage::CIplImage (int width, int height, int depth, char *pColorOrder)
 	m_roiStackPtr= 0;
 
 	bool retval= Create (width, height, depth, pColorOrder);
+#ifndef NDEBUG
 	assert (retval);
+#endif
 }
 
 CIplImage::~CIplImage ()
@@ -71,10 +73,10 @@ void CIplImage::InitROIStack (int width, int height)
 }
 
 // Creation
-bool CIplImage::Create (int width, int height, unsigned int depth, char *pColorOrder, int origin, int align )
+bool CIplImage::Create (int width, int height, unsigned int depth, const char *pColorOrder, int origin, int align )
 {
-	int nChannels;
-	char *pColorModel;
+	int nChannels= 0;
+	const char *pColorModel= NULL;
 	bool alphaChannel= false;
 
 	assert (width> 0 && width< 4000);

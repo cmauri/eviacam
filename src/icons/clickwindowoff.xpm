@@ -1,5 +1,5 @@
 /* XPM */
-static char * clickwindowoff[] = {
+static const char * clickwindowoff[] = {
 "32 32 5 1",
 "  c None",
 ". c #FF0000",

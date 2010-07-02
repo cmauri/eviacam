@@ -1,5 +1,5 @@
 /* XPM */
-static char * eviacam[] = {
+static const char * eviacam[] = {
 "32 32 25 1",
 "  c None",
 ". c #000000",

@@ -1,5 +1,5 @@
 /* XPM */
-static char *buttonNoClickSelected[] = {
+static const char *buttonNoClickSelected[] = {
 /* columns rows colors chars-per-pixel */
 "48 48 231 2",
 "   c #360E0E",

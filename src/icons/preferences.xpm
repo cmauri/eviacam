@@ -1,5 +1,5 @@
 /* XPM */
-static char * preferences[] = {
+static const char * preferences[] = {
 "32 32 422 2",
 "   c None",
 ".  c #222321",

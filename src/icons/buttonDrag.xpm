@@ -1,5 +1,5 @@
 /* XPM */
-static char *buttonDrag[] = {
+static const char *buttonDrag[] = {
 /* columns rows colors chars-per-pixel */
 "48 48 97 2",
 "   c #000000",

@@ -1,5 +1,5 @@
 /* XPM */
-static char * keyboard[] = {
+static const char * keyboard[] = {
 "32 32 4 1",
 "  c None",
 ". c #333333",

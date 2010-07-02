@@ -1,5 +1,5 @@
 /* XPM */
-static char * on[] = {
+static const char * on[] = {
 "32 32 141 2",
 "   c None",
 ".  c #666666",

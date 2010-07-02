@@ -1,5 +1,5 @@
 /* XPM */
-static char *buttonLeftSelected[] = {
+static const char *buttonLeftSelected[] = {
 /* columns rows colors chars-per-pixel */
 "48 48 256 2",
 "   c #070738",
