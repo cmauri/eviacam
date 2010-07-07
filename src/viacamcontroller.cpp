@@ -43,6 +43,9 @@
 #include "mouseoutput.h"
 #include "camwindow.h"
 #include "wconfiguration.h"
+#include "activationkey.h"
+#include "keyboardbitmapcheck.h"
+#include "wx/timer.h"
 
 //#include "icons/eviacam_mini.xpm"
 
@@ -59,18 +62,28 @@
 #define END_GUI_CALL_MUTEX()
 #endif // __WXGTK___
 
-CViacamController::CViacamController(void)
+#define TIMER_ID 12345
+
+IMPLEMENT_DYNAMIC_CLASS( CViacamController, wxDialog )
+
+BEGIN_EVENT_TABLE( CViacamController, wxDialog )
+        EVT_TIMER(TIMER_ID, CViacamController::OnTimer)
+END_EVENT_TABLE()
+
+        
+        CViacamController::CViacamController(void) : m_timer(this, TIMER_ID)
 {
 	m_pMainWindow = NULL;
 	m_pCamera= NULL;
 	m_pCaptureThread= NULL;
 	m_pClickWindowController= NULL;
-	m_pMouseOutput= NULL;
+        m_pMouseOutput= NULL;
 	m_enabled= false;
 	m_locale= new wxLocale ();
 	m_configManager= new CConfigManager(this);
 	m_frameRate= 0;
 
+        
 	InitDefaults();
 }
 
@@ -188,6 +201,7 @@ bool CViacamController::Initialize ()
 	assert (!m_pMainWindow && !m_pCamera && !m_pCaptureThread);
 
 	SetUpLanguage ();
+        //m_pKeyboardBitmapCheck = new CKeyboardBitmapCheck();
 
 	// Create camera object
 	m_pCamera= SetUpCamera();	
@@ -301,7 +315,9 @@ void CViacamController::WriteAppData(wxConfigBase* pConfObj)
 void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->Write(_T("enabledAtStartup"), m_enabledAtStartup);	
-	pConfObj->Write(_T("onScreenKeyboardCommand"), m_onScreenKeyboardCommand);
+        pConfObj->Write(_T("onScreenKeyboardCommand"), m_onScreenKeyboardCommand);
+        pConfObj->Write(_T("enabledActivationKey"), m_enabledActivationKey);
+        pConfObj->Write(_T("keySym"), (int)m_keySym);
 
 	// Propagates calls
 	m_pMouseOutput->WriteProfileData (pConfObj);
@@ -319,8 +335,19 @@ void CViacamController::ReadAppData(wxConfigBase* pConfObj)
 
 void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 {
-	pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
-	pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
+	int keyCode = 0;
+        
+        pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
+        pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
+        pConfObj->Read(_T("enabledActivationKey"), &m_enabledActivationKey);
+        pConfObj->Read(_T("keySym"), &keyCode);
+        
+        m_keySym = (KeySym) keyCode;
+        
+        // Set default activation key
+        if (m_keySym == 0) {
+            m_keySym = 65300;
+        }
 
 	// Propagates calls
 	m_pMouseOutput->ReadProfileData (pConfObj);
@@ -394,6 +421,38 @@ void CViacamController::OpenOnScreenKeyboard()
 	}
 }
 
+void CViacamController::OnTimer(wxTimerEvent& event)
+{
+    bool isEnabled = GetEnabled();
+    //m_pConfiguration = new WConfiguration(m_pMainWindow, this);
+        
+    KeySym keyCode = 0;
+    keyCode = CKeyboardBitmapCheck::ReadKeySym();
+    
+    if (keyCode != 0) {
+        if (keyCode != 65307) {
+            m_lastKeySym = keyCode;
+            m_keySym = keyCode;
+            SetEnabled(isEnabled,isEnabled);
+            //m_pConfiguration->SetActivationKey(GetActivationKeyName());            
+        }
+        CloseActivationKey();
+    }
+}
+
+void CViacamController::OpenActivationKey()
+{
+    m_window = new Activationkey(m_pMainWindow);
+    m_window->Show();
+    m_timer.Start (33);
+}
+
+void CViacamController::CloseActivationKey()
+{
+    m_window->Destroy();
+    m_timer.Stop();
+}
+
 void CViacamController::ProcessImage (IplImage *pImage)
 {
 	WViacam::EFPSCondition cond;
@@ -419,5 +478,14 @@ void CViacamController::ProcessImage (IplImage *pImage)
 	BEGIN_GUI_CALL_MUTEX()
 	m_pMouseOutput->ProcessRelativePointerMove (-vx, vy);
 	END_GUI_CALL_MUTEX()
+                
+        //Read keyboard        
+        if (m_enabledActivationKey) {
+            KeySym keyCode = CKeyboardBitmapCheck::ReadKeySym();
+            if (keyCode == m_keySym and keyCode != m_lastKeySym) {
+                SetEnabled(!m_pMouseOutput->GetEnabled(),true);
+            }
+            m_lastKeySym = keyCode;
+        }
 }
 

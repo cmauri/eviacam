@@ -17,6 +17,7 @@
     <description/>
     <versioncontrol/>
     <projectname>eviacam</projectname>
+    <defaultencoding/>
   </general>
   <kdevautoproject>
     <general>
@@ -146,7 +147,7 @@
   </kdevdoctreeview>
   <kdevdebugger>
     <general>
-      <dbgshell>libtool</dbgshell>
+      <dbgshell>libtool --mode=execute</dbgshell>
       <programargs/>
       <gdbpath/>
       <configGdbScript/>
@@ -155,6 +156,7 @@
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
+      <raiseGDBOnStart>false</raiseGDBOnStart>
     </general>
     <display>
       <staticmembers>false</staticmembers>
@@ -236,6 +238,11 @@
       <inlineGet>true</inlineGet>
       <inlineSet>true</inlineSet>
     </creategettersetter>
+    <splitheadersource>
+      <enabled>false</enabled>
+      <synchronize>true</synchronize>
+      <orientation>Vertical</orientation>
+    </splitheadersource>
   </kdevcppsupport>
   <cppsupportpart>
     <filetemplates>

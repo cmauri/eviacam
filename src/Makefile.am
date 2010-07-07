@@ -1,8 +1,8 @@
 # these are the headers for your project
-noinst_HEADERS = clickwindowcontroller.h motiontracker.h wabout.h \
-	clickwindow.h clickwindowtext.h clickwindowbitmap.h \
-	mouseoutput.h wconfiguration.h guiapp.h viacamcontroller.h \
-	wviacam.h version.h langnames-utf8.h 
+noinst_HEADERS = activationkey.h cautostart.h clickwindow.h clickwindowbitmap.h \
+	clickwindowcontroller.h clickwindowtext.h guiapp.h keyboardbitmapcheck.h langnames-utf8.h \
+	motiontracker.h mouseoutput.h version.h viacamcontroller.h wabout.h wconfiguration.h \
+	wviacam.h
 
 dist_noinst_DATA= version.h.in langnames-utf16.h gui.pjd gui.rc eviacam.vcproj \
 	icons/on.xpm icons/eviacam.ico  icons/eviacam_mini.ico  \
@@ -40,10 +40,10 @@ install-exec-hook:
 
 
 # the application source, library search path, and link libraries
-eviacam_SOURCES = guiapp.cpp wviacam.cpp viacamcontroller.cpp \
-	clickwindow.cpp clickwindowtext.cpp clickwindowbitmap.cpp \
-	clickwindowcontroller.cpp \
-	mouseoutput.cpp motiontracker.cpp wabout.cpp wconfiguration.cpp
+eviacam_SOURCES = activationkey.cpp cautostart.cpp clickwindow.cpp \
+	clickwindowbitmap.cpp clickwindowcontroller.cpp clickwindowtext.cpp guiapp.cpp \
+	keyboardbitmapcheck.cpp motiontracker.cpp mouseoutput.cpp viacamcontroller.cpp wabout.cpp \
+	wconfiguration.cpp wviacam.cpp
 	
 eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11

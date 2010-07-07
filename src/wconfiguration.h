@@ -69,7 +69,11 @@ class CViacamController;
 #define ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER 10039
 #define ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND 10036
 #define ID_BUTTON_ONSCREENKEYBOARDCOMMAND 10049
+#define ID_CHECKBOX_ACTIVATION_KEY 10067
+#define ID_TEXTCTRL_ACTIVATION_KEY 10068
+#define ID_BUTTON_ACTIVATION_KEY 10069
 #define ID_PANEL 10050
+#define ID_CHECKBOX_STARTUP 10071
 #define ID_CHOICE_PROFILE 10015
 #define ID_BUTTON_ADD_PROFILE 10017
 #define ID_BUTTON_DEL_PROFILE 10018
@@ -192,6 +196,16 @@ public:
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_ONSCREENKEYBOARDCOMMAND
     void OnButtonOnscreenkeyboardcommandClick( wxCommandEvent& event );
 
+#if defined(__WXGTK__)
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ACTIVATION_KEY
+    void OnCheckboxActivationKeyClick( wxCommandEvent& event );
+
+#endif
+#if defined(__WXGTK__)
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_ACTIVATION_KEY
+    void OnButtonActivationKeyClick( wxCommandEvent& event );
+
+#endif
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_PROFILE
     void OnChoiceProfileSelected( wxCommandEvent& event );
 
@@ -229,6 +243,8 @@ public:
 
     /// Should we show tooltips?
     static bool ShowToolTips();
+    
+    void SetActivationKey(wxString keyName);
 
 private:
 
@@ -263,6 +279,16 @@ private:
     wxCheckBox* m_chkShowAutoLocateFaceFilter;
     wxTextCtrl* m_txtOnScreenKeyboardCommand;
     wxButton* m_btntOnScreenKeyboardCommand;
+#if defined(__WXGTK__)
+    wxCheckBox* m_chkActivationKey;
+#endif
+#if defined(__WXGTK__)
+    wxTextCtrl* m_txtActivationKey;
+#endif
+#if defined(__WXGTK__)
+    wxButton* m_buttonActivationKey;
+#endif
+    wxCheckBox* m_chkStartup;
     wxChoice* m_choProfile;
     wxButton* m_btnAddProfile;
     wxButton* m_btnDeleteProfile;

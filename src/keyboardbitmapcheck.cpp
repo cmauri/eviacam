@@ -58,6 +58,5 @@ KeySym CKeyboardBitmapCheck::ReadKeySym()
 
 wxString CKeyboardBitmapCheck::GetKeyName (KeySym ks) 
 {
-    printf("KEY: %s\n", XKeysymToString(ks));
     return wxString(XKeysymToString(ks), wxConvLocal);
 }

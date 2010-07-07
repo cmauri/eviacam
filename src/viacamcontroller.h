@@ -31,13 +31,20 @@
 #include "configmanager.h"
 #include "crvcamera.h"
 #include <cv.h>
+#include "keyboardbitmapcheck.h"
+#include <X11/Xlib.h>
+#include "activationkey.h"
+#include "wconfiguration.h"
 
 class WViacam;
 //class CCamera;
 class CMouseOutput;
 
-class CViacamController : public CProcessImage, public CConfigBase
+class CViacamController : public CProcessImage, public CConfigBase, public wxDialog
 {
+    DECLARE_DYNAMIC_CLASS( CViacamController )
+    DECLARE_EVENT_TABLE()
+            
 public:
 	CViacamController(void);
 	virtual ~CViacamController(void);
@@ -51,8 +58,12 @@ public:
 	inline const bool GetEnabled () const;
 	void SetEnabled (bool value, bool silent= false);
 	
-	inline const bool GetEnabledAtStartup () const;
-	inline void SetEnabledAtStartup (bool value);	
+        inline const bool GetEnabledAtStartup () const;
+        inline void SetEnabledAtStartup (bool value);	
+        
+        inline const bool GetEnabledActivationKey () const;
+        inline void SetEnabledActivationKey (bool value);	
+        inline const wxString GetActivationKeyName () const;
 
 	void SetLanguage (const int id);
 	inline const int GetLanguage () const;
@@ -73,6 +84,8 @@ public:
 
 	void OpenConfiguration();
 	void OpenOnScreenKeyboard();
+        void OpenActivationKey();
+        void CloseActivationKey();
 
 	// Configuration methods
 	virtual void InitDefaults();
@@ -84,6 +97,10 @@ public:
 	virtual void WriteProfileData(wxConfigBase* pConfObj);  
 
 	virtual void StartupRun();
+        
+        ////@begin CViacamController event handler declarations
+        void OnTimer(wxTimerEvent& event);
+        ////@end CViacamController event handler declarations
 
 private:
 	
@@ -101,12 +118,19 @@ private:
 	CConfigManager* m_configManager;
 	wxLocale* m_locale;
 	wxString m_cameraName;
-	
+        	
 	bool m_enabled;
 	bool m_enabledAtStartup;
 	int m_languageId;
 	wxString m_onScreenKeyboardCommand;
 	float m_frameRate;
+        bool m_enabledActivationKey;
+        KeySym m_keySym;
+        KeySym m_lastKeySym;
+        wxTimer m_timer;
+        Activationkey* m_window;
+        WConfiguration* m_pConfiguration;
+
 };
 
 inline CMouseOutput* CViacamController::GetMouseOutput()
@@ -183,4 +207,21 @@ inline CConfigManager* CViacamController::GetConfigManager()
 {
 	return m_configManager;
 }
+
+inline const bool CViacamController::GetEnabledActivationKey () const
+{
+    return m_enabledActivationKey;
+}
+
+inline void CViacamController::SetEnabledActivationKey (bool value)
+{
+    m_enabledActivationKey= value;
+}
+
+inline const wxString CViacamController::GetActivationKeyName () const
+{
+    return CKeyboardBitmapCheck::GetKeyName(m_keySym);
+}
+
+
 #endif

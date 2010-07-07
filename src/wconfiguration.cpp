@@ -38,6 +38,7 @@
 ////@end includes
 
 #include "wconfiguration.h"
+#include "cautostart.h"
 
 ////@begin XPM images
 #include "icons/eviacam.xpm"
@@ -138,6 +139,14 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
     EVT_TEXT( ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND, WConfiguration::OnTextctrlOnscreenkeyboardcommandTextUpdated )
 
     EVT_BUTTON( ID_BUTTON_ONSCREENKEYBOARDCOMMAND, WConfiguration::OnButtonOnscreenkeyboardcommandClick )
+
+#if defined(__WXGTK__)
+    EVT_CHECKBOX( ID_CHECKBOX_ACTIVATION_KEY, WConfiguration::OnCheckboxActivationKeyClick )
+#endif
+
+#if defined(__WXGTK__)
+    EVT_BUTTON( ID_BUTTON_ACTIVATION_KEY, WConfiguration::OnButtonActivationKeyClick )
+#endif
 
     EVT_CHOICE( ID_CHOICE_PROFILE, WConfiguration::OnChoiceProfileSelected )
 
@@ -250,6 +259,16 @@ void WConfiguration::Init()
     m_chkShowAutoLocateFaceFilter = NULL;
     m_txtOnScreenKeyboardCommand = NULL;
     m_btntOnScreenKeyboardCommand = NULL;
+#if defined(__WXGTK__)
+    m_chkActivationKey = NULL;
+#endif
+#if defined(__WXGTK__)
+    m_txtActivationKey = NULL;
+#endif
+#if defined(__WXGTK__)
+    m_buttonActivationKey = NULL;
+#endif
+    m_chkStartup = NULL;
     m_choProfile = NULL;
     m_btnAddProfile = NULL;
     m_btnDeleteProfile = NULL;
@@ -527,84 +546,121 @@ void WConfiguration::CreateControls()
     m_btntOnScreenKeyboardCommand = new wxButton( itemPanel60, ID_BUTTON_ONSCREENKEYBOARDCOMMAND, _("Browse..."), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizer65->Add(m_btntOnScreenKeyboardCommand, 0, wxALIGN_LEFT|wxALL, 5);
 
+#if defined(__WXGTK__)
+    wxStaticBox* itemStaticBoxSizer68Static = new wxStaticBox(itemPanel60, wxID_ANY, _("Activation key"));
+    wxStaticBoxSizer* itemStaticBoxSizer68 = new wxStaticBoxSizer(itemStaticBoxSizer68Static, wxVERTICAL);
+    itemBoxSizer61->Add(itemStaticBoxSizer68, 0, wxGROW|wxALL, 5);
+    m_chkActivationKey = new wxCheckBox( itemPanel60, ID_CHECKBOX_ACTIVATION_KEY, _("Enabled activation key"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkActivationKey->SetValue(false);
+    if (WConfiguration::ShowToolTips())
+        m_chkActivationKey->SetToolTip(_("When enabled allows activate or deactivate the facial mouse pressing a key."));
+    itemStaticBoxSizer68->Add(m_chkActivationKey, 0, wxALIGN_LEFT|wxALL, 5);
+
+    m_txtActivationKey = new wxTextCtrl( itemPanel60, ID_TEXTCTRL_ACTIVATION_KEY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+    if (WConfiguration::ShowToolTips())
+        m_txtActivationKey->SetToolTip(_("Shows the selected key."));
+    m_txtActivationKey->Enable(false);
+    itemStaticBoxSizer68->Add(m_txtActivationKey, 0, wxGROW|wxALL, 5);
+
+    m_buttonActivationKey = new wxButton( itemPanel60, ID_BUTTON_ACTIVATION_KEY, _("Set key"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticBoxSizer68->Add(m_buttonActivationKey, 0, wxALIGN_RIGHT|wxALL, 5);
+
+#endif
+
     itemNotebook4->AddPage(itemPanel60, _("Advanced"));
 
     itemListbook3->AddPage(itemNotebook4, _("Profile options"), false, 0);
 
-    wxPanel* itemPanel68 = new wxPanel( itemListbook3, ID_PANEL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    wxBoxSizer* itemBoxSizer69 = new wxBoxSizer(wxVERTICAL);
-    itemPanel68->SetSizer(itemBoxSizer69);
+    wxPanel* itemPanel72 = new wxPanel( itemListbook3, ID_PANEL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxBoxSizer* itemBoxSizer73 = new wxBoxSizer(wxVERTICAL);
+    itemPanel72->SetSizer(itemBoxSizer73);
 
-    wxStaticBox* itemStaticBoxSizer70Static = new wxStaticBox(itemPanel68, wxID_ANY, _("Profile management"));
-    wxStaticBoxSizer* itemStaticBoxSizer70 = new wxStaticBoxSizer(itemStaticBoxSizer70Static, wxVERTICAL);
-    itemBoxSizer69->Add(itemStaticBoxSizer70, 0, wxGROW|wxALL, 5);
-    wxBoxSizer* itemBoxSizer71 = new wxBoxSizer(wxHORIZONTAL);
-    itemStaticBoxSizer70->Add(itemBoxSizer71, 0, wxGROW|wxALL, 0);
-    wxStaticText* itemStaticText72 = new wxStaticText( itemPanel68, wxID_STATIC, _("Select profile:"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticBox* itemStaticBoxSizer74Static = new wxStaticBox(itemPanel72, wxID_ANY, _("Run on startup"));
+    wxStaticBoxSizer* itemStaticBoxSizer74 = new wxStaticBoxSizer(itemStaticBoxSizer74Static, wxHORIZONTAL);
+    itemBoxSizer73->Add(itemStaticBoxSizer74, 0, wxGROW|wxALL, 5);
+    m_chkStartup = new wxCheckBox( itemPanel72, ID_CHECKBOX_STARTUP, _("Enabled run on startup"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkStartup->SetValue(false);
     if (WConfiguration::ShowToolTips())
-        itemStaticText72->SetToolTip(_("Chooses desired active profile"));
-    itemBoxSizer71->Add(itemStaticText72, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        m_chkStartup->SetToolTip(_("If checked the program will run on startup."));
+    itemStaticBoxSizer74->Add(m_chkStartup, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxStaticBox* itemStaticBoxSizer76Static = new wxStaticBox(itemPanel72, wxID_ANY, _("Profile management"));
+    wxStaticBoxSizer* itemStaticBoxSizer76 = new wxStaticBoxSizer(itemStaticBoxSizer76Static, wxVERTICAL);
+    itemBoxSizer73->Add(itemStaticBoxSizer76, 0, wxGROW|wxALL, 5);
+    wxBoxSizer* itemBoxSizer77 = new wxBoxSizer(wxHORIZONTAL);
+    itemStaticBoxSizer76->Add(itemBoxSizer77, 0, wxGROW|wxALL, 0);
+    wxStaticText* itemStaticText78 = new wxStaticText( itemPanel72, wxID_STATIC, _("Select profile:"), wxDefaultPosition, wxDefaultSize, 0 );
+    if (WConfiguration::ShowToolTips())
+        itemStaticText78->SetToolTip(_("Chooses desired active profile"));
+    itemBoxSizer77->Add(itemStaticText78, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choProfileStrings;
-    m_choProfile = new wxChoice( itemPanel68, ID_CHOICE_PROFILE, wxDefaultPosition, wxDefaultSize, m_choProfileStrings, 0 );
+    m_choProfile = new wxChoice( itemPanel72, ID_CHOICE_PROFILE, wxDefaultPosition, wxDefaultSize, m_choProfileStrings, 0 );
     if (WConfiguration::ShowToolTips())
         m_choProfile->SetToolTip(_("Chooses desired active profile"));
-    itemBoxSizer71->Add(m_choProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    wxBoxSizer* itemBoxSizer74 = new wxBoxSizer(wxHORIZONTAL);
-    itemStaticBoxSizer70->Add(itemBoxSizer74, 0, wxALIGN_RIGHT|wxALL, 0);
-    m_btnAddProfile = new wxButton( itemPanel68, ID_BUTTON_ADD_PROFILE, _("Add profile"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer74->Add(m_btnAddProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    m_btnDeleteProfile = new wxButton( itemPanel68, ID_BUTTON_DEL_PROFILE, _("Delete profile"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer74->Add(m_btnDeleteProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    wxStaticBox* itemStaticBoxSizer77Static = new wxStaticBox(itemPanel68, wxID_ANY, _("Selected camera"));
-    wxStaticBoxSizer* itemStaticBoxSizer77 = new wxStaticBoxSizer(itemStaticBoxSizer77Static, wxVERTICAL);
-    itemBoxSizer69->Add(itemStaticBoxSizer77, 0, wxGROW|wxALL, 5);
-    wxBoxSizer* itemBoxSizer78 = new wxBoxSizer(wxVERTICAL);
-    itemStaticBoxSizer77->Add(itemBoxSizer78, 0, wxGROW|wxALL, 0);
-    m_txtSelectedCamera = new wxTextCtrl( itemPanel68, ID_TEXTCTRL_SELECTED_CAMERA, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
-    m_txtSelectedCamera->Enable(false);
-    itemBoxSizer78->Add(m_txtSelectedCamera, 0, wxGROW|wxALL, 5);
+    itemBoxSizer77->Add(m_choProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer80 = new wxBoxSizer(wxHORIZONTAL);
-    itemStaticBoxSizer77->Add(itemBoxSizer80, 0, wxALIGN_RIGHT|wxALL, 0);
-    m_btnCameraSettings = new wxButton( itemPanel68, ID_BUTTON_CAMERA_SETTINGS, _("Settings..."), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer80->Add(m_btnCameraSettings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemStaticBoxSizer76->Add(itemBoxSizer80, 0, wxALIGN_RIGHT|wxALL, 0);
+    m_btnAddProfile = new wxButton( itemPanel72, ID_BUTTON_ADD_PROFILE, _("Add profile"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer80->Add(m_btnAddProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton82 = new wxButton( itemPanel68, ID_BUTTON_CHANGE_CAMERA, _("Change"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer80->Add(itemButton82, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_btnDeleteProfile = new wxButton( itemPanel72, ID_BUTTON_DEL_PROFILE, _("Delete profile"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer80->Add(m_btnDeleteProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxFlexGridSizer* itemFlexGridSizer83 = new wxFlexGridSizer(0, 2, 0, 0);
-    itemBoxSizer69->Add(itemFlexGridSizer83, 0, wxALIGN_LEFT|wxALL, 5);
-    wxStaticText* itemStaticText84 = new wxStaticText( itemPanel68, wxID_STATIC, _("Language:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer83->Add(itemStaticText84, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticBox* itemStaticBoxSizer83Static = new wxStaticBox(itemPanel72, wxID_ANY, _("Selected camera"));
+    wxStaticBoxSizer* itemStaticBoxSizer83 = new wxStaticBoxSizer(itemStaticBoxSizer83Static, wxVERTICAL);
+    itemBoxSizer73->Add(itemStaticBoxSizer83, 0, wxGROW|wxALL, 5);
+    wxBoxSizer* itemBoxSizer84 = new wxBoxSizer(wxVERTICAL);
+    itemStaticBoxSizer83->Add(itemBoxSizer84, 0, wxGROW|wxALL, 0);
+    m_txtSelectedCamera = new wxTextCtrl( itemPanel72, ID_TEXTCTRL_SELECTED_CAMERA, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
+    m_txtSelectedCamera->Enable(false);
+    itemBoxSizer84->Add(m_txtSelectedCamera, 0, wxGROW|wxALL, 5);
+
+    wxBoxSizer* itemBoxSizer86 = new wxBoxSizer(wxHORIZONTAL);
+    itemStaticBoxSizer83->Add(itemBoxSizer86, 0, wxALIGN_RIGHT|wxALL, 0);
+    m_btnCameraSettings = new wxButton( itemPanel72, ID_BUTTON_CAMERA_SETTINGS, _("Settings..."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer86->Add(m_btnCameraSettings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxButton* itemButton88 = new wxButton( itemPanel72, ID_BUTTON_CHANGE_CAMERA, _("Change"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer86->Add(itemButton88, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxFlexGridSizer* itemFlexGridSizer89 = new wxFlexGridSizer(0, 2, 0, 0);
+    itemBoxSizer73->Add(itemFlexGridSizer89, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText90 = new wxStaticText( itemPanel72, wxID_STATIC, _("Language:"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer89->Add(itemStaticText90, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choLanguageStrings;
-    m_choLanguage = new wxChoice( itemPanel68, ID_CHOICE_LANGUAGE, wxDefaultPosition, wxDefaultSize, m_choLanguageStrings, 0 );
-    itemFlexGridSizer83->Add(m_choLanguage, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_choLanguage = new wxChoice( itemPanel72, ID_CHOICE_LANGUAGE, wxDefaultPosition, wxDefaultSize, m_choLanguageStrings, 0 );
+    itemFlexGridSizer89->Add(m_choLanguage, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxCheckBox* itemCheckBox86 = new wxCheckBox( itemPanel68, ID_CHECKBOX_RUN_STARTUP, _("Run at system startup"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemCheckBox86->SetValue(false);
-    itemCheckBox86->Show(false);
-    itemFlexGridSizer83->Add(itemCheckBox86, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxCheckBox* itemCheckBox92 = new wxCheckBox( itemPanel72, ID_CHECKBOX_RUN_STARTUP, _("Run at system startup"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemCheckBox92->SetValue(false);
+    itemCheckBox92->Show(false);
+    itemFlexGridSizer89->Add(itemCheckBox92, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    itemListbook3->AddPage(itemPanel68, _("General options"), false, 1);
+    itemListbook3->AddPage(itemPanel72, _("General options"), false, 1);
 
     itemBoxSizer2->Add(itemListbook3, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxBoxSizer* itemBoxSizer87 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer87, 0, wxALIGN_RIGHT|wxALL, 5);
+    wxBoxSizer* itemBoxSizer93 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer2->Add(itemBoxSizer93, 0, wxALIGN_RIGHT|wxALL, 5);
 
-    wxButton* itemButton88 = new wxButton( itemDialog1, ID_BUTTON_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer87->Add(itemButton88, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButton94 = new wxButton( itemDialog1, ID_BUTTON_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer93->Add(itemButton94, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_btnCancel = new wxButton( itemDialog1, ID_BUTTON_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     m_btnCancel->Enable(false);
-    itemBoxSizer87->Add(m_btnCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer93->Add(m_btnCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 ////@end WConfiguration content construction
+}
+
+void WConfiguration::SetActivationKey(wxString keyName)
+{
+    m_txtActivationKey->SetValue(m_pViacamController->GetActivationKeyName());
+    //m_txtActivationKey->SetValue(keyName);
+    
 }
 
 
@@ -705,7 +761,8 @@ void WConfiguration::InitializeData ()
 	m_chkShowAutoLocateFaceFilter->Enable (m_chkAutoLocateFace->GetValue());
 	m_chkShowAutoLocateFaceFilter->SetValue (m_pViacamController->GetMotionTracker()->GetShowTrackFaceFilter());
 	m_txtOnScreenKeyboardCommand->SetValue(m_pViacamController->GetOnScreenKeyboardCommand());
-
+    m_chkActivationKey->SetValue(m_pViacamController->GetEnabledActivationKey());
+    m_txtActivationKey->SetValue(m_pViacamController->GetActivationKeyName());
 	// 
 	// App data
 	//
@@ -1293,3 +1350,37 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
 	Changed ();
 }
 
+
+/*!
+ * wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_ACTIVATION_KEY
+ */
+
+void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
+{
+    m_pViacamController->OpenActivationKey();
+    m_txtActivationKey->SetValue(m_pViacamController->GetActivationKeyName());
+	event.Skip(false);
+    Changed ();
+}
+
+
+/*!
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ACTIVATION_KEY
+ */
+
+void WConfiguration::OnCheckboxActivationKeyClick( wxCommandEvent& event )
+{
+    //m_chkActivationKey->SetValue(!m_chkActivationKey->GetValue());
+    //m_pViacamController->SetEnabledActivationKey(m_chkActivationKey->GetValue());
+    
+    if (m_chkActivationKey->GetValue()) {
+        m_chkActivationKey->SetValue(true);  
+        m_pViacamController->SetEnabledActivationKey(true);
+    } else {
+        m_chkActivationKey->SetValue(false);
+        m_pViacamController->SetEnabledActivationKey(false);
+    }
+    event.Skip(false);
+    Changed ();
+        
+}
