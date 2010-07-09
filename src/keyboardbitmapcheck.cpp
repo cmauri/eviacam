@@ -23,6 +23,7 @@
 #include <wx/utils.h>
 #include <X11/Xlib.h>
 #include <cmath>
+#include <wx/stdpaths.h>
 
 
 KeySym CKeyboardBitmapCheck::ReadKeySym()

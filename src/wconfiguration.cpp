@@ -38,7 +38,6 @@
 ////@end includes
 
 #include "wconfiguration.h"
-#include "cautostart.h"
 
 ////@begin XPM images
 #include "icons/eviacam.xpm"
@@ -49,12 +48,15 @@
 #include "mouseoutput.h"
 #include "motiontracker.h"
 #include "clickwindowcontroller.h"
+#include "cautostart.h"
 
 // Trick to properly compile & display native language names
 #if defined(__WXMSW__)
 #include "langnames-utf16.h"
 #else
 #include "langnames-utf8.h"
+#include "cautostart.h"
+#include <wx/stdpaths.h>
 #endif
 
 const wxLanguage s_langIds[] = {
@@ -148,6 +150,10 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
     EVT_BUTTON( ID_BUTTON_ACTIVATION_KEY, WConfiguration::OnButtonActivationKeyClick )
 #endif
 
+#if defined(__WXGTK__)
+    EVT_CHECKBOX( ID_CHECKBOX_STARTUP, WConfiguration::OnCheckboxStartupClick )
+#endif
+
     EVT_CHOICE( ID_CHOICE_PROFILE, WConfiguration::OnChoiceProfileSelected )
 
     EVT_BUTTON( ID_BUTTON_ADD_PROFILE, WConfiguration::OnButtonAddProfileClick )
@@ -187,6 +193,14 @@ WConfiguration::WConfiguration( wxWindow* parent, wxWindowID id, const wxString&
 WConfiguration::WConfiguration( wxWindow* parent, CViacamController* pViacamController, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
 	m_pViacamController= pViacamController;
+	Init();
+    Create(parent, id, caption, pos, size, style);
+}
+
+WConfiguration::WConfiguration( wxWindow* parent, CViacamController* pViacamController, CAutostart* pAutostart, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+{
+	m_pViacamController= pViacamController;
+    m_pAutostart= pAutostart;
 	Init();
     Create(parent, id, caption, pos, size, style);
 }
@@ -268,7 +282,9 @@ void WConfiguration::Init()
 #if defined(__WXGTK__)
     m_buttonActivationKey = NULL;
 #endif
+#if defined(__WXGTK__)
     m_chkStartup = NULL;
+#endif
     m_choProfile = NULL;
     m_btnAddProfile = NULL;
     m_btnDeleteProfile = NULL;
@@ -575,6 +591,7 @@ void WConfiguration::CreateControls()
     wxBoxSizer* itemBoxSizer73 = new wxBoxSizer(wxVERTICAL);
     itemPanel72->SetSizer(itemBoxSizer73);
 
+#if defined(__WXGTK__)
     wxStaticBox* itemStaticBoxSizer74Static = new wxStaticBox(itemPanel72, wxID_ANY, _("Run on startup"));
     wxStaticBoxSizer* itemStaticBoxSizer74 = new wxStaticBoxSizer(itemStaticBoxSizer74Static, wxHORIZONTAL);
     itemBoxSizer73->Add(itemStaticBoxSizer74, 0, wxGROW|wxALL, 5);
@@ -583,6 +600,8 @@ void WConfiguration::CreateControls()
     if (WConfiguration::ShowToolTips())
         m_chkStartup->SetToolTip(_("If checked the program will run on startup."));
     itemStaticBoxSizer74->Add(m_chkStartup, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+#endif
 
     wxStaticBox* itemStaticBoxSizer76Static = new wxStaticBox(itemPanel72, wxID_ANY, _("Profile management"));
     wxStaticBoxSizer* itemStaticBoxSizer76 = new wxStaticBoxSizer(itemStaticBoxSizer76Static, wxVERTICAL);
@@ -763,9 +782,12 @@ void WConfiguration::InitializeData ()
 	m_txtOnScreenKeyboardCommand->SetValue(m_pViacamController->GetOnScreenKeyboardCommand());
     m_chkActivationKey->SetValue(m_pViacamController->GetEnabledActivationKey());
     m_txtActivationKey->SetValue(m_pViacamController->GetActivationKeyName());
+    
 	// 
 	// App data
 	//
+
+    m_chkStartup->SetValue(m_pAutostart->IsEnabled());
 
 	// Profile combo
 	m_choProfile->Clear();
@@ -1370,17 +1392,20 @@ void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxActivationKeyClick( wxCommandEvent& event )
 {
-    //m_chkActivationKey->SetValue(!m_chkActivationKey->GetValue());
-    //m_pViacamController->SetEnabledActivationKey(m_chkActivationKey->GetValue());
-    
-    if (m_chkActivationKey->GetValue()) {
-        m_chkActivationKey->SetValue(true);  
-        m_pViacamController->SetEnabledActivationKey(true);
-    } else {
-        m_chkActivationKey->SetValue(false);
-        m_pViacamController->SetEnabledActivationKey(false);
-    }
+    m_pViacamController->SetEnabledActivationKey(m_chkActivationKey->GetValue());
     event.Skip(false);
     Changed ();
-        
 }
+
+
+/*!
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_STARTUP
+ */
+
+void WConfiguration::OnCheckboxStartupClick( wxCommandEvent& event )
+{
+    m_pAutostart->Enable(m_chkStartup->GetValue());
+    event.Skip();
+    Changed ();
+}
+

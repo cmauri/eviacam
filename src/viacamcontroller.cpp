@@ -43,9 +43,7 @@
 #include "mouseoutput.h"
 #include "camwindow.h"
 #include "wconfiguration.h"
-#include "activationkey.h"
-#include "keyboardbitmapcheck.h"
-#include "wx/timer.h"
+
 
 //#include "icons/eviacam_mini.xpm"
 
@@ -54,6 +52,11 @@
 
 // Under wxGTK we should protect calls to GUI. Under Windows is not needed
 #if defined(__WXGTK__) 
+#include "activationkey.h"
+#include "keyboardbitmapcheck.h"
+#include "cautostart.h"
+#include "wx/timer.h"
+#include <wx/stdpaths.h>
 #include <wx/thread.h>
 #define BEGIN_GUI_CALL_MUTEX() if (!wxIsMainThread()) wxMutexGuiEnter();
 #define END_GUI_CALL_MUTEX() if (!wxIsMainThread()) wxMutexGuiLeave();
@@ -385,7 +388,8 @@ void CViacamController::SetEnabled (bool value, bool silent)
 
 void CViacamController::OpenConfiguration()
 {
-	WConfiguration* window = new WConfiguration(m_pMainWindow, this);
+    m_pAutostart = new CAutostart(wxT("eviacam.desktop"));
+    WConfiguration* window = new WConfiguration(m_pMainWindow, this, m_pAutostart);
 
     int returnValue = window->ShowModal();
 	window->Destroy();
@@ -479,6 +483,7 @@ void CViacamController::ProcessImage (IplImage *pImage)
 	m_pMouseOutput->ProcessRelativePointerMove (-vx, vy);
 	END_GUI_CALL_MUTEX()
                 
+        #if defined(__WXGTK__) 
         //Read keyboard        
         if (m_enabledActivationKey) {
             KeySym keyCode = CKeyboardBitmapCheck::ReadKeySym();
@@ -487,5 +492,6 @@ void CViacamController::ProcessImage (IplImage *pImage)
             }
             m_lastKeySym = keyCode;
         }
+        #endif // __WXGTK___
 }
 

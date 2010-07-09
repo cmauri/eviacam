@@ -29,8 +29,9 @@ public:
     CAutostart(wxString fileName);
     ~CAutostart();
     
-    static bool IsEnabled();
-    static void Enable(bool value);
+    
+    bool IsEnabled();
+    void Enable(bool value);
 
 private:
     wxString m_fileName;

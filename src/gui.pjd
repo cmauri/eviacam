@@ -6086,7 +6086,7 @@ tracking area."</string>
                     <bool name="proxy-wxSHAPED">0</bool>
                     <bool name="proxy-wxADJUST_MINSIZE">0</bool>
                     <bool name="proxy-wxFIXED_MINSIZE">0</bool>
-                    <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
+                    <string name="proxy-Platform">"__WXGTK__"</string>
                     <document>
                       <string name="title">"wxCheckBox: ID_CHECKBOX_STARTUP"</string>
                       <string name="type">"dialog-control-document"</string>
@@ -6097,6 +6097,7 @@ tracking area."</string>
                       <long name="title-mode">0</long>
                       <long name="locked">0</long>
                       <string name="proxy-type">"wbCheckBoxProxy"</string>
+                      <string name="event-handler-0">"wxEVT_COMMAND_CHECKBOX_CLICKED|OnCheckboxStartupClick|NONE||WConfiguration"</string>
                       <string name="proxy-Id name">"ID_CHECKBOX_STARTUP"</string>
                       <long name="proxy-Id value">10071</long>
                       <string name="proxy-Name">""</string>

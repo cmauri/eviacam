@@ -31,10 +31,14 @@
 #include "configmanager.h"
 #include "crvcamera.h"
 #include <cv.h>
-#include "keyboardbitmapcheck.h"
 #include <X11/Xlib.h>
-#include "activationkey.h"
 #include "wconfiguration.h"
+
+#if defined(__WXGTK__) 
+#include "keyboardbitmapcheck.h"
+#include "activationkey.h"
+#include "cautostart.h"
+#endif // __WXGTK___
 
 class WViacam;
 //class CCamera;
@@ -130,7 +134,7 @@ private:
         wxTimer m_timer;
         Activationkey* m_window;
         WConfiguration* m_pConfiguration;
-
+        CAutostart* m_pAutostart;
 };
 
 inline CMouseOutput* CViacamController::GetMouseOutput()

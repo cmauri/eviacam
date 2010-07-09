@@ -22,6 +22,7 @@
 #include "wx/notebook.h"
 #include "wx/spinctrl.h"
 ////@end includes
+#include "cautostart.h"
 
 /*!
  * Forward declarations
@@ -106,6 +107,7 @@ public:
     WConfiguration();
     WConfiguration( wxWindow* parent, wxWindowID id = SYMBOL_WCONFIGURATION_IDNAME, const wxString& caption = SYMBOL_WCONFIGURATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIGURATION_POSITION, const wxSize& size = SYMBOL_WCONFIGURATION_SIZE, long style = SYMBOL_WCONFIGURATION_STYLE );
 	WConfiguration( wxWindow* parent, CViacamController* pViacamController, wxWindowID id = SYMBOL_WCONFIGURATION_IDNAME, const wxString& caption = SYMBOL_WCONFIGURATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIGURATION_POSITION, const wxSize& size = SYMBOL_WCONFIGURATION_SIZE, long style = SYMBOL_WCONFIGURATION_STYLE );
+    WConfiguration( wxWindow* parent, CViacamController* pViacamController, CAutostart* pAutostart, wxWindowID id = SYMBOL_WCONFIGURATION_IDNAME, const wxString& caption = SYMBOL_WCONFIGURATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIGURATION_POSITION, const wxSize& size = SYMBOL_WCONFIGURATION_SIZE, long style = SYMBOL_WCONFIGURATION_STYLE );
 	
     /// Creation
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_WCONFIGURATION_IDNAME, const wxString& caption = SYMBOL_WCONFIGURATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIGURATION_POSITION, const wxSize& size = SYMBOL_WCONFIGURATION_SIZE, long style = SYMBOL_WCONFIGURATION_STYLE );
@@ -206,6 +208,11 @@ public:
     void OnButtonActivationKeyClick( wxCommandEvent& event );
 
 #endif
+#if defined(__WXGTK__)
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_STARTUP
+    void OnCheckboxStartupClick( wxCommandEvent& event );
+
+#endif
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_PROFILE
     void OnChoiceProfileSelected( wxCommandEvent& event );
 
@@ -288,7 +295,9 @@ private:
 #if defined(__WXGTK__)
     wxButton* m_buttonActivationKey;
 #endif
+#if defined(__WXGTK__)
     wxCheckBox* m_chkStartup;
+#endif
     wxChoice* m_choProfile;
     wxButton* m_btnAddProfile;
     wxButton* m_btnDeleteProfile;
@@ -299,6 +308,7 @@ private:
 ////@end WConfiguration member variables
 
 	CViacamController* m_pViacamController;
+    CAutostart* m_pAutostart;
 	bool m_dirty;
 };
 
