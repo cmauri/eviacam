@@ -566,20 +566,26 @@ void WConfiguration::CreateControls()
     wxStaticBox* itemStaticBoxSizer68Static = new wxStaticBox(itemPanel60, wxID_ANY, _("Activation key"));
     wxStaticBoxSizer* itemStaticBoxSizer68 = new wxStaticBoxSizer(itemStaticBoxSizer68Static, wxVERTICAL);
     itemBoxSizer61->Add(itemStaticBoxSizer68, 0, wxGROW|wxALL, 5);
+#if defined(__WXGTK__)
     m_chkActivationKey = new wxCheckBox( itemPanel60, ID_CHECKBOX_ACTIVATION_KEY, _("Enabled activation key"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkActivationKey->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkActivationKey->SetToolTip(_("When enabled allows activate or deactivate the facial mouse pressing a key."));
     itemStaticBoxSizer68->Add(m_chkActivationKey, 0, wxALIGN_LEFT|wxALL, 5);
+#endif
 
+#if defined(__WXGTK__)
     m_txtActivationKey = new wxTextCtrl( itemPanel60, ID_TEXTCTRL_ACTIVATION_KEY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
     if (WConfiguration::ShowToolTips())
         m_txtActivationKey->SetToolTip(_("Shows the selected key."));
     m_txtActivationKey->Enable(false);
     itemStaticBoxSizer68->Add(m_txtActivationKey, 0, wxGROW|wxALL, 5);
+#endif
 
+#if defined(__WXGTK__)
     m_buttonActivationKey = new wxButton( itemPanel60, ID_BUTTON_ACTIVATION_KEY, _("Set key"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizer68->Add(m_buttonActivationKey, 0, wxALIGN_RIGHT|wxALL, 5);
+#endif
 
 #endif
 
@@ -677,9 +683,10 @@ void WConfiguration::CreateControls()
 
 void WConfiguration::SetActivationKey(wxString keyName)
 {
+#if defined(__WXGTK__)   
     m_txtActivationKey->SetValue(m_pViacamController->GetActivationKeyName());
     //m_txtActivationKey->SetValue(keyName);
-    
+#endif    
 }
 
 
@@ -780,15 +787,17 @@ void WConfiguration::InitializeData ()
 	m_chkShowAutoLocateFaceFilter->Enable (m_chkAutoLocateFace->GetValue());
 	m_chkShowAutoLocateFaceFilter->SetValue (m_pViacamController->GetMotionTracker()->GetShowTrackFaceFilter());
 	m_txtOnScreenKeyboardCommand->SetValue(m_pViacamController->GetOnScreenKeyboardCommand());
+#if defined(__WXGTK__)
     m_chkActivationKey->SetValue(m_pViacamController->GetEnabledActivationKey());
     m_txtActivationKey->SetValue(m_pViacamController->GetActivationKeyName());
+
     
 	// 
 	// App data
 	//
 
     m_chkStartup->SetValue(m_pAutostart->IsEnabled());
-
+#endif
 	// Profile combo
 	m_choProfile->Clear();
 	m_choProfile->Append (m_pViacamController->GetConfigManager()->GetProfileList());
@@ -1376,7 +1385,7 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
 /*!
  * wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_ACTIVATION_KEY
  */
-
+#if defined(__WXGTK__)
 void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
 {
     m_pViacamController->OpenActivationKey();
@@ -1384,28 +1393,28 @@ void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
 	event.Skip(false);
     Changed ();
 }
-
+#endif
 
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ACTIVATION_KEY
  */
-
+#if defined(__WXGTK__)
 void WConfiguration::OnCheckboxActivationKeyClick( wxCommandEvent& event )
 {
     m_pViacamController->SetEnabledActivationKey(m_chkActivationKey->GetValue());
     event.Skip(false);
     Changed ();
 }
-
+#endif
 
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_STARTUP
  */
-
+#if defined(__WXGTK__)
 void WConfiguration::OnCheckboxStartupClick( wxCommandEvent& event )
 {
     m_pAutostart->Enable(m_chkStartup->GetValue());
     event.Skip();
     Changed ();
 }
-
+#endif

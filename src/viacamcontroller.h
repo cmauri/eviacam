@@ -31,10 +31,10 @@
 #include "configmanager.h"
 #include "crvcamera.h"
 #include <cv.h>
-#include <X11/Xlib.h>
 #include "wconfiguration.h"
 
 #if defined(__WXGTK__) 
+#include <X11/Xlib.h>
 #include "keyboardbitmapcheck.h"
 #include "activationkey.h"
 #include "cautostart.h"
@@ -128,13 +128,16 @@ private:
 	int m_languageId;
 	wxString m_onScreenKeyboardCommand;
 	float m_frameRate;
-        bool m_enabledActivationKey;
-        KeySym m_keySym;
-        KeySym m_lastKeySym;
-        wxTimer m_timer;
-        Activationkey* m_window;
-        WConfiguration* m_pConfiguration;
-        CAutostart* m_pAutostart;
+	wxTimer m_timer;
+	bool m_enabledActivationKey;
+#if defined(__WXGTK__) 
+	KeySym m_keySym;
+	KeySym m_lastKeySym;
+	Activationkey* m_window;
+	CAutostart* m_pAutostart;
+#endif
+	WConfiguration* m_pConfiguration;
+	
 };
 
 inline CMouseOutput* CViacamController::GetMouseOutput()
@@ -224,7 +227,11 @@ inline void CViacamController::SetEnabledActivationKey (bool value)
 
 inline const wxString CViacamController::GetActivationKeyName () const
 {
+#if defined(__WXGTK__)   
     return CKeyboardBitmapCheck::GetKeyName(m_keySym);
+#else
+	return wxString(_T(""));
+#endif
 }
 
 
