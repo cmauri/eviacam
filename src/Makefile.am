@@ -20,6 +20,7 @@ dist_noinst_DATA= version.h.in langnames-utf16.h gui.pjd gui.rc eviacam.vcproj \
 	icons/buttonRightSelected.xpm icons/buttonRight.xpm icons/buttonShowMainWindow.xpm
 
 EXTRA_DIST = eviacam.desktop icons/eviacam.xpm
+dist_pkgdata_DATA= eviacam.desktop
 	
 desktopdir		=	$(datadir)/applications/
 desktop_DATA	=	eviacam.desktop
