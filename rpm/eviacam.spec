@@ -1,5 +1,5 @@
 #
-# spec file for package eviacam (Version 1.2.1)
+# spec file for package eviacam (Version 1.3)
 #
 # Copyright 2008-09 Cesar Mauri <cesar@crea-si.com>
 #
@@ -23,7 +23,7 @@
 
 Summary: A Cross-Platform Webcam Based Mouse Emulator
 Name: eviacam
-Version: 1.2.1
+Version: 1.3
 Release: 0
 License: GPL
 Group: Applications/Accessibility

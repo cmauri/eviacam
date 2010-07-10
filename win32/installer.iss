@@ -23,9 +23,9 @@
 
 #define APPNAME			"Enable Viacam"
 #define APPNAME_SHORT	"eViacam"
-#define VERSION         "1.2.1"
+#define VERSION         "1.3"
 #define PUBLISHER		"Cesar Mauri - CREA Software Systems"
-#define VERTEXT			"v1.2.1"
+#define VERTEXT			"v1.3"
 #define APPBIN			"eViacam.exe"
 #define COPYRIGHTY		"© 2008-10"
 
