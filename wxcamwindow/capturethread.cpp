@@ -68,7 +68,7 @@ wxThread::ExitCode CCaptureThread::Entry( )
 		// testing camera availabiliy and effectively using it.
 		wxMessageDialog errorMsg (NULL, _("Camera not detected. Aborting"), _("eViacam error"), wxOK | wxICON_ERROR);
 		errorMsg.ShowModal();
-		exit (-1);
+		exit (0);
 	}
 
 	// Start thread main loop
