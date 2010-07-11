@@ -376,22 +376,22 @@ void WConfiguration::CreateControls()
 
     itemNotebook4->AddPage(itemPanel5, _("Motion"));
 
-    wxPanel* itemPanel19 = new wxPanel( itemNotebook4, ID_PANEL_WORKSPACE, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+    wxPanel* itemPanel19 = new wxPanel( itemNotebook4, ID_PANEL_WORKSPACE, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer20 = new wxBoxSizer(wxVERTICAL);
     itemPanel19->SetSizer(itemBoxSizer20);
 
-    m_chkEnabledWorkspace = new wxCheckBox( itemPanel19, ID_CHECKBOX_WORKSPACE_LIMIT, _("Workspace limit"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkEnabledWorkspace = new wxCheckBox( itemPanel19, ID_CHECKBOX_WORKSPACE_LIMIT, _("Use workspace limit"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkEnabledWorkspace->SetValue(false);
     if (WConfiguration::ShowToolTips())
-        m_chkEnabledWorkspace->SetToolTip(_("If checked the mouse workspace will be limited."));
+        m_chkEnabledWorkspace->SetToolTip(_("Confines the mouse pointer\nto the selected area."));
     itemBoxSizer20->Add(m_chkEnabledWorkspace, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer22 = new wxBoxSizer(wxVERTICAL);
-    itemBoxSizer20->Add(itemBoxSizer22, 0, wxGROW|wxALL, 5);
+    itemBoxSizer20->Add(itemBoxSizer22, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     wxGridSizer* itemGridSizer23 = new wxGridSizer(0, 3, 0, 0);
-    itemBoxSizer22->Add(itemGridSizer23, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer22->Add(itemGridSizer23, 0, wxALIGN_CENTER_HORIZONTAL|wxRIGHT|wxTOP|wxBOTTOM, 5);
     wxStaticText* itemStaticText24 = new wxStaticText( itemPanel19, wxID_STATIC, _("Top"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer23->Add(itemStaticText24, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemGridSizer23->Add(itemStaticText24, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_spin_top_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_TOP_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
     if (WConfiguration::ShowToolTips())
@@ -403,9 +403,9 @@ void WConfiguration::CreateControls()
     itemGridSizer23->Add(itemStaticText26, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxGridSizer* itemGridSizer27 = new wxGridSizer(0, 2, 0, 0);
-    itemBoxSizer22->Add(itemGridSizer27, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer22->Add(itemGridSizer27, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 0);
     wxGridSizer* itemGridSizer28 = new wxGridSizer(0, 3, 0, 0);
-    itemGridSizer27->Add(itemGridSizer28, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemGridSizer27->Add(itemGridSizer28, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 5);
     wxStaticText* itemStaticText29 = new wxStaticText( itemPanel19, wxID_STATIC, _("Left"), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridSizer28->Add(itemStaticText29, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -435,7 +435,7 @@ void WConfiguration::CreateControls()
     wxGridSizer* itemGridSizer36 = new wxGridSizer(0, 3, 0, 0);
     itemBoxSizer22->Add(itemGridSizer36, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
     wxStaticText* itemStaticText37 = new wxStaticText( itemPanel19, wxID_STATIC, _("Bottom"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer36->Add(itemStaticText37, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemGridSizer36->Add(itemStaticText37, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_spin_bottom_workspace = new wxSpinCtrl( itemPanel19, ID_SPINCTRL_BOTTOM_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
     if (WConfiguration::ShowToolTips())
@@ -567,10 +567,10 @@ void WConfiguration::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer68 = new wxStaticBoxSizer(itemStaticBoxSizer68Static, wxVERTICAL);
     itemBoxSizer61->Add(itemStaticBoxSizer68, 0, wxGROW|wxALL, 5);
 #if defined(__WXGTK__)
-    m_chkActivationKey = new wxCheckBox( itemPanel60, ID_CHECKBOX_ACTIVATION_KEY, _("Enabled activation key"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkActivationKey = new wxCheckBox( itemPanel60, ID_CHECKBOX_ACTIVATION_KEY, _("Use activation key"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkActivationKey->SetValue(false);
     if (WConfiguration::ShowToolTips())
-        m_chkActivationKey->SetToolTip(_("When enabled allows activate or deactivate the facial mouse pressing a key."));
+        m_chkActivationKey->SetToolTip(_("When checked it allows to enable or \ndisable eViacam by pressing a key."));
     itemStaticBoxSizer68->Add(m_chkActivationKey, 0, wxALIGN_LEFT|wxALL, 5);
 #endif
 
@@ -584,7 +584,7 @@ void WConfiguration::CreateControls()
 
 #if defined(__WXGTK__)
     m_buttonActivationKey = new wxButton( itemPanel60, ID_BUTTON_ACTIVATION_KEY, _("Set key"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticBoxSizer68->Add(m_buttonActivationKey, 0, wxALIGN_RIGHT|wxALL, 5);
+    itemStaticBoxSizer68->Add(m_buttonActivationKey, 0, wxALIGN_LEFT|wxALL, 5);
 #endif
 
 #endif
@@ -598,13 +598,11 @@ void WConfiguration::CreateControls()
     itemPanel72->SetSizer(itemBoxSizer73);
 
 #if defined(__WXGTK__)
-    wxStaticBox* itemStaticBoxSizer74Static = new wxStaticBox(itemPanel72, wxID_ANY, _("Run on startup"));
+    wxStaticBox* itemStaticBoxSizer74Static = new wxStaticBox(itemPanel72, wxID_ANY, _("Run at startup"));
     wxStaticBoxSizer* itemStaticBoxSizer74 = new wxStaticBoxSizer(itemStaticBoxSizer74Static, wxHORIZONTAL);
     itemBoxSizer73->Add(itemStaticBoxSizer74, 0, wxGROW|wxALL, 5);
-    m_chkStartup = new wxCheckBox( itemPanel72, ID_CHECKBOX_STARTUP, _("Enabled run on startup"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkStartup = new wxCheckBox( itemPanel72, ID_CHECKBOX_STARTUP, _("Start eViacam at user logon"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkStartup->SetValue(false);
-    if (WConfiguration::ShowToolTips())
-        m_chkStartup->SetToolTip(_("If checked the program will run on startup."));
     itemStaticBoxSizer74->Add(m_chkStartup, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 #endif
@@ -626,7 +624,7 @@ void WConfiguration::CreateControls()
     itemBoxSizer77->Add(m_choProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer80 = new wxBoxSizer(wxHORIZONTAL);
-    itemStaticBoxSizer76->Add(itemBoxSizer80, 0, wxALIGN_RIGHT|wxALL, 0);
+    itemStaticBoxSizer76->Add(itemBoxSizer80, 0, wxALIGN_LEFT|wxALL, 0);
     m_btnAddProfile = new wxButton( itemPanel72, ID_BUTTON_ADD_PROFILE, _("Add profile"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer80->Add(m_btnAddProfile, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -643,7 +641,7 @@ void WConfiguration::CreateControls()
     itemBoxSizer84->Add(m_txtSelectedCamera, 0, wxGROW|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer86 = new wxBoxSizer(wxHORIZONTAL);
-    itemStaticBoxSizer83->Add(itemBoxSizer86, 0, wxALIGN_RIGHT|wxALL, 0);
+    itemStaticBoxSizer83->Add(itemBoxSizer86, 0, wxALIGN_LEFT|wxALL, 0);
     m_btnCameraSettings = new wxButton( itemPanel72, ID_BUTTON_CAMERA_SETTINGS, _("Settings..."), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer86->Add(m_btnCameraSettings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -1358,7 +1356,7 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
 {
     if(m_chkEnabledWorkspace->GetValue()) {
         m_chkEnabledWorkspace->SetValue(false);
-        wxMessageDialog dlg (NULL, _("This action could make you lose control of the program. Are you sure?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
+        wxMessageDialog dlg (NULL, _("This action could make you lose the control of the computer.\nDo you want to continue?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
         if (dlg.ShowModal()== wxID_YES)
         {
             m_chkEnabledWorkspace->SetValue(true);

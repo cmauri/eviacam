@@ -2933,7 +2933,7 @@ enables cursor control at startup."</string>
                   <bool name="proxy-wxSIMPLE_BORDER">0</bool>
                   <bool name="proxy-wxDOUBLE_BORDER">0</bool>
                   <bool name="proxy-wxBORDER_THEME">0</bool>
-                  <bool name="proxy-wxSUNKEN_BORDER">1</bool>
+                  <bool name="proxy-wxSUNKEN_BORDER">0</bool>
                   <bool name="proxy-wxRAISED_BORDER">0</bool>
                   <bool name="proxy-wxSTATIC_BORDER">0</bool>
                   <bool name="proxy-wxWANTS_CHARS">0</bool>
@@ -3012,10 +3012,11 @@ enables cursor control at startup."</string>
                       <string name="proxy-Implementation filename">""</string>
                       <string name="proxy-Header filename">""</string>
                       <string name="proxy-Member variable name">"m_chkEnabledWorkspace"</string>
-                      <string name="proxy-Label">"Workspace limit"</string>
+                      <string name="proxy-Label">"Use workspace limit"</string>
                       <bool name="proxy-Initial value">0</bool>
                       <string name="proxy-Help text">""</string>
-                      <string name="proxy-Tooltip text">"If checked the mouse workspace will be limited."</string>
+                      <string name="proxy-Tooltip text">"Confines the mouse pointer
+to the selected area."</string>
                       <string name="proxy-Data variable">""</string>
                       <string name="proxy-Data validator">""</string>
                       <string name="proxy-Data source">""</string>
@@ -3067,7 +3068,7 @@ enables cursor control at startup."</string>
                       <string name="proxy-type">"wbBoxSizerProxy"</string>
                       <string name="proxy-Orientation">"Vertical"</string>
                       <string name="proxy-Member variable name">""</string>
-                      <string name="proxy-AlignH">"Expand"</string>
+                      <string name="proxy-AlignH">"Centre"</string>
                       <string name="proxy-AlignV">"Centre"</string>
                       <long name="proxy-Stretch factor">0</long>
                       <long name="proxy-Border">5</long>
@@ -3099,7 +3100,7 @@ enables cursor control at startup."</string>
                         <string name="proxy-AlignV">"Centre"</string>
                         <long name="proxy-Stretch factor">0</long>
                         <long name="proxy-Border">5</long>
-                        <bool name="proxy-wxLEFT">1</bool>
+                        <bool name="proxy-wxLEFT">0</bool>
                         <bool name="proxy-wxRIGHT">1</bool>
                         <bool name="proxy-wxTOP">1</bool>
                         <bool name="proxy-wxBOTTOM">1</bool>
@@ -3162,7 +3163,7 @@ enables cursor control at startup."</string>
                           <long name="proxy-Y">-1</long>
                           <long name="proxy-Width">-1</long>
                           <long name="proxy-Height">-1</long>
-                          <string name="proxy-AlignH">"Right"</string>
+                          <string name="proxy-AlignH">"Left"</string>
                           <string name="proxy-AlignV">"Centre"</string>
                           <long name="proxy-Stretch factor">0</long>
                           <long name="proxy-Border">5</long>
@@ -3336,7 +3337,7 @@ enables cursor control at startup."</string>
                         <string name="proxy-AlignH">"Centre"</string>
                         <string name="proxy-AlignV">"Centre"</string>
                         <long name="proxy-Stretch factor">0</long>
-                        <long name="proxy-Border">5</long>
+                        <long name="proxy-Border">0</long>
                         <bool name="proxy-wxLEFT">1</bool>
                         <bool name="proxy-wxRIGHT">1</bool>
                         <bool name="proxy-wxTOP">1</bool>
@@ -3364,8 +3365,8 @@ enables cursor control at startup."</string>
                           <string name="proxy-AlignV">"Centre"</string>
                           <long name="proxy-Stretch factor">0</long>
                           <long name="proxy-Border">5</long>
-                          <bool name="proxy-wxLEFT">1</bool>
-                          <bool name="proxy-wxRIGHT">1</bool>
+                          <bool name="proxy-wxLEFT">0</bool>
+                          <bool name="proxy-wxRIGHT">0</bool>
                           <bool name="proxy-wxTOP">1</bool>
                           <bool name="proxy-wxBOTTOM">1</bool>
                           <bool name="proxy-wxSHAPED">0</bool>
@@ -3904,7 +3905,7 @@ enables cursor control at startup."</string>
                           <long name="proxy-Y">-1</long>
                           <long name="proxy-Width">-1</long>
                           <long name="proxy-Height">-1</long>
-                          <string name="proxy-AlignH">"Right"</string>
+                          <string name="proxy-AlignH">"Left"</string>
                           <string name="proxy-AlignV">"Centre"</string>
                           <long name="proxy-Stretch factor">0</long>
                           <long name="proxy-Border">5</long>
@@ -5758,10 +5759,11 @@ tracking area."</string>
                         <string name="proxy-Implementation filename">""</string>
                         <string name="proxy-Header filename">""</string>
                         <string name="proxy-Member variable name">"m_chkActivationKey"</string>
-                        <string name="proxy-Label">"Enabled activation key"</string>
+                        <string name="proxy-Label">"Use activation key"</string>
                         <bool name="proxy-Initial value">0</bool>
                         <string name="proxy-Help text">""</string>
-                        <string name="proxy-Tooltip text">"When enabled allows activate or deactivate the facial mouse pressing a key."</string>
+                        <string name="proxy-Tooltip text">"When checked it allows to enable or 
+disable eViacam by pressing a key."</string>
                         <string name="proxy-Data variable">""</string>
                         <string name="proxy-Data validator">""</string>
                         <string name="proxy-Data source">""</string>
@@ -5935,7 +5937,7 @@ tracking area."</string>
                         <long name="proxy-Y">-1</long>
                         <long name="proxy-Width">-1</long>
                         <long name="proxy-Height">-1</long>
-                        <string name="proxy-AlignH">"Right"</string>
+                        <string name="proxy-AlignH">"Left"</string>
                         <string name="proxy-AlignV">"Centre"</string>
                         <long name="proxy-Stretch factor">0</long>
                         <long name="proxy-Border">5</long>
@@ -6066,7 +6068,7 @@ tracking area."</string>
                     <string name="proxy-type">"wbStaticBoxSizerProxy"</string>
                     <string name="proxy-Id name">"wxID_ANY"</string>
                     <long name="proxy-Id value">-1</long>
-                    <string name="proxy-Label">"Run on startup"</string>
+                    <string name="proxy-Label">"Run at startup"</string>
                     <string name="proxy-Member variable name">""</string>
                     <string name="proxy-Sizer member variable name">""</string>
                     <string name="proxy-Foreground colour">""</string>
@@ -6108,10 +6110,10 @@ tracking area."</string>
                       <string name="proxy-Implementation filename">""</string>
                       <string name="proxy-Header filename">""</string>
                       <string name="proxy-Member variable name">"m_chkStartup"</string>
-                      <string name="proxy-Label">"Enabled run on startup"</string>
+                      <string name="proxy-Label">"Start eViacam at user logon"</string>
                       <bool name="proxy-Initial value">0</bool>
                       <string name="proxy-Help text">""</string>
-                      <string name="proxy-Tooltip text">"If checked the program will run on startup."</string>
+                      <string name="proxy-Tooltip text">""</string>
                       <string name="proxy-Data variable">""</string>
                       <string name="proxy-Data validator">""</string>
                       <string name="proxy-Data source">""</string>
@@ -6352,7 +6354,7 @@ tracking area."</string>
                       <string name="proxy-type">"wbBoxSizerProxy"</string>
                       <string name="proxy-Orientation">"Horizontal"</string>
                       <string name="proxy-Member variable name">""</string>
-                      <string name="proxy-AlignH">"Right"</string>
+                      <string name="proxy-AlignH">"Left"</string>
                       <string name="proxy-AlignV">"Centre"</string>
                       <long name="proxy-Stretch factor">0</long>
                       <long name="proxy-Border">0</long>
@@ -6654,7 +6656,7 @@ tracking area."</string>
                       <string name="proxy-type">"wbBoxSizerProxy"</string>
                       <string name="proxy-Orientation">"Horizontal"</string>
                       <string name="proxy-Member variable name">""</string>
-                      <string name="proxy-AlignH">"Right"</string>
+                      <string name="proxy-AlignH">"Left"</string>
                       <string name="proxy-AlignV">"Centre"</string>
                       <long name="proxy-Stretch factor">0</long>
                       <long name="proxy-Border">0</long>
@@ -7282,14 +7284,6 @@ tracking area."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -7530,14 +7524,6 @@ tracking area."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Horizontal"</string>
             <string name="proxy-Member variable name">""</string>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -8189,14 +8175,6 @@ tracking area."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
