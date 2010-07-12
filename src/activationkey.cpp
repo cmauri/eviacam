@@ -1,12 +1,24 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        activationkey.cpp
+// Name:        wconfiguration.cpp
 // Purpose:     
-// Author:      César Mauri Loba
+// Author:      CÃ©sar Mauri Loba
 // Modified by: 
-// Created:     Thu 01 Jul 2010 13:41:05 CEST
+// Created:     01/07/2008 16:35:20
 // RCS-ID:      
 // Copyright:   (C) 2008 Cesar Mauri from CREA Sistemes Informatics
-// Licence:     
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
 // For compilers that support precompilation, includes "wx/wx.h".
@@ -25,9 +37,14 @@
 
 #include "activationkey.h"
 
+#include "viacamcontroller.h"
+#include "keyboardbitmapcheck.h"
+#include "wconfiguration.h"
+#include "wx/timer.h"
+
 ////@begin XPM images
 ////@end XPM images
-
+#define TIMER_ID 1234
 
 /*!
  * Activationkey type definition
@@ -44,6 +61,7 @@ BEGIN_EVENT_TABLE( Activationkey, wxDialog )
 
 ////@begin Activationkey event table entries
 ////@end Activationkey event table entries
+	EVT_TIMER(TIMER_ID, Activationkey::OnTimer)
 
 END_EVENT_TABLE()
 
@@ -52,14 +70,29 @@ END_EVENT_TABLE()
  * Activationkey constructors
  */
 
-Activationkey::Activationkey()
+Activationkey::Activationkey() : m_timer(this, TIMER_ID)
 {
     Init();
 }
 
-Activationkey::Activationkey( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+Activationkey::Activationkey( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) : m_timer(this, TIMER_ID)
 {
     Init();
+    Create(parent, id, caption, pos, size, style);
+}
+
+Activationkey::Activationkey( wxWindow* parent, CViacamController* pViacamController, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) : m_timer(this, TIMER_ID)
+{
+	m_pViacamController= pViacamController;
+	Init();
+    Create(parent, id, caption, pos, size, style);
+}
+
+Activationkey::Activationkey( wxWindow* parent, CViacamController* pViacamController, WConfiguration* pConfiguration, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) : m_timer(this, TIMER_ID)
+{
+	m_pViacamController= pViacamController;
+	m_pConfiguration= pConfiguration;
+	Init();
     Create(parent, id, caption, pos, size, style);
 }
 
@@ -158,4 +191,22 @@ wxIcon Activationkey::GetIconResource( const wxString& name )
     wxUnusedVar(name);
     return wxNullIcon;
 ////@end Activationkey icon retrieval
+}
+
+void Activationkey::OnTimer(wxTimerEvent& event)
+{
+	KeySym keyCode = m_pViacamController->ReadKeyboard();
+	if (keyCode > 0) {
+		m_pConfiguration->SetActivationKey(CKeyboardBitmapCheck::GetKeyName(keyCode));
+	}	
+}
+
+void Activationkey::StartTimer()
+{
+	m_timer.Start(33);
+}
+
+void Activationkey::StopTimer()
+{
+	m_timer.Stop();
 }

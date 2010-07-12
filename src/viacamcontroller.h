@@ -46,8 +46,6 @@ class CMouseOutput;
 
 class CViacamController : public CProcessImage, public CConfigBase, public wxDialog
 {
-    DECLARE_DYNAMIC_CLASS( CViacamController )
-    DECLARE_EVENT_TABLE()
             
 public:
 	CViacamController(void);
@@ -90,7 +88,8 @@ public:
 	void OpenOnScreenKeyboard();
         void OpenActivationKey();
         void CloseActivationKey();
-
+	KeySym ReadKeyboard();
+        
 	// Configuration methods
 	virtual void InitDefaults();
 
@@ -101,10 +100,6 @@ public:
 	virtual void WriteProfileData(wxConfigBase* pConfObj);  
 
 	virtual void StartupRun();
-        
-        ////@begin CViacamController event handler declarations
-        void OnTimer(wxTimerEvent& event);
-        ////@end CViacamController event handler declarations
 
 private:
 	
@@ -128,7 +123,6 @@ private:
 	int m_languageId;
 	wxString m_onScreenKeyboardCommand;
 	float m_frameRate;
-	wxTimer m_timer;
 	bool m_enabledActivationKey;
 #if defined(__WXGTK__) 
 	KeySym m_keySym;

@@ -1,12 +1,23 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        activationkey.h
-// Purpose:     
-// Author:      César Mauri Loba
+// Name:        keyboardbitmapcheck.h
+// Purpose:  
+// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
-// Created:     Thu 01 Jul 2010 13:41:05 CEST
-// RCS-ID:      
-// Copyright:   (C) 2008 Cesar Mauri from CREA Sistemes Informatics
-// License:     
+// Created:     01/07/2010
+// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// 
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
 #ifndef _ACTIVATIONKEY_H_
@@ -16,6 +27,7 @@
 /*!
  * Includes
  */
+#include "wconfiguration.h"
 
 ////@begin includes
 ////@end includes
@@ -42,7 +54,6 @@ class CViacamController;
 #define SYMBOL_ACTIVATIONKEY_POSITION wxDefaultPosition
 ////@end control identifiers
 
-
 /*!
  * Activationkey class declaration
  */
@@ -56,6 +67,8 @@ public:
     /// Constructors  
     Activationkey();
     Activationkey( wxWindow* parent, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
+	Activationkey( wxWindow* parent, CViacamController* pViacamController, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
+	Activationkey( wxWindow* parent, CViacamController* pViacamController, WConfiguration* pConfiguration, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
 
     /// Creation
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
@@ -72,6 +85,9 @@ public:
 ////@begin Activationkey event handler declarations
 
 ////@end Activationkey event handler declarations
+	void OnTimer(wxTimerEvent& event);
+	void StartTimer();
+	void StopTimer();
 
 ////@begin Activationkey member function declarations
 
@@ -87,6 +103,10 @@ public:
 
 ////@begin Activationkey member variables
 ////@end Activationkey member variables
+private:
+	wxTimer m_timer;
+	CViacamController* m_pViacamController;
+	WConfiguration* m_pConfiguration;
 
 };
 

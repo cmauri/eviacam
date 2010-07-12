@@ -682,8 +682,8 @@ void WConfiguration::CreateControls()
 void WConfiguration::SetActivationKey(wxString keyName)
 {
 #if defined(__WXGTK__)   
-    m_txtActivationKey->SetValue(m_pViacamController->GetActivationKeyName());
-    //m_txtActivationKey->SetValue(keyName);
+    //m_txtActivationKey->SetValue(m_pViacamController->GetActivationKeyName());
+    m_txtActivationKey->SetValue(keyName);
 #endif    
 }
 
@@ -856,7 +856,6 @@ void WConfiguration::UnChanged ()
 		m_btnCancel->Enable (false);
 	}
 }
-
 
 /*!
  * wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_OK
@@ -1386,7 +1385,7 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
 #if defined(__WXGTK__)
 void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
 {
-    m_pViacamController->OpenActivationKey();
+	m_pViacamController->OpenActivationKey();
     m_txtActivationKey->SetValue(m_pViacamController->GetActivationKeyName());
 	event.Skip(false);
     Changed ();

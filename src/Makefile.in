@@ -36,8 +36,8 @@ build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = eviacam$(EXEEXT) eviacamloader$(EXEEXT)
 subdir = src
-DIST_COMMON = $(dist_noinst_DATA) $(noinst_HEADERS) \
-	$(srcdir)/Makefile.am $(srcdir)/Makefile.in \
+DIST_COMMON = $(dist_noinst_DATA) $(dist_pkgdata_DATA) \
+	$(noinst_HEADERS) $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	$(srcdir)/eviacam.desktop.in $(srcdir)/version.h.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.in
@@ -47,7 +47,7 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES = version.h eviacam.desktop
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(desktopdir)" \
-	"$(DESTDIR)$(pixmapdir)"
+	"$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(pixmapdir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_eviacam_OBJECTS = eviacam-activationkey.$(OBJEXT) \
@@ -99,8 +99,10 @@ am__vpath_adj = case $$p in \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 desktopDATA_INSTALL = $(INSTALL_DATA)
+dist_pkgdataDATA_INSTALL = $(INSTALL_DATA)
 pixmapDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(desktop_DATA) $(dist_noinst_DATA) $(pixmap_DATA)
+DATA = $(desktop_DATA) $(dist_noinst_DATA) $(dist_pkgdata_DATA) \
+	$(pixmap_DATA)
 HEADERS = $(noinst_HEADERS)
 ETAGS = etags
 CTAGS = ctags
@@ -269,6 +271,7 @@ dist_noinst_DATA = version.h.in langnames-utf16.h gui.pjd gui.rc eviacam.vcproj 
 	icons/buttonRightSelected.xpm icons/buttonRight.xpm icons/buttonShowMainWindow.xpm
 
 EXTRA_DIST = eviacam.desktop icons/eviacam.xpm
+dist_pkgdata_DATA = eviacam.desktop
 desktopdir = $(datadir)/applications/
 desktop_DATA = eviacam.desktop
 pixmapdir = $(datadir)/pixmaps/
@@ -644,6 +647,23 @@ uninstall-desktopDATA:
 	  echo " rm -f '$(DESTDIR)$(desktopdir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(desktopdir)/$$f"; \
 	done
+install-dist_pkgdataDATA: $(dist_pkgdata_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(pkgdatadir)" || $(MKDIR_P) "$(DESTDIR)$(pkgdatadir)"
+	@list='$(dist_pkgdata_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f=$(am__strip_dir) \
+	  echo " $(dist_pkgdataDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(pkgdatadir)/$$f'"; \
+	  $(dist_pkgdataDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(pkgdatadir)/$$f"; \
+	done
+
+uninstall-dist_pkgdataDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_pkgdata_DATA)'; for p in $$list; do \
+	  f=$(am__strip_dir) \
+	  echo " rm -f '$(DESTDIR)$(pkgdatadir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(pkgdatadir)/$$f"; \
+	done
 install-pixmapDATA: $(pixmap_DATA)
 	@$(NORMAL_INSTALL)
 	test -z "$(pixmapdir)" || $(MKDIR_P) "$(DESTDIR)$(pixmapdir)"
@@ -739,7 +759,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(PROGRAMS) $(DATA) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(desktopdir)" "$(DESTDIR)$(pixmapdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(desktopdir)" "$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(pixmapdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -786,7 +806,8 @@ info: info-am
 
 info-am:
 
-install-data-am: install-desktopDATA install-pixmapDATA
+install-data-am: install-desktopDATA install-dist_pkgdataDATA \
+	install-pixmapDATA
 
 install-dvi: install-dvi-am
 
@@ -825,7 +846,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-binPROGRAMS uninstall-desktopDATA \
-	uninstall-pixmapDATA
+	uninstall-dist_pkgdataDATA uninstall-pixmapDATA
 
 .MAKE: install-am install-exec-am install-strip
 
@@ -834,15 +855,16 @@ uninstall-am: uninstall-binPROGRAMS uninstall-desktopDATA \
 	distclean-generic distclean-libtool distclean-tags distdir dvi \
 	dvi-am html html-am info info-am install install-am \
 	install-binPROGRAMS install-data install-data-am \
-	install-desktopDATA install-dvi install-dvi-am install-exec \
-	install-exec-am install-exec-hook install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-pixmapDATA install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-binPROGRAMS uninstall-desktopDATA \
+	install-desktopDATA install-dist_pkgdataDATA install-dvi \
+	install-dvi-am install-exec install-exec-am install-exec-hook \
+	install-html install-html-am install-info install-info-am \
+	install-man install-pdf install-pdf-am install-pixmapDATA \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-binPROGRAMS \
+	uninstall-desktopDATA uninstall-dist_pkgdataDATA \
 	uninstall-pixmapDATA
 
 install-exec-hook:

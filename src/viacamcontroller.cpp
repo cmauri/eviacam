@@ -55,7 +55,6 @@
 #include "activationkey.h"
 #include "keyboardbitmapcheck.h"
 #include "cautostart.h"
-#include "wx/timer.h"
 #include <wx/stdpaths.h>
 #include <wx/thread.h>
 #define BEGIN_GUI_CALL_MUTEX() if (!wxIsMainThread()) wxMutexGuiEnter();
@@ -64,17 +63,10 @@
 #define BEGIN_GUI_CALL_MUTEX()
 #define END_GUI_CALL_MUTEX()
 #endif // __WXGTK___
-
-#define TIMER_ID 12345
-
-IMPLEMENT_DYNAMIC_CLASS( CViacamController, wxDialog )
-
-BEGIN_EVENT_TABLE( CViacamController, wxDialog )
-        EVT_TIMER(TIMER_ID, CViacamController::OnTimer)
-END_EVENT_TABLE()
-
+#define ESCAPE_KEYSYM 65307
+#define SCROLL_LOCK_KEYSYM 65300
         
-CViacamController::CViacamController(void) : m_timer(this, TIMER_ID)
+CViacamController::CViacamController(void)
 {
 	m_pMainWindow = NULL;
 	m_pCamera= NULL;
@@ -354,9 +346,9 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
         
 	m_keySym = (KeySym) keyCode;
         
-	// Set default activation key (JORDI: compte amb els números "màgics", defineix una constant)
+	// Set default activation key (JORDI: compte amb els nï¿½meros "mï¿½gics", defineix una constant)
 	if (m_keySym == 0) {
-		m_keySym = 65300;
+            m_keySym = SCROLL_LOCK_KEYSYM;
 	}
 #endif
 	// Propagates calls
@@ -396,13 +388,13 @@ void CViacamController::SetEnabled (bool value, bool silent)
 void CViacamController::OpenConfiguration()
 {   
 #if defined(__WXGTK__) 
-    WConfiguration* window = new WConfiguration(m_pMainWindow, this, m_pAutostart);
+    m_pConfiguration = new WConfiguration(m_pMainWindow, this, m_pAutostart);
 #else
-	WConfiguration* window = new WConfiguration(m_pMainWindow, this);
+    m_pConfiguration = new WConfiguration(m_pMainWindow, this);
 #endif
 
-    int returnValue = window->ShowModal();
-	window->Destroy();
+    int returnValue = m_pConfiguration->ShowModal();
+    	m_pConfiguration->Destroy();
 	if (returnValue== ID_BUTTON_OK)
 		// Save changes
 		m_configManager->WriteAll();
@@ -435,32 +427,35 @@ void CViacamController::OpenOnScreenKeyboard()
 	}
 }
 
-void CViacamController::OnTimer(wxTimerEvent& event)
+
+KeySym CViacamController::ReadKeyboard()
 {
     bool isEnabled = GetEnabled();
-    //m_pConfiguration = new WConfiguration(m_pMainWindow, this);
 #if defined(__WXGTK__)         
     KeySym keyCode = 0;
     keyCode = CKeyboardBitmapCheck::ReadKeySym();
-    
     if (keyCode != 0) {
-        if (keyCode != 65307) {
+        if (keyCode != ESCAPE_KEYSYM) {
             m_lastKeySym = keyCode;
             m_keySym = keyCode;
             SetEnabled(isEnabled,isEnabled);
-            //m_pConfiguration->SetActivationKey(GetActivationKeyName());            
+        } else {
+            keyCode = 0;
         }
         CloseActivationKey();
     }
+    return keyCode;
 #endif
+    return 0;
+    	
 }
 
 void CViacamController::OpenActivationKey()
 {
 #if defined(__WXGTK__)
-    m_window = new Activationkey(m_pMainWindow);
+    m_window = new Activationkey(m_pMainWindow, this, m_pConfiguration);
     m_window->Show();
-    m_timer.Start (33);
+    m_window->StartTimer();
 #endif
 }
 
@@ -468,7 +463,7 @@ void CViacamController::CloseActivationKey()
 {
 #if defined(__WXGTK__)
     m_window->Destroy();
-    m_timer.Stop();
+    m_window->StopTimer();
 #endif
 }
 
