@@ -14,6 +14,8 @@ src/wabout.cpp
 src/wviacam.cpp
 src/clickwindow.h
 src/langnames-utf8.h
+src/activationkey.cpp
+src/activationkey.h
 wxcamwindow/capturethread.cpp
 wxcamwindow/camwindow.cpp
 

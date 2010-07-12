@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.2\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2010-07-11 17:50+0200\n"
-"PO-Revision-Date: 2010-07-11 17:51+0100\n"
+"POT-Creation-Date: 2010-07-12 21:16+0200\n"
+"PO-Revision-Date: 2010-07-12 21:20+0100\n"
 "Last-Translator: Cesar Mauri <cesar@crea-si.com>\n"
 "Language-Team: Catalan <cesar@crea-si.com>\n"
 "MIME-Version: 1.0\n"
@@ -118,15 +118,12 @@ msgstr "Dalt"
 msgid "Top limit workspace."
 msgstr "Limit superior."
 
-#: src/wconfiguration.cpp:402
-#: src/wconfiguration.cpp:418
-#: src/wconfiguration.cpp:432
-#: src/wconfiguration.cpp:446
+#: src/wconfiguration.cpp:402 src/wconfiguration.cpp:418
+#: src/wconfiguration.cpp:432 src/wconfiguration.cpp:446
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:409
-#: src/clickwindowbitmap.cpp:229
+#: src/wconfiguration.cpp:409 src/clickwindowbitmap.cpp:229
 msgid "Left"
 msgstr "Esquerra"
 
@@ -134,8 +131,7 @@ msgstr "Esquerra"
 msgid "Left limit workspace."
 msgstr "Límit esquerre."
 
-#: src/wconfiguration.cpp:423
-#: src/clickwindowbitmap.cpp:236
+#: src/wconfiguration.cpp:423 src/clickwindowbitmap.cpp:236
 msgid "Right"
 msgstr "Dreta"
 
@@ -314,7 +310,7 @@ msgstr "Comanda per executar un programa extern de teclat en pantalla."
 msgid "Browse..."
 msgstr "Cercar..."
 
-#: src/wconfiguration.cpp:566
+#: src/wconfiguration.cpp:566 src/activationkey.h:51
 msgid "Activation key"
 msgstr "Tecla d'activació"
 
@@ -362,13 +358,11 @@ msgstr "Gestió de perfils"
 msgid "Select profile:"
 msgstr "Escollir perfil"
 
-#: src/wconfiguration.cpp:617
-#: src/wconfiguration.cpp:623
+#: src/wconfiguration.cpp:617 src/wconfiguration.cpp:623
 msgid "Chooses desired active profile"
 msgstr "Permet escollir el perfil actiu"
 
-#: src/wconfiguration.cpp:628
-#: src/wconfiguration.cpp:1186
+#: src/wconfiguration.cpp:628 src/wconfiguration.cpp:1185
 msgid "Add profile"
 msgstr "Nou perfil"
 
@@ -408,17 +402,16 @@ msgstr "&Acceptar"
 msgid "&Cancel"
 msgstr "&Cancel·lar"
 
-#: src/wconfiguration.cpp:881
+#: src/wconfiguration.cpp:880
 msgid "Discard changes?"
 msgstr "Descartar canvis?"
 
-#: src/wconfiguration.cpp:881
-#: src/wconfiguration.cpp:1359
-#: src/viacamcontroller.cpp:381
+#: src/wconfiguration.cpp:880 src/wconfiguration.cpp:1358
+#: src/viacamcontroller.cpp:373
 msgid "eViacam warning"
 msgstr "Advertiment"
 
-#: src/wconfiguration.cpp:982
+#: src/wconfiguration.cpp:981
 msgid ""
 "This action will disable eViacam click generation.\n"
 "Are you sure?"
@@ -426,12 +419,11 @@ msgstr ""
 "Aquesta acció desactivarà la generació automàtica de clics.\n"
 "Està segur?"
 
-#: src/wconfiguration.cpp:1109
-#: src/wconfiguration.cpp:1289
+#: src/wconfiguration.cpp:1108 src/wconfiguration.cpp:1288
 msgid "You should restart the application to apply this change"
 msgstr "Cal que re-iniciï l'aplicació per a que aquest canvi tingui efecte."
 
-#: src/wconfiguration.cpp:1130
+#: src/wconfiguration.cpp:1129
 msgid ""
 "Current profile has unsaved changes.\n"
 "Continue anyway?"
@@ -439,7 +431,7 @@ msgstr ""
 "No s'han guardat els canvis del perfil actual\n"
 "Continuar sense guardar?"
 
-#: src/wconfiguration.cpp:1136
+#: src/wconfiguration.cpp:1135
 #, c-format
 msgid ""
 "This action will load %s profile settings.\n"
@@ -448,7 +440,7 @@ msgstr ""
 "Aquesta acció carregarà el perfil %s.\n"
 "Està segur que vol continuar?"
 
-#: src/wconfiguration.cpp:1167
+#: src/wconfiguration.cpp:1166
 #, c-format
 msgid ""
 "This action will delete %s profile.\n"
@@ -457,28 +449,27 @@ msgstr ""
 "Aquesta acció esborrarà el perfil %s.\n"
 "Està segur que vol continuar?"
 
-#: src/wconfiguration.cpp:1186
+#: src/wconfiguration.cpp:1185
 msgid "Enter new profile name"
 msgstr "Nom del nou perfil"
 
-#: src/wconfiguration.cpp:1197
+#: src/wconfiguration.cpp:1196
 msgid "Profile already exists."
 msgstr "El perfil ja existeix."
 
-#: src/wconfiguration.cpp:1203
+#: src/wconfiguration.cpp:1202
 msgid "Invalid profile name."
 msgstr "Nom de perfil invàlid."
 
-#: src/wconfiguration.cpp:1243
-#: src/wconfiguration.cpp:1245
+#: src/wconfiguration.cpp:1242 src/wconfiguration.cpp:1244
 msgid "Choose on-screen keyboard command"
 msgstr "Escolleixi la comanda del teclat en pantalla"
 
-#: src/wconfiguration.cpp:1243
+#: src/wconfiguration.cpp:1242
 msgid "Executable files|*.exe"
 msgstr "Arxius executables|*.exe"
 
-#: src/wconfiguration.cpp:1359
+#: src/wconfiguration.cpp:1358
 msgid ""
 "This action could make you lose the control of the computer.\n"
 "Do you want to continue?"
@@ -490,8 +481,7 @@ msgstr ""
 msgid "Enable Viacam"
 msgstr "Enable Viacam"
 
-#: src/clickwindowtext.cpp:140
-#: src/clickwindowbitmap.cpp:220
+#: src/clickwindowtext.cpp:140 src/clickwindowbitmap.cpp:220
 msgid "No click"
 msgstr "No clic"
 
@@ -511,15 +501,12 @@ msgstr "#Arrossegar#"
 msgid "#Double Click#"
 msgstr "#Doble clic#"
 
-#: src/clickwindowtext.cpp:163
-#: src/clickwindowtext.cpp:323
-#: src/clickwindowbitmap.cpp:257
-#: src/clickwindowbitmap.cpp:458
+#: src/clickwindowtext.cpp:163 src/clickwindowtext.cpp:323
+#: src/clickwindowbitmap.cpp:257 src/clickwindowbitmap.cpp:458
 msgid "Hide main window"
 msgstr "Oculta finestra"
 
-#: src/clickwindowtext.cpp:325
-#: src/clickwindowbitmap.cpp:463
+#: src/clickwindowtext.cpp:325 src/clickwindowbitmap.cpp:463
 msgid "Show main window"
 msgstr "Mostra finestra"
 
@@ -535,15 +522,15 @@ msgstr "Doble clic"
 msgid "About Enable Viacam"
 msgstr "Quant a Enable Viacam"
 
-#: src/viacamcontroller.cpp:151
+#: src/viacamcontroller.cpp:143
 msgid "Not detected any camera. Aborting"
 msgstr "No es detecta cap càmera. Avortant."
 
-#: src/viacamcontroller.cpp:173
+#: src/viacamcontroller.cpp:165
 msgid "Choose the camera to use"
 msgstr "Triï la càmera a utilitzar"
 
-#: src/viacamcontroller.cpp:189
+#: src/viacamcontroller.cpp:181
 msgid ""
 "Can not initialize the camera.\n"
 "Perhaps is being used by other application."
@@ -551,7 +538,7 @@ msgstr ""
 "No es pot inicialitzar la càmera.\n"
 "Potser està essent utilitzada per una altra aplicació."
 
-#: src/viacamcontroller.cpp:381
+#: src/viacamcontroller.cpp:373
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -559,19 +546,20 @@ msgstr ""
 "Aquesta acció desactivarà eViacam.\n"
 "Està segur?"
 
-#: src/viacamcontroller.cpp:418
+#: src/viacamcontroller.cpp:410
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
-msgstr "La comanda obrir el teclat en pantalla no està definida.La pot configurar a través del diàleg de configuració."
+msgstr ""
+"La comanda obrir el teclat en pantalla no està definida.La pot configurar a "
+"través del diàleg de configuració."
 
-#: src/viacamcontroller.cpp:418
-#: src/viacamcontroller.cpp:432
+#: src/viacamcontroller.cpp:410 src/viacamcontroller.cpp:424
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "Error"
 
-#: src/viacamcontroller.cpp:428
+#: src/viacamcontroller.cpp:420
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -582,7 +570,7 @@ msgstr ""
 "La comanda %s ha fallat.\n"
 "Configuri-la a través del diàleg de configuració."
 
-#: src/viacamcontroller.cpp:430
+#: src/viacamcontroller.cpp:422
 msgid ""
 "\n"
 "\n"
@@ -665,8 +653,7 @@ msgstr "Activar"
 msgid "Disable"
 msgstr "Desactivar"
 
-#: src/wviacam.cpp:243
-#: src/clickwindow.h:31
+#: src/wviacam.cpp:243 src/clickwindow.h:31
 msgid "Click Window"
 msgstr "Finestra del clic"
 
@@ -720,6 +707,10 @@ msgstr ""
 msgid "System default"
 msgstr "Llengua del sistema"
 
+#: src/activationkey.cpp:154
+msgid "Press the desired key or 'Esc' to cancel this action."
+msgstr "Premi la tecla desitjada o 'Esc' per cancel·lar."
+
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
 msgstr "Càmera no detectada. Abortant."
@@ -733,12 +724,15 @@ msgstr "Càmera no detectada. Abortant."
 #~ msgstr ""
 #~ "Si està seleccionat activa el control del\n"
 #~ "punter a l'engegar el programa."
+
 #~ msgid "Startup"
 #~ msgstr "Inici"
+
 #~ msgid "Profiles allows storing several named sets of options."
 #~ msgstr ""
 #~ "Els perfils permeten guardar diverses\n"
 #~ "configuracions identificades per nom."
+
 #~ msgid ""
 #~ "<font face=\"Arial, Helvetica, sans-serif\">\n"
 #~ "<h1><img src=\"#IMAGE_PATH#/viacam_cam4_html.png\" width=\"120\" height="
@@ -771,22 +765,28 @@ msgstr "Càmera no detectada. Abortant."
 #~ "<img src=\"#IMAGE_PATH#/appc_logo.png\" width=\"200\" height=\"57\" "
 #~ "border=\"0\"> </p>\n"
 #~ "</font>"
+
 #~ msgid ""
 #~ "<br><h3>Contributions:</h3><br>Miguel Bouzada (Galego translation)"
 #~ "<br>Giuseppe Masciopinto (Italiano translation)<br>Samuel Thibault"
 #~ msgstr ""
 #~ "<br><h3>Contribucions:</h3><br>Miguel Bouzada (Galego translation)"
 #~ "<br>Giuseppe Masciopinto (Italiano translation)<br>Samuel Thibault"
+
 #~ msgid "Catalan"
 #~ msgstr "Català"
+
 #~ msgid "English"
 #~ msgstr "Anglès"
+
 #~ msgid "Spanish"
 #~ msgstr "Espanyol"
+
 #~ msgid "eViacam information"
 #~ msgstr "Informació"
+
 #~ msgid "Speed up"
 #~ msgstr "Augmenta velocitat"
+
 #~ msgid "Speed down"
 #~ msgstr "Disminueix velocitat"
-
