@@ -88,7 +88,9 @@ public:
 	void OpenOnScreenKeyboard();
         void OpenActivationKey();
         void CloseActivationKey();
+#if defined(__WXGTK__) 
 	KeySym ReadKeyboard();
+#endif
         
 	// Configuration methods
 	virtual void InitDefaults();

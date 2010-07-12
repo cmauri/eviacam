@@ -427,11 +427,11 @@ void CViacamController::OpenOnScreenKeyboard()
 	}
 }
 
-
+#if defined(__WXGTK__)   
 KeySym CViacamController::ReadKeyboard()
 {
     bool isEnabled = GetEnabled();
-#if defined(__WXGTK__)         
+      
     KeySym keyCode = 0;
     keyCode = CKeyboardBitmapCheck::ReadKeySym();
     if (keyCode != 0) {
@@ -445,10 +445,9 @@ KeySym CViacamController::ReadKeyboard()
         CloseActivationKey();
     }
     return keyCode;
-#endif
-    return 0;
-    	
+
 }
+#endif
 
 void CViacamController::OpenActivationKey()
 {
