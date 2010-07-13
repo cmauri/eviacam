@@ -26,15 +26,14 @@
 
 class CAutostart{
 public:
-    CAutostart(wxString fileName);
-    ~CAutostart();
-    
-    
-    bool IsEnabled();
-    void Enable(bool value);
+	CAutostart(wxString fileName);
+	~CAutostart();
+
+	bool IsEnabled();
+	void Enable(bool value);
 
 private:
-    wxString m_fileName;
+	wxString m_fileName;
 };
 
 #endif
