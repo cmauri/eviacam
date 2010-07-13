@@ -97,11 +97,11 @@ Filename: {app}\doc\README.txt; Flags: postinstall shellexec
 [Languages]
 Name: Catala; MessagesFile: compiler:Languages\Catalan.isl; InfoAfterFile: win32\Info\InfoAfter-ca.rtf
 Name: Castellano; MessagesFile: compiler:Languages\Spanish.isl; InfoAfterFile: win32\Info\InfoAfter-es.rtf
-Name: Deutsch; MessagesFile: compiler:Languages\German.isl
+Name: Deutsch; MessagesFile: compiler:Languages\German.isl; InfoAfterFile: win32\Info\InfoAfter-de.rtf
 Name: English; MessagesFile: compiler:Default.isl
 Name: Galego; MessagesFile: compiler:Languages\Galician.isl
 Name: Italiano; MessagesFile: compiler:Languages\Italian.isl
-Name: Turkish; MessagesFile: compiler:Languages\Turkish.isl
+Name: Turkish; MessagesFile: compiler:Languages\Turkish.isl; InfoAfterFile: win32\Info\InfoAfter-tr.rtf
 Name: Occitan; MessagesFile: compiler:Languages\Occitan.isl
 Name: French; MessagesFile: compiler:Languages\French.isl
 
