@@ -219,3 +219,5 @@ void WAbout::OnButtonCloseClick( wxCommandEvent& WXUNUSED(event) )
 ////@end wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_CLOSE in WAbout. 
 }
 
+
+

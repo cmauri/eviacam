@@ -28,10 +28,8 @@
 class CKeyboardBitmapCheck
 {
 public:
-    static KeySym ReadKeySym();     
-    static wxString GetKeyName(KeySym ks);
+	static KeySym ReadKeySym();
+	static wxString GetKeyName(KeySym ks);
 };
-
-
 
 #endif

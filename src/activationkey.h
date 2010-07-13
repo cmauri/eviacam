@@ -84,6 +84,9 @@ public:
 
 ////@begin Activationkey event handler declarations
 
+    /// wxEVT_CLOSE_WINDOW event handler for ID_ACTIVATIONKEY
+    void OnCloseWindow( wxCloseEvent& event );
+
 ////@end Activationkey event handler declarations
 	void OnTimer(wxTimerEvent& event);
 	void StartTimer();

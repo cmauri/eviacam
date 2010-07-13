@@ -22,10 +22,11 @@
 #include "cautostart.h"
 #include <wx/string.h>
 #include <wx/stdpaths.h>
+#include <wx/utils.h>
 
 CAutostart::CAutostart(wxString fileName)
 {
-    m_fileName = fileName;
+	m_fileName = fileName;
 }
 
 CAutostart::~CAutostart()
@@ -34,57 +35,36 @@ CAutostart::~CAutostart()
 
 bool CAutostart::IsEnabled()
 {
-    wxStandardPaths paths;
-    char cstring[1024];
-                    
-    wxString path = paths.GetUserConfigDir() + wxT("/.config/autostart/") + m_fileName;
-    strncpy(cstring, (const char*)path.mb_str(wxConvUTF8), 1023);
-                
-    if (FILE *input = fopen(cstring, "r" )) {
-        fclose(input);
-        return true;
-    }
-    
-    return false;
+	wxString path;
+
+	if (!wxGetEnv(wxT("XDG_CONFIG_HOME"), &path)) {
+		path = wxStandardPaths::Get().GetUserConfigDir() + wxT("/.config/autostart/");
+	}
+
+	return wxFileExists(path + m_fileName);
 }
 
 
 void CAutostart::Enable(bool value)
 {
-    wxStandardPaths paths;
-    wxString path;
-    char cStringInput[1024];
-    char cStringOutput[1024];
-    char command[1024];
-    char ch;
-    
-    path = paths.GetUserConfigDir() + wxT("/.config/autostart/") + m_fileName;
-    strncpy(cStringOutput, (const char*)path.mb_str(wxConvUTF8), 1023);
-                
-    if (value) {
-        path = wxT("mkdir ") + paths.GetUserConfigDir() + wxT("/.config/autostart");
-        strncpy(command, (const char*)path.mb_str(wxConvUTF8), 1023);
-        system(command);
-        path = wxT("/usr/share/applications/") + m_fileName;
-        strncpy(cStringInput, (const char*)path.mb_str(wxConvUTF8), 1023);
-        if (FILE *input = fopen(cStringInput, "r")) {
-            FILE *output = fopen(cStringOutput, "w");
-            while(1) {
-                ch = getc(input);
-                if(ch==EOF) {
-                    break;
-                } else {
-                    putc(ch,output);
-                }
-            }
-        
-            fclose (input);
-            fclose (output);
-        }
-    } else {
-        path = wxT("rm ") + path;
-        strncpy(command, (const char*)path.mb_str(wxConvUTF8), 1023);
-        system(command);
-    }
+	wxString path = wxStandardPaths::Get().GetDataDir();
+	char cString[1024];
+	strncpy(cString, (const char*)path.mb_str(wxConvUTF8), 1023);
+	printf("DIR: %s\n",cString);
+
+	wxString pathIn;
+	wxString pathOut;
+
+	pathIn = wxT("/usr/share/applications/") + m_fileName;
+	if (!wxGetEnv(wxT("XDG_CONFIG_HOME"), &pathOut)) {
+		pathOut = wxStandardPaths::Get().GetUserConfigDir() + wxT("/.config/autostart/");
+	}
+
+	if (value) {
+		wxMkdir(pathOut, 0777);
+		wxCopyFile(pathIn, pathOut + m_fileName, false);
+	} else {
+		wxRemoveFile(pathOut + m_fileName);
+	}
 }
 

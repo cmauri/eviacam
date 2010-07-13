@@ -5,7 +5,7 @@
 // Modified by: 
 // Created:     
 // Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
-// 
+//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -46,7 +46,7 @@ class CMouseOutput;
 
 class CViacamController : public CProcessImage, public CConfigBase, public wxDialog
 {
-            
+
 public:
 	CViacamController(void);
 	virtual ~CViacamController(void);
@@ -62,7 +62,7 @@ public:
 	
         inline const bool GetEnabledAtStartup () const;
         inline void SetEnabledAtStartup (bool value);	
-        
+
         inline const bool GetEnabledActivationKey () const;
         inline void SetEnabledActivationKey (bool value);	
         inline const wxString GetActivationKeyName () const;
@@ -89,7 +89,7 @@ public:
         void OpenActivationKey();
         void CloseActivationKey();
 	KeySym ReadKeyboard();
-        
+
 	// Configuration methods
 	virtual void InitDefaults();
 
@@ -117,7 +117,7 @@ private:
 	CConfigManager* m_configManager;
 	wxLocale* m_locale;
 	wxString m_cameraName;
-        	
+
 	bool m_enabled;
 	bool m_enabledAtStartup;
 	int m_languageId;
@@ -221,12 +221,11 @@ inline void CViacamController::SetEnabledActivationKey (bool value)
 
 inline const wxString CViacamController::GetActivationKeyName () const
 {
-#if defined(__WXGTK__)   
-    return CKeyboardBitmapCheck::GetKeyName(m_keySym);
+#if defined(__WXGTK__)
+	return CKeyboardBitmapCheck::GetKeyName(m_keySym);
 #else
 	return wxString(_T(""));
 #endif
 }
-
 
 #endif

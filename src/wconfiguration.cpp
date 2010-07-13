@@ -1410,7 +1410,7 @@ void WConfiguration::OnCheckboxActivationKeyClick( wxCommandEvent& event )
 #if defined(__WXGTK__)
 void WConfiguration::OnCheckboxStartupClick( wxCommandEvent& event )
 {
-    m_pAutostart->Enable(m_chkStartup->GetValue());
+	m_pAutostart->Enable(m_chkStartup->GetValue());
     event.Skip();
     Changed ();
 }

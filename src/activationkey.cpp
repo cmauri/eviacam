@@ -60,6 +60,8 @@ IMPLEMENT_DYNAMIC_CLASS( Activationkey, wxDialog )
 BEGIN_EVENT_TABLE( Activationkey, wxDialog )
 
 ////@begin Activationkey event table entries
+    EVT_CLOSE( Activationkey::OnCloseWindow )
+
 ////@end Activationkey event table entries
 	EVT_TIMER(TIMER_ID, Activationkey::OnTimer)
 
@@ -193,6 +195,14 @@ wxIcon Activationkey::GetIconResource( const wxString& name )
 ////@end Activationkey icon retrieval
 }
 
+/*!
+ * wxEVT_CLOSE_WINDOW event handler for ID_ACTIVATIONKEY
+ */
+
+void Activationkey::OnCloseWindow( wxCloseEvent& event )
+{
+}
+
 void Activationkey::OnTimer(wxTimerEvent& event)
 {
 	KeySym keyCode = m_pViacamController->ReadKeyboard();
@@ -210,3 +220,6 @@ void Activationkey::StopTimer()
 {
 	m_timer.Stop();
 }
+
+
+
