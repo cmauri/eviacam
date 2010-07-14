@@ -1394,7 +1394,8 @@ void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
 		m_txtActivationKey->SetValue(pActivationKey->GetKeyName());
 		m_pViacamController->SetActivationKeyCode(pActivationKey->GetKeyCode());
 		m_pViacamController->SetEnabled(isEnabled);
-	}	
+	}
+	delete (pActivationKey);
 		
 	event.Skip(false);
     Changed ();
