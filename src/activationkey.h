@@ -48,7 +48,7 @@ class CViacamController;
 
 ////@begin control identifiers
 #define ID_ACTIVATIONKEY 10070
-#define SYMBOL_ACTIVATIONKEY_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxDIALOG_MODAL|wxTAB_TRAVERSAL
+#define SYMBOL_ACTIVATIONKEY_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxDIALOG_MODAL|wxTAB_TRAVERSAL
 #define SYMBOL_ACTIVATIONKEY_TITLE _("Activation key")
 #define SYMBOL_ACTIVATIONKEY_IDNAME ID_ACTIVATIONKEY
 #define SYMBOL_ACTIVATIONKEY_SIZE wxSize(400, 300)
@@ -85,11 +85,8 @@ public:
 
 ////@begin Activationkey event handler declarations
 
-    /// wxEVT_CLOSE_WINDOW event handler for ID_ACTIVATIONKEY
-    void OnCloseWindow( wxCloseEvent& event );
-
-    /// wxEVT_KEY_DOWN event handler for ID_ACTIVATIONKEY
-    void OnKeyDown( wxKeyEvent& event );
+    /// wxEVT_LEFT_DOWN event handler for ID_ACTIVATIONKEY
+    void OnLeftDown( wxMouseEvent& event );
 
 ////@end Activationkey event handler declarations
 	void OnTimer(wxTimerEvent& event);

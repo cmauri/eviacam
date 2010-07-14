@@ -8110,8 +8110,7 @@ disable eViacam by pressing a key."</string>
           <string name="app-kind">"Standard"</string>
           <long name="use-xrc">0</long>
           <long name="working-mode">0</long>
-          <string name="event-handler-0">"wxEVT_CLOSE_WINDOW|OnCloseWindow|NONE||Activationkey"</string>
-          <string name="event-handler-1">"wxEVT_KEY_DOWN|OnKeyDown|NONE||Activationkey"</string>
+          <string name="event-handler-0">"wxEVT_LEFT_DOWN|OnLeftDown|NONE||Activationkey"</string>
           <string name="proxy-Id name">"ID_ACTIVATIONKEY"</string>
           <long name="proxy-Id value">10070</long>
           <string name="proxy-Class">"Activationkey"</string>
@@ -8145,7 +8144,7 @@ disable eViacam by pressing a key."</string>
           <bool name="proxy-wxSYSTEM_MENU">1</bool>
           <bool name="proxy-wxSTAY_ON_TOP">0</bool>
           <bool name="proxy-wxDIALOG_NO_PARENT">0</bool>
-          <bool name="proxy-wxCLOSE_BOX">1</bool>
+          <bool name="proxy-wxCLOSE_BOX">0</bool>
           <bool name="proxy-wxMAXIMIZE_BOX">0</bool>
           <bool name="proxy-wxMINIMIZE_BOX">0</bool>
           <bool name="proxy-wxDIALOG_MODAL">1</bool>
@@ -8199,6 +8198,7 @@ disable eViacam by pressing a key."</string>
               <long name="title-mode">0</long>
               <long name="locked">0</long>
               <string name="proxy-type">"wbStaticTextProxy"</string>
+              <string name="event-handler-0">"wxEVT_LEFT_DOWN|OnLeftDown|NONE||Activationkey"</string>
               <string name="proxy-Id name">"wxID_STATIC"</string>
               <long name="proxy-Id value">5105</long>
               <string name="proxy-Name">""</string>

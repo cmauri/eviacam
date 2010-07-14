@@ -61,8 +61,7 @@ IMPLEMENT_DYNAMIC_CLASS( Activationkey, wxDialog )
 BEGIN_EVENT_TABLE( Activationkey, wxDialog )
 
 ////@begin Activationkey event table entries
-    EVT_CLOSE( Activationkey::OnCloseWindow )
-    EVT_KEY_DOWN( Activationkey::OnKeyDown )
+    EVT_LEFT_DOWN( Activationkey::OnLeftDown )
 
 ////@end Activationkey event table entries
 	EVT_TIMER(TIMER_ID, Activationkey::OnTimer)
@@ -158,6 +157,8 @@ void Activationkey::CreateControls()
     wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, _("Press the desired key or 'Esc' to cancel this action."), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemStaticText3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
+    // Connect events and objects
+    itemStaticText3->Connect(wxID_STATIC, wxEVT_LEFT_DOWN, wxMouseEventHandler(Activationkey::OnLeftDown), NULL, this);
 ////@end Activationkey content construction
 	m_timer.Start(50);
 }
@@ -198,14 +199,6 @@ wxIcon Activationkey::GetIconResource( const wxString& name )
 ////@end Activationkey icon retrieval
 }
 
-/*!
- * wxEVT_CLOSE_WINDOW event handler for ID_ACTIVATIONKEY
- */
-
-void Activationkey::OnCloseWindow( wxCloseEvent& event )
-{
-//EndModal();
-}
 
 void Activationkey::OnTimer(wxTimerEvent& event)
 {
@@ -234,25 +227,13 @@ wxString Activationkey::GetKeyName()
 	return CKeyboardBitmapCheck::GetKeyName(m_keyCode);
 }	
 
-void Activationkey::StartTimer()
-{
-	m_timer.Start(33);
-}
-
-void Activationkey::StopTimer()
-{
-	m_timer.Stop();
-}
-
-
-
-
 /*!
- * wxEVT_KEY_DOWN event handler for ID_ACTIVATIONKEY
+ * wxEVT_LEFT_DOWN event handler for ID_ACTIVATIONKEY
  */
 
-void Activationkey::OnKeyDown( wxKeyEvent& event )
+void Activationkey::OnLeftDown( wxMouseEvent& event )
 {
-	event.Skip(false);
+	EndModal(wxID_NO);
+	m_timer.Stop();	
 }
 
