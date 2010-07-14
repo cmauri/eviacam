@@ -64,7 +64,8 @@ public:
         inline void SetEnabledAtStartup (bool value);	
 
         inline const bool GetEnabledActivationKey () const;
-        inline void SetEnabledActivationKey (bool value);	
+        inline void SetEnabledActivationKey (bool value);
+	inline void SetActivationKeyCode (int value);
         inline const wxString GetActivationKeyName () const;
 
 	void SetLanguage (const int id);
@@ -86,11 +87,6 @@ public:
 
 	void OpenConfiguration();
 	void OpenOnScreenKeyboard();
-        void OpenActivationKey();
-        void CloseActivationKey();
-#if defined(__WXGTK__)
-	KeySym ReadKeyboard();
-#endif
 
 	// Configuration methods
 	virtual void InitDefaults();
@@ -127,9 +123,8 @@ private:
 	float m_frameRate;
 	bool m_enabledActivationKey;
 #if defined(__WXGTK__) 
-	KeySym m_keySym;
-	KeySym m_lastKeySym;
-	Activationkey* m_window;
+	int m_keyCode;
+	int m_lastKeyCode;
 	CAutostart* m_pAutostart;
 #endif
 	WConfiguration* m_pConfiguration;
@@ -218,13 +213,19 @@ inline const bool CViacamController::GetEnabledActivationKey () const
 
 inline void CViacamController::SetEnabledActivationKey (bool value)
 {
-    m_enabledActivationKey= value;
+	m_enabledActivationKey= value;
+}
+
+inline void CViacamController::SetActivationKeyCode (int value)
+{
+	m_keyCode= value;
+	m_lastKeyCode= value;
 }
 
 inline const wxString CViacamController::GetActivationKeyName () const
 {
 #if defined(__WXGTK__)
-	return CKeyboardBitmapCheck::GetKeyName(m_keySym);
+	return CKeyboardBitmapCheck::GetKeyName(m_keyCode);
 #else
 	return wxString(_T(""));
 #endif

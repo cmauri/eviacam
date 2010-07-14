@@ -45,6 +45,7 @@
 ////@begin XPM images
 ////@end XPM images
 #define TIMER_ID 1234
+#define ESCAPE_KEYSYM 65307
 
 /*!
  * Activationkey type definition
@@ -61,6 +62,7 @@ BEGIN_EVENT_TABLE( Activationkey, wxDialog )
 
 ////@begin Activationkey event table entries
     EVT_CLOSE( Activationkey::OnCloseWindow )
+    EVT_KEY_DOWN( Activationkey::OnKeyDown )
 
 ////@end Activationkey event table entries
 	EVT_TIMER(TIMER_ID, Activationkey::OnTimer)
@@ -157,6 +159,7 @@ void Activationkey::CreateControls()
     itemBoxSizer2->Add(itemStaticText3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
 ////@end Activationkey content construction
+	m_timer.Start(50);
 }
 
 
@@ -201,15 +204,35 @@ wxIcon Activationkey::GetIconResource( const wxString& name )
 
 void Activationkey::OnCloseWindow( wxCloseEvent& event )
 {
+//EndModal();
 }
 
 void Activationkey::OnTimer(wxTimerEvent& event)
 {
-	KeySym keyCode = m_pViacamController->ReadKeyboard();
-	if (keyCode > 0) {
-		m_pConfiguration->SetActivationKey(CKeyboardBitmapCheck::GetKeyName(keyCode));
+	KeySym keyCode = 0;
+	
+	keyCode = CKeyboardBitmapCheck::ReadKeySym();
+
+	if (keyCode != 0) {
+		if (keyCode != ESCAPE_KEYSYM) {
+			m_keyCode = keyCode;
+			EndModal(wxID_YES);		
+		} else {		
+			EndModal(wxID_NO);
+		}
+		m_timer.Stop();	
 	}	
 }
+
+int Activationkey::GetKeyCode()
+{
+	return (int) m_keyCode;
+}
+
+wxString Activationkey::GetKeyName()
+{
+	return CKeyboardBitmapCheck::GetKeyName(m_keyCode);
+}	
 
 void Activationkey::StartTimer()
 {
@@ -222,4 +245,14 @@ void Activationkey::StopTimer()
 }
 
 
+
+
+/*!
+ * wxEVT_KEY_DOWN event handler for ID_ACTIVATIONKEY
+ */
+
+void Activationkey::OnKeyDown( wxKeyEvent& event )
+{
+	event.Skip(false);
+}
 

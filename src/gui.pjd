@@ -8111,6 +8111,7 @@ disable eViacam by pressing a key."</string>
           <long name="use-xrc">0</long>
           <long name="working-mode">0</long>
           <string name="event-handler-0">"wxEVT_CLOSE_WINDOW|OnCloseWindow|NONE||Activationkey"</string>
+          <string name="event-handler-1">"wxEVT_KEY_DOWN|OnKeyDown|NONE||Activationkey"</string>
           <string name="proxy-Id name">"ID_ACTIVATIONKEY"</string>
           <long name="proxy-Id value">10070</long>
           <string name="proxy-Class">"Activationkey"</string>

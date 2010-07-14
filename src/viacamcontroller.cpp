@@ -44,7 +44,6 @@
 #include "camwindow.h"
 #include "wconfiguration.h"
 
-
 //#include "icons/eviacam_mini.xpm"
 
 #include <wx/utils.h>
@@ -65,7 +64,7 @@
 #endif // __WXGTK___
 #define ESCAPE_KEYSYM 65307
 #define SCROLL_LOCK_KEYSYM 65300
-        
+
 CViacamController::CViacamController(void)
 {
 	m_pMainWindow = NULL;
@@ -79,7 +78,7 @@ CViacamController::CViacamController(void)
 	m_frameRate= 0;
 #if defined(__WXGTK__) 
 	m_pAutostart = new CAutostart(wxT("eviacam.desktop"));
-#endif        
+#endif
 	InitDefaults();
 }
 
@@ -267,7 +266,7 @@ void CViacamController::Finalize ()
 		m_pCaptureThread->Wait();
 		delete m_pCaptureThread;
 		m_pCaptureThread= NULL;
-	}	
+	}
 	if (m_pCamera)
 	{
 		delete m_pCamera;
@@ -278,7 +277,7 @@ void CViacamController::Finalize ()
 	{
 		delete m_pMouseOutput;
 		m_pMouseOutput= NULL;
-	}	
+	}
 
 	if (m_pClickWindowController)
 	{
@@ -291,14 +290,14 @@ void CViacamController::Finalize ()
 		m_pMainWindow->GetCamWindow()->UnregisterControl (m_motionTracker.GetTrackAreaControl());
 		// Main window is self-destroyed
 		m_pMainWindow= NULL;
-	}	
+	}
 }
 
 void CViacamController::InitDefaults()
 {
 	m_languageId= wxLANGUAGE_DEFAULT;
 	m_enabledAtStartup= false;	
-#if defined(__WXMSW__)  
+#if defined(__WXMSW__)
 	m_onScreenKeyboardCommand= _T("osk.exe");
 #endif
 }
@@ -318,7 +317,7 @@ void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 
 #if defined(__WXGTK__) 
 	pConfObj->Write(_T("enabledActivationKey"), m_enabledActivationKey);
-	pConfObj->Write(_T("keySym"), (int)m_keySym);
+	pConfObj->Write(_T("keyCode"), (int)m_keyCode);
 #endif
 
 	// Propagates calls
@@ -340,15 +339,12 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
 	pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
 #if defined(__WXGTK__) 
-	int keyCode = 0;
+	m_keyCode = 0;
 	pConfObj->Read(_T("enabledActivationKey"), &m_enabledActivationKey);
-	pConfObj->Read(_T("keySym"), &keyCode);
-        
-	m_keySym = (KeySym) keyCode;
-        
-	// Set default activation key (JORDI: compte amb els n�meros "m�gics", defineix una constant)
-	if (m_keySym == 0) {
-            m_keySym = SCROLL_LOCK_KEYSYM;
+	pConfObj->Read(_T("keyCode"), &m_keyCode);
+
+	if (m_keyCode == 0) {
+            m_keyCode = SCROLL_LOCK_KEYSYM;
 	}
 #endif
 	// Propagates calls
@@ -386,15 +382,16 @@ void CViacamController::SetEnabled (bool value, bool silent)
 }
 
 void CViacamController::OpenConfiguration()
-{   
+{
+	
 #if defined(__WXGTK__) 
-    m_pConfiguration = new WConfiguration(m_pMainWindow, this, m_pAutostart);
+	m_pConfiguration = new WConfiguration(m_pMainWindow, this, m_pAutostart);
 #else
-    m_pConfiguration = new WConfiguration(m_pMainWindow, this);
+	m_pConfiguration = new WConfiguration(m_pMainWindow, this);
 #endif
 
-    int returnValue = m_pConfiguration->ShowModal();
-    	m_pConfiguration->Destroy();
+	int returnValue = m_pConfiguration->ShowModal();
+	m_pConfiguration->Destroy();
 	if (returnValue== ID_BUTTON_OK)
 		// Save changes
 		m_configManager->WriteAll();
@@ -427,47 +424,9 @@ void CViacamController::OpenOnScreenKeyboard()
 	}
 }
 
-#if defined(__WXGTK__)   
-KeySym CViacamController::ReadKeyboard()
-{
-    bool isEnabled = GetEnabled();
-      
-    KeySym keyCode = 0;
-    keyCode = CKeyboardBitmapCheck::ReadKeySym();
-    if (keyCode != 0) {
-        if (keyCode != ESCAPE_KEYSYM) {
-            m_lastKeySym = keyCode;
-            m_keySym = keyCode;
-            SetEnabled(isEnabled,isEnabled);
-        } else {
-            keyCode = 0;
-        }
-        CloseActivationKey();
-    }
-    return keyCode;
-
-}
-#endif
-
-void CViacamController::OpenActivationKey()
-{
-#if defined(__WXGTK__)
-    m_window = new Activationkey(m_pMainWindow, this, m_pConfiguration);
-    m_window->Show();
-    m_window->StartTimer();
-#endif
-}
-
-void CViacamController::CloseActivationKey()
-{
-#if defined(__WXGTK__)
-    m_window->Destroy();
-    m_window->StopTimer();
-#endif
-}
-
 void CViacamController::ProcessImage (IplImage *pImage)
 {
+	//StopTimer();
 	WViacam::EFPSCondition cond;
 	long iFrameRate;
 	float vx, vy;
@@ -491,16 +450,15 @@ void CViacamController::ProcessImage (IplImage *pImage)
 	BEGIN_GUI_CALL_MUTEX()
 	m_pMouseOutput->ProcessRelativePointerMove (-vx, vy);
 	END_GUI_CALL_MUTEX()
-                
+
 #if defined(__WXGTK__) 
-        //Read keyboard        
+        //Read keyboard
         if (m_enabledActivationKey) {
-            KeySym keyCode = CKeyboardBitmapCheck::ReadKeySym();
-            if (keyCode == m_keySym and keyCode != m_lastKeySym) {
-                SetEnabled(!m_pMouseOutput->GetEnabled(),true);
-            }
-            m_lastKeySym = keyCode;
+		int keyCode = CKeyboardBitmapCheck::ReadKeySym();
+		if (keyCode == m_keyCode and keyCode != m_lastKeyCode) {
+		SetEnabled(!m_pMouseOutput->GetEnabled(),true);
+	}
+		m_lastKeyCode = keyCode;
         }
 #endif // __WXGTK___
 }
-

@@ -26,7 +26,7 @@
 #include <wx/stdpaths.h>
 
 
-KeySym CKeyboardBitmapCheck::ReadKeySym()
+int CKeyboardBitmapCheck::ReadKeySym()
 {
 	char keys_return[32];
 	unsigned char keys;
@@ -54,7 +54,7 @@ KeySym CKeyboardBitmapCheck::ReadKeySym()
 	}
 
 	ks = XKeycodeToKeysym(((Display *) wxGetDisplay()), kc, 0);
-	return ks;
+	return (int) ks;
 }
 
 wxString CKeyboardBitmapCheck::GetKeyName (KeySym ks) 

@@ -28,7 +28,7 @@
 class CKeyboardBitmapCheck
 {
 public:
-	static KeySym ReadKeySym();
+	static int ReadKeySym();
 	static wxString GetKeyName(KeySym ks);
 };
 

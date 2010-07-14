@@ -49,6 +49,7 @@
 #include "motiontracker.h"
 #include "clickwindowcontroller.h"
 #include "cautostart.h"
+#include "activationkey.h"
 
 // Trick to properly compile & display native language names
 #if defined(__WXMSW__)
@@ -1385,8 +1386,16 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
 #if defined(__WXGTK__)
 void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
 {
-	m_pViacamController->OpenActivationKey();
-    m_txtActivationKey->SetValue(m_pViacamController->GetActivationKeyName());
+	bool isEnabled = m_pViacamController->GetEnabled();
+	Activationkey* pActivationKey = new Activationkey(this);
+
+	if (pActivationKey->ShowModal()== wxID_YES)
+	{
+		m_txtActivationKey->SetValue(pActivationKey->GetKeyName());
+		m_pViacamController->SetActivationKeyCode(pActivationKey->GetKeyCode());
+		m_pViacamController->SetEnabled(isEnabled);
+	}	
+		
 	event.Skip(false);
     Changed ();
 }

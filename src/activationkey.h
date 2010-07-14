@@ -28,6 +28,7 @@
  * Includes
  */
 #include "wconfiguration.h"
+#include <X11/Xlib.h>
 
 ////@begin includes
 ////@end includes
@@ -87,8 +88,13 @@ public:
     /// wxEVT_CLOSE_WINDOW event handler for ID_ACTIVATIONKEY
     void OnCloseWindow( wxCloseEvent& event );
 
+    /// wxEVT_KEY_DOWN event handler for ID_ACTIVATIONKEY
+    void OnKeyDown( wxKeyEvent& event );
+
 ////@end Activationkey event handler declarations
 	void OnTimer(wxTimerEvent& event);
+	int GetKeyCode();
+	wxString GetKeyName();
 	void StartTimer();
 	void StopTimer();
 
@@ -110,6 +116,7 @@ private:
 	wxTimer m_timer;
 	CViacamController* m_pViacamController;
 	WConfiguration* m_pConfiguration;
+	KeySym m_keyCode;
 
 };
 
