@@ -676,13 +676,6 @@ void WConfiguration::CreateControls()
 ////@end WConfiguration content construction
 }
 
-void WConfiguration::SetActivationKey(wxString keyName)
-{
-#if defined(__WXGTK__)   
-    m_txtActivationKey->SetValue(keyName);
-#endif    
-}
-
 
 /*!
  * Should we show tooltips?
@@ -784,8 +777,7 @@ void WConfiguration::InitializeData ()
 #if defined(__WXGTK__)
     m_chkActivationKey->SetValue(m_pViacamController->GetEnabledActivationKey());
     m_txtActivationKey->SetValue(m_pViacamController->GetActivationKeyName());
-
-    
+	    
 	// 
 	// App data
 	//

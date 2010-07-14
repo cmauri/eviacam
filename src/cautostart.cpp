@@ -47,17 +47,14 @@ bool CAutostart::IsEnabled()
 
 void CAutostart::Enable(bool value)
 {
-	wxString path = wxStandardPaths::Get().GetDataDir();
-	char cString[1024];
-	strncpy(cString, (const char*)path.mb_str(wxConvUTF8), 1023);
-	printf("DIR: %s\n",cString);
-
 	wxString pathIn;
 	wxString pathOut;
 
-	pathIn = wxT("/usr/share/applications/") + m_fileName;
+	pathIn = wxStandardPaths::Get().GetDataDir()  + wxT("/") + m_fileName;
 	if (!wxGetEnv(wxT("XDG_CONFIG_HOME"), &pathOut)) {
-		pathOut = wxStandardPaths::Get().GetUserConfigDir() + wxT("/.config/autostart/");
+		pathOut = wxStandardPaths::Get().GetUserConfigDir() + wxT("/.config");
+		wxMkdir(pathOut, 0777);
+		pathOut += wxT("/autostart/");
 	}
 
 	if (value) {
