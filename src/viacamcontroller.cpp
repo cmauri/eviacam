@@ -199,7 +199,6 @@ bool CViacamController::Initialize ()
 	assert (!m_pMainWindow && !m_pCamera && !m_pCaptureThread);
 
 	SetUpLanguage ();
-        //m_pKeyboardBitmapCheck = new CKeyboardBitmapCheck();
 
 	// Create camera object
 	m_pCamera= SetUpCamera();	
@@ -383,13 +382,7 @@ void CViacamController::SetEnabled (bool value, bool silent)
 
 void CViacamController::OpenConfiguration()
 {
-	
-#if defined(__WXGTK__) 
-	m_pConfiguration = new WConfiguration(m_pMainWindow, this, m_pAutostart);
-#else
 	m_pConfiguration = new WConfiguration(m_pMainWindow, this);
-#endif
-
 	int returnValue = m_pConfiguration->ShowModal();
 	m_pConfiguration->Destroy();
 	if (returnValue== ID_BUTTON_OK)
@@ -426,7 +419,6 @@ void CViacamController::OpenOnScreenKeyboard()
 
 void CViacamController::ProcessImage (IplImage *pImage)
 {
-	//StopTimer();
 	WViacam::EFPSCondition cond;
 	long iFrameRate;
 	float vx, vy;
@@ -452,7 +444,7 @@ void CViacamController::ProcessImage (IplImage *pImage)
 	END_GUI_CALL_MUTEX()
 
 #if defined(__WXGTK__) 
-        //Read keyboard
+        // Read keyboard
         if (m_enabledActivationKey) {
 		int keyCode = CKeyboardBitmapCheck::ReadKeySym();
 		if (keyCode == m_keyCode and keyCode != m_lastKeyCode) {

@@ -107,7 +107,6 @@ public:
     WConfiguration();
     WConfiguration( wxWindow* parent, wxWindowID id = SYMBOL_WCONFIGURATION_IDNAME, const wxString& caption = SYMBOL_WCONFIGURATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIGURATION_POSITION, const wxSize& size = SYMBOL_WCONFIGURATION_SIZE, long style = SYMBOL_WCONFIGURATION_STYLE );
 	WConfiguration( wxWindow* parent, CViacamController* pViacamController, wxWindowID id = SYMBOL_WCONFIGURATION_IDNAME, const wxString& caption = SYMBOL_WCONFIGURATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIGURATION_POSITION, const wxSize& size = SYMBOL_WCONFIGURATION_SIZE, long style = SYMBOL_WCONFIGURATION_STYLE );
-    WConfiguration( wxWindow* parent, CViacamController* pViacamController, CAutostart* pAutostart, wxWindowID id = SYMBOL_WCONFIGURATION_IDNAME, const wxString& caption = SYMBOL_WCONFIGURATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIGURATION_POSITION, const wxSize& size = SYMBOL_WCONFIGURATION_SIZE, long style = SYMBOL_WCONFIGURATION_STYLE );
 	
     /// Creation
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_WCONFIGURATION_IDNAME, const wxString& caption = SYMBOL_WCONFIGURATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIGURATION_POSITION, const wxSize& size = SYMBOL_WCONFIGURATION_SIZE, long style = SYMBOL_WCONFIGURATION_STYLE );
