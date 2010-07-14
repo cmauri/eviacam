@@ -194,6 +194,10 @@ WConfiguration::WConfiguration( wxWindow* parent, wxWindowID id, const wxString&
 WConfiguration::WConfiguration( wxWindow* parent, CViacamController* pViacamController, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
 	m_pViacamController= pViacamController;
+	#if defined(__WXGTK__)
+		m_pAutostart = m_pViacamController->GetAutostart();
+	#endif
+
 	Init();
     Create(parent, id, caption, pos, size, style);
 }
@@ -287,9 +291,6 @@ void WConfiguration::Init()
     m_btnCancel = NULL;
 ////@end WConfiguration member initialisation
 
-#if defined(__WXGTK__)
-	m_pAutostart = m_pViacamController->GetAutostart();
-#endif
 	m_dirty= false;
 }
 

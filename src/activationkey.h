@@ -69,7 +69,6 @@ public:
     Activationkey();
     Activationkey( wxWindow* parent, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
 	Activationkey( wxWindow* parent, CViacamController* pViacamController, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
-	Activationkey( wxWindow* parent, CViacamController* pViacamController, WConfiguration* pConfiguration, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
 
     /// Creation
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );

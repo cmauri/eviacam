@@ -72,6 +72,7 @@ public:
 	inline const int GetLanguage () const;
 
 	inline CAutostart* GetAutostart();
+	inline WConfiguration* GetConfiguration();
 	inline CMouseOutput* GetMouseOutput();
 	inline CMotionTracker* GetMotionTracker();
 	inline CClickWindowController* GetClickWindowController();
@@ -135,6 +136,11 @@ private:
 inline CAutostart* CViacamController::GetAutostart()
 {
 	return m_pAutostart;
+}
+
+inline WConfiguration* CViacamController::GetConfiguration()
+{
+	return m_pConfiguration;
 }
 
 inline CMouseOutput* CViacamController::GetMouseOutput()

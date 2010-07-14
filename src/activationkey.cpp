@@ -87,14 +87,7 @@ Activationkey::Activationkey( wxWindow* parent, wxWindowID id, const wxString& c
 Activationkey::Activationkey( wxWindow* parent, CViacamController* pViacamController, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) : m_timer(this, TIMER_ID)
 {
 	m_pViacamController= pViacamController;
-	Init();
-    Create(parent, id, caption, pos, size, style);
-}
-
-Activationkey::Activationkey( wxWindow* parent, CViacamController* pViacamController, WConfiguration* pConfiguration, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) : m_timer(this, TIMER_ID)
-{
-	m_pViacamController= pViacamController;
-	m_pConfiguration= pConfiguration;
+	m_pConfiguration= m_pViacamController->GetConfiguration();
 	Init();
     Create(parent, id, caption, pos, size, style);
 }
