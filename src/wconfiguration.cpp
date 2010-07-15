@@ -49,13 +49,13 @@
 #include "motiontracker.h"
 #include "clickwindowcontroller.h"
 #include "cautostart.h"
-#include "activationkey.h"
 
 // Trick to properly compile & display native language names
 #if defined(__WXMSW__)
 #include "langnames-utf16.h"
 #else
 #include "langnames-utf8.h"
+#include "activationkey.h"
 #include "cautostart.h"
 #include <wx/stdpaths.h>
 #endif

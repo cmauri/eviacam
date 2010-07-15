@@ -35,6 +35,7 @@ CAutostart::~CAutostart()
 
 bool CAutostart::IsEnabled()
 {
+#if defined(__WXGTK__) 
 	wxString path;
 
 	if (!wxGetEnv(wxT("XDG_CONFIG_HOME"), &path)) {
@@ -42,11 +43,16 @@ bool CAutostart::IsEnabled()
 	}
 
 	return wxFileExists(path + m_fileName);
+#else
+	assert (false);	// Win: not yet implemented
+	return false;
+#endif
 }
 
 
 void CAutostart::Enable(bool value)
 {
+#if defined(__WXGTK__) 
 	wxString pathIn;
 	wxString pathOut;
 
@@ -63,5 +69,8 @@ void CAutostart::Enable(bool value)
 	} else {
 		wxRemoveFile(pathOut + m_fileName);
 	}
+#else
+	assert (false);		// Not yet implemented
+#endif
 }
 

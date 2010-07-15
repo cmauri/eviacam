@@ -37,8 +37,8 @@
 #include <X11/Xlib.h>
 #include "keyboardbitmapcheck.h"
 #include "activationkey.h"
-#include "cautostart.h"
 #endif // __WXGTK___
+#include "cautostart.h"
 
 class WViacam;
 //class CCamera;
@@ -127,8 +127,8 @@ private:
 #if defined(__WXGTK__) 
 	int m_keyCode;
 	int m_lastKeyCode;
-	CAutostart* m_pAutostart;
 #endif
+	CAutostart* m_pAutostart;
 	WConfiguration* m_pConfiguration;
 	
 };
@@ -230,8 +230,12 @@ inline void CViacamController::SetEnabledActivationKey (bool value)
 
 inline void CViacamController::SetActivationKeyCode (int value)
 {
+#if defined(__WXGTK__)
 	m_keyCode= value;
 	m_lastKeyCode= value;
+#else
+	assert (false);		// Win: not yet implemented
+#endif
 }
 
 inline const wxString CViacamController::GetActivationKeyName () const
