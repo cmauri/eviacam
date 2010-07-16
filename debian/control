@@ -2,7 +2,7 @@ Source: eviacam
 Section: x11
 Priority: extra
 Maintainer: Cesar Mauri <cesar@crea-si.com>
-Build-Depends: debhelper (>= 5), libwxgtk2.6-dev (>= 2.6.3) | libwxgtk2.8-dev, libgtk2.0-dev, libcvaux-dev (>= 1.0), libhighgui1 (>= 1.0), libpng12-dev, libxtst-dev, libxext-dev
+Build-Depends: debhelper (>= 5), libwxgtk2.6-dev (>= 2.6.3) | libwxgtk2.8-dev, libgtk2.0-dev, libcvaux-dev (>= 1.0), libhighgui1 (>= 1.0) | libhighgui4 (>= 2.0), libpng12-dev, libxtst-dev, libxext-dev
 Standards-Version: 3.7.2
 
 Package: eviacam
