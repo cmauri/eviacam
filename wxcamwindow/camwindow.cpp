@@ -119,6 +119,7 @@ void CCamWindow::OnSize (wxSizeEvent& event)
 	int width = event.GetSize().GetWidth();
 	int height = event.GetSize().GetHeight();
 	
+//	printf ("OnSize - Before. W: %d, H: %d\n", width, height);
 	// New requested size should be aligned to 4 or 8 bytes.
 	// So test it and force the alignment when necessary
 	if (width % VP_ALIGNMENT) 
@@ -129,9 +130,12 @@ void CCamWindow::OnSize (wxSizeEvent& event)
 	
 	if (width< MIN_WIDTH) { width= MIN_WIDTH; changed= true; }
 	if (height< MIN_HEIGHT) { height= MIN_HEIGHT; changed= true; }
-	
-	if (changed) ResizeParentClientArea(width, height);
-	//event.Skip (true);	
+		
+	if (changed) {
+		SetSize (width, height);
+		//ResizeParentClientArea(width, height);
+	}	
+	event.Skip (true);	
 }
 
 // DrawCam. Called from the worker thread
@@ -204,7 +208,7 @@ void CCamWindow::DrawCam (IplImage* pImg)
 		// Since version 2.9.0 there is another funtion to post events "wxQueueEvent"
 		// That should be investigated
 		wxCommandEvent event(wxEVT_MY_REFRESH);
-		wxPostEvent(this, event);
+		wxPostEvent(this, event);		
 	}	
 }
 
