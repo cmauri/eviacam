@@ -285,11 +285,7 @@ void CClickWindowController::NotifyShowMainWindowClick ()
 // Configuration methods
 void CClickWindowController::InitDefaults()
 {
-#if defined(__WXMSW__)
 	SetOpenClickWinAtStartup(true);
-#else
-	SetOpenClickWinAtStartup(false);
-#endif
 	SetFastMode (false);
 	SetDesign (CClickWindowController::NORMAL);	
 }
