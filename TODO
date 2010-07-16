@@ -1,10 +1,7 @@
 Planned
 =======
 
-- Auto start when opening session
-- APPC: key to enable/disable control; double click centers tracking area
-- Automatically set priority above normal for overall process, not only thread.
-- Possibility to restrict pointer screen area
+- APPC: double click centers tracking area
 - Click visual feedback. Sample: (http://svr-www.eng.cam.ac.uk/~er258/code/x11.html)
 - Configuration dialog TAB traversal
 - Wizard
