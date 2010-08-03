@@ -18,7 +18,6 @@ Comment[ast]=Xuegue ensin falta d'un mur o un teclau
 
 Type=Application
 Terminal=false
-Icon=eviacam.xpm
+Icon=eviacam
 Exec=eviacamloader
-StartupNotify=true
 Categories=GNOME;GTK;Utility;Accessibility;

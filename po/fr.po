@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: eviacam 1.2.1\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2010-07-14 18:03+0200\n"
-"PO-Revision-Date: 2010-02-10 16:19+0100\n"
-"Last-Translator: Sébastien Lecointre\n"
+"PO-Revision-Date: 2010-07-30 23:42+0900\n"
+"Last-Translator: YannUbuntu <yannubuntu@gmail.com>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -95,54 +95,60 @@ msgstr "Mouvements du pointeur"
 
 #: src/wconfiguration.cpp:380
 msgid "Use workspace limit"
-msgstr ""
+msgstr "Utiliser la limite d'espace de travail"
 
 #: src/wconfiguration.cpp:383
 msgid ""
 "Confines the mouse pointer\n"
 "to the selected area."
 msgstr ""
+"Confine le pointeur de souris\n"
+"à l'espace sélectionné"
 
 #: src/wconfiguration.cpp:390
 msgid "Top"
-msgstr ""
+msgstr "Haut"
 
 #: src/wconfiguration.cpp:395
 msgid "Top limit workspace."
-msgstr ""
+msgstr "Limite haute de l'espace de travail."
 
-#: src/wconfiguration.cpp:399 src/wconfiguration.cpp:415
-#: src/wconfiguration.cpp:429 src/wconfiguration.cpp:443
+#: src/wconfiguration.cpp:399
+#: src/wconfiguration.cpp:415
+#: src/wconfiguration.cpp:429
+#: src/wconfiguration.cpp:443
 msgid "%"
-msgstr ""
+msgstr "%"
 
-#: src/wconfiguration.cpp:406 src/clickwindowbitmap.cpp:229
+#: src/wconfiguration.cpp:406
+#: src/clickwindowbitmap.cpp:229
 msgid "Left"
 msgstr "Clic gauche"
 
 #: src/wconfiguration.cpp:411
 msgid "Left limit workspace."
-msgstr ""
+msgstr "Limite gauche de l'espace de travail."
 
-#: src/wconfiguration.cpp:420 src/clickwindowbitmap.cpp:236
+#: src/wconfiguration.cpp:420
+#: src/clickwindowbitmap.cpp:236
 msgid "Right"
 msgstr "Clic droit"
 
 #: src/wconfiguration.cpp:425
 msgid "Right limit workspace."
-msgstr ""
+msgstr "Limite droite de l'espace de travail."
 
 #: src/wconfiguration.cpp:434
 msgid "Bottom"
-msgstr ""
+msgstr "Bas"
 
 #: src/wconfiguration.cpp:439
 msgid "Bottom limit workspace."
-msgstr ""
+msgstr "Limite basse de l'espace de travail."
 
 #: src/wconfiguration.cpp:446
 msgid "Workspace"
-msgstr ""
+msgstr "Espace de travail"
 
 #: src/wconfiguration.cpp:452
 msgid "Dwell click"
@@ -303,28 +309,30 @@ msgstr "Commandes pour lancer un clavier virtuel externe"
 msgid "Browse..."
 msgstr "Parcourir..."
 
-#: src/wconfiguration.cpp:563 src/activationkey.h:52
+#: src/wconfiguration.cpp:563
+#: src/activationkey.h:52
 msgid "Activation key"
-msgstr ""
+msgstr "Touche d'activation"
 
 #: src/wconfiguration.cpp:567
-#, fuzzy
 msgid "Use activation key"
-msgstr "Activer au démarrage"
+msgstr "Utilise la touche d'activation"
 
 #: src/wconfiguration.cpp:570
 msgid ""
 "When checked it allows to enable or \n"
 "disable eViacam by pressing a key."
 msgstr ""
+"Cochez pour permettre d'activer ou \n"
+"désactiver eViacam en appuyant sur une touche."
 
 #: src/wconfiguration.cpp:577
 msgid "Shows the selected key."
-msgstr ""
+msgstr "Montre la touche sélectionnée."
 
 #: src/wconfiguration.cpp:583
 msgid "Set key"
-msgstr ""
+msgstr "Définit la touche"
 
 #: src/wconfiguration.cpp:589
 msgid "Advanced"
@@ -335,13 +343,12 @@ msgid "Profile options"
 msgstr "Options du profil"
 
 #: src/wconfiguration.cpp:598
-#, fuzzy
 msgid "Run at startup"
 msgstr "Lancer au démarrage du système"
 
 #: src/wconfiguration.cpp:601
 msgid "Start eViacam at user logon"
-msgstr ""
+msgstr "Démarre eViacam lors de la connexion"
 
 #: src/wconfiguration.cpp:607
 msgid "Profile management"
@@ -351,11 +358,13 @@ msgstr "Gestion du profil"
 msgid "Select profile:"
 msgstr "Choisir profil :"
 
-#: src/wconfiguration.cpp:614 src/wconfiguration.cpp:620
+#: src/wconfiguration.cpp:614
+#: src/wconfiguration.cpp:620
 msgid "Chooses desired active profile"
 msgstr "Choisit le profil désiré"
 
-#: src/wconfiguration.cpp:625 src/wconfiguration.cpp:1173
+#: src/wconfiguration.cpp:625
+#: src/wconfiguration.cpp:1173
 msgid "Add profile"
 msgstr "Ajouter un profil"
 
@@ -399,7 +408,8 @@ msgstr "&Annuler"
 msgid "Discard changes?"
 msgstr "Annuler les changements ?"
 
-#: src/wconfiguration.cpp:868 src/wconfiguration.cpp:1346
+#: src/wconfiguration.cpp:868
+#: src/wconfiguration.cpp:1346
 #: src/viacamcontroller.cpp:368
 msgid "eViacam warning"
 msgstr "Avertissement eViacam"
@@ -412,7 +422,8 @@ msgstr ""
 "Ceci va désactiver la génération de clic avec eViacam .\n"
 "Êtes -vous sûr ?"
 
-#: src/wconfiguration.cpp:1096 src/wconfiguration.cpp:1276
+#: src/wconfiguration.cpp:1096
+#: src/wconfiguration.cpp:1276
 msgid "You should restart the application to apply this change"
 msgstr "Vous devez redémarrer l'application pour appliquer ce changement"
 
@@ -454,7 +465,8 @@ msgstr "Le profil existe déjà."
 msgid "Invalid profile name."
 msgstr "Nom du profil invalide."
 
-#: src/wconfiguration.cpp:1230 src/wconfiguration.cpp:1232
+#: src/wconfiguration.cpp:1230
+#: src/wconfiguration.cpp:1232
 msgid "Choose on-screen keyboard command"
 msgstr "Choisir la commande du clavier virtuel"
 
@@ -463,17 +475,19 @@ msgid "Executable files|*.exe"
 msgstr "Fichiers exécutables|*.exe"
 
 #: src/wconfiguration.cpp:1346
-#, fuzzy
 msgid ""
 "This action could make you lose the control of the computer.\n"
 "Do you want to continue?"
-msgstr "Voulez-vous vraiment quitter le programme ?"
+msgstr ""
+"Cette action pourrait vous faire perdre le contrôle de l'ordinateur.\n"
+"Voulez-vous continuer ?"
 
 #: src/wviacam.h:71
 msgid "Enable Viacam"
 msgstr "Enable Viacam"
 
-#: src/clickwindowtext.cpp:140 src/clickwindowbitmap.cpp:220
+#: src/clickwindowtext.cpp:140
+#: src/clickwindowbitmap.cpp:220
 msgid "No click"
 msgstr "Pas de clic"
 
@@ -493,12 +507,15 @@ msgstr "#Clic maintenu#"
 msgid "#Double Click#"
 msgstr "#Double clic#"
 
-#: src/clickwindowtext.cpp:163 src/clickwindowtext.cpp:323
-#: src/clickwindowbitmap.cpp:257 src/clickwindowbitmap.cpp:458
+#: src/clickwindowtext.cpp:163
+#: src/clickwindowtext.cpp:323
+#: src/clickwindowbitmap.cpp:257
+#: src/clickwindowbitmap.cpp:458
 msgid "Hide main window"
 msgstr "Cacher la fenêtre principale"
 
-#: src/clickwindowtext.cpp:325 src/clickwindowbitmap.cpp:463
+#: src/clickwindowtext.cpp:325
+#: src/clickwindowbitmap.cpp:463
 msgid "Show main window"
 msgstr "Montrer la fenêtre principale"
 
@@ -546,7 +563,8 @@ msgstr ""
 "La commande du clavier virtuel n'est pas définie.\n"
 "Vous pouvez la configurer dans le menu options."
 
-#: src/viacamcontroller.cpp:400 src/viacamcontroller.cpp:414
+#: src/viacamcontroller.cpp:400
+#: src/viacamcontroller.cpp:414
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "Erreur eViacam"
@@ -644,7 +662,8 @@ msgstr "Activer"
 msgid "Disable"
 msgstr "Désactiver"
 
-#: src/wviacam.cpp:243 src/clickwindow.h:31
+#: src/wviacam.cpp:243
+#: src/clickwindow.h:31
 msgid "Click Window"
 msgstr "Fenêtre de clic"
 
@@ -699,7 +718,7 @@ msgstr "Celle du système"
 
 #: src/activationkey.cpp:150
 msgid "Press the desired key or 'Esc' to cancel this action."
-msgstr ""
+msgstr "Appuyez sur la touche désirée ou 'Echap' pour annuler cette action."
 
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
@@ -715,3 +734,4 @@ msgstr "Webcam non détectée. Abandon."
 #~ "Si coché, le programme active\n"
 #~ "automatiquement le contrôle\n"
 #~ "du pointeur au démarrage."
+

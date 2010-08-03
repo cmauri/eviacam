@@ -1,3 +1,6 @@
+2010-08-   - Release 1.3.1
+* Updated French translation - closes: [3032896] (thanks to YannUbuntu)
+
 2010-07-16 - Release 1.3
 * New features added:
 	* Configurable key to enable/disable eViacam (linux only)
@@ -5,6 +8,7 @@
 	* Loader process: run eViacam in high prio. and restart on crash (linux only)
 	* Option to start eViacam at user logon (linux only)
 * Bug fixes. Several important bugs have been fixed:
+	* Fixed bug [2996064] - Wrong ClickWindow behaviour
 	* Fixed bug [2989528] - Restore minimized Camera Window
 	* Fixed bug [2989526] - Click Window Button text "Hide/Show Main Window"
 	* Fixed compilation warnings [2989534]. Thanks to Christian Bieder
