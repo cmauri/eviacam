@@ -3,7 +3,7 @@
 
 wxString GetAppVersion()
 {
-    wxString version(_T("1.3"));
+    wxString version(_T("1.3.1"));
     return version;
 }
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.0\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2010-07-14 18:03+0200\n"
+"POT-Creation-Date: 2010-08-03 18:30+0200\n"
 "PO-Revision-Date: 2009-11-18 16:29+0100\n"
 "Last-Translator: carles <untiburon350@gmail.com>\n"
 "Language-Team: Carles Garrigues(Lo Socarrat)\n"
@@ -604,7 +604,7 @@ msgstr ""
 "licéncia.<br>\n"
 "  Amb lo supòrt de:"
 
-#: src/wabout.cpp:153
+#: src/wabout.cpp:154
 msgid "Contributions:"
 msgstr "Contribucions:"
 

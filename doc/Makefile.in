@@ -198,7 +198,7 @@ target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = $(AUTODIRS)  
-dist_pkgdata_DATA = appc_logo.png  stsi_logo.png  viacam_cam4_html.png click.wav
+dist_pkgdata_DATA = appc_logo.png  stsi_logo.png  guadalinfo_logo.png viacam_cam4_html.png click.wav
 dist_noinst_DATA = opencvlicense.txt
 all: all-recursive
 
