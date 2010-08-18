@@ -103,7 +103,7 @@ Name: Galego; MessagesFile: compiler:Languages\Galician.isl
 Name: Italiano; MessagesFile: compiler:Languages\Italian.isl
 Name: Turkish; MessagesFile: compiler:Languages\Turkish.isl; InfoAfterFile: win32\Info\InfoAfter-tr.rtf
 Name: Occitan; MessagesFile: compiler:Languages\Occitan.isl
-Name: French; MessagesFile: compiler:Languages\French.isl
+Name: French; MessagesFile: compiler:Languages\French.isl; InfoAfterFile: win32\Info\InfoAfter-fr.rtf
 
 [Registry]
 Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: english; Languages: English
