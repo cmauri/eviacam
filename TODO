@@ -16,6 +16,8 @@ Whises
 - Good camera layer
 - Well trained haar classifier to locate face
 - Try to generate more portable binaries (apgcc)
+- Absolute face tracking.
+
 * Contributed by Gerhard Schneider:
 	1.- If I want to fetch something from my desk or if I want to drink something, I need to turn my head. This happens very intuitively and my mouse pointer makes everything messy. So a would like a "parking place" on the click bar, where I can leave the pointer. When I come back, I would use my mouse to place the pointer in the center of the screen. 
  

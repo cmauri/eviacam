@@ -1,48 +1,39 @@
-# Asturian translations for eviacam package
-# Tornes al asturianu pal paquete eviacam.
-# Copyright (C) 2009 Cesar Mauri Loba - CREA Software Systems
-# This file is distributed under the same license as the eviacam package.
-# 
 msgid ""
 msgstr ""
-"Project-Id-Version: eviacam 1.0\n"
+"Project-Id-Version: viacam 1.3.1\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2010-09-06 17:15+0200\n"
-"PO-Revision-Date: 2010-03-05 17:33+0100\n"
-"Last-Translator: AluminiuM <aluminium@softastur.org>\n"
-"Language-Team: Asturian <softastur@softastur.org>\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Hatim Alahmadi <dr.hatim@hotmail.com>\n"
+"Language-Team: Hatim Alahmadi <dr.hatim@hotmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Arabic\n"
 
 #: src/wconfiguration.h:89
 msgid "Configuration"
-msgstr "Configuración"
+msgstr "الاعدادات"
 
 #: src/wconfiguration.cpp:329
 msgid "X axis speed"
-msgstr "Velocidá del exe X"
+msgstr "السرعة الافقية"
 
 #: src/wconfiguration.cpp:334
 msgid "Sets response sensitivity for the X axis."
-msgstr ""
-"Configura la sensibilidá del\n"
-"movimientu pa'l exe X."
+msgstr "تعيين مدى الاستشعار على المحور السيني."
 
 #: src/wconfiguration.cpp:337
 msgid "Y axis speed"
-msgstr "Velocidá del exe Y"
+msgstr "السرعة الرأسية"
 
 #: src/wconfiguration.cpp:342
 msgid "Sets response sensitivity for the Y axis."
-msgstr ""
-"Configura la sensibilidá del\n"
-"movimientu pa'l exe Y."
+msgstr "تعيين مدى الاستشعار على المحور الصادي."
 
 #: src/wconfiguration.cpp:345
 msgid "Acceleration"
-msgstr "Aceleración"
+msgstr "التسارع"
 
 #: src/wconfiguration.cpp:350
 msgid ""
@@ -50,13 +41,13 @@ msgid ""
 "0 means no acceleration and\n"
 "5 maximum acceleration."
 msgstr ""
-"Configura l'aceleración del punteru.\n"
-"0 desactiva la aceleración\n"
-"5 máxima aceleración."
+"تعيين تسارع المؤشر.\n"
+"0 يعني عدم وجود تسارع\n"
+"5 تعني أعلى تسارع."
 
 #: src/wconfiguration.cpp:353
 msgid "Smoothness"
-msgstr "Suavizau"
+msgstr "النعومة"
 
 #: src/wconfiguration.cpp:358
 msgid ""
@@ -64,108 +55,110 @@ msgid ""
 "0 means no filter and \n"
 "9 maximum filtering."
 msgstr ""
-"Filtru p'amenorgar temblores\n"
-"0 desactiva'l filtru y\n"
-"9 máximu filtrau."
+"مرشح تخفيف الارتعاش.\n"
+"0 يعني لا يوجد فلتر و\n"
+"9 تعني أقصى قدرة للفلتر."
 
 #: src/wconfiguration.cpp:361
 msgid "Easy stop"
-msgstr "Parada sele"
+msgstr "توقف سلس"
 
 #: src/wconfiguration.cpp:366
 msgid ""
 "Minimum displacement (in pixels)\n"
 "to start moving pointer."
 msgstr ""
-"Desplazamientu mínimu (en píxeles) antes\n"
-"d'empezar a move'l punteru."
+"أقل عرض (بالبكسل)\n"
+"لبدء تحريك المؤشر."
 
 #: src/wconfiguration.cpp:369
 msgid "Enabled at startup"
-msgstr "Activu al aniciar"
+msgstr "تفعيل بدء التشغيل"
 
 #: src/wconfiguration.cpp:372
 msgid ""
 "If checked the program automatically \n"
 "enables cursor control at startup."
 msgstr ""
-"Si ta seleicionau activa'l control del\n"
-"punteru al anicia'l programa."
+"عند الاختيار سيقوم البرنامج آليا \n"
+"بتفعيل التحكم بالمؤشر عند بدء التشغيل."
 
 #: src/wconfiguration.cpp:375
 msgid "Motion"
-msgstr "Movimientu"
+msgstr "الحركة"
 
 #: src/wconfiguration.cpp:381
 msgid "Use workspace limit"
-msgstr ""
+msgstr "استخدام منقطة عمل محددة"
 
 #: src/wconfiguration.cpp:384
 msgid ""
 "Confines the mouse pointer\n"
 "to the selected area."
 msgstr ""
+"حرك مؤشر الفارة\n"
+"لتحديد المنطقة."
 
 #: src/wconfiguration.cpp:391
 msgid "Top"
-msgstr ""
+msgstr "اعلى"
 
 #: src/wconfiguration.cpp:396
 msgid "Top limit workspace."
-msgstr ""
+msgstr "الحد العلوي لمنطقة العمل"
 
 #: src/wconfiguration.cpp:400 src/wconfiguration.cpp:416
 #: src/wconfiguration.cpp:430 src/wconfiguration.cpp:444
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: src/wconfiguration.cpp:407 src/clickwindowbitmap.cpp:229
 msgid "Left"
-msgstr "Esquierdu"
+msgstr "يسار"
 
 #: src/wconfiguration.cpp:412
 msgid "Left limit workspace."
-msgstr ""
+msgstr "الحد الايسر لمنطقة العمل"
 
 #: src/wconfiguration.cpp:421 src/clickwindowbitmap.cpp:236
 msgid "Right"
-msgstr "Drechu"
+msgstr "يمين"
 
 #: src/wconfiguration.cpp:426
 msgid "Right limit workspace."
-msgstr ""
+msgstr "الحد الايمن لمنطقة العمل"
 
 #: src/wconfiguration.cpp:435
 msgid "Bottom"
-msgstr ""
+msgstr "اسفل"
 
 #: src/wconfiguration.cpp:440
 msgid "Bottom limit workspace."
-msgstr ""
+msgstr "الحد السفلي لمنطقة العمل"
 
 #: src/wconfiguration.cpp:447
 msgid "Workspace"
-msgstr ""
+msgstr "منطقة العمل"
 
 #: src/wconfiguration.cpp:453
 msgid "Dwell click"
-msgstr "Clic por espera"
+msgstr ""
 
 #: src/wconfiguration.cpp:458
 msgid "Dwell time (ds)"
-msgstr "Tiempu d'espera (ds)"
+msgstr ""
 
 #: src/wconfiguration.cpp:463
 msgid ""
 "Time to wait (deciseconds) \n"
 "before sending a click."
 msgstr ""
-"Tiempu d'espera (décimes de segundu)\n"
-"antes de xenerar un clic."
+"زمن الانتظار (ديسي ثانية) \n"
+"قبل إرسال النقرة."
 
 #: src/wconfiguration.cpp:466
 msgid "Dwell area"
-msgstr "Área de clic"
+msgstr ""
 
 #: src/wconfiguration.cpp:471
 msgid ""
@@ -173,89 +166,82 @@ msgid ""
 "before restarting the dwell time\n"
 "countdown."
 msgstr ""
-"Máximu desplazamientu permitiu\n"
-"antes de reaniciar la cuenta\n"
-"atrás del tiempu d'espera."
 
 #: src/wconfiguration.cpp:474
 msgid "Allow consecutive clicks"
-msgstr "Permite clics consecutivos"
+msgstr "السماح بالنقر المتتابع"
 
 #: src/wconfiguration.cpp:477
 msgid ""
 "Allows to send multiple clicks\n"
 "when the pointer is stopped."
 msgstr ""
-"Permite unviar múltiples clics\n"
-"cuando'l punteru ta parau."
+"السماح بإرسال نقرات متعددة\n"
+"عندما يكون المؤشر متوقف."
 
 #: src/wconfiguration.cpp:480
 msgid "Beep on click"
-msgstr "Reproducir son col clic"
+msgstr "صوت النقر"
 
 #: src/wconfiguration.cpp:483
 msgid "Play sound when click generated."
-msgstr "Reproduz un son al xenerar un clic."
+msgstr "إنتاج صوت عند النقر."
 
 #: src/wconfiguration.cpp:486
 msgid "Show click countdown"
-msgstr "Amuesa cuenta atrás"
+msgstr "إظهار العد التنازلي للنقر"
 
 #: src/wconfiguration.cpp:491
 msgid "Dwell click enabled"
-msgstr "Clic por espera activau"
+msgstr ""
 
 #: src/wconfiguration.cpp:494
 msgid ""
 "Enable/Disable automatic (dwell)\n"
 "click generation mechanism."
 msgstr ""
-"Activa/Desactiva'l mecanismu\n"
-"de xeneración de clic por espera."
 
 #: src/wconfiguration.cpp:497
 msgid "Click window"
-msgstr "Ventana del Clic"
+msgstr "نافذة النقر"
 
 #: src/wconfiguration.cpp:500
 msgid "Open Click Window at startup"
-msgstr "Abrir la Ventana del Clic al aniciar."
+msgstr "فتح نافذة النقر عند بدء التشغيل"
 
 #: src/wconfiguration.cpp:503
 msgid ""
 "If checked the Click Window is automatically\n"
 "opened at program startup."
-msgstr ""
-"Si ta activau abrese la Ventana del Clic\n"
-"automáticamente al anicia'l programa."
+msgstr "عند وضع إشارة صح سيتم فتح نافذة النقر تلقائيا عن التشغيل"
 
 #: src/wconfiguration.cpp:506
 msgid "Show Click Window"
-msgstr "Amosar la Ventana del Clic"
+msgstr "عرض نافذة النقر"
 
 #: src/wconfiguration.cpp:512
 msgid "Design:"
-msgstr "Diseñu"
+msgstr "التصميم:"
 
 #: src/wconfiguration.cpp:516
 msgid "Normal"
-msgstr "Normal"
+msgstr "عادي"
 
 #: src/wconfiguration.cpp:517
 msgid "Thin"
-msgstr "Finu"
+msgstr "رفيع"
 
 #: src/wconfiguration.cpp:521
 msgid "Behaviour:"
-msgstr "Comportamientu"
+msgstr "الاستجابة:"
 
 #: src/wconfiguration.cpp:525
 msgid "Normal mode"
-msgstr "Mou normal"
+msgstr "النظام العادي"
 
 #: src/wconfiguration.cpp:526
 msgid "Fast mode"
-msgstr "Mou rápidu"
+msgstr "النظام السريع"
 
 #: src/wconfiguration.cpp:529
 msgid ""
@@ -264,22 +250,18 @@ msgid ""
 "pointer over the click window\n"
 "buttons."
 msgstr ""
-"El mou rápidu dexa escoyer\n"
-"el tipu de clic pasando'l punteru\n"
-"del mur sobro los botones de la\n"
-"ventana del clic."
 
 #: src/wconfiguration.cpp:532
 msgid "Click"
-msgstr "Clic"
+msgstr "النقر"
 
 #: src/wconfiguration.cpp:538
 msgid "Face localization"
-msgstr "Llocalización facial"
+msgstr "تحديد الوجه"
 
 #: src/wconfiguration.cpp:541
 msgid "Locate face automatically"
-msgstr "Llocalizar rostru automáticamente"
+msgstr "تحديد آلي للوجه"
 
 #: src/wconfiguration.cpp:544
 msgid ""
@@ -287,148 +269,143 @@ msgid ""
 "detect your face and center the\n"
 "tracking area."
 msgstr ""
-"Cuando se activa intenta detectar el so\n"
-"rostru y centrar l'área de seguimientu\n"
-"de mou automáticu"
 
 #: src/wconfiguration.cpp:547
 msgid "Show locate face filter"
-msgstr "Amosar filtru de llocalización de rostru"
+msgstr "عرض فلتر تحديد الوجه"
 
 #: src/wconfiguration.cpp:552
 msgid "On-screen keyboard command"
-msgstr "Comandu del teclau en pantalla"
+msgstr "أوامر لوحة مفاتيح الشاشة"
 
 #: src/wconfiguration.cpp:557
 msgid "Command to run an external on-screen keyboard application."
-msgstr ""
-"Comandu pa executar un programa\n"
-"esternu de teclau en pantalla."
+msgstr "أوامر لتشغيل برنامج لوحة مفاتيح الشاشة."
 
 #: src/wconfiguration.cpp:560
 msgid "Browse..."
-msgstr "Guetar..."
+msgstr "استعراض..."
 
 #: src/wconfiguration.cpp:564 src/activationkey.h:52
 msgid "Activation key"
-msgstr ""
+msgstr "مفتاح التفعيل"
 
 #: src/wconfiguration.cpp:568
-#, fuzzy
 msgid "Use activation key"
-msgstr "Activu al aniciar"
+msgstr "استخدام مفتاح التفعيل"
 
 #: src/wconfiguration.cpp:571
 msgid ""
 "When checked it allows to enable or \n"
 "disable eViacam by pressing a key."
 msgstr ""
+"عند الاختيار سيسمح بتفعيل أو  \n"
+"تعطيل فيا كام بنقرة زر."
 
 #: src/wconfiguration.cpp:578
 msgid "Shows the selected key."
-msgstr ""
+msgstr "عرض المفتاح المختار."
 
 #: src/wconfiguration.cpp:584
 msgid "Set key"
-msgstr ""
+msgstr "تعيين المفتاح"
 
 #: src/wconfiguration.cpp:590
 msgid "Advanced"
-msgstr "Avanzao"
+msgstr "متقدم"
 
 #: src/wconfiguration.cpp:592
 msgid "Profile options"
-msgstr "Opciones de perfil"
+msgstr "الخيارات الشخصية"
 
 #: src/wconfiguration.cpp:599
-#, fuzzy
 msgid "Run at startup"
-msgstr "Executar al anicia'l sistema"
+msgstr "تشغيل عتد بدء التشغيل"
 
 #: src/wconfiguration.cpp:602
 msgid "Start eViacam at user logon"
-msgstr ""
+msgstr "بدء فيا كام عند تسجيل الدخول"
 
 #: src/wconfiguration.cpp:608
 msgid "Profile management"
-msgstr "Xestión de perfiles"
+msgstr "إدارة الخيارات الشخصية"
 
 #: src/wconfiguration.cpp:613
 msgid "Select profile:"
-msgstr "Escoyer perfil"
+msgstr "اختر ملف الخيارات الشخصية"
 
 #: src/wconfiguration.cpp:615 src/wconfiguration.cpp:621
 msgid "Chooses desired active profile"
-msgstr "Seleiciona'l perfil activu"
+msgstr ""
 
 #: src/wconfiguration.cpp:626 src/wconfiguration.cpp:1174
 msgid "Add profile"
-msgstr "Nueu perfil"
+msgstr "إضافة ملف خيارات شخصية"
 
 #: src/wconfiguration.cpp:629
 msgid "Delete profile"
-msgstr "Esborriar perfil"
+msgstr "حذف ملف خيارات شخصية"
 
 #: src/wconfiguration.cpp:632
 msgid "Selected camera"
-msgstr "Cámara seleicioná"
+msgstr "الكاميرا المختارة"
 
 #: src/wconfiguration.cpp:643
 msgid "Settings..."
-msgstr "Opciones..."
+msgstr "اعدادات..."
 
 #: src/wconfiguration.cpp:646
 msgid "Change"
-msgstr "Cambear"
+msgstr "تغيير"
 
 #: src/wconfiguration.cpp:651
 msgid "Language:"
-msgstr "Llingua:"
+msgstr "اللغة:"
 
 #: src/wconfiguration.cpp:658
 msgid "Run at system startup"
-msgstr "Executar al anicia'l sistema"
+msgstr "تشغيل عند بدء تشغيل النظام"
 
 #: src/wconfiguration.cpp:663
 msgid "General options"
-msgstr "Opciones xenerales"
+msgstr "خيارات عامة"
 
 #: src/wconfiguration.cpp:670
 msgid "&OK"
-msgstr "&Aceutar"
+msgstr "&موافق"
 
 #: src/wconfiguration.cpp:673
 msgid "&Cancel"
-msgstr "&Encaboxar"
+msgstr "&الغاء"
 
 #: src/wconfiguration.cpp:869
 msgid "Discard changes?"
-msgstr "¿Descartar cambeos?"
+msgstr "تجهل التغييرات؟"
 
 #: src/wconfiguration.cpp:869 src/wconfiguration.cpp:1347
 #: src/viacamcontroller.cpp:369
 msgid "eViacam warning"
-msgstr "Alvertencia"
+msgstr "تحذير من فيا كام"
 
 #: src/wconfiguration.cpp:970
 msgid ""
 "This action will disable eViacam click generation.\n"
 "Are you sure?"
 msgstr ""
-"Esta aición desactivará la xeneración automática de clics.\n"
-"¿Ta seguru?"
+"سيتم تعطيل برنامج فيا كام.\n"
+"هل أنت متأكد؟"
 
 #: src/wconfiguration.cpp:1097 src/wconfiguration.cpp:1277
 msgid "You should restart the application to apply this change"
-msgstr "Ye preciso reaniciar l'aplicación pa qu'esti cambeu tenga efectu."
+msgstr "يجب أن تعيد تشغيل البرنامج لتطبيق التغييرات"
 
 #: src/wconfiguration.cpp:1118
 msgid ""
 "Current profile has unsaved changes.\n"
 "Continue anyway?"
 msgstr ""
-"Nun se guardaron los cambeos del perfil actual.\n"
-"¿Siguir ensin guardar?"
+"لم يتم حفظ تعديلات الخيارات الشخصية في هذا الملف.\n"
+"هل استمر ؟"
 
 #: src/wconfiguration.cpp:1124
 #, c-format
@@ -436,8 +413,8 @@ msgid ""
 "This action will load %s profile settings.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"Esta aición cargará les opciones del perfil %s.\n"
-"¿Siguir?"
+"سيتم تحميل ملف الخيارات الشخصية %s .\n"
+"هل تريد الاستمرار؟"
 
 #: src/wconfiguration.cpp:1155
 #, c-format
@@ -445,119 +422,118 @@ msgid ""
 "This action will delete %s profile.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"Esta aición esborriará'l perfil %s.\n"
-"¿Tá seguru?"
+"سيتم حذف ملف الخيارات الشخصية %s .\n"
+"هل تريد الاستمرار؟"
 
 #: src/wconfiguration.cpp:1174
 msgid "Enter new profile name"
-msgstr "Nome del nueu perfil"
+msgstr "اكتب اسم جديد لملف الخيارات الشخصية"
 
 #: src/wconfiguration.cpp:1185
 msgid "Profile already exists."
-msgstr "El perfil ya esiste."
+msgstr "هذا الملف موجود مسبقا"
 
 #: src/wconfiguration.cpp:1191
 msgid "Invalid profile name."
-msgstr "Nome de perfil incorrectu."
+msgstr "اسم الملف غير صالح."
 
 #: src/wconfiguration.cpp:1231 src/wconfiguration.cpp:1233
 msgid "Choose on-screen keyboard command"
-msgstr "Escueya'l programa de teclau en pantalla"
+msgstr "اختر أمر لوحة مفاتيح الشاشة"
 
 #: src/wconfiguration.cpp:1231
 msgid "Executable files|*.exe"
-msgstr "Archivos executables|*.exe"
+msgstr "ملف تنفيذي|*.exe"
 
 #: src/wconfiguration.cpp:1347
-#, fuzzy
 msgid ""
 "This action could make you lose the control of the computer.\n"
 "Do you want to continue?"
 msgstr ""
-"Esta aición zarrará'l programa.\n"
-"¿Ta seguru?"
+"سيتم فقد التحكم بالحاسب.\n"
+"هل تريد الاستمرار؟"
 
 #: src/wviacam.h:71
 msgid "Enable Viacam"
-msgstr "Enable Viacam"
+msgstr "تفعيل فيا كام"
 
 #: src/clickwindowtext.cpp:140 src/clickwindowbitmap.cpp:220
 msgid "No click"
-msgstr "Non clic"
+msgstr "بدون نقر"
 
 #: src/clickwindowtext.cpp:147
 msgid "#Left#"
-msgstr "#Esquierdu#"
+msgstr "#يسار#"
 
 #: src/clickwindowtext.cpp:151
 msgid "#Right#"
-msgstr "#Drechu#"
+msgstr "#يمين#"
 
 #: src/clickwindowtext.cpp:155
 msgid "#Drag#"
-msgstr "#Arrastre#"
+msgstr "#سحب#"
 
 #: src/clickwindowtext.cpp:159
 msgid "#Double Click#"
-msgstr "#Doble clic#"
+msgstr "#نقرتين#"
 
 #: src/clickwindowtext.cpp:163 src/clickwindowtext.cpp:323
 #: src/clickwindowbitmap.cpp:257 src/clickwindowbitmap.cpp:458
 msgid "Hide main window"
-msgstr "Anubrir ventana"
+msgstr "اخفاء النافذة الرئيسية"
 
 #: src/clickwindowtext.cpp:325 src/clickwindowbitmap.cpp:463
 msgid "Show main window"
-msgstr "Amosar ventana"
+msgstr "إظهار النافذة الرئيسية"
 
 #: src/clickwindowbitmap.cpp:243
 msgid "Drag"
-msgstr "Arrastre"
+msgstr "سحب"
 
 #: src/clickwindowbitmap.cpp:250
 msgid "Double Click"
-msgstr "Doble clic"
+msgstr "نقرتين"
 
 #: src/wabout.h:51
 msgid "About Enable Viacam"
-msgstr "Tocante a Enable Viacam"
+msgstr "حول تفعيل فيا كام"
 
 #: src/viacamcontroller.cpp:143
 msgid "Not detected any camera. Aborting"
-msgstr "Cámara non detectada. Encaboxando."
+msgstr "لم يتم العثور على أي كاميرا. احباط"
 
 #: src/viacamcontroller.cpp:165
 msgid "Choose the camera to use"
-msgstr "Escueye la cámara a usar"
+msgstr "اختيار الكاميرا المستخدمة"
 
 #: src/viacamcontroller.cpp:181
 msgid ""
 "Can not initialize the camera.\n"
 "Perhaps is being used by other application."
 msgstr ""
-"Nun se pué anicializar la cámara.\n"
-"Quiciabes ta siendo usá per otra aplicación."
+"لم يتم تهيئة الكاميرا.\n"
+"ربما يتم استخدام من قبل برنامج آخر."
 
 #: src/viacamcontroller.cpp:369
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
 msgstr ""
-"Esta aición desactivará eViacam.\n"
-"¿Ta seguru?"
+"سيتم تعطيل برنامج فيا كام.\n"
+"هل أنت متأكد؟"
 
 #: src/viacamcontroller.cpp:401
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
 msgstr ""
-"Nun se configuró'l comandu del teclau en pantalla.\n"
-"Pue seleicionalu al traviés del dialogu d'opciones."
+"لم يتم تعيين أمر لوحة مفاتيح الشاشة.\n"
+"فضلا, قم بإعدادها من نافذة خيارات."
 
 #: src/viacamcontroller.cpp:401 src/viacamcontroller.cpp:415
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
-msgstr "Error"
+msgstr "خطأ في فيا كام"
 
 #: src/viacamcontroller.cpp:411
 #, c-format
@@ -566,9 +542,9 @@ msgid ""
 "Command %s failed.\n"
 "Please, configure it through options dialog."
 msgstr ""
-"Nun se pue executar el teclau en pantalla.\n"
-"Falló el comandu %s.\n"
-"Pue configuralu al traviés del diálogu d'opciones."
+"لا يمكن تشغيل لوحة مفاتيح الشاشة.\n"
+"فشل تطبيق الأمر %s .\n"
+"فضلا, قم بإعادة إعداده من نافذة خيارات."
 
 #: src/viacamcontroller.cpp:413
 msgid ""
@@ -580,94 +556,86 @@ msgid ""
 "to disable User Account Control (UAC) to avoid such problems\n"
 "or try another osk, e.g. Click-N-Type."
 msgstr ""
-"\n"
-"\n"
-"En Windows Vista/7 dellos problemes fueren reportaos\n"
-"co'l teclau en pantalla del sistema por defectu. Estos\n"
-"asuntos tan baxo investigación. Mientres pues\n"
-"desautiva'l control d'usuariu \"User Account Control (UAC)\" pa solventar "
-"estos problemes\n"
-"o probar con otru teclau, por exemplo."
 
 #: src/wabout.cpp:142
 msgid "Close"
-msgstr "Zarrar"
+msgstr "اغلاق"
 
 #: src/wabout.cpp:148
 msgid "A cross platform webcam based mouse emulator"
-msgstr "Emulador de mur al traviés de cámara web"
+msgstr "برنامج محاكي للفارة باستخدام كاميرا الويب ومتعدد الأنظمة"
 
 #: src/wabout.cpp:150
 msgid ""
 "Released under GNU/GPL license. See license for details.<br>\n"
 "  With the support of: "
 msgstr ""
-"Espublizau baxo llicencia GNU/GPL. Ver la llicencia pa los detais.<br>\n"
-" Col sofitu de:"
+"منتج تحت رخصة GNU/GPL. شاهد الرخصة في التفاصيل.<br>\n"
+"بدعم من :"
 
 #: src/wabout.cpp:153
 msgid "Contributions:"
-msgstr "Contribuciones:"
+msgstr ""
 
 #: src/wviacam.cpp:216
 msgid "E&nable / Disable"
-msgstr "A&ctivar / Desactivar"
+msgstr "ت&فعيل / تعطيل"
 
 #: src/wviacam.cpp:218
 msgid "&Exit"
-msgstr "&Zarrar"
+msgstr "&خروج"
 
 #: src/wviacam.cpp:219
 msgid "&File"
-msgstr "&Archivu"
+msgstr "&ملف"
 
 #: src/wviacam.cpp:221
 msgid "&Click Window"
-msgstr "&Ventana del clic"
+msgstr "&نافذة النقر"
 
 #: src/wviacam.cpp:223
 msgid "&Track face"
-msgstr "&Llocalizar rostru"
+msgstr "&تتبع الوجه"
 
 #: src/wviacam.cpp:225
 msgid "&Options..."
-msgstr "&Opciones..."
+msgstr "&خيارات..."
 
 #: src/wviacam.cpp:226
 msgid "&Configuration"
-msgstr "&Configuración"
+msgstr "&اعدادات"
 
 #: src/wviacam.cpp:228
 msgid "&About..."
-msgstr "&Tocante a..."
+msgstr "&حول..."
 
 #: src/wviacam.cpp:229
 msgid "&Help"
-msgstr "A&ida"
+msgstr "&مساعدة"
 
 #: src/wviacam.cpp:236
 msgid "Enable"
-msgstr "Activar"
+msgstr "تفعيل"
 
 #: src/wviacam.cpp:239
 msgid "Disable"
-msgstr "Desactivar"
+msgstr "تعطيل"
 
 #: src/wviacam.cpp:243 src/clickwindow.h:31
 msgid "Click Window"
-msgstr "Ventana del clic"
+msgstr "نافذة النقر"
 
 #: src/wviacam.cpp:246
 msgid "On-screen keyboard"
-msgstr "Teclau en pantalla"
+msgstr "لوحة مفاتيح الشاشة"
 
 #: src/wviacam.cpp:250
 msgid "Options"
-msgstr "Opciones"
+msgstr "خيارات"
 
 #: src/wviacam.cpp:254
 msgid "Help"
-msgstr "Aida"
+msgstr "مساعدة"
 
 #: src/wviacam.cpp:261
 msgid ""
@@ -676,119 +644,39 @@ msgid ""
 "the exposure time of your camera when\n"
 "necessary."
 msgstr ""
-"Visor de velocidá de captura. Pa un correutu\n"
-"funcionamientu tién que ser superior a 25. Reduza'l\n"
-"tiempu de esposición de la cámara si ye necesario."
 
 #: src/wviacam.cpp:358
 #, c-format
 msgid " %li fps (good)"
-msgstr " %li fps (correutu)"
+msgstr " %li فريم/ث (جيد)"
 
 #: src/wviacam.cpp:361
 #, c-format
 msgid " %li fps (could be improved)"
-msgstr " %li fps (meyorable)"
+msgstr " %li فريم/ث (يمكن التحسين)"
 
 #: src/wviacam.cpp:364
 #, c-format
 msgid " %li fps (too low)"
-msgstr " %li fps (demasiau baxu)"
+msgstr " %li فريم/ث (بطئ جدا)"
 
 #: src/wviacam.cpp:410
 msgid ""
 "This action will close the program.\n"
 "Are you sure?"
 msgstr ""
-"Esta aición zarrará'l programa.\n"
-"¿Ta seguru?"
+"سيتم إغلاق البرنامج.\n"
+"هل انت متأكد؟"
 
 #: src/langnames-utf8.h:29
 msgid "System default"
-msgstr "Llingua del sistema"
+msgstr "افتراضي النظام"
 
 #: src/activationkey.cpp:150
 msgid "Press the desired key or 'Esc' to cancel this action."
 msgstr ""
+"انقر على الزر المطلوب أو النقر على زر Esc في لوحة المفاتيح لإلغاء العملية."
 
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
-msgstr "Cámara non detectada. Encaboxando."
-
-#, fuzzy
-#~ msgid "Enabled run on startup"
-#~ msgstr "Activu al aniciar"
-
-#, fuzzy
-#~ msgid "If checked the program will run on startup."
-#~ msgstr ""
-#~ "Si ta seleicionau activa'l control del\n"
-#~ "punteru al anicia'l programa."
-
-#~ msgid "Startup"
-#~ msgstr "Aniciu"
-
-#~ msgid "Profiles allows storing several named sets of options."
-#~ msgstr ""
-#~ "Los perfiles permiten almacenar diverses\n"
-#~ "configuraciones identificaes pol nome."
-
-#~ msgid ""
-#~ "<font face=\"Arial, Helvetica, sans-serif\">\n"
-#~ "<h1><img src=\"#IMAGE_PATH#/viacam_cam4_html.png\" width=\"120\" height="
-#~ "\"96\">Enable Viacam</h1>\n"
-#~ "<p>A cross platform webcam based mouse emulator</p>\n"
-#~ "<p>v#APPVERSION#</p>\n"
-#~ "<p>(c) 2008-09 C&eacute;sar Mauri Loba - CREA Software Systems<br>\n"
-#~ "  http://viacam.org<br>\n"
-#~ "  E-Mail: Cesar Mauri &lt;cesar@crea-si.com&gt;</p>\n"
-#~ "<p> Released under GNU/GPL license. See license for details.<br>\n"
-#~ "  With the support of: </p>\n"
-#~ "<p><img src=\"#IMAGE_PATH#/stsi_logo.png\" width=\"200\" height=\"57\" "
-#~ "border=\"0\"><br>\n"
-#~ "<img src=\"#IMAGE_PATH#/appc_logo.png\" width=\"200\" height=\"57\" "
-#~ "border=\"0\"> </p>\n"
-#~ "</font>"
-#~ msgstr ""
-#~ "<font face=\"Arial, Helvetica, sans-serif\">\n"
-#~ "<h1><img src=\"#IMAGE_PATH#/viacam_cam4_html.png\" width=\"120\" height="
-#~ "\"96\">Enable Viacam</h1>\n"
-#~ "<p>Emulador de mur multiplataforma al traviés de webcam</p>\n"
-#~ "<p>v#APPVERSION#</p>\n"
-#~ "<p>(c) 2008-09 C&eacute;sar Mauri Loba - CREA Software Systems<br>\n"
-#~ "  http://viacam.org<br>\n"
-#~ "  E-Mail: Cesar Mauri &lt;cesar@crea-si.com&gt;</p>\n"
-#~ "<p> Baxo llicencia GNU/GPL. Veya'l documentu de llicencia pa más detalles."
-#~ "<br>\n"
-#~ "Col sofitu de: </p>\n"
-#~ "<p><img src=\"#IMAGE_PATH#/stsi_logo.png\" width=\"200\" height=\"57\" "
-#~ "border=\"0\"><br>\n"
-#~ "<img src=\"#IMAGE_PATH#/appc_logo.png\" width=\"200\" height=\"57\" "
-#~ "border=\"0\"> </p>\n"
-#~ "</font>"
-
-#~ msgid ""
-#~ "<br><h3>Contributions:</h3><br>Miguel Bouzada (Galego translation)"
-#~ "<br>Giuseppe Masciopinto (Italiano translation)<br>Samuel Thibault"
-#~ msgstr ""
-#~ "<br><h3>Contribuciones:</h3><br>Miguel Bouzada (Galego translation)"
-#~ "<br>Giuseppe Masciopinto (Italiano translation)<br>AluminiuM (Asturianu "
-#~ "translation)<br>Samuel Thibault"
-
-#~ msgid "Catalan"
-#~ msgstr "Catalán"
-
-#~ msgid "English"
-#~ msgstr "Inglés"
-
-#~ msgid "Spanish"
-#~ msgstr "Español"
-
-#~ msgid "eViacam information"
-#~ msgstr "Información"
-
-#~ msgid "Speed up"
-#~ msgstr "Augmenta velocitat"
-
-#~ msgid "Speed down"
-#~ msgstr "Disminueix velocitat"
+msgstr "لم يتم العثور على الكاميرا. إحباط"

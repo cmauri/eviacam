@@ -72,6 +72,7 @@ mkdir $(TargetDir)tr
 mkdir $(TargetDir)de
 mkdir $(TargetDir)oc
 mkdir $(TargetDir)fr
+mkdir $(TargetDir)ar
 copy &quot;$(SolutionDir)..\po\ca.gmo&quot; $(TargetDir)ca\eviacam.mo
 copy &quot;$(SolutionDir)..\po\es.gmo&quot; $(TargetDir)es\eviacam.mo
 copy &quot;$(SolutionDir)..\po\gl.gmo&quot; $(TargetDir)gl\eviacam.mo
@@ -80,6 +81,7 @@ copy &quot;$(SolutionDir)..\po\tr.gmo&quot; $(TargetDir)tr\eviacam.mo
 copy &quot;$(SolutionDir)..\po\de.gmo&quot; $(TargetDir)de\eviacam.mo
 copy &quot;$(SolutionDir)..\po\oc.gmo&quot; $(TargetDir)oc\eviacam.mo
 copy &quot;$(SolutionDir)..\po\fr.gmo&quot; $(TargetDir)fr\eviacam.mo
+copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 "/>
 			<Tool
 				Name="VCResourceCompilerTool"
@@ -149,6 +151,7 @@ mkdir $(TargetDir)tr
 mkdir $(TargetDir)de
 mkdir $(TargetDir)oc
 mkdir $(TargetDir)fr
+mkdir $(TargetDir)ar
 copy &quot;$(SolutionDir)..\po\ca.gmo&quot; $(TargetDir)ca\eviacam.mo
 copy &quot;$(SolutionDir)..\po\es.gmo&quot; $(TargetDir)es\eviacam.mo
 copy &quot;$(SolutionDir)..\po\gl.gmo&quot; $(TargetDir)gl\eviacam.mo
@@ -157,6 +160,7 @@ copy &quot;$(SolutionDir)..\po\tr.gmo&quot; $(TargetDir)tr\eviacam.mo
 copy &quot;$(SolutionDir)..\po\de.gmo&quot; $(TargetDir)de\eviacam.mo
 copy &quot;$(SolutionDir)..\po\oc.gmo&quot; $(TargetDir)oc\eviacam.mo
 copy &quot;$(SolutionDir)..\po\fr.gmo&quot; $(TargetDir)fr\eviacam.mo
+copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 "/>
 			<Tool
 				Name="VCResourceCompilerTool"

@@ -99,7 +99,8 @@ void CViacamController::SetUpLanguage ()
 	m_languageId= m_configManager->ReadLanguage ();
 
 	m_locale->AddCatalogLookupPathPrefix(wxT("."));
-	m_locale->Init(m_languageId, wxLOCALE_CONV_ENCODING);
+	if (!m_locale->Init(m_languageId, wxLOCALE_CONV_ENCODING))
+		printf ("Cannot load locale: %s. Switching to default locale.\n");
 	m_locale->AddCatalog(wxT("eviacam"));
 }
 
