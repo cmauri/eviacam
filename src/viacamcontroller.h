@@ -66,8 +66,10 @@ public:
         inline const bool GetEnabledActivationKey () const;
         inline void SetEnabledActivationKey (bool value);
 	inline void SetActivationKeyCode (int value);
-        inline const wxString GetActivationKeyName () const;
-
+	inline const wxString GetActivationKeyName () const;
+	inline const wxString GetMotionCalibration () const;
+	inline void SetMotionCalibration (int value);
+	
 	void SetLanguage (const int id);
 	inline const int GetLanguage () const;
 
@@ -124,6 +126,7 @@ private:
 	wxString m_onScreenKeyboardCommand;
 	float m_frameRate;
 	bool m_enabledActivationKey;
+	bool m_motionCalibration;
 #if defined(__WXGTK__) 
 	int m_keyCode;
 	int m_lastKeyCode;
@@ -246,5 +249,16 @@ inline const wxString CViacamController::GetActivationKeyName () const
 	return wxString(_T(""));
 #endif
 }
+
+inline const bool CViacamController::GetMotionCalibration () const
+{
+	return m_motionCalibration;
+}
+
+inline void CViacamController::SetMotionCalibration (bool value)
+{
+	m_motionCalibration= value;
+}
+
 
 #endif
