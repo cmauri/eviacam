@@ -29,6 +29,7 @@
  */
 #include "wconfiguration.h"
 #include <X11/Xlib.h>
+#include <wx/timer.h>
 
 ////@begin includes
 ////@end includes

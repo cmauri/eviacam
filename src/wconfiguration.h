@@ -23,6 +23,11 @@
 #include "wx/spinctrl.h"
 ////@end includes
 #include "cautostart.h"
+#include <wx/dialog.h>
+#include <wx/checkbox.h>
+#include <wx/combobox.h>
+#include <wx/choice.h>
+#include <wx/button.h>
 
 /*!
  * Forward declarations
