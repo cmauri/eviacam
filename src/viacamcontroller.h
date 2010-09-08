@@ -67,8 +67,8 @@ public:
         inline void SetEnabledActivationKey (bool value);
 	inline void SetActivationKeyCode (int value);
 	inline const wxString GetActivationKeyName () const;
-	inline const wxString GetMotionCalibration () const;
-	inline void SetMotionCalibration (int value);
+	inline const bool GetMotionCalibration () const;
+	inline void SetMotionCalibration (bool value);
 	
 	void SetLanguage (const int id);
 	inline const int GetLanguage () const;
