@@ -154,6 +154,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\timeutil.cpp">
+			</File>
+			<File
 				RelativePath=".\wxappbar.cpp">
 			</File>
 		</Filter>
@@ -171,6 +174,9 @@
 			</File>
 			<File
 				RelativePath=".\mousecontrol.h">
+			</File>
+			<File
+				RelativePath=".\timeutil.h">
 			</File>
 			<File
 				RelativePath=".\wxappbar.h">

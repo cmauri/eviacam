@@ -20,15 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "dwellaction.h"
-
-#if defined(WIN32)
-// Windows
-#include <windows.h>
-#else
-// Linux
-#include <stdlib.h>
-#include <sys/time.h>
-#endif
+#include "timeutil.h"
 
 CDwellAction::CDwellAction(unsigned long waitTimeMs)
 {
@@ -40,25 +32,9 @@ CDwellAction::~CDwellAction(void)
 {
 }
 
-inline
-unsigned long CDwellAction::GetMiliCount()
-{
-#if defined(WIN32)
-	// Windows
-	return GetTickCount();
-#else
-	// Linux
-	struct timeval tv;
-	//struct timezone tz;
-	gettimeofday(&tv, NULL); //&tz);
-
-	return (((unsigned long) tv.tv_sec * 1000000 + (unsigned long) tv.tv_usec) / 1000);
-#endif	
-}
-
 void CDwellAction::Reset ()
 {
-	m_timeCountMs= GetMiliCount(); //GetTickCount();
+	m_timeCountMs= CTimeUtil::GetMiliCount();
 	m_actionDone= false;
 }
 
@@ -67,7 +43,7 @@ bool CDwellAction::Update()
 {
 	if (!m_actionDone)
 	{
-		unsigned long now= GetMiliCount(); //GetTickCount();
+		unsigned long now= CTimeUtil::GetMiliCount();
 		if ((now - m_timeCountMs)> m_waitTimeMs)
 		{
 			m_actionDone= true;
