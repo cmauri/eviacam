@@ -47,7 +47,7 @@ CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libwxutil_la_LIBADD =
 am_libwxutil_la_OBJECTS = wxappbar.lo mousecontrol.lo dwellaction.lo \
-	configbase.lo configmanager.lo
+	configbase.lo configmanager.lo timeutil.lo
 libwxutil_la_OBJECTS = $(am_libwxutil_la_OBJECTS)
 libwxutil_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -204,13 +204,13 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-noinst_HEADERS = dwellaction.h mousecontrol.h wxappbar.h configbase.h configmanager.h
+noinst_HEADERS = dwellaction.h mousecontrol.h wxappbar.h configbase.h configmanager.h timeutil.h
 INCLUDES = 
 METASOURCES = AUTO
 dist_noinst_DATA = wxutil.vcproj
 noinst_LTLIBRARIES = libwxutil.la
 libwxutil_la_LDFLAGS = $(all_libraries)
-libwxutil_la_SOURCES = wxappbar.cpp mousecontrol.cpp dwellaction.cpp configbase.cpp configmanager.cpp
+libwxutil_la_SOURCES = wxappbar.cpp mousecontrol.cpp dwellaction.cpp configbase.cpp configmanager.cpp timeutil.cpp
 all: all-am
 
 .SUFFIXES:
@@ -266,6 +266,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/configmanager.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dwellaction.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mousecontrol.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timeutil.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wxappbar.Plo@am__quote@
 
 .cpp.o:

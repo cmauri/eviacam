@@ -1,10 +1,10 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        dwellaction.h
+// Name:        timeutil.cpp
 // Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008 - 2010 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -19,34 +19,28 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
+#include "timeutil.h"
 
-#if !defined(DWELLACTION_H)
-#define DWELLACTION_H
-
-class CDwellAction
-{
-public:
-	CDwellAction(unsigned long waitTimeMs= 1000);
-	~CDwellAction(void);
-	inline const unsigned long GetWaitTimeMs () const;
-	inline void SetWaitTimeMs (unsigned long val);
-	void Reset ();
-	// True if time-out
-	bool Update();
-		
-private:
-	unsigned long m_timeCountMs, m_waitTimeMs;
-	bool m_actionDone;
-};
-
-inline const unsigned long CDwellAction::GetWaitTimeMs () const
-{ 
-	return m_waitTimeMs; 
-}
-
-inline void CDwellAction::SetWaitTimeMs (unsigned long val)
-{ 	
-	m_waitTimeMs= val; 
-}
-
+#if defined(WIN32)
+// Windows
+#include <windows.h>
+#else
+// Linux
+#include <stdlib.h>
+#include <sys/time.h>
 #endif
+
+unsigned long CTimeUtil::GetMiliCount()
+{
+#if defined(WIN32)
+	// Windows
+	return GetTickCount();
+#else
+	// Linux
+	struct timeval tv;
+	//struct timezone tz;
+	gettimeofday(&tv, NULL); //&tz);
+
+	return (((unsigned long) tv.tv_sec * 1000000 + (unsigned long) tv.tv_usec) / 1000);
+#endif	
+}
