@@ -28,6 +28,7 @@
 #include <wx/combobox.h>
 #include <wx/choice.h>
 #include <wx/button.h>
+//#include "cmotioncalibration.h"
 
 /*!
  * Forward declarations
@@ -53,6 +54,7 @@ class CViacamController;
 #define ID_SPINCTRL_SMOOTHNESS 10002
 #define ID_SPINCTRL_EASYSTOP 10003
 #define ID_CHECKBOX_ENABLE_AT_STARTUP 10023
+#define ID_BUTTON 10074
 #define ID_PANEL_WORKSPACE 10061
 #define ID_CHECKBOX_WORKSPACE_LIMIT 10062
 #define ID_SPINCTRL_TOP_WORKSPACE 10063
@@ -144,6 +146,9 @@ public:
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_AT_STARTUP
     void OnCheckboxEnableAtStartupClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON
+    void OnButtonClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_WORKSPACE_LIMIT
     void OnCheckboxWorkspaceLimitClick( wxCommandEvent& event );
@@ -271,6 +276,7 @@ private:
     wxSpinCtrl* m_spinSmoothness;
     wxSpinCtrl* m_spinEasyStop;
     wxCheckBox* m_chkEnabledAtStartup;
+    wxButton* m_buttonCalibrateMotion;
     wxCheckBox* m_chkEnabledWorkspace;
     wxSpinCtrl* m_spin_top_workspace;
     wxSpinCtrl* m_spin_left_workspace;
@@ -314,6 +320,7 @@ private:
 	CViacamController* m_pViacamController;
     CAutostart* m_pAutostart;
 	bool m_dirty;
+	//CMotionCalibration* m_pMotionCalibration;
 };
 
 

@@ -43,6 +43,7 @@
 #include "mouseoutput.h"
 #include "camwindow.h"
 #include "wconfiguration.h"
+#include "cmotioncalibration.h"
 
 //#include "icons/eviacam_mini.xpm"
 
@@ -76,6 +77,8 @@ CViacamController::CViacamController(void)
 	m_locale= new wxLocale ();
 	m_configManager= new CConfigManager(this);
 	m_frameRate= 0;
+	m_pMotionCalibration= new CMotionCalibration(this);
+	m_motionCalibrationEnabled= false;
 #if defined(__WXGTK__) 
 	m_pAutostart = new CAutostart(wxT("eviacam.desktop"));
 #endif
@@ -441,7 +444,10 @@ void CViacamController::ProcessImage (IplImage *pImage)
 
 	// Send mouse motion
 	BEGIN_GUI_CALL_MUTEX()
-	m_pMouseOutput->ProcessRelativePointerMove (-vx, vy);
+	if (m_motionCalibrationEnabled)
+		m_pMotionCalibration->ComputeMotionRange (-vx, vy);
+	else
+		m_pMouseOutput->ProcessRelativePointerMove (-vx, vy);
 	END_GUI_CALL_MUTEX()
 
 #if defined(__WXGTK__) 
@@ -454,4 +460,9 @@ void CViacamController::ProcessImage (IplImage *pImage)
 		m_lastKeyCode = keyCode;
         }
 #endif // __WXGTK___
+}
+
+void CViacamController::StartMotionCalibration (void)
+{
+	m_pMotionCalibration->InitMotionCalibration();
 }

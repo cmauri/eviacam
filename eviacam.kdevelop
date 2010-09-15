@@ -226,8 +226,8 @@
       <root>/usr/lib64/qt-3.3</root>
       <includestyle>3</includestyle>
       <designerintegration>EmbeddedKDevDesigner</designerintegration>
-      <qmake/>
-      <designer/>
+      <qmake></qmake>
+      <designer></designer>
       <designerpluginpaths/>
     </qt>
     <creategettersetter>

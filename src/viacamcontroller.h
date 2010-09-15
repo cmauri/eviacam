@@ -39,10 +39,13 @@
 #include "activationkey.h"
 #endif // __WXGTK___
 #include "cautostart.h"
+#include "cmotioncalibration.h"
 
 class WViacam;
 //class CCamera;
 class CMouseOutput;
+class WConfiguration;
+class CMotionCalibration;
 
 class CViacamController : public CProcessImage, public CConfigBase, public wxDialog
 {
@@ -69,6 +72,8 @@ public:
 	inline const wxString GetActivationKeyName () const;
 	inline const bool GetMotionCalibration () const;
 	inline void SetMotionCalibration (bool value);
+	void StartMotionCalibration (void);
+	
 	
 	void SetLanguage (const int id);
 	inline const int GetLanguage () const;
@@ -126,13 +131,14 @@ private:
 	wxString m_onScreenKeyboardCommand;
 	float m_frameRate;
 	bool m_enabledActivationKey;
-	bool m_motionCalibration;
+	bool m_motionCalibrationEnabled;
 #if defined(__WXGTK__) 
 	int m_keyCode;
 	int m_lastKeyCode;
 #endif
 	CAutostart* m_pAutostart;
 	WConfiguration* m_pConfiguration;
+	CMotionCalibration* m_pMotionCalibration;
 	
 };
 
@@ -252,12 +258,12 @@ inline const wxString CViacamController::GetActivationKeyName () const
 
 inline const bool CViacamController::GetMotionCalibration () const
 {
-	return m_motionCalibration;
+	return m_motionCalibrationEnabled;
 }
 
 inline void CViacamController::SetMotionCalibration (bool value)
 {
-	m_motionCalibration= value;
+	m_motionCalibrationEnabled= value;
 }
 
 
