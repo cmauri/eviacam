@@ -24,7 +24,7 @@
 #define MOUSEOUTPUT_H
 
 
-#include "dwellaction.h"
+#include "waittime.h"
 #include "mousecontrol.h"
 #include "configbase.h"
 #include <math.h>
@@ -111,7 +111,7 @@ class CMouseOutput : public CMouseControl, public CConfigBase
  
         bool m_restrictedWorkingArea;
 	bool m_enabled;
-	CDwellAction m_dwellAction;
+	CWaitTime m_dwellAction;
 	EClickMode m_clickMode;
 	bool m_beepOnClick;
 	bool m_consecutiveClicksAllowed;

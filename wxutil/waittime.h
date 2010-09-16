@@ -20,14 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
-#if !defined(DWELLACTION_H)
-#define DWELLACTION_H
+#if !defined(WAITTIME_H)
+#define WAITTIME_H
 
-class CDwellAction
+class CWaitTime
 {
 public:
-	CDwellAction(unsigned long waitTimeMs= 1000);
-	~CDwellAction(void);
+	CWaitTime(unsigned long waitTimeMs= 1000);
+	~CWaitTime(void);
 	inline const unsigned long GetWaitTimeMs () const;
 	inline void SetWaitTimeMs (unsigned long val);
 	void Reset ();
@@ -39,12 +39,12 @@ private:
 	bool m_actionDone;
 };
 
-inline const unsigned long CDwellAction::GetWaitTimeMs () const
+inline const unsigned long CWaitTime::GetWaitTimeMs () const
 { 
 	return m_waitTimeMs; 
 }
 
-inline void CDwellAction::SetWaitTimeMs (unsigned long val)
+inline void CWaitTime::SetWaitTimeMs (unsigned long val)
 { 	
 	m_waitTimeMs= val; 
 }

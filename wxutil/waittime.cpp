@@ -19,27 +19,27 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
-#include "dwellaction.h"
+#include "waittime.h"
 #include "timeutil.h"
 
-CDwellAction::CDwellAction(unsigned long waitTimeMs)
+CWaitTime::CWaitTime(unsigned long waitTimeMs)
 {
 	m_waitTimeMs= waitTimeMs;
 	Reset ();
 }
 
-CDwellAction::~CDwellAction(void)
+CWaitTime::~CWaitTime(void)
 {
 }
 
-void CDwellAction::Reset ()
+void CWaitTime::Reset ()
 {
 	m_timeCountMs= CTimeUtil::GetMiliCount();
 	m_actionDone= false;
 }
 
 // True if time out
-bool CDwellAction::Update()
+bool CWaitTime::Update()
 {
 	if (!m_actionDone)
 	{

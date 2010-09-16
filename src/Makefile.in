@@ -60,9 +60,9 @@ am_eviacam_OBJECTS = eviacam-activationkey.$(OBJEXT) \
 	eviacam-motiontracker.$(OBJEXT) eviacam-mouseoutput.$(OBJEXT) \
 	eviacam-viacamcontroller.$(OBJEXT) eviacam-wabout.$(OBJEXT) \
 	eviacam-wconfiguration.$(OBJEXT) \
+	eviacam-wconfirmcalibration.$(OBJEXT) \
 	eviacam-wmotioncalibrationx.$(OBJEXT) \
 	eviacam-wmotioncalibrationy.$(OBJEXT) \
-	eviacam-wconfirmcalibration.$(OBJEXT) \
 	eviacam-wviacam.$(OBJEXT)
 eviacam_OBJECTS = $(am_eviacam_OBJECTS)
 eviacam_DEPENDENCIES = $(top_builddir)/wxutil/libwxutil.la \
@@ -258,7 +258,8 @@ top_srcdir = @top_srcdir@
 noinst_HEADERS = activationkey.h cautostart.h clickwindow.h clickwindowbitmap.h \
 	clickwindowcontroller.h clickwindowtext.h cmotioncalibration.h guiapp.h keyboardbitmapcheck.h \
 	langnames-utf8.h motiontracker.h mouseoutput.h version.h viacamcontroller.h wabout.h \
-	wconfiguration.h wmotioncalibrationx.h wmotioncalibrationy.h wconfirmcalibration.h wviacam.h
+	wconfiguration.h wconfirmcalibration.h wmotioncalibrationx.h \
+	wmotioncalibrationy.h wviacam.h
 
 dist_noinst_DATA = version.h.in langnames-utf16.h gui.pjd gui.rc eviacam.vcproj \
 	icons/on.xpm icons/eviacam.ico  icons/eviacam_mini.ico  \
@@ -285,9 +286,10 @@ eviacamloader_SOURCES = eviacamloader.c
 
 # the application source, library search path, and link libraries
 eviacam_SOURCES = activationkey.cpp cautostart.cpp clickwindow.cpp \
-	clickwindowbitmap.cpp clickwindowcontroller.cpp clickwindowtext.cpp \
-	cmotioncalibration.cpp guiapp.cpp keyboardbitmapcheck.cpp motiontracker.cpp mouseoutput.cpp \
-	viacamcontroller.cpp wabout.cpp wconfiguration.cpp wmotioncalibrationx.cpp wmotioncalibrationy.cpp wconfirmcalibration.cpp wviacam.cpp
+	clickwindowbitmap.cpp clickwindowcontroller.cpp clickwindowtext.cpp cmotioncalibration.cpp \
+	guiapp.cpp keyboardbitmapcheck.cpp motiontracker.cpp mouseoutput.cpp \
+	viacamcontroller.cpp wabout.cpp wconfiguration.cpp wconfirmcalibration.cpp \
+	wmotioncalibrationx.cpp wmotioncalibrationy.cpp wviacam.cpp
 
 eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11
@@ -634,6 +636,20 @@ eviacam-wconfiguration.obj: wconfiguration.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-wconfiguration.obj `if test -f 'wconfiguration.cpp'; then $(CYGPATH_W) 'wconfiguration.cpp'; else $(CYGPATH_W) '$(srcdir)/wconfiguration.cpp'; fi`
 
+eviacam-wconfirmcalibration.o: wconfirmcalibration.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-wconfirmcalibration.o -MD -MP -MF $(DEPDIR)/eviacam-wconfirmcalibration.Tpo -c -o eviacam-wconfirmcalibration.o `test -f 'wconfirmcalibration.cpp' || echo '$(srcdir)/'`wconfirmcalibration.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-wconfirmcalibration.Tpo $(DEPDIR)/eviacam-wconfirmcalibration.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wconfirmcalibration.cpp' object='eviacam-wconfirmcalibration.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-wconfirmcalibration.o `test -f 'wconfirmcalibration.cpp' || echo '$(srcdir)/'`wconfirmcalibration.cpp
+
+eviacam-wconfirmcalibration.obj: wconfirmcalibration.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-wconfirmcalibration.obj -MD -MP -MF $(DEPDIR)/eviacam-wconfirmcalibration.Tpo -c -o eviacam-wconfirmcalibration.obj `if test -f 'wconfirmcalibration.cpp'; then $(CYGPATH_W) 'wconfirmcalibration.cpp'; else $(CYGPATH_W) '$(srcdir)/wconfirmcalibration.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-wconfirmcalibration.Tpo $(DEPDIR)/eviacam-wconfirmcalibration.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wconfirmcalibration.cpp' object='eviacam-wconfirmcalibration.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-wconfirmcalibration.obj `if test -f 'wconfirmcalibration.cpp'; then $(CYGPATH_W) 'wconfirmcalibration.cpp'; else $(CYGPATH_W) '$(srcdir)/wconfirmcalibration.cpp'; fi`
+
 eviacam-wmotioncalibrationx.o: wmotioncalibrationx.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-wmotioncalibrationx.o -MD -MP -MF $(DEPDIR)/eviacam-wmotioncalibrationx.Tpo -c -o eviacam-wmotioncalibrationx.o `test -f 'wmotioncalibrationx.cpp' || echo '$(srcdir)/'`wmotioncalibrationx.cpp
 @am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-wmotioncalibrationx.Tpo $(DEPDIR)/eviacam-wmotioncalibrationx.Po
@@ -661,20 +677,6 @@ eviacam-wmotioncalibrationy.obj: wmotioncalibrationy.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wmotioncalibrationy.cpp' object='eviacam-wmotioncalibrationy.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-wmotioncalibrationy.obj `if test -f 'wmotioncalibrationy.cpp'; then $(CYGPATH_W) 'wmotioncalibrationy.cpp'; else $(CYGPATH_W) '$(srcdir)/wmotioncalibrationy.cpp'; fi`
-
-eviacam-wconfirmcalibration.o: wconfirmcalibration.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-wconfirmcalibration.o -MD -MP -MF $(DEPDIR)/eviacam-wconfirmcalibration.Tpo -c -o eviacam-wconfirmcalibration.o `test -f 'wconfirmcalibration.cpp' || echo '$(srcdir)/'`wconfirmcalibration.cpp
-@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-wconfirmcalibration.Tpo $(DEPDIR)/eviacam-wconfirmcalibration.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wconfirmcalibration.cpp' object='eviacam-wconfirmcalibration.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-wconfirmcalibration.o `test -f 'wconfirmcalibration.cpp' || echo '$(srcdir)/'`wconfirmcalibration.cpp
-
-eviacam-wconfirmcalibration.obj: wconfirmcalibration.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-wconfirmcalibration.obj -MD -MP -MF $(DEPDIR)/eviacam-wconfirmcalibration.Tpo -c -o eviacam-wconfirmcalibration.obj `if test -f 'wconfirmcalibration.cpp'; then $(CYGPATH_W) 'wconfirmcalibration.cpp'; else $(CYGPATH_W) '$(srcdir)/wconfirmcalibration.cpp'; fi`
-@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-wconfirmcalibration.Tpo $(DEPDIR)/eviacam-wconfirmcalibration.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wconfirmcalibration.cpp' object='eviacam-wconfirmcalibration.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-wconfirmcalibration.obj `if test -f 'wconfirmcalibration.cpp'; then $(CYGPATH_W) 'wconfirmcalibration.cpp'; else $(CYGPATH_W) '$(srcdir)/wconfirmcalibration.cpp'; fi`
 
 eviacam-wviacam.o: wviacam.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-wviacam.o -MD -MP -MF $(DEPDIR)/eviacam-wviacam.Tpo -c -o eviacam-wviacam.o `test -f 'wviacam.cpp' || echo '$(srcdir)/'`wviacam.cpp

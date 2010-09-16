@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.0\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2010-09-06 17:15+0200\n"
+"POT-Creation-Date: 2010-09-16 16:13+0200\n"
 "PO-Revision-Date: 2010-07-12 21:21+0100\n"
 "Last-Translator: Cesar Mauri <cesar@crea-si.com>\n"
 "Language-Team: Spanish <cesar@crea-si.com>\n"
@@ -16,35 +16,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/wconfiguration.h:89
+#: src/wconfiguration.h:96
 msgid "Configuration"
 msgstr "Configuración"
 
-#: src/wconfiguration.cpp:329
+#: src/wconfiguration.cpp:333
 msgid "X axis speed"
 msgstr "Velocidad eje X"
 
-#: src/wconfiguration.cpp:334
+#: src/wconfiguration.cpp:338
 msgid "Sets response sensitivity for the X axis."
 msgstr ""
 "Configura la sensibilidad del\n"
 "movimiento para el eje X."
 
-#: src/wconfiguration.cpp:337
+#: src/wconfiguration.cpp:341
 msgid "Y axis speed"
 msgstr "Velocidad eje Y"
 
-#: src/wconfiguration.cpp:342
+#: src/wconfiguration.cpp:346
 msgid "Sets response sensitivity for the Y axis."
 msgstr ""
 "Configura la sensibilidad del\n"
 "movimiento para el eje Y."
 
-#: src/wconfiguration.cpp:345
+#: src/wconfiguration.cpp:349
 msgid "Acceleration"
 msgstr "Aceleración"
 
-#: src/wconfiguration.cpp:350
+#: src/wconfiguration.cpp:354
 msgid ""
 "Sets pointer's acceleration.\n"
 "0 means no acceleration and\n"
@@ -54,11 +54,11 @@ msgstr ""
 "0 desactiva la aceleración\n"
 "5 configura la aceleración máxima."
 
-#: src/wconfiguration.cpp:353
+#: src/wconfiguration.cpp:357
 msgid "Smoothness"
 msgstr "Suavizado"
 
-#: src/wconfiguration.cpp:358
+#: src/wconfiguration.cpp:362
 msgid ""
 "Tremor reduction filter.\n"
 "0 means no filter and \n"
@@ -68,11 +68,11 @@ msgstr ""
 "0 desactiva el filtro y\n"
 "9 configura el filtrado máximo."
 
-#: src/wconfiguration.cpp:361
+#: src/wconfiguration.cpp:365
 msgid "Easy stop"
 msgstr "Parada fácil"
 
-#: src/wconfiguration.cpp:366
+#: src/wconfiguration.cpp:370
 msgid ""
 "Minimum displacement (in pixels)\n"
 "to start moving pointer."
@@ -80,11 +80,11 @@ msgstr ""
 "Desplazamiento mínimo (en píxeles) antes\n"
 "de comenzar a mover el puntero."
 
-#: src/wconfiguration.cpp:369
+#: src/wconfiguration.cpp:373
 msgid "Enabled at startup"
 msgstr "Activado al iniciar"
 
-#: src/wconfiguration.cpp:372
+#: src/wconfiguration.cpp:376
 msgid ""
 "If checked the program automatically \n"
 "enables cursor control at startup."
@@ -92,15 +92,19 @@ msgstr ""
 "Si está seleccionado activa el control del\n"
 "puntero al iniciar el programa."
 
-#: src/wconfiguration.cpp:375
+#: src/wconfiguration.cpp:379
+msgid "Calibrate motion"
+msgstr ""
+
+#: src/wconfiguration.cpp:382
 msgid "Motion"
 msgstr "Movimiento"
 
-#: src/wconfiguration.cpp:381
+#: src/wconfiguration.cpp:388
 msgid "Use workspace limit"
 msgstr "Usar límite de área de trabajo"
 
-#: src/wconfiguration.cpp:384
+#: src/wconfiguration.cpp:391
 msgid ""
 "Confines the mouse pointer\n"
 "to the selected area."
@@ -108,56 +112,56 @@ msgstr ""
 "Confina el puntero del ratón\n"
 "dentro del área seleccionada."
 
-#: src/wconfiguration.cpp:391
+#: src/wconfiguration.cpp:398
 msgid "Top"
 msgstr "Superior"
 
-#: src/wconfiguration.cpp:396
+#: src/wconfiguration.cpp:403
 msgid "Top limit workspace."
 msgstr "Límite superior"
 
-#: src/wconfiguration.cpp:400 src/wconfiguration.cpp:416
-#: src/wconfiguration.cpp:430 src/wconfiguration.cpp:444
+#: src/wconfiguration.cpp:407 src/wconfiguration.cpp:423
+#: src/wconfiguration.cpp:437 src/wconfiguration.cpp:451
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:407 src/clickwindowbitmap.cpp:229
+#: src/wconfiguration.cpp:414 src/clickwindowbitmap.cpp:229
 msgid "Left"
 msgstr "Izquierdo"
 
-#: src/wconfiguration.cpp:412
+#: src/wconfiguration.cpp:419
 msgid "Left limit workspace."
 msgstr "Límite izquierdo."
 
-#: src/wconfiguration.cpp:421 src/clickwindowbitmap.cpp:236
+#: src/wconfiguration.cpp:428 src/clickwindowbitmap.cpp:236
 msgid "Right"
 msgstr "Derecho"
 
-#: src/wconfiguration.cpp:426
+#: src/wconfiguration.cpp:433
 msgid "Right limit workspace."
 msgstr "Límite derecho."
 
-#: src/wconfiguration.cpp:435
+#: src/wconfiguration.cpp:442
 msgid "Bottom"
 msgstr "Inferior"
 
-#: src/wconfiguration.cpp:440
+#: src/wconfiguration.cpp:447
 msgid "Bottom limit workspace."
 msgstr "Límite inferior."
 
-#: src/wconfiguration.cpp:447
+#: src/wconfiguration.cpp:454
 msgid "Workspace"
 msgstr "Área de trabajo"
 
-#: src/wconfiguration.cpp:453
+#: src/wconfiguration.cpp:460
 msgid "Dwell click"
 msgstr "Clic por espera"
 
-#: src/wconfiguration.cpp:458
+#: src/wconfiguration.cpp:465
 msgid "Dwell time (ds)"
 msgstr "Tiempo de espera (ds)"
 
-#: src/wconfiguration.cpp:463
+#: src/wconfiguration.cpp:470
 msgid ""
 "Time to wait (deciseconds) \n"
 "before sending a click."
@@ -165,11 +169,11 @@ msgstr ""
 "Tiempo de espera (décimas de segundo)\n"
 "antes de generar un clic."
 
-#: src/wconfiguration.cpp:466
+#: src/wconfiguration.cpp:473
 msgid "Dwell area"
 msgstr "Área de clic"
 
-#: src/wconfiguration.cpp:471
+#: src/wconfiguration.cpp:478
 msgid ""
 "Maximum allowed displacement\n"
 "before restarting the dwell time\n"
@@ -179,11 +183,11 @@ msgstr ""
 "antes de reiniciar la cuenta\n"
 "atrás del tiempo de espera."
 
-#: src/wconfiguration.cpp:474
+#: src/wconfiguration.cpp:481
 msgid "Allow consecutive clicks"
 msgstr "Permite clics consecutivos"
 
-#: src/wconfiguration.cpp:477
+#: src/wconfiguration.cpp:484
 msgid ""
 "Allows to send multiple clicks\n"
 "when the pointer is stopped."
@@ -191,23 +195,23 @@ msgstr ""
 "Permite enviar múltiples clics\n"
 "cuando el puntero está parado."
 
-#: src/wconfiguration.cpp:480
+#: src/wconfiguration.cpp:487
 msgid "Beep on click"
 msgstr "Reproducir sonido con el clic"
 
-#: src/wconfiguration.cpp:483
+#: src/wconfiguration.cpp:490
 msgid "Play sound when click generated."
 msgstr "Reproduce un sonido al generar un clic."
 
-#: src/wconfiguration.cpp:486
+#: src/wconfiguration.cpp:493
 msgid "Show click countdown"
 msgstr "Muestra cuenta atrás"
 
-#: src/wconfiguration.cpp:491
+#: src/wconfiguration.cpp:498
 msgid "Dwell click enabled"
 msgstr "Clic por espera activado"
 
-#: src/wconfiguration.cpp:494
+#: src/wconfiguration.cpp:501
 msgid ""
 "Enable/Disable automatic (dwell)\n"
 "click generation mechanism."
@@ -215,15 +219,15 @@ msgstr ""
 "Activa/Desactiva el mecanismo\n"
 "de generación de clic por espera."
 
-#: src/wconfiguration.cpp:497
+#: src/wconfiguration.cpp:504
 msgid "Click window"
 msgstr "Ventana del Clic"
 
-#: src/wconfiguration.cpp:500
+#: src/wconfiguration.cpp:507
 msgid "Open Click Window at startup"
 msgstr "Abrir la Ventana del Clic al iniciar."
 
-#: src/wconfiguration.cpp:503
+#: src/wconfiguration.cpp:510
 msgid ""
 "If checked the Click Window is automatically\n"
 "opened at program startup."
@@ -231,35 +235,35 @@ msgstr ""
 "Si está activado la Ventana del Clic se abre\n"
 "automáticamente al iniciar el programa."
 
-#: src/wconfiguration.cpp:506
+#: src/wconfiguration.cpp:513
 msgid "Show Click Window"
 msgstr "Mostrar la Ventana del Clic"
 
-#: src/wconfiguration.cpp:512
+#: src/wconfiguration.cpp:519
 msgid "Design:"
 msgstr "Diseño"
 
-#: src/wconfiguration.cpp:516
+#: src/wconfiguration.cpp:523
 msgid "Normal"
 msgstr "Normal"
 
-#: src/wconfiguration.cpp:517
+#: src/wconfiguration.cpp:524
 msgid "Thin"
 msgstr "Fino"
 
-#: src/wconfiguration.cpp:521
+#: src/wconfiguration.cpp:528
 msgid "Behaviour:"
 msgstr "Comportamiento"
 
-#: src/wconfiguration.cpp:525
+#: src/wconfiguration.cpp:532
 msgid "Normal mode"
 msgstr "Modo normal"
 
-#: src/wconfiguration.cpp:526
+#: src/wconfiguration.cpp:533
 msgid "Fast mode"
 msgstr "Modo rápido"
 
-#: src/wconfiguration.cpp:529
+#: src/wconfiguration.cpp:536
 msgid ""
 "Fast mode enables click type\n"
 "selection by hovering the mouse\n"
@@ -271,19 +275,19 @@ msgstr ""
 "del ratón sobre los botones de la\n"
 "ventana del clic."
 
-#: src/wconfiguration.cpp:532
+#: src/wconfiguration.cpp:539
 msgid "Click"
 msgstr "Clic"
 
-#: src/wconfiguration.cpp:538
+#: src/wconfiguration.cpp:545
 msgid "Face localization"
 msgstr "Localización facial"
 
-#: src/wconfiguration.cpp:541
+#: src/wconfiguration.cpp:548
 msgid "Locate face automatically"
 msgstr "Localizar rostro automáticamente"
 
-#: src/wconfiguration.cpp:544
+#: src/wconfiguration.cpp:551
 msgid ""
 "When enabled tries to automatically\n"
 "detect your face and center the\n"
@@ -293,33 +297,33 @@ msgstr ""
 "rostro y centrar el área de seguimiento\n"
 "de forma automática."
 
-#: src/wconfiguration.cpp:547
+#: src/wconfiguration.cpp:554
 msgid "Show locate face filter"
 msgstr "Mostrar filtro de localización de rostro"
 
-#: src/wconfiguration.cpp:552
+#: src/wconfiguration.cpp:559
 msgid "On-screen keyboard command"
 msgstr "Comando del teclado en pantalla"
 
-#: src/wconfiguration.cpp:557
+#: src/wconfiguration.cpp:564
 msgid "Command to run an external on-screen keyboard application."
 msgstr ""
 "Comando para ejecutar un programa\n"
 "externo de teclado en pantalla."
 
-#: src/wconfiguration.cpp:560
+#: src/wconfiguration.cpp:567
 msgid "Browse..."
 msgstr "Buscar..."
 
-#: src/wconfiguration.cpp:564 src/activationkey.h:52
+#: src/wconfiguration.cpp:571 src/activationkey.h:53
 msgid "Activation key"
 msgstr "Tecla de activación"
 
-#: src/wconfiguration.cpp:568
+#: src/wconfiguration.cpp:575
 msgid "Use activation key"
 msgstr "Usar la tecla de activación"
 
-#: src/wconfiguration.cpp:571
+#: src/wconfiguration.cpp:578
 msgid ""
 "When checked it allows to enable or \n"
 "disable eViacam by pressing a key."
@@ -327,92 +331,92 @@ msgstr ""
 "Si está seleccionado permite activar o\n"
 "desactivar eViacam presionando una tecla."
 
-#: src/wconfiguration.cpp:578
+#: src/wconfiguration.cpp:585
 msgid "Shows the selected key."
 msgstr "Muestra la tecla seleccionada."
 
-#: src/wconfiguration.cpp:584
+#: src/wconfiguration.cpp:591
 msgid "Set key"
 msgstr "Establecer tecla"
 
-#: src/wconfiguration.cpp:590
+#: src/wconfiguration.cpp:597
 msgid "Advanced"
 msgstr "Avanzado"
 
-#: src/wconfiguration.cpp:592
+#: src/wconfiguration.cpp:599
 msgid "Profile options"
 msgstr "Opciones de perfil"
 
-#: src/wconfiguration.cpp:599
+#: src/wconfiguration.cpp:606
 msgid "Run at startup"
 msgstr "Ejecutar al inicio"
 
-#: src/wconfiguration.cpp:602
+#: src/wconfiguration.cpp:609
 msgid "Start eViacam at user logon"
 msgstr "Ejecutar eViacam al iniciar la sesión"
 
-#: src/wconfiguration.cpp:608
+#: src/wconfiguration.cpp:615
 msgid "Profile management"
 msgstr "Gestión de perfiles"
 
-#: src/wconfiguration.cpp:613
+#: src/wconfiguration.cpp:620
 msgid "Select profile:"
 msgstr "Escoger perfil"
 
-#: src/wconfiguration.cpp:615 src/wconfiguration.cpp:621
+#: src/wconfiguration.cpp:622 src/wconfiguration.cpp:628
 msgid "Chooses desired active profile"
 msgstr "Selecciona el perfil activo"
 
-#: src/wconfiguration.cpp:626 src/wconfiguration.cpp:1174
+#: src/wconfiguration.cpp:633 src/wconfiguration.cpp:1181
 msgid "Add profile"
 msgstr "Nuevo perfil"
 
-#: src/wconfiguration.cpp:629
+#: src/wconfiguration.cpp:636
 msgid "Delete profile"
 msgstr "Borrar perfil"
 
-#: src/wconfiguration.cpp:632
+#: src/wconfiguration.cpp:639
 msgid "Selected camera"
 msgstr "Cámara seleccionada"
 
-#: src/wconfiguration.cpp:643
+#: src/wconfiguration.cpp:650
 msgid "Settings..."
 msgstr "Opciones..."
 
-#: src/wconfiguration.cpp:646
+#: src/wconfiguration.cpp:653
 msgid "Change"
 msgstr "Cambiar"
 
-#: src/wconfiguration.cpp:651
+#: src/wconfiguration.cpp:658
 msgid "Language:"
 msgstr "Idioma:"
 
-#: src/wconfiguration.cpp:658
+#: src/wconfiguration.cpp:665
 msgid "Run at system startup"
 msgstr "Ejecutar al iniciar el sistema"
 
-#: src/wconfiguration.cpp:663
+#: src/wconfiguration.cpp:670
 msgid "General options"
 msgstr "Opciones generales"
 
-#: src/wconfiguration.cpp:670
+#: src/wconfiguration.cpp:677
 msgid "&OK"
 msgstr "&Aceptar"
 
-#: src/wconfiguration.cpp:673
+#: src/wconfiguration.cpp:680
 msgid "&Cancel"
 msgstr "&Cancelar"
 
-#: src/wconfiguration.cpp:869
+#: src/wconfiguration.cpp:876
 msgid "Discard changes?"
 msgstr "¿Descartar cambios?"
 
-#: src/wconfiguration.cpp:869 src/wconfiguration.cpp:1347
-#: src/viacamcontroller.cpp:369
+#: src/wconfiguration.cpp:876 src/wconfiguration.cpp:1354
+#: src/viacamcontroller.cpp:372
 msgid "eViacam warning"
 msgstr "Advertencia"
 
-#: src/wconfiguration.cpp:970
+#: src/wconfiguration.cpp:977
 msgid ""
 "This action will disable eViacam click generation.\n"
 "Are you sure?"
@@ -420,12 +424,12 @@ msgstr ""
 "Esta acción desactivará la generación automática de clics.\n"
 "¿Está seguro?"
 
-#: src/wconfiguration.cpp:1097 src/wconfiguration.cpp:1277
+#: src/wconfiguration.cpp:1104 src/wconfiguration.cpp:1284
 msgid "You should restart the application to apply this change"
 msgstr ""
 "Es necesario reiniciar la aplicación para que este cambio tenga efecto."
 
-#: src/wconfiguration.cpp:1118
+#: src/wconfiguration.cpp:1125
 msgid ""
 "Current profile has unsaved changes.\n"
 "Continue anyway?"
@@ -433,7 +437,7 @@ msgstr ""
 "No se han guardado los cambios del perfil actual.\n"
 "¿Continuar sin guardar?"
 
-#: src/wconfiguration.cpp:1124
+#: src/wconfiguration.cpp:1131
 #, c-format
 msgid ""
 "This action will load %s profile settings.\n"
@@ -442,7 +446,7 @@ msgstr ""
 "Esta acción cargará las opciones del perfil %s.\n"
 "¿Continuar?"
 
-#: src/wconfiguration.cpp:1155
+#: src/wconfiguration.cpp:1162
 #, c-format
 msgid ""
 "This action will delete %s profile.\n"
@@ -451,27 +455,27 @@ msgstr ""
 "Esta acción borrará el perfil %s.\n"
 "¿Está seguro?"
 
-#: src/wconfiguration.cpp:1174
+#: src/wconfiguration.cpp:1181
 msgid "Enter new profile name"
 msgstr "Nombre del nuevo perfil"
 
-#: src/wconfiguration.cpp:1185
+#: src/wconfiguration.cpp:1192
 msgid "Profile already exists."
 msgstr "El perfil ya existe."
 
-#: src/wconfiguration.cpp:1191
+#: src/wconfiguration.cpp:1198
 msgid "Invalid profile name."
 msgstr "Nombre de perfil incorrecto."
 
-#: src/wconfiguration.cpp:1231 src/wconfiguration.cpp:1233
+#: src/wconfiguration.cpp:1238 src/wconfiguration.cpp:1240
 msgid "Choose on-screen keyboard command"
 msgstr "Escoja el programa de teclado en pantalla"
 
-#: src/wconfiguration.cpp:1231
+#: src/wconfiguration.cpp:1238
 msgid "Executable files|*.exe"
 msgstr "Archivos ejecutables|*.exe"
 
-#: src/wconfiguration.cpp:1347
+#: src/wconfiguration.cpp:1354
 msgid ""
 "This action could make you lose the control of the computer.\n"
 "Do you want to continue?"
@@ -524,15 +528,15 @@ msgstr "Doble clic"
 msgid "About Enable Viacam"
 msgstr "Acerca de Enable Viacam"
 
-#: src/viacamcontroller.cpp:143
+#: src/viacamcontroller.cpp:146
 msgid "Not detected any camera. Aborting"
 msgstr "No se detecta ninguna cámara. Abortando."
 
-#: src/viacamcontroller.cpp:165
+#: src/viacamcontroller.cpp:168
 msgid "Choose the camera to use"
 msgstr "Escoja la cámara a utilizar"
 
-#: src/viacamcontroller.cpp:181
+#: src/viacamcontroller.cpp:184
 msgid ""
 "Can not initialize the camera.\n"
 "Perhaps is being used by other application."
@@ -540,7 +544,7 @@ msgstr ""
 "No se puede inicializar la cámara\n"
 "Quizá la esté utilizando otra aplicación."
 
-#: src/viacamcontroller.cpp:369
+#: src/viacamcontroller.cpp:372
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -548,7 +552,7 @@ msgstr ""
 "Esta acción desactivará eViacam.\n"
 "¿Está seguro?"
 
-#: src/viacamcontroller.cpp:401
+#: src/viacamcontroller.cpp:404
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -556,12 +560,12 @@ msgstr ""
 "No se ha configurado el comando del teclado en pantalla.\n"
 "Puedo seleccionarlo a través del dialogo de opciones."
 
-#: src/viacamcontroller.cpp:401 src/viacamcontroller.cpp:415
+#: src/viacamcontroller.cpp:404 src/viacamcontroller.cpp:418
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "Error"
 
-#: src/viacamcontroller.cpp:411
+#: src/viacamcontroller.cpp:414
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -572,7 +576,7 @@ msgstr ""
 "El comando %s ha fallado.\n"
 "Puede configurarlo a través del diálogo de opciones."
 
-#: src/viacamcontroller.cpp:413
+#: src/viacamcontroller.cpp:416
 msgid ""
 "\n"
 "\n"

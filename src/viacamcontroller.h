@@ -24,7 +24,8 @@
 #define VIACAMCONTROLLER_H
 
 #include "capturethread.h"
-#include "dwellaction.h"
+//#include "dwellaction.h"
+#include "waittime.h"
 #include "clickwindowcontroller.h"
 #include "motiontracker.h"
 #include "configbase.h"
@@ -119,7 +120,8 @@ private:
 	CCaptureThread* m_pCaptureThread;	
 	CClickWindowController* m_pClickWindowController;
 	CMouseOutput* m_pMouseOutput;
-	CDwellAction m_dWell;	
+	//CDwellAction m_dWell;	
+	CWaitTime m_dWell;	
 	CMotionTracker m_motionTracker;
 	CConfigManager* m_configManager;
 	wxLocale* m_locale;
