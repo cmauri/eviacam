@@ -69,9 +69,10 @@ void CMotionCalibration::InitValues()
 	m_state = WAITING_X;
 }
 
-void CMotionCalibration::InitMotionCalibration()
+bool CMotionCalibration::InitMotionCalibration()
 {
 	float newSpeedX, newSpeedY;
+	bool changes = false;
 	
 	m_xSpeedBackup = m_pViacamController->GetMouseOutput()->GetXSpeed();
 	m_ySpeedBackup = m_pViacamController->GetMouseOutput()->GetYSpeed();
@@ -103,6 +104,7 @@ void CMotionCalibration::InitMotionCalibration()
 			switch (CONFIRMATIONButton)
 			{
 				case BUTTON_OK:
+					changes = true;
 					m_state = FINISHED;
 					break;
 				case BUTTON_CANCEL:
@@ -126,6 +128,7 @@ void CMotionCalibration::InitMotionCalibration()
 			}
 		}
 	}
+	return changes;
 }
 
 

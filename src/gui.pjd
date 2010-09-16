@@ -1836,6 +1836,14 @@ necessary."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
+            <string name="proxy-AlignH">"Centre"</string>
+            <string name="proxy-AlignV">"Centre"</string>
+            <long name="proxy-Stretch factor">0</long>
+            <long name="proxy-Border">5</long>
+            <bool name="proxy-wxLEFT">1</bool>
+            <bool name="proxy-wxRIGHT">1</bool>
+            <bool name="proxy-wxTOP">1</bool>
+            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -8258,6 +8266,14 @@ disable eViacam by pressing a key."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
+            <string name="proxy-AlignH">"Centre"</string>
+            <string name="proxy-AlignV">"Centre"</string>
+            <long name="proxy-Stretch factor">0</long>
+            <long name="proxy-Border">5</long>
+            <bool name="proxy-wxLEFT">1</bool>
+            <bool name="proxy-wxRIGHT">1</bool>
+            <bool name="proxy-wxTOP">1</bool>
+            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -8382,11 +8398,11 @@ disable eViacam by pressing a key."</string>
           <string name="proxy-Texture style">"Tiled"</string>
           <bool name="proxy-wxDEFAULT_DIALOG_STYLE">0</bool>
           <bool name="proxy-wxCAPTION">1</bool>
-          <bool name="proxy-wxRESIZE_BORDER">1</bool>
-          <bool name="proxy-wxSYSTEM_MENU">1</bool>
+          <bool name="proxy-wxRESIZE_BORDER">0</bool>
+          <bool name="proxy-wxSYSTEM_MENU">0</bool>
           <bool name="proxy-wxSTAY_ON_TOP">0</bool>
           <bool name="proxy-wxDIALOG_NO_PARENT">0</bool>
-          <bool name="proxy-wxCLOSE_BOX">1</bool>
+          <bool name="proxy-wxCLOSE_BOX">0</bool>
           <bool name="proxy-wxMAXIMIZE_BOX">0</bool>
           <bool name="proxy-wxMINIMIZE_BOX">0</bool>
           <bool name="proxy-wxDIALOG_MODAL">1</bool>
@@ -8549,11 +8565,11 @@ disable eViacam by pressing a key."</string>
           <string name="proxy-Texture style">"Tiled"</string>
           <bool name="proxy-wxDEFAULT_DIALOG_STYLE">0</bool>
           <bool name="proxy-wxCAPTION">1</bool>
-          <bool name="proxy-wxRESIZE_BORDER">1</bool>
-          <bool name="proxy-wxSYSTEM_MENU">1</bool>
+          <bool name="proxy-wxRESIZE_BORDER">0</bool>
+          <bool name="proxy-wxSYSTEM_MENU">0</bool>
           <bool name="proxy-wxSTAY_ON_TOP">0</bool>
           <bool name="proxy-wxDIALOG_NO_PARENT">0</bool>
-          <bool name="proxy-wxCLOSE_BOX">1</bool>
+          <bool name="proxy-wxCLOSE_BOX">0</bool>
           <bool name="proxy-wxMAXIMIZE_BOX">0</bool>
           <bool name="proxy-wxMINIMIZE_BOX">0</bool>
           <bool name="proxy-wxDIALOG_MODAL">1</bool>
@@ -8593,14 +8609,6 @@ disable eViacam by pressing a key."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -8724,11 +8732,11 @@ disable eViacam by pressing a key."</string>
           <string name="proxy-Texture style">"Tiled"</string>
           <bool name="proxy-wxDEFAULT_DIALOG_STYLE">0</bool>
           <bool name="proxy-wxCAPTION">1</bool>
-          <bool name="proxy-wxRESIZE_BORDER">1</bool>
-          <bool name="proxy-wxSYSTEM_MENU">1</bool>
+          <bool name="proxy-wxRESIZE_BORDER">0</bool>
+          <bool name="proxy-wxSYSTEM_MENU">0</bool>
           <bool name="proxy-wxSTAY_ON_TOP">0</bool>
           <bool name="proxy-wxDIALOG_NO_PARENT">0</bool>
-          <bool name="proxy-wxCLOSE_BOX">1</bool>
+          <bool name="proxy-wxCLOSE_BOX">0</bool>
           <bool name="proxy-wxMAXIMIZE_BOX">0</bool>
           <bool name="proxy-wxMINIMIZE_BOX">0</bool>
           <bool name="proxy-wxDIALOG_MODAL">1</bool>
@@ -8868,7 +8876,7 @@ Are you sure?"</string>
               <bool name="proxy-wxFIXED_MINSIZE">0</bool>
               <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
               <document>
-                <string name="title">"wxButton: ID_BUTTON_OK"</string>
+                <string name="title">"wxButton: ID_BUTTON1"</string>
                 <string name="type">"dialog-control-document"</string>
                 <string name="filename">""</string>
                 <string name="icon-name">"dialogcontrol"</string>
@@ -8877,8 +8885,8 @@ Are you sure?"</string>
                 <long name="title-mode">0</long>
                 <long name="locked">0</long>
                 <string name="proxy-type">"wbButtonProxy"</string>
-                <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnButtonOkClick|NONE||WConfirmCalibration"</string>
-                <string name="proxy-Id name">"ID_BUTTON_OK"</string>
+                <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnButton1Click|NONE||WConfirmCalibration"</string>
+                <string name="proxy-Id name">"ID_BUTTON1"</string>
                 <long name="proxy-Id value">10078</long>
                 <string name="proxy-Name">""</string>
                 <string name="proxy-Class">"wxButton"</string>
@@ -8934,7 +8942,7 @@ Are you sure?"</string>
                 <string name="proxy-Custom ctor arguments">""</string>
               </document>
               <document>
-                <string name="title">"wxButton: ID_BUTTON_CANCEL"</string>
+                <string name="title">"wxButton: ID_BUTTON2"</string>
                 <string name="type">"dialog-control-document"</string>
                 <string name="filename">""</string>
                 <string name="icon-name">"dialogcontrol"</string>
@@ -8943,8 +8951,8 @@ Are you sure?"</string>
                 <long name="title-mode">0</long>
                 <long name="locked">0</long>
                 <string name="proxy-type">"wbButtonProxy"</string>
-                <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnButtonCancelClick|NONE||WConfirmCalibration"</string>
-                <string name="proxy-Id name">"ID_BUTTON_CANCEL"</string>
+                <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnButton2Click|NONE||WConfirmCalibration"</string>
+                <string name="proxy-Id name">"ID_BUTTON2"</string>
                 <long name="proxy-Id value">10079</long>
                 <string name="proxy-Name">""</string>
                 <string name="proxy-Class">"wxButton"</string>
@@ -9000,7 +9008,7 @@ Are you sure?"</string>
                 <string name="proxy-Custom ctor arguments">""</string>
               </document>
               <document>
-                <string name="title">"wxButton: ID_BUTTON_REPEAT"</string>
+                <string name="title">"wxButton: ID_BUTTON3"</string>
                 <string name="type">"dialog-control-document"</string>
                 <string name="filename">""</string>
                 <string name="icon-name">"dialogcontrol"</string>
@@ -9009,8 +9017,8 @@ Are you sure?"</string>
                 <long name="title-mode">0</long>
                 <long name="locked">0</long>
                 <string name="proxy-type">"wbButtonProxy"</string>
-                <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnButtonRepeatClick|NONE||WConfirmCalibration"</string>
-                <string name="proxy-Id name">"ID_BUTTON_REPEAT"</string>
+                <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnButton3Click|NONE||WConfirmCalibration"</string>
+                <string name="proxy-Id name">"ID_BUTTON3"</string>
                 <long name="proxy-Id value">10080</long>
                 <string name="proxy-Name">""</string>
                 <string name="proxy-Class">"wxButton"</string>

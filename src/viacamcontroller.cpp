@@ -462,7 +462,7 @@ void CViacamController::ProcessImage (IplImage *pImage)
 #endif // __WXGTK___
 }
 
-void CViacamController::StartMotionCalibration (void)
+bool CViacamController::StartMotionCalibration (void)
 {
-	m_pMotionCalibration->InitMotionCalibration();
+	return m_pMotionCalibration->InitMotionCalibration();
 }

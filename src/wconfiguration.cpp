@@ -1428,11 +1428,11 @@ void WConfiguration::OnCheckboxStartupClick( wxCommandEvent& event )
 
 void WConfiguration::OnButtonClick( wxCommandEvent& event )
 {
-	//CMotionCalibration* m_pMotionCalibration = new CMotionCalibration(m_pViacamController);
-	//m_pMotionCalibration = new CMotionCalibration(m_pViacamController);
-	//m_pMotionCalibration->InitMotionCalibration();
-	m_pViacamController->StartMotionCalibration();
+	if (m_pViacamController->StartMotionCalibration()) {
+		InitializeData();
+		Changed ();	
+	}	
 	event.Skip();
-	Changed ();
+	
 }
 

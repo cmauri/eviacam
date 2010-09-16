@@ -34,7 +34,7 @@ class CMotionCalibration{
 	public:
 		CMotionCalibration(CViacamController* pViacamController);
 		~CMotionCalibration();
-		void InitMotionCalibration();
+		bool InitMotionCalibration();
 		void ComputeMotionRange (float vx, float vy);
 
 	private:

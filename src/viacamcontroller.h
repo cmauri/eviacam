@@ -72,7 +72,7 @@ public:
 	inline const wxString GetActivationKeyName () const;
 	inline const bool GetMotionCalibration () const;
 	inline void SetMotionCalibration (bool value);
-	void StartMotionCalibration (void);
+	bool StartMotionCalibration (void);
 	
 	
 	void SetLanguage (const int id);
