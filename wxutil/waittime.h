@@ -33,6 +33,7 @@ public:
 	void Reset ();
 	// True if time-out
 	bool Update();
+	bool IsExpired();
 		
 private:
 	unsigned long m_timeCountMs, m_waitTimeMs;

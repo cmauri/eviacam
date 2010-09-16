@@ -52,3 +52,10 @@ bool CWaitTime::Update()
 	}	
 	return false;
 }
+
+bool CWaitTime::IsExpired()
+{
+	unsigned long now= CTimeUtil::GetMiliCount();
+	return ((now - m_timeCountMs)> m_waitTimeMs);
+}
+
