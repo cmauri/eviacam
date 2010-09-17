@@ -62,16 +62,20 @@ class CViacamController;
 #define ID_SPINCTRL_RIGHT_WORKSPACE 10065
 #define ID_SPINCTRL_BOTTOM_WORKSPACE 10066
 #define ID_PANEL_CLICK 10024
+#define ID_CHECKBOX_ENABLE_DWELL 10031
 #define ID_SPINCTRL_DWELL_TIME 10005
 #define ID_SPINCTRL_DWELL_AREA 10004
 #define ID_CHECKBOX_ALLOW_CONSECUTIVE 10032
 #define ID_CHECKBOX_BEEP_ON_CLICK 10033
-#define ID_CHECKBOX_SHOW_CLICK_COUNTDOWN 10034
-#define ID_CHECKBOX_ENABLE_DWELL 10031
 #define ID_CHECKBOX_CLICKWIN_AT_STARTUP 10022
 #define ID_CHECKBOX_SHOW_CLICKWIN 10037
 #define ID_COMBOBOX_DESIGN 10035
 #define ID_CHOICE_BEHAVIOUR 10006
+#define ID_CHECKBOX 10034
+#define ID_COMBOBOX 10007
+#define ID_COMBOBOX1 10008
+#define ID_COMBOBOX2 10009
+#define ID_COMBOBOX3 10010
 #define ID_PANEL_ADVANCED 10025
 #define ID_CHECKBOX_AUTO_LOCATE_FACE 10038
 #define ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER 10039
@@ -165,6 +169,9 @@ public:
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_BOTTOM_WORKSPACE
     void OnSpinctrlBottomWorkspaceUpdated( wxSpinEvent& event );
 
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_DWELL
+    void OnCheckboxEnableDwellClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_DWELL_TIME
     void OnSpinctrlDwellTimeUpdated( wxSpinEvent& event );
 
@@ -177,12 +184,6 @@ public:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_BEEP_ON_CLICK
     void OnCheckboxBeepOnClickClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SHOW_CLICK_COUNTDOWN
-    void OnCheckboxShowClickCountdownClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_DWELL
-    void OnCheckboxEnableDwellClick( wxCommandEvent& event );
-
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_CLICKWIN_AT_STARTUP
     void OnCheckboxClickwinAtStartupClick( wxCommandEvent& event );
 
@@ -194,6 +195,18 @@ public:
 
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_BEHAVIOUR
     void OnChoiceBehaviourSelected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX
+    void OnComboboxSelected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX1
+    void OnCombobox1Selected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX2
+    void OnCombobox2Selected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX3
+    void OnCombobox3Selected( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTO_LOCATE_FACE
     void OnCheckboxAutoLocateFaceClick( wxCommandEvent& event );
@@ -282,16 +295,19 @@ private:
     wxSpinCtrl* m_spin_left_workspace;
     wxSpinCtrl* m_spin_right_workspace;
     wxSpinCtrl* m_spin_bottom_workspace;
+    wxCheckBox* m_chkDwellClickEnabled;
     wxSpinCtrl* m_spinDwellTime;
     wxSpinCtrl* m_spinDwellArea;
     wxCheckBox* m_chkAllowConsecutiveClick;
     wxCheckBox* m_chkBeepOnClick;
-    wxCheckBox* m_chkShowClickCountdown;
-    wxCheckBox* m_chkDwellClickEnabled;
     wxCheckBox* m_chkOpenClickWinAtStartup;
     wxCheckBox* m_chkShowClickWin;
     wxComboBox* m_cmbClickWindowDesign;
     wxChoice* m_choClickWindowBehaviour;
+    wxComboBox* m_cmbLeft;
+    wxComboBox* m_cmbRight;
+    wxComboBox* m_cmbTop;
+    wxComboBox* m_cmbBottom;
     wxCheckBox* m_chkAutoLocateFace;
     wxCheckBox* m_chkShowAutoLocateFaceFilter;
     wxTextCtrl* m_txtOnScreenKeyboardCommand;
