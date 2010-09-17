@@ -39,7 +39,7 @@ CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController)
 
 	InitDefaults ();
 	   
-	m_dwellAction.Reset();  
+	m_dwellCountdown.Reset();  
 	m_pClickSound= new wxSound (wxStandardPaths::Get().GetDataDir() + _T("/click.wav"));
 
 }
@@ -103,7 +103,7 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 				Reset();
 			else
 			{
-				if (m_dwellAction.Update())
+				if (m_dwellCountdown.Update())
 				{
 					// Send action
 					switch (action)
@@ -143,7 +143,7 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 //Reset internal state (dwell click time)
 void CMouseOutput::Reset() 
 {
-	m_dwellAction.Reset();
+	m_dwellCountdown.Reset();
 }
 
 void CMouseOutput::SetClickMode(CMouseOutput::EClickMode mode)
@@ -189,6 +189,8 @@ void CMouseOutput::InitDefaults()
 	SetBeepOnClick (true);
 	SetConsecutiveClicksAllowed(false);
 	SetDwellTime (10);
+	SetPreGestureTime (10);
+	SetGestureTime (10);
 	SetDwellToleranceArea (3); //.0f);	
 }
 
@@ -210,6 +212,8 @@ void CMouseOutput::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("beepOnClick"), (bool) GetBeepOnClick());
 	pConfObj->Write(_T("consecutiveClicksAllowed"), (bool) GetConsecutiveClicksAllowed());
 	pConfObj->Write(_T("dwellTime"), (long) GetDwellTime());
+	pConfObj->Write(_T("preGestureTime"), (long) GetPreGestureTime());
+	pConfObj->Write(_T("gestureTime"), (long) GetGestureTime());
 	pConfObj->Write(_T("dwellToleranceArea"), (double) GetDwellToleranceArea());
 	
 	pConfObj->SetPath (_T(".."));
@@ -236,6 +240,8 @@ void CMouseOutput::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("beepOnClick"), &m_beepOnClick);	
 	pConfObj->Read(_T("consecutiveClicksAllowed"), &m_consecutiveClicksAllowed);
 	if (pConfObj->Read(_T("dwellTime"), &val)) SetDwellTime(val);	
+	if (pConfObj->Read(_T("preGestureTime"), &val)) SetPreGestureTime(val);	
+	if (pConfObj->Read(_T("gestureTime"), &val)) SetGestureTime(val);	
 	if (pConfObj->Read(_T("dwellToleranceArea"), &dwellToleranceArea))
 		SetDwellToleranceArea((long unsigned int) dwellToleranceArea);
 		//SetDwellToleranceArea((float) dwellToleranceArea);
