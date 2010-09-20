@@ -137,13 +137,15 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
 
     EVT_CHOICE( ID_CHOICE_BEHAVIOUR, WConfiguration::OnChoiceBehaviourSelected )
 
-    EVT_COMBOBOX( ID_COMBOBOX, WConfiguration::OnComboboxSelected )
+    EVT_CHECKBOX( ID_CHECKBOX, WConfiguration::OnCheckboxEnableGestureClick )
 
-    EVT_COMBOBOX( ID_COMBOBOX1, WConfiguration::OnCombobox1Selected )
+    EVT_COMBOBOX( ID_COMBOBOX_LEFT, WConfiguration::OnComboboxLeftSelected )
 
-    EVT_COMBOBOX( ID_COMBOBOX2, WConfiguration::OnCombobox2Selected )
+    EVT_COMBOBOX( ID_COMBOBOX_RIGHT, WConfiguration::OnComboboxRightSelected )
 
-    EVT_COMBOBOX( ID_COMBOBOX3, WConfiguration::OnCombobox3Selected )
+    EVT_COMBOBOX( ID_COMBOBOX_TOP, WConfiguration::OnComboboxTopSelected )
+
+    EVT_COMBOBOX( ID_COMBOBOX_BOTTOM, WConfiguration::OnComboboxBottomSelected )
 
     EVT_CHECKBOX( ID_CHECKBOX_AUTO_LOCATE_FACE, WConfiguration::OnCheckboxAutoLocateFaceClick )
 
@@ -268,17 +270,26 @@ void WConfiguration::Init()
     m_spin_right_workspace = NULL;
     m_spin_bottom_workspace = NULL;
     m_chkDwellClickEnabled = NULL;
+    m_stDwellTime = NULL;
     m_spinDwellTime = NULL;
+    m_stDwellArea = NULL;
     m_spinDwellArea = NULL;
     m_chkAllowConsecutiveClick = NULL;
     m_chkBeepOnClick = NULL;
     m_chkOpenClickWinAtStartup = NULL;
     m_chkShowClickWin = NULL;
+    m_stDesign = NULL;
     m_cmbClickWindowDesign = NULL;
+    m_stBehaviour = NULL;
     m_choClickWindowBehaviour = NULL;
+    m_chkEnableGestureClick = NULL;
+    m_stMoveLeft = NULL;
     m_cmbLeft = NULL;
+    m_stMoveRight = NULL;
     m_cmbRight = NULL;
+    m_stMoveTop = NULL;
     m_cmbTop = NULL;
+    m_stMoveBottom = NULL;
     m_cmbBottom = NULL;
     m_chkAutoLocateFace = NULL;
     m_chkShowAutoLocateFaceFilter = NULL;
@@ -477,16 +488,16 @@ void WConfiguration::CreateControls()
     itemBoxSizer42->Add(itemStaticBoxSizer44, 0, wxGROW|wxALL, 0);
     wxFlexGridSizer* itemFlexGridSizer45 = new wxFlexGridSizer(0, 2, 0, 0);
     itemStaticBoxSizer44->Add(itemFlexGridSizer45, 0, wxALIGN_LEFT|wxALL, 0);
-    wxStaticText* itemStaticText46 = new wxStaticText( itemPanel41, wxID_STATIC, _("Dwell time (ds)"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer45->Add(itemStaticText46, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_stDwellTime = new wxStaticText( itemPanel41, ID_STATIC_DWELL_TIME, _("Dwell time (ds)"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer45->Add(m_stDwellTime, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_spinDwellTime = new wxSpinCtrl( itemPanel41, ID_SPINCTRL_DWELL_TIME, _T("2"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 2, 50, 2 );
     if (WConfiguration::ShowToolTips())
         m_spinDwellTime->SetToolTip(_("Time to wait (deciseconds) \nbefore sending a click."));
     itemFlexGridSizer45->Add(m_spinDwellTime, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText48 = new wxStaticText( itemPanel41, wxID_STATIC, _("Dwell area"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer45->Add(itemStaticText48, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_stDwellArea = new wxStaticText( itemPanel41, ID_STATIC_DWELL_AREA, _("Dwell area"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer45->Add(m_stDwellArea, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_spinDwellArea = new wxSpinCtrl( itemPanel41, ID_SPINCTRL_DWELL_AREA, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 5, 0 );
     if (WConfiguration::ShowToolTips())
@@ -520,8 +531,8 @@ void WConfiguration::CreateControls()
 
     wxFlexGridSizer* itemFlexGridSizer55 = new wxFlexGridSizer(2, 2, 0, 0);
     itemStaticBoxSizer52->Add(itemFlexGridSizer55, 0, wxALIGN_LEFT|wxALL, 0);
-    wxStaticText* itemStaticText56 = new wxStaticText( itemPanel41, wxID_STATIC, _("Design:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer55->Add(itemStaticText56, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_stDesign = new wxStaticText( itemPanel41, ID_STATIC_DESIGN, _("Design:"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer55->Add(m_stDesign, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_cmbClickWindowDesignStrings;
     m_cmbClickWindowDesignStrings.Add(_("Normal"));
@@ -529,8 +540,8 @@ void WConfiguration::CreateControls()
     m_cmbClickWindowDesign = new wxComboBox( itemPanel41, ID_COMBOBOX_DESIGN, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_cmbClickWindowDesignStrings, wxCB_READONLY );
     itemFlexGridSizer55->Add(m_cmbClickWindowDesign, 0, wxALIGN_LEFT|wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticText58 = new wxStaticText( itemPanel41, wxID_STATIC, _("Behaviour:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer55->Add(itemStaticText58, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_stBehaviour = new wxStaticText( itemPanel41, ID_STATIC_BEHAVIOUR, _("Behaviour:"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer55->Add(m_stBehaviour, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choClickWindowBehaviourStrings;
     m_choClickWindowBehaviourStrings.Add(_("Normal mode"));
@@ -540,63 +551,211 @@ void WConfiguration::CreateControls()
         m_choClickWindowBehaviour->SetToolTip(_("Fast mode enables click type\nselection by hovering the mouse\npointer over the click window\nbuttons."));
     itemFlexGridSizer55->Add(m_choClickWindowBehaviour, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxCheckBox* itemCheckBox60 = new wxCheckBox( itemPanel41, ID_CHECKBOX, _("Enable click with gestures"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemCheckBox60->SetValue(false);
-    itemBoxSizer42->Add(itemCheckBox60, 0, wxALIGN_LEFT|wxALL, 5);
+    m_chkEnableGestureClick = new wxCheckBox( itemPanel41, ID_CHECKBOX, _("Enable click with gestures"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkEnableGestureClick->SetValue(false);
+    itemBoxSizer42->Add(m_chkEnableGestureClick, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxStaticBox* itemStaticBoxSizer61Static = new wxStaticBox(itemPanel41, wxID_ANY, _("Gesture click"));
     wxStaticBoxSizer* itemStaticBoxSizer61 = new wxStaticBoxSizer(itemStaticBoxSizer61Static, wxVERTICAL);
     itemBoxSizer42->Add(itemStaticBoxSizer61, 0, wxGROW|wxALL, 5);
     wxBoxSizer* itemBoxSizer62 = new wxBoxSizer(wxHORIZONTAL);
     itemStaticBoxSizer61->Add(itemBoxSizer62, 0, wxALIGN_LEFT|wxALL, 5);
-    wxStaticText* itemStaticText63 = new wxStaticText( itemPanel41, wxID_STATIC, _("Move left:"), wxDefaultPosition, wxSize(100, -1), 0 );
-    itemBoxSizer62->Add(itemStaticText63, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_stMoveLeft = new wxStaticText( itemPanel41, ID_STATIC_MOVE_LEFT, _("Move left:"), wxDefaultPosition, wxSize(100, -1), 0 );
+    itemBoxSizer62->Add(m_stMoveLeft, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_cmbLeftStrings;
+    m_cmbLeftStrings.Add(_("Disable"));
     m_cmbLeftStrings.Add(_("Single click"));
-    m_cmbLeftStrings.Add(_("Double click"));
     m_cmbLeftStrings.Add(_("Secondary click"));
+    m_cmbLeftStrings.Add(_("Double click"));
     m_cmbLeftStrings.Add(_("Drag click"));
-    m_cmbLeft = new wxComboBox( itemPanel41, ID_COMBOBOX, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_cmbLeftStrings, wxCB_READONLY );
+    m_cmbLeftStrings.Add(_("A"));
+    m_cmbLeftStrings.Add(_("B"));
+    m_cmbLeftStrings.Add(_("C"));
+    m_cmbLeftStrings.Add(_("D"));
+    m_cmbLeftStrings.Add(_("E"));
+    m_cmbLeftStrings.Add(_("F"));
+    m_cmbLeftStrings.Add(_("G"));
+    m_cmbLeftStrings.Add(_("H"));
+    m_cmbLeftStrings.Add(_("I"));
+    m_cmbLeftStrings.Add(_("J"));
+    m_cmbLeftStrings.Add(_("K"));
+    m_cmbLeftStrings.Add(_("L"));
+    m_cmbLeftStrings.Add(_("M"));
+    m_cmbLeftStrings.Add(_("N"));
+    m_cmbLeftStrings.Add(_("O"));
+    m_cmbLeftStrings.Add(_("P"));
+    m_cmbLeftStrings.Add(_("Q"));
+    m_cmbLeftStrings.Add(_("R"));
+    m_cmbLeftStrings.Add(_("S"));
+    m_cmbLeftStrings.Add(_("T"));
+    m_cmbLeftStrings.Add(_("U"));
+    m_cmbLeftStrings.Add(_("V"));
+    m_cmbLeftStrings.Add(_("W"));
+    m_cmbLeftStrings.Add(_("X"));
+    m_cmbLeftStrings.Add(_("Y"));
+    m_cmbLeftStrings.Add(_("Z"));
+    m_cmbLeftStrings.Add(_("0"));
+    m_cmbLeftStrings.Add(_("1"));
+    m_cmbLeftStrings.Add(_("2"));
+    m_cmbLeftStrings.Add(_("3"));
+    m_cmbLeftStrings.Add(_("4"));
+    m_cmbLeftStrings.Add(_("5"));
+    m_cmbLeftStrings.Add(_("6"));
+    m_cmbLeftStrings.Add(_("7"));
+    m_cmbLeftStrings.Add(_("8"));
+    m_cmbLeftStrings.Add(_("9"));
+    m_cmbLeft = new wxComboBox( itemPanel41, ID_COMBOBOX_LEFT, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_cmbLeftStrings, wxCB_READONLY );
     itemBoxSizer62->Add(m_cmbLeft, 0, wxGROW|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer65 = new wxBoxSizer(wxHORIZONTAL);
     itemStaticBoxSizer61->Add(itemBoxSizer65, 0, wxALIGN_LEFT|wxALL, 5);
-    wxStaticText* itemStaticText66 = new wxStaticText( itemPanel41, wxID_STATIC, _("Move right:"), wxDefaultPosition, wxSize(100, -1), 0 );
-    itemBoxSizer65->Add(itemStaticText66, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_stMoveRight = new wxStaticText( itemPanel41, ID_STATIC_MOVE_RIGHT, _("Move right:"), wxDefaultPosition, wxSize(100, -1), 0 );
+    itemBoxSizer65->Add(m_stMoveRight, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_cmbRightStrings;
+    m_cmbRightStrings.Add(_("Disable"));
     m_cmbRightStrings.Add(_("Single click"));
-    m_cmbRightStrings.Add(_("Double click"));
     m_cmbRightStrings.Add(_("Secondary click"));
+    m_cmbRightStrings.Add(_("Double click"));
     m_cmbRightStrings.Add(_("Drag click"));
-    m_cmbRight = new wxComboBox( itemPanel41, ID_COMBOBOX1, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_cmbRightStrings, wxCB_READONLY );
+    m_cmbRightStrings.Add(_("A"));
+    m_cmbRightStrings.Add(_("B"));
+    m_cmbRightStrings.Add(_("C"));
+    m_cmbRightStrings.Add(_("D"));
+    m_cmbRightStrings.Add(_("E"));
+    m_cmbRightStrings.Add(_("F"));
+    m_cmbRightStrings.Add(_("G"));
+    m_cmbRightStrings.Add(_("H"));
+    m_cmbRightStrings.Add(_("I"));
+    m_cmbRightStrings.Add(_("J"));
+    m_cmbRightStrings.Add(_("K"));
+    m_cmbRightStrings.Add(_("L"));
+    m_cmbRightStrings.Add(_("M"));
+    m_cmbRightStrings.Add(_("N"));
+    m_cmbRightStrings.Add(_("O"));
+    m_cmbRightStrings.Add(_("P"));
+    m_cmbRightStrings.Add(_("Q"));
+    m_cmbRightStrings.Add(_("R"));
+    m_cmbRightStrings.Add(_("S"));
+    m_cmbRightStrings.Add(_("T"));
+    m_cmbRightStrings.Add(_("U"));
+    m_cmbRightStrings.Add(_("V"));
+    m_cmbRightStrings.Add(_("W"));
+    m_cmbRightStrings.Add(_("X"));
+    m_cmbRightStrings.Add(_("Y"));
+    m_cmbRightStrings.Add(_("Z"));
+    m_cmbRightStrings.Add(_("0"));
+    m_cmbRightStrings.Add(_("1"));
+    m_cmbRightStrings.Add(_("2"));
+    m_cmbRightStrings.Add(_("3"));
+    m_cmbRightStrings.Add(_("4"));
+    m_cmbRightStrings.Add(_("5"));
+    m_cmbRightStrings.Add(_("6"));
+    m_cmbRightStrings.Add(_("7"));
+    m_cmbRightStrings.Add(_("8"));
+    m_cmbRightStrings.Add(_("9"));
+    m_cmbRight = new wxComboBox( itemPanel41, ID_COMBOBOX_RIGHT, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_cmbRightStrings, wxCB_READONLY );
     itemBoxSizer65->Add(m_cmbRight, 0, wxGROW|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer68 = new wxBoxSizer(wxHORIZONTAL);
     itemStaticBoxSizer61->Add(itemBoxSizer68, 0, wxALIGN_LEFT|wxALL, 5);
-    wxStaticText* itemStaticText69 = new wxStaticText( itemPanel41, wxID_STATIC, _("Move top:"), wxDefaultPosition, wxSize(100, -1), 0 );
-    itemBoxSizer68->Add(itemStaticText69, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_stMoveTop = new wxStaticText( itemPanel41, ID_STATIC_MOVE_TOP, _("Move top:"), wxDefaultPosition, wxSize(100, -1), 0 );
+    itemBoxSizer68->Add(m_stMoveTop, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_cmbTopStrings;
+    m_cmbTopStrings.Add(_("Disable"));
     m_cmbTopStrings.Add(_("Single click"));
-    m_cmbTopStrings.Add(_("Double click"));
     m_cmbTopStrings.Add(_("Secondary click"));
+    m_cmbTopStrings.Add(_("Double click"));
     m_cmbTopStrings.Add(_("Drag click"));
-    m_cmbTop = new wxComboBox( itemPanel41, ID_COMBOBOX2, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_cmbTopStrings, wxCB_READONLY );
+    m_cmbTopStrings.Add(_("A"));
+    m_cmbTopStrings.Add(_("B"));
+    m_cmbTopStrings.Add(_("C"));
+    m_cmbTopStrings.Add(_("D"));
+    m_cmbTopStrings.Add(_("E"));
+    m_cmbTopStrings.Add(_("F"));
+    m_cmbTopStrings.Add(_("G"));
+    m_cmbTopStrings.Add(_("H"));
+    m_cmbTopStrings.Add(_("I"));
+    m_cmbTopStrings.Add(_("J"));
+    m_cmbTopStrings.Add(_("K"));
+    m_cmbTopStrings.Add(_("L"));
+    m_cmbTopStrings.Add(_("M"));
+    m_cmbTopStrings.Add(_("N"));
+    m_cmbTopStrings.Add(_("O"));
+    m_cmbTopStrings.Add(_("P"));
+    m_cmbTopStrings.Add(_("Q"));
+    m_cmbTopStrings.Add(_("R"));
+    m_cmbTopStrings.Add(_("S"));
+    m_cmbTopStrings.Add(_("T"));
+    m_cmbTopStrings.Add(_("U"));
+    m_cmbTopStrings.Add(_("V"));
+    m_cmbTopStrings.Add(_("W"));
+    m_cmbTopStrings.Add(_("X"));
+    m_cmbTopStrings.Add(_("Y"));
+    m_cmbTopStrings.Add(_("Z"));
+    m_cmbTopStrings.Add(_("0"));
+    m_cmbTopStrings.Add(_("1"));
+    m_cmbTopStrings.Add(_("2"));
+    m_cmbTopStrings.Add(_("3"));
+    m_cmbTopStrings.Add(_("4"));
+    m_cmbTopStrings.Add(_("5"));
+    m_cmbTopStrings.Add(_("6"));
+    m_cmbTopStrings.Add(_("7"));
+    m_cmbTopStrings.Add(_("8"));
+    m_cmbTopStrings.Add(_("9"));
+    m_cmbTop = new wxComboBox( itemPanel41, ID_COMBOBOX_TOP, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_cmbTopStrings, wxCB_READONLY );
     itemBoxSizer68->Add(m_cmbTop, 0, wxGROW|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer71 = new wxBoxSizer(wxHORIZONTAL);
     itemStaticBoxSizer61->Add(itemBoxSizer71, 0, wxALIGN_LEFT|wxALL, 5);
-    wxStaticText* itemStaticText72 = new wxStaticText( itemPanel41, wxID_STATIC, _("Move bottom:"), wxDefaultPosition, wxSize(100, -1), 0 );
-    itemBoxSizer71->Add(itemStaticText72, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_stMoveBottom = new wxStaticText( itemPanel41, ID_STATIC_MOVE_BOTTOM, _("Move bottom:"), wxDefaultPosition, wxSize(100, -1), 0 );
+    itemBoxSizer71->Add(m_stMoveBottom, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_cmbBottomStrings;
+    m_cmbBottomStrings.Add(_("Disable"));
     m_cmbBottomStrings.Add(_("Single click"));
-    m_cmbBottomStrings.Add(_("Double click"));
     m_cmbBottomStrings.Add(_("Secondary click"));
+    m_cmbBottomStrings.Add(_("Double click"));
     m_cmbBottomStrings.Add(_("Drag click"));
-    m_cmbBottom = new wxComboBox( itemPanel41, ID_COMBOBOX3, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_cmbBottomStrings, wxCB_READONLY );
+    m_cmbBottomStrings.Add(_("A"));
+    m_cmbBottomStrings.Add(_("B"));
+    m_cmbBottomStrings.Add(_("C"));
+    m_cmbBottomStrings.Add(_("D"));
+    m_cmbBottomStrings.Add(_("E"));
+    m_cmbBottomStrings.Add(_("F"));
+    m_cmbBottomStrings.Add(_("G"));
+    m_cmbBottomStrings.Add(_("H"));
+    m_cmbBottomStrings.Add(_("I"));
+    m_cmbBottomStrings.Add(_("J"));
+    m_cmbBottomStrings.Add(_("K"));
+    m_cmbBottomStrings.Add(_("L"));
+    m_cmbBottomStrings.Add(_("M"));
+    m_cmbBottomStrings.Add(_("N"));
+    m_cmbBottomStrings.Add(_("O"));
+    m_cmbBottomStrings.Add(_("P"));
+    m_cmbBottomStrings.Add(_("Q"));
+    m_cmbBottomStrings.Add(_("R"));
+    m_cmbBottomStrings.Add(_("S"));
+    m_cmbBottomStrings.Add(_("T"));
+    m_cmbBottomStrings.Add(_("U"));
+    m_cmbBottomStrings.Add(_("V"));
+    m_cmbBottomStrings.Add(_("W"));
+    m_cmbBottomStrings.Add(_("X"));
+    m_cmbBottomStrings.Add(_("Y"));
+    m_cmbBottomStrings.Add(_("Z"));
+    m_cmbBottomStrings.Add(_("0"));
+    m_cmbBottomStrings.Add(_("1"));
+    m_cmbBottomStrings.Add(_("2"));
+    m_cmbBottomStrings.Add(_("3"));
+    m_cmbBottomStrings.Add(_("4"));
+    m_cmbBottomStrings.Add(_("5"));
+    m_cmbBottomStrings.Add(_("6"));
+    m_cmbBottomStrings.Add(_("7"));
+    m_cmbBottomStrings.Add(_("8"));
+    m_cmbBottomStrings.Add(_("9"));
+    m_cmbBottom = new wxComboBox( itemPanel41, ID_COMBOBOX_BOTTOM, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_cmbBottomStrings, wxCB_READONLY );
     itemBoxSizer71->Add(m_cmbBottom, 0, wxGROW|wxALL, 5);
 
     itemNotebook4->AddPage(itemPanel41, _("Click"));
@@ -820,7 +979,8 @@ void WConfiguration::InitializeData ()
     m_spin_bottom_workspace->SetValue (m_pViacamController->GetMouseOutput()->GetBottomWorkspace());
 
 	// Clic
-	m_chkDwellClickEnabled->SetValue (m_pViacamController->GetMouseOutput()->GetClickMode()== CMouseOutput::DWELL);
+	m_chkDwellClickEnabled->SetValue (m_pViacamController->GetMouseOutput()->GetClickMode()!= CMouseOutput::NONE);
+	m_chkEnableGestureClick->SetValue (m_pViacamController->GetMouseOutput()->GetClickMode()== CMouseOutput::GESTURE);
 	m_chkAllowConsecutiveClick->SetValue (m_pViacamController->GetMouseOutput()->GetConsecutiveClicksAllowed());
 	m_chkBeepOnClick->SetValue (m_pViacamController->GetMouseOutput()->GetBeepOnClick());
 	//m_chkShowClickCountdown->SetValue (m_pViacamController->GetMouseOutput()->GetShowClickCountdown());
@@ -829,6 +989,26 @@ void WConfiguration::InitializeData ()
 	m_chkShowClickWin->SetValue ( m_pViacamController->GetClickWindowController()->IsShown() );
 	m_choClickWindowBehaviour->Select (m_pViacamController->GetClickWindowController()->GetFastMode() ? 1 : 0);
 	m_cmbClickWindowDesign->Select (m_pViacamController->GetClickWindowController()->GetDesign());
+	m_cmbLeft->Select (m_pViacamController->GetMouseOutput()->GetActionLeft());
+	m_cmbRight->Select (m_pViacamController->GetMouseOutput()->GetActionRight());
+	m_cmbTop->Select (m_pViacamController->GetMouseOutput()->GetActionTop());
+	m_cmbBottom->Select (m_pViacamController->GetMouseOutput()->GetActionBottom());
+	if (m_chkDwellClickEnabled->IsChecked())
+	{
+		EnableClickOptions(true);
+		if (m_chkEnableGestureClick->IsChecked())
+			EnableGestureOptions (true);
+		else	
+			EnableGestureOptions (false);
+	}		
+	else
+	{
+		EnableClickOptions(false);
+	}	
+	
+	
+
+	
 	//m_pViacamController->GetClickWindowController()->GetDesign ();
 	//m_radNormalDesign->;
 	//m_radThinDesign;
@@ -887,6 +1067,49 @@ void WConfiguration::InitializeData ()
 		m_btnCameraSettings->Enable (false);
 
 //	m_fpickOnScreenKeyboardCommand->SetPath (m_pViacamController->GetOnScreenKeyboardCommand());
+}
+
+void WConfiguration::EnableClickOptions (bool enable)
+{
+	m_spinDwellTime->Enable(enable);
+	m_spinDwellArea->Enable(enable);
+	m_chkAllowConsecutiveClick->Enable(enable);
+	m_chkBeepOnClick->Enable(enable);
+	m_chkOpenClickWinAtStartup->Enable(enable);
+	m_chkShowClickWin->Enable(enable);
+	m_cmbClickWindowDesign->Enable(enable);
+	m_choClickWindowBehaviour->Enable(enable);
+	m_cmbLeft->Enable(enable);
+	m_cmbRight->Enable(enable);			
+	m_cmbTop->Enable(enable);			
+	m_cmbBottom->Enable(enable);
+	m_chkEnableGestureClick->Enable(enable);
+	m_stDwellTime->Enable(enable);
+	m_stDwellArea->Enable(enable);
+	m_stDesign->Enable(enable);
+	m_stBehaviour->Enable(enable);
+	m_stMoveLeft->Enable(enable);
+	m_stMoveRight->Enable(enable);
+	m_stMoveTop->Enable(enable);
+	m_stMoveBottom->Enable(enable);
+}
+
+void WConfiguration::EnableGestureOptions (bool enable)
+{
+	m_cmbLeft->Enable(enable);
+	m_cmbRight->Enable(enable);			
+	m_cmbTop->Enable(enable);			
+	m_cmbBottom->Enable(enable);
+	m_stMoveLeft->Enable(enable);
+	m_stMoveRight->Enable(enable);
+	m_stMoveTop->Enable(enable);
+	m_stMoveBottom->Enable(enable);
+	m_chkOpenClickWinAtStartup->Enable(!enable);
+	m_chkShowClickWin->Enable(!enable);
+	m_cmbClickWindowDesign->Enable(!enable);
+	m_choClickWindowBehaviour->Enable(!enable);
+	m_stDesign->Enable(!enable);
+	m_stBehaviour->Enable(!enable);
 }
 
 /*
@@ -1041,12 +1264,19 @@ void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 		if (dlg.ShowModal()== wxID_YES)
 		{
 			m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::NONE);
+			EnableClickOptions(false);
 			Changed ();
 		}
 	}
 	else
 	{
 		m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL);
+		EnableClickOptions(true);
+		if (m_chkEnableGestureClick->IsChecked())
+			EnableGestureOptions (true);
+		else	
+			EnableGestureOptions (false);
+	
 		Changed ();
 	}
 
@@ -1490,53 +1720,68 @@ void WConfiguration::OnButtonClick( wxCommandEvent& event )
 
 
 /*!
- * wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX
+ * wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_LEFT
  */
 
-void WConfiguration::OnComboboxSelected( wxCommandEvent& event )
+void WConfiguration::OnComboboxLeftSelected( wxCommandEvent& event )
 {
-////@begin wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX in WConfiguration.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX in WConfiguration. 
+	CMouseOutput::EAction action= (CMouseOutput::EAction) event.GetSelection();
+	m_pViacamController->GetMouseOutput()->SetActionLeft (action);
+	event.Skip(false);
 }
 
 
 /*!
- * wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX1
+ * wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_RIGHT
  */
 
-void WConfiguration::OnCombobox1Selected( wxCommandEvent& event )
+void WConfiguration::OnComboboxRightSelected( wxCommandEvent& event )
 {
-////@begin wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX1 in WConfiguration.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX1 in WConfiguration. 
+	CMouseOutput::EAction action= (CMouseOutput::EAction) event.GetSelection();
+	m_pViacamController->GetMouseOutput()->SetActionRight (action);
+	event.Skip(false);
 }
 
 
 /*!
- * wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX2
+ * wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_TOP
  */
 
-void WConfiguration::OnCombobox2Selected( wxCommandEvent& event )
+void WConfiguration::OnComboboxTopSelected( wxCommandEvent& event )
 {
-////@begin wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX2 in WConfiguration.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX2 in WConfiguration. 
+	CMouseOutput::EAction action= (CMouseOutput::EAction) event.GetSelection();
+	m_pViacamController->GetMouseOutput()->SetActionTop (action);
+	event.Skip(false);
 }
 
 
 /*!
- * wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX3
+ * wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_BOTTOM
  */
 
-void WConfiguration::OnCombobox3Selected( wxCommandEvent& event )
+void WConfiguration::OnComboboxBottomSelected( wxCommandEvent& event )
 {
-////@begin wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX3 in WConfiguration.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX3 in WConfiguration. 
+	CMouseOutput::EAction action= (CMouseOutput::EAction) event.GetSelection();
+	m_pViacamController->GetMouseOutput()->SetActionBottom (action);
+	event.Skip(false);
+}
+
+
+/*!
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
+ */
+
+void WConfiguration::OnCheckboxEnableGestureClick( wxCommandEvent& event )
+{
+	if (m_chkEnableGestureClick->IsChecked())
+	{
+		EnableGestureOptions(true);
+		m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE);	
+	}
+	else
+	{
+		EnableGestureOptions(false);
+		m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL);		
+	}
 }
 

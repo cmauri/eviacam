@@ -36,6 +36,7 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 {
   public:
 	enum EClickMode { NONE, DWELL, GESTURE };
+	enum EAction { DISABLE, SINGLE, SECONDARY, DOUBLE, DRAG };
 
 	CMouseOutput (CClickWindowController& pClickWindowController);
 	~CMouseOutput ();
@@ -44,7 +45,9 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	float ProcessRelativePointerMove(float dx, float dy);
 
 	//Reset internal state (dwell click time)
-	void Reset();
+	void Reset(CWaitTime countdown);
+	
+	void DoAction(EAction action);
 
 	inline const unsigned long GetXSpeed() const;
 	inline void SetXSpeed(unsigned long value);
@@ -99,6 +102,19 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 
 	inline const bool GetEnabled() const;
 	void SetEnabled(bool value);
+	
+	inline const EAction GetActionLeft() const;
+	inline void SetActionLeft(EAction action);
+	//void SetActionLeft(EAction action);
+
+	inline const EAction GetActionRight() const;
+	inline void SetActionRight(EAction action);
+
+	inline const EAction GetActionTop() const;
+	inline void SetActionTop(EAction action);
+
+	inline const EAction GetActionBottom() const;
+	inline void SetActionBottom(EAction action);
 
 	// Configuration methods
 	virtual void InitDefaults();
@@ -120,9 +136,16 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	CWaitTime m_dwellCountdown;
 	CWaitTime m_preGestureCountdown;
 	CWaitTime m_gestureCountdown;
+	bool m_waitingGesture;
 	EClickMode m_clickMode;
 	bool m_beepOnClick;
 	bool m_consecutiveClicksAllowed;
+	EAction m_actionLeft;
+	EAction m_actionRight;
+	EAction m_actionTop;
+	EAction m_actionBottom;
+	bool m_isLeftPressed;
+	
     //Define maximal distance (in pixels) from pointer's starting countdown position
     //where is allowed to move without cancelling current countdown.
     //
@@ -313,6 +336,46 @@ inline const CMouseOutput::EClickMode CMouseOutput::GetClickMode() const {
 inline const bool CMouseOutput::GetEnabled() const
 {
 	return m_enabled;
+}
+
+inline const CMouseOutput::EAction CMouseOutput::GetActionLeft() const
+{
+	return m_actionLeft;
+}
+
+inline void CMouseOutput::SetActionLeft(CMouseOutput::EAction action)
+{
+	m_actionLeft = action;
+}
+
+inline const CMouseOutput::EAction CMouseOutput::GetActionRight() const
+{
+	return m_actionRight;
+}
+
+inline void CMouseOutput::SetActionRight(CMouseOutput::EAction action)
+{
+	m_actionRight = action;
+}
+
+inline const CMouseOutput::EAction CMouseOutput::GetActionTop() const
+{
+	return m_actionTop;
+}
+
+inline void CMouseOutput::SetActionTop(CMouseOutput::EAction action)
+{
+	m_actionTop = action;
+}
+
+inline const CMouseOutput::EAction CMouseOutput::GetActionBottom() const
+{
+	return m_actionBottom;
+}
+
+inline void CMouseOutput::SetActionBottom(CMouseOutput::EAction action)
+{
+	m_actionBottom = action;
 }
 
 #endif

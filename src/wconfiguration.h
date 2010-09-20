@@ -28,6 +28,7 @@
 #include <wx/combobox.h>
 #include <wx/choice.h>
 #include <wx/button.h>
+#include <wx/stattext.h>
 //#include "cmotioncalibration.h"
 
 /*!
@@ -63,19 +64,27 @@ class CViacamController;
 #define ID_SPINCTRL_BOTTOM_WORKSPACE 10066
 #define ID_PANEL_CLICK 10024
 #define ID_CHECKBOX_ENABLE_DWELL 10031
+#define ID_STATIC_DWELL_TIME 10072
 #define ID_SPINCTRL_DWELL_TIME 10005
+#define ID_STATIC_DWELL_AREA 10073
 #define ID_SPINCTRL_DWELL_AREA 10004
 #define ID_CHECKBOX_ALLOW_CONSECUTIVE 10032
 #define ID_CHECKBOX_BEEP_ON_CLICK 10033
 #define ID_CHECKBOX_CLICKWIN_AT_STARTUP 10022
 #define ID_CHECKBOX_SHOW_CLICKWIN 10037
+#define ID_STATIC_DESIGN 10081
 #define ID_COMBOBOX_DESIGN 10035
+#define ID_STATIC_BEHAVIOUR 10082
 #define ID_CHOICE_BEHAVIOUR 10006
 #define ID_CHECKBOX 10034
-#define ID_COMBOBOX 10007
-#define ID_COMBOBOX1 10008
-#define ID_COMBOBOX2 10009
-#define ID_COMBOBOX3 10010
+#define ID_STATIC_MOVE_LEFT 10083
+#define ID_COMBOBOX_LEFT 10007
+#define ID_STATIC_MOVE_RIGHT 10084
+#define ID_COMBOBOX_RIGHT 10008
+#define ID_STATIC_MOVE_TOP 10085
+#define ID_COMBOBOX_TOP 10009
+#define ID_STATIC_MOVE_BOTTOM 10086
+#define ID_COMBOBOX_BOTTOM 10010
 #define ID_PANEL_ADVANCED 10025
 #define ID_CHECKBOX_AUTO_LOCATE_FACE 10038
 #define ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER 10039
@@ -196,17 +205,20 @@ public:
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_BEHAVIOUR
     void OnChoiceBehaviourSelected( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX
-    void OnComboboxSelected( wxCommandEvent& event );
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
+    void OnCheckboxEnableGestureClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX1
-    void OnCombobox1Selected( wxCommandEvent& event );
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_LEFT
+    void OnComboboxLeftSelected( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX2
-    void OnCombobox2Selected( wxCommandEvent& event );
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_RIGHT
+    void OnComboboxRightSelected( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX3
-    void OnCombobox3Selected( wxCommandEvent& event );
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_TOP
+    void OnComboboxTopSelected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_BOTTOM
+    void OnComboboxBottomSelected( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTO_LOCATE_FACE
     void OnCheckboxAutoLocateFaceClick( wxCommandEvent& event );
@@ -274,6 +286,8 @@ public:
     static bool ShowToolTips();
     
     void SetActivationKey(wxString keyName);
+	void EnableClickOptions(bool enable);
+	void EnableGestureOptions(bool enable);
 
 private:
 
@@ -296,17 +310,26 @@ private:
     wxSpinCtrl* m_spin_right_workspace;
     wxSpinCtrl* m_spin_bottom_workspace;
     wxCheckBox* m_chkDwellClickEnabled;
+    wxStaticText* m_stDwellTime;
     wxSpinCtrl* m_spinDwellTime;
+    wxStaticText* m_stDwellArea;
     wxSpinCtrl* m_spinDwellArea;
     wxCheckBox* m_chkAllowConsecutiveClick;
     wxCheckBox* m_chkBeepOnClick;
     wxCheckBox* m_chkOpenClickWinAtStartup;
     wxCheckBox* m_chkShowClickWin;
+    wxStaticText* m_stDesign;
     wxComboBox* m_cmbClickWindowDesign;
+    wxStaticText* m_stBehaviour;
     wxChoice* m_choClickWindowBehaviour;
+    wxCheckBox* m_chkEnableGestureClick;
+    wxStaticText* m_stMoveLeft;
     wxComboBox* m_cmbLeft;
+    wxStaticText* m_stMoveRight;
     wxComboBox* m_cmbRight;
+    wxStaticText* m_stMoveTop;
     wxComboBox* m_cmbTop;
+    wxStaticText* m_stMoveBottom;
     wxComboBox* m_cmbBottom;
     wxCheckBox* m_chkAutoLocateFace;
     wxCheckBox* m_chkShowAutoLocateFaceFilter;

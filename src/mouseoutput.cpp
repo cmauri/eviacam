@@ -36,6 +36,8 @@ CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController)
 	
 	m_enabled= false;
         m_restrictedWorkingArea = false;
+	m_waitingGesture = false;
+	m_isLeftPressed = false;
 
 	InitDefaults ();
 	   
@@ -88,7 +90,7 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 		if (despl> m_dwellToleranceArea) 
 		{
 			// Pointer moving
-			Reset();
+			m_dwellCountdown.Reset();
 		}
 		else 
 		{
@@ -100,7 +102,7 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 			action= m_pClickWindowController->GetAction (x, y);
 
 			if (action== CClickWindowController::ACT_NO_CLICK)
-				Reset();
+				m_dwellCountdown.Reset();
 			else
 			{
 				if (m_dwellCountdown.Update())
@@ -128,22 +130,115 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 					}
 
 					m_pClickWindowController->ActionDone(x, y);
-					if (m_consecutiveClicksAllowed) Reset();
+					if (m_consecutiveClicksAllowed) m_dwellCountdown.Reset();
 
 					if (m_beepOnClick) m_pClickSound->Play (wxSOUND_ASYNC);
 
 				}
 			}						
 		}
+	} else if (m_clickMode== CMouseOutput::GESTURE)
+	{
+		// Gesture click
+		
+		if (!m_waitingGesture)
+		{
+			if (despl> m_dwellToleranceArea) 
+			{
+				// Pointer moving
+				m_preGestureCountdown.Reset();
+			}
+			else 
+			{
+				if (m_preGestureCountdown.Update())
+				{
+					m_gestureCountdown.Reset();
+					m_waitingGesture = true;
+					printf("START\n");
+				}
+			}
+		}
+		else
+		{
+			if (m_gestureCountdown.Update())
+			{
+				m_preGestureCountdown.Reset();
+				m_waitingGesture = false;
+				printf("STOP\n");
+			}
+			else
+			{
+				if (despl> m_dwellToleranceArea)
+				{
+					// Compute direction
+					if (fabs(dx) > fabs(dy))
+					{
+						if (dx < 0) DoAction(m_actionLeft);
+						else DoAction(m_actionRight);
+					}
+					else
+					{
+						if (dy < 0) DoAction(m_actionTop);
+						else DoAction(m_actionBottom);
+					}
+					
+					if (m_consecutiveClicksAllowed)
+					{
+						m_gestureCountdown.Reset();
+					}
+					else
+					{
+						m_preGestureCountdown.Reset();
+						m_waitingGesture = false;
+					}
+					
+					if (m_beepOnClick) m_pClickSound->Play (wxSOUND_ASYNC);
+					printf("STOP\n");
+				}
+			}
+			
+		}
 	}
 
 	return despl;
 }
 
+void CMouseOutput::DoAction(EAction action) {
+	switch (action)
+	{
+		case DISABLE:
+			break;
+		case SINGLE:
+			LeftClick();
+			break;
+		case DOUBLE:
+			LeftDblClick();
+			break;
+		case SECONDARY:
+			RightClick();
+			break;
+		case DRAG:
+			if (m_isLeftPressed) {
+				LeftUp();
+				m_isLeftPressed = false;
+				printf("LeftUp\n");
+			}
+			else
+			{
+				LeftDown();
+				m_isLeftPressed = true;
+				printf("LeftDown\n");
+			}
+			break;
+			
+	}
+
+}
+
 //Reset internal state (dwell click time)
-void CMouseOutput::Reset() 
+void CMouseOutput::Reset(CWaitTime countdown) 
 {
-	m_dwellCountdown.Reset();
+	countdown.Reset();
 }
 
 void CMouseOutput::SetClickMode(CMouseOutput::EClickMode mode)
@@ -153,12 +248,18 @@ void CMouseOutput::SetClickMode(CMouseOutput::EClickMode mode)
 		if (mode== CMouseOutput::DWELL) 
 		{
 			// Enable dwell click
-			Reset();
+			m_dwellCountdown.Reset();
 			m_clickMode= mode;
 		}
+		else if (mode== CMouseOutput::GESTURE)
+		{
+			// Enable gesture click
+			m_preGestureCountdown.Reset();
+			m_clickMode= mode;			
+		}		
 		else if (mode== CMouseOutput::NONE)
 		{
-			// Disable dwell click
+			// Disable dwell and gesture click
 			m_clickMode= mode;			
 		}		
 	}
@@ -168,7 +269,14 @@ void CMouseOutput::SetEnabled(bool value)
 {
 	if (value!= m_enabled)
 	{
-		if (value) Reset ();
+		if (value)
+		{
+			if (m_clickMode == DWELL)
+				m_dwellCountdown.Reset ();
+			
+			if (m_clickMode == GESTURE)
+				m_preGestureCountdown.Reset ();
+		}
 		m_enabled= value;
 	}
 }
@@ -215,7 +323,12 @@ void CMouseOutput::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("preGestureTime"), (long) GetPreGestureTime());
 	pConfObj->Write(_T("gestureTime"), (long) GetGestureTime());
 	pConfObj->Write(_T("dwellToleranceArea"), (double) GetDwellToleranceArea());
-	
+	pConfObj->Write(_T("actionTop"), (long) GetActionTop());
+	pConfObj->Write(_T("actionLeft"), (long) GetActionLeft());
+	pConfObj->Write(_T("actionRight"), (long) GetActionRight());
+	pConfObj->Write(_T("actionBottom"), (long) GetActionBottom());
+
+
 	pConfObj->SetPath (_T(".."));
 }
 
@@ -245,7 +358,10 @@ void CMouseOutput::ReadProfileData(wxConfigBase* pConfObj)
 	if (pConfObj->Read(_T("dwellToleranceArea"), &dwellToleranceArea))
 		SetDwellToleranceArea((long unsigned int) dwellToleranceArea);
 		//SetDwellToleranceArea((float) dwellToleranceArea);
-	
+	if (pConfObj->Read(_T("actionTop"), &val)) SetActionTop((CMouseOutput::EAction) val);
+	if (pConfObj->Read(_T("actionLeft"), &val)) SetActionLeft((CMouseOutput::EAction) val);
+	if (pConfObj->Read(_T("actionRight"), &val)) SetActionRight((CMouseOutput::EAction) val);
+	if (pConfObj->Read(_T("actionBottom"), &val)) SetActionBottom((CMouseOutput::EAction) val);
+
 	pConfObj->SetPath (_T(".."));
 }
-
