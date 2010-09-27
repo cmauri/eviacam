@@ -63,7 +63,7 @@ am_eviacam_OBJECTS = eviacam-activationkey.$(OBJEXT) \
 	eviacam-wconfirmcalibration.$(OBJEXT) \
 	eviacam-wmotioncalibrationx.$(OBJEXT) \
 	eviacam-wmotioncalibrationy.$(OBJEXT) \
-	eviacam-wviacam.$(OBJEXT)
+	eviacam-wviacam.$(OBJEXT) eviacam-cvisualalert.$(OBJEXT)
 eviacam_OBJECTS = $(am_eviacam_OBJECTS)
 eviacam_DEPENDENCIES = $(top_builddir)/wxutil/libwxutil.la \
 	$(top_builddir)/creavision/libcreavision.la \
@@ -259,7 +259,7 @@ noinst_HEADERS = activationkey.h cautostart.h clickwindow.h clickwindowbitmap.h 
 	clickwindowcontroller.h clickwindowtext.h cmotioncalibration.h guiapp.h keyboardbitmapcheck.h \
 	langnames-utf8.h motiontracker.h mouseoutput.h version.h viacamcontroller.h wabout.h \
 	wconfiguration.h wconfirmcalibration.h wmotioncalibrationx.h \
-	wmotioncalibrationy.h wviacam.h
+	wmotioncalibrationy.h wviacam.h cvisualalert.h
 
 dist_noinst_DATA = version.h.in langnames-utf16.h gui.pjd gui.rc eviacam.vcproj \
 	icons/on.xpm icons/eviacam.ico  icons/eviacam_mini.ico  \
@@ -289,7 +289,7 @@ eviacam_SOURCES = activationkey.cpp cautostart.cpp clickwindow.cpp \
 	clickwindowbitmap.cpp clickwindowcontroller.cpp clickwindowtext.cpp cmotioncalibration.cpp \
 	guiapp.cpp keyboardbitmapcheck.cpp motiontracker.cpp mouseoutput.cpp \
 	viacamcontroller.cpp wabout.cpp wconfiguration.cpp wconfirmcalibration.cpp \
-	wmotioncalibrationx.cpp wmotioncalibrationy.cpp wviacam.cpp
+	wmotioncalibrationx.cpp wmotioncalibrationy.cpp wviacam.cpp cvisualalert.cpp
 
 eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11
@@ -385,6 +385,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-clickwindowcontroller.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-clickwindowtext.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-cmotioncalibration.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-cvisualalert.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-guiapp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-keyboardbitmapcheck.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-motiontracker.Po@am__quote@
@@ -691,6 +692,20 @@ eviacam-wviacam.obj: wviacam.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wviacam.cpp' object='eviacam-wviacam.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-wviacam.obj `if test -f 'wviacam.cpp'; then $(CYGPATH_W) 'wviacam.cpp'; else $(CYGPATH_W) '$(srcdir)/wviacam.cpp'; fi`
+
+eviacam-cvisualalert.o: cvisualalert.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-cvisualalert.o -MD -MP -MF $(DEPDIR)/eviacam-cvisualalert.Tpo -c -o eviacam-cvisualalert.o `test -f 'cvisualalert.cpp' || echo '$(srcdir)/'`cvisualalert.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-cvisualalert.Tpo $(DEPDIR)/eviacam-cvisualalert.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cvisualalert.cpp' object='eviacam-cvisualalert.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-cvisualalert.o `test -f 'cvisualalert.cpp' || echo '$(srcdir)/'`cvisualalert.cpp
+
+eviacam-cvisualalert.obj: cvisualalert.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-cvisualalert.obj -MD -MP -MF $(DEPDIR)/eviacam-cvisualalert.Tpo -c -o eviacam-cvisualalert.obj `if test -f 'cvisualalert.cpp'; then $(CYGPATH_W) 'cvisualalert.cpp'; else $(CYGPATH_W) '$(srcdir)/cvisualalert.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-cvisualalert.Tpo $(DEPDIR)/eviacam-cvisualalert.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cvisualalert.cpp' object='eviacam-cvisualalert.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-cvisualalert.obj `if test -f 'cvisualalert.cpp'; then $(CYGPATH_W) 'cvisualalert.cpp'; else $(CYGPATH_W) '$(srcdir)/cvisualalert.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

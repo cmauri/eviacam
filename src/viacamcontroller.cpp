@@ -197,6 +197,8 @@ CCamera* CViacamController::SetUpCamera()
 	return cam;
 }
 
+wxWindow* globalWindow;
+
 bool CViacamController::Initialize ()
 {	
 	bool retval= true;
@@ -212,6 +214,7 @@ bool CViacamController::Initialize ()
 	if (retval)
 	{
 		m_pMainWindow = new WViacam( NULL, ID_WVIACAM );
+		globalWindow = m_pMainWindow;		
 		assert (m_pMainWindow);
 		m_pMainWindow->SetController (this);
 		m_pMainWindow->Show (true);	

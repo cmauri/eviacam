@@ -57,8 +57,14 @@ IMPLEMENT_APP( GuiApp )
 #if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXX11__)
 IMPLEMENT_APP_NO_MAIN(GuiApp)
 #include <X11/Xlib.h>
+#ifdef NDEBUG
+#include <mcheck.h>
+#endif
 int main(int argc, char *argv[]) {
 //printf( "XInitThreads - calling\n" );
+#ifdef NDEBUG
+mtrace();
+#endif
 if ( XInitThreads() == 0 ) {
 fprintf( stderr, "%s: Unable to initialize multithreaded X11 code (XInitThreads failed).\n", argv[0] );
 exit( EXIT_FAILURE );

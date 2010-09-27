@@ -29,6 +29,7 @@
 #include <wx/choice.h>
 #include <wx/button.h>
 #include <wx/stattext.h>
+#include <wx/statbox.h>
 //#include "cmotioncalibration.h"
 
 /*!
@@ -70,13 +71,17 @@ class CViacamController;
 #define ID_SPINCTRL_DWELL_AREA 10004
 #define ID_CHECKBOX_ALLOW_CONSECUTIVE 10032
 #define ID_CHECKBOX_BEEP_ON_CLICK 10033
+#define ID_CHECKBOX 10034
+#define ID_STATICBOX_CLICK_WIN 10087
 #define ID_CHECKBOX_CLICKWIN_AT_STARTUP 10022
 #define ID_CHECKBOX_SHOW_CLICKWIN 10037
 #define ID_STATIC_DESIGN 10081
 #define ID_COMBOBOX_DESIGN 10035
 #define ID_STATIC_BEHAVIOUR 10082
 #define ID_CHOICE_BEHAVIOUR 10006
-#define ID_CHECKBOX 10034
+#define ID_STATICBOX_GESTURE_CLICK 10088
+#define ID_STATICTEXT 10011
+#define ID_SPINCTRL 10013
 #define ID_STATIC_MOVE_LEFT 10083
 #define ID_COMBOBOX_LEFT 10007
 #define ID_STATIC_MOVE_RIGHT 10084
@@ -193,6 +198,9 @@ public:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_BEEP_ON_CLICK
     void OnCheckboxBeepOnClickClick( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
+    void OnCheckboxEnableGestureClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_CLICKWIN_AT_STARTUP
     void OnCheckboxClickwinAtStartupClick( wxCommandEvent& event );
 
@@ -205,8 +213,8 @@ public:
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_BEHAVIOUR
     void OnChoiceBehaviourSelected( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
-    void OnCheckboxEnableGestureClick( wxCommandEvent& event );
+    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL
+    void OnSpinctrlGestureTimeUpdated( wxSpinEvent& event );
 
     /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_LEFT
     void OnComboboxLeftSelected( wxCommandEvent& event );
@@ -316,13 +324,17 @@ private:
     wxSpinCtrl* m_spinDwellArea;
     wxCheckBox* m_chkAllowConsecutiveClick;
     wxCheckBox* m_chkBeepOnClick;
+    wxCheckBox* m_chkEnableGestureClick;
+    wxStaticBox* m_sboxClickWin;
     wxCheckBox* m_chkOpenClickWinAtStartup;
     wxCheckBox* m_chkShowClickWin;
     wxStaticText* m_stDesign;
     wxComboBox* m_cmbClickWindowDesign;
     wxStaticText* m_stBehaviour;
     wxChoice* m_choClickWindowBehaviour;
-    wxCheckBox* m_chkEnableGestureClick;
+    wxStaticBox* m_sboxGestureClick;
+    wxStaticText* m_stGestureTime;
+    wxSpinCtrl* m_spinGestureTime;
     wxStaticText* m_stMoveLeft;
     wxComboBox* m_cmbLeft;
     wxStaticText* m_stMoveRight;

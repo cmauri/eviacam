@@ -34,20 +34,21 @@ public:
 	// True if time-out
 	bool Update();
 	bool IsExpired();
-		
+	int PercentagePassed();
+
 private:
 	unsigned long m_timeCountMs, m_waitTimeMs;
 	bool m_actionDone;
 };
 
 inline const unsigned long CWaitTime::GetWaitTimeMs () const
-{ 
+{
 	return m_waitTimeMs; 
 }
 
 inline void CWaitTime::SetWaitTimeMs (unsigned long val)
-{ 	
-	m_waitTimeMs= val; 
+{
+	m_waitTimeMs= val;
 }
 
 #endif

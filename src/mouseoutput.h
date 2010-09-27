@@ -28,6 +28,8 @@
 #include "mousecontrol.h"
 #include "configbase.h"
 #include <math.h>
+#include <wx/cursor.h>
+#include "cvisualalert.h"
 
 class CClickWindowController;
 class wxSound;
@@ -36,7 +38,7 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 {
   public:
 	enum EClickMode { NONE, DWELL, GESTURE };
-	enum EAction { DISABLE, SINGLE, SECONDARY, DOUBLE, DRAG };
+	enum EAction { DISABLE, SINGLE, SECONDARY, DOUBLE, DRAG, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z };
 
 	CMouseOutput (CClickWindowController& pClickWindowController);
 	~CMouseOutput ();
@@ -47,6 +49,7 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	//Reset internal state (dwell click time)
 	void Reset(CWaitTime countdown);
 	
+	void WriteChar (char* c);
 	void DoAction(EAction action);
 
 	inline const unsigned long GetXSpeed() const;
@@ -133,9 +136,9 @@ class CMouseOutput : public CMouseControl, public CConfigBase
  
         bool m_restrictedWorkingArea;
 	bool m_enabled;
-	CWaitTime m_dwellCountdown;
-	CWaitTime m_preGestureCountdown;
-	CWaitTime m_gestureCountdown;
+	CWaitTime* m_dwellCountdown;
+	CWaitTime* m_preGestureCountdown;
+	CWaitTime* m_gestureCountdown;
 	bool m_waitingGesture;
 	EClickMode m_clickMode;
 	bool m_beepOnClick;
@@ -145,6 +148,8 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	EAction m_actionTop;
 	EAction m_actionBottom;
 	bool m_isLeftPressed;
+	CVisualAlert m_dwellVisualAlert;
+	CVisualAlert m_gestureVisualAlert;
 	
     //Define maximal distance (in pixels) from pointer's starting countdown position
     //where is allowed to move without cancelling current countdown.
@@ -282,33 +287,33 @@ inline void CMouseOutput::SetConsecutiveClicksAllowed(bool value) {
 }
 
 inline const unsigned long CMouseOutput::GetDwellTime() const {
-	return m_dwellCountdown.GetWaitTimeMs() / 100;
+	return m_dwellCountdown->GetWaitTimeMs() / 100;
 }
 
 inline void CMouseOutput::SetDwellTime (unsigned long ds) 
 {
 	if (ds> 50) ds= 50;
-	m_dwellCountdown.SetWaitTimeMs (ds * 100);
+	m_dwellCountdown->SetWaitTimeMs (ds * 100);
 }
 
 inline const unsigned long CMouseOutput::GetPreGestureTime() const {
-	return m_preGestureCountdown.GetWaitTimeMs() / 100;
+	return m_preGestureCountdown->GetWaitTimeMs() / 100;
 }
 
 inline void CMouseOutput::SetPreGestureTime (unsigned long ds) 
 {
 	if (ds> 50) ds= 50;
-	m_preGestureCountdown.SetWaitTimeMs (ds * 100);
+	m_preGestureCountdown->SetWaitTimeMs (ds * 100);
 }
 
 inline const unsigned long CMouseOutput::GetGestureTime() const {
-	return m_gestureCountdown.GetWaitTimeMs() / 100;
+	return m_gestureCountdown->GetWaitTimeMs() / 100;
 }
 
 inline void CMouseOutput::SetGestureTime (unsigned long ds) 
 {
 	if (ds> 50) ds= 50;
-	m_gestureCountdown.SetWaitTimeMs (ds * 100);
+	m_gestureCountdown->SetWaitTimeMs (ds * 100);
 }
 
 inline const unsigned long CMouseOutput::GetDwellToleranceArea() const {

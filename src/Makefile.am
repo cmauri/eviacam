@@ -3,7 +3,7 @@ noinst_HEADERS = activationkey.h cautostart.h clickwindow.h clickwindowbitmap.h 
 	clickwindowcontroller.h clickwindowtext.h cmotioncalibration.h guiapp.h keyboardbitmapcheck.h \
 	langnames-utf8.h motiontracker.h mouseoutput.h version.h viacamcontroller.h wabout.h \
 	wconfiguration.h wconfirmcalibration.h wmotioncalibrationx.h \
-	wmotioncalibrationy.h wviacam.h
+	wmotioncalibrationy.h wviacam.h cvisualalert.h
 
 dist_noinst_DATA= version.h.in langnames-utf16.h gui.pjd gui.rc eviacam.vcproj \
 	icons/on.xpm icons/eviacam.ico  icons/eviacam_mini.ico  \
@@ -46,7 +46,7 @@ eviacam_SOURCES = activationkey.cpp cautostart.cpp clickwindow.cpp \
 	clickwindowbitmap.cpp clickwindowcontroller.cpp clickwindowtext.cpp cmotioncalibration.cpp \
 	guiapp.cpp keyboardbitmapcheck.cpp motiontracker.cpp mouseoutput.cpp \
 	viacamcontroller.cpp wabout.cpp wconfiguration.cpp wconfirmcalibration.cpp \
-	wmotioncalibrationx.cpp wmotioncalibrationy.cpp wviacam.cpp
+	wmotioncalibrationx.cpp wmotioncalibrationy.cpp wviacam.cpp cvisualalert.cpp
 	
 eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11
