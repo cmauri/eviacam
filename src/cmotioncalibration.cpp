@@ -20,15 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
+#include <wx/app.h>
+#include <wx/event.h>
+#include <stdlib.h>
+#include <math.h>
 #include "cmotioncalibration.h"
 #include "mouseoutput.h"
 #include "wmotioncalibrationx.h"
 #include "wmotioncalibrationy.h"
 #include "wconfirmcalibration.h"
 #include "timeutil.h"
-#include <wx/app.h>
-#include <wx/event.h>
-#include <stdlib.h>
+#if defined(_WIN32) || defined(_WIN64)
+#define fmax max
+#define fmin min
+#endif
+
 
 #define BUTTON_OK 1
 #define BUTTON_CANCEL 2
