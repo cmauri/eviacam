@@ -62,7 +62,7 @@ bool CWaitTime::IsExpired()
 int CWaitTime::PercentagePassed()
 {
 	unsigned long now= CTimeUtil::GetMiliCount();
-	float percentage = 100* (now - m_timeCountMs) / m_waitTimeMs;
+	float percentage = 100.0f * (float) (now - m_timeCountMs) / (float) m_waitTimeMs;
 	return (int) percentage;
 }
 
