@@ -142,9 +142,6 @@
 				RelativePath=".\configmanager.cpp">
 			</File>
 			<File
-				RelativePath=".\dwellaction.cpp">
-			</File>
-			<File
 				RelativePath=".\mousecontrol.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -155,6 +152,9 @@
 			</File>
 			<File
 				RelativePath=".\timeutil.cpp">
+			</File>
+			<File
+				RelativePath=".\waittime.cpp">
 			</File>
 			<File
 				RelativePath=".\wxappbar.cpp">
@@ -170,13 +170,13 @@
 				RelativePath=".\configmanager.h">
 			</File>
 			<File
-				RelativePath=".\dwellaction.h">
-			</File>
-			<File
 				RelativePath=".\mousecontrol.h">
 			</File>
 			<File
 				RelativePath=".\timeutil.h">
+			</File>
+			<File
+				RelativePath=".\waittime.h">
 			</File>
 			<File
 				RelativePath=".\wxappbar.h">

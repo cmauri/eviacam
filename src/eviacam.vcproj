@@ -200,6 +200,12 @@ copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 				RelativePath=".\clickwindowtext.cpp">
 			</File>
 			<File
+				RelativePath=".\cmotioncalibration.cpp">
+			</File>
+			<File
+				RelativePath=".\cvisualalert.cpp">
+			</File>
+			<File
 				RelativePath=".\guiapp.cpp">
 			</File>
 			<File
@@ -216,6 +222,15 @@ copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 			</File>
 			<File
 				RelativePath=".\wconfiguration.cpp">
+			</File>
+			<File
+				RelativePath=".\wconfirmcalibration.cpp">
+			</File>
+			<File
+				RelativePath=".\wmotioncalibrationx.cpp">
+			</File>
+			<File
+				RelativePath=".\wmotioncalibrationy.cpp">
 			</File>
 			<File
 				RelativePath=".\wviacam.cpp">
@@ -241,6 +256,12 @@ copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 				RelativePath=".\clickwindowtext.h">
 			</File>
 			<File
+				RelativePath=".\cmotioncalibration.h">
+			</File>
+			<File
+				RelativePath=".\cvisualalert.h">
+			</File>
+			<File
 				RelativePath=".\guiapp.h">
 			</File>
 			<File
@@ -263,6 +284,15 @@ copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 			</File>
 			<File
 				RelativePath=".\wconfiguration.h">
+			</File>
+			<File
+				RelativePath=".\wconfirmcalibration.h">
+			</File>
+			<File
+				RelativePath=".\wmotioncalibrationx.h">
+			</File>
+			<File
+				RelativePath=".\wmotioncalibrationy.h">
 			</File>
 			<File
 				RelativePath=".\wviacam.h">
