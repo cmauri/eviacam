@@ -117,6 +117,9 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	inline const EAction GetActionBottom() const;
 	inline void SetActionBottom(EAction action);
 	
+	inline const bool GetVisualAlerts() const;
+	inline void SetVisualAlerts(bool value);
+	
 	// Configuration methods
 	virtual void InitDefaults();
 	virtual void WriteProfileData(wxConfigBase* pConfObj);
@@ -151,6 +154,7 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	EState m_state;
 	float m_sumDx, m_sumDy;
 	EDirection m_direction;
+	bool m_visualAlerts;
 
     //Define maximal distance (in pixels) from pointer's starting countdown position
     //where is allowed to move without cancelling current countdown.
@@ -372,6 +376,16 @@ inline const CMouseOutput::EAction CMouseOutput::GetActionBottom() const
 inline void CMouseOutput::SetActionBottom(CMouseOutput::EAction action)
 {
 	m_actionBottom = action;
+}
+
+inline const bool CMouseOutput::GetVisualAlerts() const
+{
+	return m_visualAlerts;
+}
+		
+inline void CMouseOutput::SetVisualAlerts(bool value)
+{
+	m_visualAlerts = value;
 }
 
 #endif

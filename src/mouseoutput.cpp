@@ -43,6 +43,7 @@ CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController)
 	m_enabled= false;
         m_restrictedWorkingArea = false;
 	m_isLeftPressed = false;
+	m_visualAlerts = false;
 	m_dwellCountdown = new CWaitTime();
 	m_gestureCountdown = new CWaitTime();
 
@@ -106,13 +107,16 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 		if (despl> m_dwellToleranceArea) 
 		{
 			// Pointer moving
-			m_dwellVisualAlert.End(m_xIni, m_yIni);
+			if (m_visualAlerts)
+				m_dwellVisualAlert.End(m_xIni, m_yIni);
+			
 			m_dwellCountdown->Reset();
 		}
 		else
 		{
 			if (!m_dwellCountdown->IsExpired())
-				m_dwellVisualAlert.Update(m_xIni, m_yIni, x, y, m_dwellCountdown->PercentagePassed());
+				if (m_visualAlerts)
+					m_dwellVisualAlert.Update(m_xIni, m_yIni, x, y, m_dwellCountdown->PercentagePassed());
 
 			// Pointer static
 			CClickWindowController::EAction action;
@@ -121,7 +125,9 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 
 			if (action== CClickWindowController::ACT_NO_CLICK)
 			{
-				m_dwellVisualAlert.End(m_xIni, m_yIni);
+				if (m_visualAlerts)
+					m_dwellVisualAlert.End(m_xIni, m_yIni);
+				
 				m_dwellCountdown->Reset();
 			}
 			else
@@ -151,14 +157,17 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 					}
 
 					m_pClickWindowController->ActionDone(x, y);
-					m_dwellVisualAlert.End(m_xIni, m_yIni);
+					
+					if (m_visualAlerts)
+						m_dwellVisualAlert.End(m_xIni, m_yIni);
+					
 					if (m_consecutiveClicksAllowed)
 						m_dwellCountdown->Reset();
 
 					if (m_beepOnClick) m_pClickSound->Play (wxSOUND_ASYNC);
 
 				}
-			}						
+			}
 		}
 	} else if (m_clickMode== CMouseOutput::GESTURE)
 	{
@@ -170,18 +179,24 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 				if (despl> m_dwellToleranceArea) 
 				{
 					// Pointer moving
-					m_dwellVisualAlert.End(m_xIni, m_yIni);
+					if (m_visualAlerts)
+						m_dwellVisualAlert.End(m_xIni, m_yIni);
+					
 					m_dwellCountdown->Reset();
 				}
 				else
 				{
 					if (!m_dwellCountdown->IsExpired())
-						m_dwellVisualAlert.Update(m_xIni, m_yIni, x, y, m_dwellCountdown->PercentagePassed());
+						if (m_visualAlerts)
+							m_dwellVisualAlert.Update(m_xIni, m_yIni, x, y, m_dwellCountdown->PercentagePassed());
 
 					if (m_dwellCountdown->Update())
 					{
 						m_state = COMPUTE_DIRECTION;
-						m_dwellVisualAlert.End(m_xIni, m_yIni);
+						
+						if (m_visualAlerts)
+							m_dwellVisualAlert.End(m_xIni, m_yIni);
+						
 						m_gestureCountdown->Reset();
 						m_xIni = x;
 						m_yIni = y;
@@ -192,7 +207,9 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 			case COMPUTE_DIRECTION:
 				if (!m_gestureCountdown->IsExpired())
 				{
-					m_gestureVisualAlert.Update(m_xIni, m_yIni, x, y, m_gestureCountdown->PercentagePassed());
+					if (m_visualAlerts)
+						m_gestureVisualAlert.Update(m_xIni, m_yIni, x, y, m_gestureCountdown->PercentagePassed());
+					
 					m_sumDx += dx;
 					m_sumDy += dy;
 					
@@ -221,7 +238,9 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 			case WAITING_RETURN:
 				if (!m_gestureCountdown->IsExpired())
 				{
-					m_gestureVisualAlert.Update(m_xIni, m_yIni, x, y, m_gestureCountdown->PercentagePassed());
+					if (m_visualAlerts)
+						m_gestureVisualAlert.Update(m_xIni, m_yIni, x, y, m_gestureCountdown->PercentagePassed());
+					
 					m_sumDx += dx;
 					m_sumDy += dy;
 					
@@ -230,7 +249,10 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 						DoAction();
 						m_sumDx = 0;
 						m_sumDy = 0;
-						m_gestureVisualAlert.End(m_xIni, m_yIni);
+						
+						if (m_visualAlerts)
+							m_gestureVisualAlert.End(m_xIni, m_yIni);
+						
 						m_state = DWELL_TIME;
 					}
 				}
@@ -239,7 +261,10 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 					DoAction();
 					m_sumDx = 0;
 					m_sumDy = 0;
-					m_gestureVisualAlert.End(m_xIni, m_yIni);
+					
+					if (m_visualAlerts)
+						m_gestureVisualAlert.End(m_xIni, m_yIni);
+					
 					m_state = DWELL_TIME;
 				}
 				break;
@@ -261,7 +286,13 @@ void CMouseOutput::DoAction()
 {
 	EAction action;
 	DoMovePointerAbs(m_xIni, m_yIni);
-	
+
+	if (action != DRAG and m_isLeftPressed)
+	{
+		m_isLeftPressed = false;
+		LeftUp();
+	}
+
 	switch (m_direction)
 	{
 		case LEFT:
@@ -277,7 +308,7 @@ void CMouseOutput::DoAction()
 			action = m_actionBottom;
 			break;
 	}
-	
+
 	switch (action)
 	{
 		case DISABLE:
@@ -329,14 +360,16 @@ void CMouseOutput::DoAction()
 		case Y: WriteChar("Y"); break;
 		case Z: WriteChar("Z"); break;
 	}
-
 }
 
 void CMouseOutput::EndVisualAlerts()
 {
-	m_dwellVisualAlert.End(m_xIni, m_yIni);
-	m_gestureVisualAlert.End(m_xIni, m_yIni);
-	m_dwellVisualAlert.End(m_xIni, m_yIni);
+	if (m_visualAlerts)
+	{
+		m_dwellVisualAlert.End(m_xIni, m_yIni);
+		m_gestureVisualAlert.End(m_xIni, m_yIni);
+		m_dwellVisualAlert.End(m_xIni, m_yIni);
+	}
 	m_xIni = 0;
 	m_yIni = 0;
 	m_state = DWELL_TIME;
@@ -439,6 +472,7 @@ void CMouseOutput::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("actionLeft"), (long) GetActionLeft());
 	pConfObj->Write(_T("actionRight"), (long) GetActionRight());
 	pConfObj->Write(_T("actionBottom"), (long) GetActionBottom());
+	pConfObj->Write(_T("visualAlerts"), (bool) GetVisualAlerts());
 
 
 	pConfObj->SetPath (_T(".."));
@@ -473,6 +507,7 @@ void CMouseOutput::ReadProfileData(wxConfigBase* pConfObj)
 	if (pConfObj->Read(_T("actionLeft"), &val)) SetActionLeft((CMouseOutput::EAction) val);
 	if (pConfObj->Read(_T("actionRight"), &val)) SetActionRight((CMouseOutput::EAction) val);
 	if (pConfObj->Read(_T("actionBottom"), &val)) SetActionBottom((CMouseOutput::EAction) val);
+	if (pConfObj->Read(_T("visualAlerts"), &val)) SetVisualAlerts(val);
 
 	pConfObj->SetPath (_T(".."));
 }

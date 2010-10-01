@@ -71,6 +71,7 @@ class CViacamController;
 #define ID_SPINCTRL_DWELL_AREA 10004
 #define ID_CHECKBOX_ALLOW_CONSECUTIVE 10032
 #define ID_CHECKBOX_BEEP_ON_CLICK 10033
+#define ID_CHECKBOX_ALLOW_VISUAL_ALERTS 10089
 #define ID_CHECKBOX 10034
 #define ID_STATICBOX_CLICK_WIN 10087
 #define ID_CHECKBOX_CLICKWIN_AT_STARTUP 10022
@@ -198,6 +199,9 @@ public:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_BEEP_ON_CLICK
     void OnCheckboxBeepOnClickClick( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ALLOW_VISUAL_ALERTS
+    void OnCheckboxAllowVisualAlertsClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
     void OnCheckboxEnableGestureClick( wxCommandEvent& event );
 
@@ -324,6 +328,7 @@ private:
     wxSpinCtrl* m_spinDwellArea;
     wxCheckBox* m_chkAllowConsecutiveClick;
     wxCheckBox* m_chkBeepOnClick;
+    wxCheckBox* m_chkAllowVisualAlerts;
     wxCheckBox* m_chkEnableGestureClick;
     wxStaticBox* m_sboxClickWin;
     wxCheckBox* m_chkOpenClickWinAtStartup;
