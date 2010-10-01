@@ -23,35 +23,32 @@
 #define CVISUALALERT_H
 
 #include "waittime.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+
+#if defined(__WXGTK__)
 #include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/keysym.h>
+#endif
 
 class CVisualAlert{
 public:
+	enum Stage { DWELL, GESTURE };
 	CVisualAlert();
 	~CVisualAlert();
-
-	CWaitTime* StartDwell (long x, long y, unsigned long time);
-	void UpdateDwell (long x, long y);
-	void EndDwell ();
-	CWaitTime* StartGestureClick (long x, long y, unsigned long time);
-	void UpdateGestureClick (long x, long y);
-	void EndGestureClick ();
+	void Start(Stage stg);
+	void Update(long xIni, long yIni, long x, long y, int percent);
+	void End(long xIni, long yIni);
 
 private:
 	CWaitTime* m_waitTime;
+	Stage m_stage;
+	int m_oldRadius;
+	int m_oldX;
+	int m_oldY;
+#if defined(__WXGTK__)
 	Display* m_display;
 	Window m_window;
 	int m_screen;
 	GC m_gc;
-	int m_oldRadius;
-	int m_oldX;
-	int m_oldY;
+#endif
 };
-
 
 #endif

@@ -27,9 +27,8 @@
 #include "waittime.h"
 #include "mousecontrol.h"
 #include "configbase.h"
-#include <math.h>
-#include <wx/cursor.h>
 #include "cvisualalert.h"
+#include <math.h>
 
 class CClickWindowController;
 class wxSound;
@@ -39,6 +38,8 @@ class CMouseOutput : public CMouseControl, public CConfigBase
   public:
 	enum EClickMode { NONE, DWELL, GESTURE };
 	enum EAction { DISABLE, SINGLE, SECONDARY, DOUBLE, DRAG, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z };
+	enum EState { DWELL_TIME, COMPUTE_DIRECTION, WAITING_RETURN };
+	enum EDirection { LEFT, RIGHT, TOP, BOTTOM };
 
 	CMouseOutput (CClickWindowController& pClickWindowController);
 	~CMouseOutput ();
@@ -50,7 +51,8 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	void Reset(CWaitTime countdown);
 	
 	void WriteChar (char* c);
-	void DoAction(EAction action);
+	void DoAction();
+	void EndVisualAlerts();
 
 	inline const unsigned long GetXSpeed() const;
 	inline void SetXSpeed(unsigned long value);
@@ -91,9 +93,6 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	inline const unsigned long GetDwellTime() const;
 	inline void SetDwellTime (unsigned long ds);
 
-	inline const unsigned long GetPreGestureTime() const;
-	inline void SetPreGestureTime (unsigned long ds);
-
 	inline const unsigned long GetGestureTime() const;
 	inline void SetGestureTime (unsigned long ds);
 
@@ -108,7 +107,6 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	
 	inline const EAction GetActionLeft() const;
 	inline void SetActionLeft(EAction action);
-	//void SetActionLeft(EAction action);
 
 	inline const EAction GetActionRight() const;
 	inline void SetActionRight(EAction action);
@@ -118,7 +116,7 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 
 	inline const EAction GetActionBottom() const;
 	inline void SetActionBottom(EAction action);
-
+	
 	// Configuration methods
 	virtual void InitDefaults();
 	virtual void WriteProfileData(wxConfigBase* pConfObj);
@@ -137,7 +135,6 @@ class CMouseOutput : public CMouseControl, public CConfigBase
         bool m_restrictedWorkingArea;
 	bool m_enabled;
 	CWaitTime* m_dwellCountdown;
-	CWaitTime* m_preGestureCountdown;
 	CWaitTime* m_gestureCountdown;
 	bool m_waitingGesture;
 	EClickMode m_clickMode;
@@ -150,7 +147,11 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	bool m_isLeftPressed;
 	CVisualAlert m_dwellVisualAlert;
 	CVisualAlert m_gestureVisualAlert;
-	
+	long m_xIni, m_yIni;
+	EState m_state;
+	float m_sumDx, m_sumDy;
+	EDirection m_direction;
+
     //Define maximal distance (in pixels) from pointer's starting countdown position
     //where is allowed to move without cancelling current countdown.
     //
@@ -294,16 +295,6 @@ inline void CMouseOutput::SetDwellTime (unsigned long ds)
 {
 	if (ds> 50) ds= 50;
 	m_dwellCountdown->SetWaitTimeMs (ds * 100);
-}
-
-inline const unsigned long CMouseOutput::GetPreGestureTime() const {
-	return m_preGestureCountdown->GetWaitTimeMs() / 100;
-}
-
-inline void CMouseOutput::SetPreGestureTime (unsigned long ds) 
-{
-	if (ds> 50) ds= 50;
-	m_preGestureCountdown->SetWaitTimeMs (ds * 100);
 }
 
 inline const unsigned long CMouseOutput::GetGestureTime() const {
