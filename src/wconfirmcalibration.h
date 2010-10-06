@@ -65,6 +65,9 @@ class WConfirmCalibration: public wxDialog
     DECLARE_EVENT_TABLE()
 
 public:
+
+	enum EButton { OK, CANCEL, REPEAT };
+
     /// Constructors
     WConfirmCalibration();
     WConfirmCalibration( wxWindow* parent, wxWindowID id = SYMBOL_WCONFIRMCALIBRATION_IDNAME, const wxString& caption = SYMBOL_WCONFIRMCALIBRATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIRMCALIBRATION_POSITION, const wxSize& size = SYMBOL_WCONFIRMCALIBRATION_SIZE, long style = SYMBOL_WCONFIRMCALIBRATION_STYLE );
@@ -86,11 +89,23 @@ public:
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON1
     void OnButton1Click( wxCommandEvent& event );
 
+    /// wxEVT_ENTER_WINDOW event handler for ID_BUTTON1
+    void OnEnterOkButton( wxMouseEvent& event );
+
+    /// wxEVT_LEAVE_WINDOW event handler for ID_BUTTON1
+    void OnLeaveOkButton( wxMouseEvent& event );
+
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON2
     void OnButton2Click( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON3
     void OnButton3Click( wxCommandEvent& event );
+
+    /// wxEVT_ENTER_WINDOW event handler for ID_BUTTON3
+    void OnEnterRepeatButton( wxMouseEvent& event );
+
+    /// wxEVT_LEAVE_WINDOW event handler for ID_BUTTON3
+    void OnLeaveRepeatButton( wxMouseEvent& event );
 
 ////@end WConfirmCalibration event handler declarations
 
@@ -116,7 +131,10 @@ public:
 
 private:
 	wxTimer m_timer;
-	int m_seconds;
+	int m_okCountdown;
+	int m_cancelCountdown;
+	int m_repeatCountdown;
+	EButton m_activeButton;
 };
 
 #endif

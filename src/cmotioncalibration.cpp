@@ -79,6 +79,10 @@ bool CMotionCalibration::InitMotionCalibration()
 {
 	float newSpeedX, newSpeedY;
 	bool changes = false;
+	bool isEnabled = false;
+	bool isClickEnabled = false;
+	CMouseOutput::EClickMode clickMode;
+	
 	
 	m_xSpeedBackup = m_pViacamController->GetMouseOutput()->GetXSpeed();
 	m_ySpeedBackup = m_pViacamController->GetMouseOutput()->GetYSpeed();
@@ -106,6 +110,22 @@ bool CMotionCalibration::InitMotionCalibration()
 			m_pViacamController->GetMouseOutput()->SetXSpeed(newSpeedX);
 			m_pViacamController->GetMouseOutput()->SetYSpeed(newSpeedY);
 			m_pDialog = new WConfirmCalibration(NULL);
+			
+			
+			isEnabled = m_pViacamController->GetMouseOutput()->GetEnabled();
+			clickMode = m_pViacamController->GetMouseOutput()->GetClickMode();
+			if (clickMode == CMouseOutput::NONE)
+			{
+				isClickEnabled = false;
+				m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL);
+			}
+			else
+			{
+				isClickEnabled = true;
+			}
+			m_pViacamController->GetMouseOutput()->SetEnabled(true);
+			
+			
 			int CONFIRMATIONButton = m_pDialog->ShowModal();
 			switch (CONFIRMATIONButton)
 			{
@@ -123,6 +143,8 @@ bool CMotionCalibration::InitMotionCalibration()
 					break;
 			}
 			m_pDialog->Destroy();
+			m_pViacamController->GetMouseOutput()->SetEnabled(isEnabled);
+			m_pViacamController->GetMouseOutput()->SetClickMode(clickMode);
 		}
 		
 		if (m_state == ABORTING) {

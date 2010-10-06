@@ -197,7 +197,9 @@ void Activationkey::OnTimer(wxTimerEvent& event)
 {
 	KeySym keyCode = 0;
 	
+	
 	keyCode = CKeyboardBitmapCheck::ReadKeySym();
+	
 
 	if (keyCode != 0) {
 		if (keyCode != ESCAPE_KEYSYM) {

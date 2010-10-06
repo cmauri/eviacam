@@ -42,10 +42,12 @@
 ////@end XPM images
 
 #define TIMER_ID 1234
-#define TOTAL_SECONDS 15
 #define BUTTON_OK 1
 #define BUTTON_CANCEL 2
 #define BUTTON_REPEAT 3
+#define CANCEL_TIME 20
+#define OK_TIME 20
+#define REPEAT_TIME 20
 
 /*!
  * WConfirmCalibration type definition
@@ -70,6 +72,8 @@ BEGIN_EVENT_TABLE( WConfirmCalibration, wxDialog )
 ////@end WConfirmCalibration event table entries
 
 	EVT_TIMER(TIMER_ID, WConfirmCalibration::OnTimer)
+	
+	//EVT_LEAVE_WINDOW( WConfirmCalibration::OnLeaveOkButton )
 	
 END_EVENT_TABLE()
 
@@ -160,14 +164,23 @@ void WConfirmCalibration::CreateControls()
     m_buttonCancel = new wxButton( itemDialog1, ID_BUTTON2, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(m_buttonCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_buttonRepeat = new wxButton( itemDialog1, ID_BUTTON3, _("Repeat calibration"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_buttonRepeat = new wxButton( itemDialog1, ID_BUTTON3, _("Repeat"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer4->Add(m_buttonRepeat, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
+    // Connect events and objects
+    m_buttonOk->Connect(ID_BUTTON1, wxEVT_ENTER_WINDOW, wxMouseEventHandler(WConfirmCalibration::OnEnterOkButton), NULL, this);
+    m_buttonOk->Connect(ID_BUTTON1, wxEVT_LEAVE_WINDOW, wxMouseEventHandler(WConfirmCalibration::OnLeaveOkButton), NULL, this);
+    m_buttonRepeat->Connect(ID_BUTTON3, wxEVT_ENTER_WINDOW, wxMouseEventHandler(WConfirmCalibration::OnEnterRepeatButton), NULL, this);
+    m_buttonRepeat->Connect(ID_BUTTON3, wxEVT_LEAVE_WINDOW, wxMouseEventHandler(WConfirmCalibration::OnLeaveRepeatButton), NULL, this);
 ////@end WConfirmCalibration content construction
 
 	m_timer.Start(1000);
-	m_seconds = TOTAL_SECONDS;
-	m_buttonCancel->SetLabel(wxString::Format(wxT("Cancel %i"),TOTAL_SECONDS));
+	m_okCountdown = OK_TIME;
+	m_cancelCountdown = CANCEL_TIME;
+	m_repeatCountdown = REPEAT_TIME;
+	m_activeButton = CANCEL;
+	m_buttonCancel->SetLabel(wxString::Format(wxT("Cancel %i"),CANCEL_TIME));
+	
 }
 
 
@@ -213,6 +226,7 @@ wxIcon WConfirmCalibration::GetIconResource( const wxString& name )
 
 void WConfirmCalibration::OnButton1Click( wxCommandEvent& event )
 {
+	m_timer.Stop();
 	EndModal(BUTTON_OK);
     event.Skip();
 }
@@ -224,6 +238,7 @@ void WConfirmCalibration::OnButton1Click( wxCommandEvent& event )
 
 void WConfirmCalibration::OnButton2Click( wxCommandEvent& event )
 {
+	m_timer.Stop();
 	EndModal(BUTTON_CANCEL);
     event.Skip();
 }
@@ -235,21 +250,109 @@ void WConfirmCalibration::OnButton2Click( wxCommandEvent& event )
 
 void WConfirmCalibration::OnButton3Click( wxCommandEvent& event )
 {
+	m_timer.Stop();
 	EndModal(BUTTON_REPEAT);
     event.Skip();
 }
 
 void WConfirmCalibration::OnTimer(wxTimerEvent& event)
 {
-	if (m_seconds == 0) {
+	if (m_okCountdown == 0)
+	{
 		m_timer.Stop();
-		EndModal(2);
-	} else {
-		m_seconds--;
+		EndModal(BUTTON_OK);
+	}
+	else if (m_cancelCountdown == 0)
+	{
+		m_timer.Stop();
+		EndModal(BUTTON_CANCEL);
+	}
+	else if (m_repeatCountdown == 0)
+	{
+		m_timer.Stop();
+		EndModal(BUTTON_REPEAT);
+	}
+	else
+	{
+		switch (m_activeButton)
+		{
+			case OK:
+				m_okCountdown--;
+				m_buttonOk->SetLabel(wxString::Format(wxT("Ok %i"),m_okCountdown));
+				m_buttonCancel->SetLabel(wxString::Format(wxT("Cancel")));
+				m_buttonRepeat->SetLabel(wxString::Format(wxT("Repeat")));
+				break;
+	
+			case CANCEL:
+				m_cancelCountdown--;
+				m_buttonOk->SetLabel(wxString::Format(wxT("Ok")));
+				m_buttonCancel->SetLabel(wxString::Format(wxT("Cancel %i"),m_cancelCountdown));
+				m_buttonRepeat->SetLabel(wxString::Format(wxT("Repeat")));
+				break;
+	
+			case REPEAT:
+				m_repeatCountdown--;
+				m_buttonOk->SetLabel(wxString::Format(wxT("Ok")));
+				m_buttonCancel->SetLabel(wxString::Format(wxT("Cancel")));
+				m_buttonRepeat->SetLabel(wxString::Format(wxT("Repeat %i"),m_repeatCountdown));
+				break;
+		}
 		m_timer.Stop();
 		m_timer.Start(1000);
-		m_buttonCancel->SetLabel(wxString::Format(wxT("Cancel %i"),m_seconds));
-	}	
-	event.Skip();
+	}
+	event.Skip(false);
 }
 
+
+/*!
+ * wxEVT_ENTER_WINDOW event handler for ID_BUTTON1
+ */
+
+void WConfirmCalibration::OnEnterOkButton( wxMouseEvent& event )
+{
+	printf("Enter Ok\n");
+	m_cancelCountdown = CANCEL_TIME;
+	m_repeatCountdown = REPEAT_TIME;
+	m_activeButton = OK;
+	event.Skip(false);
+}
+
+
+/*!
+ * wxEVT_LEAVE_WINDOW event handler for ID_BUTTON1
+ */
+
+void WConfirmCalibration::OnLeaveOkButton( wxMouseEvent& event )
+{
+	printf("Leave Ok\n");
+	m_okCountdown = OK_TIME;
+	m_activeButton = CANCEL;
+	event.Skip(false);
+}
+
+
+/*!
+ * wxEVT_ENTER_WINDOW event handler for ID_BUTTON3
+ */
+
+void WConfirmCalibration::OnEnterRepeatButton( wxMouseEvent& event )
+{
+	printf("Enter Repeat\n");
+	m_cancelCountdown = CANCEL_TIME;
+	m_okCountdown = OK_TIME;
+	m_activeButton = REPEAT;
+	event.Skip(false);
+}
+
+
+/*!
+ * wxEVT_LEAVE_WINDOW event handler for ID_BUTTON3
+ */
+
+void WConfirmCalibration::OnLeaveRepeatButton( wxMouseEvent& event )
+{
+	printf("Leave Repeat\n");
+	m_repeatCountdown = REPEAT_TIME;
+	m_activeButton = CANCEL;
+	event.Skip(false);
+}
