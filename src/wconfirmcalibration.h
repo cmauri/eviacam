@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        mouseoutput.h
+// Name:        wconfirmcalibration.h
 // Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
@@ -65,6 +65,9 @@ class WConfirmCalibration: public wxDialog
     DECLARE_EVENT_TABLE()
 
 public:
+
+	enum EButton { OK, CANCEL, REPEAT };
+
     /// Constructors
     WConfirmCalibration();
     WConfirmCalibration( wxWindow* parent, wxWindowID id = SYMBOL_WCONFIRMCALIBRATION_IDNAME, const wxString& caption = SYMBOL_WCONFIRMCALIBRATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIRMCALIBRATION_POSITION, const wxSize& size = SYMBOL_WCONFIRMCALIBRATION_SIZE, long style = SYMBOL_WCONFIRMCALIBRATION_STYLE );
@@ -83,14 +86,23 @@ public:
 
 ////@begin WConfirmCalibration event handler declarations
 
+    /// wxEVT_MOTION event handler for ID_WCONFIRMCALIBRATION
+    void OnWindowMotion( wxMouseEvent& event );
+
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON1
     void OnButton1Click( wxCommandEvent& event );
+
+    /// wxEVT_MOTION event handler for ID_BUTTON1
+    void OnOkButtonMotion( wxMouseEvent& event );
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON2
     void OnButton2Click( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON3
     void OnButton3Click( wxCommandEvent& event );
+
+    /// wxEVT_MOTION event handler for ID_BUTTON3
+    void OnRepeatButtonMotion( wxMouseEvent& event );
 
 ////@end WConfirmCalibration event handler declarations
 
@@ -116,7 +128,10 @@ public:
 
 private:
 	wxTimer m_timer;
-	int m_seconds;
+	int m_okCountdown;
+	int m_cancelCountdown;
+	int m_repeatCountdown;
+	EButton m_activeButton;
 };
 
 #endif
