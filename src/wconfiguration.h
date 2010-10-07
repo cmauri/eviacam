@@ -82,15 +82,11 @@ class CViacamController;
 #define ID_CHOICE_BEHAVIOUR 10006
 #define ID_STATICBOX_GESTURE_CLICK 10088
 #define ID_STATICTEXT 10011
-#define ID_SPINCTRL 10013
+#define ID_SPINCTRL_GESTURE_TIME 10013
 #define ID_STATIC_MOVE_LEFT 10083
-#define ID_COMBOBOX_LEFT 10007
 #define ID_STATIC_MOVE_RIGHT 10084
-#define ID_COMBOBOX_RIGHT 10008
 #define ID_STATIC_MOVE_TOP 10085
-#define ID_COMBOBOX_TOP 10009
 #define ID_STATIC_MOVE_BOTTOM 10086
-#define ID_COMBOBOX_BOTTOM 10010
 #define ID_PANEL_ADVANCED 10025
 #define ID_CHECKBOX_AUTO_LOCATE_FACE 10038
 #define ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER 10039
@@ -117,6 +113,11 @@ class CViacamController;
 #define SYMBOL_WCONFIGURATION_SIZE wxDefaultSize
 #define SYMBOL_WCONFIGURATION_POSITION wxDefaultPosition
 ////@end control identifiers
+#define ID_COMBOBOX_LEFT 10007
+#define ID_COMBOBOX_RIGHT 10008
+#define ID_COMBOBOX_TOP 10009
+#define ID_COMBOBOX_BOTTOM 10010
+
 
 
 /*!
@@ -217,20 +218,8 @@ public:
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_BEHAVIOUR
     void OnChoiceBehaviourSelected( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL
+    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_GESTURE_TIME
     void OnSpinctrlGestureTimeUpdated( wxSpinEvent& event );
-
-    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_LEFT
-    void OnComboboxLeftSelected( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_RIGHT
-    void OnComboboxRightSelected( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_TOP
-    void OnComboboxTopSelected( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_BOTTOM
-    void OnComboboxBottomSelected( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTO_LOCATE_FACE
     void OnCheckboxAutoLocateFaceClick( wxCommandEvent& event );
@@ -284,6 +273,19 @@ public:
     void OnButtonCancelClick( wxCommandEvent& event );
 
 ////@end WConfiguration event handler declarations
+
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_LEFT
+    void OnComboboxLeftSelected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_RIGHT
+    void OnComboboxRightSelected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_TOP
+    void OnComboboxTopSelected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_BOTTOM
+    void OnComboboxBottomSelected( wxCommandEvent& event );
+
 
 ////@begin WConfiguration member function declarations
 
@@ -341,13 +343,9 @@ private:
     wxStaticText* m_stGestureTime;
     wxSpinCtrl* m_spinGestureTime;
     wxStaticText* m_stMoveLeft;
-    wxComboBox* m_cmbLeft;
     wxStaticText* m_stMoveRight;
-    wxComboBox* m_cmbRight;
     wxStaticText* m_stMoveTop;
-    wxComboBox* m_cmbTop;
     wxStaticText* m_stMoveBottom;
-    wxComboBox* m_cmbBottom;
     wxCheckBox* m_chkAutoLocateFace;
     wxCheckBox* m_chkShowAutoLocateFaceFilter;
     wxTextCtrl* m_txtOnScreenKeyboardCommand;
@@ -372,6 +370,11 @@ private:
     wxChoice* m_choLanguage;
     wxButton* m_btnCancel;
 ////@end WConfiguration member variables
+    wxComboBox* m_cmbLeft;
+    wxComboBox* m_cmbRight;
+    wxComboBox* m_cmbTop;
+    wxComboBox* m_cmbBottom;
+
 
 	CViacamController* m_pViacamController;
     CAutostart* m_pAutostart;

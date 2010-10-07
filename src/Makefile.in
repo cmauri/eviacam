@@ -51,7 +51,9 @@ am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(desktopdir)" \
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_eviacam_OBJECTS = eviacam-activationkey.$(OBJEXT) \
-	eviacam-cautostart.$(OBJEXT) eviacam-clickwindow.$(OBJEXT) \
+	eviacam-cautostart.$(OBJEXT) eviacam-ckeyboardcode.$(OBJEXT) \
+	eviacam-ckeyboardcontrol.$(OBJEXT) \
+	eviacam-clickwindow.$(OBJEXT) \
 	eviacam-clickwindowbitmap.$(OBJEXT) \
 	eviacam-clickwindowcontroller.$(OBJEXT) \
 	eviacam-clickwindowtext.$(OBJEXT) \
@@ -255,7 +257,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
 # these are the headers for your project
-noinst_HEADERS = activationkey.h cautostart.h clickwindow.h clickwindowbitmap.h \
+noinst_HEADERS = activationkey.h cautostart.h ckeyboardcode.h ckeyboardcontrol.h clickwindow.h clickwindowbitmap.h \
 	clickwindowcontroller.h clickwindowtext.h cmotioncalibration.h guiapp.h keyboardbitmapcheck.h \
 	langnames-utf8.h motiontracker.h mouseoutput.h version.h viacamcontroller.h wabout.h \
 	wconfiguration.h wconfirmcalibration.h wmotioncalibrationx.h \
@@ -285,7 +287,7 @@ pixmap_DATA = icons/eviacam.xpm
 eviacamloader_SOURCES = eviacamloader.c
 
 # the application source, library search path, and link libraries
-eviacam_SOURCES = activationkey.cpp cautostart.cpp clickwindow.cpp \
+eviacam_SOURCES = activationkey.cpp cautostart.cpp ckeyboardcode.cpp ckeyboardcontrol.cpp clickwindow.cpp \
 	clickwindowbitmap.cpp clickwindowcontroller.cpp clickwindowtext.cpp cmotioncalibration.cpp \
 	guiapp.cpp keyboardbitmapcheck.cpp motiontracker.cpp mouseoutput.cpp \
 	viacamcontroller.cpp wabout.cpp wconfiguration.cpp wconfirmcalibration.cpp \
@@ -380,6 +382,8 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-activationkey.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-cautostart.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-ckeyboardcode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-ckeyboardcontrol.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-clickwindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-clickwindowbitmap.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-clickwindowcontroller.Po@am__quote@
@@ -468,6 +472,34 @@ eviacam-cautostart.obj: cautostart.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cautostart.cpp' object='eviacam-cautostart.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-cautostart.obj `if test -f 'cautostart.cpp'; then $(CYGPATH_W) 'cautostart.cpp'; else $(CYGPATH_W) '$(srcdir)/cautostart.cpp'; fi`
+
+eviacam-ckeyboardcode.o: ckeyboardcode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-ckeyboardcode.o -MD -MP -MF $(DEPDIR)/eviacam-ckeyboardcode.Tpo -c -o eviacam-ckeyboardcode.o `test -f 'ckeyboardcode.cpp' || echo '$(srcdir)/'`ckeyboardcode.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-ckeyboardcode.Tpo $(DEPDIR)/eviacam-ckeyboardcode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ckeyboardcode.cpp' object='eviacam-ckeyboardcode.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-ckeyboardcode.o `test -f 'ckeyboardcode.cpp' || echo '$(srcdir)/'`ckeyboardcode.cpp
+
+eviacam-ckeyboardcode.obj: ckeyboardcode.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-ckeyboardcode.obj -MD -MP -MF $(DEPDIR)/eviacam-ckeyboardcode.Tpo -c -o eviacam-ckeyboardcode.obj `if test -f 'ckeyboardcode.cpp'; then $(CYGPATH_W) 'ckeyboardcode.cpp'; else $(CYGPATH_W) '$(srcdir)/ckeyboardcode.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-ckeyboardcode.Tpo $(DEPDIR)/eviacam-ckeyboardcode.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ckeyboardcode.cpp' object='eviacam-ckeyboardcode.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-ckeyboardcode.obj `if test -f 'ckeyboardcode.cpp'; then $(CYGPATH_W) 'ckeyboardcode.cpp'; else $(CYGPATH_W) '$(srcdir)/ckeyboardcode.cpp'; fi`
+
+eviacam-ckeyboardcontrol.o: ckeyboardcontrol.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-ckeyboardcontrol.o -MD -MP -MF $(DEPDIR)/eviacam-ckeyboardcontrol.Tpo -c -o eviacam-ckeyboardcontrol.o `test -f 'ckeyboardcontrol.cpp' || echo '$(srcdir)/'`ckeyboardcontrol.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-ckeyboardcontrol.Tpo $(DEPDIR)/eviacam-ckeyboardcontrol.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ckeyboardcontrol.cpp' object='eviacam-ckeyboardcontrol.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-ckeyboardcontrol.o `test -f 'ckeyboardcontrol.cpp' || echo '$(srcdir)/'`ckeyboardcontrol.cpp
+
+eviacam-ckeyboardcontrol.obj: ckeyboardcontrol.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-ckeyboardcontrol.obj -MD -MP -MF $(DEPDIR)/eviacam-ckeyboardcontrol.Tpo -c -o eviacam-ckeyboardcontrol.obj `if test -f 'ckeyboardcontrol.cpp'; then $(CYGPATH_W) 'ckeyboardcontrol.cpp'; else $(CYGPATH_W) '$(srcdir)/ckeyboardcontrol.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-ckeyboardcontrol.Tpo $(DEPDIR)/eviacam-ckeyboardcontrol.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='ckeyboardcontrol.cpp' object='eviacam-ckeyboardcontrol.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-ckeyboardcontrol.obj `if test -f 'ckeyboardcontrol.cpp'; then $(CYGPATH_W) 'ckeyboardcontrol.cpp'; else $(CYGPATH_W) '$(srcdir)/ckeyboardcontrol.cpp'; fi`
 
 eviacam-clickwindow.o: clickwindow.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-clickwindow.o -MD -MP -MF $(DEPDIR)/eviacam-clickwindow.Tpo -c -o eviacam-clickwindow.o `test -f 'clickwindow.cpp' || echo '$(srcdir)/'`clickwindow.cpp

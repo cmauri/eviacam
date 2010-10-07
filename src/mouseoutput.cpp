@@ -32,6 +32,12 @@
 #include <X11/extensions/XTest.h>
 #endif
 
+#define DISABLE 0
+#define SINGLE 1
+#define SECONDARY 2
+#define DOUBLE 3
+#define DRAG 4
+
 CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController)
 #if defined(__WXGTK__)
 	: CMouseControl ((void *) wxGetDisplay())
@@ -49,6 +55,7 @@ CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController)
 
 	GetPointerLocation(x, y);
 	InitDefaults ();
+	InitKeyboardCode();
 
 	m_dwellVisualAlert.Start(CVisualAlert::DWELL);
 	m_gestureVisualAlert.Start(CVisualAlert::GESTURE);
@@ -91,7 +98,6 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 {
 	float despl;
 	long x, y;
-	EAction action;
 
 	if (!m_enabled) return 0.0f;
 
@@ -273,40 +279,23 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 	return despl;
 }
 
-void CMouseOutput::WriteChar (char* c)
-{
-#if defined(__WXGTK__)
-	KeyCode kc = XKeysymToKeycode((Display *) wxGetDisplay(), XStringToKeysym(c));
-	XTestFakeKeyEvent((Display *) wxGetDisplay(), kc, true, 0);
-	XTestFakeKeyEvent((Display *) wxGetDisplay(), kc, false, 0);
-#endif
-}
-
 void CMouseOutput::DoAction()
 {
-	EAction action;
+	int action;
 	DoMovePointerAbs(m_xIni, m_yIni);
 
+	switch (m_direction)
+	{
+		case LEFT:	action = m_actionLeft;	break;
+		case RIGHT:	action = m_actionRight;	break;
+		case TOP:	action = m_actionTop;	break;
+		case BOTTOM:	action = m_actionBottom;break;
+	}
+	
 	if (action != DRAG and m_isLeftPressed)
 	{
 		m_isLeftPressed = false;
 		LeftUp();
-	}
-
-	switch (m_direction)
-	{
-		case LEFT:
-			action = m_actionLeft;
-			break;
-		case RIGHT:
-			action = m_actionRight;
-			break;
-		case TOP:
-			action = m_actionTop;
-			break;
-		case BOTTOM:
-			action = m_actionBottom;
-			break;
 	}
 
 	switch (action)
@@ -333,33 +322,41 @@ void CMouseOutput::DoAction()
 				m_isLeftPressed = true;
 			}
 			break;
-		case A: WriteChar("A"); break;
-		case B: WriteChar("B"); break;
-		case C: WriteChar("C"); break;
-		case D: WriteChar("D"); break;
-		case E: WriteChar("E"); break;
-		case F: WriteChar("F"); break;
-		case G: WriteChar("G"); break;
-		case H: WriteChar("H"); break;
-		case I: WriteChar("I"); break;
-		case J: WriteChar("J"); break;
-		case K: WriteChar("K"); break;
-		case L: WriteChar("L"); break;
-		case M: WriteChar("M"); break;
-		case N: WriteChar("N"); break;
-		case O: WriteChar("O"); break;
-		case P: WriteChar("P"); break;
-		case Q: WriteChar("Q"); break;
-		case R: WriteChar("R"); break;
-		case S: WriteChar("S"); break;
-		case T: WriteChar("T"); break;
-		case U: WriteChar("U"); break;
-		case V: WriteChar("V"); break;
-		case W: WriteChar("W"); break;
-		case X: WriteChar("X"); break;
-		case Y: WriteChar("Y"); break;
-		case Z: WriteChar("Z"); break;
+		default:
+			m_keyboardCodes[action - MOUSE_EVENTS_COUNT].SendKey();
+			break;
+		
 	}
+}
+
+void CMouseOutput::InitKeyboardCode()
+{
+	m_keyboardCodes[0] = CKeyboardCode('a');
+	m_keyboardCodes[1] = CKeyboardCode('b');
+	m_keyboardCodes[2] = CKeyboardCode('c');
+	m_keyboardCodes[3] = CKeyboardCode('d');
+	m_keyboardCodes[4] = CKeyboardCode('e');
+	m_keyboardCodes[5] = CKeyboardCode('f');
+	m_keyboardCodes[6] = CKeyboardCode('g');
+	m_keyboardCodes[7] = CKeyboardCode('h');
+	m_keyboardCodes[8] = CKeyboardCode('i');
+	m_keyboardCodes[9] = CKeyboardCode('j');
+	m_keyboardCodes[10] = CKeyboardCode('K');
+	m_keyboardCodes[11] = CKeyboardCode('L');
+	m_keyboardCodes[12] = CKeyboardCode('M');
+	m_keyboardCodes[13] = CKeyboardCode('N');
+	m_keyboardCodes[14] = CKeyboardCode('O');
+	m_keyboardCodes[15] = CKeyboardCode('P');
+	m_keyboardCodes[16] = CKeyboardCode('Q');
+	m_keyboardCodes[17] = CKeyboardCode('R');
+	m_keyboardCodes[18] = CKeyboardCode('S');
+	m_keyboardCodes[19] = CKeyboardCode('T');
+	m_keyboardCodes[20] = CKeyboardCode('U');
+	m_keyboardCodes[21] = CKeyboardCode('V');
+	m_keyboardCodes[22] = CKeyboardCode('W');
+	m_keyboardCodes[23] = CKeyboardCode('X');
+	m_keyboardCodes[24] = CKeyboardCode('Y');
+	m_keyboardCodes[25] = CKeyboardCode('Z');
 }
 
 void CMouseOutput::EndVisualAlerts()
@@ -441,6 +438,10 @@ void CMouseOutput::InitDefaults()
 	SetDwellTime (3);
 	SetGestureTime (3);
 	SetDwellToleranceArea (3); //.0f);	
+	SetActionLeft(SINGLE);
+	SetActionRight(SECONDARY);
+	SetActionTop(DOUBLE);
+	SetActionBottom(DRAG);
 	m_xIni = 0;
 	m_yIni = 0;
 	m_state = DWELL_TIME;
@@ -468,12 +469,11 @@ void CMouseOutput::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("dwellTime"), (long) GetDwellTime());
 	pConfObj->Write(_T("gestureTime"), (long) GetGestureTime());
 	pConfObj->Write(_T("dwellToleranceArea"), (double) GetDwellToleranceArea());
-	pConfObj->Write(_T("actionTop"), (long) GetActionTop());
-	pConfObj->Write(_T("actionLeft"), (long) GetActionLeft());
-	pConfObj->Write(_T("actionRight"), (long) GetActionRight());
-	pConfObj->Write(_T("actionBottom"), (long) GetActionBottom());
+	pConfObj->Write(_T("actionTop"), (int) GetActionTop());
+	pConfObj->Write(_T("actionLeft"), (int) GetActionLeft());
+	pConfObj->Write(_T("actionRight"), (int) GetActionRight());
+	pConfObj->Write(_T("actionBottom"), (int) GetActionBottom());
 	pConfObj->Write(_T("visualAlerts"), (bool) GetVisualAlerts());
-
 
 	pConfObj->SetPath (_T(".."));
 }
@@ -503,10 +503,10 @@ void CMouseOutput::ReadProfileData(wxConfigBase* pConfObj)
 	if (pConfObj->Read(_T("dwellToleranceArea"), &dwellToleranceArea))
 		SetDwellToleranceArea((long unsigned int) dwellToleranceArea);
 		//SetDwellToleranceArea((float) dwellToleranceArea);
-	if (pConfObj->Read(_T("actionTop"), &val)) SetActionTop((CMouseOutput::EAction) val);
-	if (pConfObj->Read(_T("actionLeft"), &val)) SetActionLeft((CMouseOutput::EAction) val);
-	if (pConfObj->Read(_T("actionRight"), &val)) SetActionRight((CMouseOutput::EAction) val);
-	if (pConfObj->Read(_T("actionBottom"), &val)) SetActionBottom((CMouseOutput::EAction) val);
+	if (pConfObj->Read(_T("actionTop"), &val)) SetActionTop(val);
+	if (pConfObj->Read(_T("actionLeft"), &val)) SetActionLeft(val);
+	if (pConfObj->Read(_T("actionRight"), &val)) SetActionRight(val);
+	if (pConfObj->Read(_T("actionBottom"), &val)) SetActionBottom(val);
 	if (pConfObj->Read(_T("visualAlerts"), &val)) SetVisualAlerts(val);
 
 	pConfObj->SetPath (_T(".."));

@@ -23,12 +23,15 @@
 #ifndef MOUSEOUTPUT_H
 #define MOUSEOUTPUT_H
 
-
 #include "waittime.h"
 #include "mousecontrol.h"
 #include "configbase.h"
 #include "cvisualalert.h"
 #include <math.h>
+#include "ckeyboardcode.h"
+
+#define KEY_EVENTS_COUNT 26
+#define MOUSE_EVENTS_COUNT 5
 
 class CClickWindowController;
 class wxSound;
@@ -37,7 +40,6 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 {
   public:
 	enum EClickMode { NONE, DWELL, GESTURE };
-	enum EAction { DISABLE, SINGLE, SECONDARY, DOUBLE, DRAG, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z };
 	enum EState { DWELL_TIME, COMPUTE_DIRECTION, WAITING_RETURN };
 	enum EDirection { LEFT, RIGHT, TOP, BOTTOM };
 
@@ -53,6 +55,7 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	void WriteChar (char* c);
 	void DoAction();
 	void EndVisualAlerts();
+	void InitKeyboardCode();
 
 	inline const unsigned long GetXSpeed() const;
 	inline void SetXSpeed(unsigned long value);
@@ -105,20 +108,24 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	inline const bool GetEnabled() const;
 	void SetEnabled(bool value);
 	
-	inline const EAction GetActionLeft() const;
-	inline void SetActionLeft(EAction action);
+	inline const int GetActionLeft() const;
+	inline void SetActionLeft(int);
 
-	inline const EAction GetActionRight() const;
-	inline void SetActionRight(EAction action);
+	inline const int GetActionRight() const;
+	inline void SetActionRight(int);
 
-	inline const EAction GetActionTop() const;
-	inline void SetActionTop(EAction action);
+	inline const int GetActionTop() const;
+	inline void SetActionTop(int);
 
-	inline const EAction GetActionBottom() const;
-	inline void SetActionBottom(EAction action);
+	inline const int GetActionBottom() const;
+	inline void SetActionBottom(int);
 	
 	inline const bool GetVisualAlerts() const;
 	inline void SetVisualAlerts(bool value);
+	
+	inline CKeyboardCode GetKeyboardCode(int position);
+	inline const unsigned int GetKeyEventsCount() const;
+	inline const unsigned int GetMouseEventsCount() const;
 	
 	// Configuration methods
 	virtual void InitDefaults();
@@ -143,10 +150,10 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	EClickMode m_clickMode;
 	bool m_beepOnClick;
 	bool m_consecutiveClicksAllowed;
-	EAction m_actionLeft;
-	EAction m_actionRight;
-	EAction m_actionTop;
-	EAction m_actionBottom;
+	int m_actionLeft;
+	int m_actionRight;
+	int m_actionTop;
+	int m_actionBottom;
 	bool m_isLeftPressed;
 	CVisualAlert m_dwellVisualAlert;
 	CVisualAlert m_gestureVisualAlert;
@@ -155,6 +162,7 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	float m_sumDx, m_sumDy;
 	EDirection m_direction;
 	bool m_visualAlerts;
+	CKeyboardCode m_keyboardCodes[KEY_EVENTS_COUNT];
 
     //Define maximal distance (in pixels) from pointer's starting countdown position
     //where is allowed to move without cancelling current countdown.
@@ -338,42 +346,42 @@ inline const bool CMouseOutput::GetEnabled() const
 	return m_enabled;
 }
 
-inline const CMouseOutput::EAction CMouseOutput::GetActionLeft() const
+inline const int CMouseOutput::GetActionLeft() const
 {
 	return m_actionLeft;
 }
 
-inline void CMouseOutput::SetActionLeft(CMouseOutput::EAction action)
+inline void CMouseOutput::SetActionLeft(int action)
 {
 	m_actionLeft = action;
 }
 
-inline const CMouseOutput::EAction CMouseOutput::GetActionRight() const
+inline const int CMouseOutput::GetActionRight() const
 {
 	return m_actionRight;
 }
 
-inline void CMouseOutput::SetActionRight(CMouseOutput::EAction action)
+inline void CMouseOutput::SetActionRight(int action)
 {
 	m_actionRight = action;
 }
 
-inline const CMouseOutput::EAction CMouseOutput::GetActionTop() const
+inline const int CMouseOutput::GetActionTop() const
 {
 	return m_actionTop;
 }
 
-inline void CMouseOutput::SetActionTop(CMouseOutput::EAction action)
+inline void CMouseOutput::SetActionTop(int action)
 {
 	m_actionTop = action;
 }
 
-inline const CMouseOutput::EAction CMouseOutput::GetActionBottom() const
+inline const int CMouseOutput::GetActionBottom() const
 {
 	return m_actionBottom;
 }
 
-inline void CMouseOutput::SetActionBottom(CMouseOutput::EAction action)
+inline void CMouseOutput::SetActionBottom(int action)
 {
 	m_actionBottom = action;
 }
@@ -386,6 +394,21 @@ inline const bool CMouseOutput::GetVisualAlerts() const
 inline void CMouseOutput::SetVisualAlerts(bool value)
 {
 	m_visualAlerts = value;
+}
+
+inline CKeyboardCode CMouseOutput::GetKeyboardCode(int position)
+{
+	return m_keyboardCodes[position];
+}
+
+inline const unsigned int CMouseOutput::GetKeyEventsCount() const
+{
+	return KEY_EVENTS_COUNT;
+}
+
+inline const unsigned int CMouseOutput::GetMouseEventsCount() const
+{
+	return MOUSE_EVENTS_COUNT;
 }
 
 #endif

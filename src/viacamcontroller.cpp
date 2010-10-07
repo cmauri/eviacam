@@ -458,8 +458,9 @@ void CViacamController::ProcessImage (IplImage *pImage)
         if (m_enabledActivationKey) {
 		int keyCode = CKeyboardBitmapCheck::ReadKeySym();
 		if (keyCode == m_keyCode and keyCode != m_lastKeyCode) {
-		SetEnabled(!m_pMouseOutput->GetEnabled(),true);
-	}
+			m_pMouseOutput->EndVisualAlerts();
+			SetEnabled(!m_pMouseOutput->GetEnabled(),true);
+		}
 		m_lastKeyCode = keyCode;
         }
 #endif // __WXGTK___
