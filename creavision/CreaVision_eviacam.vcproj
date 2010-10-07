@@ -126,6 +126,9 @@
 				RelativePath=".\crvcamera_cv.cpp">
 			</File>
 			<File
+				RelativePath=".\crvcamera_enum.cpp">
+			</File>
+			<File
 				RelativePath=".\crvcamera_wdm.cpp">
 			</File>
 			<File
@@ -161,6 +164,9 @@
 			</File>
 			<File
 				RelativePath=".\crvcamera_cv.h">
+			</File>
+			<File
+				RelativePath=".\crvcamera_enum.h">
 			</File>
 			<File
 				RelativePath=".\crvcamera_wdm.h">

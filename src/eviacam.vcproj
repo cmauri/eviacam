@@ -188,6 +188,12 @@ copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 				RelativePath=".\cautostart.cpp">
 			</File>
 			<File
+				RelativePath=".\ckeyboardcode.cpp">
+			</File>
+			<File
+				RelativePath=".\ckeyboardcontrol.cpp">
+			</File>
+			<File
 				RelativePath=".\clickwindow.cpp">
 			</File>
 			<File
@@ -242,6 +248,12 @@ copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
 				RelativePath=".\cautostart.h">
+			</File>
+			<File
+				RelativePath=".\ckeyboardcode.h">
+			</File>
+			<File
+				RelativePath=".\ckeyboardcontrol.h">
 			</File>
 			<File
 				RelativePath=".\clickwindow.h">

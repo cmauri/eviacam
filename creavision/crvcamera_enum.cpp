@@ -160,7 +160,7 @@ int CCameraEnum::GetNumDevices()
 		//char buff[CV_DEVICE_NAME_LENGHT];
 		for (int i= 0; i< g_numDevices; i++) {
 			// Prepend device number and append device name
-			snprintf (g_deviceNames[i], CAM_DEVICE_NAME_LENGHT, " (Id:%d) %s\0", i, videoInput::getDeviceName(i));
+			_snprintf (g_deviceNames[i], CAM_DEVICE_NAME_LENGHT, " (Id:%d) %s\0", i, videoInput::getDeviceName(i));
 		}		
 	}
 //
@@ -248,7 +248,7 @@ CCamera* CCameraEnum::GetCamera (unsigned int id)
 
 void CCameraEnum::Cleanup()
 {
-#ifdef WIN32
+#ifndef WIN32
 	// Release the library
 	c_cleanup();
 #endif
