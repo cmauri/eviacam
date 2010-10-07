@@ -24,16 +24,12 @@
 #include <wx/stdpaths.h>
 #if defined(__WXGTK__)
 #include <X11/Xlib.h>
-#include <X11/extensions/XTest.h>
 #endif
-
-CKeyboardCode::CKeyboardCode()
-{
-	m_keyboardCode = NULL;
-}
+#include "ckeyboardcontrol.h"
 
 CKeyboardCode::CKeyboardCode(char key)
 {
+	Init();
 #if defined(__WXGTK__)
 	char c[2];
 	KeySym ksym;
@@ -45,35 +41,39 @@ CKeyboardCode::CKeyboardCode(char key)
 	ksym = XStringToKeysym(c);
 	kcode = XKeysymToKeycode(dpy, ksym);
 	m_keyboardCode = kcode;
-#else
-	m_keyboardCode = NULL;
 #endif	
 }
 
-//CKeyboardCode::CKeyboardCode(int key)
-//{
-//}
+#if defined(__WXGTK__)
+CKeyboardCode::CKeyboardCode(KeyCode key)
+{
+	Init();
+	m_keyboardCode = key;
+}
+#else	
+CKeyboardCode::CKeyboardCode()
+{
+	Init();
+}
+#endif
 
 CKeyboardCode::~CKeyboardCode()
 {
 }
 
-void CKeyboardCode::SendKey()
+void CKeyboardCode::Init()
 {
 #if defined(__WXGTK__)
-	//CKeyboardControl::SendKeyCode(m_keyboardCode);
-	XTestFakeKeyEvent(((Display *) wxGetDisplay()), m_keyboardCode, true, 0);
-	XTestFakeKeyEvent(((Display *) wxGetDisplay()), m_keyboardCode, false, 0);
+	m_keyboardCode = 0;
 #endif
+}
+
+void CKeyboardCode::SendKey()
+{
+	CKeyboardControl::SendKeyboardCode(*this);
 }
 
 wxString CKeyboardCode::GetKeyName()
 {
-	wxString name = wxT("");
-#if defined(__WXGTK__)
-	//return CKeyboardControl::GetKeyCodeName(m_keyboardCode);
-	KeySym ks = XKeycodeToKeysym(((Display *) wxGetDisplay()), m_keyboardCode, 0);
-	name = wxString(XKeysymToString(ks), wxConvLocal);
-#endif
-	return name;
+	return CKeyboardControl::GetKeyboardCodeName(*this);
 }

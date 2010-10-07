@@ -21,27 +21,20 @@
 /////////////////////////////////////////////////////////////////////////////
 #include "ckeyboardcontrol.h"
 #include <wx/utils.h>
+//#include <wx/stdpaths.h>
 #include <cmath>
-#include <wx/stdpaths.h>
 #if defined(__WXGTK__)
 #include <X11/extensions/XTest.h>
 #include <X11/Xlib.h>
 #endif
 
-void CKeyboardControl::SendKeyCode(KeyCode kc)
+CKeyboardCode CKeyboardControl::ReadKeyCode()
 {
 #if defined(__WXGTK__)
-	XTestFakeKeyEvent((Display *) wxGetDisplay(), kc, true, 0);
-	XTestFakeKeyEvent((Display *) wxGetDisplay(), kc, false, 0);
-#endif
-}
-
-KeyCode CKeyboardControl::ReadKeyCode()
-{
 	char keys_return[32];
 	unsigned char keys;
 	KeyCode kc = 0;
-#if defined(__WXGTK__)
+	
 	XQueryKeymap(((Display *) wxGetDisplay()), keys_return);
 
 	for(int i=0; i<32; i++) {
@@ -50,39 +43,29 @@ KeyCode CKeyboardControl::ReadKeyCode()
 			kc = (log(keys) / log(2)) + (8 * i);
 		}
 	}
+	return CKeyboardCode(kc);
+#else
+	return CKeyboardCode();
 #endif
-	return kc;
 }
 
-wxString CKeyboardControl::GetKeyCodeName(KeyCode kc)
+void CKeyboardControl::SendKeyboardCode(const CKeyboardCode& kc)
+{
+#if defined(__WXGTK__)
+	XTestFakeKeyEvent((Display *) wxGetDisplay(), kc.GetKeyboardCode(), true, 0);
+	XTestFakeKeyEvent((Display *) wxGetDisplay(), kc.GetKeyboardCode(), false, 0);
+#else
+	assert(0);
+#endif
+}
+
+
+wxString CKeyboardControl::GetKeyboardCodeName(const CKeyboardCode& kc)
 {
 	wxString name = wxT("");
 #if defined(__WXGTK__)
-	KeySym ks = XKeycodeToKeysym((Display *) wxGetDisplay(), kc, 0);
+	KeySym ks = XKeycodeToKeysym((Display *) wxGetDisplay(), kc.GetKeyboardCode(), 0);
 	name = wxString(XKeysymToString(ks), wxConvLocal);
 #endif
 	return name;
 }
-
-
-
-/*void CKeyboardControl::SendChar(char* c)
-{
-	KeyCode kc = XKeysymToKeycode((Display *) wxGetDisplay(), XStringToKeysym(c));
-	SendKeyCode(kc);
-}*/
-
-/*void CKeyboardControl::SendKeyboardCode(CKeyboardCode kc)
-{
-	XTestFakeKeyEvent((Display *) wxGetDisplay(), kc.GetKeyboardCode(), true, 0);
-	XTestFakeKeyEvent((Display *) wxGetDisplay(), kc.GetKeyboardCode(), false, 0);
-}*/
-	
-/*char* CKeyboardControl::ReadChar()
-{
-	KeyCode kc = ReadKeyCode();
-	if (kc != 0)
-		return GetKeyCodeName(kc).mb_str();
-	else
-		return NULL;
-}*/

@@ -23,19 +23,14 @@
 #define KEYBOARDCONTROL_H
 
 #include <wx/string.h>
-#include <X11/Xlib.h>
-
+#include "ckeyboardcode.h"
 
 class CKeyboardControl
 {
 public:
-	KeyCode ReadKeyCode();
-	wxString GetKeyCodeName(KeyCode kc);
-	void SendKeyCode(KeyCode kc);
-	
-	//SendChar(char* c);
-	//void SendKeyboardCode(CKeyboardCode kc);
-	//char* ReadChar();
+	static CKeyboardCode ReadKeyCode();
+	static void SendKeyboardCode(const CKeyboardCode& kc);
+	static wxString GetKeyboardCodeName(const CKeyboardCode& kc);
 };
 
 #endif

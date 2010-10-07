@@ -38,10 +38,37 @@
 #define DOUBLE 3
 #define DRAG 4
 
-CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController)
+CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController) :
 #if defined(__WXGTK__)
-	: CMouseControl ((void *) wxGetDisplay())
+	CMouseControl ((void *) wxGetDisplay()),
 #endif
+			m_keyboardCodes((CKeyboardCode[KEY_EVENTS_COUNT]){
+				CKeyboardCode('a'),
+				CKeyboardCode('b'),
+				CKeyboardCode('c'),
+				CKeyboardCode('d'),
+				CKeyboardCode('e'),
+				CKeyboardCode('f'),
+				CKeyboardCode('g'),
+				CKeyboardCode('h'),
+				CKeyboardCode('i'),
+				CKeyboardCode('j'),
+				CKeyboardCode('K'),
+				CKeyboardCode('L'),
+				CKeyboardCode('M'),
+				CKeyboardCode('N'),
+				CKeyboardCode('O'),
+				CKeyboardCode('P'),
+				CKeyboardCode('Q'),
+				CKeyboardCode('R'),
+				CKeyboardCode('S'),
+				CKeyboardCode('T'),
+				CKeyboardCode('U'),
+				CKeyboardCode('V'),
+				CKeyboardCode('W'),
+				CKeyboardCode('X'),
+				CKeyboardCode('Y'),
+				CKeyboardCode('Z')})
 {
 	long x, y;
 	m_pClickWindowController= &pClickWindowController;
@@ -55,7 +82,7 @@ CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController)
 
 	GetPointerLocation(x, y);
 	InitDefaults ();
-	InitKeyboardCode();
+	//InitKeyboardCode();
 
 	m_dwellVisualAlert.Start(CVisualAlert::DWELL);
 	m_gestureVisualAlert.Start(CVisualAlert::GESTURE);
@@ -329,7 +356,7 @@ void CMouseOutput::DoAction()
 	}
 }
 
-void CMouseOutput::InitKeyboardCode()
+/*void CMouseOutput::InitKeyboardCode()
 {
 	m_keyboardCodes[0] = CKeyboardCode('a');
 	m_keyboardCodes[1] = CKeyboardCode('b');
@@ -357,7 +384,7 @@ void CMouseOutput::InitKeyboardCode()
 	m_keyboardCodes[23] = CKeyboardCode('X');
 	m_keyboardCodes[24] = CKeyboardCode('Y');
 	m_keyboardCodes[25] = CKeyboardCode('Z');
-}
+}*/
 
 void CMouseOutput::EndVisualAlerts()
 {

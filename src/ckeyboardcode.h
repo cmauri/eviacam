@@ -24,7 +24,7 @@
 
 #include <wx/string.h>
 #if defined(__WXGTK__)
-#include "ckeyboardcontrol.h"
+#include <X11/Xlib.h>
 #endif
 
 class CKeyboardCode
@@ -32,21 +32,26 @@ class CKeyboardCode
 friend class CKeyboardControl;
 
 public:
-	CKeyboardCode();
 	CKeyboardCode(char key);
-	//CKeyboardCode(int key);
 	~CKeyboardCode();
 	wxString GetKeyName();
 	void SendKey();
 
 private:
+	void Init();
+#if defined(__WXGTK__)
+	CKeyboardCode(KeyCode key);
+	inline KeyCode GetKeyboardCode() const;
 	KeyCode m_keyboardCode;
-	inline KeyCode GetKeyboardCode();
+#else
+	CKeyboardCode();	//Provisional until win impl. is done.
+#endif	
 };
 
-inline KeyCode CKeyboardCode::GetKeyboardCode()
+#if defined(__WXGTK__)
+inline KeyCode CKeyboardCode::GetKeyboardCode() const
 {
 	return m_keyboardCode;
 }
-
+#endif
 #endif

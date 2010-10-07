@@ -18510,7 +18510,7 @@ LTLIBOBJS=`echo X"$LIBOBJS"|\
 #AC_SUBST(LTALLOCA)
 #BUILD_DATE=`LC_ALL="C" date`
 
-ac_config_files="$ac_config_files Makefile po/Makefile.in doc/Makefile wxutil/Makefile creavision/Makefile wxcamwindow/Makefile src/Makefile src/version.h src/eviacam.desktop rpm/Makefile rpm/eviacam.spec debian/changelog win32/installer.iss"
+ac_config_files="$ac_config_files Makefile po/Makefile.in doc/Makefile wxutil/Makefile creavision/Makefile libwebcam/Makefile wxcamwindow/Makefile src/Makefile src/version.h src/eviacam.desktop rpm/Makefile rpm/eviacam.spec debian/changelog win32/installer.iss"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -19593,6 +19593,7 @@ do
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
     "wxutil/Makefile") CONFIG_FILES="$CONFIG_FILES wxutil/Makefile" ;;
     "creavision/Makefile") CONFIG_FILES="$CONFIG_FILES creavision/Makefile" ;;
+    "libwebcam/Makefile") CONFIG_FILES="$CONFIG_FILES libwebcam/Makefile" ;;
     "wxcamwindow/Makefile") CONFIG_FILES="$CONFIG_FILES wxcamwindow/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "src/version.h") CONFIG_FILES="$CONFIG_FILES src/version.h" ;;
