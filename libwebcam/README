@@ -1,0 +1,128 @@
+libwebcam Webcam Library
+========================
+
+Introduction
+------------
+
+The Webcam Library libwebcam is designed to simplify the development of webcam
+applications, primarily on Linux but with an option to be ported to other
+platforms, in particular Solaris. It realizes part of what the unwritten
+Video4Linux user space library was always supposed to be: an easy to use
+library that shields its users from many of the difficulties and problems of
+using the V4L2 API directly.
+
+Today libwebcam provides the following core features:
+
+* Enumeration of all cameras available in the system.
+* Provide detailed information about the detected devices and their controls.
+* Wrapper for the V4L2 frame format enumeration.
+* Convenient access to device controls.
+* Support for configuring the Linux UVC driver's dynamic controls (extension
+  unit controls).
+
+In addition, the interface is prepared to handle device events ranging from
+newly detected cameras over control value changes to device button events.
+It is easy to add new features without breaking application compatibility and
+the addition of new controls or events is straightforward.
+
+
+Change log
+----------
+
+0.2.0 (under development):
+- Reorganized the directory layout and build system (CMake 2.6 is required now).
+- Added packaging support (.deb and .tar.bz2).
+- Added support for raw/string controls.
+- Minor bugfixes and code cleanups
+
+0.1.4-pre (unreleased, SVN tag only):
+Note: This is the last version to use the old directory layout and CMake 2.4.
+- Improved udev support (udev >= 141 is required now).
+
+0.1.3-pre (unreleased, SVN tag only):
+Note: This is the last version to work with older versions of udev.
+- Added support for some Logitech specific dynamic controls: LED1 mode, LED1
+  frequency, Disable color processing, Raw bits per pixel
+- Added a check for driver misbehavior related to V4L2_CTRL_FLAG_NEXT_CTRL and
+  avoid an endless control enumeration loop.
+- Disable the UVC driver's caching mechanism for XU controls.
+- Build system: Use the CMAKE_INSTALL_LIBDIR variable for the library
+  installation path. This should fix problems on Fedora 64-bit.
+
+0.1.2 (2009-07-08):
+- Update the controls to work better with the latest version of the UVC driver
+  that is part of the kernel.
+- Improved control handling by adding a list of well-known controls. This
+  allows libwebcam to recognize certain controls even if header files on the
+  build system do not match the current system.
+- Better handling of unknown control IDs.
+- Improved warning/error messages related to controls.
+
+0.1.1 (2008-01-29):
+- Added support the V4L2_CTRL_FLAG_READ_ONLY flag.
+- Added per handle tracking of the last system error and a new
+  c_get_handle_error_text function that allows a handle's last system error
+  to be retrieved in certain cases (C_V4L2_ERROR).
+- Added a test to check whether the driver supports dynamic controls or not.
+  This should prevent some confusing error 22 messages when "uvcdynctrl -i" is
+  used with an old driver.
+- Process meta information and constants only while parsing the XML document
+  for the first time (during the first device).
+- Implemented support for processing statistics.
+- Added some informational messages, e.g. about skipped devices.
+- Added a define to suppress EEXIST errors for all but the first device.
+- Improved the way the device is picked. Instead of just taking the first
+  device, all devices are now looped through and supported UVC devices get
+  their controls and mappings added. This is not quite necessary at the moment
+  because the UVC driver still has global controls but that may change in the
+  future.
+- Added a stub implementation of c_add_control_mappings_from_file for when
+  DISABLE_UVCVIDEO_DYNCTRL is set.
+- Added a workaround for the current UVC driver's problematic
+  V4L2_CID_EXPOSURE_AUTO control. This is a menu control whose menu choices
+  don't have contiguous IDs but { 1, 2, 4, 8 } instead. For the moment, the
+  library just skips that control.
+- Improved detection of invalid menu controls whose full choice range is not
+  correctly queriable.
+- Fix: Bogus warning messages related to the V4L2 control types 'Button' and
+  'Integer64'. Support for these types in libwebcam is still missing, though.
+- Fix: Device enumeration issue with V4L1 devices present in the system.
+- Fix: Reorganizations in the control enumeration code and inclusion of a
+  workaround for some dangerous behavior in the bttv driver. (Thanks to Bruno
+  Grasland for his bttv testing!)
+- Fix: Problem in c_enum_frame_intervals if a non-discrete frame size was
+  passed. The function now returns C_INVALID_ARG in this case.
+- Fix: A segfault would occur in c_enum_pixel_formats with unknown pixel
+  formats (i.e. pixel formats without hardcoded MIME type).
+- Fix: Disabling USE_UVCVIDEO now works again and also sets
+  DISABLE_UVCVIDEO_DYNCTRL. This allows compiling libwebcam without the
+  uvcvideo header files.
+
+0.1: Initial release
+
+
+Building, questions, and feedback
+---------------------------------
+
+Please see the README file in the top level directory for building
+instructions and how to contact the developers.
+
+
+Copyright and license
+---------------------
+
+Copyright (c) 2006-2010 Logitech.
+
+libwebcam is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+libwebcam is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with libwebcam.  If not, see <http://www.gnu.org/licenses/>.
+

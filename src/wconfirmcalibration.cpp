@@ -300,7 +300,7 @@ void WConfirmCalibration::OnTimer(wxTimerEvent& event)
 		m_timer.Stop();
 		m_timer.Start(1000);
 	}
-	event.Skip();
+	event.Skip(false);
 }
 
 

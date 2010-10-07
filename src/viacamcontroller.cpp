@@ -33,12 +33,13 @@
 
 #include "viacamcontroller.h"
 #include "wviacam.h"
-#include "crvcamera_cv.h"
-#if defined(__WXMSW__)
-#include "crvcamera_wdm.h"
-#else
-#include "crvcamera_v4l2.h"
-#endif
+//#include "crvcamera_cv.h"
+#include "crvcamera_enum.h"
+//#if defined(__WXMSW__)
+//#include "crvcamera_wdm.h"
+//#else
+//#include "crvcamera_v4l2.h"
+//#endif
 #include "clickwindow.h"
 #include "mouseoutput.h"
 #include "camwindow.h"
@@ -103,7 +104,7 @@ void CViacamController::SetUpLanguage ()
 
 	m_locale->AddCatalogLookupPathPrefix(wxT("."));
 	if (!m_locale->Init(m_languageId, wxLOCALE_CONV_ENCODING))
-		printf ("Cannot load locale: %s. Switching to default locale.\n");
+		printf ("Cannot load locale. Switching to default locale.\n");
 	m_locale->AddCatalog(wxT("eviacam"));
 }
 
@@ -125,11 +126,11 @@ void CViacamController::SetLanguage (const int id)
 	}
 }
 
-#if defined(WIN32)
-#define CAM_CLASS CCameraWDM
-#else 
-#define CAM_CLASS CCameraCV
-#endif
+//#if defined(WIN32)
+//#define CAM_CLASS CCameraWDM
+//#else 
+//#define CAM_CLASS CCameraCV
+//#endif
 
 CCamera* CViacamController::SetUpCamera()
 {
@@ -140,7 +141,7 @@ CCamera* CViacamController::SetUpCamera()
 	// Load app local data
 	ReadAppData(wxConfigBase::Get());
 
-	numDevices= CAM_CLASS::GetNumDevices ();
+	numDevices= CCameraEnum::GetNumDevices ();
 	if (numDevices== 0)
 	{
 		wxMessageDialog errorMsg (NULL, _("Not detected any camera. Aborting"), _T("Enable Viacam"), wxOK | wxICON_ERROR);
@@ -153,7 +154,7 @@ CCamera* CViacamController::SetUpCamera()
 	if (m_cameraName.Length()> 0)
 	{
 		for (camId= 0; camId< numDevices; camId++)
-			if (wxString(CAM_CLASS::GetDeviceName (camId), wxConvLibc)== m_cameraName) break;			
+			if (wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc)== m_cameraName) break;			
 		if (camId== numDevices) camId= -1;	// Not found
 	}
 
@@ -163,7 +164,7 @@ CCamera* CViacamController::SetUpCamera()
 		wxArrayString strArray;
 
 		for (camId= 0; camId< numDevices; camId++)
-			strArray.Add (wxString(CAM_CLASS::GetDeviceName (camId), wxConvLibc));
+			strArray.Add (wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc));
 
 		wxSingleChoiceDialog choiceDlg(NULL, _("Choose the camera to use"), _T("Enable Viacam"), strArray, 
 							NULL, wxDEFAULT_DIALOG_STYLE | wxOK | wxCANCEL | wxCENTRE);
@@ -174,8 +175,8 @@ CCamera* CViacamController::SetUpCamera()
 		m_cameraName= choiceDlg.GetStringSelection ();
 	}
 
-	cam= new CAM_CLASS(camId, 320, 240);
-	assert (cam);
+	cam= CCameraEnum::GetCamera(camId);
+	if (!cam) return NULL;
 	cam->SetHorizontalFlip (true);
 
 	// Try to open the camera to ensure it works

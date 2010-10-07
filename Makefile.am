@@ -4,6 +4,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = \
 	creavision \
+	libwebcam \
 	wxutil \
 	wxcamwindow \
 	po \
@@ -34,6 +35,7 @@ dist_pkgdata_DATA = THANKS
 INCLUDES = \
 	-I$(top_srcdir)/wxutil \
 	-I$(top_srcdir)/creavision \
+	-I$(top_srcdir)/libwebcam \
 	-I$(top_srcdir)/wxcamwindow
 
 maintainer-clean-local:
@@ -48,6 +50,7 @@ maintainer-clean-local:
 	-rm -f eviacam.kdevses
 	-rm *~
 	-rm creavision/*~
+	-rm libwebcam/*~
 	-rm wxutil/*~
 	-rm wxcamwindow/*~
 	-rm src/*~	

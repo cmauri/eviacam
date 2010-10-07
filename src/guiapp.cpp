@@ -36,6 +36,7 @@
 #include <wx/tooltip.h>
 #include "guiapp.h"
 #include "viacamcontroller.h"
+#include "crvcamera_enum.h"
 
 ////@begin XPM images
 ////@end XPM images
@@ -144,7 +145,6 @@ bool GuiApp::OnInit()
 	//printf ("Hola!\n");
 	//fflush (stdout);
 
-
 	m_pController= new CViacamController();
 	assert (m_pController);
 	if (!m_pController->Initialize()) 
@@ -165,6 +165,7 @@ int GuiApp::OnExit()
 	m_pController->Finalize();
 	delete m_pController;
 
+	CCameraEnum::Cleanup();
 ////@begin GuiApp cleanup
 	return wxApp::OnExit();
 ////@end GuiApp cleanup

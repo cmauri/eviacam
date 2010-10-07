@@ -189,6 +189,7 @@ AC_OUTPUT(
 	[doc/Makefile] 
 	[wxutil/Makefile] 
 	[creavision/Makefile] 
+	[libwebcam/Makefile] 
 	[wxcamwindow/Makefile] 
 	[src/Makefile] 
 	[src/version.h]
