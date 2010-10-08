@@ -89,6 +89,9 @@ public:
     /// wxEVT_MOTION event handler for ID_WCONFIRMCALIBRATION
     void OnWindowMotion( wxMouseEvent& event );
 
+    /// wxEVT_LEAVE_WINDOW event handler for ID_WCONFIRMCALIBRATION
+    void OnLeaveWindow( wxMouseEvent& event );
+
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON1
     void OnButton1Click( wxCommandEvent& event );
 

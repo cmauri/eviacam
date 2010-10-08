@@ -64,6 +64,7 @@ BEGIN_EVENT_TABLE( WConfirmCalibration, wxDialog )
 
 ////@begin WConfirmCalibration event table entries
     EVT_MOTION( WConfirmCalibration::OnWindowMotion )
+    EVT_LEAVE_WINDOW( WConfirmCalibration::OnLeaveWindow )
 
     EVT_BUTTON( ID_BUTTON1, WConfirmCalibration::OnButton1Click )
 
@@ -351,6 +352,22 @@ if (m_activeButton != OK)
 		m_repeatCountdown = REPEAT_TIME;
 		m_cancelCountdown = CANCEL_TIME;	
 		m_activeButton = OK;
+	}
+	event.Skip(false);
+}
+
+
+/*!
+ * wxEVT_LEAVE_WINDOW event handler for ID_WCONFIRMCALIBRATION
+ */
+
+void WConfirmCalibration::OnLeaveWindow( wxMouseEvent& event )
+{
+	if (m_activeButton != CANCEL)
+	{
+		m_okCountdown = OK_TIME;
+		m_repeatCountdown = REPEAT_TIME;	
+		m_activeButton = CANCEL;
 	}
 	event.Skip(false);
 }
