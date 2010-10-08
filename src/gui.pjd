@@ -9545,12 +9545,7 @@ Are you sure?"</string>
                 <long name="locked">0</long>
                 <string name="proxy-type">"wbButtonProxy"</string>
                 <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnButton1Click|NONE||WConfirmCalibration"</string>
-<<<<<<< HEAD:src/gui.pjd
                 <string name="event-handler-1">"wxEVT_MOTION|OnOkButtonMotion|NONE||WConfirmCalibration"</string>
-=======
-                <string name="event-handler-1">"wxEVT_ENTER_WINDOW|OnEnterOkButton|NONE||WConfirmCalibration"</string>
-                <string name="event-handler-2">"wxEVT_LEAVE_WINDOW|OnLeaveOkButton|NONE||WConfirmCalibration"</string>
->>>>>>> d125cfa90f06f1f566378a00a3712079cfc43fee:src/gui.pjd
                 <string name="proxy-Id name">"ID_BUTTON1"</string>
                 <long name="proxy-Id value">10078</long>
                 <string name="proxy-Name">""</string>
@@ -9683,12 +9678,7 @@ Are you sure?"</string>
                 <long name="locked">0</long>
                 <string name="proxy-type">"wbButtonProxy"</string>
                 <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnButton3Click|NONE||WConfirmCalibration"</string>
-<<<<<<< HEAD:src/gui.pjd
                 <string name="event-handler-1">"wxEVT_MOTION|OnRepeatButtonMotion|NONE||WConfirmCalibration"</string>
-=======
-                <string name="event-handler-1">"wxEVT_ENTER_WINDOW|OnEnterRepeatButton|NONE||WConfirmCalibration"</string>
-                <string name="event-handler-2">"wxEVT_LEAVE_WINDOW|OnLeaveRepeatButton|NONE||WConfirmCalibration"</string>
->>>>>>> d125cfa90f06f1f566378a00a3712079cfc43fee:src/gui.pjd
                 <string name="proxy-Id name">"ID_BUTTON3"</string>
                 <long name="proxy-Id value">10080</long>
                 <string name="proxy-Name">""</string>
