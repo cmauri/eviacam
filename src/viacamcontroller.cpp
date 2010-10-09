@@ -94,6 +94,7 @@ CViacamController::~CViacamController(void)
 #endif
 	delete m_locale;
 	delete m_configManager;
+	delete m_pMotionCalibration;
 }
 
 void CViacamController::SetUpLanguage ()
