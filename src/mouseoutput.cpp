@@ -38,43 +38,16 @@
 #define DOUBLE 3
 #define DRAG 4
 
-CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController) :
+CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController) 
 #if defined(__WXGTK__)
-	CMouseControl ((void *) wxGetDisplay()),
-#endif
-			m_keyboardCodes((CKeyboardCode[KEY_EVENTS_COUNT]){
-				CKeyboardCode('a'),
-				CKeyboardCode('b'),
-				CKeyboardCode('c'),
-				CKeyboardCode('d'),
-				CKeyboardCode('e'),
-				CKeyboardCode('f'),
-				CKeyboardCode('g'),
-				CKeyboardCode('h'),
-				CKeyboardCode('i'),
-				CKeyboardCode('j'),
-				CKeyboardCode('K'),
-				CKeyboardCode('L'),
-				CKeyboardCode('M'),
-				CKeyboardCode('N'),
-				CKeyboardCode('O'),
-				CKeyboardCode('P'),
-				CKeyboardCode('Q'),
-				CKeyboardCode('R'),
-				CKeyboardCode('S'),
-				CKeyboardCode('T'),
-				CKeyboardCode('U'),
-				CKeyboardCode('V'),
-				CKeyboardCode('W'),
-				CKeyboardCode('X'),
-				CKeyboardCode('Y'),
-				CKeyboardCode('Z')})
+ :	CMouseControl ((void *) wxGetDisplay())
+#endif			
 {
 	long x, y;
 	m_pClickWindowController= &pClickWindowController;
 
 	m_enabled= false;
-        m_restrictedWorkingArea = false;
+	m_restrictedWorkingArea = false;
 	m_isLeftPressed = false;
 	m_visualAlerts = false;
 	m_dwellCountdown = new CWaitTime();
@@ -82,12 +55,42 @@ CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController) :
 
 	GetPointerLocation(x, y);
 	InitDefaults ();
-	//InitKeyboardCode();
+	InitKeyboardCode();
 
 	m_dwellVisualAlert.Start(CVisualAlert::DWELL);
 	m_gestureVisualAlert.Start(CVisualAlert::GESTURE);
 	
 	m_pClickSound= new wxSound (wxStandardPaths::Get().GetDataDir() + _T("/click.wav"));
+}
+
+void CMouseOutput::InitKeyboardCode()
+{
+	m_keyboardCodes.push_back(CKeyboardCode('a'));
+	m_keyboardCodes.push_back(CKeyboardCode('b'));
+	m_keyboardCodes.push_back(CKeyboardCode('c'));
+	m_keyboardCodes.push_back(CKeyboardCode('d'));
+	m_keyboardCodes.push_back(CKeyboardCode('e'));
+	m_keyboardCodes.push_back(CKeyboardCode('f'));
+	m_keyboardCodes.push_back(CKeyboardCode('g'));
+	m_keyboardCodes.push_back(CKeyboardCode('h'));
+	m_keyboardCodes.push_back(CKeyboardCode('i'));
+	m_keyboardCodes.push_back(CKeyboardCode('j'));
+	m_keyboardCodes.push_back(CKeyboardCode('K'));
+	m_keyboardCodes.push_back(CKeyboardCode('L'));
+	m_keyboardCodes.push_back(CKeyboardCode('M'));
+	m_keyboardCodes.push_back(CKeyboardCode('N'));
+	m_keyboardCodes.push_back(CKeyboardCode('O'));
+	m_keyboardCodes.push_back(CKeyboardCode('P'));
+	m_keyboardCodes.push_back(CKeyboardCode('Q'));
+	m_keyboardCodes.push_back(CKeyboardCode('R'));
+	m_keyboardCodes.push_back(CKeyboardCode('S'));
+	m_keyboardCodes.push_back(CKeyboardCode('T'));
+	m_keyboardCodes.push_back(CKeyboardCode('U'));
+	m_keyboardCodes.push_back(CKeyboardCode('V'));
+	m_keyboardCodes.push_back(CKeyboardCode('W'));
+	m_keyboardCodes.push_back(CKeyboardCode('X'));
+	m_keyboardCodes.push_back(CKeyboardCode('Y'));
+	m_keyboardCodes.push_back(CKeyboardCode('Z'));
 }
 
 CMouseOutput::~CMouseOutput ()
@@ -246,7 +249,7 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 					m_sumDx += dx;
 					m_sumDy += dy;
 					
-					if (fabs(m_sumDx) > m_dwellToleranceArea or fabs(m_sumDy) > m_dwellToleranceArea)
+					if (fabs(m_sumDx) > m_dwellToleranceArea || fabs(m_sumDy) > m_dwellToleranceArea)
 					{
 						// Compute direction
 						if (fabs(dx) > fabs(dy))
@@ -277,7 +280,7 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 					m_sumDx += dx;
 					m_sumDy += dy;
 					
-					if (((m_direction == LEFT or m_direction == RIGHT) and fabs(m_sumDx) < m_dwellToleranceArea) or ((m_direction == TOP or m_direction == BOTTOM) and fabs(m_sumDy) < m_dwellToleranceArea))
+					if (((m_direction == LEFT || m_direction == RIGHT) && fabs(m_sumDx) < m_dwellToleranceArea) || ((m_direction == TOP || m_direction == BOTTOM) && fabs(m_sumDy) < m_dwellToleranceArea))
 					{
 						DoAction();
 						m_sumDx = 0;
@@ -308,7 +311,7 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 
 void CMouseOutput::DoAction()
 {
-	int action;
+	int action= m_actionLeft;	// Avoid warning
 	DoMovePointerAbs(m_xIni, m_yIni);
 
 	switch (m_direction)
@@ -316,10 +319,11 @@ void CMouseOutput::DoAction()
 		case LEFT:	action = m_actionLeft;	break;
 		case RIGHT:	action = m_actionRight;	break;
 		case TOP:	action = m_actionTop;	break;
-		case BOTTOM:	action = m_actionBottom;break;
+		case BOTTOM:	action = m_actionBottom; break;
+		default: assert (false);
 	}
 	
-	if (action != DRAG and m_isLeftPressed)
+	if (action != DRAG && m_isLeftPressed)
 	{
 		m_isLeftPressed = false;
 		LeftUp();
@@ -355,36 +359,6 @@ void CMouseOutput::DoAction()
 		
 	}
 }
-
-/*void CMouseOutput::InitKeyboardCode()
-{
-	m_keyboardCodes[0] = CKeyboardCode('a');
-	m_keyboardCodes[1] = CKeyboardCode('b');
-	m_keyboardCodes[2] = CKeyboardCode('c');
-	m_keyboardCodes[3] = CKeyboardCode('d');
-	m_keyboardCodes[4] = CKeyboardCode('e');
-	m_keyboardCodes[5] = CKeyboardCode('f');
-	m_keyboardCodes[6] = CKeyboardCode('g');
-	m_keyboardCodes[7] = CKeyboardCode('h');
-	m_keyboardCodes[8] = CKeyboardCode('i');
-	m_keyboardCodes[9] = CKeyboardCode('j');
-	m_keyboardCodes[10] = CKeyboardCode('K');
-	m_keyboardCodes[11] = CKeyboardCode('L');
-	m_keyboardCodes[12] = CKeyboardCode('M');
-	m_keyboardCodes[13] = CKeyboardCode('N');
-	m_keyboardCodes[14] = CKeyboardCode('O');
-	m_keyboardCodes[15] = CKeyboardCode('P');
-	m_keyboardCodes[16] = CKeyboardCode('Q');
-	m_keyboardCodes[17] = CKeyboardCode('R');
-	m_keyboardCodes[18] = CKeyboardCode('S');
-	m_keyboardCodes[19] = CKeyboardCode('T');
-	m_keyboardCodes[20] = CKeyboardCode('U');
-	m_keyboardCodes[21] = CKeyboardCode('V');
-	m_keyboardCodes[22] = CKeyboardCode('W');
-	m_keyboardCodes[23] = CKeyboardCode('X');
-	m_keyboardCodes[24] = CKeyboardCode('Y');
-	m_keyboardCodes[25] = CKeyboardCode('Z');
-}*/
 
 void CMouseOutput::EndVisualAlerts()
 {
@@ -508,6 +482,7 @@ void CMouseOutput::WriteProfileData(wxConfigBase* pConfObj)
 void CMouseOutput::ReadProfileData(wxConfigBase* pConfObj)
 {
 	long val;
+	bool valb;
 	double dwellToleranceArea;
 
 	pConfObj->SetPath (_T("mouseOutput"));
@@ -516,8 +491,8 @@ void CMouseOutput::ReadProfileData(wxConfigBase* pConfObj)
 	if (pConfObj->Read(_T("ySpeed"), &val))	SetYSpeed(val);
 	if (pConfObj->Read(_T("acceleration"), &val)) SetAcceleration(val);
 	if (pConfObj->Read(_T("smoothness"), &val)) SetSmoothness(val);
-	if (pConfObj->Read(_T("easyStop"), &val)) SetEasyStopValue(val);
-        if (pConfObj->Read(_T("enabledWorkspace"), &val)) SetRestrictedWorkingArea(val);
+	if (pConfObj->Read(_T("easyStop"), &valb)) SetEasyStopValue(valb);
+        if (pConfObj->Read(_T("enabledWorkspace"), &valb)) SetRestrictedWorkingArea(valb);
         if (pConfObj->Read(_T("topWorkspace"), &val)) SetTopWorkspace(val);
         if (pConfObj->Read(_T("leftWorkspace"), &val)) SetLeftWorkspace(val);
         if (pConfObj->Read(_T("rightWorkspace"), &val)) SetRightWorkspace(val);
@@ -534,7 +509,7 @@ void CMouseOutput::ReadProfileData(wxConfigBase* pConfObj)
 	if (pConfObj->Read(_T("actionLeft"), &val)) SetActionLeft(val);
 	if (pConfObj->Read(_T("actionRight"), &val)) SetActionRight(val);
 	if (pConfObj->Read(_T("actionBottom"), &val)) SetActionBottom(val);
-	if (pConfObj->Read(_T("visualAlerts"), &val)) SetVisualAlerts(val);
+	if (pConfObj->Read(_T("visualAlerts"), &valb)) SetVisualAlerts(valb);
 
 	pConfObj->SetPath (_T(".."));
 }

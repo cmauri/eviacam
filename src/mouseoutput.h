@@ -27,10 +27,10 @@
 #include "mousecontrol.h"
 #include "configbase.h"
 #include "cvisualalert.h"
-#include <math.h>
 #include "ckeyboardcode.h"
+#include <math.h>
+#include <vector>
 
-#define KEY_EVENTS_COUNT 26
 #define MOUSE_EVENTS_COUNT 5
 
 class CClickWindowController;
@@ -162,7 +162,7 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 	float m_sumDx, m_sumDy;
 	EDirection m_direction;
 	bool m_visualAlerts;
-	CKeyboardCode m_keyboardCodes[KEY_EVENTS_COUNT];
+	std::vector<CKeyboardCode> m_keyboardCodes;
 
     //Define maximal distance (in pixels) from pointer's starting countdown position
     //where is allowed to move without cancelling current countdown.
@@ -403,7 +403,7 @@ inline CKeyboardCode CMouseOutput::GetKeyboardCode(int position)
 
 inline const unsigned int CMouseOutput::GetKeyEventsCount() const
 {
-	return KEY_EVENTS_COUNT;
+	return m_keyboardCodes.size();
 }
 
 inline const unsigned int CMouseOutput::GetMouseEventsCount() const
