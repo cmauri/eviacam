@@ -38,7 +38,9 @@ private:
 	static char g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGHT];
 #ifndef WIN32
 	// Linux only. Store device localtion (e.g. video0)
+public:
 	enum { CAM_DEVICE_SHORT_NAME_LENGHT= 32, CAM_DEVICE_DRIVER_NAME_LENGHT= 20 };
+private:
 	static char g_deviceShortNames[MAX_CAM_DEVICES][CAM_DEVICE_SHORT_NAME_LENGHT];
 	static char g_deviceDriverNames[MAX_CAM_DEVICES][CAM_DEVICE_DRIVER_NAME_LENGHT];
 #endif

@@ -77,11 +77,12 @@ wxThread::ExitCode CCaptureThread::Entry( )
 		if (TestDestroy()) break;
 		
 		IplImage* pImg= m_pCamera->QueryFrame();
-//		assert (pImg);
 
-		if (pImg && m_pProcessImage) m_pProcessImage->ProcessImage (pImg);	
-		
-		if (pImg && m_pCamWindow) m_pCamWindow->DrawCam (pImg);	
+		if (pImg== NULL) wxMilliSleep(20); // If no result wait some time to avoid consuming all CPU
+		else {
+			if (m_pProcessImage) m_pProcessImage->ProcessImage (pImg);
+			if (m_pCamWindow) m_pCamWindow->DrawCam (pImg);	
+		}
 	}
 
 	m_pCamera->Close();

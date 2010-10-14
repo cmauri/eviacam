@@ -1,11 +1,12 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        crvcamera_v4l2.h
-// Purpose:  
+// Purpose:	Provide a camera capture class around v4l2 and libwebcam
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     17/05/2010
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
-// 
+// Copyright:   (C) 2008-10 Cesar Mauri Loba - CREA Software Systems
+//              Portions of guvcview are (c) of Paulo Assis and others
+//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -22,29 +23,65 @@
 #ifndef CRVCAMERA_V4L2_H_
 #define CRVCAMERA_V4L2_H_
 
-#include "crvcamera.h"
-//#include <cv.h>
-//#include "highgui.h"
-
-#include <asm/types.h>
-//#include <v4l2.h>
+#include <inttypes.h>
 #include <linux/videodev2.h>
-#include <crvimage.h>
-
-#define MAX_CV_DEVICES 10
-
-
+#include "crvcamera_enum.h"
+#include "crvcamera.h"
+#include "crvimage.h"
+#include "webcam.h"
+#include <vector>
 
 class CCameraV4L2 : public CCamera
 {
 public:
-	CCameraV4L2(int cameraId= -1, int width= 320, int height= 240, float fr= 30.0f);
+	// Device name without trailing "/dev/"
+	CCameraV4L2(const char* device_name, bool usePwc);
 	virtual ~CCameraV4L2 (void);
 
 	virtual bool Open();
 	virtual void Close();	
 	virtual IplImage *QueryFrame();
 
+private:
+	// Private types
+	enum ECaptureMethod { CAP_NONE= 0, CAP_READ, CAP_STREAMING_MMAP, CAP_STREAMING_USR };
+	enum { STREAMING_CAPTURE_NBUFFERS= 2 };
+	struct TImageFormat { 
+		unsigned int frame_rate;
+		unsigned int width;
+		unsigned int height;
+		uint32_t pixelformat;	// Four character code
+	};
+
+	// Device name without trailing "/dev/"
+	char m_deviceShortName[CCameraEnum::CAM_DEVICE_SHORT_NAME_LENGHT];
+	int m_Fd;	// File descritor for open
+	CHandle m_libWebcamHandle;	
+	ECaptureMethod m_captureMethod;
+	bool m_usePwc;
+	bool m_isStreaming;
+	bool m_buffersReady;
+	struct v4l2_buffer m_captureBuffersInfo[STREAMING_CAPTURE_NBUFFERS];
+	void* m_captureBuffersPtr[STREAMING_CAPTURE_NBUFFERS];
+	CIplImage m_resultImage;
+	TImageFormat m_currentFormat;
+	std::vector<uint32_t> m_supportedPixelFormats;
+			
+	// Private methods
+	bool DoOpen();
+	ECaptureMethod DetectCaptureMethod();
+	bool DetectBestImageFormat(TImageFormat& imgformat);
+	bool SetImageFormat(const TImageFormat& imgformat);
+	bool EnableVideo(bool enable);
+	bool AllocateBuffers();
+	bool DeallocateBuffers();
+	bool RequestBuffers(enum v4l2_memory mem);
+	bool UnRequestBuffers(enum v4l2_memory mem);
+	void UnmapBuffers();
+	bool DecodeToRGB (void* src, void* dst, int width, int height, uint32_t pixelformat);
+	void AddSupportedPixelFormats ();
+public:
+#if 0
 	// 
 	// Virtual desired methods
 	//
@@ -70,30 +107,9 @@ public:
 	virtual void SetSharpness (int value);
 
 	virtual void ShowSettingsDialog ();
-	
-	static int GetNumDevices();
-	static char *GetDeviceName (int id);
-	
+#endif
 
-	
 
-private:
-	//CvCapture* m_pCvCapture;
-	//static bool g_cvInitialized;
-	static int g_numDevices;
-	static char g_deviceNames[MAX_CV_DEVICES][50];
-	
-	struct buffer {    
-	  void *                  start;
-	  size_t                  length;
-	};
-	
-	int m_Fd;
-	int m_PixelFormat;
-	
-	struct buffer m_buffer;
-	
-	CIplImage * m_image;
 };
 
 

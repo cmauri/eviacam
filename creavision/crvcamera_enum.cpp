@@ -20,37 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
-/*
-#include <sys/timeb.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
-
-#include <fstream>
-#include <iostream>
-#include <asm/types.h>          //
-#include <linux/videodev2.h>
-#include <linux/videodev.h>
-#include "pwc-ioctl.h"
-
-#include "crvcamera.h"
-
-#include <asm/types.h>
-NO #include <v4l2.h>
-#include <linux/videodev2.h>
-#include <crvimage.h>
-*/
-
 #include <stdio.h>
 #ifdef WIN32
 	#include "videoInput.h"
 	#include "crvcamera_wdm.h"
 #else
+	#include <string.h>
 	#include "webcam.h"
 	#include "crvcamera_cv.h"
+	#include "crvcamera_v4l2.h"
 #endif
 #include "crvcamera_enum.h"
 
@@ -60,7 +38,6 @@ NO #include <v4l2.h>
 #if !defined(NDEBUG) && !defined(WIN32)
 #include <stdlib.h>	// malloc, free
 #include <assert.h>
-#include <string.h>
 
 void print_device_info (CHandle handle, char *device_name)
 {
@@ -242,7 +219,15 @@ CCamera* CCameraEnum::GetCamera (unsigned int id)
 	return new CCameraWDM(id, 320, 240);
 #else
 	// Depending on the driver instantiates the appropiate class
-	return new CCameraCV(id, 320, 240);
+	if (strcasestr(g_deviceDriverNames[id], "uvc")!= NULL) 
+		// Camera supported by uvc driver
+		return new CCameraV4L2 (g_deviceShortNames[id], false);
+	else if (strcasestr(g_deviceDriverNames[id], "pwc")!= NULL) 
+		// Camera supported by pwc driver
+		return new CCameraV4L2 (g_deviceShortNames[id], true); 
+	else
+		return new CCameraV4L2 (g_deviceShortNames[id], false);
+		//return new CCameraCV(id, 320, 240);
 #endif
 }
 
@@ -254,334 +239,5 @@ void CCameraEnum::Cleanup()
 #endif
 }
 
-#if 0
-
-bool CCameraV4L2::Open ()
-{
-	struct stat st;
-	struct v4l2_capability capability;
-	struct v4l2_format format;
-	struct buffer * buffers = NULL;
-	struct v4l2_fmtdesc fmtdesc;
-	struct v4l2_frmsizeenum frmsizeenum;
-	struct v4l2_streamparm parm;
-	struct video_window vwin;
-
-        int min;
-        int widthDesired = m_Width;
-        	
-	if (-1 == stat ("/dev/video0", &st)) {
-	    printf ("ERROR: Cannot identify ’%s’: %d, %s\n", "/dev/video0", errno, strerror (errno));
-	    return false;
-	}
-	if (!S_ISCHR (st.st_mode)) {
-	    printf ("ERROR: %s is no device\n", "/dev/video0");
-	    return false;
-	}
-	
-	m_Fd = open ("/dev/video0", O_RDWR, 0);
-	
-	if (-1 == m_Id) {
-	    printf ("ERROR: Cannot open ’%s’: %d, %s\n", "/dev/video0", errno, strerror (errno));
-	    return false;
-	}
-	
-	if (-1 == ioctl (m_Fd, VIDIOC_QUERYCAP, &capability)) {
-	    printf ("ERROR: VIDIOC_QUERYCAP\n");
-	    Close();
-	    return false;
-	  
-	}
-	
-	if (!(capability.capabilities & V4L2_CAP_VIDEO_CAPTURE)) {
-	    printf ("ERROR: is no video capture device\n");
-	    Close();
-	    return false;
-	}  
-	
-	if (!(capability.capabilities & V4L2_CAP_READWRITE)) {
-	    printf("The driver not supports read/write\n");
-	    Close();
-	    return false;
-	}
-	
-	if (!(capability.capabilities & V4L2_CAP_STREAMING)) {
-	    printf("The driver not supports streaming (memory map)\n");
-	    Close();
-	    return false;
-	}
-	
-        
-        //Select frame format
-        memset (&fmtdesc, 0, sizeof (fmtdesc));
-	  
-        fmtdesc.index = 0;
-        fmtdesc.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-	
-        int f = 15;
-        
-        while (ioctl (m_Fd, VIDIOC_ENUM_FMT, &fmtdesc) == 0) {
-            switch (fmtdesc.pixelformat) {
-                case V4L2_PIX_FMT_BGR24:
-                    f = 1;
-                    break;
-                    
-                case V4L2_PIX_FMT_RGB24:
-                    if (f > 2) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 2;
-                    }
-                    break;
-                                        
-                case V4L2_PIX_FMT_BGR32:
-                    if (f > 3) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 3;
-                    }
-                    break;
-                    
-                case V4L2_PIX_FMT_RGB32:
-                    if (f > 4) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 4;
-                    }
-                    break;
-            
-                case V4L2_PIX_FMT_RGB555:
-                    if (f > 5) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 5;
-                    }
-                    break;
-                    
-                case V4L2_PIX_FMT_RGB565:
-                    if (f > 6) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 6;
-                    }
-                    break;
-                    
-                case V4L2_PIX_FMT_RGB555X:
-                    if (f > 7) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 7;
-                    }
-                    break;
-                    
-                case V4L2_PIX_FMT_RGB565X:
-                    if (f > 8) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 8;
-                    }
-                    break;
-                    
-                case V4L2_PIX_FMT_RGB444:
-                    if (f > 9) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 9;
-                    }
-                    break;
-                    
-                case V4L2_PIX_FMT_YUV32:
-                    if (f > 10) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 10;
-                    }
-                    break;
-                    
-                case V4L2_PIX_FMT_YUV444:
-                    if (f > 11) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 11;
-                    }
-                    break;
-                    
-                case V4L2_PIX_FMT_YUV555:
-                    if (f > 12) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 12;
-                    }
-                    break;
-                    
-                case V4L2_PIX_FMT_YUV565:
-                    if (f > 13) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 13;
-                    }
-                    break;
-                    
-                case V4L2_PIX_FMT_YUV420:
-                    if (f > 14) {
-                        m_PixelFormat = fmtdesc.pixelformat;
-                        f = 14;
-                    }
-                    break;
-            }
-                    
-	  
-            fmtdesc.index++;
-        }
-	
-        
-        //Select frame size
-        memset (&frmsizeenum, 0, sizeof (frmsizeenum));
-
-        frmsizeenum.index = 0;
-        frmsizeenum.pixel_format = fmtdesc.pixelformat;
-        
-        while (ioctl (m_Fd, VIDIOC_ENUM_FRAMESIZES, &frmsizeenum) == 0) {
-            switch (frmsizeenum.type) {
-                case V4L2_FRMSIZE_TYPE_DISCRETE:
-                    if (frmsizeenum.index == 0) {
-                        m_Width = frmsizeenum.discrete.width;
-                        m_Height = frmsizeenum.discrete.height;
-                    } else {
-                        if (abs(frmsizeenum.discrete.width - widthDesired) < abs(m_Width - widthDesired)) {
-                            m_Width = frmsizeenum.discrete.width;
-                            m_Height = frmsizeenum.discrete.height;
-                        }
-                    }
-                    break;
-                
-                case V4L2_FRMSIZE_TYPE_STEPWISE:
-                    if (frmsizeenum.index == 0) {
-                        m_Width = frmsizeenum.stepwise.step_width;
-                        m_Height = frmsizeenum.stepwise.step_height;
-                    } else {
-                        if (abs(frmsizeenum.stepwise.step_width - widthDesired) < abs(m_Width - widthDesired)) {
-                            m_Width = frmsizeenum.stepwise.step_width;
-                            m_Height = frmsizeenum.stepwise.step_height;
-                        }
-                    }
-                    break;
-            }
-             frmsizeenum.index++;
-        }
-
-        
-        
-	
-	//Set frame format
-	memset (&format, 0, sizeof (format));
-
-	format.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-
-	if (-1 == ioctl (m_Fd, VIDIOC_G_FMT, &format)) {
-	    printf("ERROR: Unable to get format.\n");
-	} else {
-	    format.fmt.pix.width = m_Width;
-	    format.fmt.pix.height = m_Height;
-	    format.fmt.pix.pixelformat = m_PixelFormat;
-	    format.fmt.pix.field = V4L2_FIELD_ANY;
-	  
-	    if (-1 == ioctl (m_Fd, VIDIOC_S_FMT, &format)) {
-		printf("ERROR: Unable to set format.\n");
-		Close();
-		return false;
-	    }
-	}
-
-	/* Buggy driver paranoia. */
-	min = format.fmt.pix.width * 2;
-	if (format.fmt.pix.bytesperline < min)
-	    format.fmt.pix.bytesperline = min;
-	    min = format.fmt.pix.bytesperline * format.fmt.pix.height;
-	if (format.fmt.pix.sizeimage < min)
-	    format.fmt.pix.sizeimage = min;
-	
-	
-	m_buffer.length = format.fmt.pix.sizeimage;
-	m_buffer.start = malloc (format.fmt.pix.sizeimage);
- 	
-	if (!m_buffer.start) {
-	    fprintf (stderr, "Out of memory\n");
-	    exit (EXIT_FAILURE);
-	}
-	
-
-
-	//Set framerate
-	memset(&parm, 0, sizeof (parm));
-
-	parm.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-	
-	if (0 == ioctl (m_Fd, VIDIOC_G_PARM, &parm)) {
-	    parm.parm.capture.timeperframe.numerator = 1;
-	    parm.parm.capture.timeperframe.denominator = m_FrameRate;
-	    if (-1 == ioctl(m_Fd, VIDIOC_S_PARM, &parm)) {
-                printf("ERROR: VIDIOC_S_PARM");
-	    }
-	} else {
-            //We use not V4L2 ioctl to allow PWC drivers set framerate
-            if (ioctl(m_Fd, VIDIOCGWIN, &vwin) == 0) {
-                
-                if (vwin.flags & PWC_FPS_FRMASK) {
-                    vwin.flags &= ~PWC_FPS_FRMASK;
-                    vwin.flags |= ((int)m_FrameRate << PWC_FPS_SHIFT);
-                    if (ioctl(m_Fd, VIDIOCSWIN, &vwin) == -1)
-                        printf("ERROR: VIDIOCGWIN");
-                }
-            
-            } else {
-                printf("ERROR: This device doesn't support setting the framerate.\n");
-            }
-	}
-	
-	m_image = new CIplImage(format.fmt.pix.width, format.fmt.pix.height, IPL_DEPTH_8U, "BGR");
-	
-        
-	
-/*
-/// TO SET UP FRAME RATE
-// Set the preview rate in case we want to support previews in the future.
-	
-	capPreviewRate(m_hwndPreview, 33);
-
-	// Attempt to get the capture parameters.
-	capDriverGetCaps(m_hwndPreview, &m_capdrivercaps, sizeof(m_capdrivercaps));
-
-	// Default values.
-	m_captureparms.dwRequestMicroSecPerFrame = 33333;
-	m_captureparms.fMakeUserHitOKToCapture = FALSE;
-	m_captureparms.wPercentDropForError = 100;
-	m_captureparms.fYield = TRUE;
-	m_captureparms.dwIndexSize = 0;
-	m_captureparms.wChunkGranularity = 0;
-	m_captureparms.fUsingDOSMemory = FALSE;
-	m_captureparms.wNumVideoRequested = 3;
-	m_captureparms.fCaptureAudio = FALSE;
-	m_captureparms.wNumAudioRequested = 0;
-	m_captureparms.vKeyAbort = 0;
-	m_captureparms.fAbortLeftMouse = FALSE;
-	m_captureparms.fAbortRightMouse = FALSE;
-	m_captureparms.fLimitEnabled = FALSE;
-	m_captureparms.wTimeLimit = 0;
-	m_captureparms.fMCIControl = FALSE;
-	m_captureparms.fStepMCIDevice = FALSE;
-	m_captureparms.dwMCIStartTime = 0;
-	m_captureparms.dwMCIStopTime = 0;
-	m_captureparms.fStepCaptureAt2x = FALSE;
-	m_captureparms.wStepCaptureAverageFrames = 5;
-	m_captureparms.dwAudioBufferSize = 0;
-	m_captureparms.fDisableWriteCache = FALSE;
-	m_captureparms.AVStreamMaster = 0;
-
-	// Attempt to set the capture parameters.
-	capCaptureSetSetup(m_hwndPreview, &m_captureparms, sizeof(m_captureparms));
-
-	// Make sure that the values we have are correct.
-	capCaptureGetSetup(m_hwndPreview, &m_captureparms, sizeof(m_captureparms));
-
-
-	capSetVideoFormat ?????
-
-	capSetUserData ???
-	*/
-
-	return true;
-}
-
-
-#endif
 
 
