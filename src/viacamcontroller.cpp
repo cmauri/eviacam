@@ -192,8 +192,8 @@ CCamera* CViacamController::SetUpCamera()
 	}
 	else
 		cam->Close();
-		
-
+	
+	
 	WriteAppData(wxConfigBase::Get());
 
 	return cam;
