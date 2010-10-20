@@ -55,9 +55,8 @@ class CViacamController;
 #define ID_WVIACAM 10000
 #define ID_MENUITEM_ENABLE 10011
 #define ID_MENUITEM_EXIT 10001
-#define ID_MENUITEM_CLICKBAR 10005
-#define ID_MENU_TRACK_FACE 10004
 #define ID_MENU_OPTIONS 10003
+#define ID_MENU_WIZARD 10094
 #define ID_MENU_ABOUT 10028
 #define ID_TOOLBAR 10042
 #define ID_TOOL_ENABLE 10043
@@ -134,20 +133,11 @@ public:
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUITEM_EXIT
     void OnMenuitemExitClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUITEM_CLICKBAR
-    void OnMenuitemClickbarClick( wxCommandEvent& event );
-
-    /// wxEVT_UPDATE_UI event handler for ID_MENUITEM_CLICKBAR
-    void OnMenuitemClickbarUpdate( wxUpdateUIEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_TRACK_FACE
-    void OnMenuTrackFaceClick( wxCommandEvent& event );
-
-    /// wxEVT_UPDATE_UI event handler for ID_MENU_TRACK_FACE
-    void OnMenuTrackFaceUpdate( wxUpdateUIEvent& event );
-
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_OPTIONS
     void OnMenuOptionsClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_WIZARD
+    void OnMenuWizardClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_ABOUT
     void OnMenuAboutClick( wxCommandEvent& event );

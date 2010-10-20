@@ -65,7 +65,8 @@ am_eviacam_OBJECTS = eviacam-activationkey.$(OBJEXT) \
 	eviacam-wconfirmcalibration.$(OBJEXT) \
 	eviacam-wmotioncalibrationx.$(OBJEXT) \
 	eviacam-wmotioncalibrationy.$(OBJEXT) \
-	eviacam-wviacam.$(OBJEXT) eviacam-cvisualalert.$(OBJEXT)
+	eviacam-wviacam.$(OBJEXT) eviacam-cvisualalert.$(OBJEXT) \
+	eviacam-wwizard.$(OBJEXT)
 eviacam_OBJECTS = $(am_eviacam_OBJECTS)
 eviacam_DEPENDENCIES = $(top_builddir)/wxutil/libwxutil.la \
 	$(top_builddir)/creavision/libcreavision.la \
@@ -262,7 +263,7 @@ noinst_HEADERS = activationkey.h cautostart.h ckeyboardcode.h ckeyboardcontrol.h
 	clickwindowcontroller.h clickwindowtext.h cmotioncalibration.h guiapp.h keyboardbitmapcheck.h \
 	langnames-utf8.h motiontracker.h mouseoutput.h version.h viacamcontroller.h wabout.h \
 	wconfiguration.h wconfirmcalibration.h wmotioncalibrationx.h \
-	wmotioncalibrationy.h wviacam.h cvisualalert.h
+	wmotioncalibrationy.h wviacam.h cvisualalert.h wwizard.h
 
 dist_noinst_DATA = version.h.in langnames-utf16.h gui.pjd gui.rc eviacam.vcproj \
 	icons/on.xpm icons/eviacam.ico  icons/eviacam_mini.ico  \
@@ -292,7 +293,7 @@ eviacam_SOURCES = activationkey.cpp cautostart.cpp ckeyboardcode.cpp ckeyboardco
 	clickwindowbitmap.cpp clickwindowcontroller.cpp clickwindowtext.cpp cmotioncalibration.cpp \
 	guiapp.cpp keyboardbitmapcheck.cpp motiontracker.cpp mouseoutput.cpp \
 	viacamcontroller.cpp wabout.cpp wconfiguration.cpp wconfirmcalibration.cpp \
-	wmotioncalibrationx.cpp wmotioncalibrationy.cpp wviacam.cpp cvisualalert.cpp
+	wmotioncalibrationx.cpp wmotioncalibrationy.cpp wviacam.cpp cvisualalert.cpp wwizard.cpp
 
 eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11
@@ -403,6 +404,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-wmotioncalibrationx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-wmotioncalibrationy.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-wviacam.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacam-wwizard.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eviacamloader.Po@am__quote@
 
 .c.o:
@@ -740,6 +742,20 @@ eviacam-cvisualalert.obj: cvisualalert.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='cvisualalert.cpp' object='eviacam-cvisualalert.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-cvisualalert.obj `if test -f 'cvisualalert.cpp'; then $(CYGPATH_W) 'cvisualalert.cpp'; else $(CYGPATH_W) '$(srcdir)/cvisualalert.cpp'; fi`
+
+eviacam-wwizard.o: wwizard.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-wwizard.o -MD -MP -MF $(DEPDIR)/eviacam-wwizard.Tpo -c -o eviacam-wwizard.o `test -f 'wwizard.cpp' || echo '$(srcdir)/'`wwizard.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-wwizard.Tpo $(DEPDIR)/eviacam-wwizard.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wwizard.cpp' object='eviacam-wwizard.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-wwizard.o `test -f 'wwizard.cpp' || echo '$(srcdir)/'`wwizard.cpp
+
+eviacam-wwizard.obj: wwizard.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT eviacam-wwizard.obj -MD -MP -MF $(DEPDIR)/eviacam-wwizard.Tpo -c -o eviacam-wwizard.obj `if test -f 'wwizard.cpp'; then $(CYGPATH_W) 'wwizard.cpp'; else $(CYGPATH_W) '$(srcdir)/wwizard.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/eviacam-wwizard.Tpo $(DEPDIR)/eviacam-wwizard.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='wwizard.cpp' object='eviacam-wwizard.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(eviacam_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o eviacam-wwizard.obj `if test -f 'wwizard.cpp'; then $(CYGPATH_W) 'wwizard.cpp'; else $(CYGPATH_W) '$(srcdir)/wwizard.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

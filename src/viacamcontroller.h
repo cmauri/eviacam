@@ -75,6 +75,8 @@ public:
 	inline void SetMotionCalibration (bool value);
 	bool StartMotionCalibration (void);
 	
+	inline const bool GetRunWizardAtStartup () const;
+	inline void SetRunWizardAtStartup (bool value);	
 	
 	void SetLanguage (const int id);
 	inline const int GetLanguage () const;
@@ -97,6 +99,7 @@ public:
 
 	void OpenConfiguration();
 	void OpenOnScreenKeyboard();
+	void StartWizard();
 
 	// Configuration methods
 	virtual void InitDefaults();
@@ -134,6 +137,7 @@ private:
 	float m_frameRate;
 	bool m_enabledActivationKey;
 	bool m_motionCalibrationEnabled;
+	bool m_runWizardAtStartup;
 #if defined(__WXGTK__) 
 	int m_keyCode;
 	int m_lastKeyCode;
@@ -141,7 +145,6 @@ private:
 	CAutostart* m_pAutostart;
 	WConfiguration* m_pConfiguration;
 	CMotionCalibration* m_pMotionCalibration;
-	
 };
 
 inline CAutostart* CViacamController::GetAutostart()
@@ -268,5 +271,14 @@ inline void CViacamController::SetMotionCalibration (bool value)
 	m_motionCalibrationEnabled= value;
 }
 
+inline const bool CViacamController::GetRunWizardAtStartup () const
+{
+	return m_runWizardAtStartup;
+}
+
+inline void CViacamController::SetRunWizardAtStartup (bool value)
+{
+	m_runWizardAtStartup= value;
+}
 
 #endif

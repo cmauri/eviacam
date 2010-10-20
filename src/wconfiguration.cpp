@@ -1729,7 +1729,8 @@ void WConfiguration::OnSpinctrlGestureTimeUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnCheckboxAllowVisualAlertsClick( wxCommandEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetVisualAlerts(m_chkAllowVisualAlerts->IsChecked());
+	//m_pViacamController->GetMouseOutput()->SetVisualAlerts(m_chkAllowVisualAlerts->IsChecked());
+	m_pViacamController->StartWizard();
 	event.Skip(false);
 	Changed ();
 }

@@ -45,6 +45,7 @@
 #include "camwindow.h"
 #include "wconfiguration.h"
 #include "cmotioncalibration.h"
+#include "wwizard.h"
 
 //#include "icons/eviacam_mini.xpm"
 
@@ -80,6 +81,7 @@ CViacamController::CViacamController(void)
 	m_frameRate= 0;
 	m_pMotionCalibration= new CMotionCalibration(this);
 	m_motionCalibrationEnabled= false;
+	m_runWizardAtStartup= true;
 #if defined(__WXGTK__) 
 	m_pAutostart = new CAutostart(wxT("eviacam.desktop"));
 #endif
@@ -95,6 +97,7 @@ CViacamController::~CViacamController(void)
 	delete m_locale;
 	delete m_configManager;
 	delete m_pMotionCalibration;
+	//delete m_pWizard;
 }
 
 void CViacamController::SetUpLanguage ()
@@ -257,7 +260,13 @@ bool CViacamController::Initialize ()
 
 	// Load configuration
 	if (retval) m_configManager->ReadAll (true);
-
+	
+	
+	// Run the wizard at startup
+	if (m_runWizardAtStartup)
+		StartWizard();
+	
+	
 	return retval;
 }
 
@@ -322,6 +331,7 @@ void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->Write(_T("enabledAtStartup"), m_enabledAtStartup);	
 	pConfObj->Write(_T("onScreenKeyboardCommand"), m_onScreenKeyboardCommand);
+	pConfObj->Write(_T("runWizardAtStartup"), m_runWizardAtStartup);	
 
 #if defined(__WXGTK__) 
 	pConfObj->Write(_T("enabledActivationKey"), m_enabledActivationKey);
@@ -346,6 +356,7 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
 	pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
+	pConfObj->Read(_T("runWizardAtStartup"), &m_runWizardAtStartup);
 #if defined(__WXGTK__) 
 	m_keyCode = 0;
 	pConfObj->Read(_T("enabledActivationKey"), &m_enabledActivationKey);
@@ -471,4 +482,10 @@ void CViacamController::ProcessImage (IplImage *pImage)
 bool CViacamController::StartMotionCalibration (void)
 {
 	return m_pMotionCalibration->InitMotionCalibration();
+}
+
+void CViacamController::StartWizard()
+{
+	WWizard* m_pWizard = new WWizard(m_pMainWindow, this);
+	m_pWizard->Run();
 }
