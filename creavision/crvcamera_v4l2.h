@@ -30,6 +30,10 @@
 #include "crvimage.h"
 #include "webcam.h"
 #include <vector>
+#include <string>
+
+// Forward declarations
+class CCameraControlV4l2;
 
 class CCameraV4L2 : public CCamera
 {
@@ -42,6 +46,12 @@ public:
 	virtual void Close();	
 	virtual IplImage *QueryFrame();
 
+	virtual bool HasCameraControls() { return true; }
+	virtual unsigned int GetCameraControlsCount();
+	virtual CCameraControl* GetCameraControl(unsigned int numControl);
+#if !defined(NDEBUG)
+	void Dump();
+#endif
 private:
 	// Private types
 	enum ECaptureMethod { CAP_NONE= 0, CAP_READ, CAP_STREAMING_MMAP, CAP_STREAMING_USR };
@@ -66,6 +76,7 @@ private:
 	CIplImage m_resultImage;
 	TImageFormat m_currentFormat;
 	std::vector<uint32_t> m_supportedPixelFormats;
+	std::vector<CCameraControlV4l2> m_cameraControls;
 			
 	// Private methods
 	bool DoOpen();
@@ -80,37 +91,47 @@ private:
 	void UnmapBuffers();
 	bool DecodeToRGB (void* src, void* dst, int width, int height, uint32_t pixelformat);
 	void AddSupportedPixelFormats ();
-public:
-#if 0
-	// 
-	// Virtual desired methods
-	//
-	virtual bool HasSettingsDialog() { return true; }
-	
-	virtual int GetBrightness ();
-	virtual void SetBrightness (int value);
-	virtual int GetContrast ();
-	virtual void SetContrast (int value);
-	virtual int GetSaturation ();
-	virtual void SetSaturation (int value);
-	virtual int GetWhiteness ();
-	virtual void SetWhiteness (int value);
-	virtual int GetHue ();
-	virtual void SetHue (int value);
-	virtual int GetFlicker ();
-	virtual void SetFlicker (int value);
-	virtual int GetExposure ();
-	virtual void SetExposure (int value);
-	virtual int GetBacklightCompensation ();
-	virtual void SetBacklightCompensation (int value);
-	virtual int GetSharpness ();
-	virtual void SetSharpness (int value);
-
-	virtual void ShowSettingsDialog ();
-#endif
-
-
+	bool PopulateCameraControls ();
 };
 
+// Class that models each camera control
+class CCameraControlV4l2 : public CCameraControl {
+public:
+	CCameraControlV4l2 (CHandle handle, const CControl& control);
+	
+	virtual ECameraControlId GetId() const { return LibwebcamId2ECameraControlId(m_id); }
+	// Get the name of the control provided by the driver
+	virtual const char* GetName() const { return m_name.c_str(); }
+	virtual ECameraControlType GetType() const { return CControlType2ECameraControlType (m_type); }
+
+	// Get/set the current value. For boolean controls 0 and 1 are the only
+	// possible values. For choice controls 0 represents the first option.
+	// Set method returns true on success, false otherwise
+	virtual int GetValue() const;
+	virtual bool SetValue(int value);
+
+	virtual int GetDefaultValue() const { return m_default; }
+	virtual int GetMinimumValue() const { return m_min; }
+	virtual int GetMaximumValue() const { return m_max; }
+
+	// For choices only
+	virtual const char* GetChoiceName(unsigned int numOption) const;
+	
+	// Check whether a certain contorl id is supported
+	static bool CheckSupportedLibwebcamId (CControlId id);
+#if !defined(NDEBUG)
+	void Dump();
+#endif
+private:
+	static ECameraControlId LibwebcamId2ECameraControlId (CControlId id);
+	static ECameraControlType CControlType2ECameraControlType (CControlType type);
+	
+	CHandle m_handle;
+	CControlId m_id;	// The identifier of the control
+	std::string m_name;	// The name of the control
+	CControlType m_type;	// The type of the control
+	int m_default, m_min, m_max;
+	std::vector<std::string> m_choices;
+};
 
 #endif

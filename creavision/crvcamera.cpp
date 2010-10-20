@@ -26,6 +26,7 @@
 #include <cassert>
 #include <highgui.h>
 
+// TODO: move some attibutes to CCameraCV and add here support to flip images
 CCamera::CCamera()
 {
 	m_Id= -1;
