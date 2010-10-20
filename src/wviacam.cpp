@@ -109,13 +109,9 @@ BEGIN_EVENT_TABLE( WViacam, wxFrame )
 
     EVT_MENU( ID_MENUITEM_EXIT, WViacam::OnMenuitemExitClick )
 
-    EVT_MENU( ID_MENUITEM_CLICKBAR, WViacam::OnMenuitemClickbarClick )
-    EVT_UPDATE_UI( ID_MENUITEM_CLICKBAR, WViacam::OnMenuitemClickbarUpdate )
-
-    EVT_MENU( ID_MENU_TRACK_FACE, WViacam::OnMenuTrackFaceClick )
-    EVT_UPDATE_UI( ID_MENU_TRACK_FACE, WViacam::OnMenuTrackFaceUpdate )
-
     EVT_MENU( ID_MENU_OPTIONS, WViacam::OnMenuOptionsClick )
+
+    EVT_MENU( ID_MENU_WIZARD, WViacam::OnMenuWizardClick )
 
     EVT_MENU( ID_MENU_ABOUT, WViacam::OnMenuAboutClick )
 
@@ -218,43 +214,41 @@ void WViacam::CreateControls()
     itemMenu3->Append(ID_MENUITEM_EXIT, _("&Exit"), wxEmptyString, wxITEM_NORMAL);
     menuBar->Append(itemMenu3, _("&File"));
     wxMenu* itemMenu7 = new wxMenu;
-    itemMenu7->Append(ID_MENUITEM_CLICKBAR, _("&Click Window"), wxEmptyString, wxITEM_CHECK);
-    itemMenu7->AppendSeparator();
-    itemMenu7->Append(ID_MENU_TRACK_FACE, _("&Track face"), wxEmptyString, wxITEM_CHECK);
-    itemMenu7->AppendSeparator();
     itemMenu7->Append(ID_MENU_OPTIONS, _("&Options..."), wxEmptyString, wxITEM_NORMAL);
+    itemMenu7->AppendSeparator();
+    itemMenu7->Append(ID_MENU_WIZARD, _("&Wizard"), wxEmptyString, wxITEM_NORMAL);
     menuBar->Append(itemMenu7, _("&Configuration"));
-    wxMenu* itemMenu13 = new wxMenu;
-    itemMenu13->Append(ID_MENU_ABOUT, _("&About..."), wxEmptyString, wxITEM_NORMAL);
-    menuBar->Append(itemMenu13, _("&Help"));
+    wxMenu* itemMenu11 = new wxMenu;
+    itemMenu11->Append(ID_MENU_ABOUT, _("&About..."), wxEmptyString, wxITEM_NORMAL);
+    menuBar->Append(itemMenu11, _("&Help"));
     itemFrame1->SetMenuBar(menuBar);
 
-    wxToolBar* itemToolBar15 = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR );
-    itemToolBar15->SetToolBitmapSize(wxSize(32, 32));
-    wxBitmap itemtool16Bitmap(itemFrame1->GetBitmapResource(wxT("icons/on.xpm")));
+    wxToolBar* itemToolBar13 = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR );
+    itemToolBar13->SetToolBitmapSize(wxSize(32, 32));
+    wxBitmap itemtool14Bitmap(itemFrame1->GetBitmapResource(wxT("icons/on.xpm")));
+    wxBitmap itemtool14BitmapDisabled;
+    itemToolBar13->AddTool(ID_TOOL_ENABLE, _("Enable"), itemtool14Bitmap, itemtool14BitmapDisabled, wxITEM_NORMAL, _("Enable"), wxEmptyString);
+    wxBitmap itemtool15Bitmap(itemFrame1->GetBitmapResource(wxT("icons/off.xpm")));
+    wxBitmap itemtool15BitmapDisabled;
+    itemToolBar13->AddTool(ID_TOOL_DISABLE, _("Disable"), itemtool15Bitmap, itemtool15BitmapDisabled, wxITEM_NORMAL, _("Disable"), wxEmptyString);
+    itemToolBar13->EnableTool(ID_TOOL_DISABLE, false);
+    wxBitmap itemtool16Bitmap(itemFrame1->GetBitmapResource(wxT("icons/clickwindow.xpm")));
     wxBitmap itemtool16BitmapDisabled;
-    itemToolBar15->AddTool(ID_TOOL_ENABLE, _("Enable"), itemtool16Bitmap, itemtool16BitmapDisabled, wxITEM_NORMAL, _("Enable"), wxEmptyString);
-    wxBitmap itemtool17Bitmap(itemFrame1->GetBitmapResource(wxT("icons/off.xpm")));
+    itemToolBar13->AddTool(ID_TOOL_CLICKWIN, _("Click Window"), itemtool16Bitmap, itemtool16BitmapDisabled, wxITEM_CHECK, _("Click Window"), wxEmptyString);
+    wxBitmap itemtool17Bitmap(itemFrame1->GetBitmapResource(wxT("icons/keyboard.xpm")));
     wxBitmap itemtool17BitmapDisabled;
-    itemToolBar15->AddTool(ID_TOOL_DISABLE, _("Disable"), itemtool17Bitmap, itemtool17BitmapDisabled, wxITEM_NORMAL, _("Disable"), wxEmptyString);
-    itemToolBar15->EnableTool(ID_TOOL_DISABLE, false);
-    wxBitmap itemtool18Bitmap(itemFrame1->GetBitmapResource(wxT("icons/clickwindow.xpm")));
-    wxBitmap itemtool18BitmapDisabled;
-    itemToolBar15->AddTool(ID_TOOL_CLICKWIN, _("Click Window"), itemtool18Bitmap, itemtool18BitmapDisabled, wxITEM_CHECK, _("Click Window"), wxEmptyString);
-    wxBitmap itemtool19Bitmap(itemFrame1->GetBitmapResource(wxT("icons/keyboard.xpm")));
+    itemToolBar13->AddTool(ID_TOOL_KEYBOARD, _("On-screen keyboard"), itemtool17Bitmap, itemtool17BitmapDisabled, wxITEM_NORMAL, _("On-screen keyboard"), wxEmptyString);
+    itemToolBar13->AddSeparator();
+    wxBitmap itemtool19Bitmap(itemFrame1->GetBitmapResource(wxT("icons/preferences.xpm")));
     wxBitmap itemtool19BitmapDisabled;
-    itemToolBar15->AddTool(ID_TOOL_KEYBOARD, _("On-screen keyboard"), itemtool19Bitmap, itemtool19BitmapDisabled, wxITEM_NORMAL, _("On-screen keyboard"), wxEmptyString);
-    itemToolBar15->AddSeparator();
-    wxBitmap itemtool21Bitmap(itemFrame1->GetBitmapResource(wxT("icons/preferences.xpm")));
+    itemToolBar13->AddTool(ID_TOOL_OPTIONS, _("Options"), itemtool19Bitmap, itemtool19BitmapDisabled, wxITEM_NORMAL, _("Options"), wxEmptyString);
+    itemToolBar13->AddSeparator();
+    wxBitmap itemtool21Bitmap(itemFrame1->GetBitmapResource(wxT("icons/help.xpm")));
     wxBitmap itemtool21BitmapDisabled;
-    itemToolBar15->AddTool(ID_TOOL_OPTIONS, _("Options"), itemtool21Bitmap, itemtool21BitmapDisabled, wxITEM_NORMAL, _("Options"), wxEmptyString);
-    itemToolBar15->AddSeparator();
-    wxBitmap itemtool23Bitmap(itemFrame1->GetBitmapResource(wxT("icons/help.xpm")));
-    wxBitmap itemtool23BitmapDisabled;
-    itemToolBar15->AddTool(ID_TOOL_HELP, _("Help"), itemtool23Bitmap, itemtool23BitmapDisabled, wxITEM_NORMAL, _("Help"), wxEmptyString);
-    itemToolBar15->EnableTool(ID_TOOL_HELP, false);
-    itemToolBar15->Realize();
-    itemFrame1->SetToolBar(itemToolBar15);
+    itemToolBar13->AddTool(ID_TOOL_HELP, _("Help"), itemtool21Bitmap, itemtool21BitmapDisabled, wxITEM_NORMAL, _("Help"), wxEmptyString);
+    itemToolBar13->EnableTool(ID_TOOL_HELP, false);
+    itemToolBar13->Realize();
+    itemFrame1->SetToolBar(itemToolBar13);
 
     m_statusBar = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
     if (WViacam::ShowToolTips())
@@ -417,18 +411,6 @@ void WViacam::OnCloseWindow( wxCloseEvent& event )
 	Destroy ();
 }
 
-
-/*!
- * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUITEM_CLICKBAR
- */
-
-void WViacam::OnMenuitemClickbarClick( wxCommandEvent& event )
-{
-	m_pController->GetClickWindowController()->Show (
-		!m_pController->GetClickWindowController()->IsShown());		
-	event.Skip(false);
-}
-
 /*!
  * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUITEM_ENABLE
  */
@@ -452,37 +434,6 @@ void WViacam::OnMenuAboutClick( wxCommandEvent& event )
     int returnValue = window->ShowModal();
     window->Destroy();
 ////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_ABOUT in WViacam. 
-	event.Skip(false);
-}
-
-
-/*!
- * wxEVT_UPDATE_UI event handler for ID_MENUITEM_CLICKBAR
- */
-
-void WViacam::OnMenuitemClickbarUpdate( wxUpdateUIEvent& event )
-{
-	event.Check (m_pController->GetClickWindowController()->IsShown());
-}
-
-/*!
- * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_TRACK_FACE
- */
-
-void WViacam::OnMenuTrackFaceClick( wxCommandEvent& event )
-{
-	m_pController->GetMotionTracker()->SetTrackFace (!m_pController->GetMotionTracker()->GetTrackFace());
-	event.Skip(false);
-}
-
-
-/*!
- * wxEVT_UPDATE_UI event handler for ID_MENU_TRACK_FACE
- */
-
-void WViacam::OnMenuTrackFaceUpdate( wxUpdateUIEvent& event )
-{
-	event.Check (m_pController->GetMotionTracker()->GetTrackFace());
 	event.Skip(false);
 }
 
@@ -641,6 +592,17 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 void WViacam::OnToolKeyboardClick( wxCommandEvent& event )
 {
 	m_pController->OpenOnScreenKeyboard();
+	event.Skip(false);
+}
+
+
+/*!
+ * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_WIZARD
+ */
+
+void WViacam::OnMenuWizardClick( wxCommandEvent& event )
+{
+	m_pController->StartWizard();
 	event.Skip(false);
 }
 

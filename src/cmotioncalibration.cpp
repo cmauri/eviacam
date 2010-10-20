@@ -83,7 +83,6 @@ bool CMotionCalibration::InitMotionCalibration()
 	bool isClickEnabled = false;
 	CMouseOutput::EClickMode clickMode;
 	
-	
 	m_xSpeedBackup = m_pViacamController->GetMouseOutput()->GetXSpeed();
 	m_ySpeedBackup = m_pViacamController->GetMouseOutput()->GetYSpeed();
 	m_state = WAITING_X;

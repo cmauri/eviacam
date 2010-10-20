@@ -296,7 +296,8 @@ bool CCameraV4L2::DetectBestImageFormat(TImageFormat& imgformat)
 	//	pixelformats in order of preference (first values are better).
 	//  - Return false only in case no supported formats are available at all 
 	//	(i.e. pixel format not supported).
-	
+	//std::vector<TImageFormat> vectForm;
+			
 	// TODO: TESTING CODE set hardcoded compatible values for my camera
 	if (m_usePwc)
 		imgformat.pixelformat= V4L2_PIX_FMT_YUV420;
