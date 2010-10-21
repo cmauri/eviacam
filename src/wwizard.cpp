@@ -172,6 +172,7 @@ void WWizard::CreateControls()
 bool WWizard::Run()
 {
     wxWindowList::compatibility_iterator node = GetChildren().GetFirst();
+
     while (node)
     {
         wxWizardPage* startPage = wxDynamicCast(node->GetData(), wxWizardPage);
@@ -183,7 +184,6 @@ bool WWizard::Run()
 			Show(true);
 			return true;
 		}
-        
 		node = node->GetNext();
     }
 	
@@ -672,11 +672,13 @@ wxIcon WizardPage2::GetIconResource( const wxString& name )
 
 void WizardPage2::OnWizardpage2Changed( wxWizardEvent& event )
 {
-	if (m_wizardParent->GetPerformCalibration())
-		m_wizardParent->GetViacamController()->StartMotionCalibration();	
+	if (m_wizardParent->GetPerformCalibration() && event.GetDirection())
+		m_wizardParent->GetViacamController()->StartMotionCalibration();
 
-		//m_wizardParent->ShowPage(m_wizardParent->GetNextPage());
-		//m_wizardParent->Show(true);
+		if (event.GetDirection())
+			m_wizardParent->ShowPage(GetNext());
+		else
+			m_wizardParent->ShowPage(GetPrev());
 }
 
 

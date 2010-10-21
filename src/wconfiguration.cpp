@@ -991,6 +991,7 @@ void WConfiguration::EnableClickOptions (bool enable)
 	m_spinDwellArea->Enable(enable);
 	m_chkAllowConsecutiveClick->Enable(enable);
 	m_chkBeepOnClick->Enable(enable);
+	m_chkAllowVisualAlerts->Enable(enable);
 	m_chkOpenClickWinAtStartup->Enable(enable);
 	m_chkShowClickWin->Enable(enable);
 	m_cmbClickWindowDesign->Enable(enable);
@@ -1729,8 +1730,8 @@ void WConfiguration::OnSpinctrlGestureTimeUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnCheckboxAllowVisualAlertsClick( wxCommandEvent& event )
 {
-	//m_pViacamController->GetMouseOutput()->SetVisualAlerts(m_chkAllowVisualAlerts->IsChecked());
-	m_pViacamController->StartWizard();
+	m_pViacamController->GetMouseOutput()->SetVisualAlerts(m_chkAllowVisualAlerts->IsChecked());
+	event.Skip(false);
 	event.Skip(false);
 	Changed ();
 }
