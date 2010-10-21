@@ -32,6 +32,10 @@
 ////@end XPM images
 
 #define TIMER_ID 1234
+#define SINGLE 1
+#define SECONDARY 2
+#define DOUBLE 3
+#define DRAG 4
 
 /*!
  * WWizard type definition
@@ -877,6 +881,11 @@ void WizardPage3::OnRadiobuttonNoneClickSelected( wxCommandEvent& event )
 
 void WizardPage3::OnWizardpage3Changed( wxWizardEvent& event )
 {
+	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionLeft (SINGLE);
+	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionRight (SECONDARY);
+	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionTop (DOUBLE);
+	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionBottom (DRAG);	
+	
 	m_wizardParent->GetViacamController()->SetEnabled(true);
 	m_rbNoneClick->SetValue(true);
 	m_rbDwellClick->SetValue(false);
