@@ -33,11 +33,9 @@
 #include <sys/time.h>
 #include "pwc-ioctl.h"
 #include "colorspaces.h"
-/*
-#include <getopt.h>             // getopt_long() 
-#include <asm/types.h>          // for videodev2.h
-//#include <v4l2.h>
-*/
+#if !defined(NDEBUG)
+#include <iostream>
+#endif
 
 #define IOCTL_RETRY 4
 
@@ -82,6 +80,7 @@ CCameraV4L2::CCameraV4L2(const char* device_name, bool usePwc)
 	memset(&m_captureBuffersPtr, 0, sizeof(void*) * STREAMING_CAPTURE_NBUFFERS);	
 	memset(&m_currentFormat, 0, sizeof(m_currentFormat));
 	AddSupportedPixelFormats ();
+	//PopulateCameraControls ();
 }
 
 void CCameraV4L2::AddSupportedPixelFormats ()
@@ -110,6 +109,41 @@ void CCameraV4L2::AddSupportedPixelFormats ()
 	m_supportedPixelFormats.push_back (V4L2_PIX_FMT_BGR24);
 }
 
+bool CCameraV4L2::PopulateCameraControls ()
+{
+	CControl *controls= NULL;
+	unsigned int size= 0, count= 0;
+
+	// First call to discover required buffer size
+	if (c_enum_controls(m_libWebcamHandle, controls, &size, &count)!= C_BUFFER_TOO_SMALL) return false;
+	else {
+		// Ok, allocate buffer and query information
+		assert (size> 0);
+		unsigned char buffer[size];
+		controls= (CControl *) buffer;
+		if (c_enum_controls(m_libWebcamHandle, controls, &size, &count)!= C_SUCCESS) return false;
+		
+		// Populate camera control vector
+		for (unsigned int i= 0; i< count; ++i) {
+			if (controls[i].type!=  CC_TYPE_RAW)
+				// Ignore raw controls
+				m_cameraControls.push_back(CCameraControlV4l2(m_libWebcamHandle, controls[i]));
+		}
+	}
+	return true;
+}
+
+unsigned int CCameraV4L2::GetCameraControlsCount()
+{
+	return m_cameraControls.size();
+}
+
+CCameraControl* CCameraV4L2::GetCameraControl(unsigned int numControl)
+{
+	if (numControl>= GetCameraControlsCount()) return NULL;
+	return &m_cameraControls[numControl];
+}
+
 CCameraV4L2::~CCameraV4L2(void)
 {
 	Close ();	
@@ -127,7 +161,8 @@ void CCameraV4L2::Close ()
 		c_close_device (m_libWebcamHandle);
 		m_libWebcamHandle= 0;
 	}
-	m_captureMethod= CAP_NONE;	
+	m_captureMethod= CAP_NONE;
+	m_cameraControls.clear();
 }
 
 bool CCameraV4L2::DoOpen()
@@ -162,6 +197,9 @@ bool CCameraV4L2::DoOpen()
 		Close();
 		return false;
 	}
+	
+	PopulateCameraControls ();
+	
 	return true;
 }
 	
@@ -330,6 +368,14 @@ bool CCameraV4L2::SetImageFormat(const TImageFormat& imgformat)
 			if (ioctl(m_Fd, VIDIOC_S_PARM, &parm)== 0) properlySet= true;
 		}
 		if (!properlySet) fprintf (stderr, "Warning: cannot set FPS: %d for UVC camera\n", imgformat.frame_rate);
+		
+		// Try to set exposure control to match desired frame ratio
+		for (unsigned int i= 0; i< m_cameraControls.size(); ++i) {
+			if (m_cameraControls[i].GetId()== CCameraControl::CAM_AUTO_EXPOSURE_PRIORITY) {
+				m_cameraControls[i].SetValue(0);
+				break;
+			}
+		}			
 	}
 
 	return true;
@@ -562,8 +608,7 @@ bool CCameraV4L2::Open ()
 /* LIMIT: convert a 16.16 fixed-point value to a byte, with clipping. */
 #define LIMIT(x) ((x)>0xffffff?0xff: ((x)<=0xffff?0:((x)>>16)))
 
-							 static inline void
-							 move_420_block(int yTL, int yTR, int yBL, int yBR, int u, int v, int rowPixels, unsigned char * rgb)
+static inline void move_420_block(int yTL, int yTR, int yBL, int yBR, int u, int v, int rowPixels, unsigned char * rgb)
 {
 	const int rvScale = 91881;
 	const int guScale = -22553;
@@ -826,370 +871,190 @@ IplImage *CCameraV4L2::QueryFrame()
 	switch (errno) {
 	case EAGAIN:
 	return 0;
-
-	case EIO:
-				      // Se puede ignorar EIO
-	default:
-	printf("ERROR: read\n");
 #endif
 
 }
 
-#if 0
-int CCameraV4L2::GetBrightness ()
+#if !defined(NDEBUG)
+void CCameraV4L2::Dump()
 {
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_BRIGHTNESS;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_BRIGHTNESS;
-	if (-1 != ioctl (m_Fd, VIDIOC_G_CTRL, &control))  {
-	    return (control.value - queryctrl.minimum) * 1000 / (queryctrl.maximum - queryctrl.minimum);
+	std::cout << "CCameraV4L2::Dump(). Begin\n";
+	
+	std::cout << "m_deviceShortName:" << m_deviceShortName << std::endl;
+	std::cout << "m_Fd:" << m_Fd << std::endl;
+	std::cout << "m_libWebcamHandle:" << m_libWebcamHandle << std::endl;
+	std::cout << "m_captureMethod:" << m_captureMethod << std::endl;
+	std::cout << "m_usePwc:" << m_usePwc << std::endl;
+	std::cout << "m_isStreaming:" << m_isStreaming << std::endl;
+	std::cout << "m_buffersReady:" << m_buffersReady << std::endl;
+	
+	std::cout << "m_currentFormat.frame_rate:" <<  m_currentFormat.frame_rate << std::endl;
+	std::cout << "m_currentFormat.width" << m_currentFormat.width << std::endl;
+	std::cout << "m_currentFormat.height:" << m_currentFormat.height << std::endl;
+	std::cout << "m_currentFormat.pielformat:" <<  m_currentFormat.pixelformat << std::endl;	
+	
+	for (unsigned int i= 0; i< m_supportedPixelFormats.size(); ++i)
+		std::cout << "m_supportedPixelFormats[" << i << "]:" << m_supportedPixelFormats[i] << std::endl;
+	for (unsigned int i= 0; i< m_cameraControls.size(); ++i) {
+		std::cout << "m_cameraControls[" << i << "]:\n" << std::endl;
+		 m_cameraControls[i].Dump();
 	}
-    }
-    return -1;
+	std::cout << "CCameraV4L2::Dump(). End\n";
 }
-    
-    
-void CCameraV4L2::SetBrightness (int value)
-{
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_BRIGHTNESS;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_BRIGHTNESS;
-	control.value = (value * (queryctrl.maximum - queryctrl.minimum) / 1000) + queryctrl.minimum;	
-	ioctl (m_Fd, VIDIOC_S_CTRL, &control);
-    }    
-}
+#endif
+///////////////////////////////////////////////////////////////////////////////
+//
+// Implementacion of CCameraControlV4l2 class
+//
 
-
-int CCameraV4L2::GetContrast ()
+CCameraControlV4l2::CCameraControlV4l2 (CHandle handle, const CControl& control) :
+	m_name(control.name)
 {
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_CONTRAST;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_CONTRAST;
-	if (-1 != ioctl (m_Fd, VIDIOC_G_CTRL, &control))  {
-	    return (control.value - queryctrl.minimum) * 1000 / (queryctrl.maximum - queryctrl.minimum);
+	m_handle= handle;	
+	m_id= control.id;
+	m_type= control.type;
+	m_default= control.value.value;
+		
+	if (CControlType2ECameraControlType (control.type)!= CCTYPE_CHOICE) {
+		m_min= control.min.value;
+		m_max= control.max.value;
+		// TODO: control.step is really necessary?
 	}
-    }
-    return -1;
+	else {
+		m_min= 0;
+		m_max= control.choices.count-1;
+		for (int i= m_min; i<= m_max; ++i) m_choices.push_back(control.choices.list[i].name);		
+	}	
 }
 
-
-void CCameraV4L2::SetContrast (int value)
+// Get/set the current value. For boolean controls 0 and 1 are the only
+// possible values. For choice controls 0 represents the first option.
+// Set method returns true on success, false otherwise
+int CCameraControlV4l2::GetValue() const
 {
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_CONTRAST;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_CONTRAST;
-	control.value = (value * (queryctrl.maximum - queryctrl.minimum) / 1000) + queryctrl.minimum;
-	ioctl (m_Fd, VIDIOC_S_CTRL, &control);
-    }    
-}
-
-
-int CCameraV4L2::GetSaturation ()
-{
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_SATURATION;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_SATURATION;
-	if (-1 != ioctl (m_Fd, VIDIOC_G_CTRL, &control))  {
-	    return (control.value - queryctrl.minimum) * 1000 / (queryctrl.maximum - queryctrl.minimum);
+	CControlValue value;
+	value.type= m_type;
+	value.value= 0;
+	
+	if (c_get_control (m_handle, m_id, &value)!= C_SUCCESS) {
+		fprintf (stderr, "CCameraControlV4l2::GetValue() failed to query value\n");
+		return 0;
 	}
-    }
-    return -1;
+	
+	return value.value;
 }
 
-
-void CCameraV4L2::SetSaturation (int value)
+bool CCameraControlV4l2::SetValue(int value)
 {
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_SATURATION;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-        memset(&control, 0, sizeof(control));
-        control.id = V4L2_CID_SATURATION;
-        control.value = (value * (queryctrl.maximum - queryctrl.minimum) / 1000) + queryctrl.minimum;
-        ioctl (m_Fd, VIDIOC_S_CTRL, &control);
-    }    
-}
-
-
-int CCameraV4L2::GetWhiteness ()
-{
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    
-    queryctrl.id = V4L2_CID_GAMMA;
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_GAMMA;
-	if (-1 != ioctl (m_Fd, VIDIOC_G_CTRL, &control))  {
-	    return (control.value - queryctrl.minimum) * 1000 / (queryctrl.maximum - queryctrl.minimum);
+	CControlValue cvalue;
+	cvalue.type= m_type;
+	cvalue.value= value;
+	
+	if (c_set_control (m_handle, m_id, &cvalue)!= C_SUCCESS) {
+		fprintf (stderr, "CCameraControlV4l2::GetValue() failed to query value\n");
+		return false;
 	}
-    }
-    return -1;
+	return false;
 }
 
-
-void CCameraV4L2::SetWhiteness (int value)
+const char* CCameraControlV4l2::GetChoiceName(unsigned int numOption) const
 {
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_GAMMA;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_GAMMA;
-	control.value = (value * (queryctrl.maximum - queryctrl.minimum) / 1000) + queryctrl.minimum;	
-	ioctl (m_Fd, VIDIOC_S_CTRL, &control);
-    }    
+	if (numOption> (unsigned int) m_max) return NULL;
+	
+	return  m_choices[numOption].c_str();
 }
 
-
-int CCameraV4L2::GetHue ()
+bool CCameraControlV4l2::CheckSupportedLibwebcamId (CControlId id)
 {
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    struct video_picture vpic;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_HUE;
+	return (LibwebcamId2ECameraControlId(id)!= CAM_ERROR_ENTRY);	
+}
 
-    if (ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl) == 0)  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_HUE;
-	if (-1 != ioctl (m_Fd, VIDIOC_G_CTRL, &control))  {
-	    return (control.value - queryctrl.minimum) * 1000 / (queryctrl.maximum - queryctrl.minimum);
+CCameraControl::ECameraControlId CCameraControlV4l2::LibwebcamId2ECameraControlId (CControlId id)
+{
+	switch(id) {
+		case CC_BRIGHTNESS: return CAM_BRIGHTNESS;
+		case CC_CONTRAST: return CAM_CONTRAST;
+		case CC_GAIN: return CAM_GAIN;
+		case CC_SATURATION: return CAM_SATURATION;
+		case CC_HUE: return CAM_HUE;
+		case CC_GAMMA: return CAM_GAMMA;
+		case CC_SHARPNESS: return CAM_SHARPNESS;
+		case CC_WHITE_BALANCE_TEMPERATURE: return CAM_WHITE_BALANCE_TEMPERATURE;
+		case CC_AUTO_WHITE_BALANCE_TEMPERATURE: return CAM_AUTO_WHITE_BALANCE_TEMPERATURE;
+		case CC_WHITE_BALANCE_COMPONENT: return CAM_WHITE_BALANCE_COMPONENT;
+		case CC_AUTO_WHITE_BALANCE_COMPONENT: return CAM_AUTO_WHITE_BALANCE_COMPONENT;
+		case CC_BACKLIGHT_COMPENSATION: return CAM_BACKLIGHT_COMPENSATION;
+		case CC_POWER_LINE_FREQUENCY: return CAM_POWER_LINE_FREQUENCY;
+		case CC_AUTO_HUE: return CAM_AUTO_HUE;
+		case CC_AUTO_EXPOSURE_MODE: return CAM_AUTO_EXPOSURE_MODE;
+		case CC_AUTO_EXPOSURE_PRIORITY: return CAM_AUTO_EXPOSURE_PRIORITY;
+		case CC_EXPOSURE_TIME_ABSOLUTE: return CAM_EXPOSURE_TIME_ABSOLUTE;
+		case CC_EXPOSURE_TIME_RELATIVE: return CAM_EXPOSURE_TIME_RELATIVE;
+		case CC_AUTO_FOCUS: return CAM_AUTO_FOCUS;
+		case CC_FOCUS_ABSOLUTE: return CAM_FOCUS_ABSOLUTE;
+		case CC_FOCUS_RELATIVE: return CAM_FOCUS_RELATIVE;
+		case CC_IRIS_ABSOLUTE: return CAM_IRIS_ABSOLUTE;
+		case CC_IRIS_RELATIVE: return CAM_IRIS_RELATIVE;
+		case CC_ZOOM_ABSOLUTE: return CAM_ZOOM_ABSOLUTE;
+		case CC_ZOOM_RELATIVE: return CAM_ZOOM_RELATIVE;
+		case CC_DIGITAL_ZOOM: return CAM_DIGITAL_ZOOM;
+		case CC_PAN_ABSOLUTE: return CAM_PAN_ABSOLUTE;
+		case CC_PAN_RELATIVE: return CAM_PAN_RELATIVE;
+		case CC_TILT_ABSOLUTE: return CAM_TILT_ABSOLUTE;
+		case CC_TILT_RELATIVE: return CAM_TILT_RELATIVE;
+		case CC_ROLL_ABSOLUTE: return CAM_ROLL_ABSOLUTE;
+		case CC_ROLL_RELATIVE: return CAM_ROLL_RELATIVE;
+		case CC_PRIVACY: return CAM_PRIVACY;
+		case CC_PAN_RESET: return CAM_PAN_RESET;
+		case CC_TILT_RESET: return CAM_TILT_RESET;
+		case CC_LOGITECH_PANTILT_RELATIVE: return CAM_LOGITECH_PANTILT_RELATIVE;
+		case CC_LOGITECH_PANTILT_RESET: return CAM_LOGITECH_PANTILT_RESET;
+		case CC_LOGITECH_LED1_MODE: return CAM_LOGITECH_LED1_MODE;
+		case CC_LOGITECH_LED1_FREQUENCY: return CAM_LOGITECH_LED1_FREQUENCY;
+		case CC_LOGITECH_DISABLE_PROCESSING: return CAM_LOGITECH_DISABLE_PROCESSING;
+		case CC_LOGITECH_RAW_BITS_PER_PIXEL: return CAM_LOGITECH_RAW_BITS_PER_PIXEL;
+		default: return CAM_ERROR_ENTRY;
 	}
-    } else if (ioctl(m_Fd, VIDIOCGPICT, &vpic) == 0) {
-	return vpic.hue;
-    }
-
-    return -1;
 }
 
-
-void CCameraV4L2::SetHue (int value)
+CCameraControl::ECameraControlType CCameraControlV4l2::CControlType2ECameraControlType (CControlType type)
 {
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    struct video_picture vpic;
-   
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    memset(&vpic, 0, sizeof(vpic));
-    queryctrl.id = V4L2_CID_HUE;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_HUE;
-	control.value = (value * (queryctrl.maximum - queryctrl.minimum) / 1000) + queryctrl.minimum;	
-	ioctl (m_Fd, VIDIOC_S_CTRL, &control);
-    } else {
-	vpic.hue = value;
-	ioctl(m_Fd, VIDIOCSPICT, &vpic);
-    }    
+	ECameraControlType ownType= CCTYPE_NUMBER;
+	switch (type) {
+		case CC_TYPE_BOOLEAN:
+			ownType= CCTYPE_BOOLEAN;
+			break;
+		case CC_TYPE_BYTE:
+		case CC_TYPE_WORD:
+		case CC_TYPE_DWORD:
+			ownType= CCTYPE_NUMBER;
+			break;
+		case CC_TYPE_CHOICE:
+			ownType= CCTYPE_CHOICE;
+			break;
+		default:
+			// Unsupported control. Execution should never reach this point
+			assert (false);
+	}	
+	return ownType;
 }
 
-
-int CCameraV4L2::GetFlicker ()
+#if !defined(NDEBUG)
+void CCameraControlV4l2::Dump()
 {
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_POWER_LINE_FREQUENCY;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_POWER_LINE_FREQUENCY;
-	if (-1 != ioctl (m_Fd, VIDIOC_G_CTRL, &control))  {
-	    return control.value;
-	}
-    }
-    return -1;
-}
-
-
-void CCameraV4L2::SetFlicker (int value)
-{
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    int flicker = 0;
-    
-     switch (value) {
-	case 0:
-	    flicker = V4L2_CID_POWER_LINE_FREQUENCY_DISABLED;
-	    break;
-	case 1:
-	    flicker = V4L2_CID_POWER_LINE_FREQUENCY_50HZ;
-	    break;
-	case 2:
-	    flicker = V4L2_CID_POWER_LINE_FREQUENCY_60HZ;
-	    break;
-    }
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_POWER_LINE_FREQUENCY;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_POWER_LINE_FREQUENCY;
-	control.value = flicker;
-	ioctl (m_Fd, VIDIOC_S_CTRL, &control);
-    }   
-}
-
-
-int CCameraV4L2::GetExposure ()
-{
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_EXPOSURE;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_EXPOSURE;
-	if (-1 != ioctl (m_Fd, VIDIOC_G_CTRL, &control))  {
-	    return control.value;
-	}
-    }
-    return -1;
-}
-
-
-void CCameraV4L2::SetExposure (int value)
-{
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_EXPOSURE;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_EXPOSURE;
-	control.value = value;
-	ioctl (m_Fd, VIDIOC_S_CTRL, &control);
-    } 
- }
-
-
-
-
-
-int CCameraV4L2::GetBacklightCompensation ()
-{
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_BACKLIGHT_COMPENSATION;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_BACKLIGHT_COMPENSATION;
-	if (-1 != ioctl (m_Fd, VIDIOC_G_CTRL, &control))  {
-	    return (control.value - queryctrl.minimum) * 1000 / (queryctrl.maximum - queryctrl.minimum);
-	}
-    }
-    return -1;
-}
-
-
-void CCameraV4L2::SetBacklightCompensation (int value)
-{
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_BACKLIGHT_COMPENSATION;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_BACKLIGHT_COMPENSATION;
-	control.value = (value * (queryctrl.maximum - queryctrl.minimum) / 1000) + queryctrl.minimum;	
-	ioctl (m_Fd, VIDIOC_S_CTRL, &control);
-    }    
-}
-
-
-
-int CCameraV4L2::GetSharpness ()
-{
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_SHARPNESS;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_SHARPNESS;
-	if (-1 != ioctl (m_Fd, VIDIOC_G_CTRL, &control))  {
-	    return (control.value - queryctrl.minimum) * 1000 / (queryctrl.maximum - queryctrl.minimum);
-	}
-    }
-    return -1;
-}
-    
-    
-void CCameraV4L2::SetSharpness (int value)
-{
-    struct v4l2_queryctrl queryctrl;
-    struct v4l2_control control;
-    
-    memset(&queryctrl, 0, sizeof(queryctrl));
-    queryctrl.id = V4L2_CID_SHARPNESS;
-    
-    if (0 == ioctl (m_Fd, VIDIOC_QUERYCTRL, &queryctrl))  {
-	memset(&control, 0, sizeof(control));
-	control.id = V4L2_CID_SHARPNESS;
-	control.value = (value * (queryctrl.maximum - queryctrl.minimum) / 1000) + queryctrl.minimum;	
-	ioctl (m_Fd, VIDIOC_S_CTRL, &control);
-    }    
-}
-
-
-void CCameraV4L2::ShowSettingsDialog ()
-{
-    SetBrightness(700);
-    SetContrast(500);
-    SetWhiteness(800);
+	std::cout << " CCameraControlV4l2::Dump(). Begin\n";
+	std::cout << "m_handle:" << m_handle << std::endl;
+	std::cout << "m_id:" << m_id << std::endl;
+	std::cout << "m_id (converted):" << LibwebcamId2ECameraControlId (m_id) << std::endl;
+	std::cout << "m_name:" << m_name << std::endl;
+	std::cout << "m_type:" << m_type << std::endl;
+	std::cout << "m_type (converted):" << CControlType2ECameraControlType(m_type) << std::endl;
+	std::cout << "m_default:" << m_default << std::endl;
+	std::cout << "m_min:" << m_min << std::endl;
+	std::cout << "m_max:" << m_max << std::endl;
+	for (unsigned int i= 0; i< m_choices.size(); ++i)
+		std::cout << "m_choices[" << i << "]:" << m_choices[i] << std::endl;
+	std::cout << "Value:" << GetValue() << std::endl;	
+	std::cout << " CCameraControlV4l2::Dump(). End\n";
 }
 #endif

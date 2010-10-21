@@ -24,6 +24,9 @@
 
 #include <cv.h>
 
+// Forward declarations
+class CCameraControl;
+
 class CCamera
 {
 public:
@@ -40,9 +43,20 @@ public:
 	// 
 	// Virtual desired methods
 	//
+	
+	//
+	// Settings dialogue provided by the driver
+	//
 	virtual bool HasSettingsDialog() { return false; }
 	virtual void ShowSettingsDialog () {}
 
+	//
+	// Settings directly supported by the camera class.
+	//
+	virtual bool HasCameraControls() { return false; }
+	virtual unsigned int GetCameraControlsCount() { return 0; }
+	virtual CCameraControl* GetCameraControl(unsigned int numControl) { return NULL; }
+	
 	//
 	// Implemented methods
 	//
@@ -79,6 +93,84 @@ protected:
 	int m_lastTimeStamp;
 	int m_elapsedTime;
 	bool m_horizontalFlip;
+};
+
+// Class that models each camera control
+class CCameraControl {
+public:
+	enum ECameraControlId {
+		CAM_BRIGHTNESS= 0,
+		CAM_CONTRAST,
+		CAM_GAIN,
+		CAM_SATURATION,
+		CAM_HUE,
+		CAM_GAMMA,
+		CAM_SHARPNESS,
+		CAM_WHITE_BALANCE_TEMPERATURE,		// White balance color temperature
+		CAM_AUTO_WHITE_BALANCE_TEMPERATURE,	// Enable/disable automatic balance color
+		CAM_WHITE_BALANCE_COMPONENT,		// White balance color component control (red, blue)
+		CAM_AUTO_WHITE_BALANCE_COMPONENT,	// Enable/disable automatic white balance color component selection		
+		CAM_BACKLIGHT_COMPENSATION,
+		CAM_POWER_LINE_FREQUENCY,	// Local power line frequency for anti-flicker processing
+		CAM_AUTO_HUE,			// Enable/disable automatic hue control
+		CAM_AUTO_EXPOSURE_MODE,		// Mode for automatic exposure control
+		CAM_AUTO_EXPOSURE_PRIORITY,	// Constraints for automatic exposure control (e.g. adaptive vs. constant frame rate)
+		CAM_EXPOSURE_TIME_ABSOLUTE,	// Length of exposure (electronic shutter speed)
+		CAM_EXPOSURE_TIME_RELATIVE,	// Relative change to the current length of exposure
+		// Optics control
+		CAM_AUTO_FOCUS,		// Enable/disable automatic focus
+		CAM_FOCUS_ABSOLUTE,	// Distance to the focused target
+		CAM_FOCUS_RELATIVE,	// Relative change in distance to currently focused target
+		CAM_IRIS_ABSOLUTE, 	// Aperture setting	
+		CAM_IRIS_RELATIVE, 	// Relative change to the current aperture setting	
+		CAM_ZOOM_ABSOLUTE, 	// Objective lens focal length	
+		CAM_ZOOM_RELATIVE, 	// Relative change to the current objective lens focal length	
+		CAM_DIGITAL_ZOOM,  	// Digital zoom multiplier applied to the optical image
+		// Motion control	
+		CAM_PAN_ABSOLUTE,	// Pan angle (rotation on a vertical axis)	
+		CAM_PAN_RELATIVE,	// Relative change to the current pan angle	
+		CAM_TILT_ABSOLUTE,	// Tilt angle (rotation in a vertical plane)	
+		CAM_TILT_RELATIVE,	// Relative change to the current tilt angle	
+		CAM_ROLL_ABSOLUTE,	// Roll angle (rotation along the image viewing axis)	
+		CAM_ROLL_RELATIVE,	// Relative change to the current roll angle
+		CAM_PRIVACY,		// Temporarily prevent image from being acquired
+		CAM_PAN_RESET,		// Reset pan angle to a safe default value.
+		CAM_TILT_RESET,		// Reset tilt angle to a safe default value.
+		// Logitech custom contols
+		CAM_LOGITECH_PANTILT_RELATIVE,	// Relative change to the current pan and tilt angles.
+		CAM_LOGITECH_PANTILT_RESET,	// Reset pan and tilt angles to a safe default value.
+		CAM_LOGITECH_LED1_MODE, 		// Illumination mode of the first LED.
+		CAM_LOGITECH_LED1_FREQUENCY, 	// Blinking frequency of the first LED.
+		CAM_LOGITECH_DISABLE_PROCESSING, // Disable video processing (enable raw mode)
+		CAM_LOGITECH_RAW_BITS_PER_PIXEL, 	// Bits per pixel for raw (Bayer) mode
+				
+		CAM_LATEST_ENTRY,
+		CAM_ERROR_ENTRY= CAM_LATEST_ENTRY
+	};
+	
+	// Types of controls
+	enum ECameraControlType { CCTYPE_BOOLEAN, CCTYPE_CHOICE, CCTYPE_NUMBER };
+
+	virtual ~CCameraControl() {};
+	
+	virtual ECameraControlId GetId() const= 0;
+	// Get the name of the control provided by the driver
+	virtual const char* GetName() const= 0;
+	virtual ECameraControlType GetType() const= 0;
+	
+	// Get/set the current value. For boolean controls 0 and 1 are the only
+	// possible values. For choice controls 0 represents the first option.
+	// Set method returns true on success, false otherwise
+	virtual int GetValue() const= 0;
+	virtual bool SetValue(int value)= 0;
+	
+	virtual int GetDefaultValue() const= 0;
+	
+	virtual int GetMinimumValue() const= 0;
+	virtual int GetMaximumValue() const= 0;
+	
+	// For choices only
+	virtual const char* GetChoiceName(unsigned int numOption) const { return NULL; }
 };
 
 inline bool CCamera::GetHorizontalFlip ()
