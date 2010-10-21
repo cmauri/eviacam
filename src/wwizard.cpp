@@ -334,6 +334,8 @@ void WizardPage::CreateControls()
 
     m_chkRunWizardAtStartup = new wxCheckBox( itemWizardPageSimple2, ID_CHECKBOX1, _("Run this wizard at startup"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkRunWizardAtStartup->SetValue(true);
+    if (WizardPage::ShowToolTips())
+        m_chkRunWizardAtStartup->SetToolTip(_("If checked the wizard automatically appears at startup."));
     itemBoxSizer3->Add(m_chkRunWizardAtStartup, 0, wxALIGN_LEFT|wxALL, 5);
 
 ////@end WizardPage content construction
@@ -488,6 +490,8 @@ void WizardPage1::CreateControls()
 
     m_chkPerformCalibration = new wxCheckBox( itemWizardPageSimple6, ID_CHECKBOX_PERFORM_CALIBRATION, _("Perform calibration"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkPerformCalibration->SetValue(true);
+    if (WizardPage1::ShowToolTips())
+        m_chkPerformCalibration->SetToolTip(_("If checked the next window allows to calibrate the speed of the pointer."));
     itemBoxSizer7->Add(m_chkPerformCalibration, 0, wxALIGN_LEFT|wxALL, 5);
 
 ////@end WizardPage1 content construction
