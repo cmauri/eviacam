@@ -88,6 +88,7 @@ public:
 	inline CClickWindowController* GetClickWindowController();
 	inline WViacam* GetMainWindow();
 	inline CConfigManager* GetConfigManager();
+	inline CCamera* GetCamera();
 	
 	inline const wxString& GetOnScreenKeyboardCommand() const;
 	inline void SetOnScreenKeyboardCommand(const wxString& value);
@@ -230,6 +231,11 @@ inline void CViacamController::SetOnScreenKeyboardCommand(const wxString& value)
 inline CConfigManager* CViacamController::GetConfigManager()
 {
 	return m_configManager;
+}
+
+inline CCamera* CViacamController::GetCamera()
+{
+	return m_pCamera;
 }
 
 inline const bool CViacamController::GetEnabledActivationKey () const
