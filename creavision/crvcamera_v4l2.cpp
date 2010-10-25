@@ -507,6 +507,8 @@ bool CCameraV4L2::DetectBestImageFormat(TImageFormat& imgformat)
 	SelectBestFramePixelNumber (imgformat.width * imgformat.height, availableFormats);
 	
 	// Check aspect ratio
+	//TODO: Check weird errors. floating point errors.
+/*
 	if (imgformat.width> 0 && imgformat.height> 0) {
 		float bestdiff= FLT_MAX;
 		float aratio= (float) imgformat.width / (float) imgformat.height;
@@ -515,15 +517,22 @@ bool CCameraV4L2::DetectBestImageFormat(TImageFormat& imgformat)
 			unsigned int diff= abs_distance_to_range<float> ((float)i->min_width / (float)i->max_height, (float)i->max_width / (float)i->min_height, aratio);
 			if (diff< bestdiff) bestdiff= diff;
 		}
+		printf("bestdiff: %f,%d\n", bestdiff, *((int *)&bestdiff));
 		// Remove worst entries
 		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end();)
-			if (abs_distance_to_range<float> ((float)i->min_width / (float)i->max_height, (float)i->max_width / (float)i->min_height, aratio)!= bestdiff) 
+		{
+			float tmp = abs_distance_to_range<float> ((float)i->min_width / (float)i->max_height, (float)i->max_width / (float)i->min_height, aratio);
+			
+			printf("%f, %d\n",tmp, *((int *)&tmp));
+			
+			if (abs_distance_to_range<float> ((float)i->min_width / (float)i->max_height, (float)i->max_width / (float)i->min_height, aratio)> bestdiff) 
 				i= availableFormats.erase(i);
 			else
 				++i;
-		
+		}
 		assert (availableFormats.size()> 0);
 	}
+*/
 	
 	// If frame rate not explicity specified then selects highest fr available
 	if (imgformat.frame_rate== 0) {
