@@ -184,13 +184,6 @@ bool CCameraV4L2::DoOpen()
 		return false;
 	}
 	
-	// Open device
-	m_Fd= open (devName, O_RDWR);	
-	if (m_Fd== -1) {
-		fprintf (stderr, "ERROR: Cannot open ’%s’: %d, %s\n", devName, errno, strerror (errno));
-		return false;
-	}
-	
 	// "Open" device via libwebcam 
 	m_libWebcamHandle= c_open_device (m_deviceShortName);
 	if (m_libWebcamHandle== 0) {
@@ -200,6 +193,14 @@ bool CCameraV4L2::DoOpen()
 	}
 	
 	PopulateCameraControls ();
+	
+	// Open device
+	m_Fd= open (devName, O_RDWR);	
+	if (m_Fd== -1) {
+		fprintf (stderr, "ERROR: Cannot open ’%s’: %d, %s\n", devName, errno, strerror (errno));
+		Close();
+		return false;
+	}
 	
 	return true;
 }
@@ -792,7 +793,7 @@ bool CCameraV4L2::Open ()
 	imgformat.height= 240;
 	// TODO: set values from constructor/parameters
 	
-	if (false) //m_usePwc)
+	if (m_usePwc)
 		// TODO: Workaround for PWC cameras. It seems that is not possible
 		// to open a device twice and fails when trying to enumerate formats
 		imgformat.pixelformat= V4L2_PIX_FMT_YUV420;
