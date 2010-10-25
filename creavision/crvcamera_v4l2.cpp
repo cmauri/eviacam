@@ -27,10 +27,12 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <limits.h>
 #include <linux/videodev.h>
 #include <sys/ioctl.h>
 #include <sys/mman.h>
 #include <sys/time.h>
+#include <list>
 #include "pwc-ioctl.h"
 #include "colorspaces.h"
 #if !defined(NDEBUG)
@@ -80,7 +82,6 @@ CCameraV4L2::CCameraV4L2(const char* device_name, bool usePwc)
 	memset(&m_captureBuffersPtr, 0, sizeof(void*) * STREAMING_CAPTURE_NBUFFERS);	
 	memset(&m_currentFormat, 0, sizeof(m_currentFormat));
 	AddSupportedPixelFormats ();
-	//PopulateCameraControls ();
 }
 
 void CCameraV4L2::AddSupportedPixelFormats ()
@@ -189,7 +190,7 @@ bool CCameraV4L2::DoOpen()
 		fprintf (stderr, "ERROR: Cannot open ’%s’: %d, %s\n", devName, errno, strerror (errno));
 		return false;
 	}
-
+	
 	// "Open" device via libwebcam 
 	m_libWebcamHandle= c_open_device (m_deviceShortName);
 	if (m_libWebcamHandle== 0) {
@@ -275,40 +276,284 @@ CCameraV4L2::ECaptureMethod CCameraV4L2::DetectCaptureMethod()
 	return CAP_NONE;
 }
 
+// Only used by DetectBestImageFormat
+typedef struct  {
+	unsigned int min_frame_rate;
+	unsigned int max_frame_rate;
+	unsigned int step_frame_rate;
+	unsigned int min_width;
+	unsigned int min_height;
+	unsigned int max_width;
+	unsigned int max_height;
+	unsigned int step_width;
+	unsigned int step_height;		
+	uint32_t pixelformat;	// Four character code	
+} TImageFormatEx;
+#if !defined(NDEBUG)
+static 
+void dump_TImageFormatEx (TImageFormatEx& ife)
+{
+	std::cout << "dump_TImageFormatEx. fr: " << ife.min_frame_rate << ", " << ife.max_frame_rate << ", " << ife.step_frame_rate 
+		<< "w:" << ife.min_width << ", " << ife.max_width << ", " << ife.step_width 
+		<< "h:" << ife.min_height << ", " << ife.max_height << ", " << ife.step_height 
+		<< "px;" << ife.pixelformat << std::endl;
+}
+#endif
+
+// Given a range returns the absolute distance to a value
+template <class T>
+T abs_distance_to_range (T min, T max, T val)
+{
+	if (val< min) return min-val;
+	if (val< max) return 0;
+	return val-max;
+}
+
+// Given a steped range and a desired value, selects a value within 
+// the range as near as possible to the desired value
+static 
+uint range_value_fit (uint min, uint max, uint step, uint val)
+{
+	if (val<= min) return min;
+	if (val>= max) return max;
+	
+	// Adjust step
+	if (step== 0) step= 1;
+	val-= (val % step);
+	if (val< min) val= min;
+	return val;	
+}
+
+
+// Look for best matching entries for a desired frame rate and remove all other entries
+// fr= 0 means that nothing is done (all formats are appropiate), fr=UINT_MAX selects highest
+// frame rate
+static void SelectBestFrameRate (unsigned int fr, std::list<TImageFormatEx>& availableFormats)
+{
+	if (fr> 0) {	
+		unsigned int bestdiff= UINT_MAX;
+		// Find closest frame ratio	
+		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
+			unsigned int diff= abs_distance_to_range<uint> (i->min_frame_rate, i->max_frame_rate, fr);
+			if (diff< bestdiff) bestdiff= diff;
+		}
+		// Remove worse entries
+		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end();)
+			if (abs_distance_to_range<uint> (i->min_frame_rate, i->max_frame_rate, fr)!= bestdiff) 
+				i= availableFormats.erase(i);
+			else
+				++i;
+		
+		assert (availableFormats.size()> 0);
+	}
+}
+
+// Sizes. Chooses closest number of pixels (width*height) to the requested
+static void SelectBestFramePixelNumber (unsigned int npixels, std::list<TImageFormatEx>& availableFormats)
+{
+	if (npixels> 0) {
+		unsigned int bestdiff= UINT_MAX;
+		//unsigned int npixels= imgformat.width * imgformat.height;
+		// Find closest frame ratio	
+		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
+			unsigned int diff= abs_distance_to_range<uint> (i->min_width * i->min_height, i->max_width * i->max_height, npixels);
+			if (diff< bestdiff) bestdiff= diff;
+		}
+		// Remove worse entries
+		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end();)
+			if (abs_distance_to_range<uint> (i->min_width * i->min_height, i->max_width * i->max_height, npixels)!= bestdiff) 
+				i= availableFormats.erase(i);
+			else
+				++i;
+		
+		assert (availableFormats.size()> 0);		
+	}
+}
+
+
+// Given a set of desired parameters finds the most suitable configuration which the camera supports
+//
+// Initialize the fields of the TImageFormat struct with the desired value for
+// each field or 0 to express that any possibility is fine or UINT_MAX to request
+// the maximum available value. 
+
 bool CCameraV4L2::DetectBestImageFormat(TImageFormat& imgformat)
 {
-	// Here we should implement a "clever" selection according with the 
-	// actual camera capabilities using libwebcam
-	// Instructions:
-	//  - Take a look to crvcamera_enum & webcam.h to see how to iterate
-	//	though the camera properties. Command uvcdynctrl coudl also be
-	//	useful. You can rely on an open CHandle
-	//	in m_libWebcamHandle and the device name in m_deviceShortName.
-	//	Don't add new attributes to the class nor use dynamic memory
-	//	(use stack allocation instead). You can add new private methods
-	//	when necessary.
-	//  - The critical parameter is frame_rate, select first a set of image sizes
-	//	& pixel formats that support the highgest frame rate. Note that
-	//	some camera models doesn't report frame rate so, the code should
-	//	manage properly this situation
-	//  - Then choose the closest matching resolution to 320x240 and finally
-	//	the pixelformat. m_supportedPixelFormats is array of supported
-	//	pixelformats in order of preference (first values are better).
-	//  - Return false only in case no supported formats are available at all 
-	//	(i.e. pixel format not supported).
-	//std::vector<TImageFormat> vectForm;
-			
-	// TODO: TESTING CODE set hardcoded compatible values for my camera
-	if (m_usePwc)
-		imgformat.pixelformat= V4L2_PIX_FMT_YUV420;
-	else
-		imgformat.pixelformat= V4L2_PIX_FMT_YUYV;
-	imgformat.frame_rate= 30;
-	imgformat.width= 320;
-	imgformat.height= 240;	
-	// TODO: TESTING CODE set hardcoded compatible values for my camera
+	std::list<TImageFormatEx> availableFormats;
 
-	return true;
+	//
+	// First build an array containing all possible formats
+	//
+	
+	unsigned int sformats, ssizes, sintervals;
+	unsigned int cformats, csizes, cintervals;
+	// Request needed buffer to store formats
+	sformats= cformats= 0;	
+	if (c_enum_pixel_formats (m_libWebcamHandle, NULL, &sformats, &cformats)!= C_BUFFER_TOO_SMALL) return false;
+	else {
+		unsigned char bufferformats[sformats];
+		CPixelFormat* formats= (CPixelFormat*) bufferformats;
+		// Get formats
+		if (c_enum_pixel_formats (m_libWebcamHandle, formats, &sformats, &cformats)!= C_SUCCESS) return false;
+		
+		for (unsigned int ifo= 0; ifo< cformats; ++ifo) {
+			TImageFormatEx tmpif;
+			memset(&tmpif, 0, sizeof(tmpif));
+			
+			// Store pixel format
+			tmpif.pixelformat= v4l2_fourcc (formats[ifo].fourcc[0], formats[ifo].fourcc[1], formats[ifo].fourcc[2], formats[ifo].fourcc[3]);
+						
+			// Request needed buffer to store sizes
+			ssizes= csizes= 0;
+			if (c_enum_frame_sizes (m_libWebcamHandle, &formats[ifo], NULL, &ssizes, &csizes)!= C_BUFFER_TOO_SMALL)
+				// No frame sizes detected, should not happen but we cope with it anyway
+				availableFormats.push_back(tmpif);			
+			else {
+				unsigned char buffersizes[ssizes];
+				CFrameSize* sizes= (CFrameSize*) buffersizes;
+				// Get sizes
+				if (c_enum_frame_sizes (m_libWebcamHandle, &formats[ifo], sizes, &ssizes, &csizes)!= C_SUCCESS) {
+					// Unlikely but we cope with it anyway
+					availableFormats.push_back(tmpif);
+					continue;
+				}
+				
+				for (unsigned int is= 0; is< csizes; ++is) {
+					// Store size
+					if (sizes[is].type== CF_SIZE_CONTINUOUS) {
+						tmpif.min_width= sizes[is].min_width;
+						tmpif.min_height= sizes[is].min_height;
+						tmpif.max_width= sizes[is].max_width;
+						tmpif.max_height= sizes[is].max_height;
+						tmpif.step_width= sizes[is].step_width;
+						tmpif.step_height= sizes[is].step_height;
+					} 
+					else {
+						tmpif.min_width= sizes[is].width;
+						tmpif.min_height= sizes[is].height;
+						tmpif.max_width= sizes[is].width;
+						tmpif.max_height= sizes[is].height;
+						tmpif.step_width= 1;
+						tmpif.step_height= 1;
+					}
+					
+					// Request needed buffer to store intervals
+					sintervals= cintervals= 0;
+					if (c_enum_frame_intervals (m_libWebcamHandle, &formats[ifo], &sizes[is], NULL, &sintervals, &cintervals)!= C_BUFFER_TOO_SMALL)
+						// No intervals detected. Some cameras doesn't provide this information
+						availableFormats.push_back(tmpif);
+					else {
+						unsigned char bufferintervals[sintervals];
+						CFrameInterval* intervals= (CFrameInterval*) bufferintervals;
+						// Get intervals
+						if (c_enum_frame_intervals (m_libWebcamHandle, &formats[ifo], &sizes[is], intervals, &sintervals, &cintervals)!= C_SUCCESS) {
+							// Unlikely but we cope with it anyway
+							availableFormats.push_back(tmpif);
+							continue;
+						}
+						
+						for (unsigned int ii= 0; ii< cintervals; ++ii) {
+							// Store frame rate
+							if (intervals[ii].type== CF_INTERVAL_DISCRETE) {
+								tmpif.max_frame_rate= tmpif.min_frame_rate= (intervals[ii].n? intervals[ii].d / intervals[ii].n : 0);
+								tmpif.step_frame_rate= 1;
+							}
+							else {
+								tmpif.max_frame_rate= (intervals[ii].max_n? intervals[ii].max_d / intervals[ii].max_n : 0);
+								tmpif.min_frame_rate= (intervals[ii].min_n? intervals[ii].min_d / intervals[ii].min_n : 0);
+								tmpif.step_frame_rate= (intervals[ii].step_n? intervals[ii].step_d / intervals[ii].step_n : 0);
+								if (tmpif.step_frame_rate== 0) tmpif.step_frame_rate= 1;
+							}
+							
+							availableFormats.push_back(tmpif);				
+						}
+					}
+				}
+				
+			}			
+		}
+	}
+#if !defined(NDEBUG)	
+	for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
+		dump_TImageFormatEx (*i);
+	}
+#endif
+	//
+	// Selection process
+	//
+	
+	// Filter by compatible pixel formats. Remove entries which use non supported encodings
+	for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end();) {
+		bool found= false;
+		for (unsigned int ienc= 0; !found && ienc< m_supportedPixelFormats.size(); ++ienc)
+			if (m_supportedPixelFormats[ienc]== i->pixelformat) found= true;
+		
+		if (!found) {			
+			char* tmp= (char *) &i->pixelformat;
+			std::cerr << "crvcamera_v4l2: discarding unsuported format: " << tmp[0] << tmp[1] << tmp[2] << tmp[3] << std::endl;
+			i= availableFormats.erase (i);
+		}
+		else ++i;
+	}
+
+	// No available formats detected
+	if (availableFormats.size()== 0) return false;
+
+	// As for realtime computer vision frame rate is usually a critical parameter we first choose it.
+	SelectBestFrameRate (imgformat.frame_rate, availableFormats);
+	
+	// Sizes. Chooses closest number of pixel (width*height) to the requested
+	SelectBestFramePixelNumber (imgformat.width * imgformat.height, availableFormats);
+	
+	// Check aspect ratio
+	if (imgformat.width> 0 && imgformat.height> 0) {
+		float bestdiff= FLT_MAX;
+		float aratio= (float) imgformat.width / (float) imgformat.height;
+		// Find closest frame ratio	
+		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
+			unsigned int diff= abs_distance_to_range<float> ((float)i->min_width / (float)i->max_height, (float)i->max_width / (float)i->min_height, aratio);
+			if (diff< bestdiff) bestdiff= diff;
+		}
+		// Remove worst entries
+		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end();)
+			if (abs_distance_to_range<float> ((float)i->min_width / (float)i->max_height, (float)i->max_width / (float)i->min_height, aratio)!= bestdiff) 
+				i= availableFormats.erase(i);
+			else
+				++i;
+		
+		assert (availableFormats.size()> 0);
+	}
+	
+	// If frame rate not explicity specified then selects highest fr available
+	if (imgformat.frame_rate== 0) {
+		imgformat.frame_rate= UINT_MAX;
+		SelectBestFrameRate (imgformat.frame_rate, availableFormats);
+	}
+	
+	// If frame size not explicity specified then selects bigger frame size available
+	if (imgformat.width== 0 || imgformat.height== 0) {
+		if (!imgformat.width) imgformat.width= UINT_MAX;
+		if (!imgformat.height) imgformat.height= UINT_MAX;		
+		SelectBestFramePixelNumber (UINT_MAX, availableFormats);
+	}
+	
+	// Finally chooses best available pixelformat
+	for (unsigned int ienc= 0; ienc< m_supportedPixelFormats.size(); ++ienc) {		
+		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
+			if (m_supportedPixelFormats[ienc]== i->pixelformat) {
+				// Bingo! Store data and finish
+				imgformat.pixelformat= m_supportedPixelFormats[ienc];
+				imgformat.frame_rate= range_value_fit (i->min_frame_rate, i->max_frame_rate, i->step_frame_rate, imgformat.frame_rate);
+				imgformat.width= range_value_fit (i->min_width, i->max_width, i->step_width, imgformat.width);
+				imgformat.height= range_value_fit (i->min_height, i->max_height, i->step_height, imgformat.height);
+				return true;
+			}
+		}
+	}
+	
+	// Execution should never reach this point
+	assert (false);
+	return false;
 }
 
 bool CCameraV4L2::SetImageFormat(const TImageFormat& imgformat)
@@ -377,17 +622,7 @@ bool CCameraV4L2::SetImageFormat(const TImageFormat& imgformat)
 			}
 		}			
 	}
-
 	return true;
-/*
-	// Buggy driver paranoia. 
-	min = format.fmt.pix.width * 2;
-	if (format.fmt.pix.bytesperline < min)
-	    format.fmt.pix.bytesperline = min;
-	    min = format.fmt.pix.bytesperline * format.fmt.pix.height;
-	if (format.fmt.pix.sizeimage < min)
-	    format.fmt.pix.sizeimage = min;
-*/
 }
 
 void CCameraV4L2::UnmapBuffers()
@@ -548,14 +783,30 @@ bool CCameraV4L2::Open ()
 	if (m_Fd!= -1) return true;	// Already open	
 	if (!DoOpen()) return false;
 
-	TImageFormat imgformat;
-
-	DetectBestImageFormat(imgformat);
+	TImageFormat imgformat;	
+	memset(&imgformat, 0, sizeof(imgformat));
+	
+	// TODO: set values from constructor/parameters
+	imgformat.frame_rate= 30;
+	imgformat.width= 320;
+	imgformat.height= 240;
+	// TODO: set values from constructor/parameters
+	
+	if (false) //m_usePwc)
+		// TODO: Workaround for PWC cameras. It seems that is not possible
+		// to open a device twice and fails when trying to enumerate formats
+		imgformat.pixelformat= V4L2_PIX_FMT_YUV420;
+	else
+		if (!DetectBestImageFormat(imgformat)) {
+			fprintf (stderr, "Unable to find any suitable image format\n");
+			Close();
+			return false;
+		}
+		
 	if (!SetImageFormat(imgformat)) {
 		Close();
 		return false;
 	}
-
 	m_captureMethod= DetectCaptureMethod();
 	if (m_captureMethod== CAP_NONE) {
 		fprintf (stderr, "Unable to find a suitable capure mode\n");
@@ -575,7 +826,6 @@ bool CCameraV4L2::Open ()
 		return false;
 	}
 	return true;
-	//return true;
 }
 
 // From opencv (otherlibs/highgui/cvcap_v4l.cpp)
