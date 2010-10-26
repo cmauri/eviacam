@@ -166,6 +166,8 @@ typedef struct _Device {
 	/// Boolean whether the device is still valid, i.e. exists in the system.
 	/// Devices marked as invalid will be cleared out by cleanup_device_list().
 	int				valid;
+	/// File descriptor returned by open
+	int				fd;
 	/// Next device in the global device list
 	struct _Device	* next;
 

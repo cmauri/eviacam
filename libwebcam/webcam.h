@@ -689,6 +689,7 @@ extern void			c_cleanup (void);
 
 extern CHandle		c_open_device (const char *device_name);
 extern void			c_close_device (CHandle hDevice);
+extern int 		c_get_file_descriptor (CHandle hDevice);
 
 extern CResult		c_enum_devices (CDevice *devices, unsigned int *size, unsigned int *count);
 extern CResult		c_get_device_info (CHandle hDevice, const char *device_name, CDevice *info, unsigned int *size);

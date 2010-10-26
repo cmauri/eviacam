@@ -41,97 +41,8 @@
 
 #define IOCTL_RETRY 4
 
-// Define possibly missing entries from videodev2.h
-#ifndef V4L2_PIX_FMT_MJPEG
-#define V4L2_PIX_FMT_MJPEG  v4l2_fourcc('M', 'J', 'P', 'G') /*  MJPEG stream     */
-#endif
-
-#ifndef V4L2_PIX_FMT_JPEG
-#define V4L2_PIX_FMT_JPEG  v4l2_fourcc('J', 'P', 'E', 'G')  /*  JPEG stream      */
-#endif
-
-#ifndef V4L2_PIX_FMT_YUYV
-#define V4L2_PIX_FMT_YUYV    v4l2_fourcc('Y','U','Y','V')   /* YUV 4:2:2        */
-#endif
-
-#ifndef V4L2_PIX_FMT_YVYU
-#define V4L2_PIX_FMT_YVYU    v4l2_fourcc('Y','V','Y','U')   /* YUV 4:2:2        */
-#endif
-
-#ifndef V4L2_PIX_FMT_UYVY
-#define V4L2_PIX_FMT_UYVY    v4l2_fourcc('U','Y','V','Y')   /* YUV 4:2:2        */
-#endif
-
-#ifndef V4L2_PIX_FMT_YYUV
-#define V4L2_PIX_FMT_YYUV    v4l2_fourcc('Y','Y','U','V')   /* YUV 4:2:2        */
-#endif
-
-#ifndef V4L2_PIX_FMT_YUV420
-#define V4L2_PIX_FMT_YUV420  v4l2_fourcc('Y','U','1','2')   /* YUV 4:2:0 Planar  */
-#endif
-
-#ifndef V4L2_PIX_FMT_YVU420
-#define V4L2_PIX_FMT_YVU420  v4l2_fourcc('Y','V','1','2')   /* YUV 4:2:0 Planar  */
-#endif
-
-#ifndef V4L2_PIX_FMT_NV12
-#define V4L2_PIX_FMT_NV12  v4l2_fourcc('N','V','1','2')   /* YUV 4:2:0 Planar (u/v) interleaved */
-#endif
-
-#ifndef V4L2_PIX_FMT_NV21
-#define V4L2_PIX_FMT_NV21  v4l2_fourcc('N','V','2','1')   /* YUV 4:2:0 Planar (v/u) interleaved */
-#endif
-
-#ifndef V4L2_PIX_FMT_NV16
-#define V4L2_PIX_FMT_NV16  v4l2_fourcc('N','V','1','6')   /* YUV 4:2:2 Planar (u/v) interleaved */
-#endif
-
-#ifndef V4L2_PIX_FMT_NV61
-#define V4L2_PIX_FMT_NV61  v4l2_fourcc('N','V','6','1')   /* YUV 4:2:2 Planar (v/u) interleaved */
-#endif
-
-#ifndef V4L2_PIX_FMT_Y41P
-#define V4L2_PIX_FMT_Y41P  v4l2_fourcc('Y','4','1','P')    /* YUV 4:1:1          */
-#endif
-
-#ifndef V4L2_PIX_FMT_GREY
-#define V4L2_PIX_FMT_GREY  v4l2_fourcc('G','R','E','Y')    /*      Y only       */
-#endif
-
-#ifndef V4L2_PIX_FMT_SPCA501
-#define V4L2_PIX_FMT_SPCA501 v4l2_fourcc('S','5','0','1')  /* YUYV - by line     */
-#endif
-
-#ifndef V4L2_PIX_FMT_SPCA505
-#define V4L2_PIX_FMT_SPCA505 v4l2_fourcc('S','5','0','5')  /* YYUV - by line     */
-#endif
-
-#ifndef V4L2_PIX_FMT_SPCA508
-#define V4L2_PIX_FMT_SPCA508 v4l2_fourcc('S','5','0','8')  /* YUVY - by line     */
-#endif
-
-#ifndef V4L2_PIX_FMT_SGBRG8
-#define V4L2_PIX_FMT_SGBRG8  v4l2_fourcc('G', 'B', 'R', 'G') /* GBGB.. RGRG..    */
-#endif
-
-#ifndef V4L2_PIX_FMT_SGRBG8
-#define V4L2_PIX_FMT_SGRBG8  v4l2_fourcc('G', 'R', 'B', 'G') /* GRGR.. BGBG..    */
-#endif
-
-#ifndef V4L2_PIX_FMT_SBGGR8
-#define V4L2_PIX_FMT_SBGGR8  v4l2_fourcc('B', 'A', '8', '1') /* BGBG.. GRGR..    */
-#endif
-
 #ifndef V4L2_PIX_FMT_SRGGB8
-#define V4L2_PIX_FMT_SRGGB8  v4l2_fourcc('R', 'G', 'G', 'B') /* RGRG.. GBGB..    */
-#endif
-
-#ifndef V4L2_PIX_FMT_BGR24
-#define V4L2_PIX_FMT_BGR24   v4l2_fourcc('B', 'G', 'R', '3') /* 24  BGR-8-8-8    */
-#endif
-
-#ifndef V4L2_PIX_FMT_RGB24
-#define V4L2_PIX_FMT_RGB24   v4l2_fourcc('R', 'G', 'B', '3') /* 24  RGB-8-8-8    */
+	#define V4L2_PIX_FMT_SRGGB8  v4l2_fourcc('R', 'G', 'G', 'B') /* RGRG.. GBGB..    */
 #endif
 
 /* ioctl with a number of retries in the case of failure
@@ -243,10 +154,11 @@ void CCameraV4L2::Close ()
 {
 	if (m_isStreaming) EnableVideo(false);	
 	if (m_buffersReady) DeallocateBuffers();
-	if (m_Fd!= -1) { 
+	/*if (m_Fd!= -1) { 
 		close(m_Fd); 
 		m_Fd = -1; 
-	}
+	}*/
+	m_Fd= -1;
 	if (m_libWebcamHandle!= 0) {
 		c_close_device (m_libWebcamHandle);
 		m_libWebcamHandle= 0;
@@ -282,10 +194,10 @@ bool CCameraV4L2::DoOpen()
 	}
 	
 	PopulateCameraControls ();
-	
+	 
 	// Open device
-	m_Fd= open (devName, O_RDWR);	
-	if (m_Fd== -1) {
+	m_Fd= c_get_file_descriptor (m_libWebcamHandle); //open (devName, O_RDWR);	
+	if (m_Fd<= 0) { //-1) {
 		fprintf (stderr, "ERROR: Cannot open ’%s’: %d, %s\n", devName, errno, strerror (errno));
 		Close();
 		return false;
@@ -891,7 +803,7 @@ bool CCameraV4L2::Open ()
 	imgformat.height= 240;
 	// TODO: set values from constructor/parameters
 	
-	if (m_usePwc)
+	if (false)
 		// TODO: Workaround for PWC cameras. It seems that is not possible
 		// to open a device twice and fails when trying to enumerate formats
 		imgformat.pixelformat= V4L2_PIX_FMT_YUV420;

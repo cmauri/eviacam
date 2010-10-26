@@ -65,7 +65,7 @@ private:
 
 	// Device name without trailing "/dev/"
 	char m_deviceShortName[CCameraEnum::CAM_DEVICE_SHORT_NAME_LENGHT];
-	int m_Fd;	// File descritor for open
+	int m_Fd;	// TODO: remove // File descritor for open
 	CHandle m_libWebcamHandle;	
 	ECaptureMethod m_captureMethod;
 	bool m_usePwc;
