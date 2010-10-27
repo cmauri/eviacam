@@ -508,24 +508,18 @@ bool CCameraV4L2::DetectBestImageFormat(TImageFormat& imgformat)
 	SelectBestFramePixelNumber (imgformat.width * imgformat.height, availableFormats);
 	
 	// Check aspect ratio
-	//TODO: Check weird errors. floating point errors.
-/*
+	//TODO: Check weird errors. floating point errors.	
 	if (imgformat.width> 0 && imgformat.height> 0) {
 		float bestdiff= FLT_MAX;
 		float aratio= (float) imgformat.width / (float) imgformat.height;
 		// Find closest frame ratio	
 		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
-			unsigned int diff= abs_distance_to_range<float> ((float)i->min_width / (float)i->max_height, (float)i->max_width / (float)i->min_height, aratio);
+			float diff= abs_distance_to_range<float> ((float)i->min_width / (float)i->max_height, (float)i->max_width / (float)i->min_height, aratio);
 			if (diff< bestdiff) bestdiff= diff;
 		}
-		printf("bestdiff: %f,%d\n", bestdiff, *((int *)&bestdiff));
 		// Remove worst entries
 		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end();)
 		{
-			float tmp = abs_distance_to_range<float> ((float)i->min_width / (float)i->max_height, (float)i->max_width / (float)i->min_height, aratio);
-			
-			printf("%f, %d\n",tmp, *((int *)&tmp));
-			
 			if (abs_distance_to_range<float> ((float)i->min_width / (float)i->max_height, (float)i->max_width / (float)i->min_height, aratio)> bestdiff) 
 				i= availableFormats.erase(i);
 			else
@@ -533,7 +527,7 @@ bool CCameraV4L2::DetectBestImageFormat(TImageFormat& imgformat)
 		}
 		assert (availableFormats.size()> 0);
 	}
-*/
+
 	
 	// If frame rate not explicity specified then selects highest fr available
 	if (imgformat.frame_rate== 0) {
@@ -737,15 +731,15 @@ bool CCameraV4L2::AllocateBuffers()
 				return false;
 			}
 		}
-			
-		// Result image	
+		/* 			
+		// Result image			
 		// TODO: make sure that image is not initialized with padded rows
-		if (!m_resultImage.Create (m_currentFormat.width, m_currentFormat.height, IPL_DEPTH_8U, "RGB", IPL_ORIGIN_TL, IPL_ALIGN_DWORD )) {
+		if (!m_resultImage.Create (m_currentFormat.width, m_currentFormat.height, IPL_DEPTH_8U, "BGR", IPL_ORIGIN_TL, IPL_ALIGN_DWORD )) {
 			fprintf (stderr, "Cannot create result image\n");
 			UnmapBuffers();
 			UnRequestBuffers(V4L2_MEMORY_MMAP);
 			return false;
-		}
+		}*/
 	}
 	else if (m_captureMethod== CAP_STREAMING_USR) {
 		fprintf (stderr, "ERROR: AllocateBuffers: CAP_STREAMING_USR not implemented\n");
@@ -824,7 +818,17 @@ bool CCameraV4L2::Open ()
 		Close();
 		return false;
 	}	
-
+	// Result image	
+	// TODO: correct the V4L2_PIX_FMT_YUV420 conversion routine
+	const char* planeOrder;
+	if (imgformat.pixelformat== V4L2_PIX_FMT_YUV420) planeOrder= "BGR";
+	else planeOrder= "RGB";
+	// TODO: make sure that image is not initialized with padded rows
+	if (!m_resultImage.Create (m_currentFormat.width, m_currentFormat.height, IPL_DEPTH_8U, planeOrder, IPL_ORIGIN_TL, IPL_ALIGN_DWORD )) {
+		fprintf (stderr, "Cannot create result image\n");		
+		Close();
+		return false;
+	}
 	if (!AllocateBuffers()) {
 		fprintf (stderr, "Unable to allocate buffers\n");
 		Close();
