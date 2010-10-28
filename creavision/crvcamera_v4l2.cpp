@@ -1308,7 +1308,7 @@ bool CCameraControlV4l2::SetValue(int value)
 		fprintf (stderr, "CCameraControlV4l2::GetValue() failed to query value\n");
 		return false;
 	}
-	return false;
+	return true;
 }
 
 const char* CCameraControlV4l2::GetChoiceName(unsigned int numOption) const
