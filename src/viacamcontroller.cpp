@@ -264,7 +264,7 @@ bool CViacamController::Initialize ()
 	
 	
 	// Run the wizard at startup
-	if (m_runWizardAtStartup)
+	if (retval && m_runWizardAtStartup)
 		StartWizard();
 	
 	
