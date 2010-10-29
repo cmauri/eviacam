@@ -487,9 +487,6 @@ bool CViacamController::StartMotionCalibration (void)
 
 void CViacamController::StartWizard()
 {
-	//TODO: Provisional. Wait for the initialization of the camera
-	//wxSleep(1);
-	
 	WWizard* m_pWizard = new WWizard(m_pMainWindow, this);
 	m_pWizard->Run();
 }
