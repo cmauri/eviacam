@@ -46,6 +46,7 @@
 #include "wconfiguration.h"
 #include "cmotioncalibration.h"
 #include "wwizard.h"
+#include "wcameradialog.h"
 
 //#include "icons/eviacam_mini.xpm"
 
@@ -486,6 +487,15 @@ bool CViacamController::StartMotionCalibration (void)
 
 void CViacamController::StartWizard()
 {
+	//TODO: Provisional. Wait for the initialization of the camera
+	//wxSleep(1);
+	
 	WWizard* m_pWizard = new WWizard(m_pMainWindow, this);
 	m_pWizard->Run();
+}
+
+void CViacamController::OpenCameraControlDialog()
+{
+	WCameraDialog* m_pCameraDialog = new WCameraDialog(m_pMainWindow, m_pCamera);
+	m_pCameraDialog->ShowModal();
 }

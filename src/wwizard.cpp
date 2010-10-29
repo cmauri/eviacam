@@ -330,6 +330,7 @@ void WizardPage::CreateControls()
     itemWizardPageSimple2->SetSizer(itemBoxSizer3);
 
     wxStaticText* itemStaticText4 = new wxStaticText( itemWizardPageSimple2, wxID_STATIC, _("This wizard guides you through simple steps\nto configure eViacam."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticText4->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, false, wxT("Sans")));
     itemBoxSizer3->Add(itemStaticText4, 0, wxALIGN_LEFT|wxALL, 5);
 
     m_chkRunWizardAtStartup = new wxCheckBox( itemWizardPageSimple2, ID_CHECKBOX1, _("Run this wizard at startup"), wxDefaultPosition, wxDefaultSize, 0 );

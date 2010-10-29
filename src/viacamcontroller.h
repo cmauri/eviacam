@@ -101,6 +101,7 @@ public:
 	void OpenConfiguration();
 	void OpenOnScreenKeyboard();
 	void StartWizard();
+	void OpenCameraControlDialog();
 
 	// Configuration methods
 	virtual void InitDefaults();
