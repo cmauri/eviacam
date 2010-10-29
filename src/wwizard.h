@@ -19,6 +19,8 @@
 
 ////@begin includes
 #include "wx/wizard.h"
+#include "wx/spinctrl.h"
+#include "wx/tglbtn.h"
 ////@end includes
 #include <wx/timer.h>
 
@@ -28,8 +30,13 @@
 
 ////@begin forward declarations
 class WizardPage;
+class WizardPage5;
 class WizardPage1;
 class WizardPage2;
+class WizardPage6;
+class wxSpinCtrl;
+class wxToggleButton;
+class WizardPage7;
 class WizardPage3;
 class WizardPage4;
 ////@end forward declarations
@@ -42,17 +49,23 @@ class CViacamController;
 ////@begin control identifiers
 #define ID_WWIZARD 10090
 #define ID_WIZARDPAGE 10091
-#define ID_CHECKBOX1 10092
+#define ID_WIZARDPAGE5 10115
 #define ID_WIZARDPAGE1 10093
 #define ID_CHECKBOX_PERFORM_CALIBRATION 10095
 #define ID_WIZARDPAGE2 10096
+#define ID_WIZARDPAGE6 10116
+#define ID_SPINCTRL 10118
+#define ID_SPINCTRL1 10119
+#define ID_TOGGLEBUTTON 10117
+#define ID_WIZARDPAGE7 10120
 #define ID_WIZARDPAGE3 10097
-#define ID_RADIOBUTTON_NONE_CLICK 10098
 #define ID_RADIOBUTTON_DWELL_CLICK 10099
 #define ID_RADIOBUTTON_GESTURE_CLICK 10100
-#define ID_BUTTON4 10101
-#define wxID_STATIC_TEST 10102
+#define ID_RADIOBUTTON_NONE_CLICK 10098
+#define ID_TOGGLEBUTTON1 10121
 #define ID_WIZARDPAGE4 10103
+#define ID_CHECKBOX1 10092
+#define ID_CHECKBOX3 10101
 #define SYMBOL_WWIZARD_IDNAME ID_WWIZARD
 ////@end control identifiers
 
@@ -118,6 +131,9 @@ public:
 	inline const bool GetPerformCalibration() const;
 	inline void SetPerformCalibration(bool value);
 	
+	inline const bool GetIsMotionEnabled() const;
+	inline void SetIsMotionEnabled(bool value);
+
 	inline const EClickMode GetClickMode() const;
 	inline void SetClickMode(EClickMode value);
 
@@ -128,6 +144,7 @@ private:
 	CViacamController* m_pViacamController;
 	bool m_runWizardAtStartup;
 	bool m_performCalibration;
+	bool m_isMotionEnabled;
 	EClickMode m_clickMode;
 	WizardPage* m_wizardPage3;
 	
@@ -163,6 +180,16 @@ private:
 		m_performCalibration = value;
 	}
 
+	inline const bool WWizard::GetIsMotionEnabled() const
+	{
+		return m_isMotionEnabled;	
+	}
+	
+	inline void WWizard::SetIsMotionEnabled(bool value)
+	{
+		m_isMotionEnabled = value;
+	}
+	
 	inline const WWizard::EClickMode WWizard::GetClickMode() const
 	{
 		return m_clickMode;	
@@ -204,12 +231,6 @@ public:
 
 ////@begin WizardPage event handler declarations
 
-    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE
-    void OnWizardpageChanged( wxWizardEvent& event );
-
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX1
-    void OnCheckboxRunWizardAtStartupClick( wxCommandEvent& event );
-
 ////@end WizardPage event handler declarations
 
 ////@begin WizardPage member function declarations
@@ -225,7 +246,6 @@ public:
     static bool ShowToolTips();
 
 ////@begin WizardPage member variables
-    wxCheckBox* m_chkRunWizardAtStartup;
 ////@end WizardPage member variables
 	WWizard* m_wizardParent;
 };
@@ -371,26 +391,26 @@ public:
     /// wxEVT_WIZARD_PAGE_CHANGING event handler for ID_WIZARDPAGE3
     void OnWizardpage3Changing( wxWizardEvent& event );
 
-    /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_NONE_CLICK
-    void OnRadiobuttonNoneClickSelected( wxCommandEvent& event );
-
     /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_DWELL_CLICK
     void OnRadiobuttonDwellClickSelected( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_GESTURE_CLICK
     void OnRadiobuttonGestureClickSelected( wxCommandEvent& event );
 
-    /// wxEVT_LEFT_DOWN event handler for ID_BUTTON4
-    void OnLeftDown( wxMouseEvent& event );
+    /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_NONE_CLICK
+    void OnRadiobuttonNoneClickSelected( wxCommandEvent& event );
 
-    /// wxEVT_LEFT_UP event handler for ID_BUTTON4
-    void OnLeftUp( wxMouseEvent& event );
+    /// wxEVT_LEFT_DOWN event handler for ID_TOGGLEBUTTON1
+    void OnLeftDownTest( wxMouseEvent& event );
 
-    /// wxEVT_LEFT_DCLICK event handler for ID_BUTTON4
-    void OnLeftDClick( wxMouseEvent& event );
+    /// wxEVT_LEFT_UP event handler for ID_TOGGLEBUTTON1
+    void OnLeftUpTest( wxMouseEvent& event );
 
-    /// wxEVT_RIGHT_UP event handler for ID_BUTTON4
-    void OnRightUp( wxMouseEvent& event );
+    /// wxEVT_LEFT_DCLICK event handler for ID_TOGGLEBUTTON1
+    void OnLeftDClickTest( wxMouseEvent& event );
+
+    /// wxEVT_RIGHT_UP event handler for ID_TOGGLEBUTTON1
+    void OnRightUpTest( wxMouseEvent& event );
 
 ////@end WizardPage3 event handler declarations
 
@@ -409,11 +429,10 @@ public:
     static bool ShowToolTips();
 
 ////@begin WizardPage3 member variables
-    wxRadioButton* m_rbNoneClick;
     wxRadioButton* m_rbDwellClick;
     wxRadioButton* m_rbGestureClick;
-    wxButton* m_buttonTest;
-    wxStaticText* m_staticTest;
+    wxRadioButton* m_rbNoneClick;
+    wxToggleButton* m_toggleTest;
 ////@end WizardPage3 member variables
 	WWizard* m_wizardParent;
 	wxTimer m_timer;
@@ -448,6 +467,15 @@ public:
 
 ////@begin WizardPage4 event handler declarations
 
+    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE4
+    void OnWizardpage4PageChanged( wxWizardEvent& event );
+
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX1
+    void OnCheckboxRunWizardAtStartupClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX3
+    void OnCheckboxStartupClick( wxCommandEvent& event );
+
 ////@end WizardPage4 event handler declarations
 
 ////@begin WizardPage4 member function declarations
@@ -463,7 +491,171 @@ public:
     static bool ShowToolTips();
 
 ////@begin WizardPage4 member variables
+    wxCheckBox* m_chkRunWizardAtStartup;
+    wxCheckBox* m_chkStartup;
 ////@end WizardPage4 member variables
+	WWizard* m_wizardParent;
+};
+
+/*!
+ * WizardPage5 class declaration
+ */
+
+class WizardPage5: public wxWizardPageSimple
+{    
+    DECLARE_DYNAMIC_CLASS( WizardPage5 )
+    DECLARE_EVENT_TABLE()
+
+public:
+    /// Constructors
+    WizardPage5();
+
+    WizardPage5( wxWizard* parent );
+
+    /// Creation
+    bool Create( wxWizard* parent );
+
+    /// Destructor
+    ~WizardPage5();
+
+    /// Initialises member variables
+    void Init();
+
+    /// Creates the controls and sizers
+    void CreateControls();
+
+////@begin WizardPage5 event handler declarations
+
+////@end WizardPage5 event handler declarations
+
+////@begin WizardPage5 member function declarations
+
+    /// Retrieves bitmap resources
+    wxBitmap GetBitmapResource( const wxString& name );
+
+    /// Retrieves icon resources
+    wxIcon GetIconResource( const wxString& name );
+////@end WizardPage5 member function declarations
+
+    /// Should we show tooltips?
+    static bool ShowToolTips();
+
+////@begin WizardPage5 member variables
+    wxStaticText* m_staticCameraName;
+    wxStaticText* m_staticFramerate;
+////@end WizardPage5 member variables
+	WWizard* m_wizardParent;
+};
+
+/*!
+ * WizardPage6 class declaration
+ */
+
+class WizardPage6: public wxWizardPageSimple
+{    
+    DECLARE_DYNAMIC_CLASS( WizardPage6 )
+    DECLARE_EVENT_TABLE()
+
+public:
+    /// Constructors
+    WizardPage6();
+
+    WizardPage6( wxWizard* parent );
+
+    /// Creation
+    bool Create( wxWizard* parent );
+
+    /// Destructor
+    ~WizardPage6();
+
+    /// Initialises member variables
+    void Init();
+
+    /// Creates the controls and sizers
+    void CreateControls();
+
+////@begin WizardPage6 event handler declarations
+
+    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE6
+    void OnWizardpage6PageChanged( wxWizardEvent& event );
+
+    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL
+    void OnSpinctrlXSpeedUpdated( wxSpinEvent& event );
+
+    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL1
+    void OnSpinctrlYSpeedUpdated( wxSpinEvent& event );
+
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_TOGGLEBUTTON
+    void OnTogglebuttonClick( wxCommandEvent& event );
+
+////@end WizardPage6 event handler declarations
+
+////@begin WizardPage6 member function declarations
+
+    /// Retrieves bitmap resources
+    wxBitmap GetBitmapResource( const wxString& name );
+
+    /// Retrieves icon resources
+    wxIcon GetIconResource( const wxString& name );
+////@end WizardPage6 member function declarations
+
+    /// Should we show tooltips?
+    static bool ShowToolTips();
+
+////@begin WizardPage6 member variables
+    wxSpinCtrl* m_spinXSpeed;
+    wxSpinCtrl* m_spinYSpeed;
+    wxToggleButton* m_toggleEnableMotion;
+////@end WizardPage6 member variables
+	WWizard* m_wizardParent;
+};
+
+/*!
+ * WizardPage7 class declaration
+ */
+
+class WizardPage7: public wxWizardPageSimple
+{    
+    DECLARE_DYNAMIC_CLASS( WizardPage7 )
+    DECLARE_EVENT_TABLE()
+
+public:
+    /// Constructors
+    WizardPage7();
+
+    WizardPage7( wxWizard* parent );
+
+    /// Creation
+    bool Create( wxWizard* parent );
+
+    /// Destructor
+    ~WizardPage7();
+
+    /// Initialises member variables
+    void Init();
+
+    /// Creates the controls and sizers
+    void CreateControls();
+
+////@begin WizardPage7 event handler declarations
+
+////@end WizardPage7 event handler declarations
+
+////@begin WizardPage7 member function declarations
+
+    /// Retrieves bitmap resources
+    wxBitmap GetBitmapResource( const wxString& name );
+
+    /// Retrieves icon resources
+    wxIcon GetIconResource( const wxString& name );
+////@end WizardPage7 member function declarations
+
+    /// Should we show tooltips?
+    static bool ShowToolTips();
+
+////@begin WizardPage7 member variables
+////@end WizardPage7 member variables
+	WWizard* m_wizardParent;
 };
 
 #endif
