@@ -31,9 +31,10 @@ public:
 	inline const unsigned long GetWaitTimeMs () const;
 	inline void SetWaitTimeMs (unsigned long val);
 	void Reset ();
-	// True if time-out
-	bool Update();
-	bool IsExpired();
+	// If countdown expired returns true once and false for all
+	// subsequent calls until a Reset
+	bool OneShootAction();
+	bool HasExpired();
 	int PercentagePassed();
 
 private:

@@ -20,47 +20,179 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "cvisualalert.h"
-#include <stdio.h>
-#if defined(__WXGTK__) 
-#include <unistd.h>
-#include <stdlib.h>
+#include <wx/utils.h>
+#if defined(__WXGTK__)
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
+#include <gtk/gtk.h>
 #endif
+
+
+// class CVisualAlertProgress
+#define PROGRESS_SIZE 30
+#define PROGRESS_OFFSET 8
 
 #define LINE_WIDTH 2
-#define START_RADIUS 30
-#define RADIUS_STEP 1
-#define MSECOND 1000
-#define VISUAL_OFFSET 8
+//#define START_RADIUS 30
+//#define RADIUS_STEP 1
+//#define MSECOND 1000
+
 #define CROSS_SIZE 8
 
-CVisualAlert::CVisualAlert()
+
+CVisualAlertProgress::CVisualAlertProgress()
 {
-	m_waitTime = NULL;
-	m_oldRadius = 0;
-	m_oldX = 0;
-	m_oldY = 0;
+	m_oldSize= 0;
+	m_oldX= 0;
+	m_oldY= 0;
+}
+
+CVisualAlertProgress::~CVisualAlertProgress()
+{
+//	End();
+}
+
 #if defined(__WXGTK__)
-	m_display = NULL;
-	m_window = NULL;
-	m_screen = NULL;
-	m_gc = NULL;
+static void
+draw_line (gint x1, gint y1, gint x2, gint y2)
+{
+    GdkScreen *screen;
+    GdkWindow *root;
+    GdkGC *gc;
+
+    screen = gdk_display_get_default_screen (gdk_display_get_default ());
+    root = gdk_screen_get_root_window (screen);
+
+    gc = gdk_gc_new (root);
+    gdk_gc_set_subwindow (gc, GDK_INCLUDE_INFERIORS);
+    gdk_gc_set_function (gc, GDK_INVERT);
+    gdk_gc_set_line_attributes (gc, 1,
+				GDK_LINE_SOLID,
+				GDK_CAP_ROUND,
+				GDK_JOIN_ROUND);
+    gdk_draw_arc (root, gc, TRUE,
+		  x1 - 4, y1 - 4, 8, 8, 0, 23040);
+    gdk_draw_line (root, gc, x1, y1, x2, y2);
+    g_object_unref (gc);
+}
+#endif
+
+void CVisualAlertProgress::Update(int x, int y, int percent)
+{
+#if defined(__WXGTK__)
+	int size = (PROGRESS_SIZE * (100 - percent)) / 100;
+	
+	if (size || m_oldSize) {
+		XGrabServer(m_display);
+	
+		if (m_oldSize!= 0) 
+			// Need to clear previos drawing
+			XDrawLine(m_display, m_window, m_gc, m_oldX + PROGRESS_OFFSET, m_oldY + PROGRESS_OFFSET,  
+				m_oldX + PROGRESS_OFFSET, m_oldY + PROGRESS_OFFSET - m_oldSize);
+		if (size> 0)
+			// Draw progress bar
+			XDrawLine(m_display, m_window, m_gc, x+PROGRESS_OFFSET, y+PROGRESS_OFFSET,  x+PROGRESS_OFFSET, y+PROGRESS_OFFSET - size);
+		
+		XUngrabServer(m_display);
+		XFlush(m_display);
+	}
+	
+	m_oldSize = size;
+	m_oldX = x;
+	m_oldY = y;
 #endif
 }
 
-CVisualAlert::~CVisualAlert()
+void CVisualAlertProgress::End()
 {
+	if(m_oldSize!= 0) {
+		// Need to clear previos drawing	
+		XGrabServer(m_display);
+		XDrawLine(m_display, m_window, m_gc, m_oldX + PROGRESS_OFFSET, m_oldY + PROGRESS_OFFSET,  
+			  m_oldX + PROGRESS_OFFSET, m_oldY + PROGRESS_OFFSET - m_oldSize);
+		XUngrabServer(m_display);
+		XFlush(m_display);
+		m_oldSize= 0;
+	}
 }
 
-void CVisualAlert::Start(Stage stg)
+CVisualAlertDirection::CVisualAlertDirection()
 {
-	m_stage = stg;
+	m_running= false;
+	m_xOrigin= 0;
+	m_yOrigin= 0;
+	m_xOldDest= 0;
+	m_yOldDest= 0;
+}
 
-#if defined(__WXGTK__) 
-	m_oldRadius = 0;
+CVisualAlertDirection::~CVisualAlertDirection()
+{
+//	End();
+}
+
+void CVisualAlertDirection::Update(int x, int y)
+{
+	XGrabServer(m_display);
+	if (!m_running) {
+		// Not running. Use this point as origin
+		m_xOrigin= x;
+		m_yOrigin= y;
+		m_running= true;
+		
+		// Draw cross.
+		XDrawLine(m_display, m_window, m_gc, m_xOrigin - CROSS_SIZE, m_yOrigin, m_xOrigin + CROSS_SIZE, m_yOrigin);
+		XDrawLine(m_display, m_window, m_gc, m_xOrigin, m_yOrigin - CROSS_SIZE, m_xOrigin, m_yOrigin + CROSS_SIZE);
+	}
+	else {
+		XSetForeground(m_display, m_gc, 0xff0000);
+		// Clear previous direction line
+		XDrawLine(m_display, m_window, m_gc, m_xOrigin, m_yOrigin, m_xOldDest, m_yOldDest);
+		// Draw new
+		XDrawLine(m_display, m_window, m_gc, m_xOrigin, m_yOrigin, x, y);
+		XSetForeground(m_display, m_gc, WhitePixel(m_display, m_screen));
+	}
+	XUngrabServer(m_display);
+	XFlush(m_display);
 	
-	m_display = XOpenDisplay(0);
+	m_xOldDest= x;
+	m_yOldDest= y;
+}
+
+void CVisualAlertDirection::End()
+{
+	if (m_running) {
+		XGrabServer(m_display);
+		// Clear cross.
+		XDrawLine(m_display, m_window, m_gc, m_xOrigin - CROSS_SIZE, m_yOrigin, m_xOrigin + CROSS_SIZE, m_yOrigin);
+		XDrawLine(m_display, m_window, m_gc, m_xOrigin, m_yOrigin - CROSS_SIZE, m_xOrigin, m_yOrigin + CROSS_SIZE);
+		
+		XSetForeground(m_display, m_gc, 0xff0000);
+		// Clear previous direction line
+		XDrawLine(m_display, m_window, m_gc, m_xOrigin, m_yOrigin, m_xOldDest, m_yOldDest);
+		
+		XSetForeground(m_display, m_gc, WhitePixel(m_display, m_screen));
+		XUngrabServer(m_display);
+		XFlush(m_display);
+		
+		m_running= false;
+		m_xOrigin= 0;
+		m_yOrigin= 0;
+		m_xOldDest= 0;
+		m_yOldDest= 0;
+	}
+}
+
+
+//CVisualAlert::CVisualAlert(Stage stg)
+CVisualAlert::CVisualAlert()
+{
+//	m_stage = stg;
+//	m_oldRadius = 0;
+//	m_oldX = 0;
+//	m_oldY = 0;
+	
+#if defined(__WXGTK__)	
+	m_display = (Display*) wxGetDisplay(); //XOpenDisplay(0);
 	
 	m_screen = DefaultScreen(m_display);
 	m_window =  XRootWindow(m_display, m_screen);
@@ -79,10 +211,16 @@ void CVisualAlert::Start(Stage stg)
 
 	// Use XOR, so drawind twice removes it
 	XSetFunction(m_display, m_gc, GXxor);
-
 #endif
 }
 
+CVisualAlert::~CVisualAlert()
+{
+#if defined(__WXGTK__) 
+	XFreeGC(m_display, m_gc);
+#endif
+}
+/*
 void CVisualAlert::Update(long xIni, long yIni, long x, long y, int percent)
 {
 #if defined(__WXGTK__)
@@ -94,7 +232,7 @@ void CVisualAlert::Update(long xIni, long yIni, long x, long y, int percent)
 		switch(m_stage)
 		{
 			case DWELL:
-				XDrawLine(m_display, m_window, m_gc, m_oldX+VISUAL_OFFSET, m_oldY+VISUAL_OFFSET,  m_oldX+VISUAL_OFFSET, m_oldY+VISUAL_OFFSET - m_oldRadius);
+				XDrawLine(m_display, m_window, m_gc, m_oldX+PROGRESS_OFFSET, m_oldY+PROGRESS_OFFSET,  m_oldX+PROGRESS_OFFSET, m_oldY+PROGRESS_OFFSET - m_oldRadius);
 				break;
 				
 			case GESTURE:
@@ -104,7 +242,7 @@ void CVisualAlert::Update(long xIni, long yIni, long x, long y, int percent)
 				XSetForeground(m_display, m_gc, WhitePixel(m_display, m_screen));
 	
 				//Progress line.
-				XDrawLine(m_display, m_window, m_gc, m_oldX+VISUAL_OFFSET, m_oldY+VISUAL_OFFSET,  m_oldX+VISUAL_OFFSET, m_oldY+VISUAL_OFFSET - m_oldRadius);
+				XDrawLine(m_display, m_window, m_gc, m_oldX+PROGRESS_OFFSET, m_oldY+PROGRESS_OFFSET,  m_oldX+PROGRESS_OFFSET, m_oldY+PROGRESS_OFFSET - m_oldRadius);
 				
 				//Cross.
 				XDrawLine(m_display, m_window, m_gc, xIni-CROSS_SIZE, yIni,  xIni+CROSS_SIZE, yIni);
@@ -121,7 +259,7 @@ void CVisualAlert::Update(long xIni, long yIni, long x, long y, int percent)
 		switch(m_stage)
 		{
 			case DWELL:
-				XDrawLine(m_display, m_window, m_gc, x+VISUAL_OFFSET, y+VISUAL_OFFSET,  x+VISUAL_OFFSET, y+VISUAL_OFFSET - radius);
+				XDrawLine(m_display, m_window, m_gc, x+PROGRESS_OFFSET, y+PROGRESS_OFFSET,  x+PROGRESS_OFFSET, y+PROGRESS_OFFSET - radius);
 				break;
 				
 			case GESTURE:
@@ -131,7 +269,7 @@ void CVisualAlert::Update(long xIni, long yIni, long x, long y, int percent)
 				XSetForeground(m_display, m_gc, WhitePixel(m_display, m_screen));
 				
 				//Progress line.
-				XDrawLine(m_display, m_window, m_gc, x+VISUAL_OFFSET, y+VISUAL_OFFSET,  x+VISUAL_OFFSET, y+VISUAL_OFFSET - radius);
+				XDrawLine(m_display, m_window, m_gc, x+PROGRESS_OFFSET, y+PROGRESS_OFFSET,  x+PROGRESS_OFFSET, y+PROGRESS_OFFSET - radius);
 				
 				//Cross.
 				XDrawLine(m_display, m_window, m_gc, xIni-CROSS_SIZE, yIni,  xIni+CROSS_SIZE, yIni);
@@ -156,7 +294,7 @@ void CVisualAlert::End(long xIni, long yIni)
 		switch(m_stage)
 		{
 			case DWELL:
-				XDrawLine(m_display, m_window, m_gc, m_oldX+VISUAL_OFFSET, m_oldY+VISUAL_OFFSET,  m_oldX+VISUAL_OFFSET, m_oldY+VISUAL_OFFSET - m_oldRadius);
+				XDrawLine(m_display, m_window, m_gc, m_oldX+PROGRESS_OFFSET, m_oldY+PROGRESS_OFFSET,  m_oldX+PROGRESS_OFFSET, m_oldY+PROGRESS_OFFSET - m_oldRadius);
 				break;
 			
 			case GESTURE:
@@ -166,11 +304,11 @@ void CVisualAlert::End(long xIni, long yIni)
 				XSetForeground(m_display, m_gc, WhitePixel(m_display, m_screen));
 				
 				//Progress line.
-				XDrawLine(m_display, m_window, m_gc, m_oldX+VISUAL_OFFSET, m_oldY+VISUAL_OFFSET,  m_oldX+VISUAL_OFFSET, m_oldY+VISUAL_OFFSET - m_oldRadius);
+				XDrawLine(m_display, m_window, m_gc, m_oldX+PROGRESS_OFFSET, m_oldY+PROGRESS_OFFSET,  m_oldX+PROGRESS_OFFSET, m_oldY+PROGRESS_OFFSET - m_oldRadius);
 				
 				//Cross.
-				XDrawLine(m_display, m_window, m_gc, xIni-VISUAL_OFFSET, yIni,  xIni+VISUAL_OFFSET, yIni);
-				XDrawLine(m_display, m_window, m_gc, xIni, yIni-VISUAL_OFFSET, xIni, yIni+VISUAL_OFFSET);
+				XDrawLine(m_display, m_window, m_gc, xIni-PROGRESS_OFFSET, yIni,  xIni+PROGRESS_OFFSET, yIni);
+				XDrawLine(m_display, m_window, m_gc, xIni, yIni-PROGRESS_OFFSET, xIni, yIni+PROGRESS_OFFSET);
 				break;
 		}
 		XUngrabServer(m_display);
@@ -179,3 +317,4 @@ void CVisualAlert::End(long xIni, long yIni)
 	m_oldRadius = 0;
 #endif
 }
+*/

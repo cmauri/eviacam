@@ -1,11 +1,11 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        mouseoutput.h
-// Purpose:  
+// Purpose:
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     
+// Modified by:
+// Created:
 // Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
-// 
+//
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -19,7 +19,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
-
 #ifndef MOUSEOUTPUT_H
 #define MOUSEOUTPUT_H
 
@@ -31,31 +30,21 @@
 #include <math.h>
 #include <vector>
 
-#define MOUSE_EVENTS_COUNT 5
-
 class CClickWindowController;
 class wxSound;
 
 class CMouseOutput : public CMouseControl, public CConfigBase
 {
-  public:
+public:
 	enum EClickMode { NONE, DWELL, GESTURE };
-	enum EState { DWELL_TIME, COMPUTE_DIRECTION, WAITING_RETURN };
-	enum EDirection { LEFT, RIGHT, TOP, BOTTOM };
-
 	CMouseOutput (CClickWindowController& pClickWindowController);
 	~CMouseOutput ();
 
 	// Call from machine vision tracker
 	float ProcessRelativePointerMove(float dx, float dy);
-
-	//Reset internal state (dwell click time)
-	void Reset(CWaitTime countdown);
 	
-	void WriteChar (char* c);
-	void DoAction();
+	// TODO: check if is really needed
 	void EndVisualAlerts();
-	void InitKeyboardCode();
 
 	inline const unsigned long GetXSpeed() const;
 	inline void SetXSpeed(unsigned long value);
@@ -74,19 +63,19 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 
 	inline const EClickMode GetClickMode() const;
 	void SetClickMode(EClickMode mode);
-        
+
         inline const unsigned long GetTopWorkspace() const;
         inline void SetTopWorkspace(unsigned long value);
-        
+
         inline const unsigned long GetLeftWorkspace() const;
         inline void SetLeftWorkspace(unsigned long value);
-        
+
         inline const unsigned long GetRightWorkspace() const;
         inline void SetRightWorkspace(unsigned long value);
-        
+
         inline const unsigned long GetBottomWorkspace() const;
         inline void SetBottomWorkspace(unsigned long value);
-        
+
         inline const bool GetRestrictedWorkingArea() const;
         inline void SetRestrictedWorkingArea(bool value);
 
@@ -119,59 +108,78 @@ class CMouseOutput : public CMouseControl, public CConfigBase
 
 	inline const int GetActionBottom() const;
 	inline void SetActionBottom(int);
-	
+
 	inline const bool GetVisualAlerts() const;
 	inline void SetVisualAlerts(bool value);
 	
 	inline CKeyboardCode GetKeyboardCode(int position);
 	inline const unsigned int GetKeyEventsCount() const;
 	inline const unsigned int GetMouseEventsCount() const;
-	
+
+	bool GetFastGestureAction() const { return m_fastGestureAction; }
+	void SetFastGestureAction(bool value) { m_fastGestureAction= value; }
+
 	// Configuration methods
 	virtual void InitDefaults();
 	virtual void WriteProfileData(wxConfigBase* pConfObj);
 	virtual void ReadProfileData(wxConfigBase* pConfObj);
 
-  private:
-	
+private:
 	const float GetSpeedFactor(unsigned long speed) const;
-
-	CClickWindowController * m_pClickWindowController;
-
+	
+	// TODO: this codi needs refactoring. Dwell click & gesture click 
+	// should be in its own class for each
+	
+	//
+	// General attributes
+	//
+	bool m_enabled;
 	unsigned long m_xSpeed, m_ySpeed;
 	unsigned long m_acceleration;
-        unsigned long m_topWorkspace, m_leftWorkspace, m_rightWorkspace, m_bottomWorkspace;
- 
-        bool m_restrictedWorkingArea;
-	bool m_enabled;
-	CWaitTime* m_dwellCountdown;
-	CWaitTime* m_gestureCountdown;
-	bool m_waitingGesture;
 	EClickMode m_clickMode;
 	bool m_beepOnClick;
 	bool m_consecutiveClicksAllowed;
+	bool m_visualAlerts;
+	wxSound* m_pClickSound;	
+	//Define maximal distance (in pixels) from pointer's starting countdown position
+	//where is allowed to move without cancelling current countdown. Try and choose: 
+	// countdown starts when motion is under tolerance or where zero motion interval is detected.
+	float m_dwellToleranceArea;
+	
+	//
+	// Dwell click
+	//
+	CClickWindowController* m_pClickWindowController;
+	CWaitTime m_dwellCountdown;
+	//CVisualAlert m_dwellVisualAlert;
+	CVisualAlertProgress m_progressVisualAlert;
+	
+	//
+	// Workspace limits
+	//
+        unsigned long m_topWorkspace, m_leftWorkspace, m_rightWorkspace, m_bottomWorkspace; 
+        bool m_restrictedWorkingArea;
+
+	//
+	// Gesture click
+	//
+	void InitKeyboardCodes();
+	enum EState { DWELL_TIME, COMPUTE_DIRECTION, WAIT_DWELL }; //, WAITING_RETURN };	
+	enum EDirection { LEFT, RIGHT, TOP, BOTTOM };
+	void DoActionGesture(EDirection direction);
+	EState m_state;
+	bool m_waitingGesture;	
+	CVisualAlertDirection m_gestureVisualAlert;
 	int m_actionLeft;
 	int m_actionRight;
 	int m_actionTop;
 	int m_actionBottom;
 	bool m_isLeftPressed;
-	CVisualAlert m_dwellVisualAlert;
-	CVisualAlert m_gestureVisualAlert;
-	long m_xIni, m_yIni;
-	EState m_state;
-	float m_sumDx, m_sumDy;
-	EDirection m_direction;
-	bool m_visualAlerts;
+	bool m_fastGestureAction;
+	//float m_sumDx, m_sumDy;	
+	//EDirection m_direction;	
 	std::vector<CKeyboardCode> m_keyboardCodes;
-
-    //Define maximal distance (in pixels) from pointer's starting countdown position
-    //where is allowed to move without cancelling current countdown.
-    //
-    //Try and choose: countdown starts when motion is under tolerance or where zero motion
-    //interval is detected.
-	float m_dwellToleranceArea;
-
-	wxSound* m_pClickSound;
+	long m_xIniGesture, m_yIniGesture;
 };
 
 inline const unsigned long CMouseOutput::GetXSpeed() const
@@ -300,23 +308,26 @@ inline void CMouseOutput::SetConsecutiveClicksAllowed(bool value) {
 }
 
 inline const unsigned long CMouseOutput::GetDwellTime() const {
-	return m_dwellCountdown->GetWaitTimeMs() / 100;
+	return m_dwellCountdown.GetWaitTimeMs() / 100;
 }
 
 inline void CMouseOutput::SetDwellTime (unsigned long ds) 
 {
 	if (ds> 50) ds= 50;
-	m_dwellCountdown->SetWaitTimeMs (ds * 100);
+	m_dwellCountdown.SetWaitTimeMs (ds * 100);
 }
 
+// TODO: remove (check config dialog)
 inline const unsigned long CMouseOutput::GetGestureTime() const {
-	return m_gestureCountdown->GetWaitTimeMs() / 100;
+	//return m_gestureCountdown->GetWaitTimeMs() / 100;
+	return 0;
 }
 
+// TODO: remove (check config dialog)
 inline void CMouseOutput::SetGestureTime (unsigned long ds) 
 {
 	if (ds> 50) ds= 50;
-	m_gestureCountdown->SetWaitTimeMs (ds * 100);
+	//m_gestureCountdown->SetWaitTimeMs (ds * 100);
 }
 
 inline const unsigned long CMouseOutput::GetDwellToleranceArea() const {
@@ -405,10 +416,10 @@ inline const unsigned int CMouseOutput::GetKeyEventsCount() const
 {
 	return m_keyboardCodes.size();
 }
-
+/*
 inline const unsigned int CMouseOutput::GetMouseEventsCount() const
 {
 	return MOUSE_EVENTS_COUNT;
-}
+}*/
 
 #endif

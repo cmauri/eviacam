@@ -38,8 +38,9 @@ void CWaitTime::Reset ()
 	m_actionDone= false;
 }
 
-// True if time out
-bool CWaitTime::Update()
+// If countdown expired returns true once and false for all
+// subsequent calls until a Reset
+bool CWaitTime::OneShootAction()
 {
 	if (!m_actionDone)
 	{
@@ -53,7 +54,7 @@ bool CWaitTime::Update()
 	return false;
 }
 
-bool CWaitTime::IsExpired()
+bool CWaitTime::HasExpired()
 {
 	unsigned long now= CTimeUtil::GetMiliCount();
 	return ((now - m_timeCountMs)> m_waitTimeMs);
@@ -62,6 +63,7 @@ bool CWaitTime::IsExpired()
 int CWaitTime::PercentagePassed()
 {
 	unsigned long now= CTimeUtil::GetMiliCount();
+	if ((now - m_timeCountMs)> m_waitTimeMs) return 100;
 	float percentage = 100.0f * (float) (now - m_timeCountMs) / (float) m_waitTimeMs;
 	return (int) percentage;
 }

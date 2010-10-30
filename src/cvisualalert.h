@@ -21,34 +21,63 @@
 /////////////////////////////////////////////////////////////////////////////
 #ifndef CVISUALALERT_H
 #define CVISUALALERT_H
-
-#include "waittime.h"
-
 #if defined(__WXGTK__)
 #include <X11/Xlib.h>
 #endif
 
-class CVisualAlert{
+class CVisualAlert {
 public:
-	enum Stage { DWELL, GESTURE };
-	CVisualAlert();
+	//enum Stage { DWELL, GESTURE };
+	//CVisualAlert(Stage stg);
+	
 	~CVisualAlert();
-	void Start(Stage stg);
-	void Update(long xIni, long yIni, long x, long y, int percent);
-	void End(long xIni, long yIni);
+	
+	// TODO: modify to remove 2 first parameters
+	//void Update(long xIni, long yIni, long x, long y, int percent);
+	//void End(long xIni, long yIni);
 
-private:
-	CWaitTime* m_waitTime;
-	Stage m_stage;
-	int m_oldRadius;
-	int m_oldX;
-	int m_oldY;
+protected:
+	CVisualAlert();
+	//Stage m_stage;
+	//int m_oldRadius;
+	//int m_oldX;
+	//int m_oldY;
+	
 #if defined(__WXGTK__)
 	Display* m_display;
 	Window m_window;
 	int m_screen;
 	GC m_gc;
 #endif
+};
+
+// Specialization for progress indicator
+class CVisualAlertProgress : public CVisualAlert {
+public:
+	CVisualAlertProgress();
+	~CVisualAlertProgress();
+	void Update(int x, int y, int percent);
+	void End();
+	
+private:
+	int m_oldSize;
+	int m_oldX;
+	int m_oldY;
+};
+
+// Specialization for direction indicator
+class CVisualAlertDirection : public CVisualAlert {
+public:
+	CVisualAlertDirection();
+	~CVisualAlertDirection();
+	void Update(int x, int y);
+	void End();
+private:
+	bool m_running;
+	int m_xOrigin;
+	int m_yOrigin;
+	int m_xOldDest;
+	int m_yOldDest;
 };
 
 #endif
