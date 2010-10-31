@@ -34,9 +34,10 @@ public:
 	CMouseControl(void* pDisplay= NULL);
 	virtual ~CMouseControl();
 
-	void SetWorkingArea (float leftPercent, float rightPercent,
-						 float topPercent, float bottomPercent);
-
+	void SetRestrictedWorkingArea (bool value) { m_enabledRestrictedWorkingArea = value; }
+	bool GetRestrictedWorkingArea() const { return m_enabledRestrictedWorkingArea; }
+	void SetWorkingArea (float leftPercent, float rightPercent, float topPercent, float bottomPercent);
+	
 	void SetClickArea (long minX, long minY, long maxX, long maxY);
 	void ResetClickArea ();
 	
@@ -51,9 +52,6 @@ public:
 	void SetRelFactors (float fDx, float fDy) {	SetRelFactorX (fDx); SetRelFactorY (fDy); }
 	void SetRelAcceleration2 (long delta0= 9999, float factor0= 1.0f,
 					long delta1= 9999, float factor1= 1.0f);
-
-	void SetEnabledRestrictedWorkingArea (bool value) { m_enabledRestrictedWorkingArea = value; }
-
 
 	inline float GetRelDeltaThreshold () const;
 	inline void SetRelDeltaThreshold (float deltaThreshold);

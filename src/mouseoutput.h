@@ -76,8 +76,8 @@ public:
         inline const unsigned long GetBottomWorkspace() const;
         inline void SetBottomWorkspace(unsigned long value);
 
-        inline const bool GetRestrictedWorkingArea() const;
-        inline void SetRestrictedWorkingArea(bool value);
+        //inline const bool GetRestrictedWorkingArea() const;
+        //inline void SetRestrictedWorkingArea(bool value);
 
 	inline const bool GetConsecutiveClicksAllowed() const;
 	inline void SetConsecutiveClicksAllowed(bool value);
@@ -128,7 +128,7 @@ private:
 	const float GetSpeedFactor(unsigned long speed) const;
 	
 	// TODO: this codi needs refactoring. Dwell click & gesture click 
-	// should be in its own class for each
+	// should be in its own class (each)
 	
 	//
 	// General attributes
@@ -151,14 +151,12 @@ private:
 	//
 	CClickWindowController* m_pClickWindowController;
 	CWaitTime m_dwellCountdown;
-	//CVisualAlert m_dwellVisualAlert;
 	CVisualAlertProgress m_progressVisualAlert;
 	
 	//
 	// Workspace limits
 	//
         unsigned long m_topWorkspace, m_leftWorkspace, m_rightWorkspace, m_bottomWorkspace; 
-        bool m_restrictedWorkingArea;
 
 	//
 	// Gesture click
@@ -168,16 +166,13 @@ private:
 	enum EDirection { LEFT, RIGHT, TOP, BOTTOM };
 	void DoActionGesture(EDirection direction);
 	EState m_state;
-	bool m_waitingGesture;	
 	CVisualAlertDirection m_gestureVisualAlert;
 	int m_actionLeft;
 	int m_actionRight;
 	int m_actionTop;
 	int m_actionBottom;
 	bool m_isLeftPressed;
-	bool m_fastGestureAction;
-	//float m_sumDx, m_sumDy;	
-	//EDirection m_direction;	
+	bool m_fastGestureAction;	
 	std::vector<CKeyboardCode> m_keyboardCodes;
 	long m_xIniGesture, m_yIniGesture;
 };
@@ -286,19 +281,6 @@ inline void CMouseOutput::SetBottomWorkspace(unsigned long value)
     SetBottomPercent((float) (50 - m_bottomWorkspace) / 50);
 }
 
-
-inline const bool CMouseOutput::GetRestrictedWorkingArea() const
-{
-    return m_restrictedWorkingArea;
-}
-
-inline void CMouseOutput::SetRestrictedWorkingArea(bool value)
-{
-    m_restrictedWorkingArea = value;
-    SetEnabledRestrictedWorkingArea(m_restrictedWorkingArea);
-}
-
-
 inline const bool CMouseOutput::GetConsecutiveClicksAllowed() const {
 	return m_consecutiveClicksAllowed;
 }
@@ -336,7 +318,7 @@ inline const unsigned long CMouseOutput::GetDwellToleranceArea() const {
 
 inline void CMouseOutput::SetDwellToleranceArea(unsigned long area) 
 {
-	if (area> 5) area= 5;
+	if (area> 5) area= 8;
 	m_dwellToleranceArea= (float) area;
 }
 
@@ -416,10 +398,5 @@ inline const unsigned int CMouseOutput::GetKeyEventsCount() const
 {
 	return m_keyboardCodes.size();
 }
-/*
-inline const unsigned int CMouseOutput::GetMouseEventsCount() const
-{
-	return MOUSE_EVENTS_COUNT;
-}*/
 
 #endif

@@ -27,22 +27,9 @@
 
 class CVisualAlert {
 public:
-	//enum Stage { DWELL, GESTURE };
-	//CVisualAlert(Stage stg);
-	
 	~CVisualAlert();
-	
-	// TODO: modify to remove 2 first parameters
-	//void Update(long xIni, long yIni, long x, long y, int percent);
-	//void End(long xIni, long yIni);
-
 protected:
 	CVisualAlert();
-	//Stage m_stage;
-	//int m_oldRadius;
-	//int m_oldX;
-	//int m_oldY;
-	
 #if defined(__WXGTK__)
 	Display* m_display;
 	Window m_window;
