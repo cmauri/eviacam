@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        wcameradialog.h
 // Purpose:     
-// Author:      César Mauri Loba
+// Author:      Cï¿½sar Mauri Loba
 // Modified by: 
 // Created:     Fri 22 Oct 2010 10:02:49 CEST
 // RCS-ID:      
@@ -26,7 +26,7 @@
  */
 
 ////@begin forward declarations
-class wxBoxSizer;
+class wxFlexGridSizer;
 ////@end forward declarations
 class CCamera;
 class CCameraControl;
@@ -38,11 +38,10 @@ class CCameraControl;
 ////@begin control identifiers
 #define ID_WCAMERADIALOG 10104
 #define ID_SCROLLEDWINDOW1 10111
-#define ID_PANEL2 10112
 #define SYMBOL_WCAMERADIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxDIALOG_MODAL|wxTAB_TRAVERSAL
-#define SYMBOL_WCAMERADIALOG_TITLE _("Camera Dialog")
+#define SYMBOL_WCAMERADIALOG_TITLE _("Camera settings")
 #define SYMBOL_WCAMERADIALOG_IDNAME ID_WCAMERADIALOG
-#define SYMBOL_WCAMERADIALOG_SIZE wxSize(-1, 100)
+#define SYMBOL_WCAMERADIALOG_SIZE wxDefaultSize
 #define SYMBOL_WCAMERADIALOG_POSITION wxDefaultPosition
 ////@end control identifiers
 
@@ -108,15 +107,15 @@ public:
     /// Should we show tooltips?
     static bool ShowToolTips();
 	
-	wxSizer* ControlNumberWidget (const CCameraControl& cc, wxPanel* panel);
+	void CreateCameraControlWidget (const CCameraControl& cc, wxWindow* parent, wxSizer* sizer);
 
 ////@begin WCameraDialog member variables
-    wxBoxSizer* m_bsizerListControls;
+    wxScrolledWindow* m_scrollWindow;
+    wxFlexGridSizer* m_controlsSizer;
 ////@end WCameraDialog member variables
 	CCamera* m_pCamera;
 	int m_lastId;
 	vector<ControlInfo> m_controlList;
-	vector<wxSizer*> m_sizerList;
 };
 
 #endif

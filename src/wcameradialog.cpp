@@ -85,10 +85,6 @@ bool WCameraDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     wxDialog::Create( parent, id, caption, pos, size, style );
 
     CreateControls();
-    if (GetSizer())
-    {
-        GetSizer()->SetSizeHints(this);
-    }
     Centre();
 ////@end WCameraDialog creation
     return true;
@@ -113,7 +109,8 @@ WCameraDialog::~WCameraDialog()
 void WCameraDialog::Init()
 {
 ////@begin WCameraDialog member initialisation
-    m_bsizerListControls = NULL;
+    m_scrollWindow = NULL;
+    m_controlsSizer = NULL;
 ////@end WCameraDialog member initialisation
 	m_pCamera = NULL;
 	m_lastId = FIRST_CONTROL_ID;
@@ -129,51 +126,50 @@ void WCameraDialog::CreateControls()
 ////@begin WCameraDialog content construction
     WCameraDialog* itemDialog1 = this;
 
-    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    itemDialog1->SetSizer(itemBoxSizer2);
+    m_scrollWindow = new wxScrolledWindow( itemDialog1, ID_SCROLLEDWINDOW1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxVSCROLL );
+    m_scrollWindow->SetScrollbars(10, 10, 10, 10);
+    m_controlsSizer = new wxFlexGridSizer(0, 3, 0, 0);
+    m_scrollWindow->SetSizer(m_controlsSizer);
 
-    wxScrolledWindow* itemScrolledWindow3 = new wxScrolledWindow( itemDialog1, ID_SCROLLEDWINDOW1, wxDefaultPosition, wxSize(500, 1000), wxSUNKEN_BORDER|wxVSCROLL );
-    itemBoxSizer2->Add(itemScrolledWindow3, 0, wxALIGN_LEFT|wxALL, 5);
-    itemScrolledWindow3->SetScrollbars(10, 10, 10, 10);
-    wxPanel* itemPanel4 = new wxPanel( itemScrolledWindow3, ID_PANEL2, wxDefaultPosition, wxSize(500, 1000), wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
-    m_bsizerListControls = new wxBoxSizer(wxVERTICAL);
-    itemPanel4->SetSizer(m_bsizerListControls);
-
-    itemScrolledWindow3->SetMinSize(wxSize(500, 1000));
+    m_scrollWindow->SetMinSize(wxDefaultSize);
 
 ////@end WCameraDialog content construction
 
-	unsigned int numControl;
-	wxSizer* sizer;
+   // m_scrollWindow->FitInside();
+//   m_scrollWindow->SetScrollRate(10,10);
+ //  itemBoxSizer4->FitInside(m_scrollWindow);
+
+	//wxSizer* sizer;
 	
-	for (numControl=0; numControl < m_pCamera->GetCameraControlsCount(); numControl++)
-	{
-		sizer = ControlNumberWidget( *(m_pCamera->GetCameraControl(numControl)), itemPanel4 );
-		m_sizerList.push_back(sizer);
-	}
+	for (unsigned int numControl= 0; numControl < m_pCamera->GetCameraControlsCount(); numControl++)
+		CreateCameraControlWidget( *(m_pCamera->GetCameraControl(numControl)), m_scrollWindow, m_controlsSizer);
+		
+	m_controlsSizer->FitInside(m_scrollWindow);
 	
+	//wxSize size= m_controlsSizer->GetSize();
+	
+	//printf ("Size: %d, %d\n", size.GetWidth(), size.GetHeight());
+	//itemDialog1->SetSize( size.GetWidth()+20, size.GetHeight());
 }
 
 
-wxSizer* WCameraDialog::ControlNumberWidget (const CCameraControl& cc, wxPanel* panel)
+void WCameraDialog::CreateCameraControlWidget (const CCameraControl& cc, wxWindow* parent, wxSizer* sizer)
 {
 	ControlInfo ci;
 	ci.cc = &cc;
-			
-	wxBoxSizer* itemBoxSizer = new wxBoxSizer(wxHORIZONTAL);
-	m_bsizerListControls->Add(itemBoxSizer, 0, wxALIGN_LEFT|wxALL, 5);
-	
-	wxStaticText* itemStaticText = new wxStaticText( panel, m_lastId+1, wxString(cc.GetName(),wxConvUTF8), wxDefaultPosition, wxSize(100, -1), 0 );
-	itemBoxSizer->Add(itemStaticText, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	wxStaticText* itemStaticText = new wxStaticText( parent, m_lastId+1, wxString(cc.GetName(),wxConvUTF8) + _T(":"), wxDefaultPosition, wxDefaultSize, 0); // wxSize(-1, -1), 0 );
+	sizer->Add(itemStaticText, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	switch (cc.GetType())
 	{
 		case CCameraControl::CCTYPE_BOOLEAN:
 		{	
-			wxCheckBox* itemCheckBox = new wxCheckBox( panel, m_lastId+2, _(""), wxDefaultPosition, wxDefaultSize, 0 );
+			wxCheckBox* itemCheckBox = new wxCheckBox( parent, m_lastId+2, _(""), wxDefaultPosition, wxDefaultSize, 0 );
 			itemCheckBox->SetValue(cc.GetValue());
-			itemBoxSizer->Add(itemCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-			
+			sizer->Add(itemCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+			sizer->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+            
 			ci.type.checkbox = itemCheckBox;
 			itemCheckBox->Connect(m_lastId+2, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(WCameraDialog::OnCheckboxClick), NULL, this);						
 		}		
@@ -185,9 +181,10 @@ wxSizer* WCameraDialog::ControlNumberWidget (const CCameraControl& cc, wxPanel* 
 			for (int i=0; i<=cc.GetMaximumValue(); i++)
 				choiceStrings.Add(wxString (cc.GetChoiceName(i), wxConvUTF8));
 				
-			wxChoice* itemChoice = new wxChoice( panel, m_lastId+2, wxDefaultPosition, wxDefaultSize, choiceStrings, 0 );
+			wxChoice* itemChoice = new wxChoice( parent, m_lastId+2, wxDefaultPosition, wxDefaultSize, choiceStrings, 0 );
 			itemChoice->SetSelection(cc.GetValue());		
-			itemBoxSizer->Add(itemChoice, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+			sizer->Add(itemChoice, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+            sizer->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 			
 			ci.type.choice = itemChoice;
 			itemChoice->Connect(m_lastId+2, wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler(WCameraDialog::OnChoiceSelected), NULL, this);						
@@ -196,25 +193,23 @@ wxSizer* WCameraDialog::ControlNumberWidget (const CCameraControl& cc, wxPanel* 
 	
 		case CCameraControl::CCTYPE_NUMBER:
 		{
-			wxSlider* itemSlider = new wxSlider( panel, m_lastId+2, cc.GetValue(), cc.GetMinimumValue(), cc.GetMaximumValue(), wxDefaultPosition, wxSize(200, -1), wxSL_HORIZONTAL );
-			itemBoxSizer->Add(itemSlider, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+			wxSlider* itemSlider = new wxSlider( parent, m_lastId+2, cc.GetValue(), cc.GetMinimumValue(), cc.GetMaximumValue(), wxDefaultPosition, wxSize(100, -1), wxSL_HORIZONTAL );
+			sizer->Add(itemSlider, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-			wxTextCtrl* itemTextCtrl = new wxTextCtrl( panel, m_lastId+3, wxString::Format(wxT("%i"),cc.GetValue()), wxDefaultPosition, wxDefaultSize, 0 );
+			wxTextCtrl* itemTextCtrl = new wxTextCtrl( parent, m_lastId+3, wxString::Format(wxT("%i"),cc.GetValue()), wxDefaultPosition, wxDefaultSize, 0 );
 			itemTextCtrl->SetEditable(false);		
-			itemBoxSizer->Add(itemTextCtrl, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+			sizer->Add(itemTextCtrl, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 			
 			ci.type.slider = itemSlider;
 			ci.textCtrl = itemTextCtrl;
 			
-			itemSlider->Connect(m_lastId+2, wxEVT_COMMAND_SLIDER_UPDATED, wxCommandEventHandler(WCameraDialog::OnSliderUpdated), NULL, this);				
+			itemSlider->Connect(m_lastId+2, wxEVT_COMMAND_SLIDER_UPDATED, wxCommandEventHandler(WCameraDialog::OnSliderUpdated), NULL, this);
 		}
 		break;
 	
 	}
 	m_lastId += 4;
 	m_controlList.push_back(ci);
-	
-    return itemBoxSizer;
 }
 
 
