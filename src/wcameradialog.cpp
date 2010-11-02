@@ -47,6 +47,8 @@ IMPLEMENT_DYNAMIC_CLASS( WCameraDialog, wxDialog )
 BEGIN_EVENT_TABLE( WCameraDialog, wxDialog )
 
 ////@begin WCameraDialog event table entries
+    EVT_BUTTON( ID_BUTTON_CAMDIALOG_CLOSE, WCameraDialog::OnButtonCamdialogCloseClick )
+
 ////@end WCameraDialog event table entries
 
 END_EVENT_TABLE()
@@ -85,6 +87,10 @@ bool WCameraDialog::Create( wxWindow* parent, wxWindowID id, const wxString& cap
     wxDialog::Create( parent, id, caption, pos, size, style );
 
     CreateControls();
+    if (GetSizer())
+    {
+        GetSizer()->SetSizeHints(this);
+    }
     Centre();
 ////@end WCameraDialog creation
     return true;
@@ -126,30 +132,36 @@ void WCameraDialog::CreateControls()
 ////@begin WCameraDialog content construction
     WCameraDialog* itemDialog1 = this;
 
-    m_scrollWindow = new wxScrolledWindow( itemDialog1, ID_SCROLLEDWINDOW1, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxVSCROLL );
+    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
+    itemDialog1->SetSizer(itemBoxSizer2);
+
+    wxPanel* itemPanel3 = new wxPanel( itemDialog1, ID_PANEL2, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+    itemBoxSizer2->Add(itemPanel3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    m_scrollWindow = new wxScrolledWindow( itemPanel3, ID_SCROLLEDWINDOW1, wxDefaultPosition, wxSize(500, 400), wxSUNKEN_BORDER|wxVSCROLL );
     m_scrollWindow->SetScrollbars(10, 10, 10, 10);
     m_controlsSizer = new wxFlexGridSizer(0, 3, 0, 0);
     m_scrollWindow->SetSizer(m_controlsSizer);
 
-    m_scrollWindow->SetMinSize(wxDefaultSize);
+    m_scrollWindow->FitInside();
+
+    wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer2->Add(itemBoxSizer6, 0, wxALIGN_RIGHT|wxALL, 5);
+
+    wxButton* itemButton7 = new wxButton( itemDialog1, ID_BUTTON_CAMDIALOG_CLOSE, _("Close"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer6->Add(itemButton7, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 ////@end WCameraDialog content construction
-
-   // m_scrollWindow->FitInside();
-//   m_scrollWindow->SetScrollRate(10,10);
- //  itemBoxSizer4->FitInside(m_scrollWindow);
-
-	//wxSizer* sizer;
 	
+	// Add controls
 	for (unsigned int numControl= 0; numControl < m_pCamera->GetCameraControlsCount(); numControl++)
 		CreateCameraControlWidget( *(m_pCamera->GetCameraControl(numControl)), m_scrollWindow, m_controlsSizer);
-		
-	m_controlsSizer->FitInside(m_scrollWindow);
-	
-	//wxSize size= m_controlsSizer->GetSize();
-	
-	//printf ("Size: %d, %d\n", size.GetWidth(), size.GetHeight());
-	//itemDialog1->SetSize( size.GetWidth()+20, size.GetHeight());
+
+	// TODO: automatically set size to fit content
+//	wxSize size= m_controlsSizer->GetSize();
+//	printf ("Size: %d, %d\n", size.GetWidth(), size.GetHeight());
+//	size= m_scrollWindow->GetSize();	
+//	printf ("Size: %d, %d\n", size.GetWidth(), size.GetHeight());
 }
 
 
@@ -270,3 +282,14 @@ void WCameraDialog::OnSliderUpdated( wxCommandEvent& event )
 	m_controlList[(event.GetId()-FIRST_CONTROL_ID)/4].textCtrl->SetValue(wxString::Format(wxT("%i"), cc->GetValue()));
 	event.Skip(false);
 }
+
+/*!
+ * wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_CAMDIALOG_CLOSE
+ */
+
+void WCameraDialog::OnButtonCamdialogCloseClick( wxCommandEvent& event )
+{
+	this->EndModal(0);
+	event.Skip(false);
+}
+

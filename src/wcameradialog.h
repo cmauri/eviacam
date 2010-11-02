@@ -37,7 +37,9 @@ class CCameraControl;
 
 ////@begin control identifiers
 #define ID_WCAMERADIALOG 10104
+#define ID_PANEL2 10123
 #define ID_SCROLLEDWINDOW1 10111
+#define ID_BUTTON_CAMDIALOG_CLOSE 10124
 #define SYMBOL_WCAMERADIALOG_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxDIALOG_MODAL|wxTAB_TRAVERSAL
 #define SYMBOL_WCAMERADIALOG_TITLE _("Camera settings")
 #define SYMBOL_WCAMERADIALOG_IDNAME ID_WCAMERADIALOG
@@ -89,6 +91,9 @@ public:
     void CreateControls();
 
 ////@begin WCameraDialog event handler declarations
+
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_CAMDIALOG_CLOSE
+    void OnButtonCamdialogCloseClick( wxCommandEvent& event );
 
 ////@end WCameraDialog event handler declarations
 	void OnCheckboxClick( wxCommandEvent& event );
