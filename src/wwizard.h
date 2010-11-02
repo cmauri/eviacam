@@ -19,6 +19,7 @@
 
 ////@begin includes
 #include "wx/wizard.h"
+#include "wx/statline.h"
 #include "wx/spinctrl.h"
 #include "wx/tglbtn.h"
 ////@end includes
