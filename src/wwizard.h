@@ -50,6 +50,7 @@ class CViacamController;
 #define ID_WWIZARD 10090
 #define ID_WIZARDPAGE 10091
 #define ID_WIZARDPAGE5 10115
+#define ID_BUTTON5 10124
 #define ID_WIZARDPAGE1 10093
 #define ID_CHECKBOX_PERFORM_CALIBRATION 10095
 #define ID_WIZARDPAGE2 10096
@@ -66,6 +67,7 @@ class CViacamController;
 #define ID_WIZARDPAGE4 10103
 #define ID_CHECKBOX1 10092
 #define ID_CHECKBOX3 10101
+#define ID_CHECKBOX4 10123
 #define SYMBOL_WWIZARD_IDNAME ID_WWIZARD
 ////@end control identifiers
 
@@ -473,8 +475,13 @@ public:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX1
     void OnCheckboxRunWizardAtStartupClick( wxCommandEvent& event );
 
+#if defined(__WXGTK__)
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX3
     void OnCheckboxStartupClick( wxCommandEvent& event );
+
+#endif
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX4
+    void OnCheckboxEnabledAtStartupClick( wxCommandEvent& event );
 
 ////@end WizardPage4 event handler declarations
 
@@ -492,7 +499,10 @@ public:
 
 ////@begin WizardPage4 member variables
     wxCheckBox* m_chkRunWizardAtStartup;
+#if defined(__WXGTK__)
     wxCheckBox* m_chkStartup;
+#endif
+    wxCheckBox* m_chkEnabledAtStartup;
 ////@end WizardPage4 member variables
 	WWizard* m_wizardParent;
 };
@@ -526,6 +536,9 @@ public:
 
 ////@begin WizardPage5 event handler declarations
 
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON5
+    void OnButtonCameraSettingsClick( wxCommandEvent& event );
+
 ////@end WizardPage5 event handler declarations
 
 ////@begin WizardPage5 member function declarations
@@ -543,6 +556,7 @@ public:
 ////@begin WizardPage5 member variables
     wxStaticText* m_staticCameraName;
     wxStaticText* m_staticFramerate;
+    wxButton* m_btnCameraSettings;
 ////@end WizardPage5 member variables
 	WWizard* m_wizardParent;
 };
