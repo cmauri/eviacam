@@ -77,12 +77,12 @@ private:
 	TImageFormat m_currentFormat;
 	std::vector<uint32_t> m_supportedPixelFormats;
 	std::vector<CCameraControlV4l2> m_cameraControls;
-			
+
 	// Private methods
 	bool DoOpen();
 	ECaptureMethod DetectCaptureMethod();
-	bool DetectBestImageFormat(TImageFormat& imgformat);
-	bool SetImageFormat(const TImageFormat& imgformat);
+	bool DetectBestImageFormat();
+	bool SetImageFormat();
 	bool EnableVideo(bool enable);
 	bool AllocateBuffers();
 	bool DeallocateBuffers();

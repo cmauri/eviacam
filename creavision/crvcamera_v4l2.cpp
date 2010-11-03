@@ -142,6 +142,10 @@
 * returns - ioctl result
 * Based on xioctl from guvcview
 */
+// TODO: this is code borrowed from Paulo's guvcview, but here
+// it seems useless because we don't open the device in non-blocking mode
+// Considered either removing or opening device in non-blocking mode
+// See sleep TODO below
 static
 int xioctl(int fd, int IOCTL_X, void *arg)
 {
@@ -304,7 +308,8 @@ bool CCameraV4L2::RequestBuffers(enum v4l2_memory mem)
 	requestbuffers.count= STREAMING_CAPTURE_NBUFFERS;
 	requestbuffers.type= V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	requestbuffers.memory= mem; //V4L2_MEMORY_MMAP;
-	if (ioctl(m_Fd, VIDIOC_REQBUFS, &requestbuffers)== 0) {
+	//if (ioctl(m_Fd, VIDIOC_REQBUFS, &requestbuffers)== 0) {
+	if (xioctl(m_Fd, VIDIOC_REQBUFS, &requestbuffers)== 0) {
 		if (requestbuffers.count== STREAMING_CAPTURE_NBUFFERS) return true;
 		if (requestbuffers.count> 0) UnRequestBuffers(mem);		
 	}
@@ -321,7 +326,8 @@ bool CCameraV4L2::UnRequestBuffers(enum v4l2_memory mem)
 	requestbuffers.count= 0;
 	requestbuffers.type= V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	requestbuffers.memory= mem; //V4L2_MEMORY_MMAP;
-	if (ioctl(m_Fd, VIDIOC_REQBUFS, &requestbuffers)== 0) return true;
+	//if (ioctl(m_Fd, VIDIOC_REQBUFS, &requestbuffers)== 0) return true;
+	if (xioctl(m_Fd, VIDIOC_REQBUFS, &requestbuffers)== 0) return true;
 	return false;
 }
 	
@@ -331,7 +337,8 @@ CCameraV4L2::ECaptureMethod CCameraV4L2::DetectCaptureMethod()
 	struct v4l2_capability capability;	
 
 	// Query basic capabilities. This never should fail
-	if (-1 == ioctl (m_Fd, VIDIOC_QUERYCAP, &capability)) {
+	if (xioctl (m_Fd, VIDIOC_QUERYCAP, &capability)!= 0) {
+	//if (ioctl (m_Fd, VIDIOC_QUERYCAP, &capability)!= 0) {
 #if !defined(NDEBUG)
 		fprintf (stderr, "ERROR: Cannot query camera capabilities: VIDIOC_QUERYCAP ioctl failed\n");
 #endif
@@ -347,7 +354,7 @@ CCameraV4L2::ECaptureMethod CCameraV4L2::DetectCaptureMethod()
 
 	// Driver supports streaming
 	if ((capability.capabilities & V4L2_CAP_STREAMING)) {
-		// Streaming supported. What kind?
+		// Streaming supported. Which kind?
 		// It can be V4L2_MEMORY_MMAP or V4L2_MEMORY_USERPTR
 
 		// Check MMAP first as preferent option
@@ -468,7 +475,7 @@ static void SelectBestFramePixelNumber (unsigned int npixels, std::list<TImageFo
 // each field or 0 to express that any possibility is fine or UINT_MAX to request
 // the maximum available value. 
 
-bool CCameraV4L2::DetectBestImageFormat(TImageFormat& imgformat)
+bool CCameraV4L2::DetectBestImageFormat()
 {
 	std::list<TImageFormatEx> availableFormats;
 
@@ -591,17 +598,17 @@ bool CCameraV4L2::DetectBestImageFormat(TImageFormat& imgformat)
 	if (availableFormats.size()== 0) return false;
 
 	// As for realtime computer vision frame rate is usually a critical parameter we first choose it.
-	SelectBestFrameRate (imgformat.frame_rate, availableFormats);
+	SelectBestFrameRate (m_currentFormat.frame_rate, availableFormats);
 	
 	// Sizes. Chooses closest number of pixel (width*height) to the requested
-	SelectBestFramePixelNumber (imgformat.width * imgformat.height, availableFormats);
+	SelectBestFramePixelNumber (m_currentFormat.width * m_currentFormat.height, availableFormats);
 	
 	// Check aspect ratio
 	//TODO: Check weird errors. floating point errors.	
-	if (imgformat.width> 0 && imgformat.height> 0) {
+	if (m_currentFormat.width> 0 && m_currentFormat.height> 0) {
 		float bestdiff= FLT_MAX;
-		float aratio= (float) imgformat.width / (float) imgformat.height;
-		// Find closest frame ratio	
+		float aratio= (float) m_currentFormat.width / (float) m_currentFormat.height;
+		// Find closest frame ratio
 		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
 			float diff= abs_distance_to_range<float> ((float)i->min_width / (float)i->max_height, (float)i->max_width / (float)i->min_height, aratio);
 			if (diff< bestdiff) bestdiff= diff;
@@ -619,15 +626,15 @@ bool CCameraV4L2::DetectBestImageFormat(TImageFormat& imgformat)
 
 	
 	// If frame rate not explicity specified then selects highest fr available
-	if (imgformat.frame_rate== 0) {
-		imgformat.frame_rate= UINT_MAX;
-		SelectBestFrameRate (imgformat.frame_rate, availableFormats);
+	if (m_currentFormat.frame_rate== 0) {
+		m_currentFormat.frame_rate= UINT_MAX;
+		SelectBestFrameRate (m_currentFormat.frame_rate, availableFormats);
 	}
 	
 	// If frame size not explicity specified then selects bigger frame size available
-	if (imgformat.width== 0 || imgformat.height== 0) {
-		if (!imgformat.width) imgformat.width= UINT_MAX;
-		if (!imgformat.height) imgformat.height= UINT_MAX;		
+	if (m_currentFormat.width== 0 || m_currentFormat.height== 0) {
+		if (!m_currentFormat.width) m_currentFormat.width= UINT_MAX;
+		if (!m_currentFormat.height) m_currentFormat.height= UINT_MAX;		
 		SelectBestFramePixelNumber (UINT_MAX, availableFormats);
 	}
 	
@@ -636,10 +643,10 @@ bool CCameraV4L2::DetectBestImageFormat(TImageFormat& imgformat)
 		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
 			if (m_supportedPixelFormats[ienc]== i->pixelformat) {
 				// Bingo! Store data and finish
-				imgformat.pixelformat= m_supportedPixelFormats[ienc];
-				imgformat.frame_rate= range_value_fit (i->min_frame_rate, i->max_frame_rate, i->step_frame_rate, imgformat.frame_rate);
-				imgformat.width= range_value_fit (i->min_width, i->max_width, i->step_width, imgformat.width);
-				imgformat.height= range_value_fit (i->min_height, i->max_height, i->step_height, imgformat.height);
+				m_currentFormat.pixelformat= m_supportedPixelFormats[ienc];
+				m_currentFormat.frame_rate= range_value_fit (i->min_frame_rate, i->max_frame_rate, i->step_frame_rate, m_currentFormat.frame_rate);
+				m_currentFormat.width= range_value_fit (i->min_width, i->max_width, i->step_width, m_currentFormat.width);
+				m_currentFormat.height= range_value_fit (i->min_height, i->max_height, i->step_height, m_currentFormat.height);
 				return true;
 			}
 		}
@@ -650,31 +657,33 @@ bool CCameraV4L2::DetectBestImageFormat(TImageFormat& imgformat)
 	return false;
 }
 
-bool CCameraV4L2::SetImageFormat(const TImageFormat& imgformat)
+bool CCameraV4L2::SetImageFormat()
 {
 	struct v4l2_format format;
 	
 	//Set frame format
 	memset (&format, 0, sizeof (format));
 	format.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-
-	if (ioctl (m_Fd, VIDIOC_G_FMT, &format)== -1) {
+	if (xioctl (m_Fd, VIDIOC_G_FMT, &format)== -1) {
+	//if (ioctl (m_Fd, VIDIOC_G_FMT, &format)== -1) {
 		fprintf(stderr, "ERROR: Unable to get format.\n");
 		return false;	
 	}
 	
-	format.fmt.pix.width = imgformat.width;
-	format.fmt.pix.height = imgformat.height;
-	format.fmt.pix.pixelformat = imgformat.pixelformat;
+	format.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+	format.fmt.pix.width = m_currentFormat.width;
+	format.fmt.pix.height = m_currentFormat.height;
+	format.fmt.pix.pixelformat = m_currentFormat.pixelformat;
 	format.fmt.pix.field = V4L2_FIELD_ANY;
 
-	if (ioctl (m_Fd, VIDIOC_S_FMT, &format)== -1) {
+	if (xioctl (m_Fd, VIDIOC_S_FMT, &format)== -1) {
+	//if (ioctl (m_Fd, VIDIOC_S_FMT, &format)== -1) {
 		fprintf(stderr, "ERROR: Unable to set format.\n");
 		return false;	
 	}
 	
 	// Store currently set format (last VIDIOC_S_FMT may have changed it)
-	m_currentFormat.frame_rate= imgformat.frame_rate;
+	//m_currentFormat.frame_rate= imgformat.frame_rate;
 	m_currentFormat.width= format.fmt.pix.width;
 	m_currentFormat.height= format.fmt.pix.height;
 	m_currentFormat.pixelformat= format.fmt.pix.pixelformat;	
@@ -685,29 +694,50 @@ bool CCameraV4L2::SetImageFormat(const TImageFormat& imgformat)
 		struct video_window vwin;
 
 		// Using a PWC based camera
-		if ((ioctl(m_Fd, VIDIOCGWIN, &vwin) == 0) && (vwin.flags & PWC_FPS_FRMASK)) {
+		if ((xioctl(m_Fd, VIDIOCGWIN, &vwin) == 0) && (vwin.flags & PWC_FPS_FRMASK)) {
+		//if ((ioctl(m_Fd, VIDIOCGWIN, &vwin) == 0) && (vwin.flags & PWC_FPS_FRMASK)) {
 			vwin.flags &= ~PWC_FPS_FRMASK;
-			vwin.flags |= (imgformat.frame_rate << PWC_FPS_SHIFT);
-			if (ioctl(m_Fd, VIDIOCSWIN, &vwin) == 0) properlySet= true;
+			vwin.flags |= (m_currentFormat.frame_rate << PWC_FPS_SHIFT);
+			if (xioctl(m_Fd, VIDIOCSWIN, &vwin) == 0) properlySet= true;
+			//if (ioctl(m_Fd, VIDIOCSWIN, &vwin) == 0) properlySet= true;
 		}
 
-		if (!properlySet) fprintf (stderr, "Warning: cannot set FPS: %d for PWC camera\n", imgformat.frame_rate);
+		if (!properlySet) fprintf (stderr, "Warning: cannot set FPS: %d for PWC camera\n", m_currentFormat.frame_rate);
 	}
 	else {
-		bool properlySet= false;
 		struct v4l2_streamparm parm;
 
 		// An UVC camera is assumed
 		memset(&parm, 0, sizeof (parm));
 		parm.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	
-		if (ioctl (m_Fd, VIDIOC_G_PARM, &parm)== 0) {
+		// Firstly try to get current v4l2_streamparm parameters
+		if (xioctl (m_Fd, VIDIOC_G_PARM, &parm)== 0) {
+		//if (ioctl (m_Fd, VIDIOC_G_PARM, &parm)== 0) {
 			parm.parm.capture.timeperframe.numerator = 1;
-			parm.parm.capture.timeperframe.denominator = imgformat.frame_rate;
-			if (ioctl(m_Fd, VIDIOC_S_PARM, &parm)== 0) properlySet= true;
+			parm.parm.capture.timeperframe.denominator = m_currentFormat.frame_rate;
+			if (xioctl(m_Fd, VIDIOC_S_PARM, &parm)!= 0) {
+			//if (ioctl(m_Fd, VIDIOC_S_PARM, &parm)!= 0) {
+				// Show warning and continue
+				fprintf (stderr, "Warning: cannot set FPS: %d for UVC camera\n", m_currentFormat.frame_rate);
+			}
+			
+			// Read values again and store actual values
+			if (xioctl (m_Fd, VIDIOC_G_PARM, &parm)== 0) {
+			//if (ioctl (m_Fd, VIDIOC_G_PARM, &parm)== 0) {
+				// Set failed, store read values
+				m_currentFormat.frame_rate= 0;
+				if (parm.parm.capture.timeperframe.denominator)
+					m_currentFormat.frame_rate= parm.parm.capture.timeperframe.denominator / parm.parm.capture.timeperframe.numerator;
+			}
+			else
+				fprintf (stderr, "Warning: cannot read again VIDIOC_G_PARM\n");
 		}
-		if (!properlySet) fprintf (stderr, "Warning: cannot set FPS: %d for UVC camera\n", imgformat.frame_rate);
-		
+		else {
+			fprintf (stderr, "Error: VIDIOC_G_PARM for UVC camera\n");
+			return false;
+		}
+	
 		// Try to set exposure control to match desired frame ratio
 		for (unsigned int i= 0; i< m_cameraControls.size(); ++i) {
 			if (m_cameraControls[i].GetId()== CCameraControl::CAM_AUTO_EXPOSURE_PRIORITY) {
@@ -819,16 +849,7 @@ bool CCameraV4L2::AllocateBuffers()
 				UnRequestBuffers(V4L2_MEMORY_MMAP);
 				return false;
 			}
-		}
-		/* 			
-		// Result image			
-		// TODO: make sure that image is not initialized with padded rows
-		if (!m_resultImage.Create (m_currentFormat.width, m_currentFormat.height, IPL_DEPTH_8U, "BGR", IPL_ORIGIN_TL, IPL_ALIGN_DWORD )) {
-			fprintf (stderr, "Cannot create result image\n");
-			UnmapBuffers();
-			UnRequestBuffers(V4L2_MEMORY_MMAP);
-			return false;
-		}*/
+		}		
 	}
 	else if (m_captureMethod== CAP_STREAMING_USR) {
 		fprintf (stderr, "ERROR: AllocateBuffers: CAP_STREAMING_USR not implemented\n");
@@ -876,28 +897,20 @@ bool CCameraV4L2::Open ()
 {
 	if (m_Fd!= -1) return true;	// Already open	
 	if (!DoOpen()) return false;
-
-	TImageFormat imgformat;	
-	memset(&imgformat, 0, sizeof(imgformat));
 	
 	// TODO: set values from constructor/parameters
-	imgformat.frame_rate= 30;
-	imgformat.width= 320;
-	imgformat.height= 240;
+	m_currentFormat.frame_rate= 30;
+	m_currentFormat.width= 320;
+	m_currentFormat.height= 240;
+	m_currentFormat.pixelformat= 0;
 	// TODO: set values from constructor/parameters
 	
-	if (false)
-		// TODO: Workaround for PWC cameras. It seems that is not possible
-		// to open a device twice and fails when trying to enumerate formats
-		imgformat.pixelformat= V4L2_PIX_FMT_YUV420;
-	else
-		if (!DetectBestImageFormat(imgformat)) {
-			fprintf (stderr, "Unable to find any suitable image format\n");
-			Close();
-			return false;
-		}
-		
-	if (!SetImageFormat(imgformat)) {
+	if (!DetectBestImageFormat()) {
+		fprintf (stderr, "Unable to find any suitable image format\n");
+		Close();
+		return false;
+	}
+	if (!SetImageFormat()) {
 		Close();
 		return false;
 	}
@@ -906,20 +919,21 @@ bool CCameraV4L2::Open ()
 		fprintf (stderr, "Unable to find a suitable capure mode\n");
 		Close();
 		return false;
-	}	
+	}
+	
+	if (!AllocateBuffers()) {
+		fprintf (stderr, "Unable to allocate buffers\n");
+		Close();
+		return false;
+	}
 	// Result image	
 	// TODO: correct the V4L2_PIX_FMT_YUV420 conversion routine
 	const char* planeOrder;
-	if (imgformat.pixelformat== V4L2_PIX_FMT_YUV420) planeOrder= "BGR";
+	if (m_currentFormat.pixelformat== V4L2_PIX_FMT_YUV420) planeOrder= "BGR";
 	else planeOrder= "RGB";
 	// TODO: make sure that image is not initialized with padded rows
 	if (!m_resultImage.Create (m_currentFormat.width, m_currentFormat.height, IPL_DEPTH_8U, planeOrder, IPL_ORIGIN_TL, IPL_ALIGN_DWORD )) {
 		fprintf (stderr, "Cannot create result image\n");		
-		Close();
-		return false;
-	}
-	if (!AllocateBuffers()) {
-		fprintf (stderr, "Unable to allocate buffers\n");
 		Close();
 		return false;
 	}
@@ -929,6 +943,10 @@ bool CCameraV4L2::Open ()
 		Close();
 		return false;
 	}
+	
+	// TODO: Awful. This is a provisional solution to avoid broken frames while capturing.
+	// It seems as if the driver/camera needs some time before start grabbing.
+	sleep (1);
 	return true;
 }
 
@@ -960,7 +978,7 @@ bool CCameraV4L2::Open ()
  */
 
 /* LIMIT: convert a 16.16 fixed-point value to a byte, with clipping. */
-#define LIMIT(x) ((x)>0xffffff?0xff: ((x)<=0xffff?0:((x)>>16)))
+#define LIMIT(x) ((unsigned char)((x)>0xffffff?0xff: ((x)<=0xffff?0:((x)>>16))))
 
 static inline void move_420_block(int yTL, int yTR, int yBL, int yBR, int u, int v, int rowPixels, unsigned char * rgb)
 {
@@ -1218,6 +1236,7 @@ IplImage *CCameraV4L2::QueryFrame()
 	else if (m_resultImage.ptr()->origin == 0 && m_horizontalFlip)
 		cvFlip (m_resultImage.ptr(), NULL, 1);
 	
+	
 	return m_resultImage.ptr();
 
 #if 0
@@ -1246,13 +1265,14 @@ void CCameraV4L2::Dump()
 	std::cout << "m_currentFormat.width" << m_currentFormat.width << std::endl;
 	std::cout << "m_currentFormat.height:" << m_currentFormat.height << std::endl;
 	std::cout << "m_currentFormat.pielformat:" <<  m_currentFormat.pixelformat << std::endl;	
-	
+/*	
 	for (unsigned int i= 0; i< m_supportedPixelFormats.size(); ++i)
 		std::cout << "m_supportedPixelFormats[" << i << "]:" << m_supportedPixelFormats[i] << std::endl;
 	for (unsigned int i= 0; i< m_cameraControls.size(); ++i) {
 		std::cout << "m_cameraControls[" << i << "]:\n" << std::endl;
 		 m_cameraControls[i].Dump();
 	}
+	*/
 	std::cout << "CCameraV4L2::Dump(). End\n";
 }
 #endif
