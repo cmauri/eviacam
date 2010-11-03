@@ -62,7 +62,7 @@ void CAutostart::Enable(bool value)
 		wxMkdir(pathOut, 0777);
 		pathOut += wxT("/autostart/");
 	}
-
+	
 	if (value) {
 		wxMkdir(pathOut, 0777);
 		wxCopyFile(pathIn, pathOut + m_fileName, false);
