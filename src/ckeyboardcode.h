@@ -33,6 +33,7 @@ friend class CKeyboardControl;
 
 public:
 	CKeyboardCode(char key);
+	CKeyboardCode(int key);
 	~CKeyboardCode();
 	wxString GetKeyName();
 	void SendKey();

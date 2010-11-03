@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        wconfiguration.cpp
+// Name:        activationkey.cpp
 // Purpose:     
 // Author:      César Mauri Loba
 // Modified by: 
@@ -38,7 +38,7 @@
 #include "activationkey.h"
 
 #include "viacamcontroller.h"
-#include "keyboardbitmapcheck.h"
+#include "ckeyboardcontrol.h"
 #include "wconfiguration.h"
 #include "wx/timer.h"
 
@@ -195,12 +195,11 @@ wxIcon Activationkey::GetIconResource( const wxString& name )
 
 void Activationkey::OnTimer(wxTimerEvent& event)
 {
-	KeySym keyCode = 0;
-	
-	
-	keyCode = CKeyboardBitmapCheck::ReadKeySym();
-	
+	int keyCode = 0;
+	CKeyboardCode kbCode = CKeyboardControl::ReadKeyCode();
 
+	keyCode = CKeyboardControl::GetKeyCode(kbCode);
+	
 	if (keyCode != 0) {
 		if (keyCode != ESCAPE_KEYSYM) {
 			m_keyCode = keyCode;
@@ -209,17 +208,18 @@ void Activationkey::OnTimer(wxTimerEvent& event)
 			EndModal(wxID_NO);
 		}
 		m_timer.Stop();	
-	}	
+	}
 }
 
 int Activationkey::GetKeyCode()
 {
-	return (int) m_keyCode;
+	return m_keyCode;
 }
 
 wxString Activationkey::GetKeyName()
 {
-	return CKeyboardBitmapCheck::GetKeyName(m_keyCode);
+	CKeyboardCode kbCode = CKeyboardCode(m_keyCode);
+	return CKeyboardControl::GetKeyboardCodeName(kbCode);
 }	
 
 /*!

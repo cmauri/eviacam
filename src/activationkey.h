@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        keyboardbitmapcheck.h
+// Name:        activationkey.h
 // Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
@@ -113,8 +113,7 @@ private:
 	wxTimer m_timer;
 	CViacamController* m_pViacamController;
 	WConfiguration* m_pConfiguration;
-	KeySym m_keyCode;
-
+	int m_keyCode;
 };
 
 #endif

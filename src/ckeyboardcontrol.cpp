@@ -40,7 +40,17 @@ CKeyboardCode CKeyboardControl::ReadKeyCode()
 	for(int i=0; i<32; i++) {
 		keys = (unsigned char) keys_return[i];
 		if (keys > 0) {
-			kc = (log(keys) / log(2)) + (8 * i);
+			switch (keys) {
+				case 1:   kc = 0; break;
+				case 2:   kc = 1; break;
+				case 4:   kc = 2; break;
+				case 8:   kc = 3; break;
+				case 16:  kc = 4; break;
+				case 32:  kc = 5; break;
+				case 64:  kc = 6; break;
+				case 128: kc = 7; break;
+			}
+			kc += 8 * i;
 		}
 	}
 	return CKeyboardCode(kc);
@@ -68,4 +78,18 @@ wxString CKeyboardControl::GetKeyboardCodeName(const CKeyboardCode& kc)
 	name = wxString(XKeysymToString(ks), wxConvLocal);
 #endif
 	return name;
+}
+
+int CKeyboardControl::GetKeyCode(const CKeyboardCode& kc)
+{
+	int code = -1;
+#if defined(__WXGTK__)
+	code = (int) kc.GetKeyboardCode();
+#endif
+	return code;
+}
+
+bool CKeyboardControl::Equal(const CKeyboardCode& kc1, const CKeyboardCode& kc2)
+{
+	return (kc1.GetKeyboardCode() == kc2.GetKeyboardCode());
 }

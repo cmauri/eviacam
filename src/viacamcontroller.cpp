@@ -56,7 +56,7 @@
 // Under wxGTK we should protect calls to GUI. Under Windows is not needed
 #if defined(__WXGTK__) 
 #include "activationkey.h"
-#include "keyboardbitmapcheck.h"
+#include "ckeyboardcontrol.h"
 #include "cautostart.h"
 #include <wx/stdpaths.h>
 #include <wx/thread.h>
@@ -470,7 +470,8 @@ void CViacamController::ProcessImage (IplImage *pImage)
 #if defined(__WXGTK__) 
         // Read keyboard
         if (m_enabledActivationKey) {
-		int keyCode = CKeyboardBitmapCheck::ReadKeySym();
+		CKeyboardCode kbCode = CKeyboardControl::ReadKeyCode();
+		int keyCode = CKeyboardControl::GetKeyCode(kbCode);
 		if (keyCode == m_keyCode and keyCode != m_lastKeyCode) {
 			m_pMouseOutput->EndVisualAlerts();
 			SetEnabled(!m_pMouseOutput->GetEnabled(),true);

@@ -36,7 +36,7 @@
 
 #if defined(__WXGTK__) 
 #include <X11/Xlib.h>
-#include "keyboardbitmapcheck.h"
+#include "ckeyboardcontrol.h"
 #include "activationkey.h"
 #endif // __WXGTK___
 #include "cautostart.h"
@@ -266,7 +266,8 @@ inline void CViacamController::SetActivationKeyCode (int value)
 inline const wxString CViacamController::GetActivationKeyName () const
 {
 #if defined(__WXGTK__)
-	return CKeyboardBitmapCheck::GetKeyName(m_keyCode);
+	CKeyboardCode kbCode = CKeyboardCode(m_keyCode);
+	return CKeyboardControl::GetKeyboardCodeName(kbCode);
 #else
 	return wxString(_T(""));
 #endif

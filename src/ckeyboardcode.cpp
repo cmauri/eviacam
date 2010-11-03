@@ -44,6 +44,14 @@ CKeyboardCode::CKeyboardCode(char key)
 #endif	
 }
 
+CKeyboardCode::CKeyboardCode(int key)
+{
+	Init();
+#if defined(__WXGTK__)
+	m_keyboardCode = (KeyCode) key;
+#endif
+}
+
 #if defined(__WXGTK__)
 CKeyboardCode::CKeyboardCode(KeyCode key)
 {

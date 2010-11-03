@@ -31,6 +31,8 @@ public:
 	static CKeyboardCode ReadKeyCode();
 	static void SendKeyboardCode(const CKeyboardCode& kc);
 	static wxString GetKeyboardCodeName(const CKeyboardCode& kc);
+	static int GetKeyCode(const CKeyboardCode& kc);
+	static bool Equal(const CKeyboardCode& kc1, const CKeyboardCode& kc2);
 };
 
 #endif
