@@ -498,7 +498,7 @@ void WizardPage1::CreateControls()
     wxStaticLine* itemStaticLine23 = new wxStaticLine( itemWizardPageSimple19, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     itemBoxSizer20->Add(itemStaticLine23, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticText24 = new wxStaticText( itemWizardPageSimple19, wxID_STATIC, _("Attention, eViacam will be enabled in the next window to calibrate\nthe speed of the pointer.\n\nIf you perform the automatic calibration, the system will asks you to\nmove your head to calibrate the pointer speed. After this calibration,\nyou may adjust the pointer speed manually."), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText24 = new wxStaticText( itemWizardPageSimple19, wxID_STATIC, _("Attention, eViacam will be enabled in the next window to calibrate\nthe speed of the pointer.\n\nIf you perform the automatic calibration, the system will ask you to\nmove your head to calibrate the pointer speed. After this calibration,\nyou may adjust the pointer speed manually."), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer20->Add(itemStaticText24, 0, wxALIGN_LEFT|wxALL, 5);
 
     m_chkPerformCalibration = new wxCheckBox( itemWizardPageSimple19, ID_CHECKBOX_PERFORM_CALIBRATION, _("Perform automatic calibration"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -926,6 +926,7 @@ void WizardPage3::OnWizardpage3Changed( wxWizardEvent& event )
 	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionTop (DOUBLE);
 	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionBottom (DRAG);	
 	
+	m_wizardParent->SetIsMotionEnabled(m_wizardParent->GetViacamController()->GetEnabled());
 	m_wizardParent->GetViacamController()->SetEnabled(true);
 	m_rbDwellClick->SetValue(true);
 	m_rbGestureClick->SetValue(false);
@@ -974,7 +975,7 @@ void WizardPage3::OnRadiobuttonGestureClickSelected( wxCommandEvent& event )
 
 void WizardPage3::OnWizardpage3Changing( wxWizardEvent& event )
 {
-    m_wizardParent->GetViacamController()->SetEnabled(false, true);
+    m_wizardParent->GetViacamController()->SetEnabled(m_wizardParent->GetIsMotionEnabled(), true);
 	m_wizardParent->GetViacamController()->GetClickWindowController()->Show(false);
 	event.Skip(false);
 }
