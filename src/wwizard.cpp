@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        wwizard.cpp
 // Purpose:     
-// Author:      César Mauri Loba
+// Author:      Cï¿½sar Mauri Loba
 // Modified by: 
 // Created:     Mon 18 Oct 2010 09:57:22 CEST
 // RCS-ID:      
@@ -1852,7 +1852,7 @@ void WizardPage4::OnCheckboxEnabledAtStartupClick( wxCommandEvent& event )
 
 void WizardPage5::OnButtonCameraSettingsClick( wxCommandEvent& event )
 {
-	m_wizardParent->GetViacamController()->OpenCameraControlDialog();
-    event.Skip(false);
+	m_wizardParent->GetViacamController()->ShowCameraSettingsDialog();
+	event.Skip(false);
 }
 
