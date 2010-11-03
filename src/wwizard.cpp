@@ -89,7 +89,7 @@ bool WWizard::Create( wxWindow* parent, wxWindowID id, const wxPoint& pos )
 {
 ////@begin WWizard creation
     SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
-    wxBitmap wizardBitmap(GetBitmapResource(wxT("wizard.png")));
+    wxBitmap wizardBitmap(wxNullBitmap);
     wxWizard::Create( parent, id, _("Wizard"), wizardBitmap, pos, wxDEFAULT_DIALOG_STYLE|wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX );
 
     CreateControls();
@@ -136,55 +136,55 @@ void WWizard::CreateControls()
     WizardPage* itemWizardPageSimple2 = new WizardPage( itemWizard1 );
     itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple2);
 
-    WizardPage5* itemWizardPageSimple5 = new WizardPage5( itemWizard1 );
-    itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple5);
+    WizardPage5* itemWizardPageSimple9 = new WizardPage5( itemWizard1 );
+    itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple9);
 
-    WizardPage1* itemWizardPageSimple12 = new WizardPage1( itemWizard1 );
-    itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple12);
-
-    WizardPage2* itemWizardPageSimple17 = new WizardPage2( itemWizard1 );
-    itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple17);
-
-    WizardPage6* itemWizardPageSimple19 = new WizardPage6( itemWizard1 );
+    WizardPage1* itemWizardPageSimple19 = new WizardPage1( itemWizard1 );
     itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple19);
 
-    WizardPage7* itemWizardPageSimple30 = new WizardPage7( itemWizard1 );
-    itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple30);
+    WizardPage2* itemWizardPageSimple26 = new WizardPage2( itemWizard1 );
+    itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple26);
 
-    WizardPage3* itemWizardPageSimple33 = new WizardPage3( itemWizard1 );
-    itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple33);
+    WizardPage6* itemWizardPageSimple31 = new WizardPage6( itemWizard1 );
+    itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple31);
 
-    WizardPage4* itemWizardPageSimple40 = new WizardPage4( itemWizard1 );
-    itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple40);
+    WizardPage7* itemWizardPageSimple44 = new WizardPage7( itemWizard1 );
+    itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple44);
+
+    WizardPage3* itemWizardPageSimple50 = new WizardPage3( itemWizard1 );
+    itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple50);
+
+    WizardPage4* itemWizardPageSimple60 = new WizardPage4( itemWizard1 );
+    itemWizard1->GetPageAreaSizer()->Add(itemWizardPageSimple60);
 
     wxWizardPageSimple* lastPage = NULL;
     if (lastPage)
         wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple2);
     lastPage = itemWizardPageSimple2;
     if (lastPage)
-        wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple5);
-    lastPage = itemWizardPageSimple5;
-    if (lastPage)
-        wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple12);
-    lastPage = itemWizardPageSimple12;
-    if (lastPage)
-        wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple17);
-    lastPage = itemWizardPageSimple17;
+        wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple9);
+    lastPage = itemWizardPageSimple9;
     if (lastPage)
         wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple19);
     lastPage = itemWizardPageSimple19;
     if (lastPage)
-        wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple30);
-    lastPage = itemWizardPageSimple30;
+        wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple26);
+    lastPage = itemWizardPageSimple26;
     if (lastPage)
-        wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple33);
-    lastPage = itemWizardPageSimple33;
+        wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple31);
+    lastPage = itemWizardPageSimple31;
     if (lastPage)
-        wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple40);
-    lastPage = itemWizardPageSimple40;
+        wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple44);
+    lastPage = itemWizardPageSimple44;
+    if (lastPage)
+        wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple50);
+    lastPage = itemWizardPageSimple50;
+    if (lastPage)
+        wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple60);
+    lastPage = itemWizardPageSimple60;
 ////@end WWizard content construction
 	m_isMotionEnabled = m_pViacamController->GetEnabled();
-	m_wizardPage3 = (WizardPage*) itemWizardPageSimple33;
+	m_wizardPage3 = (WizardPage*) itemWizardPageSimple50;
 }
 
 
@@ -232,11 +232,6 @@ wxBitmap WWizard::GetBitmapResource( const wxString& name )
     // Bitmap retrieval
 ////@begin WWizard bitmap retrieval
     wxUnusedVar(name);
-    if (name == _T("wizard.png"))
-    {
-        wxBitmap bitmap(_T("wizard.png"), wxBITMAP_TYPE_PNG);
-        return bitmap;
-    }
     return wxNullBitmap;
 ////@end WWizard bitmap retrieval
 }
@@ -343,9 +338,20 @@ void WizardPage::CreateControls()
     wxBoxSizer* itemBoxSizer3 = new wxBoxSizer(wxVERTICAL);
     itemWizardPageSimple2->SetSizer(itemBoxSizer3);
 
-    wxStaticText* itemStaticText4 = new wxStaticText( itemWizardPageSimple2, wxID_STATIC, _("This wizard guides you through simple steps\nto configure eViacam."), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText4 = new wxStaticText( itemWizardPageSimple2, wxID_STATIC, _("Welcome to the eViacam configuration wizard"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText4->SetFont(wxFont(12, wxSWISS, wxNORMAL, wxBOLD, false, wxT("Sans")));
     itemBoxSizer3->Add(itemStaticText4, 0, wxALIGN_LEFT|wxALL, 5);
+
+    wxStaticLine* itemStaticLine5 = new wxStaticLine( itemWizardPageSimple2, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer3->Add(itemStaticLine5, 0, wxGROW|wxALL, 5);
+
+    wxStaticText* itemStaticText6 = new wxStaticText( itemWizardPageSimple2, wxID_STATIC, _("This wizard will guide you through the basic configuration of eViacam."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer3->Add(itemStaticText6, 0, wxALIGN_LEFT|wxALL, 5);
+
+    itemBoxSizer3->Add(5, 230, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxStaticText* itemStaticText8 = new wxStaticText( itemWizardPageSimple2, wxID_STATIC, _("To continue, click Next."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer3->Add(itemStaticText8, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT|wxTOP, 5);
 
 ////@end WizardPage content construction
 }
@@ -477,22 +483,29 @@ void WizardPage1::Init()
 void WizardPage1::CreateControls()
 {    
 ////@begin WizardPage1 content construction
-    WizardPage1* itemWizardPageSimple12 = this;
+    WizardPage1* itemWizardPageSimple19 = this;
 
-    wxBoxSizer* itemBoxSizer13 = new wxBoxSizer(wxVERTICAL);
-    itemWizardPageSimple12->SetSizer(itemBoxSizer13);
+    wxBoxSizer* itemBoxSizer20 = new wxBoxSizer(wxVERTICAL);
+    itemWizardPageSimple19->SetSizer(itemBoxSizer20);
 
-    wxStaticText* itemStaticText14 = new wxStaticText( itemWizardPageSimple12, wxID_STATIC, _("Calibration pointer:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer13->Add(itemStaticText14, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText21 = new wxStaticText( itemWizardPageSimple19, wxID_STATIC, _("Pointer calibration"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticText21->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemBoxSizer20->Add(itemStaticText21, 0, wxALIGN_LEFT|wxRIGHT|wxTOP|wxBOTTOM, 5);
 
-    wxStaticText* itemStaticText15 = new wxStaticText( itemWizardPageSimple12, wxID_STATIC, _("eViacam will be enabled in next window to\ncalibrate the speed of the pointer.\n\nTo move the pointer you should move your head."), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer13->Add(itemStaticText15, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText22 = new wxStaticText( itemWizardPageSimple19, wxID_STATIC, _("Set the pointer speed"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer20->Add(itemStaticText22, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_chkPerformCalibration = new wxCheckBox( itemWizardPageSimple12, ID_CHECKBOX_PERFORM_CALIBRATION, _("Perform calibration"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticLine* itemStaticLine23 = new wxStaticLine( itemWizardPageSimple19, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer20->Add(itemStaticLine23, 0, wxGROW|wxALL, 5);
+
+    wxStaticText* itemStaticText24 = new wxStaticText( itemWizardPageSimple19, wxID_STATIC, _("Attention, eViacam will be enabled in the next window to calibrate\nthe speed of the pointer.\n\nIf you perform the automatic calibration, the system will ask you to\nmove your head to calibrate the pointer speed. After this calibration,\nyou may adjust the pointer speed manually."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer20->Add(itemStaticText24, 0, wxALIGN_LEFT|wxALL, 5);
+
+    m_chkPerformCalibration = new wxCheckBox( itemWizardPageSimple19, ID_CHECKBOX_PERFORM_CALIBRATION, _("Perform automatic calibration"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkPerformCalibration->SetValue(true);
     if (WizardPage1::ShowToolTips())
         m_chkPerformCalibration->SetToolTip(_("If checked the next window allows to calibrate the speed of the pointer."));
-    itemBoxSizer13->Add(m_chkPerformCalibration, 0, wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizer20->Add(m_chkPerformCalibration, 0, wxALIGN_LEFT|wxALL, 5);
 
 ////@end WizardPage1 content construction
 }
@@ -596,6 +609,8 @@ bool WizardPage2::Create( wxWizard* parent )
     wxWizardPageSimple::Create( parent, NULL, NULL, wizardBitmap );
 
     CreateControls();
+    if (GetSizer())
+        GetSizer()->Fit(this);
 ////@end WizardPage2 creation
     return true;
 }
@@ -630,9 +645,20 @@ void WizardPage2::Init()
 void WizardPage2::CreateControls()
 {    
 ////@begin WizardPage2 content construction
-    WizardPage2* itemWizardPageSimple17 = this;
+    WizardPage2* itemWizardPageSimple26 = this;
 
-    wxStaticText* itemStaticText18 = new wxStaticText( itemWizardPageSimple17, wxID_STATIC, _("Calibration pointer:"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxBoxSizer* itemBoxSizer27 = new wxBoxSizer(wxVERTICAL);
+    itemWizardPageSimple26->SetSizer(itemBoxSizer27);
+
+    wxStaticText* itemStaticText28 = new wxStaticText( itemWizardPageSimple26, wxID_STATIC, _("Pointer calibration "), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticText28->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemBoxSizer27->Add(itemStaticText28, 0, wxALIGN_LEFT|wxRIGHT|wxTOP|wxBOTTOM, 5);
+
+    wxStaticText* itemStaticText29 = new wxStaticText( itemWizardPageSimple26, wxID_STATIC, _("Set the pointer speed"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer27->Add(itemStaticText29, 0, wxALIGN_LEFT|wxALL, 5);
+
+    wxStaticLine* itemStaticLine30 = new wxStaticLine( itemWizardPageSimple26, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer27->Add(itemStaticLine30, 0, wxGROW|wxALL, 5);
 
 ////@end WizardPage2 content construction
 }
@@ -794,29 +820,39 @@ void WizardPage3::Init()
 void WizardPage3::CreateControls()
 {    
 ////@begin WizardPage3 content construction
-    WizardPage3* itemWizardPageSimple33 = this;
+    WizardPage3* itemWizardPageSimple50 = this;
 
-    wxBoxSizer* itemBoxSizer34 = new wxBoxSizer(wxVERTICAL);
-    itemWizardPageSimple33->SetSizer(itemBoxSizer34);
+    wxBoxSizer* itemBoxSizer51 = new wxBoxSizer(wxVERTICAL);
+    itemWizardPageSimple50->SetSizer(itemBoxSizer51);
 
-    wxStaticText* itemStaticText35 = new wxStaticText( itemWizardPageSimple33, wxID_STATIC, _("Click mode:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer34->Add(itemStaticText35, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText52 = new wxStaticText( itemWizardPageSimple50, wxID_STATIC, _("Click mode"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticText52->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemBoxSizer51->Add(itemStaticText52, 0, wxALIGN_LEFT|wxRIGHT|wxTOP|wxBOTTOM, 5);
 
-    m_rbDwellClick = new wxRadioButton( itemWizardPageSimple33, ID_RADIOBUTTON_DWELL_CLICK, _("Dwell: the click occurs when the mouse remains\nmotionless for a preset time. Using the click\nwindow, the user can indicate the type of click."), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText53 = new wxStaticText( itemWizardPageSimple50, wxID_STATIC, _("How to make the click"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer51->Add(itemStaticText53, 0, wxALIGN_LEFT|wxALL, 5);
+
+    wxStaticLine* itemStaticLine54 = new wxStaticLine( itemWizardPageSimple50, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer51->Add(itemStaticLine54, 0, wxGROW|wxALL, 5);
+
+    wxStaticText* itemStaticText55 = new wxStaticText( itemWizardPageSimple50, wxID_STATIC, _("Please select the click mode that best suits your needs."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer51->Add(itemStaticText55, 0, wxALIGN_LEFT|wxALL, 5);
+
+    m_rbDwellClick = new wxRadioButton( itemWizardPageSimple50, ID_RADIOBUTTON_DWELL_CLICK, _("Dwell: the click occurs when the mouse remains motionless for a\npreset time. Using the click window, the user can indicate the\ntype of click."), wxDefaultPosition, wxDefaultSize, 0 );
     m_rbDwellClick->SetValue(true);
-    itemBoxSizer34->Add(m_rbDwellClick, 0, wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizer51->Add(m_rbDwellClick, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_rbGestureClick = new wxRadioButton( itemWizardPageSimple33, ID_RADIOBUTTON_GESTURE_CLICK, _("Gesture: This method contains two steps.\nThe first one is a dwell time with the mouse\nremaining motionless. After this period, the\nuser should move the head to a direction to\nindicate the type of click."), wxDefaultPosition, wxDefaultSize, 0 );
+    m_rbGestureClick = new wxRadioButton( itemWizardPageSimple50, ID_RADIOBUTTON_GESTURE_CLICK, _("Gesture: this method contains two steps. The first one, consists in\na dwell time with the mouse remaining motionless. After this\nperiod, the user should move the head to a direction to indicate\nthe type of click."), wxDefaultPosition, wxDefaultSize, 0 );
     m_rbGestureClick->SetValue(false);
-    itemBoxSizer34->Add(m_rbGestureClick, 0, wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizer51->Add(m_rbGestureClick, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_rbNoneClick = new wxRadioButton( itemWizardPageSimple33, ID_RADIOBUTTON_NONE_CLICK, _("None: click function is disabled."), wxDefaultPosition, wxDefaultSize, 0 );
+    m_rbNoneClick = new wxRadioButton( itemWizardPageSimple50, ID_RADIOBUTTON_NONE_CLICK, _("None: click function is disabled."), wxDefaultPosition, wxDefaultSize, 0 );
     m_rbNoneClick->SetValue(false);
-    itemBoxSizer34->Add(m_rbNoneClick, 0, wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizer51->Add(m_rbNoneClick, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_toggleTest = new wxToggleButton( itemWizardPageSimple33, ID_TOGGLEBUTTON1, _("Click here to test"), wxDefaultPosition, wxSize(150, 50), 0 );
+    m_toggleTest = new wxToggleButton( itemWizardPageSimple50, ID_TOGGLEBUTTON1, _("Click here to test"), wxDefaultPosition, wxSize(150, 50), 0 );
     m_toggleTest->SetValue(false);
-    itemBoxSizer34->Add(m_toggleTest, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer51->Add(m_toggleTest, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     // Connect events and objects
     m_toggleTest->Connect(ID_TOGGLEBUTTON1, wxEVT_LEFT_DOWN, wxMouseEventHandler(WizardPage3::OnLeftDownTest), NULL, this);
@@ -890,6 +926,7 @@ void WizardPage3::OnWizardpage3Changed( wxWizardEvent& event )
 	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionTop (DOUBLE);
 	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionBottom (DRAG);	
 	
+	m_wizardParent->SetIsMotionEnabled(m_wizardParent->GetViacamController()->GetEnabled());
 	m_wizardParent->GetViacamController()->SetEnabled(true);
 	m_rbDwellClick->SetValue(true);
 	m_rbGestureClick->SetValue(false);
@@ -938,7 +975,7 @@ void WizardPage3::OnRadiobuttonGestureClickSelected( wxCommandEvent& event )
 
 void WizardPage3::OnWizardpage3Changing( wxWizardEvent& event )
 {
-    m_wizardParent->GetViacamController()->SetEnabled(false, true);
+    m_wizardParent->GetViacamController()->SetEnabled(m_wizardParent->GetIsMotionEnabled(), true);
 	m_wizardParent->GetViacamController()->GetClickWindowController()->Show(false);
 	event.Skip(false);
 }
@@ -963,7 +1000,11 @@ BEGIN_EVENT_TABLE( WizardPage4, wxWizardPageSimple )
 
     EVT_CHECKBOX( ID_CHECKBOX1, WizardPage4::OnCheckboxRunWizardAtStartupClick )
 
+#if defined(__WXGTK__)
     EVT_CHECKBOX( ID_CHECKBOX3, WizardPage4::OnCheckboxStartupClick )
+#endif
+
+    EVT_CHECKBOX( ID_CHECKBOX4, WizardPage4::OnCheckboxEnabledAtStartupClick )
 
 ////@end WizardPage4 event table entries
 
@@ -1024,7 +1065,10 @@ void WizardPage4::Init()
 {
 ////@begin WizardPage4 member initialisation
     m_chkRunWizardAtStartup = NULL;
+#if defined(__WXGTK__)
     m_chkStartup = NULL;
+#endif
+    m_chkEnabledAtStartup = NULL;
 ////@end WizardPage4 member initialisation
 }
 
@@ -1036,25 +1080,48 @@ void WizardPage4::Init()
 void WizardPage4::CreateControls()
 {    
 ////@begin WizardPage4 content construction
-    WizardPage4* itemWizardPageSimple40 = this;
+    WizardPage4* itemWizardPageSimple60 = this;
 
-    wxBoxSizer* itemBoxSizer41 = new wxBoxSizer(wxVERTICAL);
-    itemWizardPageSimple40->SetSizer(itemBoxSizer41);
+    wxBoxSizer* itemBoxSizer61 = new wxBoxSizer(wxVERTICAL);
+    itemWizardPageSimple60->SetSizer(itemBoxSizer61);
 
-    wxStaticText* itemStaticText42 = new wxStaticText( itemWizardPageSimple40, wxID_STATIC, _("Congratulations!\nYou have completed the configuration wizard.\n\nYou can change the settings through\nConfiguration -> Options"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer41->Add(itemStaticText42, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText62 = new wxStaticText( itemWizardPageSimple60, wxID_STATIC, _("Wizard completed"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticText62->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemBoxSizer61->Add(itemStaticText62, 0, wxALIGN_LEFT|wxRIGHT|wxTOP|wxBOTTOM, 5);
 
-    m_chkRunWizardAtStartup = new wxCheckBox( itemWizardPageSimple40, ID_CHECKBOX1, _("Run this wizard at startup"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticLine* itemStaticLine63 = new wxStaticLine( itemWizardPageSimple60, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer61->Add(itemStaticLine63, 0, wxGROW|wxALL, 5);
+
+    wxStaticText* itemStaticText64 = new wxStaticText( itemWizardPageSimple60, wxID_STATIC, _("Congratulations, you have completed the configuration wizard. You\nmay change the settings through Configuration -> Options."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer61->Add(itemStaticText64, 0, wxALIGN_LEFT|wxALL, 5);
+
+    m_chkRunWizardAtStartup = new wxCheckBox( itemWizardPageSimple60, ID_CHECKBOX1, _("Run this wizard at startup"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkRunWizardAtStartup->SetValue(true);
     if (WizardPage4::ShowToolTips())
         m_chkRunWizardAtStartup->SetToolTip(_("If checked the wizard automatically appears at startup."));
-    itemBoxSizer41->Add(m_chkRunWizardAtStartup, 0, wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizer61->Add(m_chkRunWizardAtStartup, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_chkStartup = new wxCheckBox( itemWizardPageSimple40, ID_CHECKBOX3, _("Start eViacam at user logon"), wxDefaultPosition, wxDefaultSize, 0 );
+#if defined(__WXGTK__)
+    m_chkStartup = new wxCheckBox( itemWizardPageSimple60, ID_CHECKBOX3, _("Start eViacam at user logon"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkStartup->SetValue(false);
-    itemBoxSizer41->Add(m_chkStartup, 0, wxALIGN_LEFT|wxALL, 5);
+    itemBoxSizer61->Add(m_chkStartup, 0, wxALIGN_LEFT|wxALL, 5);
+
+#endif
+
+    m_chkEnabledAtStartup = new wxCheckBox( itemWizardPageSimple60, ID_CHECKBOX4, _("Enable motion at startup"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkEnabledAtStartup->SetValue(false);
+    if (WizardPage4::ShowToolTips())
+        m_chkEnabledAtStartup->SetToolTip(_("If checked the program automatically \nenables cursor control at startup."));
+    itemBoxSizer61->Add(m_chkEnabledAtStartup, 0, wxALIGN_LEFT|wxALL, 5);
+
+    itemBoxSizer61->Add(5, 120, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxStaticText* itemStaticText69 = new wxStaticText( itemWizardPageSimple60, wxID_STATIC, _("Click finish to exit the wizard."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer61->Add(itemStaticText69, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT|wxTOP, 5);
 
 ////@end WizardPage4 content construction
+	m_chkEnabledAtStartup->SetValue(m_wizardParent->GetViacamController()->GetEnabledAtStartup());
+	m_chkStartup->SetValue(m_wizardParent->GetViacamController()->GetAutostart()->IsEnabled());
 }
 
 
@@ -1105,13 +1172,6 @@ void WizardPage3::OnTimer(wxTimerEvent& event)
 
 
 
-
-
-
-
-
-
-
 /*!
  * wxEVT_WIZARD_FINISHED event handler for ID_WWIZARD
  */
@@ -1153,6 +1213,8 @@ IMPLEMENT_DYNAMIC_CLASS( WizardPage5, wxWizardPageSimple )
 BEGIN_EVENT_TABLE( WizardPage5, wxWizardPageSimple )
 
 ////@begin WizardPage5 event table entries
+    EVT_BUTTON( ID_BUTTON5, WizardPage5::OnButtonCameraSettingsClick )
+
 ////@end WizardPage5 event table entries
 
 END_EVENT_TABLE()
@@ -1214,6 +1276,7 @@ void WizardPage5::Init()
 ////@begin WizardPage5 member initialisation
     m_staticCameraName = NULL;
     m_staticFramerate = NULL;
+    m_btnCameraSettings = NULL;
 ////@end WizardPage5 member initialisation
 }
 
@@ -1225,29 +1288,42 @@ void WizardPage5::Init()
 void WizardPage5::CreateControls()
 {    
 ////@begin WizardPage5 content construction
-    WizardPage5* itemWizardPageSimple5 = this;
+    WizardPage5* itemWizardPageSimple9 = this;
 
-    wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxVERTICAL);
-    itemWizardPageSimple5->SetSizer(itemBoxSizer6);
+    wxBoxSizer* itemBoxSizer10 = new wxBoxSizer(wxVERTICAL);
+    itemWizardPageSimple9->SetSizer(itemBoxSizer10);
 
-    wxStaticText* itemStaticText7 = new wxStaticText( itemWizardPageSimple5, wxID_STATIC, _("Camera properties:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer6->Add(itemStaticText7, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText11 = new wxStaticText( itemWizardPageSimple9, wxID_STATIC, _("Camera setup"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticText11->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemBoxSizer10->Add(itemStaticText11, 0, wxALIGN_LEFT|wxRIGHT|wxTOP|wxBOTTOM, 5);
 
-    wxStaticText* itemStaticText8 = new wxStaticText( itemWizardPageSimple5, wxID_STATIC, _("Camera detected:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer6->Add(itemStaticText8, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText12 = new wxStaticText( itemWizardPageSimple9, wxID_STATIC, _("Select the camera properties"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer10->Add(itemStaticText12, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_staticCameraName = new wxStaticText( itemWizardPageSimple5, wxID_STATIC, _("camera_name"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer6->Add(m_staticCameraName, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxStaticLine* itemStaticLine13 = new wxStaticLine( itemWizardPageSimple9, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer10->Add(itemStaticLine13, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticText10 = new wxStaticText( itemWizardPageSimple5, wxID_STATIC, _("Framerate:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer6->Add(itemStaticText10, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText14 = new wxStaticText( itemWizardPageSimple9, wxID_STATIC, _("Camera detected:"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer10->Add(itemStaticText14, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_staticFramerate = new wxStaticText( itemWizardPageSimple5, wxID_STATIC, _("framerate"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer6->Add(m_staticFramerate, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    m_staticCameraName = new wxStaticText( itemWizardPageSimple9, wxID_STATIC, _("camera_name"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_staticCameraName->SetFont(wxFont(10, wxSWISS, wxITALIC, wxNORMAL, false, wxT("Sans")));
+    itemBoxSizer10->Add(m_staticCameraName, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxStaticText* itemStaticText16 = new wxStaticText( itemWizardPageSimple9, wxID_STATIC, _("Framerate:"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer10->Add(itemStaticText16, 0, wxALIGN_LEFT|wxALL, 5);
+
+    m_staticFramerate = new wxStaticText( itemWizardPageSimple9, wxID_STATIC, _("framerate"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_staticFramerate->SetFont(wxFont(10, wxSWISS, wxITALIC, wxNORMAL, false, wxT("Sans")));
+    itemBoxSizer10->Add(m_staticFramerate, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    m_btnCameraSettings = new wxButton( itemWizardPageSimple9, ID_BUTTON5, _("Settings"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer10->Add(m_btnCameraSettings, 0, wxALIGN_LEFT|wxALL, 5);
 
 ////@end WizardPage5 content construction
 	m_staticCameraName->SetLabel(m_wizardParent->GetViacamController()->GetCameraName());
-	m_staticFramerate->SetLabel(wxString::Format(wxT("%f"), m_wizardParent->GetViacamController()->GetCamera()->GetRealFrameRate()));
+	m_staticFramerate->SetLabel(wxString::Format(wxT("%f"), m_wizardParent->GetViacamController()->GetCamera()->GetFrameRate()));
+
 }
 
 
@@ -1381,38 +1457,45 @@ void WizardPage6::Init()
 void WizardPage6::CreateControls()
 {    
 ////@begin WizardPage6 content construction
-    WizardPage6* itemWizardPageSimple19 = this;
+    WizardPage6* itemWizardPageSimple31 = this;
 
-    wxBoxSizer* itemBoxSizer20 = new wxBoxSizer(wxVERTICAL);
-    itemWizardPageSimple19->SetSizer(itemBoxSizer20);
+    wxBoxSizer* itemBoxSizer32 = new wxBoxSizer(wxVERTICAL);
+    itemWizardPageSimple31->SetSizer(itemBoxSizer32);
 
-    wxStaticText* itemStaticText21 = new wxStaticText( itemWizardPageSimple19, wxID_STATIC, _("Fine tuning:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer20->Add(itemStaticText21, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText33 = new wxStaticText( itemWizardPageSimple31, wxID_STATIC, _("Pointer calibration"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticText33->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemBoxSizer32->Add(itemStaticText33, 0, wxALIGN_LEFT|wxRIGHT|wxTOP|wxBOTTOM, 5);
 
-    wxStaticText* itemStaticText22 = new wxStaticText( itemWizardPageSimple19, wxID_STATIC, _("Description"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer20->Add(itemStaticText22, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText34 = new wxStaticText( itemWizardPageSimple31, wxID_STATIC, _("Set the pointer speed"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer32->Add(itemStaticText34, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxBoxSizer* itemBoxSizer23 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer20->Add(itemBoxSizer23, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticLine* itemStaticLine35 = new wxStaticLine( itemWizardPageSimple31, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer32->Add(itemStaticLine35, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticText24 = new wxStaticText( itemWizardPageSimple19, wxID_STATIC, _("X axis speed"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer23->Add(itemStaticText24, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticText* itemStaticText36 = new wxStaticText( itemWizardPageSimple31, wxID_STATIC, _("You can enable/disable the mouse motion to test the pointer speed\nand adjust the parameters manually."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer32->Add(itemStaticText36, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_spinXSpeed = new wxSpinCtrl( itemWizardPageSimple19, ID_SPINCTRL, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 30, 0 );
-    itemBoxSizer23->Add(m_spinXSpeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxBoxSizer* itemBoxSizer37 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer32->Add(itemBoxSizer37, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxBoxSizer* itemBoxSizer26 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer20->Add(itemBoxSizer26, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText38 = new wxStaticText( itemWizardPageSimple31, wxID_STATIC, _("X axis speed"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer37->Add(itemStaticText38, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText27 = new wxStaticText( itemWizardPageSimple19, wxID_STATIC, _("Y axis speed"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer26->Add(itemStaticText27, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_spinXSpeed = new wxSpinCtrl( itemWizardPageSimple31, ID_SPINCTRL, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 30, 0 );
+    itemBoxSizer37->Add(m_spinXSpeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spinYSpeed = new wxSpinCtrl( itemWizardPageSimple19, ID_SPINCTRL1, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 30, 0 );
-    itemBoxSizer26->Add(m_spinYSpeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxBoxSizer* itemBoxSizer40 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer32->Add(itemBoxSizer40, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_toggleEnableMotion = new wxToggleButton( itemWizardPageSimple19, ID_TOGGLEBUTTON, _("Enable motion"), wxDefaultPosition, wxSize(150, 50), 0 );
+    wxStaticText* itemStaticText41 = new wxStaticText( itemWizardPageSimple31, wxID_STATIC, _("Y axis speed"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer40->Add(itemStaticText41, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    m_spinYSpeed = new wxSpinCtrl( itemWizardPageSimple31, ID_SPINCTRL1, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 30, 0 );
+    itemBoxSizer40->Add(m_spinYSpeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    m_toggleEnableMotion = new wxToggleButton( itemWizardPageSimple31, ID_TOGGLEBUTTON, _("Enable motion"), wxDefaultPosition, wxSize(150, 50), 0 );
     m_toggleEnableMotion->SetValue(false);
-    itemBoxSizer20->Add(m_toggleEnableMotion, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    itemBoxSizer32->Add(m_toggleEnableMotion, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
 ////@end WizardPage6 content construction
 	
@@ -1597,13 +1680,23 @@ void WizardPage7::Init()
 void WizardPage7::CreateControls()
 {    
 ////@begin WizardPage7 content construction
-    WizardPage7* itemWizardPageSimple30 = this;
+    WizardPage7* itemWizardPageSimple44 = this;
 
-    wxBoxSizer* itemBoxSizer31 = new wxBoxSizer(wxVERTICAL);
-    itemWizardPageSimple30->SetSizer(itemBoxSizer31);
+    wxBoxSizer* itemBoxSizer45 = new wxBoxSizer(wxVERTICAL);
+    itemWizardPageSimple44->SetSizer(itemBoxSizer45);
 
-    wxStaticText* itemStaticText32 = new wxStaticText( itemWizardPageSimple30, wxID_STATIC, wxGetTranslation(wxString(wxT("Av")) + (wxChar) 0x00ED + wxT("s: Ara el ratol") + (wxChar) 0x00ED + wxT(" s'activar") + (wxChar) 0x00E0 + wxT("...")), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer31->Add(itemStaticText32, 0, wxALIGN_LEFT|wxALL, 5);
+    wxStaticText* itemStaticText46 = new wxStaticText( itemWizardPageSimple44, wxID_STATIC, _("Click mode"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticText46->SetFont(wxFont(10, wxSWISS, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemBoxSizer45->Add(itemStaticText46, 0, wxALIGN_LEFT|wxRIGHT|wxTOP|wxBOTTOM, 5);
+
+    wxStaticText* itemStaticText47 = new wxStaticText( itemWizardPageSimple44, wxID_STATIC, _("How to make the click"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer45->Add(itemStaticText47, 0, wxALIGN_LEFT|wxALL, 5);
+
+    wxStaticLine* itemStaticLine48 = new wxStaticLine( itemWizardPageSimple44, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
+    itemBoxSizer45->Add(itemStaticLine48, 0, wxGROW|wxALL, 5);
+
+    wxStaticText* itemStaticText49 = new wxStaticText( itemWizardPageSimple44, wxID_STATIC, _("Attention, eViacam will be enabled in the next window to allow you\nto test different ways of clicking.\n"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer45->Add(itemStaticText49, 0, wxALIGN_LEFT|wxALL, 5);
 
 ////@end WizardPage7 content construction
 }
@@ -1724,7 +1817,9 @@ void WizardPage4::OnCheckboxRunWizardAtStartupClick( wxCommandEvent& event )
 
 void WizardPage4::OnCheckboxStartupClick( wxCommandEvent& event )
 {
+#if defined(__WXGTK__)
 	m_wizardParent->GetViacamController()->GetAutostart()->Enable(m_chkStartup->GetValue());
+#endif
     event.Skip(false);
 }
 
@@ -1737,5 +1832,27 @@ void WizardPage4::OnWizardpage4PageChanged( wxWizardEvent& event )
 {
     m_chkRunWizardAtStartup->SetValue(m_wizardParent->GetViacamController()->GetRunWizardAtStartup());
 	event.Skip(false);
+}
+
+
+/*!
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX4
+ */
+
+void WizardPage4::OnCheckboxEnabledAtStartupClick( wxCommandEvent& event )
+{
+	m_wizardParent->GetViacamController()->SetEnabledAtStartup (m_chkEnabledAtStartup->GetValue());
+	event.Skip(false);
+}
+
+
+/*!
+ * wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON5
+ */
+
+void WizardPage5::OnButtonCameraSettingsClick( wxCommandEvent& event )
+{
+	m_wizardParent->GetViacamController()->OpenCameraControlDialog();
+    event.Skip(false);
 }
 
