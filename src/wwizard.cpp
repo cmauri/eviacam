@@ -842,7 +842,7 @@ void WizardPage3::CreateControls()
     m_rbDwellClick->SetValue(true);
     itemBoxSizer51->Add(m_rbDwellClick, 0, wxALIGN_LEFT|wxALL, 5);
 
-    m_rbGestureClick = new wxRadioButton( itemWizardPageSimple50, ID_RADIOBUTTON_GESTURE_CLICK, _("Gesture: this method contains two steps. The first one consists in\na dwell time with the mouse remaining motionless. After this\nperiod, the user should move the head to a direction to indicate\nthe type of click."), wxDefaultPosition, wxDefaultSize, 0 );
+    m_rbGestureClick = new wxRadioButton( itemWizardPageSimple50, ID_RADIOBUTTON_GESTURE_CLICK, _("Gesture: this method contains two steps. The first one, consists in\na dwell time with the mouse remaining motionless. After this\nperiod, the user should move the head to a direction to indicate\nthe type of click."), wxDefaultPosition, wxDefaultSize, 0 );
     m_rbGestureClick->SetValue(false);
     itemBoxSizer51->Add(m_rbGestureClick, 0, wxALIGN_LEFT|wxALL, 5);
 
@@ -1322,14 +1322,8 @@ void WizardPage5::CreateControls()
 
 ////@end WizardPage5 content construction
 	m_staticCameraName->SetLabel(m_wizardParent->GetViacamController()->GetCameraName());
-	float framerate = 0.0f;
-	framerate = 0.5f * m_wizardParent->GetViacamController()->GetCamera()->GetRealFrameRate() + 0.5f * framerate;
-	long iFrameRate= 0;
-	//iFrameRate = (long) (framerate + 0.5f);	
-	
-	
-	//m_staticFramerate->SetLabel(wxString::Format(wxT("%f"), m_wizardParent->GetViacamController()->GetCamera()->GetRealFrameRate()));
-	m_staticFramerate->SetLabel(wxString::Format(wxT("%f"), framerate));
+	m_staticFramerate->SetLabel(wxString::Format(wxT("%f"), m_wizardParent->GetViacamController()->GetCamera()->GetFrameRate()));
+
 }
 
 
