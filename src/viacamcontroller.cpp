@@ -490,9 +490,18 @@ void CViacamController::StartWizard()
 	WWizard* m_pWizard = new WWizard(m_pMainWindow, this);
 	m_pWizard->Run();
 }
-
+/*
 void CViacamController::OpenCameraControlDialog()
 {
 	WCameraDialog* m_pCameraDialog = new WCameraDialog(m_pMainWindow, m_pCamera);
 	m_pCameraDialog->ShowModal();
+}*/
+
+void CViacamController::ShowCameraSettingsDialog () const
+{
+	if (m_pCamera->HasSettingsDialog()) m_pCamera->ShowSettingsDialog ();
+	if (m_pCamera->HasCameraControls()) {
+		WCameraDialog* m_pCameraDialog = new WCameraDialog(m_pMainWindow, m_pCamera);
+		m_pCameraDialog->ShowModal();
+	}
 }

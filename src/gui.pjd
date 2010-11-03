@@ -776,40 +776,6 @@
                 <string name="proxy-Bitmap unchecked">""</string>
                 <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
               </document>
-              <document>
-                <string name="title">"------------"</string>
-                <string name="type">"dialog-control-document"</string>
-                <string name="filename">""</string>
-                <string name="icon-name">"menuitem"</string>
-                <long name="is-transient">0</long>
-                <long name="owns-file">1</long>
-                <long name="title-mode">0</long>
-                <long name="locked">0</long>
-                <string name="proxy-type">"wbMenuSeparatorProxy"</string>
-                <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
-              </document>
-              <document>
-                <string name="title">"&amp;Camera controls: ID_MENU_CAMERA_CONTROLS"</string>
-                <string name="type">"dialog-control-document"</string>
-                <string name="filename">""</string>
-                <string name="icon-name">"menuitem"</string>
-                <long name="is-transient">0</long>
-                <long name="owns-file">1</long>
-                <long name="title-mode">0</long>
-                <long name="locked">0</long>
-                <string name="proxy-type">"wbMenuItemProxy"</string>
-                <string name="event-handler-0">"wxEVT_COMMAND_MENU_SELECTED|OnMenuCameraControlsClick|NONE||WViacam"</string>
-                <string name="proxy-Id name">"ID_MENU_CAMERA_CONTROLS"</string>
-                <long name="proxy-Id value">10114</long>
-                <string name="proxy-Label">"&amp;Camera controls"</string>
-                <string name="proxy-Kind">"Normal"</string>
-                <bool name="proxy-Checked">0</bool>
-                <bool name="proxy-Enabled">1</bool>
-                <string name="proxy-Help text">""</string>
-                <string name="proxy-Bitmap">""</string>
-                <string name="proxy-Bitmap unchecked">""</string>
-                <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
-              </document>
             </document>
             <document>
               <string name="title">"Help"</string>

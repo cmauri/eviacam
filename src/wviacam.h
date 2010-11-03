@@ -57,7 +57,6 @@ class CViacamController;
 #define ID_MENUITEM_EXIT 10001
 #define ID_MENU_OPTIONS 10003
 #define ID_MENU_WIZARD 10094
-#define ID_MENU_CAMERA_CONTROLS 10114
 #define ID_MENU_ABOUT 10028
 #define ID_TOOLBAR 10042
 #define ID_TOOL_ENABLE 10043
@@ -139,9 +138,6 @@ public:
 
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_WIZARD
     void OnMenuWizardClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CAMERA_CONTROLS
-    void OnMenuCameraControlsClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_ABOUT
     void OnMenuAboutClick( wxCommandEvent& event );

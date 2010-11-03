@@ -95,13 +95,13 @@ public:
 
 	inline const wxString& GetCameraName () const;
 	inline const bool CameraHasSettingsDialog () const;
-	inline void ShowCameraSettingsDialog () const;
+	void ShowCameraSettingsDialog () const;
 	inline void ChangeCamera ();
 
 	void OpenConfiguration();
 	void OpenOnScreenKeyboard();
 	void StartWizard();
-	void OpenCameraControlDialog();
+	//void OpenCameraControlDialog();
 
 	// Configuration methods
 	virtual void InitDefaults();
@@ -211,13 +211,17 @@ inline const wxString& CViacamController::GetCameraName () const
 
 inline const bool CViacamController::CameraHasSettingsDialog () const
 {
-	return m_pCamera->HasSettingsDialog();
+	return (m_pCamera->HasSettingsDialog() || m_pCamera->HasCameraControls());
 }
-
+/*
 inline void CViacamController::ShowCameraSettingsDialog () const
 {
-	m_pCamera->ShowSettingsDialog ();
-}
+	if (m_pCamera->HasSettingsDialog()) m_pCamera->ShowSettingsDialog ();
+	if (m_pCamera->HasCameraControls()) {
+		WCameraDialog* m_pCameraDialog = new WCameraDialog(m_pMainWindow, m_pCamera);
+		m_pCameraDialog->ShowModal();
+	}
+}*/
 
 inline void CViacamController::ChangeCamera ()
 {
