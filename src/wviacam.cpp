@@ -69,31 +69,6 @@ IMPLEMENT_CLASS( WViacam, wxFrame )
 DECLARE_EVENT_TYPE(wxEVT_SET_FPS, -1)
 DEFINE_EVENT_TYPE(wxEVT_SET_FPS)
 
-/* Custom event to send mouse commands to system */ 
-
-/*
-class wxSendMouseEvent: public wxCommandEvent
-{
-public:
-	wxSendMouseEvent( wxEventType commandType = wxEVT_NULL, int id = 0 ) :
-		wxCommandEvent(commandType, id) {};
-
-	// accessors
-	void SetVx(float vx) { m_vx= vx; }
-	void SetVy(float vy) { m_vy= vy; }	
-	float GetVx() { return m_vx; }
-	float GetVy() { return m_vy; }
- 
-	wxEvent *Clone(void) const { return new wxSendMouseEvent(*this); }
-
-
-private:
-	float m_vx, m_vy;
-};
-DECLARE_EVENT_TYPE(wxEVT_SEND_MOUSE_EVENT, -1)
-DEFINE_EVENT_TYPE(wxEVT_SEND_MOUSE_EVENT)
-*/
-
 /*!
  * WViacam event table definition
  */
@@ -133,8 +108,7 @@ BEGIN_EVENT_TABLE( WViacam, wxFrame )
 ////@end WViacam event table entries
 
 	EVT_COMMAND  (wxID_ANY, wxEVT_SET_FPS, WViacam::OnSetFPS)
-//	EVT_COMMAND  (wxID_ANY, wxEVT_SEND_MOUSE_EVENT, WViacam::OnSendMouseMotionUpdate)
-	
+
 END_EVENT_TABLE()
 
 

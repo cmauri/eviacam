@@ -33,13 +33,7 @@
 
 #include "viacamcontroller.h"
 #include "wviacam.h"
-//#include "crvcamera_cv.h"
 #include "crvcamera_enum.h"
-//#if defined(__WXMSW__)
-//#include "crvcamera_wdm.h"
-//#else
-//#include "crvcamera_v4l2.h"
-//#endif
 #include "clickwindow.h"
 #include "mouseoutput.h"
 #include "camwindow.h"
@@ -47,9 +41,6 @@
 #include "cmotioncalibration.h"
 #include "wwizard.h"
 #include "wcameradialog.h"
-
-//#include "icons/eviacam_mini.xpm"
-
 #include <wx/utils.h>
 #include <wx/debug.h>
 
@@ -491,15 +482,13 @@ void CViacamController::StartWizard()
 	WWizard* m_pWizard = new WWizard(m_pMainWindow, this);
 	m_pWizard->Run();
 }
-/*
-void CViacamController::OpenCameraControlDialog()
-{
-	WCameraDialog* m_pCameraDialog = new WCameraDialog(m_pMainWindow, m_pCamera);
-	m_pCameraDialog->ShowModal();
-}*/
 
 void CViacamController::ShowCameraSettingsDialog () const
 {
+	if (m_enabled) {
+		wxMessageDialog dlg (NULL, _("Note that adjusting the camera controls while eViacam\nis enabled may cause loss of pointer control.\nAre you sure you want to continue?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
+		if (dlg.ShowModal()== wxID_NO) return;
+	}
 	if (m_pCamera->HasSettingsDialog()) m_pCamera->ShowSettingsDialog ();
 	if (m_pCamera->HasCameraControls()) {
 		WCameraDialog* m_pCameraDialog = new WCameraDialog(m_pMainWindow, m_pCamera);

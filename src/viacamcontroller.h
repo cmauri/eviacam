@@ -24,7 +24,6 @@
 #define VIACAMCONTROLLER_H
 
 #include "capturethread.h"
-//#include "dwellaction.h"
 #include "waittime.h"
 #include "clickwindowcontroller.h"
 #include "motiontracker.h"
@@ -101,7 +100,6 @@ public:
 	void OpenConfiguration();
 	void OpenOnScreenKeyboard();
 	void StartWizard();
-	//void OpenCameraControlDialog();
 
 	// Configuration methods
 	virtual void InitDefaults();
