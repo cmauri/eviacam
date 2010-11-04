@@ -720,7 +720,7 @@
               <string name="proxy-Member variable name">""</string>
               <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
               <document>
-                <string name="title">"&amp;Wizard: ID_MENU_WIZARD"</string>
+                <string name="title">"&amp;Wizard...: ID_MENU_WIZARD"</string>
                 <string name="type">"dialog-control-document"</string>
                 <string name="filename">""</string>
                 <string name="icon-name">"menuitem"</string>
@@ -732,7 +732,7 @@
                 <string name="event-handler-0">"wxEVT_COMMAND_MENU_SELECTED|OnMenuWizardClick|NONE||WViacam"</string>
                 <string name="proxy-Id name">"ID_MENU_WIZARD"</string>
                 <long name="proxy-Id value">10094</long>
-                <string name="proxy-Label">"&amp;Wizard"</string>
+                <string name="proxy-Label">"&amp;Wizard..."</string>
                 <string name="proxy-Kind">"Normal"</string>
                 <bool name="proxy-Checked">0</bool>
                 <bool name="proxy-Enabled">1</bool>
