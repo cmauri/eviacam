@@ -38,6 +38,7 @@
 
 ////@begin forward declarations
 class wxSpinCtrl;
+class wxBoxSizer;
 ////@end forward declarations
 class CViacamController;
 
@@ -81,8 +82,6 @@ class CViacamController;
 #define ID_STATIC_BEHAVIOUR 10082
 #define ID_CHOICE_BEHAVIOUR 10006
 #define ID_STATICBOX_GESTURE_CLICK 10088
-#define ID_STATICTEXT 10011
-#define ID_SPINCTRL_GESTURE_TIME 10013
 #define ID_STATIC_MOVE_LEFT 10083
 #define ID_STATIC_MOVE_RIGHT 10084
 #define ID_STATIC_MOVE_TOP 10085
@@ -218,9 +217,6 @@ public:
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_BEHAVIOUR
     void OnChoiceBehaviourSelected( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_GESTURE_TIME
-    void OnSpinctrlGestureTimeUpdated( wxSpinEvent& event );
-
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTO_LOCATE_FACE
     void OnCheckboxAutoLocateFaceClick( wxCommandEvent& event );
 
@@ -340,11 +336,13 @@ private:
     wxStaticText* m_stBehaviour;
     wxChoice* m_choClickWindowBehaviour;
     wxStaticBox* m_sboxGestureClick;
-    wxStaticText* m_stGestureTime;
-    wxSpinCtrl* m_spinGestureTime;
+    wxBoxSizer* m_sizerLeft;
     wxStaticText* m_stMoveLeft;
+    wxBoxSizer* m_sizerRight;
     wxStaticText* m_stMoveRight;
+    wxBoxSizer* m_sizerTop;
     wxStaticText* m_stMoveTop;
+    wxBoxSizer* m_sizerBottom;
     wxStaticText* m_stMoveBottom;
     wxCheckBox* m_chkAutoLocateFace;
     wxCheckBox* m_chkShowAutoLocateFaceFilter;

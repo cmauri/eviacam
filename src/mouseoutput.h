@@ -299,19 +299,6 @@ inline void CMouseOutput::SetDwellTime (unsigned long ds)
 	m_dwellCountdown.SetWaitTimeMs (ds * 100);
 }
 
-// TODO: remove (check config dialog)
-inline const unsigned long CMouseOutput::GetGestureTime() const {
-	//return m_gestureCountdown->GetWaitTimeMs() / 100;
-	return 0;
-}
-
-// TODO: remove (check config dialog)
-inline void CMouseOutput::SetGestureTime (unsigned long ds) 
-{
-	if (ds> 50) ds= 50;
-	//m_gestureCountdown->SetWaitTimeMs (ds * 100);
-}
-
 inline const unsigned long CMouseOutput::GetDwellToleranceArea() const {
 	return (unsigned long) m_dwellToleranceArea;
 }
