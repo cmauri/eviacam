@@ -109,9 +109,9 @@ BEGIN_EVENT_TABLE( WViacam, wxFrame )
 
     EVT_MENU( ID_MENUITEM_EXIT, WViacam::OnMenuitemExitClick )
 
-    EVT_MENU( ID_MENU_OPTIONS, WViacam::OnMenuOptionsClick )
-
     EVT_MENU( ID_MENU_WIZARD, WViacam::OnMenuWizardClick )
+
+    EVT_MENU( ID_MENU_OPTIONS, WViacam::OnMenuOptionsClick )
 
     EVT_MENU( ID_MENU_ABOUT, WViacam::OnMenuAboutClick )
 
@@ -214,9 +214,9 @@ void WViacam::CreateControls()
     itemMenu3->Append(ID_MENUITEM_EXIT, _("&Exit"), wxEmptyString, wxITEM_NORMAL);
     menuBar->Append(itemMenu3, _("&File"));
     wxMenu* itemMenu7 = new wxMenu;
-    itemMenu7->Append(ID_MENU_OPTIONS, _("&Options..."), wxEmptyString, wxITEM_NORMAL);
-    itemMenu7->AppendSeparator();
     itemMenu7->Append(ID_MENU_WIZARD, _("&Wizard"), wxEmptyString, wxITEM_NORMAL);
+    itemMenu7->AppendSeparator();
+    itemMenu7->Append(ID_MENU_OPTIONS, _("&Options..."), wxEmptyString, wxITEM_NORMAL);
     menuBar->Append(itemMenu7, _("&Configuration"));
     wxMenu* itemMenu11 = new wxMenu;
     itemMenu11->Append(ID_MENU_ABOUT, _("&About..."), wxEmptyString, wxITEM_NORMAL);
