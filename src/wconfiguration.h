@@ -20,6 +20,8 @@
 ////@begin includes
 #include "wx/listbook.h"
 #include "wx/notebook.h"
+#include "wx/gbsizer.h"
+#include "wx/statline.h"
 #include "wx/spinctrl.h"
 ////@end includes
 #include "cautostart.h"
@@ -51,12 +53,12 @@ class CViacamController;
 #define ID_LISTBOOK 10051
 #define ID_NOTEBOOK 10019
 #define ID_PANEL_MOTION 10021
+#define ID_CHECKBOX_ENABLE_AT_STARTUP 10023
 #define ID_SPINCTRL_XSPEED 10026
 #define ID_SPINCTRL_YSPEED 10000
 #define ID_SPINCTRL_ACCELERATION 10001
 #define ID_SPINCTRL_SMOOTHNESS 10002
 #define ID_SPINCTRL_EASYSTOP 10003
-#define ID_CHECKBOX_ENABLE_AT_STARTUP 10023
 #define ID_BUTTON 10074
 #define ID_PANEL_WORKSPACE 10061
 #define ID_CHECKBOX_WORKSPACE_LIMIT 10062
@@ -148,6 +150,9 @@ public:
 
 ////@begin WConfiguration event handler declarations
 
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_AT_STARTUP
+    void OnCheckboxEnableAtStartupClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_XSPEED
     void OnSpinctrlXspeedUpdated( wxSpinEvent& event );
 
@@ -162,9 +167,6 @@ public:
 
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_EASYSTOP
     void OnSpinctrlEasystopUpdated( wxSpinEvent& event );
-
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_AT_STARTUP
-    void OnCheckboxEnableAtStartupClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON
     void OnButtonClick( wxCommandEvent& event );
@@ -307,12 +309,12 @@ private:
 	void UnChanged ();
 
 ////@begin WConfiguration member variables
+    wxCheckBox* m_chkEnabledAtStartup;
     wxSpinCtrl* m_spinXSpeed;
     wxSpinCtrl* m_spinYSpeed;
     wxSpinCtrl* m_spinAcceleration;
     wxSpinCtrl* m_spinSmoothness;
     wxSpinCtrl* m_spinEasyStop;
-    wxCheckBox* m_chkEnabledAtStartup;
     wxButton* m_buttonCalibrateMotion;
     wxCheckBox* m_chkEnabledWorkspace;
     wxSpinCtrl* m_spin_top_workspace;
