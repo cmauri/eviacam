@@ -121,7 +121,6 @@ void WWizard::Init()
 	m_pViacamController = NULL;
 	m_runWizardAtStartup = true;
 	m_performCalibration = true;
-	m_isMotionEnabled = false;
 }
 
 
@@ -184,8 +183,6 @@ void WWizard::CreateControls()
         wxWizardPageSimple::Chain(lastPage, itemWizardPageSimple70);
     lastPage = itemWizardPageSimple70;
 ////@end WWizard content construction
-	m_isMotionEnabled = m_pViacamController->GetEnabled();
-//	 = (WizardPage*) itemWizardPageSimple50;
 }
 
 
@@ -573,8 +570,6 @@ void WizardPage1::OnCheckboxPerformCalibrationClick( wxCommandEvent& event )
 }
 
 
-
-
 /*!
  * WizardPage2 type definition
  */
@@ -723,16 +718,18 @@ void WizardPage2::OnWizardpage2Changed( wxWizardEvent& event )
 {
 	if (m_wizardParent->GetPerformCalibration() && event.GetDirection())
 	{
-		m_wizardParent->SetIsMotionEnabled(m_wizardParent->GetViacamController()->GetEnabled());
+		//m_wizardParent->SetIsMotionEnabled(m_wizardParent->GetViacamController()->GetEnabled());
+		bool isEnabled= m_wizardParent->GetViacamController()->GetEnabled();
 		m_wizardParent->GetViacamController()->StartMotionCalibration();
-		m_wizardParent->GetViacamController()->SetEnabled(m_wizardParent->GetIsMotionEnabled());
-	}	
+		m_wizardParent->GetViacamController()->SetEnabled(isEnabled);
+	}
 
-
-		if (event.GetDirection())
-			m_wizardParent->ShowPage(GetNext());
-		else
-			m_wizardParent->ShowPage(GetPrev());
+	if (event.GetDirection())
+		m_wizardParent->ShowPage(GetNext());
+	else
+		m_wizardParent->ShowPage(GetPrev());
+	
+	event.Skip(false);
 }
 
 
@@ -944,7 +941,6 @@ void WizardPage3::OnWizardpage3Changed( wxWizardEvent& event )
 	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionTop (DOUBLE);
 	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionBottom (DRAG);	
 	
-	m_wizardParent->SetIsMotionEnabled(m_wizardParent->GetViacamController()->GetEnabled());
 	m_wizardParent->GetViacamController()->SetEnabled(true);
 	m_rbDwellClick->SetValue(true);
 	m_rbGestureClick->SetValue(false);
@@ -993,11 +989,10 @@ void WizardPage3::OnRadiobuttonGestureClickSelected( wxCommandEvent& event )
 
 void WizardPage3::OnWizardpage3Changing( wxWizardEvent& event )
 {
-    m_wizardParent->GetViacamController()->SetEnabled(m_wizardParent->GetIsMotionEnabled(), true);
+	m_wizardParent->GetViacamController()->SetEnabled(true, true);
 	m_wizardParent->GetViacamController()->GetClickWindowController()->Show(false);
 	event.Skip(false);
 }
-
 
 
 /*!
@@ -1203,7 +1198,7 @@ void WWizard::OnWwizardFinished( wxWizardEvent& event )
 {
 	GetViacamController()->SetRunWizardAtStartup(m_runWizardAtStartup);
 	GetViacamController()->GetConfigManager()->WriteAll();
-    event.Skip(false);
+	event.Skip(false);
 }
 
 
@@ -1416,6 +1411,7 @@ BEGIN_EVENT_TABLE( WizardPage6, wxWizardPageSimple )
     EVT_SPINCTRL( ID_SPINCTRL1, WizardPage6::OnSpinctrlYSpeedUpdated )
 
     EVT_TOGGLEBUTTON( ID_TOGGLEBUTTON, WizardPage6::OnTogglebuttonClick )
+    EVT_UPDATE_UI( ID_TOGGLEBUTTON, WizardPage6::OnTogglebuttonUpdate )
 
 ////@end WizardPage6 event table entries
 
@@ -1537,7 +1533,7 @@ void WizardPage6::CreateControls()
     itemBoxSizer41->Add(m_toggleEnableMotion, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
 ////@end WizardPage6 content construction
-	
+//	m_toggleEnableMotion->Enable (!m_wizardParent->GetViacamController()->GetEnabled());	
 }
 
 
@@ -1605,16 +1601,37 @@ void WizardPage6::OnSpinctrlYSpeedUpdated( wxSpinEvent& event )
 
 void WizardPage6::OnTogglebuttonClick( wxCommandEvent& event )
 {
-    m_wizardParent->GetViacamController()->SetEnabled(!m_wizardParent->GetViacamController()->GetEnabled(), true);
-
-	if (m_toggleEnableMotion->GetValue())
+	bool isEnabled= m_wizardParent->GetViacamController()->GetEnabled();
+	m_wizardParent->GetViacamController()->SetEnabled(!isEnabled, !isEnabled, m_wizardParent);
+	if (m_wizardParent->GetViacamController()->GetEnabled()) {
+		m_toggleEnableMotion->SetValue(true);
 		m_toggleEnableMotion->SetLabel(wxT("Disable motion"));
-	else	
+	}
+	else	{
+		m_toggleEnableMotion->SetValue(false);
 		m_toggleEnableMotion->SetLabel(wxT("Enable motion"));
-	
+	}		
 	event.Skip(false);
 }
 
+/*!
+ * wxEVT_UPDATE_UI event handler for ID_TOGGLEBUTTON
+ */
+
+void WizardPage6::OnTogglebuttonUpdate( wxUpdateUIEvent& event )
+{
+	if (m_wizardParent->GetViacamController()->GetEnabled()!= m_toggleEnableMotion->GetValue()) {	
+		if (m_wizardParent->GetViacamController()->GetEnabled()) {
+			m_toggleEnableMotion->SetValue(true);
+			m_toggleEnableMotion->SetLabel(wxT("Disable motion"));
+		}
+		else	{
+			m_toggleEnableMotion->SetValue(false);
+			m_toggleEnableMotion->SetLabel(wxT("Enable motion"));
+		}	
+	}
+	event.Skip(false);
+}
 
 /*!
  * wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE6
@@ -1624,13 +1641,13 @@ void WizardPage6::OnWizardpageCalib3PageChanged( wxWizardEvent& event )
 {
 	m_spinXSpeed->SetValue(m_wizardParent->GetViacamController()->GetMouseOutput()->GetXSpeed());
 	m_spinYSpeed->SetValue(m_wizardParent->GetViacamController()->GetMouseOutput()->GetYSpeed());
-
+/*
 	if (m_wizardParent->GetIsMotionEnabled())
 	{
 		m_toggleEnableMotion->SetValue(true);
 		m_toggleEnableMotion->SetLabel(wxT("Disable motion"));
 	}	
-
+*/
 	event.Skip(false);
 }
 
@@ -1908,4 +1925,7 @@ void WizardPage5::OnWizardpageCameraPageChanged( wxWizardEvent& event )
 	m_staticFramerate->SetLabel(wxString::Format(wxT("%.1f"), m_wizardParent->GetViacamController()->GetCamera()->GetRealFrameRate()));
 	event.Skip(false);
 }
+
+
+
 

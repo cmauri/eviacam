@@ -12654,6 +12654,7 @@ and adjust the parameters manually."</string>
                   <long name="locked">0</long>
                   <string name="proxy-type">"wbToggleButtonProxy"</string>
                   <string name="event-handler-0">"wxEVT_COMMAND_CHECKBOX_CLICKED|OnTogglebuttonClick|NONE||WizardPage6"</string>
+                  <string name="event-handler-1">"wxEVT_UPDATE_UI|OnTogglebuttonUpdate|NONE||WizardPage6"</string>
                   <string name="proxy-Id name">"ID_TOGGLEBUTTON"</string>
                   <long name="proxy-Id value">10117</long>
                   <string name="proxy-Name">""</string>

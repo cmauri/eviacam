@@ -371,13 +371,13 @@ void CViacamController::StartupRun()
 }
 
 
-void CViacamController::SetEnabled (bool value, bool silent)
+void CViacamController::SetEnabled (bool value, bool silent, wxWindow* parent)
 {
 	if (value!= m_enabled)
 	{
 		if (value== false && !silent)
 		{
-			wxMessageDialog dlg (NULL, _("This action will disable eViacam.\nAre you sure?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
+			wxMessageDialog dlg (parent, _("This action will disable eViacam.\nAre you sure?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
 			if (dlg.ShowModal()== wxID_YES)
 			{
 				m_enabled= value;

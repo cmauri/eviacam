@@ -147,9 +147,7 @@ private:
 	CViacamController* m_pViacamController;
 	bool m_runWizardAtStartup;
 	bool m_performCalibration;
-	bool m_isMotionEnabled;
 	EClickMode m_clickMode;
-//	WizardPage* m_wizardPage3;
 	
 };
 
@@ -157,11 +155,6 @@ private:
 	{
 		return m_pViacamController;
 	}
-	/*
-	inline WizardPage* WWizard::GetNextPage()
-	{
-		return m_wizardPage3;
-	}*/
 	
 	inline const bool WWizard::GetRunAtStartup() const
 	{
@@ -183,16 +176,6 @@ private:
 		m_performCalibration = value;
 	}
 
-	inline const bool WWizard::GetIsMotionEnabled() const
-	{
-		return m_isMotionEnabled;	
-	}
-	
-	inline void WWizard::SetIsMotionEnabled(bool value)
-	{
-		m_isMotionEnabled = value;
-	}
-	
 	inline const WWizard::EClickMode WWizard::GetClickMode() const
 	{
 		return m_clickMode;	
@@ -605,6 +588,9 @@ public:
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_TOGGLEBUTTON
     void OnTogglebuttonClick( wxCommandEvent& event );
+
+    /// wxEVT_UPDATE_UI event handler for ID_TOGGLEBUTTON
+    void OnTogglebuttonUpdate( wxUpdateUIEvent& event );
 
 ////@end WizardPage6 event handler declarations
 

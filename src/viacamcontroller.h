@@ -46,6 +46,7 @@ class WViacam;
 class CMouseOutput;
 class WConfiguration;
 class CMotionCalibration;
+class wxWindow;
 
 class CViacamController : public CProcessImage, public CConfigBase, public wxDialog
 {
@@ -61,7 +62,7 @@ public:
 	virtual void ProcessImage (IplImage *pImage);
 
 	inline const bool GetEnabled () const;
-	void SetEnabled (bool value, bool silent= false);
+	void SetEnabled (bool value, bool silent= false, wxWindow* parent= NULL);
 	
         inline const bool GetEnabledAtStartup () const;
         inline void SetEnabledAtStartup (bool value);	
