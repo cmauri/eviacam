@@ -10491,6 +10491,7 @@ Are you sure?"</string>
             <long name="title-mode">0</long>
             <long name="locked">0</long>
             <string name="proxy-type">"wbWizardPageProxy"</string>
+            <string name="event-handler-0">"wxEVT_WIZARD_PAGE_CHANGED|OnWizardpageCameraPageChanged|NONE||WizardPage5"</string>
             <string name="proxy-Id name">"ID_WIZARDPAGE_CAMERA"</string>
             <long name="proxy-Id value">10115</long>
             <string name="proxy-Class">"WizardPage5"</string>

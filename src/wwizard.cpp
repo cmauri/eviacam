@@ -1236,6 +1236,8 @@ IMPLEMENT_DYNAMIC_CLASS( WizardPage5, wxWizardPageSimple )
 BEGIN_EVENT_TABLE( WizardPage5, wxWizardPageSimple )
 
 ////@begin WizardPage5 event table entries
+    EVT_WIZARD_PAGE_CHANGED( -1, WizardPage5::OnWizardpageCameraPageChanged )
+
     EVT_BUTTON( ID_BUTTON5, WizardPage5::OnButtonCameraSettingsClick )
 
 ////@end WizardPage5 event table entries
@@ -1351,8 +1353,8 @@ void WizardPage5::CreateControls()
     itemBoxSizer15->Add(m_btnCameraSettings, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
 ////@end WizardPage5 content construction
-	m_staticCameraName->SetLabel(m_wizardParent->GetViacamController()->GetCameraName());
-	m_staticFramerate->SetLabel(wxString::Format(wxT("%f"), m_wizardParent->GetViacamController()->GetCamera()->GetFrameRate()));
+	m_staticCameraName->SetLabel(m_wizardParent->GetViacamController()->GetCameraName());	
+	m_staticFramerate->SetLabel(wxString::Format(wxT("%.1f"), m_wizardParent->GetViacamController()->GetCamera()->GetRealFrameRate()));
 
 }
 
@@ -1893,6 +1895,17 @@ void WizardPage4::OnCheckboxEnabledAtStartupClick( wxCommandEvent& event )
 void WizardPage5::OnButtonCameraSettingsClick( wxCommandEvent& event )
 {
 	m_wizardParent->GetViacamController()->ShowCameraSettingsDialog();
+	event.Skip(false);
+}
+
+
+/*!
+ * wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE_CAMERA
+ */
+
+void WizardPage5::OnWizardpageCameraPageChanged( wxWizardEvent& event )
+{
+	m_staticFramerate->SetLabel(wxString::Format(wxT("%.1f"), m_wizardParent->GetViacamController()->GetCamera()->GetRealFrameRate()));
 	event.Skip(false);
 }
 

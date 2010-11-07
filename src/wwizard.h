@@ -537,6 +537,9 @@ public:
 
 ////@begin WizardPage5 event handler declarations
 
+    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE_CAMERA
+    void OnWizardpageCameraPageChanged( wxWizardEvent& event );
+
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON5
     void OnButtonCameraSettingsClick( wxCommandEvent& event );
 
