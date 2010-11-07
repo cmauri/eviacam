@@ -39,7 +39,7 @@
 
 #include "viacamcontroller.h"
 #include "ckeyboardcontrol.h"
-#include "wconfiguration.h"
+//#include "wconfiguration.h"
 #include "wx/timer.h"
 
 ////@begin XPM images
@@ -87,7 +87,7 @@ Activationkey::Activationkey( wxWindow* parent, wxWindowID id, const wxString& c
 Activationkey::Activationkey( wxWindow* parent, CViacamController* pViacamController, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) : m_timer(this, TIMER_ID)
 {
 	m_pViacamController= pViacamController;
-	m_pConfiguration= m_pViacamController->GetConfiguration();
+//	m_pConfiguration= m_pViacamController->GetConfiguration();
 	Init();
     Create(parent, id, caption, pos, size, style);
 }

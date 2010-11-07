@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        wconfiguration.h
 // Purpose:     
-// Author:      César Mauri Loba
+// Author:      Cï¿½sar Mauri Loba
 // Modified by: 
 // Created:     29/12/2008 16:35:20
 // RCS-ID:      
@@ -20,8 +20,6 @@
 ////@begin includes
 #include "wx/listbook.h"
 #include "wx/notebook.h"
-#include "wx/gbsizer.h"
-#include "wx/statline.h"
 #include "wx/spinctrl.h"
 ////@end includes
 #include "cautostart.h"
@@ -40,9 +38,9 @@
 
 ////@begin forward declarations
 class wxSpinCtrl;
-class wxBoxSizer;
 ////@end forward declarations
 class CViacamController;
+class wxPanel;
 
 /*!
  * Control identifiers
@@ -53,7 +51,6 @@ class CViacamController;
 #define ID_LISTBOOK 10051
 #define ID_NOTEBOOK 10019
 #define ID_PANEL_MOTION 10021
-#define ID_CHECKBOX_ENABLE_AT_STARTUP 10023
 #define ID_SPINCTRL_XSPEED 10026
 #define ID_SPINCTRL_YSPEED 10000
 #define ID_SPINCTRL_ACCELERATION 10001
@@ -75,29 +72,34 @@ class CViacamController;
 #define ID_CHECKBOX_ALLOW_CONSECUTIVE 10032
 #define ID_CHECKBOX_BEEP_ON_CLICK 10033
 #define ID_CHECKBOX_ALLOW_VISUAL_ALERTS 10089
-#define ID_CHECKBOX 10034
-#define ID_STATICBOX_CLICK_WIN 10087
-#define ID_CHECKBOX_CLICKWIN_AT_STARTUP 10022
-#define ID_CHECKBOX_SHOW_CLICKWIN 10037
+#define ID_STATICBOX_CLICK_WIN 10007
 #define ID_STATIC_DESIGN 10081
-#define ID_COMBOBOX_DESIGN 10035
+#define ID_CHOICE_DESIGN 10087
 #define ID_STATIC_BEHAVIOUR 10082
 #define ID_CHOICE_BEHAVIOUR 10006
-#define ID_STATICBOX_GESTURE_CLICK 10088
+#define ID_CHECKBOX_CLICKWIN_AT_STARTUP 10022
+#define ID_CHECKBOX_SHOW_CLICKWIN 10037
+#define ID_STATICBOX_GESTURE_CLICK 10008
+#define ID_CHECKBOX 10034
 #define ID_STATIC_MOVE_LEFT 10083
+#define ID_CHOICE 10035
 #define ID_STATIC_MOVE_RIGHT 10084
-#define ID_STATIC_MOVE_TOP 10085
-#define ID_STATIC_MOVE_BOTTOM 10086
+#define ID_CHOICE1 10088
+#define ID_STATIC_MOVE_UP 10085
+#define ID_CHOICE2 10102
+#define ID_STATIC_MOVE_DOWN 10086
+#define ID_CHOICE3 10105
 #define ID_PANEL_ADVANCED 10025
-#define ID_CHECKBOX_AUTO_LOCATE_FACE 10038
-#define ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER 10039
+#define ID_CHECKBOX_STARTUP 10071
+#define ID_CHECKBOX_ENABLE_AT_STARTUP 10023
 #define ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND 10036
 #define ID_BUTTON_ONSCREENKEYBOARDCOMMAND 10049
 #define ID_CHECKBOX_ACTIVATION_KEY 10067
 #define ID_TEXTCTRL_ACTIVATION_KEY 10068
 #define ID_BUTTON_ACTIVATION_KEY 10069
+#define ID_CHECKBOX_AUTO_LOCATE_FACE 10038
+#define ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER 10039
 #define ID_PANEL 10050
-#define ID_CHECKBOX_STARTUP 10071
 #define ID_CHOICE_PROFILE 10015
 #define ID_BUTTON_ADD_PROFILE 10017
 #define ID_BUTTON_DEL_PROFILE 10018
@@ -105,10 +107,7 @@ class CViacamController;
 #define ID_BUTTON_CAMERA_SETTINGS 10053
 #define ID_BUTTON_CHANGE_CAMERA 10054
 #define ID_CHOICE_LANGUAGE 10012
-#define ID_CHECKBOX_RUN_STARTUP 10016
-#define ID_BUTTON_OK 10040
-#define ID_BUTTON_CANCEL 10041
-#define SYMBOL_WCONFIGURATION_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxDIALOG_MODAL|wxTAB_TRAVERSAL
+#define SYMBOL_WCONFIGURATION_STYLE wxCAPTION|wxSYSTEM_MENU|wxDIALOG_MODAL|wxTAB_TRAVERSAL
 #define SYMBOL_WCONFIGURATION_TITLE _("Configuration")
 #define SYMBOL_WCONFIGURATION_IDNAME ID_WCONFIGURATION
 #define SYMBOL_WCONFIGURATION_SIZE wxDefaultSize
@@ -149,9 +148,6 @@ public:
     void CreateControls();
 
 ////@begin WConfiguration event handler declarations
-
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_AT_STARTUP
-    void OnCheckboxEnableAtStartupClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_XSPEED
     void OnSpinctrlXspeedUpdated( wxSpinEvent& event );
@@ -204,8 +200,11 @@ public:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ALLOW_VISUAL_ALERTS
     void OnCheckboxAllowVisualAlertsClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
-    void OnCheckboxEnableGestureClick( wxCommandEvent& event );
+    /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_DESIGN
+    void OnChoiceDesignSelected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_BEHAVIOUR
+    void OnChoiceBehaviourSelected( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_CLICKWIN_AT_STARTUP
     void OnCheckboxClickwinAtStartupClick( wxCommandEvent& event );
@@ -213,17 +212,18 @@ public:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SHOW_CLICKWIN
     void OnCheckboxShowClickwinClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_DESIGN
-    void OnComboboxDesignSelected( wxCommandEvent& event );
+#if defined(__WXGTK__)
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
+    void OnCheckboxEnableGestureClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_BEHAVIOUR
-    void OnChoiceBehaviourSelected( wxCommandEvent& event );
+#endif
+#if defined(__WXGTK__)
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_STARTUP
+    void OnCheckboxStartupClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTO_LOCATE_FACE
-    void OnCheckboxAutoLocateFaceClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER
-    void OnCheckboxShowLocateFaceFilterClick( wxCommandEvent& event );
+#endif
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_AT_STARTUP
+    void OnCheckboxEnableAtStartupClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND
     void OnTextctrlOnscreenkeyboardcommandTextUpdated( wxCommandEvent& event );
@@ -241,11 +241,12 @@ public:
     void OnButtonActivationKeyClick( wxCommandEvent& event );
 
 #endif
-#if defined(__WXGTK__)
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_STARTUP
-    void OnCheckboxStartupClick( wxCommandEvent& event );
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTO_LOCATE_FACE
+    void OnCheckboxAutoLocateFaceClick( wxCommandEvent& event );
 
-#endif
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER
+    void OnCheckboxShowLocateFaceFilterClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_PROFILE
     void OnChoiceProfileSelected( wxCommandEvent& event );
 
@@ -264,11 +265,11 @@ public:
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_LANGUAGE
     void OnChoiceLanguageSelected( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_OK
-    void OnButtonOkClick( wxCommandEvent& event );
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for wxID_OK
+    void OnOkClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_CANCEL
-    void OnButtonCancelClick( wxCommandEvent& event );
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for wxID_CANCEL
+    void OnCancelClick( wxCommandEvent& event );
 
 ////@end WConfiguration event handler declarations
 
@@ -309,7 +310,6 @@ private:
 	void UnChanged ();
 
 ////@begin WConfiguration member variables
-    wxCheckBox* m_chkEnabledAtStartup;
     wxSpinCtrl* m_spinXSpeed;
     wxSpinCtrl* m_spinYSpeed;
     wxSpinCtrl* m_spinAcceleration;
@@ -321,6 +321,7 @@ private:
     wxSpinCtrl* m_spin_left_workspace;
     wxSpinCtrl* m_spin_right_workspace;
     wxSpinCtrl* m_spin_bottom_workspace;
+    wxPanel* m_panelClick;
     wxCheckBox* m_chkDwellClickEnabled;
     wxStaticText* m_stDwellTime;
     wxSpinCtrl* m_spinDwellTime;
@@ -329,25 +330,47 @@ private:
     wxCheckBox* m_chkAllowConsecutiveClick;
     wxCheckBox* m_chkBeepOnClick;
     wxCheckBox* m_chkAllowVisualAlerts;
-    wxCheckBox* m_chkEnableGestureClick;
     wxStaticBox* m_sboxClickWin;
-    wxCheckBox* m_chkOpenClickWinAtStartup;
-    wxCheckBox* m_chkShowClickWin;
     wxStaticText* m_stDesign;
-    wxComboBox* m_cmbClickWindowDesign;
+    wxChoice* m_choClickWindowDesign;
     wxStaticText* m_stBehaviour;
     wxChoice* m_choClickWindowBehaviour;
+    wxCheckBox* m_chkOpenClickWinAtStartup;
+    wxCheckBox* m_chkShowClickWin;
+#if defined(__WXGTK__)
     wxStaticBox* m_sboxGestureClick;
-    wxBoxSizer* m_sizerLeft;
+#endif
+#if defined(__WXGTK__)
+    wxCheckBox* m_chkEnableGestureClick;
+#endif
+#if defined(__WXGTK__)
     wxStaticText* m_stMoveLeft;
-    wxBoxSizer* m_sizerRight;
+#endif
+#if defined(__WXGTK__)
+    wxChoice* m_choLeft;
+#endif
+#if defined(__WXGTK__)
     wxStaticText* m_stMoveRight;
-    wxBoxSizer* m_sizerTop;
-    wxStaticText* m_stMoveTop;
-    wxBoxSizer* m_sizerBottom;
-    wxStaticText* m_stMoveBottom;
-    wxCheckBox* m_chkAutoLocateFace;
-    wxCheckBox* m_chkShowAutoLocateFaceFilter;
+#endif
+#if defined(__WXGTK__)
+    wxChoice* m_choRight;
+#endif
+#if defined(__WXGTK__)
+    wxStaticText* m_stMoveUp;
+#endif
+#if defined(__WXGTK__)
+    wxChoice* m_choUp;
+#endif
+#if defined(__WXGTK__)
+    wxStaticText* m_stMoveDown;
+#endif
+#if defined(__WXGTK__)
+    wxChoice* m_choDown;
+#endif
+#if defined(__WXGTK__)
+    wxCheckBox* m_chkStartup;
+#endif
+    wxCheckBox* m_chkEnabledAtStartup;
     wxTextCtrl* m_txtOnScreenKeyboardCommand;
     wxButton* m_btntOnScreenKeyboardCommand;
 #if defined(__WXGTK__)
@@ -359,9 +382,8 @@ private:
 #if defined(__WXGTK__)
     wxButton* m_buttonActivationKey;
 #endif
-#if defined(__WXGTK__)
-    wxCheckBox* m_chkStartup;
-#endif
+    wxCheckBox* m_chkAutoLocateFace;
+    wxCheckBox* m_chkShowAutoLocateFaceFilter;
     wxChoice* m_choProfile;
     wxButton* m_btnAddProfile;
     wxButton* m_btnDeleteProfile;
@@ -379,7 +401,6 @@ private:
 	CViacamController* m_pViacamController;
     CAutostart* m_pAutostart;
 	bool m_dirty;
-	//CMotionCalibration* m_pMotionCalibration;
 };
 
 

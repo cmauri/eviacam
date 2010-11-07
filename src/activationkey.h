@@ -27,8 +27,6 @@
 /*!
  * Includes
  */
-#include "wconfiguration.h"
-#include <X11/Xlib.h>
 #include <wx/timer.h>
 
 ////@begin includes
@@ -112,7 +110,7 @@ public:
 private:
 	wxTimer m_timer;
 	CViacamController* m_pViacamController;
-	WConfiguration* m_pConfiguration;
+//	WConfiguration* m_pConfiguration;
 	int m_keyCode;
 };
 

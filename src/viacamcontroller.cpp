@@ -397,7 +397,7 @@ void CViacamController::OpenConfiguration()
 	m_pConfiguration = new WConfiguration(m_pMainWindow, this);
 	int returnValue = m_pConfiguration->ShowModal();
 	m_pConfiguration->Destroy();
-	if (returnValue== ID_BUTTON_OK)
+	if (returnValue== wxID_OK)
 		// Save changes
 		m_configManager->WriteAll();
 	else
