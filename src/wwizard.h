@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        wwizard.h
 // Purpose:     
-// Author:      César Mauri Loba
+// Author:      Cï¿½sar Mauri Loba
 // Modified by: 
 // Created:     Mon 18 Oct 2010 09:57:22 CEST
 // RCS-ID:      
@@ -49,23 +49,23 @@ class CViacamController;
 
 ////@begin control identifiers
 #define ID_WWIZARD 10090
-#define ID_WIZARDPAGE 10091
-#define ID_WIZARDPAGE5 10115
+#define ID_WIZARDPAGE_INI 10091
+#define ID_WIZARDPAGE_CAMERA 10115
 #define ID_BUTTON5 10124
-#define ID_WIZARDPAGE1 10093
+#define ID_WIZARDPAGE_CALIB1 10093
 #define ID_CHECKBOX_PERFORM_CALIBRATION 10095
-#define ID_WIZARDPAGE2 10096
-#define ID_WIZARDPAGE6 10116
+#define ID_WIZARDPAGE_CALIB2 10096
+#define ID_WIZARDPAGE_CALIB3 10116
 #define ID_SPINCTRL 10118
 #define ID_SPINCTRL1 10119
 #define ID_TOGGLEBUTTON 10117
-#define ID_WIZARDPAGE7 10120
-#define ID_WIZARDPAGE3 10097
+#define ID_WIZARDPAGE_CLICK1 10120
+#define ID_WIZARDPAGE_CLICK2 10097
 #define ID_RADIOBUTTON_DWELL_CLICK 10099
 #define ID_RADIOBUTTON_GESTURE_CLICK 10100
 #define ID_RADIOBUTTON_NONE_CLICK 10098
 #define ID_TOGGLEBUTTON1 10121
-#define ID_WIZARDPAGE4 10103
+#define ID_WIZARDPAGE_FINAL 10103
 #define ID_CHECKBOX1 10092
 #define ID_CHECKBOX3 10101
 #define ID_CHECKBOX4 10123
@@ -125,7 +125,7 @@ public:
     static bool ShowToolTips();
 	
 	inline CViacamController* GetViacamController();
-	inline WizardPage* GetNextPage();
+//	inline WizardPage* GetNextPage();
 	
 	
 	inline const bool GetRunAtStartup() const;
@@ -149,7 +149,7 @@ private:
 	bool m_performCalibration;
 	bool m_isMotionEnabled;
 	EClickMode m_clickMode;
-	WizardPage* m_wizardPage3;
+//	WizardPage* m_wizardPage3;
 	
 };
 
@@ -157,11 +157,11 @@ private:
 	{
 		return m_pViacamController;
 	}
-	
+	/*
 	inline WizardPage* WWizard::GetNextPage()
 	{
 		return m_wizardPage3;
-	}
+	}*/
 	
 	inline const bool WWizard::GetRunAtStartup() const
 	{
@@ -282,7 +282,7 @@ public:
 
 ////@begin WizardPage1 event handler declarations
 
-    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE1
+    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE_CALIB1
     void OnWizardpage1Changed( wxWizardEvent& event );
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_PERFORM_CALIBRATION
@@ -337,7 +337,7 @@ public:
 
 ////@begin WizardPage2 event handler declarations
 
-    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE2
+    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE_CALIB2
     void OnWizardpage2Changed( wxWizardEvent& event );
 
 ////@end WizardPage2 event handler declarations
@@ -388,10 +388,10 @@ public:
 
 ////@begin WizardPage3 event handler declarations
 
-    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE3
+    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE_CLICK2
     void OnWizardpage3Changed( wxWizardEvent& event );
 
-    /// wxEVT_WIZARD_PAGE_CHANGING event handler for ID_WIZARDPAGE3
+    /// wxEVT_WIZARD_PAGE_CHANGING event handler for ID_WIZARDPAGE_CLICK2
     void OnWizardpage3Changing( wxWizardEvent& event );
 
     /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_DWELL_CLICK
@@ -470,8 +470,8 @@ public:
 
 ////@begin WizardPage4 event handler declarations
 
-    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE4
-    void OnWizardpage4PageChanged( wxWizardEvent& event );
+    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE_FINAL
+    void OnWizardpageFinalPageChanged( wxWizardEvent& event );
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX1
     void OnCheckboxRunWizardAtStartupClick( wxCommandEvent& event );
@@ -591,8 +591,8 @@ public:
 
 ////@begin WizardPage6 event handler declarations
 
-    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE6
-    void OnWizardpage6PageChanged( wxWizardEvent& event );
+    /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE_CALIB3
+    void OnWizardpageCalib3PageChanged( wxWizardEvent& event );
 
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL
     void OnSpinctrlXSpeedUpdated( wxSpinEvent& event );
