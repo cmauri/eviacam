@@ -882,7 +882,7 @@ void WizardPage3::CreateControls()
     wxBoxSizer* itemBoxSizer94 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer88->Add(itemBoxSizer94, 0, wxGROW|wxALL, 5);
 
-    m_toggleTest = new wxToggleButton( itemWizardPageSimple87, ID_TOGGLEBUTTON1, _("Click here to test"), wxDefaultPosition, wxSize(150, 50), 0 );
+    m_toggleTest = new wxToggleButton( itemWizardPageSimple87, ID_TOGGLEBUTTON1, _("Click here to test"), wxDefaultPosition, wxSize(-1, 50), 0 );
     m_toggleTest->SetValue(false);
     itemBoxSizer94->Add(m_toggleTest, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
