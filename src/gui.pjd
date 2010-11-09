@@ -14828,7 +14828,7 @@ and adjust the parameters manually."</string>
                 <bool name="proxy-wxFIXED_MINSIZE">0</bool>
                 <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
                 <document>
-                  <string name="title">"wxToggleButton: ID_TOGGLEBUTTON1"</string>
+                  <string name="title">"wxToggleButton: ID_TOGGLE_TEST"</string>
                   <string name="type">"dialog-control-document"</string>
                   <string name="filename">""</string>
                   <string name="icon-name">"togglebutton"</string>
@@ -14837,11 +14837,12 @@ and adjust the parameters manually."</string>
                   <long name="title-mode">0</long>
                   <long name="locked">0</long>
                   <string name="proxy-type">"wbToggleButtonProxy"</string>
-                  <string name="event-handler-0">"wxEVT_LEFT_DOWN|OnLeftDownTest|NONE||WizardPage3"</string>
-                  <string name="event-handler-1">"wxEVT_LEFT_UP|OnLeftUpTest|NONE||WizardPage3"</string>
-                  <string name="event-handler-2">"wxEVT_LEFT_DCLICK|OnLeftDClickTest|NONE||WizardPage3"</string>
-                  <string name="event-handler-3">"wxEVT_RIGHT_UP|OnRightUpTest|NONE||WizardPage3"</string>
-                  <string name="proxy-Id name">"ID_TOGGLEBUTTON1"</string>
+                  <string name="event-handler-0">"wxEVT_COMMAND_CHECKBOX_CLICKED|OnToggleTestClick|NONE||WizardPage3"</string>
+                  <string name="event-handler-1">"wxEVT_LEFT_DOWN|OnLeftDownTest|NONE||WizardPage3"</string>
+                  <string name="event-handler-2">"wxEVT_LEFT_UP|OnLeftUpTest|NONE||WizardPage3"</string>
+                  <string name="event-handler-3">"wxEVT_LEFT_DCLICK|OnLeftDClickTest|NONE||WizardPage3"</string>
+                  <string name="event-handler-4">"wxEVT_RIGHT_UP|OnRightUpTest|NONE||WizardPage3"</string>
+                  <string name="proxy-Id name">"ID_TOGGLE_TEST"</string>
                   <long name="proxy-Id value">10121</long>
                   <string name="proxy-Name">""</string>
                   <string name="proxy-Class">"wxToggleButton"</string>

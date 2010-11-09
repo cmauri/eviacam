@@ -194,7 +194,7 @@ public:
 private:
 	CCamWindow* m_pCamWindow;
 	CViacamController* m_pController;
-	wxTaskBarIcon* m_taskBarIcon;
+	wxTaskBarIcon* m_taskBarIcon;	
 
 	long m_prevFPS;
 };

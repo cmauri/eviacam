@@ -45,7 +45,7 @@
 #define BUTTON_OK 1
 #define BUTTON_CANCEL 2
 #define BUTTON_REPEAT 3
-#define CANCEL_TIME 15
+#define CANCEL_TIME 10
 #define OK_TIME 5
 #define REPEAT_TIME 5
 
@@ -188,7 +188,7 @@ void WConfirmCalibration::CreateControls()
 	m_cancelCountdown = CANCEL_TIME;
 	m_repeatCountdown = REPEAT_TIME;
 	m_activeButton = CANCEL;
-	m_buttonCancel->SetLabel(wxString::Format(wxT("Cancel %i"),CANCEL_TIME));
+	m_buttonCancel->SetLabel(_("Cancel") + wxString::Format(wxT(" %i"),CANCEL_TIME));
 	
 }
 
@@ -287,23 +287,23 @@ void WConfirmCalibration::OnTimer(wxTimerEvent& event)
 		{
 			case OK:
 				m_okCountdown--;
-				m_buttonOk->SetLabel(wxString::Format(wxT("Ok %i"),m_okCountdown));
-				m_buttonCancel->SetLabel(wxString::Format(wxT("Cancel")));
-				m_buttonRepeat->SetLabel(wxString::Format(wxT("Repeat")));
+				m_buttonOk->SetLabel(_("Ok") + wxString::Format(wxT(" %i"), m_okCountdown));
+				m_buttonCancel->SetLabel(_("Cancel"));
+				m_buttonRepeat->SetLabel(_("Repeat"));
 				break;
 	
 			case CANCEL:
 				m_cancelCountdown--;
-				m_buttonOk->SetLabel(wxString::Format(wxT("Ok")));
-				m_buttonCancel->SetLabel(wxString::Format(wxT("Cancel %i"),m_cancelCountdown));
-				m_buttonRepeat->SetLabel(wxString::Format(wxT("Repeat")));
+				m_buttonOk->SetLabel(_("Ok"));
+				m_buttonCancel->SetLabel(_("Cancel") + wxString::Format(wxT(" %i"), m_cancelCountdown));
+				m_buttonRepeat->SetLabel(_("Repeat"));
 				break;
 	
 			case REPEAT:
 				m_repeatCountdown--;
-				m_buttonOk->SetLabel(wxString::Format(wxT("Ok")));
-				m_buttonCancel->SetLabel(wxString::Format(wxT("Cancel")));
-				m_buttonRepeat->SetLabel(wxString::Format(wxT("Repeat %i"),m_repeatCountdown));
+				m_buttonOk->SetLabel(_("Ok"));
+				m_buttonCancel->SetLabel(_("Cancel"));
+				m_buttonRepeat->SetLabel(_("Repeat") + wxString::Format(wxT(" %i"), m_repeatCountdown));
 				break;
 		}
 		m_timer.Stop();

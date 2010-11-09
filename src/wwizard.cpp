@@ -774,6 +774,8 @@ BEGIN_EVENT_TABLE( WizardPage3, wxWizardPageSimple )
     EVT_WIZARD_PAGE_CHANGED( -1, WizardPage3::OnWizardpage3Changed )
     EVT_WIZARD_PAGE_CHANGING( -1, WizardPage3::OnWizardpage3Changing )
 
+    EVT_TOGGLEBUTTON( ID_TOGGLE_TEST, WizardPage3::OnToggleTestClick )
+
     EVT_RADIOBUTTON( ID_RADIOBUTTON_DWELL_CLICK, WizardPage3::OnRadiobuttonDwellClickSelected )
 
 #if defined(__WXGTK__)
@@ -849,6 +851,8 @@ void WizardPage3::Init()
 #endif
     m_rbNoneClick = NULL;
 ////@end WizardPage3 member initialisation
+	m_dClickSignaled= false;
+	m_dragSignaled= false;
 }
 
 
@@ -882,7 +886,7 @@ void WizardPage3::CreateControls()
     wxBoxSizer* itemBoxSizer94 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer88->Add(itemBoxSizer94, 0, wxGROW|wxALL, 5);
 
-    m_toggleTest = new wxToggleButton( itemWizardPageSimple87, ID_TOGGLEBUTTON1, _("Click here to test"), wxDefaultPosition, wxSize(-1, 50), 0 );
+    m_toggleTest = new wxToggleButton( itemWizardPageSimple87, ID_TOGGLE_TEST, _("Click here to test"), wxDefaultPosition, wxSize(-1, 50), 0 );
     m_toggleTest->SetValue(false);
     itemBoxSizer94->Add(m_toggleTest, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
@@ -915,10 +919,10 @@ void WizardPage3::CreateControls()
     itemBoxSizer94->Add(m_rbNoneClick, 0, wxALIGN_LEFT|wxALL, 5);
 
     // Connect events and objects
-    m_toggleTest->Connect(ID_TOGGLEBUTTON1, wxEVT_LEFT_DOWN, wxMouseEventHandler(WizardPage3::OnLeftDownTest), NULL, this);
-    m_toggleTest->Connect(ID_TOGGLEBUTTON1, wxEVT_LEFT_UP, wxMouseEventHandler(WizardPage3::OnLeftUpTest), NULL, this);
-    m_toggleTest->Connect(ID_TOGGLEBUTTON1, wxEVT_LEFT_DCLICK, wxMouseEventHandler(WizardPage3::OnLeftDClickTest), NULL, this);
-    m_toggleTest->Connect(ID_TOGGLEBUTTON1, wxEVT_RIGHT_UP, wxMouseEventHandler(WizardPage3::OnRightUpTest), NULL, this);
+    m_toggleTest->Connect(ID_TOGGLE_TEST, wxEVT_LEFT_DOWN, wxMouseEventHandler(WizardPage3::OnLeftDownTest), NULL, this);
+    m_toggleTest->Connect(ID_TOGGLE_TEST, wxEVT_LEFT_UP, wxMouseEventHandler(WizardPage3::OnLeftUpTest), NULL, this);
+    m_toggleTest->Connect(ID_TOGGLE_TEST, wxEVT_LEFT_DCLICK, wxMouseEventHandler(WizardPage3::OnLeftDClickTest), NULL, this);
+    m_toggleTest->Connect(ID_TOGGLE_TEST, wxEVT_RIGHT_UP, wxMouseEventHandler(WizardPage3::OnRightUpTest), NULL, this);
 ////@end WizardPage3 content construction
 
 }
@@ -1233,9 +1237,10 @@ wxIcon WizardPage4::GetIconResource( const wxString& name )
 
 void WizardPage3::OnTimer(wxTimerEvent& event)
 {
-	m_toggleTest->SetLabel(wxT("Click here to test"));
+	m_toggleTest->SetLabel(_("Click here to test"));
+	m_dClickSignaled= m_dragSignaled= false;
 	m_toggleTest->SetValue(false);
-	m_timer.Stop();
+	m_timer.Stop();	
 	event.Skip(false);
 }
 
@@ -1892,15 +1897,35 @@ wxIcon WizardPage7::GetIconResource( const wxString& name )
 
 
 /*!
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_TOGGLE_TEST
+ */
+
+void WizardPage3::OnToggleTestClick( wxCommandEvent& event )
+{
+	printf ("Clic\n");
+	wxPoint p= m_toggleTest->GetPosition();
+	p.x+= 10;
+	//m_toggleTest->Move(p);
+////@begin wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_TOGGLE_TEST in WizardPage3.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+////@end wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_TOGGLE_TEST in WizardPage3. 
+}
+
+
+/*!
  * wxEVT_LEFT_DOWN event handler for ID_TOGGLEBUTTON1
  */
 
 void WizardPage3::OnLeftDownTest( wxMouseEvent& event )
 {
-	m_toggleTest->SetLabel(wxT("Drag"));
+	printf ("LeftD\n");
+	m_toggleTest->SetLabel(_("Drag"));
+	m_dClickSignaled= false;
+	m_dragSignaled= true;
 	m_toggleTest->SetValue(true);
 	m_timer.Start(1000);
-    event.Skip(false);
+	event.Skip(true); //false);
 }
 
 
@@ -1910,16 +1935,23 @@ void WizardPage3::OnLeftDownTest( wxMouseEvent& event )
 
 void WizardPage3::OnLeftUpTest( wxMouseEvent& event )
 {
-	if (m_toggleTest->GetLabel() != wxT("Double click"))
+	printf ("LeftU\n");
+//m_dClickSignaled, m_dragSignaled;
+	if (!m_dClickSignaled)
 	{
-		if (m_toggleTest->GetLabel() == wxT("Drag"))
-			m_toggleTest->SetLabel(wxT("Left click"));
+		if (m_dragSignaled)
+			m_toggleTest->SetLabel(wxT("Drop"));			
 		else
-			m_toggleTest->SetLabel(wxT("Drop"));
+			m_toggleTest->SetLabel(wxT("Left click"));
+			
 		m_toggleTest->SetValue(true);	
 		m_timer.Start(1000);
-		event.Skip(false);
-	}	
+		//event.Skip(false);
+	}
+	else
+		m_dClickSignaled= false;
+		
+	event.Skip(true);
 }
 
 
@@ -1931,10 +1963,11 @@ void WizardPage3::OnLeftUpTest( wxMouseEvent& event )
 
 void WizardPage3::OnRightUpTest( wxMouseEvent& event )
 {
+	printf ("RightUp\n");
 	m_toggleTest->SetValue(true);
-	m_toggleTest->SetLabel(wxT("Right click"));
+	m_toggleTest->SetLabel(_("Right click"));
 	m_timer.Start(1000);
-    event.Skip(false);
+  //  event.Skip(false);
 }
 
 
@@ -1946,10 +1979,11 @@ void WizardPage3::OnRightUpTest( wxMouseEvent& event )
 
 void WizardPage3::OnLeftDClickTest( wxMouseEvent& event )
 {
-	m_toggleTest->SetLabel(wxT("Double click"));
+	printf ("Double\n");
+	m_toggleTest->SetLabel(_("Double click"));
 	m_toggleTest->SetValue(true);
 	m_timer.Start(1000);
-    event.Skip(false);
+	//event.Skip(false);
 }
 
 
@@ -2172,3 +2206,5 @@ wxIcon WizardPage8::GetIconResource( const wxString& name )
     return wxNullIcon;
 ////@end WizardPage8 icon retrieval
 }
+
+

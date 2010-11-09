@@ -63,7 +63,7 @@ class CViacamController;
 #define ID_TOGGLEBUTTON 10117
 #define ID_WIZARDPAGE_CLICK1 10120
 #define ID_WIZARDPAGE_CLICK2 10097
-#define ID_TOGGLEBUTTON1 10121
+#define ID_TOGGLE_TEST 10121
 #define ID_RADIOBUTTON_DWELL_CLICK 10099
 #define ID_RADIOBUTTON_GESTURE_CLICK 10100
 #define ID_RADIOBUTTON_NONE_CLICK 10098
@@ -379,16 +379,19 @@ public:
     /// wxEVT_WIZARD_PAGE_CHANGING event handler for ID_WIZARDPAGE_CLICK2
     void OnWizardpage3Changing( wxWizardEvent& event );
 
-    /// wxEVT_LEFT_DOWN event handler for ID_TOGGLEBUTTON1
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_TOGGLE_TEST
+    void OnToggleTestClick( wxCommandEvent& event );
+
+    /// wxEVT_LEFT_DOWN event handler for ID_TOGGLE_TEST
     void OnLeftDownTest( wxMouseEvent& event );
 
-    /// wxEVT_LEFT_UP event handler for ID_TOGGLEBUTTON1
+    /// wxEVT_LEFT_UP event handler for ID_TOGGLE_TEST
     void OnLeftUpTest( wxMouseEvent& event );
 
-    /// wxEVT_LEFT_DCLICK event handler for ID_TOGGLEBUTTON1
+    /// wxEVT_LEFT_DCLICK event handler for ID_TOGGLE_TEST
     void OnLeftDClickTest( wxMouseEvent& event );
 
-    /// wxEVT_RIGHT_UP event handler for ID_TOGGLEBUTTON1
+    /// wxEVT_RIGHT_UP event handler for ID_TOGGLE_TEST
     void OnRightUpTest( wxMouseEvent& event );
 
     /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_DWELL_CLICK
@@ -428,6 +431,7 @@ public:
 ////@end WizardPage3 member variables
 	WWizard* m_wizardParent;
 	wxTimer m_timer;
+	bool m_dClickSignaled, m_dragSignaled;
 };
 
 /*!
