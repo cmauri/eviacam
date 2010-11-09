@@ -155,20 +155,28 @@ void WConfirmCalibration::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, _("The new calibration will be applied. \nAre you sure?"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemStaticText3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, _("Move your head to see how it works"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(itemStaticText3, 0, wxGROW|wxALL, 5);
 
-    wxBoxSizer* itemBoxSizer4 = new wxBoxSizer(wxHORIZONTAL);
-    itemBoxSizer2->Add(itemBoxSizer4, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxStaticText* itemStaticText4 = new wxStaticText( itemDialog1, wxID_STATIC, _("Hover one of the buttons to select your choice"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(itemStaticText4, 0, wxGROW|wxALL, 5);
+
+    itemBoxSizer2->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, _("- \"Ok\" saves this configuration.\n- \"Cancel\" retains the old configuration.\n- \"Repeat\" starts again the calibration process."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(itemStaticText6, 0, wxGROW|wxALL, 5);
+
+    wxBoxSizer* itemBoxSizer7 = new wxBoxSizer(wxHORIZONTAL);
+    itemBoxSizer2->Add(itemBoxSizer7, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     m_buttonOk = new wxButton( itemDialog1, ID_BUTTON1, _("Ok"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer4->Add(m_buttonOk, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer7->Add(m_buttonOk, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_buttonCancel = new wxButton( itemDialog1, ID_BUTTON2, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer4->Add(m_buttonCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer7->Add(m_buttonCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_buttonRepeat = new wxButton( itemDialog1, ID_BUTTON3, _("Repeat"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer4->Add(m_buttonRepeat, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemBoxSizer7->Add(m_buttonRepeat, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     // Connect events and objects
     m_buttonOk->Connect(ID_BUTTON1, wxEVT_MOTION, wxMouseEventHandler(WConfirmCalibration::OnOkButtonMotion), NULL, this);
