@@ -18,7 +18,8 @@ dist_noinst_DATA= version.h.in langnames-utf16.h gui.pjd gui.rc eviacam.vcproj \
 	icons/buttonLeftSelectedLocked.xpm icons/buttonLeftSelected.xpm icons/buttonLeft.xpm \
 	icons/buttonNoClickSelected.xpm icons/buttonNoClick.xpm \
 	icons/buttonRightDisabled.xpm icons/buttonRightLocked.xpm icons/buttonRightSelectedLocked.xpm \
-	icons/buttonRightSelected.xpm icons/buttonRight.xpm icons/buttonShowMainWindow.xpm
+	icons/buttonRightSelected.xpm icons/buttonRight.xpm icons/buttonShowMainWindow.xpm \
+	icons/usermoveh64.xpm icons/usermovev64.xpm
 
 EXTRA_DIST = eviacam.desktop icons/eviacam.xpm
 dist_pkgdata_DATA= eviacam.desktop

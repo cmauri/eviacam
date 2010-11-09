@@ -571,7 +571,7 @@ bool CCameraV4L2::DetectBestImageFormat()
 			}			
 		}
 	}
-#if !defined(NDEBUG)	
+#if !defined(NDEBUG)
 	for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
 		dump_TImageFormatEx (*i);
 	}
@@ -586,9 +586,11 @@ bool CCameraV4L2::DetectBestImageFormat()
 		for (unsigned int ienc= 0; !found && ienc< m_supportedPixelFormats.size(); ++ienc)
 			if (m_supportedPixelFormats[ienc]== i->pixelformat) found= true;
 		
-		if (!found) {			
+		if (!found) {
+#if !defined(NDEBUG)
 			char* tmp= (char *) &i->pixelformat;
 			std::cerr << "crvcamera_v4l2: discarding unsuported format: " << tmp[0] << tmp[1] << tmp[2] << tmp[3] << std::endl;
+#endif
 			i= availableFormats.erase (i);
 		}
 		else ++i;
