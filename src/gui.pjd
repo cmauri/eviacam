@@ -792,6 +792,39 @@
               <string name="proxy-Member variable name">""</string>
               <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
               <document>
+                <string name="title">"&amp;Help contents: ID_MENU_HELP_CONTENTS"</string>
+                <string name="type">"dialog-control-document"</string>
+                <string name="filename">""</string>
+                <string name="icon-name">"menuitem"</string>
+                <long name="is-transient">0</long>
+                <long name="owns-file">1</long>
+                <long name="title-mode">0</long>
+                <long name="locked">0</long>
+                <string name="proxy-type">"wbMenuItemProxy"</string>
+                <string name="proxy-Id name">"ID_MENU_HELP_CONTENTS"</string>
+                <long name="proxy-Id value">10040</long>
+                <string name="proxy-Label">"&amp;Help contents"</string>
+                <string name="proxy-Kind">"Normal"</string>
+                <bool name="proxy-Checked">0</bool>
+                <bool name="proxy-Enabled">1</bool>
+                <string name="proxy-Help text">""</string>
+                <string name="proxy-Bitmap">""</string>
+                <string name="proxy-Bitmap unchecked">""</string>
+                <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
+              </document>
+              <document>
+                <string name="title">"------------"</string>
+                <string name="type">"dialog-control-document"</string>
+                <string name="filename">""</string>
+                <string name="icon-name">"menuitem"</string>
+                <long name="is-transient">0</long>
+                <long name="owns-file">1</long>
+                <long name="title-mode">0</long>
+                <long name="locked">0</long>
+                <string name="proxy-type">"wbMenuSeparatorProxy"</string>
+                <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
+              </document>
+              <document>
                 <string name="title">"&amp;About...: ID_MENU_ABOUT"</string>
                 <string name="type">"dialog-control-document"</string>
                 <string name="filename">""</string>
@@ -1059,7 +1092,7 @@
               <string name="proxy-Bitmap (disabled)">""</string>
               <string name="proxy-Label">"Help"</string>
               <string name="proxy-Kind">"Normal"</string>
-              <bool name="proxy-Enabled">0</bool>
+              <bool name="proxy-Enabled">1</bool>
               <string name="proxy-Tooltip">"Help"</string>
               <string name="proxy-Help text">""</string>
               <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
