@@ -32,6 +32,7 @@
 ////@begin forward declarations
 class WizardPage;
 class WizardPage5;
+class WizardPage8;
 class WizardPage1;
 class WizardPage2;
 class WizardPage6;
@@ -52,6 +53,7 @@ class CViacamController;
 #define ID_WIZARDPAGE_INI 10091
 #define ID_WIZARDPAGE_CAMERA 10115
 #define ID_BUTTON5 10124
+#define ID_WIZARDPAGE_TRACKER 10016
 #define ID_WIZARDPAGE_CALIB1 10093
 #define ID_CHECKBOX_PERFORM_CALIBRATION 10095
 #define ID_WIZARDPAGE_CALIB2 10096
@@ -61,10 +63,10 @@ class CViacamController;
 #define ID_TOGGLEBUTTON 10117
 #define ID_WIZARDPAGE_CLICK1 10120
 #define ID_WIZARDPAGE_CLICK2 10097
+#define ID_TOGGLEBUTTON1 10121
 #define ID_RADIOBUTTON_DWELL_CLICK 10099
 #define ID_RADIOBUTTON_GESTURE_CLICK 10100
 #define ID_RADIOBUTTON_NONE_CLICK 10098
-#define ID_TOGGLEBUTTON1 10121
 #define ID_WIZARDPAGE_FINAL 10103
 #define ID_CHECKBOX1 10092
 #define ID_CHECKBOX3 10101
@@ -377,15 +379,6 @@ public:
     /// wxEVT_WIZARD_PAGE_CHANGING event handler for ID_WIZARDPAGE_CLICK2
     void OnWizardpage3Changing( wxWizardEvent& event );
 
-    /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_DWELL_CLICK
-    void OnRadiobuttonDwellClickSelected( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_GESTURE_CLICK
-    void OnRadiobuttonGestureClickSelected( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_NONE_CLICK
-    void OnRadiobuttonNoneClickSelected( wxCommandEvent& event );
-
     /// wxEVT_LEFT_DOWN event handler for ID_TOGGLEBUTTON1
     void OnLeftDownTest( wxMouseEvent& event );
 
@@ -397,6 +390,17 @@ public:
 
     /// wxEVT_RIGHT_UP event handler for ID_TOGGLEBUTTON1
     void OnRightUpTest( wxMouseEvent& event );
+
+    /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_DWELL_CLICK
+    void OnRadiobuttonDwellClickSelected( wxCommandEvent& event );
+
+#if defined(__WXGTK__)
+    /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_GESTURE_CLICK
+    void OnRadiobuttonGestureClickSelected( wxCommandEvent& event );
+
+#endif
+    /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_NONE_CLICK
+    void OnRadiobuttonNoneClickSelected( wxCommandEvent& event );
 
 ////@end WizardPage3 event handler declarations
 
@@ -415,10 +419,12 @@ public:
     static bool ShowToolTips();
 
 ////@begin WizardPage3 member variables
-    wxRadioButton* m_rbDwellClick;
-    wxRadioButton* m_rbGestureClick;
-    wxRadioButton* m_rbNoneClick;
     wxToggleButton* m_toggleTest;
+    wxRadioButton* m_rbDwellClick;
+#if defined(__WXGTK__)
+    wxRadioButton* m_rbGestureClick;
+#endif
+    wxRadioButton* m_rbNoneClick;
 ////@end WizardPage3 member variables
 	WWizard* m_wizardParent;
 	wxTimer m_timer;
@@ -660,6 +666,53 @@ public:
 ////@begin WizardPage7 member variables
 ////@end WizardPage7 member variables
 	WWizard* m_wizardParent;
+};
+
+/*!
+ * WizardPage8 class declaration
+ */
+
+class WizardPage8: public wxWizardPageSimple
+{    
+    DECLARE_DYNAMIC_CLASS( WizardPage8 )
+    DECLARE_EVENT_TABLE()
+
+public:
+    /// Constructors
+    WizardPage8();
+
+    WizardPage8( wxWizard* parent );
+
+    /// Creation
+    bool Create( wxWizard* parent );
+
+    /// Destructor
+    ~WizardPage8();
+
+    /// Initialises member variables
+    void Init();
+
+    /// Creates the controls and sizers
+    void CreateControls();
+
+////@begin WizardPage8 event handler declarations
+
+////@end WizardPage8 event handler declarations
+
+////@begin WizardPage8 member function declarations
+
+    /// Retrieves bitmap resources
+    wxBitmap GetBitmapResource( const wxString& name );
+
+    /// Retrieves icon resources
+    wxIcon GetIconResource( const wxString& name );
+////@end WizardPage8 member function declarations
+
+    /// Should we show tooltips?
+    static bool ShowToolTips();
+
+////@begin WizardPage8 member variables
+////@end WizardPage8 member variables
 };
 
 #endif
