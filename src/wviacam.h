@@ -141,7 +141,7 @@ public:
     void OnMenuOptionsClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_HELP_CONTENTS
-    void OnMenuHelpContentsClick( wxCommandEvent& event );
+    void OnToolHelpClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_ABOUT
     void OnMenuAboutClick( wxCommandEvent& event );
@@ -169,9 +169,6 @@ public:
 
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_TOOL_OPTIONS
     void OnToolOptionsClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_TOOL_HELP
-    void OnToolHelpClick( wxCommandEvent& event );
 
 ////@end WViacam event handler declarations
 

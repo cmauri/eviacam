@@ -89,7 +89,7 @@ BEGIN_EVENT_TABLE( WViacam, wxFrame )
 
     EVT_MENU( ID_MENU_OPTIONS, WViacam::OnMenuOptionsClick )
 
-    EVT_MENU( ID_MENU_HELP_CONTENTS, WViacam::OnMenuHelpContentsClick )
+    EVT_MENU( ID_MENU_HELP_CONTENTS, WViacam::OnToolHelpClick )
 
     EVT_MENU( ID_MENU_ABOUT, WViacam::OnMenuAboutClick )
 
@@ -558,7 +558,20 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 {
 	wxHtmlHelpController* m_wxHtmlHelpController;
 	m_wxHtmlHelpController = new wxHtmlHelpController();
-	m_wxHtmlHelpController->AddBook(wxT("../doc/eng/hhp/help.hhp"),false);
+	
+	switch(m_pController->GetLocale()->GetLanguage())
+	{
+		case (wxLANGUAGE_CATALAN):
+			m_wxHtmlHelpController->AddBook(wxT("../doc/cat/hhp/help.hhp"),false);
+			break;
+		case (wxLANGUAGE_SPANISH):
+			m_wxHtmlHelpController->AddBook(wxT("../doc/esp/hhp/help.hhp"),false);
+			break;
+		default:
+			m_wxHtmlHelpController->AddBook(wxT("../doc/eng/hhp/help.hhp"),false);
+			break;
+	}		
+	
 	m_wxHtmlHelpController->DisplayContents();
     event.Skip(false);
 }
@@ -586,16 +599,4 @@ void WViacam::OnMenuWizardClick( wxCommandEvent& event )
 }
 
 
-/*!
- * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_HELP_CONTENTS
- */
-
-void WViacam::OnMenuHelpContentsClick( wxCommandEvent& event )
-{
-	wxHtmlHelpController* m_wxHtmlHelpController;
-	m_wxHtmlHelpController = new wxHtmlHelpController();
-	m_wxHtmlHelpController->AddBook(wxT("../doc/eng/hhp/help.hhp"),false);
-	m_wxHtmlHelpController->DisplayContents();
-    event.Skip(false);
-}
 

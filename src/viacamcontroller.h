@@ -97,6 +97,7 @@ public:
 	inline const bool CameraHasSettingsDialog () const;
 	void ShowCameraSettingsDialog () const;
 	inline void ChangeCamera ();
+	inline wxLocale* GetLocale();
 
 	void OpenConfiguration();
 	void OpenOnScreenKeyboard();
@@ -291,5 +292,11 @@ inline void CViacamController::SetRunWizardAtStartup (bool value)
 {
 	m_runWizardAtStartup= value;
 }
+
+inline wxLocale* CViacamController::GetLocale()
+{
+	return m_locale;
+}
+
 
 #endif

@@ -801,7 +801,7 @@
                 <long name="title-mode">0</long>
                 <long name="locked">0</long>
                 <string name="proxy-type">"wbMenuItemProxy"</string>
-                <string name="event-handler-0">"wxEVT_COMMAND_MENU_SELECTED|OnMenuHelpContentsClick|NONE||WViacam"</string>
+                <string name="event-handler-0">"wxEVT_COMMAND_MENU_SELECTED|OnToolHelpClick|NONE||WViacam"</string>
                 <string name="proxy-Id name">"ID_MENU_HELP_CONTENTS"</string>
                 <long name="proxy-Id value">10040</long>
                 <string name="proxy-Label">"&amp;Help contents"</string>
