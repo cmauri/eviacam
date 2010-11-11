@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>eViacam - Factores importantes de la c&aacute;mara web</title>
+<meta http-equiv="" content="text/html; charset=iso-8859-1">
+<meta http-equiv="" content="text/html; charset=iso-8859-1">
+<link type="text/css" href="../style/normal.css" rel="stylesheet">
+</head>
+<body>
+<h1 class="text">EVIACAM<br>
+  AYUDA</h1>
+<h2 class="text">C&Aacute;MARA WEB</h2>
+
+<h3 class="text">FACTORES IMPORTANTES</h3>
+<br>
+
+<p class="tnormal">La webcam es el elemento t&eacute;cnico determinante para el correcto funcionamiento de eViacam. La imagen que provee este dispositivo a la aplicaci&oacute;n debe cumplir los siguientes requisitos:</p>
+<p class="tnormal">&nbsp;</p>
+
+<p class="tnormal"><strong>- Velocidad de captura</strong></p>
+<p class="tnormal">&nbsp;</p>
+<p class="tnormal">Es el n&uacute;mero de im&aacute;genes por segundos que la webcam transmite al PC y el par&aacute;metro se indica en fps (frames per second). Este valor deber&aacute; estar comprendido entre 25 y 30 fps, no siendo inferior a 25 ya que su funcionamiento se ver&iacute;a sensiblemente deteriorado. Puede comprobar este valor en el extremo inferior izquierdo de la pantalla principal de eViacam.</p>
+<p class="tnormal">&nbsp;</p>
+
+<p class="tnormal"><img width="" height="" src="fps.png"></p>
+<p class="tnormal">&nbsp;</p>
+
+<p class="tnormal">Por otra parte, el par&aacute;metro de velocidad de captura puede variar en funci&oacute;n de la resoluci&oacute;n de captura configurada y de la iluminaci&oacute;n de la sala.</p>
+<p class="tnormal">&nbsp;</p>
+
+<p class="tnormal"><strong>- Resoluci&oacute;n de captura de imagen</strong></p>
+<p class="tnormal">&nbsp;</p>
+<p class="tnormal">Es el tama&ntilde;o (en p&iacute;xeles) al cual la imagen es capturada. Nunca deber&iacute;a ser inferior a 320x240.</p>
+<p class="tnormal">&nbsp;</p>
+
+<p class="tnormal"><strong>- Calidad de la imagen</strong></p>
+<p class="tnormal">&nbsp;</p>
+<p class="tnormal">La c&aacute;mara debe transmitir una imagen n&iacute;tida y sin perturbaciones. En este sentido es interesante que incluya opciones antiparpadeo que permitan cancelar este efecto en la imagen, el cual normalmente aparece cuando la iluminaci&oacute;n es de tipo fluorescente (50/60 Hz). Los mejores resultados se obtienen con c&aacute;maras que equipan sensores &oacute;pticos de tipo CCD, respecto de otras que incorporan sensores de tipo CMOS.</p>
+<p class="tnormal">&nbsp;</p>
+
+<p class="tnormal"><a href='doc-0003.htm'>Volver al inicio</a></p>
+</body>
+</html>
