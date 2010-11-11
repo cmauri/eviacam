@@ -140,6 +140,9 @@ public:
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_OPTIONS
     void OnMenuOptionsClick( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_HELP_CONTENTS
+    void OnMenuHelpContentsClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_ABOUT
     void OnMenuAboutClick( wxCommandEvent& event );
 

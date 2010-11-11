@@ -52,6 +52,7 @@
 #include "icons/help.xpm"
 ////@end XPM images
 
+#include <wx/html/helpctrl.h>
 
 /*!
  * WViacam type definition
@@ -87,6 +88,8 @@ BEGIN_EVENT_TABLE( WViacam, wxFrame )
     EVT_MENU( ID_MENU_WIZARD, WViacam::OnMenuWizardClick )
 
     EVT_MENU( ID_MENU_OPTIONS, WViacam::OnMenuOptionsClick )
+
+    EVT_MENU( ID_MENU_HELP_CONTENTS, WViacam::OnMenuHelpContentsClick )
 
     EVT_MENU( ID_MENU_ABOUT, WViacam::OnMenuAboutClick )
 
@@ -553,10 +556,11 @@ void WViacam::OnToolOptionsClick( wxCommandEvent& event )
 
 void WViacam::OnToolHelpClick( wxCommandEvent& event )
 {
-////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_TOOL_HELP in WViacam.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_TOOL_HELP in WViacam. 
+	wxHtmlHelpController* m_wxHtmlHelpController;
+	m_wxHtmlHelpController = new wxHtmlHelpController();
+	m_wxHtmlHelpController->AddBook(wxT("../doc/eng/hhp/help.hhp"),false);
+	m_wxHtmlHelpController->DisplayContents();
+    event.Skip(false);
 }
 
 
@@ -580,3 +584,18 @@ void WViacam::OnMenuWizardClick( wxCommandEvent& event )
 	m_pController->StartWizard();
 	event.Skip(false);
 }
+
+
+/*!
+ * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_HELP_CONTENTS
+ */
+
+void WViacam::OnMenuHelpContentsClick( wxCommandEvent& event )
+{
+	wxHtmlHelpController* m_wxHtmlHelpController;
+	m_wxHtmlHelpController = new wxHtmlHelpController();
+	m_wxHtmlHelpController->AddBook(wxT("../doc/eng/hhp/help.hhp"),false);
+	m_wxHtmlHelpController->DisplayContents();
+    event.Skip(false);
+}
+
