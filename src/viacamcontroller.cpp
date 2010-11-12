@@ -39,7 +39,7 @@
 #include "camwindow.h"
 #include "wconfiguration.h"
 #include "cmotioncalibration.h"
-#include "wwizard.h"
+//#include "wwizard.h"
 #include "wcameradialog.h"
 #include <wx/utils.h>
 #include <wx/debug.h>
@@ -60,7 +60,8 @@
 #define ESCAPE_KEYSYM 65307
 #define SCROLL_LOCK_KEYSYM 65300
 
-CViacamController::CViacamController(void)
+CViacamController::CViacamController(void) :
+	m_wizardManager(*this)
 {
 	m_pMainWindow = NULL;
 	m_pCamera= NULL;
@@ -89,7 +90,6 @@ CViacamController::~CViacamController(void)
 	delete m_locale;
 	delete m_configManager;
 	delete m_pMotionCalibration;
-	//delete m_pWizard;
 }
 
 void CViacamController::SetUpLanguage ()
@@ -122,12 +122,6 @@ void CViacamController::SetLanguage (const int id)
 		}
 	}
 }
-
-//#if defined(WIN32)
-//#define CAM_CLASS CCameraWDM
-//#else 
-//#define CAM_CLASS CCameraCV
-//#endif
 
 CCamera* CViacamController::SetUpCamera()
 {
@@ -188,7 +182,6 @@ CCamera* CViacamController::SetUpCamera()
 	}
 	else
 		cam->Close();
-	
 	
 	WriteAppData(wxConfigBase::Get());
 
@@ -480,8 +473,7 @@ bool CViacamController::StartMotionCalibration (void)
 
 void CViacamController::StartWizard()
 {
-	WWizard* m_pWizard = new WWizard(m_pMainWindow, this);
-	m_pWizard->Run();
+	m_wizardManager.Open (m_pMainWindow);
 }
 
 void CViacamController::ShowCameraSettingsDialog () const

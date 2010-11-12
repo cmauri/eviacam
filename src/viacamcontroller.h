@@ -40,15 +40,15 @@
 #endif // __WXGTK___
 #include "cautostart.h"
 #include "cmotioncalibration.h"
+#include "wwizardmanager.h"
 
 class WViacam;
-//class CCamera;
 class CMouseOutput;
 class WConfiguration;
 class CMotionCalibration;
 class wxWindow;
 
-class CViacamController : public CProcessImage, public CConfigBase, public wxDialog
+class CViacamController : public CProcessImage, public CConfigBase
 {
 
 public:
@@ -115,9 +115,9 @@ public:
 	virtual void StartupRun();
 
 private:
-	
 	void ReleaseResources();
 	void SetUpLanguage();
+		
 	CCamera* SetUpCamera();
 	
 	WViacam* m_pMainWindow;
@@ -125,8 +125,6 @@ private:
 	CCaptureThread* m_pCaptureThread;	
 	CClickWindowController* m_pClickWindowController;
 	CMouseOutput* m_pMouseOutput;
-	//CDwellAction m_dWell;	
-	CWaitTime m_dWell;	
 	CMotionTracker m_motionTracker;
 	CConfigManager* m_configManager;
 	wxLocale* m_locale;
@@ -147,6 +145,7 @@ private:
 	CAutostart* m_pAutostart;
 	WConfiguration* m_pConfiguration;
 	CMotionCalibration* m_pMotionCalibration;
+	WWizardManager m_wizardManager;
 };
 
 inline CAutostart* CViacamController::GetAutostart()
@@ -213,15 +212,6 @@ inline const bool CViacamController::CameraHasSettingsDialog () const
 {
 	return (m_pCamera->HasSettingsDialog() || m_pCamera->HasCameraControls());
 }
-/*
-inline void CViacamController::ShowCameraSettingsDialog () const
-{
-	if (m_pCamera->HasSettingsDialog()) m_pCamera->ShowSettingsDialog ();
-	if (m_pCamera->HasCameraControls()) {
-		WCameraDialog* m_pCameraDialog = new WCameraDialog(m_pMainWindow, m_pCamera);
-		m_pCameraDialog->ShowModal();
-	}
-}*/
 
 inline void CViacamController::ChangeCamera ()
 {
