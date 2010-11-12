@@ -78,7 +78,7 @@ void CMouseOutput::InitDefaults()
 	SetEasyStopValue (1);	
 	
 	// Dwell click specific
-	SetDwellTime (3);
+	SetDwellTime (10);
 	
 	// Workspace limits
 	SetRestrictedWorkingArea (false);
@@ -93,7 +93,6 @@ void CMouseOutput::InitDefaults()
 	SetActionTop(DOUBLE);
 	SetActionBottom(DRAG);
 	SetFastGestureAction(false);
-	//SetGestureTime (3);
 }
 
 void CMouseOutput::InitKeyboardCodes()
@@ -295,9 +294,11 @@ float CMouseOutput::ProcessRelativePointerMove(float dx, float dy)
 						if (m_beepOnClick) m_pClickSound->Play (wxSOUND_ASYNC);
 					}
 					
-					// Next state
-					if (m_consecutiveClicksAllowed) m_state = DWELL_TIME;
-					else m_state = WAIT_DWELL;
+					// Next state. Ignores consecutive clicks allowed because for
+					// gesture click mode it is difficult to control
+					//if (m_consecutiveClicksAllowed) m_state = DWELL_TIME;
+					//else m_state = WAIT_DWELL;
+					m_state = WAIT_DWELL;
 				}
 				else {
 					if (m_visualAlerts) {
