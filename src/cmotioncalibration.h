@@ -26,27 +26,27 @@
 #include "wmotioncalibrationx.h"
 #include "wmotioncalibrationy.h"
 #include "wconfirmcalibration.h"
-
+#include "mouseoutput.h"
 #include <wx/msgdlg.h>
 
 class CMotionCalibration{
 
-	public:
-		CMotionCalibration(CViacamController* pViacamController);
-		~CMotionCalibration();
-		bool InitMotionCalibration();
-		void ComputeMotionRange (float vx, float vy);
+public:
+	CMotionCalibration(CViacamController* pViacamController);
+	~CMotionCalibration();
+	bool InitMotionCalibration();
+	void ComputeMotionRange (float vx, float vy);
 
-	private:
-		void InitValues();
-		
-		CViacamController* m_pViacamController;
-		wxDialog* m_pDialog;		
-		unsigned long m_xSpeedBackup, m_ySpeedBackup;
-		float m_posXVirt, m_posYVirt;
-		float m_posXVirtMax, m_posYVirtMax;
-		float m_posXVirtMin, m_posYVirtMin;
-		unsigned long m_lastTimestamp;
-		enum state{WAITING_X,MEASURING_X,WAITING_Y,MEASURING_Y,CONFIRMATION,ABORTING,FINISHED};
-		state m_state;
+private:
+	void InitValues();
+	
+	CViacamController* m_pViacamController;
+	wxDialog* m_pDialog;		
+	unsigned long m_xSpeedBackup, m_ySpeedBackup;
+	float m_posXVirt, m_posYVirt;
+	float m_posXVirtMax, m_posYVirtMax;
+	float m_posXVirtMin, m_posYVirtMin;
+	unsigned long m_lastTimestamp;
+	enum EState {WAITING_X, MEASURING_X, WAITING_Y, MEASURING_Y, CONFIRMATION, ABORTING, FINISHED};
+	EState m_state;
 };

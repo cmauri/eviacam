@@ -49,7 +49,6 @@
 #include "motiontracker.h"
 #include "clickwindowcontroller.h"
 #include "cautostart.h"
-//#include "cmotioncalibration.h"
 
 // Trick to properly compile & display native language names
 #if defined(__WXMSW__)
@@ -920,18 +919,15 @@ void WConfiguration::InitializeData ()
 	m_choUp->Select (m_pViacamController->GetMouseOutput()->GetActionTop());
 	m_choDown->Select (m_pViacamController->GetMouseOutput()->GetActionBottom());
 	m_chkAllowVisualAlerts->SetValue (m_pViacamController->GetMouseOutput()->GetVisualAlerts());
-	if (m_chkDwellClickEnabled->IsChecked())
-	{
-		EnableClickOptions(true);
+	if (m_chkDwellClickEnabled->IsChecked()) {
+		EnableGUIClickOptions(true);
 		if (m_chkEnableGestureClick->IsChecked())
-			EnableGestureOptions (true);
+			EnableGUIGestureOptions (true);
 		else	
-			EnableGestureOptions (false);
+			EnableGUIGestureOptions (false);
 	}		
 	else
-	{
-		EnableClickOptions(false);
-	}
+		EnableGUIClickOptions(false);
 
 	// Startup
 	m_chkEnabledAtStartup->SetValue (m_pViacamController->GetEnabledAtStartup());
@@ -985,7 +981,7 @@ void WConfiguration::InitializeData ()
 		m_btnCameraSettings->Enable (false);
 }
 
-void WConfiguration::EnableClickOptions (bool enable)
+void WConfiguration::EnableGUIClickOptions (bool enable)
 {
 	m_spinDwellTime->Enable(enable);
 	m_spinDwellArea->Enable(enable);
@@ -1011,7 +1007,7 @@ void WConfiguration::EnableClickOptions (bool enable)
 	m_stMoveDown->Enable(enable);
 }
 
-void WConfiguration::EnableGestureOptions (bool enable)
+void WConfiguration::EnableGUIGestureOptions (bool enable)
 {
 	m_choLeft->Enable(enable);
 	m_choRight->Enable(enable);			
@@ -1046,10 +1042,6 @@ void WConfiguration::UnChanged ()
 		m_btnCancel->Enable (false);
 	}
 }
-
-
-
-
 
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_AT_STARTUP
@@ -1141,36 +1133,54 @@ void WConfiguration::OnSpinctrlEasystopUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 {
-	if (!m_chkDwellClickEnabled->GetValue())
-	{
-		wxMessageDialog dlg (NULL, _("This action will disable eViacam click generation.\nAre you sure?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
-		if (dlg.ShowModal()== wxID_YES)
-		{
-			m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::NONE);
-			EnableClickOptions(false);
+	if (!m_chkDwellClickEnabled->GetValue()) {
+		if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::NONE, false)) {
+			EnableGUIClickOptions(false);
 			Changed ();
 		}
 	}
-	else
-	{
-		wxMessageDialog dlg (NULL, _("This action will disable eViacam click generation.\nAre you sure?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
-		if (dlg.ShowModal()== wxID_YES)
-		{
-			m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL);
-			EnableClickOptions(true);
-			if (m_chkEnableGestureClick->IsChecked())
-				EnableGestureOptions (true);
-			else	
-				EnableGestureOptions (false);
-		
-			Changed ();
+	else {
+		// Enabling click generation, which modality?
+		if (!m_chkEnableGestureClick->IsChecked()) {
+			// Dwell click
+			if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL, false)) {
+				EnableGUIClickOptions(true);
+				EnableGUIGestureOptions (false);
+				Changed ();
+			}
 		}
-	}
-
-	m_chkDwellClickEnabled->SetValue (m_pViacamController->GetMouseOutput()->GetClickMode()== CMouseOutput::DWELL);
+		else {
+			if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE, false)) {
+				EnableGUIClickOptions(true);
+				EnableGUIGestureOptions (true);
+				Changed ();
+			}
+		}	
+	}		
+	m_chkDwellClickEnabled->SetValue (m_pViacamController->GetMouseOutput()->GetClickMode()!= CMouseOutput::NONE);
 	event.Skip(false);	
 }
 
+/*!
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
+ */
+
+void WConfiguration::OnCheckboxEnableGestureClick( wxCommandEvent& event )
+{
+	if (m_chkEnableGestureClick->IsChecked())
+	{
+		if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE, false))
+			EnableGUIGestureOptions(true);
+		else
+			m_chkEnableGestureClick->SetValue(false);
+	}
+	else {
+		if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL, false))
+			EnableGUIGestureOptions(false);
+		else
+			m_chkEnableGestureClick->SetValue(true);
+	}
+}
 
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ALLOW_CONSECUTIVE
@@ -1179,8 +1189,8 @@ void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 void WConfiguration::OnCheckboxAllowConsecutiveClick( wxCommandEvent& event )
 {
 	m_pViacamController->GetMouseOutput()->SetConsecutiveClicksAllowed (m_chkAllowConsecutiveClick->GetValue());
-	event.Skip(false);
 	Changed ();
+	event.Skip(false);	
 }
 
 
@@ -1194,8 +1204,6 @@ void WConfiguration::OnCheckboxBeepOnClickClick( wxCommandEvent& event )
 	event.Skip(false);
 	Changed ();
 }
-
-
 
 
 /*!
@@ -1257,7 +1265,6 @@ void WConfiguration::OnCheckboxShowLocateFaceFilterClick( wxCommandEvent& event 
 	event.Skip(false);
 	Changed ();
 }
-
 
 
 /*!
@@ -1336,8 +1343,7 @@ void WConfiguration::OnButtonDelProfileClick( wxCommandEvent& event )
 		InitializeData ();
 		UnChanged ();
 	}
-
-    event.Skip(false);
+	event.Skip(false);
 }
 
 
@@ -1472,8 +1478,6 @@ void WConfiguration::OnSpinctrlTopWorkspaceUpdated( wxSpinEvent& event )
 }
 
 
-
-
 /*!
  * wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_RIGHT_WORKSPACE
  */
@@ -1484,9 +1488,6 @@ void WConfiguration::OnSpinctrlRightWorkspaceUpdated( wxSpinEvent& event )
 	event.Skip(false);
 	Changed ();
 }
-
-
-
 
 
 /*!
@@ -1654,29 +1655,6 @@ void WConfiguration::OnComboboxBottomSelected( wxCommandEvent& event )
 	event.Skip(false);
 }
 
-
-/*!
- * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
- */
-
-void WConfiguration::OnCheckboxEnableGestureClick( wxCommandEvent& event )
-{
-	if (m_chkEnableGestureClick->IsChecked())
-	{
-		m_pViacamController->GetClickWindowController()->Show (false);
-		EnableGestureOptions(true);
-		m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE);
-	}
-	else
-	{
-		EnableGestureOptions(false);
-		m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL);
-		if (m_chkShowClickWin->IsChecked())
-		{	
-			m_pViacamController->GetClickWindowController()->Show (true);
-		}
-	}
-}
 
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ALLOW_VISUAL_ALERTS

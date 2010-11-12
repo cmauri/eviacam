@@ -27,6 +27,7 @@
 #include <math.h>
 #include <wx/cursor.h>
 #include <wx/window.h>
+#include <wx/msgdlg.h>
 #if defined(__WXGTK__)
 #include <X11/extensions/XTest.h>
 #endif
@@ -386,28 +387,46 @@ void CMouseOutput::EndVisualAlerts()
 	m_state = DWELL_TIME;
 }
 
-void CMouseOutput::SetClickMode(CMouseOutput::EClickMode mode)
+// Return true is the change has been applied, or false otherwise
+bool CMouseOutput::SetClickMode(CMouseOutput::EClickMode mode, bool silent)
 {
 	if (mode!= m_clickMode)
 	{
+		if (!silent) {
+			if (mode== CMouseOutput::NONE) {
+				wxMessageDialog dlg (NULL, _("This action will disable eViacam click generation.\nAre you sure?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
+				if (dlg.ShowModal()!= wxID_YES) return false;
+			}
+			else {
+				wxMessageDialog dlg (NULL, _("This action will change the click generation method.\nAre you sure?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
+				if (dlg.ShowModal()!= wxID_YES) return false;
+			}
+		}
+		
 		if (mode== CMouseOutput::DWELL) 
 		{
 			// Enable dwell click
 			m_dwellCountdown.Reset();
+			// TODO: clickwindowcontroller should store an attribute (useClickWindow) instead of relaying on
+			// IsShown and ClickWindowAtStartup
+			m_pClickWindowController->Show(true);
 			m_clickMode= mode;
 		}
 		else if (mode== CMouseOutput::GESTURE)
 		{
 			// Enable gesture click
 			m_dwellCountdown.Reset();
+			 m_pClickWindowController->Show(false);
 			m_clickMode= mode;
 		}		
 		else if (mode== CMouseOutput::NONE)
 		{
 			// Disable dwell and gesture click
+			 m_pClickWindowController->Show(false);
 			m_clickMode= mode;
 		}
 	}
+	return true;
 }
 
 void CMouseOutput::SetEnabled(bool value)

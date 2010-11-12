@@ -14514,7 +14514,6 @@ and adjust the parameters manually."</string>
             <long name="locked">0</long>
             <string name="proxy-type">"wbWizardPageProxy"</string>
             <string name="event-handler-0">"wxEVT_WIZARD_PAGE_CHANGED|OnWizardpage3Changed|NONE||WizardPage3"</string>
-            <string name="event-handler-1">"wxEVT_WIZARD_PAGE_CHANGING|OnWizardpage3Changing|NONE||WizardPage3"</string>
             <string name="proxy-Id name">"ID_WIZARDPAGE_CLICK2"</string>
             <long name="proxy-Id value">10097</long>
             <string name="proxy-Class">"WizardPage3"</string>

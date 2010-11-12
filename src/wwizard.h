@@ -142,8 +142,6 @@ public:
     static bool ShowToolTips();
 	
 	inline CViacamController* GetViacamController();
-//	inline WizardPage* GetNextPage();
-	
 	
 	inline const bool GetRunAtStartup() const;
 	inline void SetRunAtStartup(bool value);
@@ -154,33 +152,17 @@ public:
 	inline const bool GetIsMotionEnabled() const;
 	inline void SetIsMotionEnabled(bool value);
 
-	inline const EClickMode GetClickMode() const;
-	inline void SetClickMode(EClickMode value);
-
 private:
 ////@begin WWizard member variables
 ////@end WWizard member variables
 	
 	CViacamController* m_pViacamController;
-	bool m_runWizardAtStartup;
 	bool m_performCalibration;
-	EClickMode m_clickMode;
-	
 };
 
 	inline CViacamController* WWizard::GetViacamController()
 	{
 		return m_pViacamController;
-	}
-	
-	inline const bool WWizard::GetRunAtStartup() const
-	{
-		return m_runWizardAtStartup;	
-	}
-	
-	inline void WWizard::SetRunAtStartup(bool value)
-	{
-		m_runWizardAtStartup = value;
 	}
 
 	inline const bool WWizard::GetPerformCalibration() const
@@ -192,17 +174,6 @@ private:
 	{
 		m_performCalibration = value;
 	}
-
-	inline const WWizard::EClickMode WWizard::GetClickMode() const
-	{
-		return m_clickMode;	
-	}
-	
-	inline void WWizard::SetClickMode(EClickMode value)
-	{
-		m_clickMode = value;
-	}
-
 
 /*!
  * WizardPage class declaration
@@ -385,14 +356,11 @@ public:
 
     /// Creates the controls and sizers
     void CreateControls();
-
+private:
 ////@begin WizardPage3 event handler declarations
 
     /// wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE_CLICK2
     void OnWizardpage3Changed( wxWizardEvent& event );
-
-    /// wxEVT_WIZARD_PAGE_CHANGING event handler for ID_WIZARDPAGE_CLICK2
-    void OnWizardpage3Changing( wxWizardEvent& event );
 
     /// wxEVT_LEFT_DOWN event handler for ID_TOGGLE_TEST
     void OnLeftDownTest( wxMouseEvent& event );
@@ -431,6 +399,8 @@ public:
 
     /// Should we show tooltips?
     static bool ShowToolTips();
+
+	void UpdateRadioButtons();
 
 ////@begin WizardPage3 member variables
     wxToggleButton* m_toggleTest;

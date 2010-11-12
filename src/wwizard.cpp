@@ -131,7 +131,7 @@ void WWizard::Init()
 ////@begin WWizard member initialisation
 ////@end WWizard member initialisation
 	m_pViacamController = NULL;
-	m_runWizardAtStartup = true;
+//	m_runWizardAtStartup = true;
 	m_performCalibration = true;
 }
 
@@ -784,7 +784,6 @@ BEGIN_EVENT_TABLE( WizardPage3, wxWizardPageSimple )
 
 ////@begin WizardPage3 event table entries
     EVT_WIZARD_PAGE_CHANGED( -1, WizardPage3::OnWizardpage3Changed )
-    EVT_WIZARD_PAGE_CHANGING( -1, WizardPage3::OnWizardpage3Changing )
 
     EVT_RADIOBUTTON( ID_RADIOBUTTON_DWELL_CLICK, WizardPage3::OnRadiobuttonDwellClickSelected )
 
@@ -859,11 +858,9 @@ void WizardPage3::Init()
 #endif
     m_rbNoneClick = NULL;
 ////@end WizardPage3 member initialisation
-//	m_dClickSignaled= false;
-//	m_dragSignaled= false;
+
 	m_isLeftDown= false;
 	m_isDoubleClick= false;
-//	m_xIni= m_yIni= 0;
 }
 
 
@@ -974,6 +971,28 @@ wxIcon WizardPage3::GetIconResource( const wxString& name )
 ////@end WizardPage3 icon retrieval
 }
 
+void WizardPage3::UpdateRadioButtons()
+{
+	// Set radio buttons according to the current configuration
+	m_rbDwellClick->SetValue(false);
+	m_rbGestureClick->SetValue(false);
+	m_rbNoneClick->SetValue(false);
+	switch (m_wizardParent->GetViacamController()->GetMouseOutput()->GetClickMode()) {
+	case CMouseOutput::DWELL:
+		m_rbDwellClick->SetValue(true);
+		// Just in case
+		m_wizardParent->GetViacamController()->GetClickWindowController()->Show(true);
+		break;
+	case CMouseOutput::GESTURE:
+		m_rbGestureClick->SetValue(true);
+		break;
+	case CMouseOutput::NONE:
+		m_rbNoneClick->SetValue(true);
+		break;
+	default:
+		assert (false);
+	}
+}
 
 /*!
  * wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_NONE_CLICK
@@ -981,11 +1000,9 @@ wxIcon WizardPage3::GetIconResource( const wxString& name )
 
 void WizardPage3::OnRadiobuttonNoneClickSelected( wxCommandEvent& event )
 {
-	m_rbDwellClick->SetValue(false);
-	m_rbGestureClick->SetValue(false);
-	m_wizardParent->SetClickMode(WWizard::NONE);
 	m_wizardParent->GetViacamController()->GetClickWindowController()->Show(false);
-	m_wizardParent->GetViacamController()->GetMouseOutput()->SetClickMode(CMouseOutput::NONE);
+	m_wizardParent->GetViacamController()->GetMouseOutput()->SetClickMode(CMouseOutput::NONE, false);
+	UpdateRadioButtons();
 	event.Skip(false);
 }
 
@@ -996,19 +1013,8 @@ void WizardPage3::OnRadiobuttonNoneClickSelected( wxCommandEvent& event )
 
 void WizardPage3::OnWizardpage3Changed( wxWizardEvent& event )
 {
-	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionLeft (SINGLE);
-	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionRight (SECONDARY);
-	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionTop (DOUBLE);
-	m_wizardParent->GetViacamController()->GetMouseOutput()->SetActionBottom (DRAG);	
-	
 	m_wizardParent->GetViacamController()->SetEnabled(true);
-	m_rbDwellClick->SetValue(true);
-	m_rbGestureClick->SetValue(false);
-	m_rbNoneClick->SetValue(false);
-
-	m_wizardParent->GetViacamController()->GetClickWindowController()->Show(true);	
-	m_wizardParent->SetClickMode(WWizard::DWELL);
-	m_wizardParent->GetViacamController()->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL);
+	UpdateRadioButtons();
 	event.Skip(false);
 }
 
@@ -1019,11 +1025,8 @@ void WizardPage3::OnWizardpage3Changed( wxWizardEvent& event )
 
 void WizardPage3::OnRadiobuttonDwellClickSelected( wxCommandEvent& event )
 {
-	m_rbNoneClick->SetValue(false);
-	m_rbGestureClick->SetValue(false);
-	m_wizardParent->SetClickMode(WWizard::DWELL);
-	m_wizardParent->GetViacamController()->GetClickWindowController()->Show(true);
-	m_wizardParent->GetViacamController()->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL);
+	m_wizardParent->GetViacamController()->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL, false);
+	UpdateRadioButtons();
 	event.Skip(false);
 }
 
@@ -1034,25 +1037,12 @@ void WizardPage3::OnRadiobuttonDwellClickSelected( wxCommandEvent& event )
 
 void WizardPage3::OnRadiobuttonGestureClickSelected( wxCommandEvent& event )
 {
-	m_rbNoneClick->SetValue(false);
-	m_rbDwellClick->SetValue(false);
-	m_wizardParent->SetClickMode(WWizard::GESTURE);
-	m_wizardParent->GetViacamController()->GetClickWindowController()->Show(false);
-	m_wizardParent->GetViacamController()->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE);
+	m_wizardParent->GetViacamController()->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE, false);
+	UpdateRadioButtons();
 	event.Skip(false);
 }
 
 
-/*!
- * wxEVT_WIZARD_PAGE_CHANGING event handler for ID_WIZARDPAGE3
- */
-
-void WizardPage3::OnWizardpage3Changing( wxWizardEvent& event )
-{
-	m_wizardParent->GetViacamController()->SetEnabled(true, true);
-	m_wizardParent->GetViacamController()->GetClickWindowController()->Show(false);
-	event.Skip(false);
-}
 
 /*!
  * wxEVT_LEFT_DOWN event handler for ID_TOGGLEBUTTON1
@@ -1304,7 +1294,9 @@ wxIcon WizardPage4::GetIconResource( const wxString& name )
 
 void WWizard::OnWwizardFinished( wxWizardEvent& event )
 {
-	GetViacamController()->SetRunWizardAtStartup(m_runWizardAtStartup);
+	//GetViacamController()->SetRunWizardAtStartup(GetViacamController()->GetRunWizardAtStartup ());
+	
+	//m_runWizardAtStartup);
 	GetViacamController()->GetConfigManager()->WriteAll();
 	event.Skip(false);
 }
@@ -1652,7 +1644,7 @@ void WizardPage6::CreateControls()
     itemBoxSizer61->Add(m_toggleEnableMotion, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
 ////@end WizardPage6 content construction
-//	m_toggleEnableMotion->Enable (!m_wizardParent->GetViacamController()->GetEnabled());	
+
 }
 
 
@@ -1760,13 +1752,6 @@ void WizardPage6::OnWizardpageCalib3PageChanged( wxWizardEvent& event )
 {
 	m_spinXSpeed->SetValue(m_wizardParent->GetViacamController()->GetMouseOutput()->GetXSpeed());
 	m_spinYSpeed->SetValue(m_wizardParent->GetViacamController()->GetMouseOutput()->GetYSpeed());
-/*
-	if (m_wizardParent->GetIsMotionEnabled())
-	{
-		m_toggleEnableMotion->SetValue(true);
-		m_toggleEnableMotion->SetLabel(wxT("Disable motion"));
-	}	
-*/
 	event.Skip(false);
 }
 
@@ -1953,7 +1938,7 @@ wxIcon WizardPage7::GetIconResource( const wxString& name )
 
 void WizardPage4::OnCheckboxRunWizardAtStartupClick( wxCommandEvent& event )
 {
-	m_wizardParent->SetRunAtStartup(m_chkRunWizardAtStartup->GetValue());
+	m_wizardParent->GetViacamController()->SetRunWizardAtStartup(event.IsChecked());
 	event.Skip(false);
 }
 
@@ -1965,7 +1950,7 @@ void WizardPage4::OnCheckboxRunWizardAtStartupClick( wxCommandEvent& event )
 void WizardPage4::OnCheckboxStartupClick( wxCommandEvent& event )
 {
 #if defined(__WXGTK__)
-	m_wizardParent->GetViacamController()->GetAutostart()->Enable(m_chkStartup->GetValue());
+	m_wizardParent->GetViacamController()->GetAutostart()->Enable(event.IsChecked());
 #endif
     event.Skip(false);
 }
@@ -1977,7 +1962,7 @@ void WizardPage4::OnCheckboxStartupClick( wxCommandEvent& event )
 
 void WizardPage4::OnWizardpageFinalPageChanged( wxWizardEvent& event )
 {
-    m_chkRunWizardAtStartup->SetValue(m_wizardParent->GetViacamController()->GetRunWizardAtStartup());
+	m_chkRunWizardAtStartup->SetValue(m_wizardParent->GetViacamController()->GetRunWizardAtStartup());
 	event.Skip(false);
 }
 
@@ -2013,10 +1998,6 @@ void WizardPage5::OnWizardpageCameraPageChanged( wxWizardEvent& event )
 	m_staticFramerate->SetLabel(wxString::Format(wxT("%.1f"), m_wizardParent->GetViacamController()->GetCamera()->GetRealFrameRate()));
 	event.Skip(false);
 }
-
-
-
-
 
 
 /*!

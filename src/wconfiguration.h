@@ -297,10 +297,10 @@ public:
 
     /// Should we show tooltips?
     static bool ShowToolTips();
-    
-    void SetActivationKey(wxString keyName);
-	void EnableClickOptions(bool enable);
-	void EnableGestureOptions(bool enable);
+
+	void SetActivationKey(wxString keyName);
+	void EnableGUIClickOptions(bool enable);
+	void EnableGUIGestureOptions(bool enable);
 
 private:
 

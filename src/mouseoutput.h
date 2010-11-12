@@ -62,7 +62,7 @@ public:
 	inline void SetEasyStopValue (unsigned long value);
 
 	inline const EClickMode GetClickMode() const;
-	void SetClickMode(EClickMode mode);
+	bool SetClickMode(EClickMode mode, bool silent= true);
 
         inline const unsigned long GetTopWorkspace() const;
         inline void SetTopWorkspace(unsigned long value);

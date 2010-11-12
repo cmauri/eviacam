@@ -35,10 +35,11 @@
 #define fmin min
 #endif
 
-
 #define BUTTON_OK 1
 #define BUTTON_CANCEL 2
 #define BUTTON_REPEAT 3
+
+
 #define TIME_LIMIT_NO_MOTION_X 5000
 #define MOTION_THRESHOLD_X 0.5f
 #define TIME_LIMIT_NO_X_RANGE_EXPANDED 3000
@@ -77,16 +78,16 @@ void CMotionCalibration::InitValues()
 
 bool CMotionCalibration::InitMotionCalibration()
 {
-	float newSpeedX, newSpeedY;
-	bool changes = false;
-	bool isEnabled = false;
-	bool isClickEnabled = false;
-	CMouseOutput::EClickMode clickMode;
+	bool changes = false;	
 	
 	m_xSpeedBackup = m_pViacamController->GetMouseOutput()->GetXSpeed();
 	m_ySpeedBackup = m_pViacamController->GetMouseOutput()->GetYSpeed();
 	m_state = WAITING_X;
 	
+	// Store previous values
+	bool isEnabled= m_pViacamController->GetEnabled();
+	CMouseOutput::EClickMode clickMode= m_pViacamController->GetMouseOutput()->GetClickMode();
+		
 	while (m_state != FINISHED) {
 		InitValues();
 		m_pViacamController->SetMotionCalibration(true);
@@ -94,56 +95,56 @@ bool CMotionCalibration::InitMotionCalibration()
 		m_pDialog = new WMotionCalibrationX(NULL);
 		m_pDialog->ShowModal();
 		m_pDialog->Destroy();
+		m_pDialog= NULL;
 
 		if (m_state == WAITING_Y) {
 			m_pDialog = new WMotionCalibrationY(NULL);
 			m_pDialog->ShowModal();
 			m_pDialog->Destroy();
+			m_pDialog= NULL;
 		}
 		
 		m_pViacamController->SetMotionCalibration(false);
 		
 		if (m_state == CONFIRMATION) {
-			newSpeedX = fmax(fmin(fabs(((m_posXVirtMax - m_posXVirtMin) * MULTIPLIER_X) - MAX_THRESHOLD_SPEED), MAX_THRESHOLD_SPEED), MIN_THRESHOLD_SPEED);
-			newSpeedY = fmax(fmin(fabs(((m_posYVirtMax - m_posYVirtMin) * MULTIPLIER_Y) - MAX_THRESHOLD_SPEED), MAX_THRESHOLD_SPEED), MIN_THRESHOLD_SPEED);
+			// Compute new speed parameters
+			// TODO: revise formula
+			float newSpeedX = fmax(fmin(fabs(((m_posXVirtMax - m_posXVirtMin) * MULTIPLIER_X) - MAX_THRESHOLD_SPEED), MAX_THRESHOLD_SPEED), MIN_THRESHOLD_SPEED);
+			float newSpeedY = fmax(fmin(fabs(((m_posYVirtMax - m_posYVirtMin) * MULTIPLIER_Y) - MAX_THRESHOLD_SPEED), MAX_THRESHOLD_SPEED), MIN_THRESHOLD_SPEED);
+			
+			// Set between reasonable limits
+			if (newSpeedX> 22.0f) newSpeedX= 22.0f;
+			else if (newSpeedX< 10.0f) newSpeedX= 10.0f;
+			if (newSpeedY> 20.0f) newSpeedY= 20.0f;
+			else if (newSpeedY< 10.0f) newSpeedY= 10.0f;
+			
+			// Set new parameters
 			m_pViacamController->GetMouseOutput()->SetXSpeed(newSpeedX);
 			m_pViacamController->GetMouseOutput()->SetYSpeed(newSpeedY);
+			
+			// Disable click generation & enable motion to test
+			m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::NONE);
+			m_pViacamController->SetEnabled(true, true);			
+						
+			// Request user acknowledgment
 			m_pDialog = new WConfirmCalibration(NULL);
-			
-			
-			isEnabled = m_pViacamController->GetMouseOutput()->GetEnabled();
-			clickMode = m_pViacamController->GetMouseOutput()->GetClickMode();
-			if (clickMode == CMouseOutput::NONE)
-			{
-				isClickEnabled = false;
-				m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL);
-			}
-			else
-			{
-				isClickEnabled = true;
-			}
-			m_pViacamController->GetMouseOutput()->SetEnabled(true);
-			
-			
-			int CONFIRMATIONButton = m_pDialog->ShowModal();
-			switch (CONFIRMATIONButton)
-			{
-				case BUTTON_OK:
-					changes = true;
-					m_state = FINISHED;
-					break;
-				case BUTTON_CANCEL:
-					m_state = FINISHED;
+			int retvalConfirm = m_pDialog->ShowModal();
+			if (retvalConfirm== BUTTON_REPEAT) m_state = WAITING_X;
+			else {
+				if (retvalConfirm== BUTTON_OK) changes = true;
+				else if (retvalConfirm== BUTTON_CANCEL) {
 					m_pViacamController->GetMouseOutput()->SetXSpeed(m_xSpeedBackup);
 					m_pViacamController->GetMouseOutput()->SetYSpeed(m_ySpeedBackup);	
-					break;
-				case BUTTON_REPEAT:
-					m_state = WAITING_X;
-					break;
+				}
+				else assert (false);
+				// Restore previous settings
+				m_pViacamController->GetMouseOutput()->SetClickMode(clickMode);
+				m_pViacamController->SetEnabled(isEnabled, true);
+				
+				m_state = FINISHED;
 			}
 			m_pDialog->Destroy();
-			m_pViacamController->GetMouseOutput()->SetEnabled(isEnabled);
-			m_pViacamController->GetMouseOutput()->SetClickMode(clickMode);
+			m_pDialog= NULL;			
 		}
 		
 		if (m_state == ABORTING) {
