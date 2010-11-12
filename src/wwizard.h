@@ -379,9 +379,6 @@ public:
     /// wxEVT_WIZARD_PAGE_CHANGING event handler for ID_WIZARDPAGE_CLICK2
     void OnWizardpage3Changing( wxWizardEvent& event );
 
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_TOGGLE_TEST
-    void OnToggleTestClick( wxCommandEvent& event );
-
     /// wxEVT_LEFT_DOWN event handler for ID_TOGGLE_TEST
     void OnLeftDownTest( wxMouseEvent& event );
 
@@ -407,7 +404,6 @@ public:
 
 ////@end WizardPage3 event handler declarations
 
-	void OnTimer(wxTimerEvent& event);
 
 ////@begin WizardPage3 member function declarations
 
@@ -430,8 +426,9 @@ public:
     wxRadioButton* m_rbNoneClick;
 ////@end WizardPage3 member variables
 	WWizard* m_wizardParent;
-	wxTimer m_timer;
-	bool m_dClickSignaled, m_dragSignaled;
+	bool m_isLeftDown;
+	bool m_isDoubleClick;
+	wxLongLong m_lastLeftDown;
 };
 
 /*!
