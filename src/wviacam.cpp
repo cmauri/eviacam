@@ -53,6 +53,7 @@
 ////@end XPM images
 
 #include <wx/html/helpctrl.h>
+#include <wx/stdpaths.h>
 
 /*!
  * WViacam type definition
@@ -559,21 +560,25 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 	wxHtmlHelpController* m_wxHtmlHelpController;
 	m_wxHtmlHelpController = new wxHtmlHelpController();
 	
+	wxString path;
+		
 	switch(m_pController->GetLocale()->GetLanguage())
 	{
+		
 		case (wxLANGUAGE_CATALAN):
-			m_wxHtmlHelpController->AddBook(wxT("../doc/cat/hhp/help.hhp"),false);
+			path= wxStandardPaths::Get().GetDataDir().Append(_T("/cat/hhp/help.hhp"));
 			break;
 		case (wxLANGUAGE_SPANISH):
-			m_wxHtmlHelpController->AddBook(wxT("../doc/esp/hhp/help.hhp"),false);
+			path= wxStandardPaths::Get().GetDataDir().Append(_T("/esp/hhp/help.hhp"));			
 			break;
 		default:
-			m_wxHtmlHelpController->AddBook(wxT("../doc/eng/hhp/help.hhp"),false);
+			path= wxStandardPaths::Get().GetDataDir().Append(_T("/eng/hhp/help.hhp"));
 			break;
 	}		
-	
+	//puts(path.char_str()); printf ("\n");
+	m_wxHtmlHelpController->AddBook(path,false);
 	m_wxHtmlHelpController->DisplayContents();
-    event.Skip(false);
+	event.Skip(false);
 }
 
 
