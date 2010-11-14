@@ -566,13 +566,13 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 	{
 		
 		case (wxLANGUAGE_CATALAN):
-			path= wxStandardPaths::Get().GetDataDir().Append(_T("/cat/hhp/help.hhp"));
+			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/cat/help.hhp"));
 			break;
 		case (wxLANGUAGE_SPANISH):
-			path= wxStandardPaths::Get().GetDataDir().Append(_T("/esp/hhp/help.hhp"));			
+			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/esp/help.hhp"));			
 			break;
 		default:
-			path= wxStandardPaths::Get().GetDataDir().Append(_T("/eng/hhp/help.hhp"));
+			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/eng/help.hhp"));
 			break;
 	}		
 	//puts(path.char_str()); printf ("\n");
