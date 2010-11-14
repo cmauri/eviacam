@@ -576,6 +576,8 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 			break;
 	}		
 	//puts(path.char_str()); printf ("\n");
+	//wxMessageDialog dlg (this, path, _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
+	//dlg.ShowModal();
 	m_wxHtmlHelpController->AddBook(path,false);
 	m_wxHtmlHelpController->DisplayContents();
 	event.Skip(false);
