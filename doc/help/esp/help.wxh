@@ -154,7 +154,7 @@
           <long name="page-break">1</long>
         </document>
         <document>
-          <string name="title">"Factores importantes de la cámara web"</string>
+          <string name="title">"Sobre webcams"</string>
           <string name="type">"text-editor-document"</string>
           <string name="filename">"webcam.htm"</string>
           <string name="icon-name">"htmldoc"</string>
@@ -163,6 +163,40 @@
           <long name="title-mode">0</long>
           <long name="locked">0</long>
           <string name="created">"11/11/2010"</string>
+          <long name="is-folder">0</long>
+          <long name="link-icon-to-page">1</long>
+          <long name="is-visible-in-contents">1</long>
+          <long name="is-default-page">0</long>
+          <string name="topic-name">""</string>
+          <long name="use-header-footer">1</long>
+          <long name="page-break">1</long>
+        </document>
+        <document>
+          <string name="title">"Asistente de configuración"</string>
+          <string name="type">"text-editor-document"</string>
+          <string name="filename">"wizard.htm"</string>
+          <string name="icon-name">"htmldoc"</string>
+          <long name="is-transient">0</long>
+          <long name="owns-file">1</long>
+          <long name="title-mode">0</long>
+          <long name="locked">0</long>
+          <long name="is-folder">0</long>
+          <long name="link-icon-to-page">1</long>
+          <long name="is-visible-in-contents">1</long>
+          <long name="is-default-page">0</long>
+          <string name="topic-name">""</string>
+          <long name="use-header-footer">1</long>
+          <long name="page-break">1</long>
+        </document>
+        <document>
+          <string name="title">"Método de calibración automático"</string>
+          <string name="type">"text-editor-document"</string>
+          <string name="filename">"calibration.htm"</string>
+          <string name="icon-name">"htmldoc"</string>
+          <long name="is-transient">0</long>
+          <long name="owns-file">1</long>
+          <long name="title-mode">0</long>
+          <long name="locked">0</long>
           <long name="is-folder">0</long>
           <long name="link-icon-to-page">1</long>
           <long name="is-visible-in-contents">1</long>
@@ -208,45 +242,9 @@
           <long name="page-break">1</long>
         </document>
         <document>
-          <string name="title">"Barra del Clic"</string>
+          <string name="title">"Ventana del clic"</string>
           <string name="type">"text-editor-document"</string>
           <string name="filename">"click_bar.htm"</string>
-          <string name="icon-name">"htmldoc"</string>
-          <long name="is-transient">0</long>
-          <long name="owns-file">1</long>
-          <long name="title-mode">0</long>
-          <long name="locked">0</long>
-          <string name="created">"11/11/2010"</string>
-          <long name="is-folder">0</long>
-          <long name="link-icon-to-page">1</long>
-          <long name="is-visible-in-contents">1</long>
-          <long name="is-default-page">0</long>
-          <string name="topic-name">""</string>
-          <long name="use-header-footer">1</long>
-          <long name="page-break">1</long>
-        </document>
-        <document>
-          <string name="title">"Asistente de configuración"</string>
-          <string name="type">"text-editor-document"</string>
-          <string name="filename">"wizard.htm"</string>
-          <string name="icon-name">"htmldoc"</string>
-          <long name="is-transient">0</long>
-          <long name="owns-file">1</long>
-          <long name="title-mode">0</long>
-          <long name="locked">0</long>
-          <string name="created">"11/11/2010"</string>
-          <long name="is-folder">0</long>
-          <long name="link-icon-to-page">1</long>
-          <long name="is-visible-in-contents">1</long>
-          <long name="is-default-page">0</long>
-          <string name="topic-name">""</string>
-          <long name="use-header-footer">1</long>
-          <long name="page-break">1</long>
-        </document>
-        <document>
-          <string name="title">"Método de calibración automático"</string>
-          <string name="type">"text-editor-document"</string>
-          <string name="filename">"calibration.htm"</string>
           <string name="icon-name">"htmldoc"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">1</long>

@@ -16,8 +16,16 @@
       <param name="Local" value="environment.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Factores importantes de la cámara web">
+      <param name="Name" value="Sobre webcams">
       <param name="Local" value="webcam.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Asistente de configuración">
+      <param name="Local" value="wizard.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Método de calibración automático">
+      <param name="Local" value="calibration.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
       <param name="Name" value="Opciones de configuración">
@@ -28,16 +36,8 @@
       <param name="Local" value="click.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Barra del Clic">
+      <param name="Name" value="Ventana del clic">
       <param name="Local" value="click_bar.htm">
-      </OBJECT>
-  <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Asistente de configuración">
-      <param name="Local" value="wizard.htm">
-      </OBJECT>
-  <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Método de calibración automático">
-      <param name="Local" value="calibration.htm">
       </OBJECT>
 </UL>
 </BODY></HTML>
