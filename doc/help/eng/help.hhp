@@ -1,0 +1,29 @@
+[OPTIONS]
+Compatibility=1.1
+Full-text search=Yes
+Contents file=help.hhc
+Compiled file=help.chm
+Default Window=Help
+Default topic=intro.htm
+Charset=utf-8
+Index file=help.hhk
+Title=eViacam
+
+[WINDOWS]
+Help=,"help.hhc","help.hhk","intro.htm",,,,,,0x2420,,0x380e,,,,,0,,,
+
+[FILES]
+intro.htm
+environment.htm
+webcam.htm
+options.htm
+click.htm
+click_bar.htm
+wizard.htm
+calibration.htm
+
+[ALIAS]
+#include "help_alias.h"
+
+[MAP]
+#include "help_ids.h"
