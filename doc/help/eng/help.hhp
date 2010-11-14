@@ -7,7 +7,7 @@ Default Window=Help
 Default topic=intro.htm
 Charset=utf-8
 Index file=help.hhk
-Title=eViacam
+Title=Enable Viacam
 
 [WINDOWS]
 Help=,"help.hhc","help.hhk","intro.htm",,,,,,0x2420,,0x380e,,,,,0,,,
@@ -16,11 +16,11 @@ Help=,"help.hhc","help.hhk","intro.htm",,,,,,0x2420,,0x380e,,,,,0,,,
 intro.htm
 environment.htm
 webcam.htm
+wizard.htm
+calibration.htm
 options.htm
 click.htm
 click_bar.htm
-wizard.htm
-calibration.htm
 
 [ALIAS]
 #include "help_alias.h"

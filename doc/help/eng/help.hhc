@@ -16,8 +16,16 @@
       <param name="Local" value="environment.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Web camera's key factor">
+      <param name="Name" value="About webcams">
       <param name="Local" value="webcam.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Configuration wizard">
+      <param name="Local" value="wizard.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Automatic calibration method">
+      <param name="Local" value="calibration.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
       <param name="Name" value="Configuration options">
@@ -28,16 +36,8 @@
       <param name="Local" value="click.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Click Bar">
+      <param name="Name" value="Click Window">
       <param name="Local" value="click_bar.htm">
-      </OBJECT>
-  <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="The wizard">
-      <param name="Local" value="wizard.htm">
-      </OBJECT>
-  <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Automatic calibration method">
-      <param name="Local" value="calibration.htm">
       </OBJECT>
 </UL>
 </BODY></HTML>
