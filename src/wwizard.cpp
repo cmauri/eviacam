@@ -975,17 +975,21 @@ void WizardPage3::UpdateRadioButtons()
 {
 	// Set radio buttons according to the current configuration
 	m_rbDwellClick->SetValue(false);
+#if defined(__WXGTK__)
 	m_rbGestureClick->SetValue(false);
 	m_rbNoneClick->SetValue(false);
+#endif
 	switch (m_wizardParent->GetViacamController()->GetMouseOutput()->GetClickMode()) {
 	case CMouseOutput::DWELL:
 		m_rbDwellClick->SetValue(true);
 		// Just in case
 		m_wizardParent->GetViacamController()->GetClickWindowController()->Show(true);
 		break;
+#if defined(__WXGTK__)
 	case CMouseOutput::GESTURE:
 		m_rbGestureClick->SetValue(true);
 		break;
+#endif
 	case CMouseOutput::NONE:
 		m_rbNoneClick->SetValue(true);
 		break;
@@ -1034,14 +1038,14 @@ void WizardPage3::OnRadiobuttonDwellClickSelected( wxCommandEvent& event )
 /*!
  * wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_GESTURE_CLICK
  */
-
+#if defined(__WXGTK__)
 void WizardPage3::OnRadiobuttonGestureClickSelected( wxCommandEvent& event )
 {
 	m_wizardParent->GetViacamController()->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE, false);
 	UpdateRadioButtons();
 	event.Skip(false);
 }
-
+#endif
 
 
 /*!
@@ -1248,7 +1252,9 @@ void WizardPage4::CreateControls()
 
 ////@end WizardPage4 content construction
 	m_chkEnabledAtStartup->SetValue(m_wizardParent->GetViacamController()->GetEnabledAtStartup());
+#if defined(__WXGTK__)
 	m_chkStartup->SetValue(m_wizardParent->GetViacamController()->GetAutostart()->IsEnabled());
+#endif
 }
 
 
@@ -1946,7 +1952,7 @@ void WizardPage4::OnCheckboxRunWizardAtStartupClick( wxCommandEvent& event )
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX3
  */
-
+#if defined(__WXGTK__)
 void WizardPage4::OnCheckboxStartupClick( wxCommandEvent& event )
 {
 #if defined(__WXGTK__)
@@ -1954,7 +1960,7 @@ void WizardPage4::OnCheckboxStartupClick( wxCommandEvent& event )
 #endif
     event.Skip(false);
 }
-
+#endif
 
 /*!
  * wxEVT_WIZARD_PAGE_CHANGED event handler for ID_WIZARDPAGE4

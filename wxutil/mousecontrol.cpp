@@ -26,6 +26,7 @@
 //fprintf(stderr, "XTest extension not supported on server.\n");
 //exit(1);
 //}
+#include <math.h>
 
 #if defined(WIN32)
 //
@@ -34,6 +35,9 @@
 #define _WIN32_WINNT 0x0500
 #include <windows.h>
 #define MOUSE_EXTRA_INFO 69
+
+inline float roundf(float x) { return (x-floorf(x))>0.5 ? ceilf(x) : floorf(x); }
+
 #else	// WIN32
 //
 // Linux
@@ -44,7 +48,6 @@
 
 #include <assert.h>
 #include <string.h>
-#include <math.h>
 #include "mousecontrol.h"
 
 // Mouse actions

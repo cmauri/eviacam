@@ -209,6 +209,7 @@ void Activationkey::OnTimer(wxTimerEvent& event)
 		}
 		m_timer.Stop();	
 	}
+	event.Skip(false);
 }
 
 int Activationkey::GetKeyCode()
@@ -230,5 +231,6 @@ void Activationkey::OnLeftDown( wxMouseEvent& event )
 {
 	EndModal(wxID_NO);
 	m_timer.Stop();	
+	event.Skip(false);
 }
 

@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        wconfiguration.h
 // Purpose:     
-// Author:      C�sar Mauri Loba
+// Author:      Cesar Mauri Loba
 // Modified by: 
 // Created:     29/12/2008 16:35:20
 // RCS-ID:      
@@ -141,6 +141,7 @@ public:
     /// Destructor
     ~WConfiguration();
 
+private:
     /// Initialises member variables
     void Init();
 
@@ -197,9 +198,11 @@ public:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_BEEP_ON_CLICK
     void OnCheckboxBeepOnClickClick( wxCommandEvent& event );
 
+#if defined(__WXGTK__)
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ALLOW_VISUAL_ALERTS
     void OnCheckboxAllowVisualAlertsClick( wxCommandEvent& event );
 
+#endif
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_DESIGN
     void OnChoiceDesignSelected( wxCommandEvent& event );
 
@@ -299,10 +302,12 @@ public:
     static bool ShowToolTips();
 
 	void SetActivationKey(wxString keyName);
-	void EnableGUIClickOptions(bool enable);
-	void EnableGUIGestureOptions(bool enable);
 
-private:
+	// Enable/disable GUI areas
+	void UpdateGUIClickOptions();
+	void EnableGUIGeneralClickOptions(bool enable);
+	void EnableGUIGestureOptions(bool enable);
+	void EnableGUIClickWindowOptions(bool enable);
 
 	// Read info from model classes
 	void InitializeData ();
@@ -329,7 +334,9 @@ private:
     wxSpinCtrl* m_spinDwellArea;
     wxCheckBox* m_chkAllowConsecutiveClick;
     wxCheckBox* m_chkBeepOnClick;
+#if defined(__WXGTK__)
     wxCheckBox* m_chkAllowVisualAlerts;
+#endif
     wxStaticBox* m_sboxClickWin;
     wxStaticText* m_stDesign;
     wxChoice* m_choClickWindowDesign;

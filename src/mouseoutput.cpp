@@ -388,17 +388,17 @@ void CMouseOutput::EndVisualAlerts()
 }
 
 // Return true is the change has been applied, or false otherwise
-bool CMouseOutput::SetClickMode(CMouseOutput::EClickMode mode, bool silent)
+bool CMouseOutput::SetClickMode(CMouseOutput::EClickMode mode, bool silent, wxWindow* parent)
 {
 	if (mode!= m_clickMode)
 	{
 		if (!silent) {
 			if (mode== CMouseOutput::NONE) {
-				wxMessageDialog dlg (NULL, _("This action will disable eViacam click generation.\nAre you sure?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
+				wxMessageDialog dlg (parent, _("This action will disable eViacam click generation.\nAre you sure?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
 				if (dlg.ShowModal()!= wxID_YES) return false;
 			}
 			else {
-				wxMessageDialog dlg (NULL, _("This action will change the click generation method.\nAre you sure?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
+				wxMessageDialog dlg (parent, _("This action will change the click generation method.\nAre you sure?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
 				if (dlg.ShowModal()!= wxID_YES) return false;
 			}
 		}

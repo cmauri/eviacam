@@ -185,6 +185,9 @@ copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\activationkey.cpp">
+			</File>
+			<File
 				RelativePath=".\cautostart.cpp">
 			</File>
 			<File
@@ -227,6 +230,9 @@ copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 				RelativePath=".\wabout.cpp">
 			</File>
 			<File
+				RelativePath=".\wcameradialog.cpp">
+			</File>
+			<File
 				RelativePath=".\wconfiguration.cpp">
 			</File>
 			<File
@@ -241,11 +247,20 @@ copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 			<File
 				RelativePath=".\wviacam.cpp">
 			</File>
+			<File
+				RelativePath=".\wwizard.cpp">
+			</File>
+			<File
+				RelativePath=".\wwizardmanager.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath=".\activationkey.h">
+			</File>
 			<File
 				RelativePath=".\cautostart.h">
 			</File>
@@ -295,6 +310,9 @@ copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 				RelativePath=".\wabout.h">
 			</File>
 			<File
+				RelativePath=".\wcameradialog.h">
+			</File>
+			<File
 				RelativePath=".\wconfiguration.h">
 			</File>
 			<File
@@ -308,6 +326,12 @@ copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 			</File>
 			<File
 				RelativePath=".\wviacam.h">
+			</File>
+			<File
+				RelativePath=".\wwizard.h">
+			</File>
+			<File
+				RelativePath=".\wwizardmanager.h">
 			</File>
 		</Filter>
 		<Filter

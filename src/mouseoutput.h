@@ -32,6 +32,7 @@
 
 class CClickWindowController;
 class wxSound;
+class wxWindow;
 
 class CMouseOutput : public CMouseControl, public CConfigBase
 {
@@ -62,7 +63,7 @@ public:
 	inline void SetEasyStopValue (unsigned long value);
 
 	inline const EClickMode GetClickMode() const;
-	bool SetClickMode(EClickMode mode, bool silent= true);
+	bool SetClickMode(EClickMode mode, bool silent= true, wxWindow* parent= NULL);
 
         inline const unsigned long GetTopWorkspace() const;
         inline void SetTopWorkspace(unsigned long value);

@@ -89,7 +89,9 @@ int CKeyboardControl::GetKeyCode(const CKeyboardCode& kc)
 	return code;
 }
 
+/*
 bool CKeyboardControl::Equal(const CKeyboardCode& kc1, const CKeyboardCode& kc2)
 {
 	return (kc1.GetKeyboardCode() == kc2.GetKeyboardCode());
 }
+*/

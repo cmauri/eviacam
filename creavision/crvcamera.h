@@ -55,7 +55,8 @@ public:
 	//
 	virtual bool HasCameraControls() { return false; }
 	virtual unsigned int GetCameraControlsCount() { return 0; }
-	virtual CCameraControl* GetCameraControl(unsigned int numControl) { return NULL; }
+	//virtual CCameraControl* GetCameraControl(unsigned int numControl) { return NULL; }
+	virtual CCameraControl* GetCameraControl(unsigned int) { return NULL; }
 	
 	//
 	// Implemented methods
@@ -170,7 +171,8 @@ public:
 	virtual int GetMaximumValue() const= 0;
 	
 	// For choices only
-	virtual const char* GetChoiceName(unsigned int numOption) const { return NULL; }
+	//virtual const char* GetChoiceName(unsigned int numOption) const { return NULL; }
+	virtual const char* GetChoiceName(unsigned int) const { return NULL; }
 };
 
 inline bool CCamera::GetHorizontalFlip ()

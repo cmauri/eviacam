@@ -126,7 +126,9 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
 
     EVT_CHECKBOX( ID_CHECKBOX_BEEP_ON_CLICK, WConfiguration::OnCheckboxBeepOnClickClick )
 
+#if defined(__WXGTK__)
     EVT_CHECKBOX( ID_CHECKBOX_ALLOW_VISUAL_ALERTS, WConfiguration::OnCheckboxAllowVisualAlertsClick )
+#endif
 
     EVT_CHOICE( ID_CHOICE_DESIGN, WConfiguration::OnChoiceDesignSelected )
 
@@ -279,7 +281,9 @@ void WConfiguration::Init()
     m_spinDwellArea = NULL;
     m_chkAllowConsecutiveClick = NULL;
     m_chkBeepOnClick = NULL;
+#if defined(__WXGTK__)
     m_chkAllowVisualAlerts = NULL;
+#endif
     m_sboxClickWin = NULL;
     m_stDesign = NULL;
     m_choClickWindowDesign = NULL;
@@ -550,17 +554,19 @@ void WConfiguration::CreateControls()
     m_chkAllowConsecutiveClick->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkAllowConsecutiveClick->SetToolTip(_("Allows to send multiple clicks\nwhen the pointer is stopped."));
-    itemBoxSizer53->Add(m_chkAllowConsecutiveClick, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT|wxTOP, 5);
+    itemBoxSizer53->Add(m_chkAllowConsecutiveClick, 0, wxALIGN_LEFT|wxALL, 5);
 
     m_chkBeepOnClick = new wxCheckBox( m_panelClick, ID_CHECKBOX_BEEP_ON_CLICK, _("Beep on click"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkBeepOnClick->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkBeepOnClick->SetToolTip(_("Play sound when click generated."));
-    itemBoxSizer53->Add(m_chkBeepOnClick, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT, 5);
+    itemBoxSizer53->Add(m_chkBeepOnClick, 0, wxALIGN_LEFT|wxALL, 5);
 
+#if defined(__WXGTK__)
     m_chkAllowVisualAlerts = new wxCheckBox( m_panelClick, ID_CHECKBOX_ALLOW_VISUAL_ALERTS, _("Allow visual alerts"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkAllowVisualAlerts->SetValue(false);
-    itemBoxSizer53->Add(m_chkAllowVisualAlerts, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT, 5);
+    itemBoxSizer53->Add(m_chkAllowVisualAlerts, 0, wxALIGN_LEFT|wxALL, 5);
+#endif
 
     m_sboxClickWin = new wxStaticBox(m_panelClick, ID_STATICBOX_CLICK_WIN, _("Click window"));
     wxStaticBoxSizer* itemStaticBoxSizer57 = new wxStaticBoxSizer(m_sboxClickWin, wxVERTICAL);
@@ -595,11 +601,11 @@ void WConfiguration::CreateControls()
     m_chkOpenClickWinAtStartup->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkOpenClickWinAtStartup->SetToolTip(_("If checked the Click Window is automatically\nopened at program startup."));
-    itemBoxSizer64->Add(m_chkOpenClickWinAtStartup, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT|wxTOP, 5);
+    itemBoxSizer64->Add(m_chkOpenClickWinAtStartup, 0, wxALIGN_LEFT|wxALL, 5);
 
     m_chkShowClickWin = new wxCheckBox( m_panelClick, ID_CHECKBOX_SHOW_CLICKWIN, _("Show Click Window"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkShowClickWin->SetValue(false);
-    itemBoxSizer64->Add(m_chkShowClickWin, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT, 5);
+    itemBoxSizer64->Add(m_chkShowClickWin, 0, wxALIGN_LEFT|wxALL, 5);
 
 #if defined(__WXGTK__)
     m_sboxGestureClick = new wxStaticBox(m_panelClick, ID_STATICBOX_GESTURE_CLICK, _("Gesture click"));
@@ -822,13 +828,14 @@ void WConfiguration::CreateControls()
     itemStdDialogButtonSizer113->Realize();
 
 ////@end WConfiguration content construction
-
+#if defined(__WXGTK__)
 	for (unsigned int i=0; i<m_pViacamController->GetMouseOutput()->GetKeyEventsCount(); i++) {
 		m_choLeft->Append(_("Key:") + m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetKeyName());
 		m_choRight->Append(_("Key:") + m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetKeyName());
 		m_choUp->Append(_("Key:") + m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetKeyName());
 		m_choDown->Append(_("Key:") + m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetKeyName());
 	}
+#endif
 }
 
 
@@ -905,7 +912,9 @@ void WConfiguration::InitializeData ()
 	
 	// Clic
 	m_chkDwellClickEnabled->SetValue (m_pViacamController->GetMouseOutput()->GetClickMode()!= CMouseOutput::NONE);
+#if defined(__WXGTK__)
 	m_chkEnableGestureClick->SetValue (m_pViacamController->GetMouseOutput()->GetClickMode()== CMouseOutput::GESTURE);
+#endif
 	m_chkAllowConsecutiveClick->SetValue (m_pViacamController->GetMouseOutput()->GetConsecutiveClicksAllowed());
 	m_chkBeepOnClick->SetValue (m_pViacamController->GetMouseOutput()->GetBeepOnClick());
 	//m_chkShowClickCountdown->SetValue (m_pViacamController->GetMouseOutput()->GetShowClickCountdown());
@@ -914,20 +923,14 @@ void WConfiguration::InitializeData ()
 	m_chkShowClickWin->SetValue ( m_pViacamController->GetClickWindowController()->IsShown() );
 	m_choClickWindowBehaviour->Select (m_pViacamController->GetClickWindowController()->GetFastMode() ? 1 : 0);
 	m_choClickWindowDesign->Select (m_pViacamController->GetClickWindowController()->GetDesign());
+#if defined(__WXGTK__)
 	m_choLeft->Select (m_pViacamController->GetMouseOutput()->GetActionLeft());
 	m_choRight->Select (m_pViacamController->GetMouseOutput()->GetActionRight());
 	m_choUp->Select (m_pViacamController->GetMouseOutput()->GetActionTop());
 	m_choDown->Select (m_pViacamController->GetMouseOutput()->GetActionBottom());
 	m_chkAllowVisualAlerts->SetValue (m_pViacamController->GetMouseOutput()->GetVisualAlerts());
-	if (m_chkDwellClickEnabled->IsChecked()) {
-		EnableGUIClickOptions(true);
-		if (m_chkEnableGestureClick->IsChecked())
-			EnableGUIGestureOptions (true);
-		else	
-			EnableGUIGestureOptions (false);
-	}		
-	else
-		EnableGUIClickOptions(false);
+#endif
+	UpdateGUIClickOptions();
 
 	// Startup
 	m_chkEnabledAtStartup->SetValue (m_pViacamController->GetEnabledAtStartup());
@@ -981,34 +984,53 @@ void WConfiguration::InitializeData ()
 		m_btnCameraSettings->Enable (false);
 }
 
-void WConfiguration::EnableGUIClickOptions (bool enable)
+void WConfiguration::UpdateGUIClickOptions()
+{
+	if (m_chkDwellClickEnabled->IsChecked()) {
+		EnableGUIGeneralClickOptions(true);
+#if defined(__WXGTK__)
+		if (m_chkEnableGestureClick->IsChecked()) {
+			EnableGUIGestureOptions (true);
+			EnableGUIClickWindowOptions(false);
+		}
+		else {
+			EnableGUIGestureOptions (false);
+			EnableGUIClickWindowOptions(true);
+		}
+#else
+		EnableGUIClickWindowOptions(true);	
+#endif
+	}		
+	else {
+		EnableGUIGeneralClickOptions(false);
+		EnableGUIGestureOptions (false);
+		EnableGUIClickWindowOptions(false);
+	}
+}
+
+void WConfiguration::EnableGUIGeneralClickOptions (bool enable)
 {
 	m_spinDwellTime->Enable(enable);
 	m_spinDwellArea->Enable(enable);
 	m_chkAllowConsecutiveClick->Enable(enable);
 	m_chkBeepOnClick->Enable(enable);
-	m_chkAllowVisualAlerts->Enable(enable);
 	m_chkOpenClickWinAtStartup->Enable(enable);
 	m_chkShowClickWin->Enable(enable);
 	m_choClickWindowDesign->Enable(enable);
 	m_choClickWindowBehaviour->Enable(enable);
-	m_choLeft->Enable(enable);
-	m_choRight->Enable(enable);			
-	m_choUp->Enable(enable);			
-	m_choDown->Enable(enable);
-	m_chkEnableGestureClick->Enable(enable);
 	m_stDwellTime->Enable(enable);
 	m_stDwellArea->Enable(enable);
 	m_stDesign->Enable(enable);
 	m_stBehaviour->Enable(enable);
-	m_stMoveLeft->Enable(enable);
-	m_stMoveRight->Enable(enable);
-	m_stMoveUp->Enable(enable);
-	m_stMoveDown->Enable(enable);
+#if defined(__WXGTK__)
+	m_chkAllowVisualAlerts->Enable(enable);
+	m_chkEnableGestureClick->Enable(enable);
+#endif
 }
 
 void WConfiguration::EnableGUIGestureOptions (bool enable)
 {
+#if defined(__WXGTK__)
 	m_choLeft->Enable(enable);
 	m_choRight->Enable(enable);			
 	m_choUp->Enable(enable);			
@@ -1017,12 +1039,17 @@ void WConfiguration::EnableGUIGestureOptions (bool enable)
 	m_stMoveRight->Enable(enable);
 	m_stMoveUp->Enable(enable);
 	m_stMoveDown->Enable(enable);
-	m_chkOpenClickWinAtStartup->Enable(!enable);
-	m_chkShowClickWin->Enable(!enable);
-	m_choClickWindowDesign->Enable(!enable);
-	m_choClickWindowBehaviour->Enable(!enable);
-	m_stDesign->Enable(!enable);
-	m_stBehaviour->Enable(!enable);
+#endif
+}
+
+void WConfiguration::EnableGUIClickWindowOptions(bool enable)
+{
+	m_chkOpenClickWinAtStartup->Enable(enable);
+	m_chkShowClickWin->Enable(enable);
+	m_choClickWindowDesign->Enable(enable);
+	m_choClickWindowBehaviour->Enable(enable);
+	m_stDesign->Enable(enable);
+	m_stBehaviour->Enable(enable);
 }
 
 void WConfiguration::Changed ()
@@ -1134,33 +1161,38 @@ void WConfiguration::OnSpinctrlEasystopUpdated( wxSpinEvent& event )
 void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 {
 	if (!m_chkDwellClickEnabled->GetValue()) {
-		if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::NONE, false)) {
-			EnableGUIClickOptions(false);
-			Changed ();
+		if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::NONE, false, this)) {
+			EnableGUIGeneralClickOptions(false);
+			EnableGUIGestureOptions(false);
+			EnableGUIClickWindowOptions(false);
+			Changed();
 		}
 	}
 	else {
 		// Enabling click generation, which modality?
-		if (!m_chkEnableGestureClick->IsChecked()) {
-			// Dwell click
-			if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL, false)) {
-				EnableGUIClickOptions(true);
-				EnableGUIGestureOptions (false);
+#if defined(__WXGTK__)
+		if (m_chkEnableGestureClick->IsChecked())
+			// Gesture click
+			if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE, false, this)) {
+				EnableGUIGeneralClickOptions(true);
+				EnableGUIGestureOptions(true);
+				EnableGUIClickWindowOptions(false);
 				Changed ();
 			}
-		}
-		else {
-			if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE, false)) {
-				EnableGUIClickOptions(true);
-				EnableGUIGestureOptions (true);
+		else
+#endif
+			if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL, false, this)) {
+				EnableGUIGeneralClickOptions(true);
+				EnableGUIGestureOptions(false);
+				EnableGUIClickWindowOptions(true);
 				Changed ();
 			}
-		}	
 	}		
 	m_chkDwellClickEnabled->SetValue (m_pViacamController->GetMouseOutput()->GetClickMode()!= CMouseOutput::NONE);
 	event.Skip(false);	
 }
 
+#if defined(__WXGTK__)
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
  */
@@ -1169,18 +1201,24 @@ void WConfiguration::OnCheckboxEnableGestureClick( wxCommandEvent& event )
 {
 	if (m_chkEnableGestureClick->IsChecked())
 	{
-		if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE, false))
+		if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE, false, this)) {
 			EnableGUIGestureOptions(true);
-		else
+			EnableGUIClickWindowOptions(false);
+		}
+		else {
 			m_chkEnableGestureClick->SetValue(false);
+		}
 	}
 	else {
-		if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL, false))
+		if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL, false, this)) {
 			EnableGUIGestureOptions(false);
+			EnableGUIClickWindowOptions(true);
+		}
 		else
 			m_chkEnableGestureClick->SetValue(true);
 	}
 }
+#endif
 
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ALLOW_CONSECUTIVE
@@ -1545,11 +1583,11 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
 	Changed ();
 }
 
-
+#if defined(__WXGTK__)
 /*!
  * wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_ACTIVATION_KEY
  */
-#if defined(__WXGTK__)
+
 void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
 {
 	bool isEnabled = m_pViacamController->GetEnabled();
@@ -1568,10 +1606,11 @@ void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
 }
 #endif
 
+#if defined(__WXGTK__)
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ACTIVATION_KEY
  */
-#if defined(__WXGTK__)
+
 void WConfiguration::OnCheckboxActivationKeyClick( wxCommandEvent& event )
 {
     m_pViacamController->SetEnabledActivationKey(m_chkActivationKey->GetValue());
@@ -1580,10 +1619,11 @@ void WConfiguration::OnCheckboxActivationKeyClick( wxCommandEvent& event )
 }
 #endif
 
+#if defined(__WXGTK__)
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_STARTUP
  */
-#if defined(__WXGTK__)
+
 void WConfiguration::OnCheckboxStartupClick( wxCommandEvent& event )
 {
 	m_pAutostart->Enable(m_chkStartup->GetValue());
@@ -1655,7 +1695,7 @@ void WConfiguration::OnComboboxBottomSelected( wxCommandEvent& event )
 	event.Skip(false);
 }
 
-
+#if defined(__WXGTK__)
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ALLOW_VISUAL_ALERTS
  */
@@ -1667,7 +1707,7 @@ void WConfiguration::OnCheckboxAllowVisualAlertsClick( wxCommandEvent& event )
 	event.Skip(false);
 	Changed ();
 }
-
+#endif
 
 /*!
  * wxEVT_COMMAND_BUTTON_CLICKED event handler for wxID_OK

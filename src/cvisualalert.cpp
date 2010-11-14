@@ -72,6 +72,7 @@ void CVisualAlertProgress::Update(int x, int y, int percent)
 
 void CVisualAlertProgress::End()
 {
+#if defined(__WXGTK__)
 	if(m_oldSize!= 0) {
 		// Need to clear previos drawing	
 		XGrabServer(m_display);
@@ -81,6 +82,7 @@ void CVisualAlertProgress::End()
 		XFlush(m_display);
 		m_oldSize= 0;
 	}
+#endif
 }
 
 CVisualAlertDirection::CVisualAlertDirection()
@@ -99,6 +101,7 @@ CVisualAlertDirection::~CVisualAlertDirection()
 
 void CVisualAlertDirection::Update(int x, int y)
 {
+#if defined(__WXGTK__)
 	XGrabServer(m_display);
 	if (!m_running) {
 		// Not running. Use this point as origin
@@ -125,10 +128,12 @@ void CVisualAlertDirection::Update(int x, int y)
 	
 	m_xOldDest= x;
 	m_yOldDest= y;
+#endif
 }
 
 void CVisualAlertDirection::End()
 {
+#if defined(__WXGTK__)
 	if (m_running) {
 		XGrabServer(m_display);
 		// Clear cross.
@@ -149,6 +154,7 @@ void CVisualAlertDirection::End()
 		m_xOldDest= 0;
 		m_yOldDest= 0;
 	}
+#endif
 }
 
 CVisualAlert::CVisualAlert()
