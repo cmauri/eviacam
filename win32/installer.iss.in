@@ -75,9 +75,7 @@ Source: doc\*.txt; DestDir: {app}\doc; Flags: recursesubdirs ignoreversion
 Source: doc\*.png; DestDir: {app}\doc; Flags: recursesubdirs ignoreversion
 Source: README; DestDir: {app}\doc; Flags: ignoreversion; DestName: README.txt
 Source: README.ca; DestDir: {app}\doc; Flags: ignoreversion; DestName: README.ca.txt
-Source: doc\eng\*; DestDir: {app}\bin\eng; Flags: recursesubdirs ignoreversion
-Source: doc\esp\*; DestDir: {app}\bin\esp; Flags: recursesubdirs ignoreversion
-Source: doc\cat\*; DestDir: {app}\bin\cat; Flags: recursesubdirs ignoreversion
+Source: doc\help\*; DestDir: {app}\bin\help; Flags: recursesubdirs ignoreversion
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}
 
