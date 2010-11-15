@@ -46,8 +46,8 @@
 #define BUTTON_CANCEL 2
 #define BUTTON_REPEAT 3
 #define CANCEL_TIME 10
-#define OK_TIME 5
-#define REPEAT_TIME 5
+#define OK_TIME 2
+#define REPEAT_TIME 2
 
 /*!
  * WConfirmCalibration type definition

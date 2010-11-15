@@ -108,9 +108,9 @@ bool CMotionCalibration::InitMotionCalibration()
 		
 		if (m_state == CONFIRMATION) {
 			// Compute new speed parameters
-			// TODO: revise formula
-			float newSpeedX = fmax(fmin(fabs(((m_posXVirtMax - m_posXVirtMin) * MULTIPLIER_X) - MAX_THRESHOLD_SPEED), MAX_THRESHOLD_SPEED), MIN_THRESHOLD_SPEED);
-			float newSpeedY = fmax(fmin(fabs(((m_posYVirtMax - m_posYVirtMin) * MULTIPLIER_Y) - MAX_THRESHOLD_SPEED), MAX_THRESHOLD_SPEED), MIN_THRESHOLD_SPEED);
+			// TODO: improve formula taking into account several proves and adjustements
+			float newSpeedX = 600.0f / (m_posXVirtMax - m_posXVirtMin);				
+			float newSpeedY = 600.0f / (m_posYVirtMax - m_posYVirtMin);
 			
 			// Set between reasonable limits
 			if (newSpeedX> 22.0f) newSpeedX= 22.0f;
