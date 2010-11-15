@@ -2,7 +2,7 @@
 # in this directory they are installed into the english dir
 
 SUBDIRS = $(AUTODIRS)  
-dist_pkgdata_DATA= appc_logo.png  stsi_logo.png  guadalinfo_logo.png viacam_cam4_html.png click.wav 
+dist_pkgdata_DATA= appc_logo.png  stsi_logo.png  guadalinfo_logo.png viacam_cam4_html.png click.wav license.txt
 
 #nobase_dist_pkgdata_DATA= eng/hhp/help.htb esp/hhp/help.htb cat/hhp/help.htb
 
