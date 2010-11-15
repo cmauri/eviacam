@@ -40,6 +40,8 @@
 
 #define MOUSE_EVENTS_COUNT 5
 
+//#define ENABLE_EXPERIMENTAL_KEY_ACTIONS 1
+
 CMouseOutput::CMouseOutput(CClickWindowController& pClickWindowController) 
 #if defined(__WXGTK__)
 :	CMouseControl ((void *) wxGetDisplay())
@@ -98,6 +100,7 @@ void CMouseOutput::InitDefaults()
 
 void CMouseOutput::InitKeyboardCodes()
 {
+#if defined(ENABLE_EXPERIMENTAL_KEY_ACTIONS)
 	// TODO: add useful entries here
 	m_keyboardCodes.push_back(CKeyboardCode('a'));
 	m_keyboardCodes.push_back(CKeyboardCode('b'));
@@ -125,6 +128,7 @@ void CMouseOutput::InitKeyboardCodes()
 	m_keyboardCodes.push_back(CKeyboardCode('X'));
 	m_keyboardCodes.push_back(CKeyboardCode('Y'));
 	m_keyboardCodes.push_back(CKeyboardCode('Z'));
+#endif
 }
 
 CMouseOutput::~CMouseOutput ()
