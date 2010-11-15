@@ -2,18 +2,14 @@ Planned
 =======
 
 - APPC: double click centers tracking area
-- Click visual feedback. Sample: (http://svr-www.eng.cam.ac.uk/~er258/code/x11.html)
+- Click visual feedback (done for linux). Sample: (http://svr-www.eng.cam.ac.uk/~er258/code/x11.html)
+
 - Configuration dialog TAB traversal
-- Wizard
-- User's manual
-- Auto set pwc attributes (linux)
-- With crvcamera_cv workaround to force 320x240 resolution
 
 Whises
 ======
 
 - Add zooming feature 
-- Good camera layer
 - Well trained haar classifier to locate face
 - Try to generate more portable binaries (apgcc)
 - Absolute face tracking.
