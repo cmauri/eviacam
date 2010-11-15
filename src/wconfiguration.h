@@ -221,6 +221,26 @@ private:
 
 #endif
 #if defined(__WXGTK__)
+    /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE
+    void OnLeftGestureChoiceSelected( wxCommandEvent& event );
+
+#endif
+#if defined(__WXGTK__)
+    /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE1
+    void OnRightGestureChoiceSelected( wxCommandEvent& event );
+
+#endif
+#if defined(__WXGTK__)
+    /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE2
+    void OnUpGestureChoiceSelected( wxCommandEvent& event );
+
+#endif
+#if defined(__WXGTK__)
+    /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE3
+    void OnDownGestureChoiceSelected( wxCommandEvent& event );
+
+#endif
+#if defined(__WXGTK__)
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_STARTUP
     void OnCheckboxStartupClick( wxCommandEvent& event );
 

@@ -143,6 +143,22 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
 #endif
 
 #if defined(__WXGTK__)
+    EVT_CHOICE( ID_CHOICE, WConfiguration::OnLeftGestureChoiceSelected )
+#endif
+
+#if defined(__WXGTK__)
+    EVT_CHOICE( ID_CHOICE1, WConfiguration::OnRightGestureChoiceSelected )
+#endif
+
+#if defined(__WXGTK__)
+    EVT_CHOICE( ID_CHOICE2, WConfiguration::OnUpGestureChoiceSelected )
+#endif
+
+#if defined(__WXGTK__)
+    EVT_CHOICE( ID_CHOICE3, WConfiguration::OnDownGestureChoiceSelected )
+#endif
+
+#if defined(__WXGTK__)
     EVT_CHECKBOX( ID_CHECKBOX_STARTUP, WConfiguration::OnCheckboxStartupClick )
 #endif
 
@@ -1551,7 +1567,6 @@ void WConfiguration::OnSpinctrlBottomWorkspaceUpdated( wxSpinEvent& event )
 	Changed ();
 }
 
-
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_WORKSPACE_LIMIT
  */
@@ -1733,4 +1748,62 @@ void WConfiguration::OnCancelClick( wxCommandEvent& event )
 	}		
 	event.Skip(false);
 }
+
+
+
+#if defined(__WXGTK__)
+
+/*!
+ * wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE
+ */
+
+void WConfiguration::OnLeftGestureChoiceSelected( wxCommandEvent& event )
+{
+	m_pViacamController->GetMouseOutput()->SetActionLeft (event.GetInt());
+	Changed();
+	event.Skip(false);
+}
+#endif
+
+#if defined(__WXGTK__)
+
+/*!
+ * wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE1
+ */
+
+void WConfiguration::OnRightGestureChoiceSelected( wxCommandEvent& event )
+{
+	m_pViacamController->GetMouseOutput()->SetActionRight (event.GetInt());
+	Changed();
+	event.Skip(false);
+}
+#endif
+
+#if defined(__WXGTK__)
+
+/*!
+ * wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE2
+ */
+
+void WConfiguration::OnUpGestureChoiceSelected( wxCommandEvent& event )
+{
+	m_pViacamController->GetMouseOutput()->SetActionTop (event.GetInt());
+	Changed();
+	event.Skip(false);
+}
+#endif
+
+#if defined(__WXGTK__)
+
+/*!
+ * wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE3
+ */
+
+void WConfiguration::OnDownGestureChoiceSelected( wxCommandEvent& event )
+{
+	m_pViacamController->GetMouseOutput()->SetActionBottom (event.GetInt());
+	Changed();
+	event.Skip(false);
+}
+#endif
 

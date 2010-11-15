@@ -5668,6 +5668,7 @@ opened at program startup."</string>
                             <long name="title-mode">0</long>
                             <long name="locked">0</long>
                             <string name="proxy-type">"wbChoiceProxy"</string>
+                            <string name="event-handler-0">"wxEVT_COMMAND_CHOICE_SELECTED|OnLeftGestureChoiceSelected|NONE||WConfiguration"</string>
                             <string name="proxy-Id name">"ID_CHOICE"</string>
                             <long name="proxy-Id value">10035</long>
                             <string name="proxy-Name">""</string>
@@ -5797,6 +5798,7 @@ opened at program startup."</string>
                             <long name="title-mode">0</long>
                             <long name="locked">0</long>
                             <string name="proxy-type">"wbChoiceProxy"</string>
+                            <string name="event-handler-0">"wxEVT_COMMAND_CHOICE_SELECTED|OnRightGestureChoiceSelected|NONE||WConfiguration"</string>
                             <string name="proxy-Id name">"ID_CHOICE1"</string>
                             <long name="proxy-Id value">10088</long>
                             <string name="proxy-Name">""</string>
@@ -5926,6 +5928,7 @@ opened at program startup."</string>
                             <long name="title-mode">0</long>
                             <long name="locked">0</long>
                             <string name="proxy-type">"wbChoiceProxy"</string>
+                            <string name="event-handler-0">"wxEVT_COMMAND_CHOICE_SELECTED|OnUpGestureChoiceSelected|NONE||WConfiguration"</string>
                             <string name="proxy-Id name">"ID_CHOICE2"</string>
                             <long name="proxy-Id value">10102</long>
                             <string name="proxy-Name">""</string>
@@ -6055,6 +6058,7 @@ opened at program startup."</string>
                             <long name="title-mode">0</long>
                             <long name="locked">0</long>
                             <string name="proxy-type">"wbChoiceProxy"</string>
+                            <string name="event-handler-0">"wxEVT_COMMAND_CHOICE_SELECTED|OnDownGestureChoiceSelected|NONE||WConfiguration"</string>
                             <string name="proxy-Id name">"ID_CHOICE3"</string>
                             <long name="proxy-Id value">10105</long>
                             <string name="proxy-Name">""</string>
