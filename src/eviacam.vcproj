@@ -73,6 +73,7 @@ mkdir $(TargetDir)de
 mkdir $(TargetDir)oc
 mkdir $(TargetDir)fr
 mkdir $(TargetDir)ar
+
 copy &quot;$(SolutionDir)..\po\ca.gmo&quot; $(TargetDir)ca\eviacam.mo
 copy &quot;$(SolutionDir)..\po\es.gmo&quot; $(TargetDir)es\eviacam.mo
 copy &quot;$(SolutionDir)..\po\gl.gmo&quot; $(TargetDir)gl\eviacam.mo
@@ -82,7 +83,16 @@ copy &quot;$(SolutionDir)..\po\de.gmo&quot; $(TargetDir)de\eviacam.mo
 copy &quot;$(SolutionDir)..\po\oc.gmo&quot; $(TargetDir)oc\eviacam.mo
 copy &quot;$(SolutionDir)..\po\fr.gmo&quot; $(TargetDir)fr\eviacam.mo
 copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
-"/>
+
+copy &quot;%WXWIN%\locale\ca.mo&quot; $(TargetDir)ca\wxstd.mo
+copy &quot;%WXWIN%\locale\es.mo&quot; $(TargetDir)es\wxstd.mo
+rem copy &quot;%WXWIN%\locale\gl.mo&quot; $(TargetDir)gl\wxstd.mo
+copy &quot;%WXWIN%\locale\it.mo&quot; $(TargetDir)it\wxstd.mo
+copy &quot;%WXWIN%\locale\tr.mo&quot; $(TargetDir)tr\wxstd.mo
+copy &quot;%WXWIN%\locale\de.mo&quot; $(TargetDir)de\wxstd.mo
+rem copy &quot;%WXWIN%\locale\oc.mo&quot; $(TargetDir)oc\wxstd.mo
+copy &quot;%WXWIN%\locale\fr.mo&quot; $(TargetDir)fr\wxstd.mo
+rem copy &quot;%WXWIN%\locale\ar.mo&quot; $(TargetDir)ar\wxstd.mo"/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				AdditionalIncludeDirectories="$(WXWIN)\include"/>
@@ -152,6 +162,7 @@ mkdir $(TargetDir)de
 mkdir $(TargetDir)oc
 mkdir $(TargetDir)fr
 mkdir $(TargetDir)ar
+
 copy &quot;$(SolutionDir)..\po\ca.gmo&quot; $(TargetDir)ca\eviacam.mo
 copy &quot;$(SolutionDir)..\po\es.gmo&quot; $(TargetDir)es\eviacam.mo
 copy &quot;$(SolutionDir)..\po\gl.gmo&quot; $(TargetDir)gl\eviacam.mo
@@ -161,7 +172,16 @@ copy &quot;$(SolutionDir)..\po\de.gmo&quot; $(TargetDir)de\eviacam.mo
 copy &quot;$(SolutionDir)..\po\oc.gmo&quot; $(TargetDir)oc\eviacam.mo
 copy &quot;$(SolutionDir)..\po\fr.gmo&quot; $(TargetDir)fr\eviacam.mo
 copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
-"/>
+
+copy &quot;%WXWIN%\locale\ca.mo&quot; $(TargetDir)ca\wxstd.mo
+copy &quot;%WXWIN%\locale\es.mo&quot; $(TargetDir)es\wxstd.mo
+rem copy &quot;%WXWIN%\locale\gl.mo&quot; $(TargetDir)gl\wxstd.mo
+copy &quot;%WXWIN%\locale\it.mo&quot; $(TargetDir)it\wxstd.mo
+copy &quot;%WXWIN%\locale\tr.mo&quot; $(TargetDir)tr\wxstd.mo
+copy &quot;%WXWIN%\locale\de.mo&quot; $(TargetDir)de\wxstd.mo
+rem copy &quot;%WXWIN%\locale\oc.mo&quot; $(TargetDir)oc\wxstd.mo
+copy &quot;%WXWIN%\locale\fr.mo&quot; $(TargetDir)fr\wxstd.mo
+rem copy &quot;%WXWIN%\locale\ar.mo&quot; $(TargetDir)ar\wxstd.mo"/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				AdditionalIncludeDirectories="$(WXWIN)\include"/>
