@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.0\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2010-11-15 03:07+0100\n"
+"POT-Creation-Date: 2010-11-18 18:51+0100\n"
 "PO-Revision-Date: 2009-11-18 16:29+0100\n"
 "Last-Translator: carles <untiburon350@gmail.com>\n"
 "Language-Team: Carles Garrigues(Lo Socarrat)\n"
@@ -955,9 +955,14 @@ msgid ""
 "and adjust the parameters manually."
 msgstr ""
 
-#: src/wwizard.cpp:1648
+#: src/wwizard.cpp:1648 src/wwizard.cpp:1729 src/wwizard.cpp:1747
 #, fuzzy
 msgid "Enable motion"
+msgstr "Opcions generalas"
+
+#: src/wwizard.cpp:1725 src/wwizard.cpp:1743
+#, fuzzy
+msgid "Disable motion"
 msgstr "Opcions generalas"
 
 #: src/wwizard.cpp:1863
@@ -1062,16 +1067,26 @@ msgstr ""
 msgid "Camera settings"
 msgstr ""
 
+#: src/mouseoutput.cpp:401
+msgid ""
+"This action will disable eViacam click generation.\n"
+"Are you sure?"
+msgstr ""
+"Aquesta accion desactivarà la generacion automatica de clics.\n"
+"Sètz segur?"
+
+#: src/mouseoutput.cpp:405
+#, fuzzy
+msgid ""
+"This action will change the click generation method.\n"
+"Are you sure?"
+msgstr ""
+"Aquesta accion desactivarà la generacion automatica de clics.\n"
+"Sètz segur?"
+
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
 msgstr "Camèra pas detectada. Anullacion."
-
-#~ msgid ""
-#~ "This action will disable eViacam click generation.\n"
-#~ "Are you sure?"
-#~ msgstr ""
-#~ "Aquesta accion desactivarà la generacion automatica de clics.\n"
-#~ "Sètz segur?"
 
 #, fuzzy
 #~ msgid "default"

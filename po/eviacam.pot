@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2010-11-15 03:07+0100\n"
+"POT-Creation-Date: 2010-11-18 18:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -869,8 +869,12 @@ msgid ""
 "and adjust the parameters manually."
 msgstr ""
 
-#: src/wwizard.cpp:1648
+#: src/wwizard.cpp:1648 src/wwizard.cpp:1729 src/wwizard.cpp:1747
 msgid "Enable motion"
+msgstr ""
+
+#: src/wwizard.cpp:1725 src/wwizard.cpp:1743
+msgid "Disable motion"
 msgstr ""
 
 #: src/wwizard.cpp:1863
@@ -971,6 +975,18 @@ msgstr ""
 
 #: src/wcameradialog.h:57
 msgid "Camera settings"
+msgstr ""
+
+#: src/mouseoutput.cpp:401
+msgid ""
+"This action will disable eViacam click generation.\n"
+"Are you sure?"
+msgstr ""
+
+#: src/mouseoutput.cpp:405
+msgid ""
+"This action will change the click generation method.\n"
+"Are you sure?"
 msgstr ""
 
 #: wxcamwindow/capturethread.cpp:69

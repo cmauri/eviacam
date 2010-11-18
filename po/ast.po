@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.0\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2010-11-15 03:07+0100\n"
+"POT-Creation-Date: 2010-11-18 18:51+0100\n"
 "PO-Revision-Date: 2010-03-05 17:33+0100\n"
 "Last-Translator: AluminiuM <aluminium@softastur.org>\n"
 "Language-Team: Asturian <softastur@softastur.org>\n"
@@ -956,9 +956,14 @@ msgid ""
 "and adjust the parameters manually."
 msgstr ""
 
-#: src/wwizard.cpp:1648
+#: src/wwizard.cpp:1648 src/wwizard.cpp:1729 src/wwizard.cpp:1747
 #, fuzzy
 msgid "Enable motion"
+msgstr "Opciones xenerales"
+
+#: src/wwizard.cpp:1725 src/wwizard.cpp:1743
+#, fuzzy
+msgid "Disable motion"
 msgstr "Opciones xenerales"
 
 #: src/wwizard.cpp:1863
@@ -1063,16 +1068,26 @@ msgstr ""
 msgid "Camera settings"
 msgstr ""
 
+#: src/mouseoutput.cpp:401
+msgid ""
+"This action will disable eViacam click generation.\n"
+"Are you sure?"
+msgstr ""
+"Esta aición desactivará la xeneración automática de clics.\n"
+"¿Ta seguru?"
+
+#: src/mouseoutput.cpp:405
+#, fuzzy
+msgid ""
+"This action will change the click generation method.\n"
+"Are you sure?"
+msgstr ""
+"Esta aición desactivará la xeneración automática de clics.\n"
+"¿Ta seguru?"
+
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
 msgstr "Cámara non detectada. Encaboxando."
-
-#~ msgid ""
-#~ "This action will disable eViacam click generation.\n"
-#~ "Are you sure?"
-#~ msgstr ""
-#~ "Esta aición desactivará la xeneración automática de clics.\n"
-#~ "¿Ta seguru?"
 
 #, fuzzy
 #~ msgid "default"

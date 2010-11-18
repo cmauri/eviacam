@@ -28,6 +28,7 @@ src/activationkey.h
 src/wmotioncalibrationx.h
 src/wmotioncalibrationy.h
 src/wcameradialog.h
+src/mouseoutput.cpp
 wxcamwindow/capturethread.cpp
 wxcamwindow/camwindow.cpp
 

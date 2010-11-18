@@ -1722,11 +1722,11 @@ void WizardPage6::OnTogglebuttonClick( wxCommandEvent& event )
 	m_wizardParent->GetViacamController()->SetEnabled(!isEnabled, !isEnabled, m_wizardParent);
 	if (m_wizardParent->GetViacamController()->GetEnabled()) {
 		m_toggleEnableMotion->SetValue(true);
-		m_toggleEnableMotion->SetLabel(wxT("Disable motion"));
+		m_toggleEnableMotion->SetLabel(_("Disable motion"));
 	}
 	else	{
 		m_toggleEnableMotion->SetValue(false);
-		m_toggleEnableMotion->SetLabel(wxT("Enable motion"));
+		m_toggleEnableMotion->SetLabel(_("Enable motion"));
 	}		
 	event.Skip(false);
 }
@@ -1740,11 +1740,11 @@ void WizardPage6::OnTogglebuttonUpdate( wxUpdateUIEvent& event )
 	if (m_wizardParent->GetViacamController()->GetEnabled()!= m_toggleEnableMotion->GetValue()) {	
 		if (m_wizardParent->GetViacamController()->GetEnabled()) {
 			m_toggleEnableMotion->SetValue(true);
-			m_toggleEnableMotion->SetLabel(wxT("Disable motion"));
+			m_toggleEnableMotion->SetLabel(_("Disable motion"));
 		}
 		else	{
 			m_toggleEnableMotion->SetValue(false);
-			m_toggleEnableMotion->SetLabel(wxT("Enable motion"));
+			m_toggleEnableMotion->SetLabel(_("Enable motion"));
 		}	
 	}
 	event.Skip(false);
