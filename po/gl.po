@@ -4,6 +4,7 @@
 # This file is distributed under the same license as the eviacam package.
 # Miguel Anxo Bouzada <mbouzada@gmail.com>, 2009
 #
+#: src/wcameradialog.cpp:193
 msgid ""
 msgstr ""
 "Project-Id-Version: eviacam-1.0\n"
@@ -26,8 +27,7 @@ msgstr "Configuración"
 msgid "Motion calibration"
 msgstr "Calibración do movemento"
 
-#: src/wconfiguration.cpp:412
-#: src/wwizard.cpp:1629
+#: src/wconfiguration.cpp:412 src/wwizard.cpp:1629
 msgid "X axis speed"
 msgstr "Velocidade eixo X"
 
@@ -37,8 +37,7 @@ msgstr ""
 "Configura a sensibilidade do\n"
 "movemento para o eixo X."
 
-#: src/wconfiguration.cpp:420
-#: src/wwizard.cpp:1638
+#: src/wconfiguration.cpp:420 src/wwizard.cpp:1638
 msgid "Y axis speed"
 msgstr "Velocidade eixo Y"
 
@@ -120,15 +119,12 @@ msgstr "Superior"
 msgid "Top limit workspace."
 msgstr "Límite superior"
 
-#: src/wconfiguration.cpp:489
-#: src/wconfiguration.cpp:503
-#: src/wconfiguration.cpp:515
-#: src/wconfiguration.cpp:529
+#: src/wconfiguration.cpp:489 src/wconfiguration.cpp:503
+#: src/wconfiguration.cpp:515 src/wconfiguration.cpp:529
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:494
-#: src/clickwindowbitmap.cpp:229
+#: src/wconfiguration.cpp:494 src/clickwindowbitmap.cpp:229
 msgid "Left"
 msgstr "Esquerdo"
 
@@ -136,8 +132,7 @@ msgstr "Esquerdo"
 msgid "Left limit workspace."
 msgstr "Límite esquerdo."
 
-#: src/wconfiguration.cpp:506
-#: src/clickwindowbitmap.cpp:236
+#: src/wconfiguration.cpp:506 src/clickwindowbitmap.cpp:236
 msgid "Right"
 msgstr "Dereito"
 
@@ -279,8 +274,7 @@ msgstr ""
 msgid "Show Click Window"
 msgstr "Amosar a xanela do clic"
 
-#: src/wconfiguration.cpp:627
-#: src/wwizard.cpp:912
+#: src/wconfiguration.cpp:627 src/wwizard.cpp:912
 msgid "Gesture click"
 msgstr "Clic por xestos"
 
@@ -292,42 +286,28 @@ msgstr "Activar clic por xestos"
 msgid "Move left:"
 msgstr "Esquerda:"
 
-#: src/wconfiguration.cpp:642
-#: src/wconfiguration.cpp:654
-#: src/wconfiguration.cpp:666
-#: src/wconfiguration.cpp:678
-#: src/wviacam.cpp:213
+#: src/wconfiguration.cpp:642 src/wconfiguration.cpp:654
+#: src/wconfiguration.cpp:666 src/wconfiguration.cpp:678 src/wviacam.cpp:213
 msgid "Disable"
 msgstr "Desactivar"
 
-#: src/wconfiguration.cpp:643
-#: src/wconfiguration.cpp:655
-#: src/wconfiguration.cpp:667
-#: src/wconfiguration.cpp:679
-#: src/wwizard.cpp:1077
+#: src/wconfiguration.cpp:643 src/wconfiguration.cpp:655
+#: src/wconfiguration.cpp:667 src/wconfiguration.cpp:679 src/wwizard.cpp:1077
 msgid "Left click"
 msgstr "Clic esquerdo"
 
-#: src/wconfiguration.cpp:644
-#: src/wconfiguration.cpp:656
-#: src/wconfiguration.cpp:668
-#: src/wconfiguration.cpp:680
-#: src/wwizard.cpp:1089
+#: src/wconfiguration.cpp:644 src/wconfiguration.cpp:656
+#: src/wconfiguration.cpp:668 src/wconfiguration.cpp:680 src/wwizard.cpp:1089
 msgid "Right click"
 msgstr "Clic dereito"
 
-#: src/wconfiguration.cpp:645
-#: src/wconfiguration.cpp:657
-#: src/wconfiguration.cpp:669
-#: src/wconfiguration.cpp:681
-#: src/wwizard.cpp:1099
+#: src/wconfiguration.cpp:645 src/wconfiguration.cpp:657
+#: src/wconfiguration.cpp:669 src/wconfiguration.cpp:681 src/wwizard.cpp:1099
 msgid "Double click"
 msgstr "Dobre clic"
 
-#: src/wconfiguration.cpp:646
-#: src/wconfiguration.cpp:658
-#: src/wconfiguration.cpp:670
-#: src/wconfiguration.cpp:682
+#: src/wconfiguration.cpp:646 src/wconfiguration.cpp:658
+#: src/wconfiguration.cpp:670 src/wconfiguration.cpp:682
 msgid "Drag click"
 msgstr "Clic de arrastre"
 
@@ -351,18 +331,15 @@ msgstr "Clic"
 msgid "Startup"
 msgstr "Inicio"
 
-#: src/wconfiguration.cpp:698
-#: src/wwizard.cpp:1235
+#: src/wconfiguration.cpp:698 src/wwizard.cpp:1235
 msgid "Start eViacam at user logon"
 msgstr "Executar eViacam ao iniciar a sesión"
 
-#: src/wconfiguration.cpp:703
-#: src/wwizard.cpp:1241
+#: src/wconfiguration.cpp:703 src/wwizard.cpp:1241
 msgid "Enable eViacam at startup"
 msgstr "Activar eViacam ao iniciar"
 
-#: src/wconfiguration.cpp:706
-#: src/wwizard.cpp:1244
+#: src/wconfiguration.cpp:706 src/wwizard.cpp:1244
 msgid ""
 "If checked the program automatically \n"
 "enables cursor control at startup."
@@ -384,8 +361,7 @@ msgstr ""
 msgid "Browse..."
 msgstr "Buscar..."
 
-#: src/wconfiguration.cpp:724
-#: src/activationkey.h:51
+#: src/wconfiguration.cpp:724 src/activationkey.h:51
 msgid "Activation key"
 msgstr "Tecla de activación"
 
@@ -447,13 +423,11 @@ msgstr "Xestión de perfiles"
 msgid "Select profile:"
 msgstr "Escoller perfil:"
 
-#: src/wconfiguration.cpp:787
-#: src/wconfiguration.cpp:793
+#: src/wconfiguration.cpp:787 src/wconfiguration.cpp:793
 msgid "Chooses desired active profile"
 msgstr "Escolle o perfil activo"
 
-#: src/wconfiguration.cpp:796
-#: src/wconfiguration.cpp:1410
+#: src/wconfiguration.cpp:796 src/wconfiguration.cpp:1410
 msgid "Add profile"
 msgstr "Engadir perfil"
 
@@ -493,15 +467,12 @@ msgstr "&Aceptar"
 msgid "&Cancel"
 msgstr "&Cancelar"
 
-#: src/wconfiguration.cpp:849
-#: src/wconfiguration.cpp:850
-#: src/wconfiguration.cpp:851
-#: src/wconfiguration.cpp:852
+#: src/wconfiguration.cpp:849 src/wconfiguration.cpp:850
+#: src/wconfiguration.cpp:851 src/wconfiguration.cpp:852
 msgid "Key:"
 msgstr "Tecla:"
 
-#: src/wconfiguration.cpp:1334
-#: src/wconfiguration.cpp:1514
+#: src/wconfiguration.cpp:1334 src/wconfiguration.cpp:1514
 msgid "You should restart the application to apply this change"
 msgstr "É preciso reiniciar o aplicativo para que este cambio teña efecto."
 
@@ -543,8 +514,7 @@ msgstr "O perfil xa existe."
 msgid "Invalid profile name."
 msgstr "Nome de perfil incorrecto."
 
-#: src/wconfiguration.cpp:1468
-#: src/wconfiguration.cpp:1470
+#: src/wconfiguration.cpp:1468 src/wconfiguration.cpp:1470
 msgid "Choose on-screen keyboard command"
 msgstr "Escolla o programa de teclado na pantalla"
 
@@ -560,10 +530,8 @@ msgstr ""
 "Esta acción pode facerlle perder o control do computador.\n"
 "Está seguro que quere continuar?"
 
-#: src/wconfiguration.cpp:1578
-#: src/wconfiguration.cpp:1744
-#: src/viacamcontroller.cpp:374
-#: src/cmotioncalibration.cpp:151
+#: src/wconfiguration.cpp:1578 src/wconfiguration.cpp:1744
+#: src/viacamcontroller.cpp:374 src/cmotioncalibration.cpp:151
 msgid "eViacam warning"
 msgstr "Advertencia"
 
@@ -575,8 +543,7 @@ msgstr "Desbotar cambios?"
 msgid "Enable Viacam"
 msgstr "Enable Viacam"
 
-#: src/clickwindowtext.cpp:140
-#: src/clickwindowbitmap.cpp:220
+#: src/clickwindowtext.cpp:140 src/clickwindowbitmap.cpp:220
 msgid "No click"
 msgstr "Sen clic"
 
@@ -596,20 +563,16 @@ msgstr "#Arrastre#"
 msgid "#Double Click#"
 msgstr "#Dobre clic#"
 
-#: src/clickwindowtext.cpp:163
-#: src/clickwindowtext.cpp:323
-#: src/clickwindowbitmap.cpp:257
-#: src/clickwindowbitmap.cpp:458
+#: src/clickwindowtext.cpp:163 src/clickwindowtext.cpp:323
+#: src/clickwindowbitmap.cpp:257 src/clickwindowbitmap.cpp:458
 msgid "Hide main window"
 msgstr "Agachar a xanela"
 
-#: src/clickwindowtext.cpp:325
-#: src/clickwindowbitmap.cpp:463
+#: src/clickwindowtext.cpp:325 src/clickwindowbitmap.cpp:463
 msgid "Show main window"
 msgstr "Amosar a xanela"
 
-#: src/clickwindowbitmap.cpp:243
-#: src/wwizard.cpp:1057
+#: src/clickwindowbitmap.cpp:243 src/wwizard.cpp:1057
 msgid "Drag"
 msgstr "Arrastre"
 
@@ -653,8 +616,7 @@ msgstr ""
 "Non se configurou a orde de teclado na pantalla.\n"
 "Pode seleccionalo a través do dialogo de opcións."
 
-#: src/viacamcontroller.cpp:406
-#: src/viacamcontroller.cpp:420
+#: src/viacamcontroller.cpp:406 src/viacamcontroller.cpp:420
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "Atopouse un erro"
@@ -700,8 +662,7 @@ msgstr ""
 "o control do punteiro.\n"
 "Está seguro que desexa continuar?"
 
-#: src/wabout.cpp:142
-#: src/wcameradialog.cpp:164
+#: src/wabout.cpp:142 src/wcameradialog.cpp:164
 msgid "Close"
 msgstr "Pechar"
 
@@ -761,8 +722,7 @@ msgstr "&Axuda"
 msgid "Enable"
 msgstr "Activar"
 
-#: src/wviacam.cpp:217
-#: src/clickwindow.h:31
+#: src/wviacam.cpp:217 src/clickwindow.h:31
 msgid "Click Window"
 msgstr "Xanela do clic"
 
@@ -848,29 +808,32 @@ msgstr "Este asistente guiarao a través da configuración básica de eViacam"
 msgid "Click Next to continue."
 msgstr "Prema en Seguinte para continuar"
 
-#: src/wwizard.cpp:520
-#: src/wwizard.cpp:1605
+#: src/wwizard.cpp:520 src/wwizard.cpp:1605
 msgid "Pointer calibration"
 msgstr "Calibración del movemento"
 
-#: src/wwizard.cpp:529
-#: src/wwizard.cpp:702
+#: src/wwizard.cpp:529 src/wwizard.cpp:702
 msgid "Setting motion parameters"
 msgstr "Axuste dos parámetros de movemento"
 
 #: src/wwizard.cpp:538
 msgid ""
-"The assisted calibration procedure will ask you to move your head in order to automatically configure the appropiate motion parameters.\n"
+"The assisted calibration procedure will ask you to move your head in order "
+"to automatically configure the appropiate motion parameters.\n"
 "\n"
-"After this calibration stage, you can manually adjust the motion parameters.\n"
+"After this calibration stage, you can manually adjust the motion "
+"parameters.\n"
 "\n"
-"NOTE: the calibration assistant will enable the pointer control so that you can test your configuration."
+"NOTE: the calibration assistant will enable the pointer control so that you "
+"can test your configuration."
 msgstr ""
-"O procedemento de calibración asistida pediralle que mova a cabeza para configurar automaticamente os parámetros de movemento axeitados.\n"
+"O procedemento de calibración asistida pediralle que mova a cabeza para "
+"configurar automaticamente os parámetros de movemento axeitados.\n"
 "\n"
 "Despois deste procedemento, poderá axustar manualmente ditos parámetros.\n"
 "\n"
-"NOTA: o asistente de calibración activará o control do punteiro para que poida probar a configuración."
+"NOTA: o asistente de calibración activará o control do punteiro para que "
+"poida probar a configuración."
 
 #: src/wwizard.cpp:546
 msgid "Perform assisted calibration"
@@ -888,8 +851,7 @@ msgstr ""
 msgid "Pointer calibration "
 msgstr "Calibración do movemento"
 
-#: src/wwizard.cpp:879
-#: src/wwizard.cpp:1854
+#: src/wwizard.cpp:879 src/wwizard.cpp:1854
 msgid "Click mode"
 msgstr "Modo de clic"
 
@@ -906,12 +868,20 @@ msgid "Dwell Click (default)"
 msgstr "Clic por demora (predeterminado)"
 
 #: src/wwizard.cpp:907
-msgid "The click is generated automatically when you hover the mouse pointer momentarily. The Click the Window lets you choose between different actions."
-msgstr "O clic xerase automaticamente detendo o punteiro uns instantes. A xanela do clic (parte superior) permítelle escoller entre as diferentes accións."
+msgid ""
+"The click is generated automatically when you hover the mouse pointer "
+"momentarily. The Click the Window lets you choose between different actions."
+msgstr ""
+"O clic xerase automaticamente detendo o punteiro uns instantes. A xanela do "
+"clic (parte superior) permítelle escoller entre as diferentes accións."
 
 #: src/wwizard.cpp:919
-msgid "The click is automatically generated by stopping the pointer for a moment and then moving the pointer to one of the 4 directions to choose the action."
-msgstr "O clic xerase automaticamente detendo o punteiro uns instantes e movéndoo despois nunha das catro direccións para escoller a acción desexada."
+msgid ""
+"The click is automatically generated by stopping the pointer for a moment "
+"and then moving the pointer to one of the 4 directions to choose the action."
+msgstr ""
+"O clic xerase automaticamente detendo o punteiro uns instantes e movéndoo "
+"despois nunha das catro direccións para escoller a acción desexada."
 
 #: src/wwizard.cpp:925
 msgid "No click. Click function disabled."
@@ -972,8 +942,16 @@ msgid "framerate"
 msgstr "framerate"
 
 #: src/wwizard.cpp:1453
-msgid "For best performance possible, the frame rate should be equal to or greater than 25 fps. eViacam tries to automatically configure your camera, but If this value is below this threshold you may need to manually adjust the camera settings."
-msgstr "Para obter o mellor rendemento posíbel, a velocidade de captura debería ser igual ou superior a 25 fps. eViacam tenta configurar automaticamente a cámara, pero se este valor está por debaixo deste limiar pode ser preciso axustar manualmente a configuración da cámara."
+msgid ""
+"For best performance possible, the frame rate should be equal to or greater "
+"than 25 fps. eViacam tries to automatically configure your camera, but If "
+"this value is below this threshold you may need to manually adjust the "
+"camera settings."
+msgstr ""
+"Para obter o mellor rendemento posíbel, a velocidade de captura debería ser "
+"igual ou superior a 25 fps. eViacam tenta configurar automaticamente a "
+"cámara, pero se este valor está por debaixo deste limiar pode ser preciso "
+"axustar manualmente a configuración da cámara."
 
 #: src/wwizard.cpp:1459
 msgid "Camera settings..."
@@ -991,14 +969,11 @@ msgstr ""
 "Pode activar/desactivar o movemento do punteiro para comprobar\n"
 "a configuración e axustar manualmente os parámetros."
 
-#: src/wwizard.cpp:1648
-#: src/wwizard.cpp:1729
-#: src/wwizard.cpp:1747
+#: src/wwizard.cpp:1648 src/wwizard.cpp:1729 src/wwizard.cpp:1747
 msgid "Enable motion"
 msgstr "Activar movemento"
 
-#: src/wwizard.cpp:1725
-#: src/wwizard.cpp:1743
+#: src/wwizard.cpp:1725 src/wwizard.cpp:1743
 msgid "Disable motion"
 msgstr "Desactivar movemento"
 
@@ -1007,24 +982,42 @@ msgid "How to make the click"
 msgstr "Como premer (facer clic)"
 
 #: src/wwizard.cpp:1872
-msgid "eViacam provides several several methods to generate mouse click actions:"
+msgid ""
+"eViacam provides several several methods to generate mouse click actions:"
 msgstr "eViacam fornece distintos métodos para xerar as accións do rato:"
 
 #: src/wwizard.cpp:1878
-msgid "- Dwell Click (default). The click is generated automatically when you hover the mouse pointer momentarily. The Click the Window lets you choose between different actions."
-msgstr "- Clic por demora (predeterminado). O clic xerase automaticamente tras deter o punteiro durante un instante. A xanela do clic permítelle escoller entre as diferentes accións."
+msgid ""
+"- Dwell Click (default). The click is generated automatically when you hover "
+"the mouse pointer momentarily. The Click the Window lets you choose between "
+"different actions."
+msgstr ""
+"- Clic por demora (predeterminado). O clic xerase automaticamente tras deter "
+"o punteiro durante un instante. A xanela do clic permítelle escoller entre "
+"as diferentes accións."
 
 #: src/wwizard.cpp:1883
-msgid "- Gesture Click. The click is automatically generated by stopping the pointer for a moment and then moving the pointer to one of the 4 directions to choose the action."
-msgstr "- Clic por xestos. O clic xerase automaticamente detendo o punteiro un instantes e movéndoo  despois nunha das 4 direccións para escoller a acción desexada."
+msgid ""
+"- Gesture Click. The click is automatically generated by stopping the "
+"pointer for a moment and then moving the pointer to one of the 4 directions "
+"to choose the action."
+msgstr ""
+"- Clic por xestos. O clic xerase automaticamente detendo o punteiro un "
+"instantes e movéndoo  despois nunha das 4 direccións para escoller a acción "
+"desexada."
 
 #: src/wwizard.cpp:1889
 msgid "- No click. Click function disabled."
 msgstr "- Sen clic. A función do clic desactivarase."
 
 #: src/wwizard.cpp:1895
-msgid "In the next window you can choose the method to click. eViacam will be enabled to allow you to test the different ways of clicking."
-msgstr "Na seguinte pantalla poderá escoller o método para premer (facer clic). eViacam activarase para que poida probar as distintas formas de premer  (facer clic)."
+msgid ""
+"In the next window you can choose the method to click. eViacam will be "
+"enabled to allow you to test the different ways of clicking."
+msgstr ""
+"Na seguinte pantalla poderá escoller o método para premer (facer clic). "
+"eViacam activarase para que poida probar as distintas formas de premer  "
+"(facer clic)."
 
 #: src/wwizard.cpp:2096
 msgid "Tracker setup"
@@ -1036,13 +1029,16 @@ msgstr "Configurar a área de seguimento facial"
 
 #: src/wwizard.cpp:2114
 msgid ""
-"The user's face must appear inside the blue rectangle (tracking area) to move the pointer.\n"
+"The user's face must appear inside the blue rectangle (tracking area) to "
+"move the pointer.\n"
 "\n"
 "Move and resize this area if necessary to set it around your face."
 msgstr ""
-"A faciana do usuario debe aparecer no interior do rectángulo azul (área de seguimento) para mover o punteiro.\n"
+"A faciana do usuario debe aparecer no interior do rectángulo azul (área de "
+"seguimento) para mover o punteiro.\n"
 "\n"
-"De ser preciso, desprace e redimensione esta área para que a súa faciana apareza no interior."
+"De ser preciso, desprace e redimensione esta área para que a súa faciana "
+"apareza no interior."
 
 #: src/wconfirmcalibration.cpp:158
 msgid "Move your head to see how it works"
@@ -1062,25 +1058,19 @@ msgstr ""
 "- «Cancelar» mantén a configuración antiga.\n"
 "- «Repetir» reinicia de novo o proceso de calibración."
 
-#: src/wconfirmcalibration.cpp:172
-#: src/wconfirmcalibration.cpp:290
-#: src/wconfirmcalibration.cpp:297
-#: src/wconfirmcalibration.cpp:304
+#: src/wconfirmcalibration.cpp:172 src/wconfirmcalibration.cpp:290
+#: src/wconfirmcalibration.cpp:297 src/wconfirmcalibration.cpp:304
 msgid "Ok"
 msgstr "Aceptar"
 
-#: src/wconfirmcalibration.cpp:175
-#: src/wconfirmcalibration.cpp:191
-#: src/wconfirmcalibration.cpp:291
-#: src/wconfirmcalibration.cpp:298
+#: src/wconfirmcalibration.cpp:175 src/wconfirmcalibration.cpp:191
+#: src/wconfirmcalibration.cpp:291 src/wconfirmcalibration.cpp:298
 #: src/wconfirmcalibration.cpp:305
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/wconfirmcalibration.cpp:178
-#: src/wconfirmcalibration.cpp:292
-#: src/wconfirmcalibration.cpp:299
-#: src/wconfirmcalibration.cpp:306
+#: src/wconfirmcalibration.cpp:178 src/wconfirmcalibration.cpp:292
+#: src/wconfirmcalibration.cpp:299 src/wconfirmcalibration.cpp:306
 msgid "Repeat"
 msgstr "Repetir"
 
@@ -1127,14 +1117,19 @@ msgstr "Non se atopou unha cámara. Cancelando."
 #, fuzzy
 #~ msgid "default"
 #~ msgstr "Idioma do sistema"
+
 #~ msgid "Easy stop"
 #~ msgstr "Parada fácil"
+
 #~ msgid "Show click countdown"
 #~ msgstr "Amosa conta atrás"
+
 #~ msgid "Run at system startup"
 #~ msgstr "Executar ao iniciar o sistema"
+
 #~ msgid "&Click Window"
 #~ msgstr "&Ventá do clic"
+
 #~ msgid "&Track face"
 #~ msgstr "&Localizar faciana"
 
@@ -1147,10 +1142,12 @@ msgstr "Non se atopou unha cámara. Cancelando."
 #~ msgstr ""
 #~ "Se está seleccionado activa o control do\n"
 #~ "punteiro ao iniciar o programa."
+
 #~ msgid "Profiles allows storing several named sets of options."
 #~ msgstr ""
 #~ "Os perfiles permiten almacenar diversas\n"
 #~ "configuracións identificadas por un nome."
+
 #~ msgid ""
 #~ "<font face=\"Arial, Helvetica, sans-serif\">\n"
 #~ "<h1><img src=\"#IMAGE_PATH#/viacam_cam4_html.png\" width=\"120\" height="
@@ -1183,16 +1180,19 @@ msgstr "Non se atopou unha cámara. Cancelando."
 #~ "<img src=\"#IMAGE_PATH#/appc_logo.png\" width=\"200\" height=\"57\" "
 #~ "border=\"0\"> </p>\n"
 #~ "</font>"
+
 #~ msgid ""
 #~ "<br><h3>Contributions:</h3><br>Miguel Bouzada (Galego translation)"
 #~ "<br>Giuseppe Masciopinto (Italiano translation)<br>Samuel Thibault"
 #~ msgstr ""
 #~ "<br><h3>Contribucións:</h3><br>Miguel Anxo Bouzada (tradución ao Galego)"
 #~ "<br>Giuseppe Masciopinto (tradución ao Italiano)<br>Samuel Thibault"
+
 #~ msgid "Catalan"
 #~ msgstr "Catalán"
+
 #~ msgid "English"
 #~ msgstr "Inglés"
+
 #~ msgid "Spanish"
 #~ msgstr "Español"
-
