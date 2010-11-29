@@ -1,4 +1,4 @@
-				---------------
+                                ---------------
                                  Enable Viacam
                                 ---------------
                                   
@@ -7,7 +7,7 @@
  About
 =======
 
-Enable Viacam (aka eViacam) is a mouse replacement software that moves the 
+Enable Viacam (a.k.a. eViacam) is a mouse replacement software that moves the 
 pointer as you move your head. It works on standard PCs equipped with a web 
 camera. No additional hardware is required. Based on the award winning Facial
 Mouse software. 
@@ -16,18 +16,14 @@ Mouse software.
 =====================
 
 GNU/Linux
-Windows 2000/XP/Vista
+Windows 2000/XP/Vista/7
 
  Instructions 
 ==============
 
+(NOTE: as of version 1.4, the instructions manual is included in the software)
+
 First install and configure your web camera before using eViacam. It's very important to configure your camera in manual exposure mode and adjust this parameter to get about 25 fps or more. Most modern cameras can deliver 30fps. Please check your web camera manual when necessary.
-
-NOTE FOR LINUX: if you are using a camera supported by the pwc driver (e.g. these based on Phillips chipset like Logitech Quickcam PRO 4000,  Creative Webcam 5 and other) you may want to do:
-
-setpwc -f 30
-
-before running eViacam to set the frame rate. Also ensure the your user has permissions to access the camera
 
 Once installed run evicam (evicam.exe for Windows). The application should open, automatically detect your camera and begin streaming the live video. 
 
@@ -40,66 +36,14 @@ For clicking simply stop the pointer over the desired position. In few moments a
  Build instructions
 ====================
 
-eViacam is built against wxWidgets and OpenCV libraries (among other 
-common ones, of course :) ).
-
- Linux build
---------------
-
-- Pre-requisites
-  ==============
-  
-  wxWidgets >= 2.6
-  opencv = 1.0
-  gtk+-2.0
-  
-- Building
-  ========
-  
-  ./configure
-  make
-  make install
-
-  See INSTALL for generic instructions on building.
-
-DEBIAN etch NOTE: you can use official wxWidgets packages with come with the distro to build eViacam. Only is needed to manually build opencv1. The best way of doing it is using the opencv debian source package.
-
-Ubuntu notes: in order to compile on Ubuntu (karmic) you need the following packages: libxext-dev, libxtst-dev, libgtk2.0-dev, libwxbase2.8-dev, libwxgtk2.8-dev, libhighgui-dev, libswscale-dev
-
- Windows build
----------------
-
-- Pre-requisites
-  ==============
-  
-  wxWidgets = 2.8
-  opencv = 1.0
-  Platform SDK (tested with PSDK-x86_WindowsServer2003_SP1(2005))
-  DirectX SDK 9.0 Update (February 2005) or later
-  
-- Building using Visual Studio 2003
-  =================================
-
-Build the \Microsoft Platform SDK\Samples\Multimedia\DirectShow\BaseClasses\
-I've tested with VS2003, but is also supposed to work for newer versions. 
-Visual Studio solution (.sln) is in win32/ directory. 
-You should set the following environment variables:
-
-	WXWIN to point to wxWidgets folder
-	CVPATH to point to opencv1 folder
-	PSDK_DIR to point the Platform SDK folder
-	
-Build as Release.
-	
-Once the program is compiled, you may wish to create the installer. 
-Inno Setup is used for installer generation on Windows.
+See INSTALL file.
 
  Notes
 =======
 
 - Asturian (Bable) support
 
-The current stable version of wxWidgets (2.8.10, at July 2009) doesn't support 
+The current stable version of wxWidgets (2.8.x at November 2010) doesn't support 
 Asturian language yet, but it seems that support has been added to development
 version. So, if you want enable Asturian language support, you need the latest
 wxWidgets development snapshot and should uncomment the line before compiling
@@ -113,14 +57,25 @@ Note that these files use special enconding.
 =========
 
 eViacam is released under the GNU/GPL license.
-
 See the COPYING file for details on program's licensing.
 
  Author
 ========
  
-Cesar Mauri Loba (cesar at crea-si dot com)
-Please see the AUTHORS file for information about other contributors.
+(c) 2008-10 Cesar Mauri Loba (cesar at crea-si dot com)
+Please see the AUTHORS and THANKS files for information about other contributors.
+
+Acknowledgements
+=================
+
+This software has been developed with the support of different collaborators and sponsored by:
+    - Consorcio Fernando de los Rios
+    - Seceretaría de Telecomunicacions i Societat de la Informació del 
+	  Departament de Governació i Administracions Públiques de la Generalitat 
+	  de Catalunya
+	- Associació Provincial de Paràlisi Cerebral (APPC) de Tarragona.
+
+Thanks to everyone in the APPC for his/her collaboration in testing and particularly to users who have collaborated actively, including Ruben, Gloria, Cristina and many many others. Thank you all.
 
  Links
 =======

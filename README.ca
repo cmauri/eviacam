@@ -1,4 +1,4 @@
-				---------------
+                                ---------------
                                  Enable Viacam
                                 ---------------
                                   
@@ -7,24 +7,20 @@
  Quant a
 =========
 
-Enable Viacam (aka eViacam) és un programa d'ordinador que substitueix la funcionalitat del ratolí permetent moure el punter a partir del moviment del cap. Funciona en un ordinador PC equipat amb una càmera web, sense elements addicionals. eViacam està basat en el programa Ratón Facial guardonat amb diversos premis. Funciona per entorns Linux i Windows.
+Enable Viacam (alias eViacam) és un programa d'ordinador que substitueix la funcionalitat del ratolí permetent moure el punter a partir del moviment del cap. Funciona en un ordinador PC equipat amb una càmera web, sense elements addicionals. eViacam està basat en el programa Ratón Facial guardonat amb diversos premis.
 
  Plataformes suportades
 ========================
 
 GNU/Linux
-Windows 2000/XP/Vista
+Windows 2000/XP/Vista/7
 
  Instruccions 
 ==============
 
+(NOTA: a partir de la versió 1.4, el manual d'instruccions s'inclou en el programari)
+
 Primer cal haver instal·lat i configurar correctament la càmera web. És molt important configurar al càmera en mode d'exposició manual i ajustar aquest paràmetre per obtenir 25 fps o més de velocitat de captura. La majoría de càmeres modernes proporcionen fins a 30 fps. Consulti el manual de la càmera en cas necessari.
-
-NOTA PER LINUX: si utilitza una càmera suportada pel driver pwc (ex. algunes càmeres basades amb el chipset de Phillips com la Logitech Quickcam PRO 4000,  Creative Webcam 5 i d'altres) pot voler executar:
-
-setpwc -f 30
-
-abans d'executar eViacam per configurar la velocitat de captura. Comprovi que té permisos per accedir a la càmera.
 
 Un cop instal·lat executi evicam (evicam.exe per Windows). El programa s'ha d'obrir, detectar automàticament la càmera i mostrar la imatge en temps real.
 
@@ -34,23 +30,47 @@ Activi la opció per iniciar la funció de control des del menú Arxiu. Provi a 
 
 Per fer clic només cal aturar el punter sobre la localització desitja. En uns instants es genera un clic de forma automàtica (aquest temps d'espera es pot ajustar des del diàleg de configuració). Utilitzi la finestra encastada de la part superior per tal d'escollir entre els diferents tipus de clic.
 
+ Instal·lació
+==============
+
+Veure fitxer INSTALL
+
+ Notes
+=======
+
+- Suport Asturiano (Bable)
+
+La versió estable actual de wxWidgets (2.8.x al novembre de 2010) no és compatible amb llengua asturiana encara, però sembla que s'ha afegit suport per a la versió de desenvolupament. Per tant, si voleu activar el suport de llengua asturiana, necessita l'última versió de desenvolupament de wxWidgets i cal descomentar la següent línia abans de compilar
+
+	// #define ENABLE_ASTURIAN
+en:
+	src/langnames-utf8.h
+	src/langnames-utf16.h	
+
+	Tingueu en compte que aquests arxius utilitzen una codificació especial.
+
  Llicència
 ===========
 
-Enable Viacam es proporciona sota llicència GNU/GPL.
-
+Enable Viacam es proporciona sota llicència GNU/GPL v3.
 Vegi l'arxiu COPYING per detalls sobre la la llicència.
 
  Autor
 ========
  
-Cesar Mauri Loba (cesar a crea-si punt com)
-Vegi l'arxiu AUTHORS més informació sobre altres contribucions.
+(c) 2008-10 Cesar Mauri Loba (cesar a crea-si punt com)
+Vegi els arxius AUTHORS i THANKS  per més informació sobre altres contribucions.
 
  Agraïments
 ============
 
-- Aquest software ha estat desenvolupat gràcies al suport de la Seceretaría de Telecomunicacions i Societat de la Informació del Departament de Governació i Administracions Públiques de la Generalitat de Catalunya i a l'Associació Provincial de Paràlisi Cerebral de Tarragona (APPC).
+- Aquest software ha estat desenvolupat gràcies al suport de diferents
+  col·laboradors i el patrocini de:
+	- Consorcio Fernando de los Ríos
+    - Seceretaría de Telecomunicacions i Societat de la Informació del 
+	  Departament de Governació i Administracions Públiques de la Generalitat 
+	  de Catalunya
+	- Associació Provincial de Paràlisi Cerebral (APPC) de Tarragona.
 
 - Gràcies a tota la gent de l'APPC per la seva col·laboració en les proves i especialment als usuaris que han col·laborat activament, entre ells el Ruben, la Glòria, la Cristina i molts i molts altres. Gràcies a tots.
 

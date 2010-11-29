@@ -15,6 +15,8 @@ SUBDIRS = \
 EXTRA_DIST = \
 	autogen.sh \
 	README.ca \
+	README.es \
+	INSTALL.es \
 	AGRAIMENTS.txt \
 	win32/eviacam.sln \
 	win32/installer.iss \
