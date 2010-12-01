@@ -1,0 +1,1 @@
+grep @ *.po | egrep "(Team|Translator)" | cut -d ':' -f 3 | cut -d "\\" -f 1 | sort -u | grep -v "cesar@crea-si.com" | grep -v "put@real.email.address" | grep -v "fill@with.real.email.address)"
