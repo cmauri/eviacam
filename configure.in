@@ -194,6 +194,7 @@ AC_OUTPUT(
 	[src/Makefile] 
 	[src/version.h]
 	[src/eviacam.desktop]
+	[src/eviacamloader.c]
 	[rpm/Makefile]
 	[rpm/eviacam.spec]
 	[debian/changelog]

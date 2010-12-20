@@ -81,7 +81,7 @@ int main (int argc, char **argv)
 		}
 		else if (pid== 0) {
 			/* child process */
-			return execl ("/usr/bin/eviacam", "eviacam", NULL);
+			return execl ("@prefix@/bin/eviacam", "eviacam", NULL);
 			/* return execl ("./foo", "foo", NULL); */
 		}
 		else

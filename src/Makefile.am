@@ -5,7 +5,7 @@ noinst_HEADERS = activationkey.h cautostart.h ckeyboardcode.h ckeyboardcontrol.h
 	wconfiguration.h wconfirmcalibration.h wmotioncalibrationx.h \
 	wmotioncalibrationy.h wviacam.h cvisualalert.h wwizard.h wwizardmanager.h wcameradialog.h
 
-dist_noinst_DATA= version.h.in langnames-utf16.h gui.pjd gui.rc eviacam.vcproj \
+dist_noinst_DATA= version.h.in eviacamloader.c.in langnames-utf16.h gui.pjd gui.rc eviacam.vcproj \
 	icons/on.xpm icons/eviacam.ico  icons/eviacam_mini.ico  \
 	icons/clickwindowoff.xpm  icons/help.xpm icons/preferences.xpm \
 	icons/clickwindow.xpm icons/keyboard.xpm icons/user.xpm \
