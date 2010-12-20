@@ -566,20 +566,25 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 	{
 		
 		case (wxLANGUAGE_CATALAN):
-			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/cat/help.hhp"));
+			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/ca/help.hhp"));
 			break;
 		case (wxLANGUAGE_SPANISH):
-			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/esp/help.hhp"));			
+			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/es/help.hhp"));
+			break;
+		case (wxLANGUAGE_GERMAN):
+			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/de/help.hhp"));
+			break;
+		case (wxLANGUAGE_GALICIAN):
+			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/gl/help.hhp"));
 			break;
 		default:
-			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/eng/help.hhp"));
+			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/en/help.hhp"));
 			break;
 	}		
-	//puts(path.char_str()); printf ("\n");
-	//wxMessageDialog dlg (this, path, _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
-	//dlg.ShowModal();
+	
 	m_wxHtmlHelpController->AddBook(path,false);
 	m_wxHtmlHelpController->DisplayContents();
+	
 	event.Skip(false);
 }
 
