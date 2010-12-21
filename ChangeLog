@@ -1,3 +1,16 @@
+2010-12-21 - Release 1.4.1
+* Added wxWidgets message catalog files for Windows
+* Added wx2.6-i18n | wx2.8-i18n as recommended dependencies on debian/control
+* Updated translations:
+	* Galego (Miguel Anxo Bouzada)
+	* Deutsch (Christian Bieder)
+	* Français (Sébastien Lecointre)
+* Added documentation translations:
+	* Galego (Miguel Anxo Bouzada)
+	* Deutsch (Christian Bieder)
+* Closes
+	[3095560] eViacam doesn't start under Ubuntu 10.10
+
 2010-11-15 - Release 1.4
 * New capture layer for linux platforms and camera controls dialogue
 	* This new layer greatly improves the camera capture on linux platforms
