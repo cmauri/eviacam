@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2010-11-18 18:51+0100\n"
+"POT-Creation-Date: 2010-12-24 13:22+0100\n"
 "PO-Revision-Date: 2010-07-11 20:35+0300\n"
 "Last-Translator: Anıl Özbek <anil@artistanbulpr.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -23,31 +23,31 @@ msgstr ""
 msgid "Configuration"
 msgstr "Yapılandırma"
 
-#: src/wconfiguration.cpp:403
+#: src/wconfiguration.cpp:404
 msgid "Motion calibration"
 msgstr ""
 
-#: src/wconfiguration.cpp:412 src/wwizard.cpp:1629
+#: src/wconfiguration.cpp:413 src/wwizard.cpp:1629
 msgid "X axis speed"
 msgstr "X ekseni hızı"
 
-#: src/wconfiguration.cpp:417
+#: src/wconfiguration.cpp:418
 msgid "Sets response sensitivity for the X axis."
 msgstr "X ekseninin tepki hassasiyetini ayarlar."
 
-#: src/wconfiguration.cpp:420 src/wwizard.cpp:1638
+#: src/wconfiguration.cpp:421 src/wwizard.cpp:1638
 msgid "Y axis speed"
 msgstr "Y ekseni hızı"
 
-#: src/wconfiguration.cpp:425
+#: src/wconfiguration.cpp:426
 msgid "Sets response sensitivity for the Y axis."
 msgstr "Y ekseninin tepki hassasiyetini ayarlar."
 
-#: src/wconfiguration.cpp:428
+#: src/wconfiguration.cpp:429
 msgid "Acceleration"
 msgstr "Hızlanma"
 
-#: src/wconfiguration.cpp:433
+#: src/wconfiguration.cpp:434
 msgid ""
 "Sets pointer's acceleration.\n"
 "0 means no acceleration and\n"
@@ -57,11 +57,11 @@ msgstr ""
 "0 hiç hızlandırma olmadığını,\n"
 "5 ise en yüksek hızlandırma olduğunu gösterir."
 
-#: src/wconfiguration.cpp:436
+#: src/wconfiguration.cpp:437
 msgid "Smoothness"
 msgstr "Düzgünlük"
 
-#: src/wconfiguration.cpp:441
+#: src/wconfiguration.cpp:442
 msgid ""
 "Tremor reduction filter.\n"
 "0 means no filter and \n"
@@ -71,11 +71,11 @@ msgstr ""
 "0 hiç filtreleme olmadığı,\n"
 "9 ise en yüksek filtreleme olduğunu gösterir."
 
-#: src/wconfiguration.cpp:444
+#: src/wconfiguration.cpp:445
 msgid "Motion threshold"
 msgstr ""
 
-#: src/wconfiguration.cpp:449
+#: src/wconfiguration.cpp:450
 msgid ""
 "Minimum displacement (in pixels)\n"
 "to start moving pointer."
@@ -83,25 +83,25 @@ msgstr ""
 "İşaretçiyi hareket ettirmek için\n"
 "en az yerdeğişim (piksel bazında)."
 
-#: src/wconfiguration.cpp:456
+#: src/wconfiguration.cpp:457
 msgid "Assisted calibration"
 msgstr ""
 
-#: src/wconfiguration.cpp:459
+#: src/wconfiguration.cpp:460
 msgid "Motion"
 msgstr "Hareket"
 
-#: src/wconfiguration.cpp:465
+#: src/wconfiguration.cpp:466
 #, fuzzy
 msgid "Workspace limit"
 msgstr "Çalışmaalanı sınırlarını kullan"
 
-#: src/wconfiguration.cpp:468
+#: src/wconfiguration.cpp:469
 #, fuzzy
 msgid "Enable workspace limit"
 msgstr "Çalışmaalanı sınırlarını kullan"
 
-#: src/wconfiguration.cpp:471
+#: src/wconfiguration.cpp:472
 msgid ""
 "Confines the mouse pointer\n"
 "to the selected area."
@@ -109,57 +109,57 @@ msgstr ""
 "Fare işaretçisiniz seçili alana\n"
 "sınırlandırır."
 
-#: src/wconfiguration.cpp:480
+#: src/wconfiguration.cpp:481
 msgid "Top"
 msgstr "Üst"
 
-#: src/wconfiguration.cpp:485
+#: src/wconfiguration.cpp:486
 msgid "Top limit workspace."
 msgstr "Çalışma alanı üst sınır."
 
-#: src/wconfiguration.cpp:489 src/wconfiguration.cpp:503
-#: src/wconfiguration.cpp:515 src/wconfiguration.cpp:529
+#: src/wconfiguration.cpp:490 src/wconfiguration.cpp:504
+#: src/wconfiguration.cpp:516 src/wconfiguration.cpp:530
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:494 src/clickwindowbitmap.cpp:229
+#: src/wconfiguration.cpp:495 src/clickwindowbitmap.cpp:229
 msgid "Left"
 msgstr "Sol"
 
-#: src/wconfiguration.cpp:499
+#: src/wconfiguration.cpp:500
 msgid "Left limit workspace."
 msgstr "Çalışmaalanı sol sınır."
 
-#: src/wconfiguration.cpp:506 src/clickwindowbitmap.cpp:236
+#: src/wconfiguration.cpp:507 src/clickwindowbitmap.cpp:236
 msgid "Right"
 msgstr "Sağ"
 
-#: src/wconfiguration.cpp:511
+#: src/wconfiguration.cpp:512
 msgid "Right limit workspace."
 msgstr "Çalışma alanı sağ sınır."
 
-#: src/wconfiguration.cpp:520
+#: src/wconfiguration.cpp:521
 msgid "Bottom"
 msgstr "Alt"
 
-#: src/wconfiguration.cpp:525
+#: src/wconfiguration.cpp:526
 msgid "Bottom limit workspace."
 msgstr "Çalışmaalanı alt sınır."
 
-#: src/wconfiguration.cpp:532
+#: src/wconfiguration.cpp:533
 msgid "Workspace"
 msgstr "Çalışmaalanı"
 
-#: src/wconfiguration.cpp:538
+#: src/wconfiguration.cpp:539
 msgid "Dwell click"
 msgstr "Durarak tıklama"
 
-#: src/wconfiguration.cpp:541
+#: src/wconfiguration.cpp:542
 #, fuzzy
 msgid "Enable dwell click"
 msgstr "Durarak tıklama"
 
-#: src/wconfiguration.cpp:544
+#: src/wconfiguration.cpp:545
 msgid ""
 "Enable/Disable automatic (dwell)\n"
 "click generation mechanism."
@@ -167,11 +167,11 @@ msgstr ""
 "Otomatik (durarak) tıklama\n"
 "mekanizmasını aç/kapat."
 
-#: src/wconfiguration.cpp:551
+#: src/wconfiguration.cpp:552
 msgid "Dwell time (ds)"
 msgstr "Durarak tıklama süresi (ds)"
 
-#: src/wconfiguration.cpp:556
+#: src/wconfiguration.cpp:557
 msgid ""
 "Time to wait (deciseconds) \n"
 "before sending a click."
@@ -179,11 +179,11 @@ msgstr ""
 "Tıklama göndermeden önce\n"
 "bekleme süresi (desisaniye)."
 
-#: src/wconfiguration.cpp:559
+#: src/wconfiguration.cpp:560
 msgid "Dwell area"
 msgstr "Durarak tıklama alanı"
 
-#: src/wconfiguration.cpp:564
+#: src/wconfiguration.cpp:565
 msgid ""
 "Maximum allowed displacement\n"
 "before restarting the dwell time\n"
@@ -192,11 +192,11 @@ msgstr ""
 "Durarak tıklama süresi başlamadan önce\n"
 "izin verilen en yüksek yerdeğişimi."
 
-#: src/wconfiguration.cpp:569
+#: src/wconfiguration.cpp:570
 msgid "Allow consecutive clicks"
 msgstr "Ardışık tıklamalara izin ver"
 
-#: src/wconfiguration.cpp:572
+#: src/wconfiguration.cpp:573
 msgid ""
 "Allows to send multiple clicks\n"
 "when the pointer is stopped."
@@ -204,47 +204,47 @@ msgstr ""
 "İşaretçi durduğu zaman\n"
 "çoklu tıklama gönderimine izin verir."
 
-#: src/wconfiguration.cpp:575
+#: src/wconfiguration.cpp:576
 msgid "Beep on click"
 msgstr "Tıklamalarda bip sesi çıkar"
 
-#: src/wconfiguration.cpp:578
+#: src/wconfiguration.cpp:579
 msgid "Play sound when click generated."
 msgstr "Tıklama oluşturulduğunda ses çalar."
 
-#: src/wconfiguration.cpp:582
+#: src/wconfiguration.cpp:583
 msgid "Allow visual alerts"
 msgstr ""
 
-#: src/wconfiguration.cpp:587
+#: src/wconfiguration.cpp:588
 msgid "Click window"
 msgstr "Tıklama penceresi"
 
-#: src/wconfiguration.cpp:594
+#: src/wconfiguration.cpp:595
 msgid "Design:"
 msgstr "Tasarım:"
 
-#: src/wconfiguration.cpp:598
+#: src/wconfiguration.cpp:599
 msgid "Normal"
 msgstr "Normal"
 
-#: src/wconfiguration.cpp:599
+#: src/wconfiguration.cpp:600
 msgid "Thin"
 msgstr "İnce"
 
-#: src/wconfiguration.cpp:603
+#: src/wconfiguration.cpp:604
 msgid "Behaviour:"
 msgstr "Davranış:"
 
-#: src/wconfiguration.cpp:607
+#: src/wconfiguration.cpp:608
 msgid "Normal mode"
 msgstr "Normal kip"
 
-#: src/wconfiguration.cpp:608
+#: src/wconfiguration.cpp:609
 msgid "Fast mode"
 msgstr "Hızlı kip"
 
-#: src/wconfiguration.cpp:611
+#: src/wconfiguration.cpp:612
 msgid ""
 "Fast mode enables click type\n"
 "selection by hovering the mouse\n"
@@ -255,11 +255,11 @@ msgstr ""
 "düğmelerin üzerinden işaretçiyle\n"
 "geçerken seçilmesini sağlar."
 
-#: src/wconfiguration.cpp:616
+#: src/wconfiguration.cpp:617
 msgid "Open Click Window at startup"
 msgstr "Başlangıçta Tıklama Penceresini aç"
 
-#: src/wconfiguration.cpp:619
+#: src/wconfiguration.cpp:620
 msgid ""
 "If checked the Click Window is automatically\n"
 "opened at program startup."
@@ -267,82 +267,82 @@ msgstr ""
 "eğer aktifleştirilirse Tıklama Penceresi\n"
 "program çalışmaya başlarken otomatik olarak açılacak."
 
-#: src/wconfiguration.cpp:622
+#: src/wconfiguration.cpp:623
 msgid "Show Click Window"
 msgstr "Tıklama Penceresini Göster"
 
-#: src/wconfiguration.cpp:627 src/wwizard.cpp:912
+#: src/wconfiguration.cpp:628 src/wwizard.cpp:912
 #, fuzzy
 msgid "Gesture click"
 msgstr "Tıklamalarda bip sesi çıkar"
 
-#: src/wconfiguration.cpp:630
+#: src/wconfiguration.cpp:631
 msgid "Enable gesture click"
 msgstr ""
 
-#: src/wconfiguration.cpp:638
+#: src/wconfiguration.cpp:639
 msgid "Move left:"
 msgstr ""
 
-#: src/wconfiguration.cpp:642 src/wconfiguration.cpp:654
-#: src/wconfiguration.cpp:666 src/wconfiguration.cpp:678 src/wviacam.cpp:213
+#: src/wconfiguration.cpp:643 src/wconfiguration.cpp:655
+#: src/wconfiguration.cpp:667 src/wconfiguration.cpp:679 src/wviacam.cpp:213
 msgid "Disable"
 msgstr "Kapat"
 
-#: src/wconfiguration.cpp:643 src/wconfiguration.cpp:655
-#: src/wconfiguration.cpp:667 src/wconfiguration.cpp:679 src/wwizard.cpp:1077
+#: src/wconfiguration.cpp:644 src/wconfiguration.cpp:656
+#: src/wconfiguration.cpp:668 src/wconfiguration.cpp:680 src/wwizard.cpp:1077
 #, fuzzy
 msgid "Left click"
 msgstr "Durarak tıklama"
 
-#: src/wconfiguration.cpp:644 src/wconfiguration.cpp:656
-#: src/wconfiguration.cpp:668 src/wconfiguration.cpp:680 src/wwizard.cpp:1089
+#: src/wconfiguration.cpp:645 src/wconfiguration.cpp:657
+#: src/wconfiguration.cpp:669 src/wconfiguration.cpp:681 src/wwizard.cpp:1089
 #, fuzzy
 msgid "Right click"
 msgstr "Tıklama yok"
 
-#: src/wconfiguration.cpp:645 src/wconfiguration.cpp:657
-#: src/wconfiguration.cpp:669 src/wconfiguration.cpp:681 src/wwizard.cpp:1099
+#: src/wconfiguration.cpp:646 src/wconfiguration.cpp:658
+#: src/wconfiguration.cpp:670 src/wconfiguration.cpp:682 src/wwizard.cpp:1099
 #, fuzzy
 msgid "Double click"
 msgstr "Çift tıklama"
 
-#: src/wconfiguration.cpp:646 src/wconfiguration.cpp:658
-#: src/wconfiguration.cpp:670 src/wconfiguration.cpp:682
+#: src/wconfiguration.cpp:647 src/wconfiguration.cpp:659
+#: src/wconfiguration.cpp:671 src/wconfiguration.cpp:683
 #, fuzzy
 msgid "Drag click"
 msgstr "Durarak tıklama"
 
-#: src/wconfiguration.cpp:650
+#: src/wconfiguration.cpp:651
 msgid "Move right:"
 msgstr ""
 
-#: src/wconfiguration.cpp:662
+#: src/wconfiguration.cpp:663
 msgid "Move up:"
 msgstr ""
 
-#: src/wconfiguration.cpp:674
+#: src/wconfiguration.cpp:675
 msgid "Move down:"
 msgstr ""
 
-#: src/wconfiguration.cpp:688
+#: src/wconfiguration.cpp:689
 msgid "Click"
 msgstr "Tıklama"
 
-#: src/wconfiguration.cpp:694
+#: src/wconfiguration.cpp:695
 msgid "Startup"
 msgstr "Başlangıç"
 
-#: src/wconfiguration.cpp:698 src/wwizard.cpp:1235
+#: src/wconfiguration.cpp:699 src/wwizard.cpp:1235
 msgid "Start eViacam at user logon"
 msgstr "Kullanıcı girişinde eViacam'ı başlat"
 
-#: src/wconfiguration.cpp:703 src/wwizard.cpp:1241
+#: src/wconfiguration.cpp:704 src/wwizard.cpp:1241
 #, fuzzy
 msgid "Enable eViacam at startup"
 msgstr "Başlangıçta aktifleştir"
 
-#: src/wconfiguration.cpp:706 src/wwizard.cpp:1244
+#: src/wconfiguration.cpp:707 src/wwizard.cpp:1244
 msgid ""
 "If checked the program automatically \n"
 "enables cursor control at startup."
@@ -350,27 +350,27 @@ msgstr ""
 "eğer aktifleştirilirse program\n"
 "başlangıçta otomatik olarak işaretçi kontrolünü açacak."
 
-#: src/wconfiguration.cpp:709
+#: src/wconfiguration.cpp:710
 msgid "On-screen keyboard command"
 msgstr "Ekran klavyesi komutu"
 
-#: src/wconfiguration.cpp:717
+#: src/wconfiguration.cpp:718
 msgid "Command to run an external on-screen keyboard application."
 msgstr "Harici bir ekran klavyesi yazılımını çalıştırmak için komut."
 
-#: src/wconfiguration.cpp:720
+#: src/wconfiguration.cpp:721
 msgid "Browse..."
 msgstr "Gözat..."
 
-#: src/wconfiguration.cpp:724 src/activationkey.h:51
+#: src/wconfiguration.cpp:725 src/activationkey.h:51
 msgid "Activation key"
 msgstr "Aktifleştirme tuşu"
 
-#: src/wconfiguration.cpp:728
+#: src/wconfiguration.cpp:729
 msgid "Use activation key"
 msgstr "Aktifleştirme tuşu kullan"
 
-#: src/wconfiguration.cpp:731
+#: src/wconfiguration.cpp:732
 msgid ""
 "When checked it allows to enable or \n"
 "disable eViacam by pressing a key."
@@ -378,24 +378,24 @@ msgstr ""
 "Seçildiğinde eViacam'ı bir tuşa basarak \n"
 "aktifleştirmeye ve devredışı bırakmaya izin verir."
 
-#: src/wconfiguration.cpp:741
+#: src/wconfiguration.cpp:742
 msgid "Shows the selected key."
 msgstr "Seçilen tuşu gösterir."
 
-#: src/wconfiguration.cpp:747
+#: src/wconfiguration.cpp:748
 #, fuzzy
 msgid "Set key..."
 msgstr "Tuşu ayarla"
 
-#: src/wconfiguration.cpp:753
+#: src/wconfiguration.cpp:754
 msgid "Face localization"
 msgstr "Yüz konumlandırma"
 
-#: src/wconfiguration.cpp:760
+#: src/wconfiguration.cpp:761
 msgid "Locate face automatically"
 msgstr "Yüzün yerini otomatik olarak bul"
 
-#: src/wconfiguration.cpp:763
+#: src/wconfiguration.cpp:764
 msgid ""
 "When enabled tries to automatically\n"
 "detect your face and center the\n"
@@ -405,81 +405,81 @@ msgstr ""
 "otomatik olarak bulmayı ve izleme alanının ortasına\n"
 "yerleştirmeyi dener."
 
-#: src/wconfiguration.cpp:766
+#: src/wconfiguration.cpp:767
 msgid "Show locate face filter"
 msgstr "Yüz filtresini göster"
 
-#: src/wconfiguration.cpp:771
+#: src/wconfiguration.cpp:772
 msgid "Advanced"
 msgstr "Gelişmiş"
 
-#: src/wconfiguration.cpp:773
+#: src/wconfiguration.cpp:774
 msgid "Profile options"
 msgstr "Profil seçenekleri"
 
-#: src/wconfiguration.cpp:779
+#: src/wconfiguration.cpp:780
 msgid "Profile management"
 msgstr "Profil yönetimi"
 
-#: src/wconfiguration.cpp:785
+#: src/wconfiguration.cpp:786
 msgid "Select profile:"
 msgstr "Profil seç:"
 
-#: src/wconfiguration.cpp:787 src/wconfiguration.cpp:793
+#: src/wconfiguration.cpp:788 src/wconfiguration.cpp:794
 msgid "Chooses desired active profile"
 msgstr "Kullanılmak istenen profil seçilir"
 
-#: src/wconfiguration.cpp:796 src/wconfiguration.cpp:1410
+#: src/wconfiguration.cpp:797 src/wconfiguration.cpp:1411
 msgid "Add profile"
 msgstr "Profil ekle"
 
-#: src/wconfiguration.cpp:799
+#: src/wconfiguration.cpp:800
 msgid "Delete profile"
 msgstr "Profili Sil"
 
-#: src/wconfiguration.cpp:802
+#: src/wconfiguration.cpp:803
 msgid "Camera"
 msgstr ""
 
-#: src/wconfiguration.cpp:812
+#: src/wconfiguration.cpp:813
 msgid "Settings..."
 msgstr "&Ayarlar..."
 
-#: src/wconfiguration.cpp:815
+#: src/wconfiguration.cpp:816
 msgid "Change"
 msgstr "Değiştir"
 
-#: src/wconfiguration.cpp:818
+#: src/wconfiguration.cpp:819
 #, fuzzy
 msgid "Language"
 msgstr "Dil:"
 
-#: src/wconfiguration.cpp:823
+#: src/wconfiguration.cpp:824
 msgid "Language:"
 msgstr "Dil:"
 
-#: src/wconfiguration.cpp:830
+#: src/wconfiguration.cpp:831
 msgid "General options"
 msgstr "Genel seçenekler"
 
-#: src/wconfiguration.cpp:837
+#: src/wconfiguration.cpp:838
 msgid "&OK"
 msgstr "&Tamam"
 
-#: src/wconfiguration.cpp:840
+#: src/wconfiguration.cpp:841
 msgid "&Cancel"
 msgstr "&İptal"
 
-#: src/wconfiguration.cpp:849 src/wconfiguration.cpp:850
-#: src/wconfiguration.cpp:851 src/wconfiguration.cpp:852
+#: src/wconfiguration.cpp:850 src/wconfiguration.cpp:851
+#: src/wconfiguration.cpp:852 src/wconfiguration.cpp:853
 msgid "Key:"
 msgstr ""
 
-#: src/wconfiguration.cpp:1334 src/wconfiguration.cpp:1514
+#: src/wconfiguration.cpp:1335 src/wconfiguration.cpp:1515
 msgid "You should restart the application to apply this change"
 msgstr "Bu değişiklikleri uygulamak için yazılımı yeniden başlatmalısınız"
 
-#: src/wconfiguration.cpp:1355
+#: src/wconfiguration.cpp:1356
 msgid ""
 "Current profile has unsaved changes.\n"
 "Continue anyway?"
@@ -487,7 +487,7 @@ msgstr ""
 "Şimdiki profil kaydedilmemiş değişikliklere sahip.\n"
 "Devam edilsin mi?"
 
-#: src/wconfiguration.cpp:1361
+#: src/wconfiguration.cpp:1362
 #, c-format
 msgid ""
 "This action will load %s profile settings.\n"
@@ -496,7 +496,7 @@ msgstr ""
 "Bu hareket %s profili ayarlarını yükleyecek.\n"
 "Devam etmek istediğinizden emin misiniz?"
 
-#: src/wconfiguration.cpp:1392
+#: src/wconfiguration.cpp:1393
 #, c-format
 msgid ""
 "This action will delete %s profile.\n"
@@ -505,27 +505,27 @@ msgstr ""
 "Bu hareket %s profilini silecek.\n"
 "Devam etmek istediğinizden emin misiniz?"
 
-#: src/wconfiguration.cpp:1410
+#: src/wconfiguration.cpp:1411
 msgid "Enter new profile name"
 msgstr "Yeni profil ismini girin"
 
-#: src/wconfiguration.cpp:1421
+#: src/wconfiguration.cpp:1422
 msgid "Profile already exists."
 msgstr "Profil zaten var."
 
-#: src/wconfiguration.cpp:1427
+#: src/wconfiguration.cpp:1428
 msgid "Invalid profile name."
 msgstr "Geçersiz profil ismi"
 
-#: src/wconfiguration.cpp:1468 src/wconfiguration.cpp:1470
+#: src/wconfiguration.cpp:1469 src/wconfiguration.cpp:1471
 msgid "Choose on-screen keyboard command"
 msgstr "Ekran klavyesi için komut seçin"
 
-#: src/wconfiguration.cpp:1468
+#: src/wconfiguration.cpp:1469
 msgid "Executable files|*.exe"
 msgstr "Çalıştırılabilir dosyalar|*.exe"
 
-#: src/wconfiguration.cpp:1578
+#: src/wconfiguration.cpp:1579
 msgid ""
 "This action could make you lose the control of the computer.\n"
 "Do you want to continue?"
@@ -533,12 +533,12 @@ msgstr ""
 "Bu hareket bilgisayarınızın kontrolünü kaybetmenize neden olabilir.\n"
 "Devam etmek istiyor musunuz?"
 
-#: src/wconfiguration.cpp:1578 src/wconfiguration.cpp:1744
+#: src/wconfiguration.cpp:1579 src/wconfiguration.cpp:1745
 #: src/viacamcontroller.cpp:374 src/cmotioncalibration.cpp:151
 msgid "eViacam warning"
 msgstr "eViacam uyarısı"
 
-#: src/wconfiguration.cpp:1744
+#: src/wconfiguration.cpp:1745
 msgid "Discard changes?"
 msgstr "Değişiklikler yoksayılsın mı?"
 

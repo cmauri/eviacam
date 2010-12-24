@@ -105,6 +105,7 @@ Name: Turkish; MessagesFile: compiler:Languages\Turkish.isl; InfoAfterFile: win3
 Name: Occitan; MessagesFile: compiler:Languages\Occitan.isl
 Name: French; MessagesFile: compiler:Languages\French.isl; InfoAfterFile: win32\Info\InfoAfter-fr.rtf
 Name: Arabic; MessagesFile: compiler:Languages\Arabic.isl
+Name: Hebrew; MessagesFile: compiler:Languages\Hebrew.isl
 
 [Registry]
 Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: english; Languages: English
@@ -117,6 +118,7 @@ Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; Va
 Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: oc; Languages: Occitan
 Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: fr; Languages: French
 Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: ar; Languages: Arabic
+Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: he; Languages: Hebrew
 
 [_ISTool]
 Use7zip=false
