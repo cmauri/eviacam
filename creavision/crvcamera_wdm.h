@@ -23,12 +23,9 @@
 #define CRVCAMERA_WDM_H_
 
 #include "crvcamera.h"
-#include "crvimage.h"
-#include <cv.h>
 
-//class videoInput;
-
-#include "videoInput.h"
+class videoInput;
+class CIplImage;
 
 class CCameraWDM : public CCamera
 {
@@ -37,16 +34,19 @@ public:
 	virtual ~CCameraWDM (void);
 
 	static int GetNumDevices();
-	static char *GetDeviceName (int id) { return videoInput::getDeviceName(id); }
+	static char* GetDeviceName (int id);
 
-	virtual bool Open();
-	virtual void Close();	
-	virtual IplImage *QueryFrame();
+	virtual bool DoOpen();
+	virtual void DoClose();	
+	virtual IplImage *DoQueryFrame();
 
 	virtual bool HasSettingsDialog() { return true; }
 	virtual void ShowSettingsDialog ();
 
 private:
+	int m_Id;
+	int m_Width, m_Height;
+	float m_FrameRate;
 	videoInput* m_VI;
 	int m_numDevices;
 	CIplImage* m_pImage;

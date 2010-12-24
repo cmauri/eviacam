@@ -20,52 +20,53 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "crvcamera.h"
+#include "cv.h"
 #include <sys/timeb.h>
 #include <sys/types.h>
 #include <stdio.h>
 #include <cassert>
-#include <highgui.h>
 
-// TODO: move some attibutes to CCameraCV and add here support to flip images
+// Return timestamp in ms
+static int GetTime (void)
+{
+	struct timeb now;	
+	ftime(&now);
+	return now.time*1000 + now.millitm;
+}
+
 CCamera::CCamera()
 {
-	m_Id= -1;
-	m_Width= 0;
-	m_Height= 0;
 	m_RealWidth=0;
 	m_RealHeight= 0;
-	m_FrameRate= 0;
 	m_RealFrameRate= 0.0f;
 	m_LastRealFrameRate= 0.0f;
-	m_showingLive= false;
 	m_lastTimeStamp= GetTime();
 	m_horizontalFlip= false;
 }
 
 CCamera::~CCamera(void)
 {
+	// Should call Close but is not done here
+	// because DoClose is virtual. We rely on
+	// derived classes
 }
 
-// Return timestamp in ms
-int CCamera::GetTime (void)
+bool CCamera::Open()
 {
-	struct timeb now;
-	
-	ftime(&now);
-
-	return now.time*1000 + now.millitm;
+	bool retval= DoOpen();
+	if (retval) m_lastTimeStamp= GetTime();
+	return retval;
 }
 
-void CCamera::OnQueryFrame(IplImage *pImage)
+void CCamera::Close()
 {
-	// Camera window
-	if (m_showingLive)
-	{
-		char winName[20];
-		sprintf (winName, "Camera%d", m_Id);
-		cvShowImage( winName, pImage );
-		//cvWaitKey( 10 );
-	}
+	DoClose();
+}
+
+IplImage* CCamera::QueryFrame()
+{
+	IplImage* pImage= DoQueryFrame();
+	if (!pImage) return NULL;
 
 	// Update real size
 	m_RealWidth= pImage->width;
@@ -83,36 +84,19 @@ void CCamera::OnQueryFrame(IplImage *pImage)
 		m_RealFrameRate= (1000.0f / (float) m_elapsedTime) * weight + m_LastRealFrameRate * (1.0f - weight);
 	else
 		m_RealFrameRate= 0;
-}
 
-void CCamera::ShowLive ()
-{
-	if (m_showingLive) return;
+	// Flip image when needed to provide an image with top-left origin
+	if ( pImage->origin == 1 ) {
+		if (m_horizontalFlip) 
+			cvFlip (pImage, NULL, -1);
+		else 
+			cvFlip (pImage, NULL, 0);
 
-	char winName[20];
-	sprintf (winName, "Camera%d", m_Id);
-	cvNamedWindow( winName );
+		pImage->origin= 0;
+	}
+	else 
+		if (m_horizontalFlip) 
+			cvFlip (pImage, NULL, 1);	
 
-	m_showingLive= true;
-}
-
-void CCamera::CloseLive ()
-{
-	if (!m_showingLive) return;
-
-	char winName[20];
-	sprintf (winName, "Camera%d", m_Id);
-	cvDestroyWindow( winName );
-
-	m_showingLive= false;
-}
-
-float CCamera::GetFrameRate ()
-{
-	return m_FrameRate;
-}
-
-float CCamera::GetRealFrameRate ()
-{
-	return m_RealFrameRate;
+	return pImage;
 }

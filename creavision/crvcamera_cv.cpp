@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "crvcamera_cv.h"
+#include <highgui.h>
 #include <sys/timeb.h>
 #include <sys/types.h>
 #include <stdio.h>
@@ -77,20 +78,17 @@ int VfwCamFpsWorkaround ()
         &ftLastWriteTime);       // last write time 
  
 	// Enumerate the subkeys
-	if (cSubKeys)
-	{
-		for (i=0; i<cSubKeys; i++) 
-		{ 
+	if (cSubKeys) {
+		for (i=0; i<cSubKeys; i++) { 
 			cbName = MAX_KEY_LENGTH;
 			retCode = RegEnumKeyEx(hKey, i,	achKey, &cbName, NULL, 
 									NULL, NULL, &ftLastWriteTime); 
-			if (retCode == ERROR_SUCCESS) 
-			{
+
+			if (retCode == ERROR_SUCCESS) {
 				HKEY hKeyValue;
 
 				retCode= RegOpenKeyEx(hKey, achKey, 0, KEY_WRITE, &hKeyValue);
-				if (retCode== ERROR_SUCCESS)
-				{
+				if (retCode== ERROR_SUCCESS) {
 					DWORD value= 333330;
 					retCode= RegSetValueEx(hKeyValue, TEXT("AvgTimePerFrame"), 0, REG_DWORD, 
 											(const BYTE *) &value, sizeof(DWORD));
@@ -128,111 +126,44 @@ CCameraCV::~CCameraCV(void)
 	Close ();	
 }
 
-bool CCameraCV::Open ()
+bool CCameraCV::DoOpen ()
 {
 	if (m_pCvCapture!= NULL) return true;	// Already opened
 	m_pCvCapture= cvCaptureFromCAM (m_Id);
 	if (m_pCvCapture== NULL) return false;
 	
-	m_lastTimeStamp= GetTime();
+	// Try to set capture parameters although not always works
 	cvSetCaptureProperty( m_pCvCapture, CV_CAP_PROP_FRAME_WIDTH, (double) m_Width );
 	cvSetCaptureProperty( m_pCvCapture, CV_CAP_PROP_FRAME_HEIGHT, (double) m_Height );
 	// The following line does nothing under MS Windows
 	cvSetCaptureProperty( m_pCvCapture, CV_CAP_PROP_FPS, (double) m_FrameRate );
-/*
-/// TO SET UP FRAME RATE
-// Set the preview rate in case we want to support previews in the future.
-	
-	capPreviewRate(m_hwndPreview, 33);
-
-	// Attempt to get the capture parameters.
-	capDriverGetCaps(m_hwndPreview, &m_capdrivercaps, sizeof(m_capdrivercaps));
-
-	// Default values.
-	m_captureparms.dwRequestMicroSecPerFrame = 33333;
-	m_captureparms.fMakeUserHitOKToCapture = FALSE;
-	m_captureparms.wPercentDropForError = 100;
-	m_captureparms.fYield = TRUE;
-	m_captureparms.dwIndexSize = 0;
-	m_captureparms.wChunkGranularity = 0;
-	m_captureparms.fUsingDOSMemory = FALSE;
-	m_captureparms.wNumVideoRequested = 3;
-	m_captureparms.fCaptureAudio = FALSE;
-	m_captureparms.wNumAudioRequested = 0;
-	m_captureparms.vKeyAbort = 0;
-	m_captureparms.fAbortLeftMouse = FALSE;
-	m_captureparms.fAbortRightMouse = FALSE;
-	m_captureparms.fLimitEnabled = FALSE;
-	m_captureparms.wTimeLimit = 0;
-	m_captureparms.fMCIControl = FALSE;
-	m_captureparms.fStepMCIDevice = FALSE;
-	m_captureparms.dwMCIStartTime = 0;
-	m_captureparms.dwMCIStopTime = 0;
-	m_captureparms.fStepCaptureAt2x = FALSE;
-	m_captureparms.wStepCaptureAverageFrames = 5;
-	m_captureparms.dwAudioBufferSize = 0;
-	m_captureparms.fDisableWriteCache = FALSE;
-	m_captureparms.AVStreamMaster = 0;
-
-	// Attempt to set the capture parameters.
-	capCaptureSetSetup(m_hwndPreview, &m_captureparms, sizeof(m_captureparms));
-
-	// Make sure that the values we have are correct.
-	capCaptureGetSetup(m_hwndPreview, &m_captureparms, sizeof(m_captureparms));
-
-
-	capSetVideoFormat ?????
-
-	capSetUserData ???
-	*/
 
 	return true;
 }
 
-void CCameraCV::Close ()
+void CCameraCV::DoClose ()
 {
 	if (m_pCvCapture== NULL) return;	// Already closed
-
-	CloseLive ();
 	cvReleaseCapture (&m_pCvCapture);
-
 	m_pCvCapture= NULL;
 }
 
-IplImage *CCameraCV::QueryFrame()
+IplImage *CCameraCV::DoQueryFrame()
 {
 	assert (m_pCvCapture);
 	if (m_pCvCapture== NULL) return NULL;
 
 	IplImage *pImage= cvQueryFrame( m_pCvCapture );
-	//assert (pImage);
+	assert (pImage);
 	if (pImage== NULL) return NULL;
-
-	// Flip image when needed
-	if ( pImage->origin == 1 && m_horizontalFlip)
-	{
-		//cvConvertImage ( pImage, pImage, CV_CVTIMG_FLIP );
-		cvFlip (pImage, NULL, -1);
-		pImage->origin= 0;
-	}
-	else if ( pImage->origin == 1 && !m_horizontalFlip)
-	{
-		cvFlip (pImage, NULL, 0);
-		pImage->origin= 0;
-	}
-	else if ( pImage->origin == 0 && m_horizontalFlip)
-		cvFlip (pImage, NULL, 1);			
-
-
+	
 #if defined(linux)
-	// TODO: it seems that under Linux no proper channelSeq is reported
+	// It seems that under Linux no proper channelSeq is reported
 	// Tested with Logitech Quickcam pro 4000 
 	pImage->channelSeq[0]= 'B';
 	pImage->channelSeq[2]= 'R';
 #endif
 
-	OnQueryFrame (pImage);
-	
 	return pImage;
 }
 
@@ -244,8 +175,7 @@ int CCameraCV::GetNumDevices()
 	if (!g_cvInitialized) { cvInitSystem (0, NULL); g_cvInitialized= true; }
 
 	// Detect number of connected devices
-	for (i= 0; i< MAX_CV_DEVICES; i++)
-	{
+	for (i= 0; i< MAX_CV_DEVICES; i++) {
 		 tmpCapture= cvCreateCameraCapture (i);
 		 if (tmpCapture== NULL) break;
 
@@ -262,7 +192,6 @@ int CCameraCV::GetNumDevices()
 
 char* CCameraCV::GetDeviceName (int id)
 {
-	if (id>= g_numDevices) return NULL;
-	
+	if (id>= g_numDevices) return NULL;	
 	return g_deviceNames[id];
 }

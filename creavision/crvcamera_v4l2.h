@@ -42,9 +42,9 @@ public:
 	CCameraV4L2(const char* device_name, bool usePwc);
 	virtual ~CCameraV4L2 (void);
 
-	virtual bool Open();
-	virtual void Close();	
-	virtual IplImage *QueryFrame();
+	virtual bool DoOpen();
+	virtual void DoClose();	
+	virtual IplImage *DoQueryFrame();
 
 	virtual bool HasCameraControls() { return true; }
 	virtual unsigned int GetCameraControlsCount();
@@ -79,7 +79,7 @@ private:
 	std::vector<CCameraControlV4l2> m_cameraControls;
 
 	// Private methods
-	bool DoOpen();
+	bool InternalOpen();
 	ECaptureMethod DetectCaptureMethod();
 	bool DetectBestImageFormat();
 	bool SetImageFormat();

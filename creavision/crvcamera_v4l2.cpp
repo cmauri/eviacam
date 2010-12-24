@@ -243,7 +243,7 @@ CCameraV4L2::~CCameraV4L2(void)
 	Close ();	
 }
 
-void CCameraV4L2::Close ()
+void CCameraV4L2::DoClose ()
 {
 	if (m_isStreaming) EnableVideo(false);	
 	if (m_buffersReady) DeallocateBuffers();
@@ -260,7 +260,7 @@ void CCameraV4L2::Close ()
 	m_cameraControls.clear();
 }
 
-bool CCameraV4L2::DoOpen()
+bool CCameraV4L2::InternalOpen()
 {
 	char devName[CCameraEnum::CAM_DEVICE_SHORT_NAME_LENGHT+5];
 	struct stat st;	
@@ -895,10 +895,10 @@ bool CCameraV4L2::DeallocateBuffers()
 	return true;
 }
 
-bool CCameraV4L2::Open ()
+bool CCameraV4L2::DoOpen ()
 {
 	if (m_Fd!= -1) return true;	// Already open	
-	if (!DoOpen()) return false;
+	if (!InternalOpen()) return false;
 	
 	// TODO: set values from constructor/parameters
 	m_currentFormat.frame_rate= 30;
@@ -1167,7 +1167,7 @@ bool CCameraV4L2::DecodeToRGB (void* src, void* dst, int width, int height, uint
 	return true;
 }
 
-IplImage *CCameraV4L2::QueryFrame()
+IplImage *CCameraV4L2::DoQueryFrame()
 {
 	if (!m_isStreaming) return NULL;
 	fd_set rdset;
@@ -1224,6 +1224,7 @@ IplImage *CCameraV4L2::QueryFrame()
 			return NULL;
 		}		
 	}
+	/*
 	OnQueryFrame (m_resultImage.ptr());
 	
 	// Flip image when needed
@@ -1237,7 +1238,7 @@ IplImage *CCameraV4L2::QueryFrame()
 	}
 	else if (m_resultImage.ptr()->origin == 0 && m_horizontalFlip)
 		cvFlip (m_resultImage.ptr(), NULL, 1);
-	
+	*/
 	
 	return m_resultImage.ptr();
 

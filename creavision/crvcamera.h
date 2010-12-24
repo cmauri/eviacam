@@ -22,10 +22,9 @@
 #ifndef CRVCAMERA_H_
 #define CRVCAMERA_H_
 
-#include <cv.h>
-
 // Forward declarations
 class CCameraControl;
+typedef struct _IplImage IplImage;
 
 class CCamera
 {
@@ -34,16 +33,27 @@ public:
 	virtual ~CCamera (void);
 
 	// 
-	// Pure virtual methods
+	// Open, close and capture operations.
 	//
-	virtual bool Open()= 0;
-	virtual void Close()= 0;
-	virtual IplImage* QueryFrame()= 0;
-	
-	// 
-	// Virtual desired methods
+	bool Open();
+	void Close();
+	IplImage* QueryFrame();	// TODO: return const ptr
+
 	//
-	
+	// Capture information. Intended only for informational
+	// purposes. Values returned here may not be accurate
+	// (i.e. may change during capture).
+	//
+	int GetRealWidth () {return m_RealWidth; }
+	int GetRealHeight () {return m_RealHeight; }
+	float GetRealFrameRate () {return m_RealFrameRate; }
+
+	//
+	// Image flip control
+	//
+	bool GetHorizontalFlip () { return m_horizontalFlip; }
+	void SetHorizontalFlip (bool value) { m_horizontalFlip= value; }
+
 	//
 	// Settings dialogue provided by the driver
 	//
@@ -55,42 +65,21 @@ public:
 	//
 	virtual bool HasCameraControls() { return false; }
 	virtual unsigned int GetCameraControlsCount() { return 0; }
-	//virtual CCameraControl* GetCameraControl(unsigned int numControl) { return NULL; }
-	virtual CCameraControl* GetCameraControl(unsigned int) { return NULL; }
+	virtual CCameraControl* GetCameraControl(unsigned int) { return 0; }
 	
-	//
-	// Implemented methods
-	//
-
-	// Should be called in the QueryFrame body
-	void OnQueryFrame(IplImage *pImage);
-
-	void ShowLive ();	
-	void CloseLive ();
-	
-	int GetWidth () {return m_Width; }
-	int GetRealWidth () {return m_RealWidth; }
-	//void SetWidth (int width);
-
-	int GetHeight () {return m_Height; }
-	int GetRealHeight () {return m_RealHeight; }
-	//void SetHeight (int height);
-
-	float GetFrameRate ();
-	float GetRealFrameRate ();
-	//void SetFrameRate (double fr);
-	
-	inline bool GetHorizontalFlip ();
-	inline void SetHorizontalFlip (bool value);	
 protected:
-	int GetTime (void);
+	// Open, close and capture operations implemented using NVI idiom
+	virtual bool DoOpen()= 0;
+	virtual void DoClose()= 0;
+	virtual IplImage* DoQueryFrame()= 0;
 
-	int m_Id;
-	int m_Width, m_Height;
+private:
+	// Make CCamera non-copyable
+	CCamera( const CCamera& );	// not implemented
+	CCamera& operator=( const CCamera& );     // not implemented
+
 	int m_RealWidth, m_RealHeight;
-	float m_FrameRate;
 	float m_RealFrameRate, m_LastRealFrameRate;
-	bool m_showingLive;
 	int m_lastTimeStamp;
 	int m_elapsedTime;
 	bool m_horizontalFlip;
@@ -171,18 +160,7 @@ public:
 	virtual int GetMaximumValue() const= 0;
 	
 	// For choices only
-	//virtual const char* GetChoiceName(unsigned int numOption) const { return NULL; }
-	virtual const char* GetChoiceName(unsigned int) const { return NULL; }
+	virtual const char* GetChoiceName(unsigned int) const { return 0; }
 };
-
-inline bool CCamera::GetHorizontalFlip ()
-{
-	return m_horizontalFlip;
-}
-
-inline void CCamera::SetHorizontalFlip (bool value)
-{
-	m_horizontalFlip= value;
-}
 
 #endif

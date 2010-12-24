@@ -20,10 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "crvcamera_wdm.h"
+
 #include <sys/timeb.h>
 #include <sys/types.h>
 #include <stdio.h>
 #include <cassert>
+#include <cv.h>
+#include "crvimage.h"
 #include "videoInput.h"
 
 CCameraWDM::CCameraWDM(int cameraId, int width, int height, float fr)
@@ -43,32 +46,30 @@ CCameraWDM::~CCameraWDM(void)
 	Close();
 }
 
-bool CCameraWDM::Open ()
+bool CCameraWDM::DoOpen ()
 {
-	//create a videoInput object
+	// Create a videoInput object
 	if (m_VI) return false;
 
 	m_VI= new videoInput;
+	assert (m_VI);
 
-	// TODO: BGR channel sequence assumed
-	m_pImage= new CIplImage (m_Width, m_Height, IPL_DEPTH_8U, "BGR");		
+	// BGR channel sequence assumed
+	m_pImage= new CIplImage (m_Width, m_Height, IPL_DEPTH_8U, "BGR");
+	assert (m_pImage);	
 
 	m_VI->setIdealFramerate(m_Id, (int) m_FrameRate);
-	if (!m_VI->setupDevice (m_Id, m_Width, m_Height)) 
-	{
+	if (!m_VI->setupDevice (m_Id, m_Width, m_Height)) {
 		Close();
 		return false;
 	}
-	
-	m_lastTimeStamp= GetTime();
 
 	return true;	
 }
 
-void CCameraWDM::Close ()
+void CCameraWDM::DoClose ()
 {
-	if (m_VI)
-	{
+	if (m_VI) {
 		m_VI->stopDevice(m_Id);
 		delete m_VI;
 		m_VI= NULL;
@@ -76,16 +77,15 @@ void CCameraWDM::Close ()
 	}
 }
 
-IplImage *CCameraWDM::QueryFrame()
+IplImage *CCameraWDM::DoQueryFrame()
 {
 	if (!m_VI) return NULL;
 
 	assert (m_pImage->ptr()->imageSize== m_VI->getSize(m_Id));
 	
 	m_VI->getPixels(m_Id, (unsigned char *) m_pImage->ptr()->imageData, false, false);
-	if (m_horizontalFlip) cvFlip (m_pImage->ptr(), NULL, -1);
-
-	OnQueryFrame (m_pImage->ptr());
+	// Set appropiate origin
+	m_pImage->ptr()->origin= 1;
 	
 	return m_pImage->ptr();
 }
@@ -100,19 +100,15 @@ int CCameraWDM::GetNumDevices()
 	int numDevices;
 
 	// Try to detect if previously initialized
-	if (strlen(GetDeviceName (0))== 0)
-	{
+	if (strlen(GetDeviceName (0))== 0) {
 		char buff[20];
 
 		// Not initialized. Add the camera number to the name
         numDevices= videoInput::listDevices (true);
 
-		for (int i= 0; i< numDevices; i++)
-		{
+		for (int i= 0; i< numDevices; i++) {
 			sprintf (buff, " (Id:%d)\0", i);
-			//MessageBox (NULL, buff, NULL, MB_OK);
-			strncat (GetDeviceName (i), buff, 19);
-			//MessageBox (NULL, "AKI 5", NULL, MB_OK);
+			strncat (GetDeviceName (i), buff, 19);			
 		}		
 	}
 	else
@@ -120,4 +116,9 @@ int CCameraWDM::GetNumDevices()
 		numDevices= videoInput::listDevices (true);
 
 	return numDevices;
+}
+
+char* CCameraWDM::GetDeviceName (int id)
+{ 
+	return videoInput::getDeviceName(id); 
 }
