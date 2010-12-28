@@ -698,15 +698,15 @@ void s501_to_yuyv(BYTE *framebuffer, BYTE *tmpbuffer, int width, int height)
 		V = Y1 + width;
 		for (w = width / 2; --w >= 0; ) 
 		{
-			*framebuffer++ = 0x80 + *Y0++;
-			*framebuffer++ = 0x80 + *U;
-			*framebuffer++ = 0x80 + *Y0++;
-			*framebuffer++ = 0x80 + *V;
+			*framebuffer++ = (BYTE) (0x80 + *Y0++);
+			*framebuffer++ = (BYTE) (0x80 + *U);
+			*framebuffer++ = (BYTE) (0x80 + *Y0++);
+			*framebuffer++ = (BYTE) (0x80 + *V);
 
-			*line2++ = 0x80 + *Y1++;
-			*line2++ = 0x80 + *U++;
-			*line2++ = 0x80 + *Y1++;
-			*line2++ = 0x80 + *V++;
+			*line2++ = (BYTE) (0x80 + *Y1++);
+			*line2++ = (BYTE) (0x80 + *U++);
+			*line2++ = (BYTE) (0x80 + *Y1++);
+			*line2++ = (BYTE) (0x80 + *V++);
 		}
 		Y0 += width * 2;                  /* next block of lines */
 		framebuffer = line2;
@@ -737,15 +737,15 @@ void s505_to_yuyv(BYTE *framebuffer, BYTE *tmpbuffer, int width, int height)
 		V  = U + width/2;
 		for (w = width / 2; --w >= 0; ) 
 		{
-			*framebuffer++ = 0x80 + *Y0++;
-			*framebuffer++ = 0x80 + *U;
-			*framebuffer++ = 0x80 + *Y0++;
-			*framebuffer++ = 0x80 + *V;
+			*framebuffer++ = (BYTE) (0x80 + *Y0++);
+			*framebuffer++ = (BYTE) (0x80 + *U);
+			*framebuffer++ = (BYTE) (0x80 + *Y0++);
+			*framebuffer++ = (BYTE) (0x80 + *V);
 
-			*line2++ = 0x80 + *Y1++;
-			*line2++ = 0x80 + *U++;
-			*line2++ = 0x80 + *Y1++;
-			*line2++ = 0x80 + *V++;
+			*line2++ = (BYTE) (0x80 + *Y1++);
+			*line2++ = (BYTE) (0x80 + *U++);
+			*line2++ = (BYTE) (0x80 + *Y1++);
+			*line2++ = (BYTE) (0x80 + *V++);
 		}
 		Y0 += width * 2;                  /* next block of lines */
 		framebuffer = line2;
@@ -776,15 +776,15 @@ void s508_to_yuyv(BYTE *framebuffer, BYTE *tmpbuffer, int width, int height)
 		Y1= V + width/2;
 		for (w = width / 2; --w >= 0; ) 
 		{
-			*framebuffer++ = 0x80 + *Y0++;
-			*framebuffer++ = 0x80 + *U;
-			*framebuffer++ = 0x80 + *Y0++;
-			*framebuffer++ = 0x80 + *V;
+			*framebuffer++ = (BYTE) (0x80 + *Y0++);
+			*framebuffer++ = (BYTE) (0x80 + *U);
+			*framebuffer++ = (BYTE) (0x80 + *Y0++);
+			*framebuffer++ = (BYTE) (0x80 + *V);
 
-			*line2++ = 0x80 + *Y1++;
-			*line2++ = 0x80 + *U++;
-			*line2++ = 0x80 + *Y1++;
-			*line2++ = 0x80 + *V++;
+			*line2++ = (BYTE) (0x80 + *Y1++);
+			*line2++ = (BYTE) (0x80 + *U++);
+			*line2++ = (BYTE) (0x80 + *Y1++);
+			*line2++ = (BYTE) (0x80 + *V++);
 		}
 		Y0 += width * 2;                  /* next block of lines */
 		framebuffer = line2;
@@ -825,13 +825,13 @@ static void convert_border_bayer_line_to_bgr24( BYTE* bayer, BYTE* adjacent_baye
 		if (blue_line) 
 		{
 			*bgr++ = bayer[1];
-			*bgr++ = t0;
-			*bgr++ = t1;
+			*bgr++ = (BYTE) t0;
+			*bgr++ = (BYTE) t1;
 		} 
 		else 
 		{
-			*bgr++ = t1;
-			*bgr++ = t0;
+			*bgr++ = (BYTE) t1;
+			*bgr++ = (BYTE) t0;
 			*bgr++ = bayer[1];
 		}
 		bayer++;
@@ -845,13 +845,13 @@ static void convert_border_bayer_line_to_bgr24( BYTE* bayer, BYTE* adjacent_baye
 		if (blue_line) 
 		{
 			*bgr++ = bayer[0];
-			*bgr++ = t0;
+			*bgr++ = (BYTE) t0;
 			*bgr++ = adjacent_bayer[1];
 		} 
 		else 
 		{
 			*bgr++ = adjacent_bayer[1];
-			*bgr++ = t0;
+			*bgr++ = (BYTE) t0;
 			*bgr++ = bayer[0];
 		}
 		width--;
@@ -862,7 +862,7 @@ static void convert_border_bayer_line_to_bgr24( BYTE* bayer, BYTE* adjacent_baye
 		for ( ; width > 2; width -= 2) 
 		{
 			t0 = (bayer[0] + bayer[2] + 1) >> 1;
-			*bgr++ = t0;
+			*bgr++ = (BYTE) t0;
 			*bgr++ = bayer[1];
 			*bgr++ = adjacent_bayer[1];
 			bayer++;
@@ -871,8 +871,8 @@ static void convert_border_bayer_line_to_bgr24( BYTE* bayer, BYTE* adjacent_baye
 			t0 = (bayer[0] + bayer[2] + adjacent_bayer[1] + 1) / 3;
 			t1 = (adjacent_bayer[0] + adjacent_bayer[2] + 1) >> 1;
 			*bgr++ = bayer[1];
-			*bgr++ = t0;
-			*bgr++ = t1;
+			*bgr++ = (BYTE) t0;
+			*bgr++ = (BYTE) t1;
 			bayer++;
 			adjacent_bayer++;
 		}
@@ -884,14 +884,14 @@ static void convert_border_bayer_line_to_bgr24( BYTE* bayer, BYTE* adjacent_baye
 			t0 = (bayer[0] + bayer[2] + 1) >> 1;
 			*bgr++ = adjacent_bayer[1];
 			*bgr++ = bayer[1];
-			*bgr++ = t0;
+			*bgr++ = (BYTE) t0;
 			bayer++;
 			adjacent_bayer++;
 
 			t0 = (bayer[0] + bayer[2] + adjacent_bayer[1] + 1) / 3;
 			t1 = (adjacent_bayer[0] + adjacent_bayer[2] + 1) >> 1;
-			*bgr++ = t1;
-			*bgr++ = t0;
+			*bgr++ = (BYTE) t1;
+			*bgr++ = (BYTE) t0;
 			*bgr++ = bayer[1];
 			bayer++;
 			adjacent_bayer++;
@@ -904,7 +904,7 @@ static void convert_border_bayer_line_to_bgr24( BYTE* bayer, BYTE* adjacent_baye
 		t0 = (bayer[0] + bayer[2] + 1) >> 1;
 		if (blue_line) 
 		{
-			*bgr++ = t0;
+			*bgr++ = (BYTE) t0;
 			*bgr++ = bayer[1];
 			*bgr++ = adjacent_bayer[1];
 		} 
@@ -912,20 +912,20 @@ static void convert_border_bayer_line_to_bgr24( BYTE* bayer, BYTE* adjacent_baye
 		{
 			*bgr++ = adjacent_bayer[1];
 			*bgr++ = bayer[1];
-			*bgr++ = t0;
+			*bgr++ = (BYTE) t0;
 		}
 		/* Last pixel */
 		t0 = (bayer[1] + adjacent_bayer[2] + 1) >> 1;
 		if (blue_line) 
 		{
 			*bgr++ = bayer[2];
-			*bgr++ = t0;
+			*bgr++ = (BYTE) t0;
 			*bgr++ = adjacent_bayer[1];
 		}
 		else 
 		{
 			*bgr++ = adjacent_bayer[1];
-			*bgr++ = t0;
+			*bgr++ = (BYTE) t0;
 			*bgr++ = bayer[2];
 		}
 	} 
@@ -973,30 +973,30 @@ static void bayer_to_rgbbgr24(BYTE *bayer,
 			t1 = (bayer[0] + bayer[width * 2] + bayer[width + 1] + 1) / 3;
 			if (blue_line) 
 			{
-				*bgr++ = t0;
-				*bgr++ = t1;
+				*bgr++ = (BYTE) t0;
+				*bgr++ = (BYTE) t1;
 				*bgr++ = bayer[width];
 			} 
 			else 
 			{
 				*bgr++ = bayer[width];
-				*bgr++ = t1;
-				*bgr++ = t0;
+				*bgr++ = (BYTE) t1;
+				*bgr++ = (BYTE) t0;
 			}
 
 			/* Write second pixel */
 			t1 = (bayer[width] + bayer[width + 2] + 1) >> 1;
 			if (blue_line) 
 			{
-				*bgr++ = t0;
+				*bgr++ = (BYTE) t0;
 				*bgr++ = bayer[width + 1];
-				*bgr++ = t1;
+				*bgr++ = (BYTE) t1;
 			} 
 			else 
 			{
-				*bgr++ = t1;
+				*bgr++ = (BYTE) t1;
 				*bgr++ = bayer[width + 1];
-				*bgr++ = t0;
+				*bgr++ = (BYTE) t0;
 			}
 			bayer++;
 		} 
@@ -1006,7 +1006,7 @@ static void bayer_to_rgbbgr24(BYTE *bayer,
 			t0 = (bayer[0] + bayer[width * 2] + 1) >> 1;
 			if (blue_line) 
 			{
-				*bgr++ = t0;
+				*bgr++ = (BYTE) t0;
 				*bgr++ = bayer[width];
 				*bgr++ = bayer[width + 1];
 			} 
@@ -1014,7 +1014,7 @@ static void bayer_to_rgbbgr24(BYTE *bayer,
 			{
 				*bgr++ = bayer[width + 1];
 				*bgr++ = bayer[width];
-				*bgr++ = t0;
+				*bgr++ = (BYTE) t0;
 			}
 		}
 
@@ -1027,16 +1027,16 @@ static void bayer_to_rgbbgr24(BYTE *bayer,
 				t1 = (bayer[1] + bayer[width] +
 					bayer[width + 2] + bayer[width * 2 + 1] +
 					2) >> 2;
-				*bgr++ = t0;
-				*bgr++ = t1;
+				*bgr++ = (BYTE) t0;
+				*bgr++ = (BYTE) t1;
 				*bgr++ = bayer[width + 1];
 
 				t0 = (bayer[2] + bayer[width * 2 + 2] + 1) >> 1;
 				t1 = (bayer[width + 1] + bayer[width + 3] +
 					1) >> 1;
-				*bgr++ = t0;
+				*bgr++ = (BYTE) t0;
 				*bgr++ = bayer[width + 2];
-				*bgr++ = t1;
+				*bgr++ = (BYTE) t1;
 			}
 		} 
 		else 
@@ -1049,15 +1049,15 @@ static void bayer_to_rgbbgr24(BYTE *bayer,
 					bayer[width + 2] + bayer[width * 2 + 1] +
 					2) >> 2;
 				*bgr++ = bayer[width + 1];
-				*bgr++ = t1;
-				*bgr++ = t0;
+				*bgr++ = (BYTE) t1;
+				*bgr++ = (BYTE) t0;
 
 				t0 = (bayer[2] + bayer[width * 2 + 2] + 1) >> 1;
 				t1 = (bayer[width + 1] + bayer[width + 3] +
 					1) >> 1;
-				*bgr++ = t1;
+				*bgr++ = (BYTE) t1;
 				*bgr++ = bayer[width + 2];
-				*bgr++ = t0;
+				*bgr++ = (BYTE) t0;
 			}
 		}
 
@@ -1071,21 +1071,21 @@ static void bayer_to_rgbbgr24(BYTE *bayer,
 				2) >> 2;
 			if (blue_line) 
 			{
-				*bgr++ = t0;
-				*bgr++ = t1;
+				*bgr++ = (BYTE) t0;
+				*bgr++ = (BYTE) t1;
 				*bgr++ = bayer[width + 1];
 			} 
 			else 
 			{
 				*bgr++ = bayer[width + 1];
-				*bgr++ = t1;
-				*bgr++ = t0;
+				*bgr++ = (BYTE) t1;
+				*bgr++ = (BYTE) t0;
 			}
 			/* write last pixel */
 			t0 = (bayer[2] + bayer[width * 2 + 2] + 1) >> 1;
 			if (blue_line) 
 			{
-				*bgr++ = t0;
+				*bgr++ = (BYTE) t0;
 				*bgr++ = bayer[width + 2];
 				*bgr++ = bayer[width + 1];
 			} 
@@ -1093,7 +1093,7 @@ static void bayer_to_rgbbgr24(BYTE *bayer,
 			{
 				*bgr++ = bayer[width + 1];
 				*bgr++ = bayer[width + 2];
-				*bgr++ = t0;
+				*bgr++ = (BYTE) t0;
 			}
 			bayer++;
 		} 
@@ -1104,15 +1104,15 @@ static void bayer_to_rgbbgr24(BYTE *bayer,
 			t1 = (bayer[1] + bayer[width * 2 + 1] + bayer[width] + 1) / 3;
 			if (blue_line) 
 			{
-				*bgr++ = t0;
-				*bgr++ = t1;
+				*bgr++ = (BYTE) t0;
+				*bgr++ = (BYTE) t1;
 				*bgr++ = bayer[width + 1];
 			} 
 			else 
 			{
 				*bgr++ = bayer[width + 1];
-				*bgr++ = t1;
-				*bgr++ = t0;
+				*bgr++ = (BYTE) t1;
+				*bgr++ = (BYTE) t0;
 			}
 		}
 
