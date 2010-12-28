@@ -23,7 +23,7 @@
     <bool name="generate_for_xrced">0</bool>
     <bool name="generate_virtual_eventhandlers">0</bool>
     <string name="current_platform">"__WXGTK__"</string>
-    <string name="target_wx_version">"2.6.3"</string>
+    <string name="target_wx_version">"2.8.7"</string>
     <string name="app_kind">"Standard"</string>
     <string name="cpp_header_comment">"/////////////////////////////////////////////////////////////////////////////
 // Name:        %HEADER-FILENAME%
@@ -95,7 +95,7 @@
     <string name="xrc_encoding">"utf-8"</string>
     <string name="project_encoding">"utf-8"</string>
     <string name="resource_archive">""</string>
-    <long name="text_file_type">0</long>
+    <long name="text_file_type">1</long>
     <bool name="use_tabs">0</bool>
     <long name="indent_size">4</long>
     <string name="whitespace_after_return_type">" "</string>
@@ -1829,6 +1829,14 @@ necessary."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
+            <string name="proxy-AlignH">"Centre"</string>
+            <string name="proxy-AlignV">"Centre"</string>
+            <long name="proxy-Stretch factor">0</long>
+            <long name="proxy-Border">5</long>
+            <bool name="proxy-wxLEFT">1</bool>
+            <bool name="proxy-wxRIGHT">1</bool>
+            <bool name="proxy-wxTOP">1</bool>
+            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
