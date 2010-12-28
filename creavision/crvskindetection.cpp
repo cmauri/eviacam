@@ -80,7 +80,7 @@ inline bool IsSkin_GomezMorales_1 (int R, int G, int B)
 {
 	float r, g, b, rgb, rgb2;
 
-	r= R / 255.0f;	g= G / 255.0f;	b= B / 255.0f;
+	r= (float) R / 255.0f;	g= (float) G / 255.0f;	b= (float) B / 255.0f;
 	rgb= r + g + b;
 	rgb2= rgb * rgb;
 
@@ -91,7 +91,7 @@ inline bool IsSkin_GomezMorales_2 (int R, int G, int B)
 {
 	float r, g, b, rgb;
 
-	r= R / 255.0f;	g= G / 255.0f;	b= B / 255.0f;
+	r= (float) R / 255.0f;	g= (float) G / 255.0f;	b= (float) B / 255.0f;
 	rgb= r + g + b;
 	
 	return ( (b/g)< 1.249 && (rgb / (3*r))> 0.696 && 

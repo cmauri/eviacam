@@ -29,8 +29,10 @@
 #include "crvimage.h"
 #include "videoInput.h"
 
-CCameraWDM::CCameraWDM(int cameraId, int width, int height, float fr)
+CCameraWDM::CCameraWDM(int cameraId, unsigned int width, unsigned int height,
+		float fr) throw(camera_exception)
 {
+	if (cameraId>= GetNumDevices()) throw camera_exception("wrong camera id");
 	m_Id= cameraId;
 	m_Width= width;
 	m_Height= height;
@@ -38,7 +40,11 @@ CCameraWDM::CCameraWDM(int cameraId, int width, int height, float fr)
 
 	m_VI= NULL;	
 
+#if defined (NDEBUG)
 	videoInput::setVerbose(false);
+#else
+	videoInput::setVerbose(true);
+#endif
 }
 
 CCameraWDM::~CCameraWDM(void)
@@ -95,30 +101,27 @@ void CCameraWDM::ShowSettingsDialog ()
 	if (m_VI) m_VI->showSettingsWindow (m_Id);
 }
 
+int CCameraWDM::g_numDevices= -1;
+char CCameraWDM::g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGHT];
+
 int CCameraWDM::GetNumDevices() 
 { 
-	int numDevices;
-
-	// Try to detect if previously initialized
-	if (strlen(GetDeviceName (0))== 0) {
-		char buff[20];
-
-		// Not initialized. Add the camera number to the name
-        numDevices= videoInput::listDevices (true);
-
-		for (int i= 0; i< numDevices; i++) {
-			sprintf (buff, " (Id:%d)\0", i);
-			strncat (GetDeviceName (i), buff, 19);			
+	// Win32: uses videoInput
+	if (g_numDevices== -1) {		
+		// First initialization
+		g_numDevices= videoInput::listDevices (true);
+		if (g_numDevices> MAX_CAM_DEVICES) g_numDevices= MAX_CAM_DEVICES;		
+		for (int i= 0; i< g_numDevices; ++i) {
+			// Prepend device number and append device name
+			_snprintf (g_deviceNames[i], CAM_DEVICE_NAME_LENGHT, " (Id:%d) %s\0", i, videoInput::getDeviceName(i));
 		}		
 	}
-	else
-		// Already initialized
-		numDevices= videoInput::listDevices (true);
 
-	return numDevices;
+	return g_numDevices;	
 }
 
-char* CCameraWDM::GetDeviceName (int id)
+const char* CCameraWDM::GetDeviceName (unsigned int id)
 { 
-	return videoInput::getDeviceName(id); 
+	if ((int) id>= GetNumDevices()) return NULL;
+	return g_deviceNames[id];
 }

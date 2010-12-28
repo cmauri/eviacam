@@ -33,25 +33,31 @@
 #include <string>
 
 // Forward declarations
-class CCameraControlV4l2;
+class CCameraControlV4L2;
 
 class CCameraV4L2 : public CCamera
 {
 public:
-	// Device name without trailing "/dev/"
-	CCameraV4L2(const char* device_name, bool usePwc);
+	CCameraV4L2(int cameraId= -1, unsigned int width= 320, 
+		unsigned int height= 240, float fr= 30.0f) throw(camera_exception);
 	virtual ~CCameraV4L2 (void);
 
+	
+	virtual bool HasCameraControls() { return true; }
+	virtual unsigned int GetCameraControlsCount();
+	virtual CCameraControl* GetCameraControl(unsigned int numControl);
+	
+	static int GetNumDevices();
+	static const char* GetDeviceName (unsigned int id);
+#if !defined(NDEBUG)
+	void Dump();
+#endif
+
+protected:
 	virtual bool DoOpen();
 	virtual void DoClose();	
 	virtual IplImage *DoQueryFrame();
 
-	virtual bool HasCameraControls() { return true; }
-	virtual unsigned int GetCameraControlsCount();
-	virtual CCameraControl* GetCameraControl(unsigned int numControl);
-#if !defined(NDEBUG)
-	void Dump();
-#endif
 private:
 	// Private types
 	enum ECaptureMethod { CAP_NONE= 0, CAP_READ, CAP_STREAMING_MMAP, CAP_STREAMING_USR };
@@ -62,21 +68,34 @@ private:
 		unsigned int height;
 		uint32_t pixelformat;	// Four character code
 	};
-
-	// Device name without trailing "/dev/"
-	char m_deviceShortName[CCameraEnum::CAM_DEVICE_SHORT_NAME_LENGHT];
-	int m_Fd;	// TODO: remove // File descritor for open
+	
+	int m_Id;
+	TImageFormat m_desiredFormat;
+	TImageFormat m_currentFormat;
 	CHandle m_libWebcamHandle;	
 	ECaptureMethod m_captureMethod;
-	bool m_usePwc;
 	bool m_isStreaming;
 	bool m_buffersReady;
 	struct v4l2_buffer m_captureBuffersInfo[STREAMING_CAPTURE_NBUFFERS];
 	void* m_captureBuffersPtr[STREAMING_CAPTURE_NBUFFERS];
-	CIplImage m_resultImage;
-	TImageFormat m_currentFormat;
+	CIplImage m_resultImage;	
 	std::vector<uint32_t> m_supportedPixelFormats;
-	std::vector<CCameraControlV4l2> m_cameraControls;
+	std::vector<CCameraControlV4L2> m_cameraControls;
+
+	//
+	// Static members
+	//
+	enum { MAX_CAM_DEVICES= 10, CAM_DEVICE_NAME_LENGHT= 50 };
+	static int g_numDevices;
+	static char g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGHT];
+	enum { CAM_DEVICE_SHORT_NAME_LENGHT= 32, CAM_DEVICE_DRIVER_NAME_LENGHT= 20 };
+	static char g_deviceShortNames[MAX_CAM_DEVICES][CAM_DEVICE_SHORT_NAME_LENGHT];
+	static char g_deviceDriverNames[MAX_CAM_DEVICES][CAM_DEVICE_DRIVER_NAME_LENGHT];
+	// Instance count for automatic libwebcam cleanup
+	static int g_numInstances;
+	// Instances inc/dec
+	void InstanceCreated() throw(camera_exception);
+	void InstanceDestroyed();
 
 	// Private methods
 	bool InternalOpen();
@@ -95,9 +114,9 @@ private:
 };
 
 // Class that models each camera control
-class CCameraControlV4l2 : public CCameraControl {
+class CCameraControlV4L2 : public CCameraControl {
 public:
-	CCameraControlV4l2 (CHandle handle, const CControl& control);
+	CCameraControlV4L2 (CHandle handle, const CControl& control);
 	
 	virtual ECameraControlId GetId() const { return LibwebcamId2ECameraControlId(m_id); }
 	// Get the name of the control provided by the driver
@@ -117,7 +136,7 @@ public:
 	// For choices only
 	virtual const char* GetChoiceName(unsigned int numOption) const;
 	
-	// Check whether a certain contorl id is supported
+	// Check whether a certain control id is supported
 	static bool CheckSupportedLibwebcamId (CControlId id);
 #if !defined(NDEBUG)
 	void Dump();

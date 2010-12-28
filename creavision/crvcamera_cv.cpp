@@ -55,7 +55,7 @@ int VfwCamFpsWorkaround ()
     DWORD    cbSecurityDescriptor; // size of security descriptor 
     FILETIME ftLastWriteTime;      // last write time 
 	DWORD i, retCode;   
-    DWORD cchValue = MAX_VALUE_NAME; 
+   // DWORD cchValue = MAX_VALUE_NAME; 
 
 	// Open key
 	retCode= RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\Microsoft\\VfWWDM Mapper"), 
@@ -106,8 +106,10 @@ int VfwCamFpsWorkaround ()
 
 #endif
 
-CCameraCV::CCameraCV(int cameraId, int width, int height, float fr)
+CCameraCV::CCameraCV(int cameraId, unsigned int width, int unsigned height, 
+		float fr) throw (camera_exception)
 {
+	if (cameraId>= GetNumDevices()) throw camera_exception("wrong camera id");
 	m_Id= cameraId;
 	m_Width= width;
 	m_Height= height;
@@ -117,8 +119,6 @@ CCameraCV::CCameraCV(int cameraId, int width, int height, float fr)
 #if defined(WIN32)
 	VfwCamFpsWorkaround ();
 #endif
-
-	if (!g_cvInitialized) { cvInitSystem (0, NULL); g_cvInitialized= true; }
 }
 
 CCameraCV::~CCameraCV(void)
@@ -169,29 +169,30 @@ IplImage *CCameraCV::DoQueryFrame()
 
 int CCameraCV::GetNumDevices()
 {
-	int i;
-	CvCapture* tmpCapture;
+	if (!g_cvInitialized) {		
+		cvInitSystem (0, NULL); 
+		g_cvInitialized= true; 
 
-	if (!g_cvInitialized) { cvInitSystem (0, NULL); g_cvInitialized= true; }
+		int i;
+		CvCapture* tmpCapture;
 
-	// Detect number of connected devices
-	for (i= 0; i< MAX_CV_DEVICES; i++) {
-		 tmpCapture= cvCreateCameraCapture (i);
-		 if (tmpCapture== NULL) break;
+		// Detect number of connected devices
+		for (i= 0; i< MAX_CV_DEVICES; ++i) {
+			tmpCapture= cvCreateCameraCapture (i);
+			if (tmpCapture== NULL) break;
 
-		 cvReleaseCapture (&tmpCapture);
+			cvReleaseCapture (&tmpCapture);
 
-		 // Generate device name
-		 sprintf (g_deviceNames[i], "Camera (Id:%d)", i);
+			// Generate device name
+			sprintf (g_deviceNames[i], "Camera (Id:%d)", i);
+		}		
+		g_numDevices= i;
 	}
-	
-	g_numDevices= i;
-
 	return g_numDevices;
 }
 
-char* CCameraCV::GetDeviceName (int id)
+char* CCameraCV::GetDeviceName (unsigned int id)
 {
-	if (id>= g_numDevices) return NULL;	
+	if ((int) id>= GetNumDevices()) return NULL;	
 	return g_deviceNames[id];
 }

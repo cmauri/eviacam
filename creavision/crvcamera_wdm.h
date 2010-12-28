@@ -30,11 +30,12 @@ class CIplImage;
 class CCameraWDM : public CCamera
 {
 public:
-	CCameraWDM(int cameraId= -1, int width= 320, int height= 240, float fr= 30.0f);
+	CCameraWDM(int cameraId= -1, unsigned int width= 320, 
+		unsigned int height= 240, float fr= 30.0f) throw(camera_exception);
 	virtual ~CCameraWDM (void);
 
 	static int GetNumDevices();
-	static char* GetDeviceName (int id);
+	static const char* GetDeviceName (unsigned int id);
 
 	virtual bool DoOpen();
 	virtual void DoClose();	
@@ -44,11 +45,14 @@ public:
 	virtual void ShowSettingsDialog ();
 
 private:
+	enum { MAX_CAM_DEVICES= 10, CAM_DEVICE_NAME_LENGHT= 50 };
+	static int g_numDevices;
+	static char g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGHT];
+
 	int m_Id;
-	int m_Width, m_Height;
+	unsigned int m_Width, m_Height;
 	float m_FrameRate;
 	videoInput* m_VI;
-	int m_numDevices;
 	CIplImage* m_pImage;
 };
 

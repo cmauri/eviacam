@@ -165,7 +165,6 @@ int GuiApp::OnExit()
 	m_pController->Finalize();
 	delete m_pController;
 
-	CCameraEnum::Cleanup();
 ////@begin GuiApp cleanup
 	return wxApp::OnExit();
 ////@end GuiApp cleanup

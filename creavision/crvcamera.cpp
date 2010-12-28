@@ -34,7 +34,7 @@ static int GetTime (void)
 	return now.time*1000 + now.millitm;
 }
 
-CCamera::CCamera()
+CCamera::CCamera() throw (camera_exception)
 {
 	m_RealWidth=0;
 	m_RealHeight= 0;

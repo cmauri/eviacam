@@ -30,7 +30,9 @@ class CCameraCV : public CCamera
 {	
 public:
 	enum { MAX_CV_DEVICES= 10 };
-	CCameraCV(int cameraId= -1, int width= 320, int height= 240, float fr= 30.0f);
+	CCameraCV(int cameraId= -1, 
+		unsigned int width= 320, unsigned int height= 240,
+		float fr= 30.0f) throw (camera_exception);
 	virtual ~CCameraCV (void);
 
 protected:
@@ -40,11 +42,11 @@ protected:
 
 public:
 	static int GetNumDevices();
-	static char *GetDeviceName (int id);
+	static char *GetDeviceName (unsigned int id);
 
 private:
 	int m_Id;
-	int m_Width, m_Height;
+	unsigned int m_Width, m_Height;
 	float m_FrameRate;
 	CvCapture* m_pCvCapture;
 	static bool g_cvInitialized;

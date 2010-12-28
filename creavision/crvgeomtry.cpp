@@ -107,7 +107,7 @@ Real segment_angle (tRPoint *p1, tRPoint *p2)
     }
     else return atan(dy / dx) + M_PI;
 
-    return 0.0;     /* evitar warning */
+//    return 0.0;     /* evitar warning */
 }
 
 /* donada una recta diu si un punt es troba sobre la recta (0)

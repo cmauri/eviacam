@@ -22,14 +22,27 @@
 #ifndef CRVCAMERA_H_
 #define CRVCAMERA_H_
 
+#include <stdexcept>
+
 // Forward declarations
 class CCameraControl;
 typedef struct _IplImage IplImage;
 
+// Class to signal errors during camera object construction
+class camera_exception : public std::runtime_error
+{
+public:
+	camera_exception (const char* msg) : std::runtime_error (msg) {}
+};
+
+#if defined (_MSC_VER)
+#pragma warning(disable: 4290)
+#endif
+
 class CCamera
 {
 public:
-	CCamera();
+	CCamera() throw (camera_exception);
 	virtual ~CCamera (void);
 
 	// 
@@ -162,5 +175,7 @@ public:
 	// For choices only
 	virtual const char* GetChoiceName(unsigned int) const { return 0; }
 };
+
+
 
 #endif

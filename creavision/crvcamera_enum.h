@@ -27,23 +27,25 @@ class CCamera;
 class CCameraEnum
 {
 public:
-	
+	// Return the number of cameras detected 
 	static int GetNumDevices();
-	static char *GetDeviceName (unsigned int id);
-	static CCamera* GetCamera (unsigned int id);
-	static void Cleanup();
+	
+	// Return the name of a camera given its number or NULL
+	// if the camera doesn't exist.
+	static const char *GetDeviceName (unsigned int id);
+	
+	// Create a camera instace given its number. 
+	// It allows to indicate desired frame size and rate.
+	// Returns NULL if the camera doesn't exist or another
+	// error occurred.
+	static CCamera* GetCamera 
+		(unsigned int id,
+		unsigned int width= 320,
+		unsigned int height= 240,
+		float frameRate= 30.0f);
+		
 private:
-	enum { MAX_CAM_DEVICES= 10, CAM_DEVICE_NAME_LENGHT= 50 };
-	static int g_numDevices;
-	static char g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGHT];
-#ifndef WIN32
-	// Linux only. Store device localtion (e.g. video0)
-public:
-	enum { CAM_DEVICE_SHORT_NAME_LENGHT= 32, CAM_DEVICE_DRIVER_NAME_LENGHT= 20 };
-private:
-	static char g_deviceShortNames[MAX_CAM_DEVICES][CAM_DEVICE_SHORT_NAME_LENGHT];
-	static char g_deviceDriverNames[MAX_CAM_DEVICES][CAM_DEVICE_DRIVER_NAME_LENGHT];
-#endif
+	CCameraEnum();	// Object instantation forbiden	
 };
 
 

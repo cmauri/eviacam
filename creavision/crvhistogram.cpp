@@ -55,7 +55,7 @@ bool crvHistogramBeginEnd (TCrvHistogram &his, unsigned char &begin, unsigned ch
 	// Begining
 	for (i= 0; i< 256; i++) {
 		if (his[i]> 0) {
-			begin= i;
+			begin= (unsigned char) i;
 			break;
 		}
 	}
@@ -65,7 +65,7 @@ bool crvHistogramBeginEnd (TCrvHistogram &his, unsigned char &begin, unsigned ch
 	// End
 	for (i= 255; i>= 0; i--) {
 		if (his[i]> 0) {
-			end= i;
+			end= (unsigned char) i;
 			break;
 		}
 	}

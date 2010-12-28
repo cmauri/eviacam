@@ -32,7 +32,7 @@
 				AssemblerListingLocation="$(SolutionDir)$(ConfigurationName)\creavision\"
 				ObjectFile="$(SolutionDir)$(ConfigurationName)\creavision\"
 				ProgramDataBaseFileName="$(SolutionDir)$(ConfigurationName)\creavision.pdb"
-				WarningLevel="3"
+				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				CompileAs="0"/>
 			<Tool
@@ -81,7 +81,7 @@
 				AssemblerListingLocation="$(SolutionDir)$(ConfigurationName)\creavision\"
 				ObjectFile="$(SolutionDir)$(ConfigurationName)\creavision\"
 				ProgramDataBaseFileName="$(SolutionDir)$(ConfigurationName)\creavision.pdb"
-				WarningLevel="3"
+				WarningLevel="4"
 				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
 				CompileAs="0"/>
