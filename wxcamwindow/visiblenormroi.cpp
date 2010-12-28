@@ -241,14 +241,13 @@ bool CVisibleNormROI::UnregisterChildROI (CVisibleNormROI* pNormROI)
 //
 void CVisibleNormROI::GetDirectionSegment (const CvSize& winSize, CvPoint& p1, CvPoint& p2)
 {
-	float cx, cy;
-	float line_lenght;
-
 	GetP1P2Integer (winSize, p1, p2);
-	line_lenght= sqrt (pow(p2.x - p1.x, 2) + pow(p2.y - p1.y,2)) * 1.1f / 2.0f;
+	float line_lenght= sqrtf (
+		powf((float)(p2.x - p1.x), 2.0f) + 
+		powf((float)(p2.y - p1.y), 2.0f)) * 1.1f / 2.0f;
 	
-	cx= (p1.x + p2.x) / 2.0f;
-	cy= (p1.y + p2.y) / 2.0f;
+	float cx= (float)(p1.x + p2.x) / 2.0f;
+	float cy= (float)(p1.y + p2.y) / 2.0f;
 
 	p1.x= (int) (cx + 0.5f); 
 	p1.y= (int) (cy + 0.5f);
@@ -391,7 +390,7 @@ bool CVisibleNormROI::OnMouseMovedClick0 (const CvSize& winSize, const CvPoint& 
 			case OVER_ORIENTER:				
 				or_p2.x= cursor.x;
 				or_p2.y= cursor.y;
-				SetRotation (atan2((float) (or_p1.y - or_p2.y), (float) (or_p2.x - or_p1.x)));
+				SetRotation (atan2f((float) (or_p1.y - or_p2.y), (float) (or_p2.x - or_p1.x)));
 				break;
 			case OVER_UL_CORNER:
 			case OVER_BR_CORNER:
