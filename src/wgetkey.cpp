@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        activationkey.cpp
+// Name:        wgetkey.cpp
 // Purpose:     
 // Author:      César Mauri Loba
 // Modified by: 
@@ -35,71 +35,58 @@
 ////@begin includes
 ////@end includes
 
-#include "activationkey.h"
-//#include "viacamcontroller.h"
-
-//#include "wconfiguration.h"
+#include "wgetkey.h"
 #include <wx/timer.h>
 #include <wx/defs.h>
 
 ////@begin XPM images
 ////@end XPM images
 #define TIMER_ID 1234
-//#define ESCAPE_KEYSYM 65307
 
 /*!
- * Activationkey type definition
+ * WGetKey type definition
  */
 
-IMPLEMENT_DYNAMIC_CLASS( Activationkey, wxDialog )
+IMPLEMENT_DYNAMIC_CLASS( WGetKey, wxDialog )
 
 
 /*!
- * Activationkey event table definition
+ * WGetKey event table definition
  */
 
-BEGIN_EVENT_TABLE( Activationkey, wxDialog )
+BEGIN_EVENT_TABLE( WGetKey, wxDialog )
 
-////@begin Activationkey event table entries
-    EVT_LEFT_DOWN( Activationkey::OnLeftDown )
+////@begin WGetKey event table entries
+    EVT_LEFT_DOWN( WGetKey::OnLeftDown )
 
-////@end Activationkey event table entries
-	EVT_TIMER(TIMER_ID, Activationkey::OnTimer)
+////@end WGetKey event table entries
+	EVT_TIMER(TIMER_ID, WGetKey::OnTimer)
 
 END_EVENT_TABLE()
 
 
 /*!
- * Activationkey constructors
+ * WGetKey constructors
  */
 
-Activationkey::Activationkey() : m_timer(this, TIMER_ID)
+WGetKey::WGetKey() : m_timer(this, TIMER_ID)
 {
     Init();
 }
 
-Activationkey::Activationkey( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) : m_timer(this, TIMER_ID)
+WGetKey::WGetKey( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) : m_timer(this, TIMER_ID)
 {
     Init();
     Create(parent, id, caption, pos, size, style);
 }
-
-/*
-Activationkey::Activationkey( wxWindow* parent, CViacamController* pViacamController, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) : m_timer(this, TIMER_ID)
-{
-	m_pViacamController= pViacamController;
-//	m_pConfiguration= m_pViacamController->GetConfiguration();
-	Init();
-    Create(parent, id, caption, pos, size, style);
-}*/
 
 /*!
  * Activationkey creator
  */
 
-bool Activationkey::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+bool WGetKey::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
-////@begin Activationkey creation
+////@begin WGetKey creation
     SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
 
@@ -109,19 +96,19 @@ bool Activationkey::Create( wxWindow* parent, wxWindowID id, const wxString& cap
         GetSizer()->SetSizeHints(this);
     }
     Centre();
-////@end Activationkey creation
+////@end WGetKey creation
     return true;
 }
 
 
 /*!
- * Activationkey destructor
+ * WGetKey destructor
  */
 
-Activationkey::~Activationkey()
+WGetKey::~WGetKey()
 {
-////@begin Activationkey destruction
-////@end Activationkey destruction
+////@begin WGetKey destruction
+////@end WGetKey destruction
 }
 
 
@@ -129,10 +116,10 @@ Activationkey::~Activationkey()
  * Member initialisation
  */
 
-void Activationkey::Init()
+void WGetKey::Init()
 {
-////@begin Activationkey member initialisation
-////@end Activationkey member initialisation
+////@begin WGetKey member initialisation
+////@end WGetKey member initialisation
 }
 
 
@@ -140,10 +127,10 @@ void Activationkey::Init()
  * Control creation for Activationkey
  */
 
-void Activationkey::CreateControls()
+void WGetKey::CreateControls()
 {    
-////@begin Activationkey content construction
-    Activationkey* itemDialog1 = this;
+////@begin WGetKey content construction
+    WGetKey* itemDialog1 = this;
 
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
@@ -152,8 +139,8 @@ void Activationkey::CreateControls()
     itemBoxSizer2->Add(itemStaticText3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     // Connect events and objects
-    itemStaticText3->Connect(wxID_STATIC, wxEVT_LEFT_DOWN, wxMouseEventHandler(Activationkey::OnLeftDown), NULL, this);
-////@end Activationkey content construction
+    itemStaticText3->Connect(wxID_STATIC, wxEVT_LEFT_DOWN, wxMouseEventHandler(WGetKey::OnLeftDown), NULL, this);
+////@end WGetKey content construction
 	m_timer.Start(50);
 }
 
@@ -162,7 +149,7 @@ void Activationkey::CreateControls()
  * Should we show tooltips?
  */
 
-bool Activationkey::ShowToolTips()
+bool WGetKey::ShowToolTips()
 {
     return true;
 }
@@ -171,36 +158,32 @@ bool Activationkey::ShowToolTips()
  * Get bitmap resources
  */
 
-wxBitmap Activationkey::GetBitmapResource( const wxString& name )
+wxBitmap WGetKey::GetBitmapResource( const wxString& name )
 {
     // Bitmap retrieval
-////@begin Activationkey bitmap retrieval
+////@begin WGetKey bitmap retrieval
     wxUnusedVar(name);
     return wxNullBitmap;
-////@end Activationkey bitmap retrieval
+////@end WGetKey bitmap retrieval
 }
 
 /*!
  * Get icon resources
  */
 
-wxIcon Activationkey::GetIconResource( const wxString& name )
+wxIcon WGetKey::GetIconResource( const wxString& name )
 {
     // Icon retrieval
-////@begin Activationkey icon retrieval
+////@begin WGetKey icon retrieval
     wxUnusedVar(name);
     return wxNullIcon;
-////@end Activationkey icon retrieval
+////@end WGetKey icon retrieval
 }
 
 
-void Activationkey::OnTimer(wxTimerEvent& event)
+void WGetKey::OnTimer(wxTimerEvent& event)
 {
-//	int keyCode = 0;
 	CKeyboardCode kc = CKeyboardCode::ReadKeyCode();
-
-	//keyCode = kbCode.GetKeyboardCode();
-		//CKeyboardControl::GetKeyCode(kbCode);
 	
 	if (kc.IsValid()) {
 		if (kc== CKeyboardCode::FromWXKeyCode (WXK_ESCAPE)) {
@@ -214,24 +197,16 @@ void Activationkey::OnTimer(wxTimerEvent& event)
 	event.Skip(false);
 }
 
-CKeyboardCode Activationkey::GetKeyCode()
+CKeyboardCode WGetKey::GetKeyCode()
 {
 	return m_keyCode;
 }
-
-/*
-wxString Activationkey::GetKeyName()
-{
-	CKeyboardCode kbCode = CKeyboardCode(m_keyCode);
-	//return CKeyboardControl::GetKeyboardCodeName(kbCode);
-	return kbCode.GetKeyName();
-}*/	
 
 /*!
  * wxEVT_LEFT_DOWN event handler for ID_ACTIVATIONKEY
  */
 
-void Activationkey::OnLeftDown( wxMouseEvent& event )
+void WGetKey::OnLeftDown( wxMouseEvent& event )
 {
 	EndModal(wxID_NO);
 	m_timer.Stop();	

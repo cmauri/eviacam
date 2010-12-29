@@ -28,7 +28,7 @@ class CKeyboardCode
 {
 public:
     CKeyboardCode();
-	// Default destructor, copy constructor, and copy operator are fine
+	// Default destructor, copy constructor and copy operator are fine
 	bool operator==(const CKeyboardCode &other) const {
 		return m_virtualKeyCode== other.m_virtualKeyCode;
 	}
@@ -53,11 +53,7 @@ public:
 	void SetRawValue(unsigned int value);
 
 	bool IsValid() const { return m_virtualKeyCode!= 0; }
-	//CKeyboardCode(char key);
-	//CKeyboardCode(int key);
-	//~CKeyboardCode();	
-	//KeyCode GetKeyboardCode() const;
-
+	
 	// Reads a keycode from keyboard and returns a CKeyboardCode object
 	static CKeyboardCode ReadKeyCode();
 
@@ -72,10 +68,7 @@ public:
 
 #if !defined(NDEBUG)
 	void Dump() const;
-#endif
-	//static void SendKeyboardCode(const CKeyboardCode& kc);
-	//static wxString GetKeyboardCodeName(const CKeyboardCode& kc);
-
+#endif	
 private:
 	// Stores the virtual key code. This corresponds to a unique key
 	// after taking into account the keyboard layout (the keyboard

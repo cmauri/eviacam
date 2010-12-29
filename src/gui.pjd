@@ -9051,7 +9051,7 @@ tracking area."</string>
           </document>
         </document>
         <document>
-          <string name="title">"Activation key"</string>
+          <string name="title">"Get key"</string>
           <string name="type">"dialog-document"</string>
           <string name="filename">""</string>
           <string name="icon-name">"dialog"</string>
@@ -9068,16 +9068,16 @@ tracking area."</string>
           <string name="app-kind">"Standard"</string>
           <long name="use-xrc">0</long>
           <long name="working-mode">0</long>
-          <string name="event-handler-0">"wxEVT_LEFT_DOWN|OnLeftDown|NONE||Activationkey"</string>
+          <string name="event-handler-0">"wxEVT_LEFT_DOWN|OnLeftDown|NONE||WGetKey"</string>
           <string name="proxy-Id name">"ID_ACTIVATIONKEY"</string>
           <long name="proxy-Id value">10070</long>
-          <string name="proxy-Class">"Activationkey"</string>
+          <string name="proxy-Class">"WGetKey"</string>
           <string name="proxy-Base class">"wxDialog"</string>
           <string name="proxy-Window kind">"wxDialog"</string>
-          <string name="proxy-Implementation filename">"activationkey.cpp"</string>
-          <string name="proxy-Header filename">"activationkey.h"</string>
+          <string name="proxy-Implementation filename">"wgetkey.cpp"</string>
+          <string name="proxy-Header filename">"wgetkey.h"</string>
           <string name="proxy-XRC filename">""</string>
-          <string name="proxy-Title">"Activation key"</string>
+          <string name="proxy-Title">"Get key"</string>
           <bool name="proxy-Centre">1</bool>
           <string name="proxy-Icon">""</string>
           <bool name="proxy-Dialog units">0</bool>
@@ -9142,14 +9142,6 @@ tracking area."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -9164,7 +9156,7 @@ tracking area."</string>
               <long name="title-mode">0</long>
               <long name="locked">0</long>
               <string name="proxy-type">"wbStaticTextProxy"</string>
-              <string name="event-handler-0">"wxEVT_LEFT_DOWN|OnLeftDown|NONE||Activationkey"</string>
+              <string name="event-handler-0">"wxEVT_LEFT_DOWN|OnLeftDown|NONE||WGetKey"</string>
               <string name="proxy-Id name">"wxID_STATIC"</string>
               <long name="proxy-Id value">5105</long>
               <string name="proxy-Name">""</string>

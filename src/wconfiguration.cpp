@@ -55,7 +55,7 @@
 #include "langnames-utf16.h"
 #else
 #include "langnames-utf8.h"
-#include "activationkey.h"
+#include "wgetkey.h"
 #include "cautostart.h"
 #include <wx/stdpaths.h>
 #endif
@@ -1608,18 +1608,15 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
 void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
 {
 	bool isEnabled = m_pViacamController->GetEnabled();
-	//Activationkey* pActivationKey = new Activationkey(this);
-	Activationkey pActivationKey(this);
+	WGetKey dlgGetKey(this);
 
-	if (pActivationKey.ShowModal()== wxID_YES)
-	{
-		CKeyboardCode kc= pActivationKey.GetKeyCode();
+	if (dlgGetKey.ShowModal()== wxID_YES) {
+		CKeyboardCode kc= dlgGetKey.GetKeyCode();
 		m_txtActivationKey->SetValue(wxString(kc.GetName(), wxConvLocal));
 		m_pViacamController->SetActivationKeyCode(kc);
 		Changed ();
 	}
 	m_pViacamController->SetEnabled(isEnabled);
-	//delete (pActivationKey);
 		
 	event.Skip(false);    
 }

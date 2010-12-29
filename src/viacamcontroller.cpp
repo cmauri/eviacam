@@ -39,15 +39,14 @@
 #include "camwindow.h"
 #include "wconfiguration.h"
 #include "cmotioncalibration.h"
-//#include "wwizard.h"
 #include "wcameradialog.h"
 #include <wx/utils.h>
 #include <wx/debug.h>
 
 // Under wxGTK we should protect calls to GUI. Under Windows is not needed
 #if defined(__WXGTK__) 
-#include "activationkey.h"
-#include "ckeyboardcontrol.h"
+//#include "activationkey.h"
+//#include "ckeyboardcontrol.h"
 #include "cautostart.h"
 #include <wx/stdpaths.h>
 #include <wx/thread.h>

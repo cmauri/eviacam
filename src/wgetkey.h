@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        activationkey.h
+// Name:        wgetkey.h
 // Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
@@ -19,16 +19,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
-
-#ifndef _ACTIVATIONKEY_H_
-#define _ACTIVATIONKEY_H_
+#ifndef _WGETKEY_H_
+#define _WGETKEY_H_
 
 
 /*!
  * Includes
  */
-#include <wx/timer.h>
 #include "ckeyboardcode.h"
+#include <wx/timer.h>
 
 ////@begin includes
 ////@end includes
@@ -48,33 +47,32 @@
 
 ////@begin control identifiers
 #define ID_ACTIVATIONKEY 10070
-#define SYMBOL_ACTIVATIONKEY_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxDIALOG_MODAL|wxTAB_TRAVERSAL
-#define SYMBOL_ACTIVATIONKEY_TITLE _("Activation key")
-#define SYMBOL_ACTIVATIONKEY_IDNAME ID_ACTIVATIONKEY
-#define SYMBOL_ACTIVATIONKEY_SIZE wxSize(400, 300)
-#define SYMBOL_ACTIVATIONKEY_POSITION wxDefaultPosition
+#define SYMBOL_WGETKEY_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxTAB_TRAVERSAL
+#define SYMBOL_WGETKEY_TITLE _("Get key")
+#define SYMBOL_WGETKEY_IDNAME ID_ACTIVATIONKEY
+#define SYMBOL_WGETKEY_SIZE wxSize(400, 300)
+#define SYMBOL_WGETKEY_POSITION wxDefaultPosition
 ////@end control identifiers
 
 /*!
- * Activationkey class declaration
+ * WGetKey class declaration
  */
 
-class Activationkey: public wxDialog
+class WGetKey: public wxDialog
 {    
-    DECLARE_DYNAMIC_CLASS( Activationkey )
+    DECLARE_DYNAMIC_CLASS( WGetKey )
     DECLARE_EVENT_TABLE()
 
 public:
     /// Constructors  
-    Activationkey();
-    Activationkey( wxWindow* parent, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
-//	Activationkey( wxWindow* parent, CViacamController* pViacamController, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
+    WGetKey();
+    WGetKey( wxWindow* parent, wxWindowID id = SYMBOL_WGETKEY_IDNAME, const wxString& caption = SYMBOL_WGETKEY_TITLE, const wxPoint& pos = SYMBOL_WGETKEY_POSITION, const wxSize& size = SYMBOL_WGETKEY_SIZE, long style = SYMBOL_WGETKEY_STYLE );
 
     /// Creation
-    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
+    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_WGETKEY_IDNAME, const wxString& caption = SYMBOL_WGETKEY_TITLE, const wxPoint& pos = SYMBOL_WGETKEY_POSITION, const wxSize& size = SYMBOL_WGETKEY_SIZE, long style = SYMBOL_WGETKEY_STYLE );
 
     /// Destructor
-    ~Activationkey();
+    ~WGetKey();
 
 	CKeyboardCode GetKeyCode();
 
@@ -85,36 +83,34 @@ private:
     /// Creates the controls and sizers
     void CreateControls();
 
-////@begin Activationkey event handler declarations
+////@begin WGetKey event handler declarations
 
     /// wxEVT_LEFT_DOWN event handler for ID_ACTIVATIONKEY
     void OnLeftDown( wxMouseEvent& event );
 
-////@end Activationkey event handler declarations
+////@end WGetKey event handler declarations
 	void OnTimer(wxTimerEvent& event);
 	
 //	wxString GetKeyName();
 	void StartTimer();
 	void StopTimer();
 
-////@begin Activationkey member function declarations
+////@begin WGetKey member function declarations
 
     /// Retrieves bitmap resources
     wxBitmap GetBitmapResource( const wxString& name );
 
     /// Retrieves icon resources
     wxIcon GetIconResource( const wxString& name );
-////@end Activationkey member function declarations
+////@end WGetKey member function declarations
 
     /// Should we show tooltips?
     static bool ShowToolTips();
 
-////@begin Activationkey member variables
-////@end Activationkey member variables
+////@begin WGetKey member variables
+////@end WGetKey member variables
 private:
 	wxTimer m_timer;
-//	CViacamController* m_pViacamController;
-//	WConfiguration* m_pConfiguration;
 	CKeyboardCode m_keyCode;
 };
 

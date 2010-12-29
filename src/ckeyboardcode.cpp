@@ -54,11 +54,9 @@ CKeyboardCode::CKeyboardCode (unsigned int vkCode)
 const char* CKeyboardCode::GetName() const
 {	 
 #if defined(__WXGTK__)
-	//return wxString(XKeysymToString((KeySym) m_virtualKeyCode), wxConvLocal);
 	return XKeysymToString((KeySym) m_virtualKeyCode);
 #else
 	// Still not available for Windows
-	//return wxT("");
 	return "";
 #endif	
 }
@@ -95,7 +93,6 @@ CKeyboardCode CKeyboardCode::ReadKeyCode()
 #if defined(__WXGTK__)
 	char keys_return[32];
 	unsigned char keys;
-	//KeyCode kc = 0;
 	unsigned int kc = 0;
 	
 	XQueryKeymap(((Display *) wxGetDisplay()), keys_return);
@@ -116,11 +113,7 @@ CKeyboardCode CKeyboardCode::ReadKeyCode()
 			}
 			kc += 8 * i;
 		}
-	}
-	
-	//CKeyboardCode tmp= FromScanCode (kc);
-	//printf ("KeyCode: %u\n", kc);
-	//tmp.Dump();	
+	}	
 	return FromScanCode (kc);
 #else
 	// Still not available for Windows
@@ -133,7 +126,6 @@ CKeyboardCode CKeyboardCode::ReadKeyCode()
 CKeyboardCode CKeyboardCode::FromScanCode (unsigned int scanCode)
 {	
 #if defined(__WXGTK__)
-	//m_virtualKeyCode= 
 	return CKeyboardCode ((unsigned int) XKeycodeToKeysym(
 			(Display *) wxGetDisplay(), (KeyCode) scanCode, 0));
 #else
@@ -149,14 +141,6 @@ CKeyboardCode CKeyboardCode::FromASCII (char ascii)
 {
 #if defined(__WXGTK__)
 	char c[2]= { ascii, '\0'};
-	//KeySym ksym;
-	//KeyCode kcode;
-	//c[0] = key;
-	//c[1] = '\0';
-	//CKeyboardCode kc;
-	//kc.m_virtualKeyCode= 
-	//kcode = XKeysymToKeycode(dpy, ksym);
-	//m_keyboardCode = kcode;
 	return CKeyboardCode ((unsigned int) XStringToKeysym(c));
 #else
 	// Still not available for Windows
@@ -185,19 +169,12 @@ CKeyboardCode CKeyboardCode::FromWXKeyCode (wxKeyCode kc)
 		case WXK_RETURN: return CKeyboardCode(XK_Return);
 		case WXK_ESCAPE: return CKeyboardCode(XK_Escape);		
 		case WXK_DELETE: return CKeyboardCode(XK_Delete);
-		//case WXK_SPACE: return CKeyboardCode(XK_Space);
-		//case WXK_START: return CKeyboardCode(x);
-		//case WXK_LBUTTON: return CKeyboardCode(x);
-		//case WXK_RBUTTON: return CKeyboardCode(x);
-		//case WXK_CANCEL: return CKeyboardCode(x);
-		//case WXK_MBUTTON: return CKeyboardCode(x);
 		case WXK_CLEAR: return CKeyboardCode(XK_Clear);
 		case WXK_SHIFT: return CKeyboardCode(XK_Shift_L);
 		case WXK_ALT: return CKeyboardCode(XK_Alt_L);
 		case WXK_CONTROL: return CKeyboardCode(XK_Control_L);
 		case WXK_MENU: return CKeyboardCode(XK_Menu);
 		case WXK_PAUSE: return CKeyboardCode(XK_Pause);
-		//case WXK_CAPITAL: return CKeyboardCode(x);
 		case WXK_END: return CKeyboardCode(XK_End);
 		case WXK_HOME: return CKeyboardCode(XK_Home);
 		case WXK_LEFT: return CKeyboardCode(XK_Left);
@@ -330,73 +307,3 @@ CKeyboardCode CKeyboardCode::FromWXKeyCode (wxKeyCode kc)
 	return CKeyboardCode();
 #endif
 }
-
-/*
-KeyCode CKeyboardCode::GetKeyboardCode() const
-{
-	return m_keyboardCode; 
-}*/
-/*
-CKeyboardCode::CKeyboardCode(char key)
-{
-	Init();
-#if defined(__WXGTK__)
-	char c[2];
-	KeySym ksym;
-	KeyCode kcode;
-	Display *dpy = XOpenDisplay( NULL );
-	c[0] = key;
-	c[1] = '\0';
-	
-	ksym = XStringToKeysym(c);
-	kcode = XKeysymToKeycode(dpy, ksym);
-	m_keyboardCode = kcode;
-#endif	
-}*/
-
-/*
-CKeyboardCode::CKeyboardCode(int key)
-{
-	Init();
-#if defined(__WXGTK__)
-	m_keyboardCode = (KeyCode) key;
-#endif
-}
-
-#if defined(__WXGTK__)
-CKeyboardCode::CKeyboardCode(KeyCode key)
-{
-	Init();
-	m_keyboardCode = key;
-}
-#else	
-
-#endif
-
-CKeyboardCode::~CKeyboardCode()
-{
-}
-
-*/
-
-/*
-void CKeyboardCode::SendKeyboardCode(const CKeyboardCode& kc)
-{
-#if defined(__WXGTK__)
-	XTestFakeKeyEvent((Display *) wxGetDisplay(), kc.GetKeyboardCode(), true, 0);
-	XTestFakeKeyEvent((Display *) wxGetDisplay(), kc.GetKeyboardCode(), false, 0);
-#else
-	assert(0);
-#endif
-}*/
-/*
-wxString CKeyboardCode::GetKeyboardCodeName(const CKeyboardCode& kc)
-{
-	wxString name = wxT("");
-#if defined(__WXGTK__)
-	KeySym ks = XKeycodeToKeysym((Display *) wxGetDisplay(), kc.GetKeyboardCode(), 0);
-	name = wxString(XKeysymToString(ks), wxConvLocal);
-#endif
-	return name;
-}
-*/

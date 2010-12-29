@@ -213,16 +213,10 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\activationkey.cpp">
-			</File>
-			<File
 				RelativePath=".\cautostart.cpp">
 			</File>
 			<File
 				RelativePath=".\ckeyboardcode.cpp">
-			</File>
-			<File
-				RelativePath=".\ckeyboardcontrol.cpp">
 			</File>
 			<File
 				RelativePath=".\clickwindow.cpp">
@@ -267,6 +261,9 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 				RelativePath=".\wconfirmcalibration.cpp">
 			</File>
 			<File
+				RelativePath=".\wgetkey.cpp">
+			</File>
+			<File
 				RelativePath=".\wmotioncalibrationx.cpp">
 			</File>
 			<File
@@ -287,16 +284,10 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\activationkey.h">
-			</File>
-			<File
 				RelativePath=".\cautostart.h">
 			</File>
 			<File
 				RelativePath=".\ckeyboardcode.h">
-			</File>
-			<File
-				RelativePath=".\ckeyboardcontrol.h">
 			</File>
 			<File
 				RelativePath=".\clickwindow.h">
@@ -345,6 +336,9 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 			</File>
 			<File
 				RelativePath=".\wconfirmcalibration.h">
+			</File>
+			<File
+				RelativePath=".\wgetkey.h">
 			</File>
 			<File
 				RelativePath=".\wmotioncalibrationx.h">

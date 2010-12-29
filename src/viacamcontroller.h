@@ -34,9 +34,7 @@
 #include "wconfiguration.h"
 
 #if defined(__WXGTK__) 
-//#include <X11/Xlib.h>
-//#include "ckeyboardcontrol.h"
-#include "activationkey.h"
+#include "wgetkey.h"
 #endif // __WXGTK___
 #include "ckeyboardcode.h"
 #include "cautostart.h"
