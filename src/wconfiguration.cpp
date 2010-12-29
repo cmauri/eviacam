@@ -847,10 +847,10 @@ void WConfiguration::CreateControls()
 ////@end WConfiguration content construction
 #if defined(__WXGTK__)
 	for (unsigned int i=0; i<m_pViacamController->GetMouseOutput()->GetKeyEventsCount(); i++) {
-		m_choLeft->Append(_("Key:") + m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetKeyName());
-		m_choRight->Append(_("Key:") + m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetKeyName());
-		m_choUp->Append(_("Key:") + m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetKeyName());
-		m_choDown->Append(_("Key:") + m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetKeyName());
+		m_choLeft->Append(_("Key:") + wxString(m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetName(), wxConvLocal));
+		m_choRight->Append(_("Key:") + wxString(m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetName(), wxConvLocal));
+		m_choUp->Append(_("Key:") + wxString(m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetName(), wxConvLocal));
+		m_choDown->Append(_("Key:") + wxString(m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetName(), wxConvLocal));
 	}
 #endif
 }
@@ -961,7 +961,7 @@ void WConfiguration::InitializeData ()
 	m_txtOnScreenKeyboardCommand->SetValue(m_pViacamController->GetOnScreenKeyboardCommand());
 #if defined(__WXGTK__)
 	m_chkActivationKey->SetValue(m_pViacamController->GetEnabledActivationKey());
-	m_txtActivationKey->SetValue(m_pViacamController->GetActivationKeyName());
+	m_txtActivationKey->SetValue(wxString(m_pViacamController->GetActivationKey().GetName(), wxConvLocal));
 	    
 	// 
 	// App data
@@ -1188,7 +1188,7 @@ void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 	else {
 		// Enabling click generation, which modality?
 #if defined(__WXGTK__)
-		if (m_chkEnableGestureClick->IsChecked())
+		if (m_chkEnableGestureClick->IsChecked()) {
 			// Gesture click
 			if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE, false, this)) {
 				EnableGUIGeneralClickOptions(true);
@@ -1196,6 +1196,7 @@ void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 				EnableGUIClickWindowOptions(false);
 				Changed ();
 			}
+		}
 		else
 #endif
 			if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL, false, this)) {
@@ -1607,18 +1608,20 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
 void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
 {
 	bool isEnabled = m_pViacamController->GetEnabled();
-	Activationkey* pActivationKey = new Activationkey(this);
+	//Activationkey* pActivationKey = new Activationkey(this);
+	Activationkey pActivationKey(this);
 
-	if (pActivationKey->ShowModal()== wxID_YES)
+	if (pActivationKey.ShowModal()== wxID_YES)
 	{
-		m_txtActivationKey->SetValue(pActivationKey->GetKeyName());
-		m_pViacamController->SetActivationKeyCode(pActivationKey->GetKeyCode());
-		m_pViacamController->SetEnabled(isEnabled);
+		CKeyboardCode kc= pActivationKey.GetKeyCode();
+		m_txtActivationKey->SetValue(wxString(kc.GetName(), wxConvLocal));
+		m_pViacamController->SetActivationKeyCode(kc);
+		Changed ();
 	}
-	delete (pActivationKey);
+	m_pViacamController->SetEnabled(isEnabled);
+	//delete (pActivationKey);
 		
-	event.Skip(false);
-    Changed ();
+	event.Skip(false);    
 }
 #endif
 

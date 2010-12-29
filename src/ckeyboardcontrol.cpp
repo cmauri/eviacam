@@ -27,7 +27,7 @@
 #include <X11/extensions/XTest.h>
 #include <X11/Xlib.h>
 #endif
-
+/*
 CKeyboardCode CKeyboardControl::ReadKeyCode()
 {
 #if defined(__WXGTK__)
@@ -88,7 +88,7 @@ int CKeyboardControl::GetKeyCode(const CKeyboardCode& kc)
 #endif
 	return code;
 }
-
+*/
 /*
 bool CKeyboardControl::Equal(const CKeyboardCode& kc1, const CKeyboardCode& kc2)
 {

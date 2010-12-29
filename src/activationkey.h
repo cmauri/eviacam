@@ -28,6 +28,7 @@
  * Includes
  */
 #include <wx/timer.h>
+#include "ckeyboardcode.h"
 
 ////@begin includes
 ////@end includes
@@ -39,7 +40,7 @@
 ////@begin forward declarations
 ////@end forward declarations
 
-class CViacamController;
+//class CViacamController;
 
 /*!
  * Control identifiers
@@ -67,7 +68,7 @@ public:
     /// Constructors  
     Activationkey();
     Activationkey( wxWindow* parent, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
-	Activationkey( wxWindow* parent, CViacamController* pViacamController, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
+//	Activationkey( wxWindow* parent, CViacamController* pViacamController, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
 
     /// Creation
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_ACTIVATIONKEY_IDNAME, const wxString& caption = SYMBOL_ACTIVATIONKEY_TITLE, const wxPoint& pos = SYMBOL_ACTIVATIONKEY_POSITION, const wxSize& size = SYMBOL_ACTIVATIONKEY_SIZE, long style = SYMBOL_ACTIVATIONKEY_STYLE );
@@ -75,6 +76,9 @@ public:
     /// Destructor
     ~Activationkey();
 
+	CKeyboardCode GetKeyCode();
+
+private:
     /// Initialises member variables
     void Init();
 
@@ -88,8 +92,8 @@ public:
 
 ////@end Activationkey event handler declarations
 	void OnTimer(wxTimerEvent& event);
-	int GetKeyCode();
-	wxString GetKeyName();
+	
+//	wxString GetKeyName();
 	void StartTimer();
 	void StopTimer();
 
@@ -109,9 +113,9 @@ public:
 ////@end Activationkey member variables
 private:
 	wxTimer m_timer;
-	CViacamController* m_pViacamController;
+//	CViacamController* m_pViacamController;
 //	WConfiguration* m_pConfiguration;
-	int m_keyCode;
+	CKeyboardCode m_keyCode;
 };
 
 #endif

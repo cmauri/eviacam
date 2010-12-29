@@ -57,8 +57,8 @@
 #define BEGIN_GUI_CALL_MUTEX()
 #define END_GUI_CALL_MUTEX()
 #endif // __WXGTK___
-#define ESCAPE_KEYSYM 65307
-#define SCROLL_LOCK_KEYSYM 65300
+//#define ESCAPE_KEYSYM 65307
+//#define SCROLL_LOCK_KEYSYM 65300
 
 CViacamController::CViacamController(void) :
 	m_wizardManager(*this)
@@ -303,6 +303,7 @@ void CViacamController::InitDefaults()
 #if defined(__WXMSW__)
 	m_onScreenKeyboardCommand= _T("osk.exe");
 #endif
+	m_keyCode= CKeyboardCode::FromWXKeyCode (WXK_SCROLL);
 }
 
 void CViacamController::WriteAppData(wxConfigBase* pConfObj)
@@ -319,10 +320,8 @@ void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("onScreenKeyboardCommand"), m_onScreenKeyboardCommand);
 	pConfObj->Write(_T("runWizardAtStartup"), m_runWizardAtStartup);	
 
-#if defined(__WXGTK__) 
 	pConfObj->Write(_T("enabledActivationKey"), m_enabledActivationKey);
-	pConfObj->Write(_T("keyCode"), (int)m_keyCode);
-#endif
+	pConfObj->Write(_T("keyCode"), (int) m_keyCode.GetRawValue());
 
 	// Propagates calls
 	m_pMouseOutput->WriteProfileData (pConfObj);
@@ -343,15 +342,16 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
 	pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
 	pConfObj->Read(_T("runWizardAtStartup"), &m_runWizardAtStartup);
-#if defined(__WXGTK__) 
-	m_keyCode = 0;
+	//m_keyCode = 0;
 	pConfObj->Read(_T("enabledActivationKey"), &m_enabledActivationKey);
-	pConfObj->Read(_T("keyCode"), &m_keyCode);
-
+	int rawKeyCode;
+	pConfObj->Read(_T("keyCode"), &rawKeyCode);
+	m_keyCode.SetRawValue((unsigned int) rawKeyCode);
+/*
 	if (m_keyCode == 0) {
             m_keyCode = SCROLL_LOCK_KEYSYM;
 	}
-#endif
+*/
 	// Propagates calls
 	m_pMouseOutput->ReadProfileData (pConfObj);
 	m_pClickWindowController->ReadProfileData (pConfObj);
@@ -453,16 +453,18 @@ void CViacamController::ProcessImage (IplImage *pImage)
 	END_GUI_CALL_MUTEX()
 
 #if defined(__WXGTK__) 
-        // Read keyboard
-        if (m_enabledActivationKey) {
-		CKeyboardCode kbCode = CKeyboardControl::ReadKeyCode();
-		int keyCode = CKeyboardControl::GetKeyCode(kbCode);
-		if (keyCode == m_keyCode and keyCode != m_lastKeyCode) {
+	// Read keyboard
+	if (m_enabledActivationKey) {
+		//BEGIN_GUI_CALL_MUTEX()
+		CKeyboardCode kc = CKeyboardCode::ReadKeyCode();
+		//int keyCode = kbCode.GetKeyboardCode();
+		if (kc== m_keyCode and kc!= m_lastKeyCode) {
 			m_pMouseOutput->EndVisualAlerts();
 			SetEnabled(!m_pMouseOutput->GetEnabled(),true);
 		}
-		m_lastKeyCode = keyCode;
-        }
+		m_lastKeyCode = kc;
+		//END_GUI_CALL_MUTEX()
+	}
 #endif // __WXGTK___
 }
 

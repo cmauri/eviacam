@@ -36,16 +36,16 @@
 ////@end includes
 
 #include "activationkey.h"
+//#include "viacamcontroller.h"
 
-#include "viacamcontroller.h"
-#include "ckeyboardcontrol.h"
 //#include "wconfiguration.h"
-#include "wx/timer.h"
+#include <wx/timer.h>
+#include <wx/defs.h>
 
 ////@begin XPM images
 ////@end XPM images
 #define TIMER_ID 1234
-#define ESCAPE_KEYSYM 65307
+//#define ESCAPE_KEYSYM 65307
 
 /*!
  * Activationkey type definition
@@ -84,13 +84,14 @@ Activationkey::Activationkey( wxWindow* parent, wxWindowID id, const wxString& c
     Create(parent, id, caption, pos, size, style);
 }
 
+/*
 Activationkey::Activationkey( wxWindow* parent, CViacamController* pViacamController, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) : m_timer(this, TIMER_ID)
 {
 	m_pViacamController= pViacamController;
 //	m_pConfiguration= m_pViacamController->GetConfiguration();
 	Init();
     Create(parent, id, caption, pos, size, style);
-}
+}*/
 
 /*!
  * Activationkey creator
@@ -195,33 +196,36 @@ wxIcon Activationkey::GetIconResource( const wxString& name )
 
 void Activationkey::OnTimer(wxTimerEvent& event)
 {
-	int keyCode = 0;
-	CKeyboardCode kbCode = CKeyboardControl::ReadKeyCode();
+//	int keyCode = 0;
+	CKeyboardCode kc = CKeyboardCode::ReadKeyCode();
 
-	keyCode = CKeyboardControl::GetKeyCode(kbCode);
+	//keyCode = kbCode.GetKeyboardCode();
+		//CKeyboardControl::GetKeyCode(kbCode);
 	
-	if (keyCode != 0) {
-		if (keyCode != ESCAPE_KEYSYM) {
-			m_keyCode = keyCode;
-			EndModal(wxID_YES);		
+	if (kc.IsValid()) {
+		if (kc== CKeyboardCode::FromWXKeyCode (WXK_ESCAPE)) {
+			EndModal(wxID_NO);		
 		} else {		
-			EndModal(wxID_NO);
+			m_keyCode = kc;
+			EndModal(wxID_YES);
 		}
 		m_timer.Stop();	
 	}
 	event.Skip(false);
 }
 
-int Activationkey::GetKeyCode()
+CKeyboardCode Activationkey::GetKeyCode()
 {
 	return m_keyCode;
 }
 
+/*
 wxString Activationkey::GetKeyName()
 {
 	CKeyboardCode kbCode = CKeyboardCode(m_keyCode);
-	return CKeyboardControl::GetKeyboardCodeName(kbCode);
-}	
+	//return CKeyboardControl::GetKeyboardCodeName(kbCode);
+	return kbCode.GetKeyName();
+}*/	
 
 /*!
  * wxEVT_LEFT_DOWN event handler for ID_ACTIVATIONKEY

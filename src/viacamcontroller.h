@@ -34,10 +34,11 @@
 #include "wconfiguration.h"
 
 #if defined(__WXGTK__) 
-#include <X11/Xlib.h>
-#include "ckeyboardcontrol.h"
+//#include <X11/Xlib.h>
+//#include "ckeyboardcontrol.h"
 #include "activationkey.h"
 #endif // __WXGTK___
+#include "ckeyboardcode.h"
 #include "cautostart.h"
 #include "cmotioncalibration.h"
 #include "wwizardmanager.h"
@@ -69,8 +70,8 @@ public:
 
         inline const bool GetEnabledActivationKey () const;
         inline void SetEnabledActivationKey (bool value);
-	inline void SetActivationKeyCode (int value);
-	inline const wxString GetActivationKeyName () const;
+	inline void SetActivationKeyCode (CKeyboardCode value);
+	inline const CKeyboardCode GetActivationKey () const;
 	inline const bool GetMotionCalibration () const;
 	inline void SetMotionCalibration (bool value);
 	bool StartMotionCalibration (void);
@@ -138,10 +139,12 @@ private:
 	bool m_enabledActivationKey;
 	bool m_motionCalibrationEnabled;
 	bool m_runWizardAtStartup;
-#if defined(__WXGTK__) 
-	int m_keyCode;
-	int m_lastKeyCode;
-#endif
+//#if defined(__WXGTK__) 
+	//int m_keyCode;
+	//int m_lastKeyCode;
+	CKeyboardCode m_keyCode;
+	CKeyboardCode m_lastKeyCode;
+//#endif
 	CAutostart* m_pAutostart;
 	WConfiguration* m_pConfiguration;
 	CMotionCalibration* m_pMotionCalibration;
@@ -243,24 +246,17 @@ inline void CViacamController::SetEnabledActivationKey (bool value)
 	m_enabledActivationKey= value;
 }
 
-inline void CViacamController::SetActivationKeyCode (int value)
+inline void CViacamController::SetActivationKeyCode (CKeyboardCode value)
 {
-#if defined(__WXGTK__)
 	m_keyCode= value;
 	m_lastKeyCode= value;
-#else
-	assert (false);		// Win: not yet implemented
-#endif
 }
 
-inline const wxString CViacamController::GetActivationKeyName () const
+
+//inline const wxString CViacamController::GetActivationKeyName () const
+inline const CKeyboardCode CViacamController::GetActivationKey () const
 {
-#if defined(__WXGTK__)
-	CKeyboardCode kbCode = CKeyboardCode(m_keyCode);
-	return CKeyboardControl::GetKeyboardCodeName(kbCode);
-#else
-	return wxString(_T(""));
-#endif
+	return m_keyCode;
 }
 
 inline const bool CViacamController::GetMotionCalibration () const
