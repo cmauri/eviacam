@@ -41,7 +41,7 @@
 
 ////@begin XPM images
 ////@end XPM images
-#define TIMER_ID 1234
+//#define TIMER_ID 1234
 
 /*!
  * WGetKey type definition
@@ -60,7 +60,7 @@ BEGIN_EVENT_TABLE( WGetKey, wxDialog )
     EVT_LEFT_DOWN( WGetKey::OnLeftDown )
 
 ////@end WGetKey event table entries
-	EVT_TIMER(TIMER_ID, WGetKey::OnTimer)
+//	EVT_TIMER(TIMER_ID, WGetKey::OnTimer)
 
 END_EVENT_TABLE()
 
@@ -69,12 +69,12 @@ END_EVENT_TABLE()
  * WGetKey constructors
  */
 
-WGetKey::WGetKey() : m_timer(this, TIMER_ID)
+WGetKey::WGetKey() //: m_timer(this, TIMER_ID)
 {
     Init();
 }
 
-WGetKey::WGetKey( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) : m_timer(this, TIMER_ID)
+WGetKey::WGetKey( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) //: m_timer(this, TIMER_ID)
 {
     Init();
     Create(parent, id, caption, pos, size, style);
@@ -119,6 +119,7 @@ WGetKey::~WGetKey()
 void WGetKey::Init()
 {
 ////@begin WGetKey member initialisation
+    m_txtKey = NULL;
 ////@end WGetKey member initialisation
 }
 
@@ -135,13 +136,15 @@ void WGetKey::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, _("Press the desired key or 'Esc' to cancel this action."), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(itemStaticText3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    m_txtKey = new wxTextCtrl( itemDialog1, ID_TEXTCTRL, _("Press the desired key or 'Esc' to cancel this action."), wxDefaultPosition, wxSize(350, -1), wxTE_READONLY|wxTE_CENTRE|wxWANTS_CHARS );
+    itemBoxSizer2->Add(m_txtKey, 0, wxGROW|wxALL, 5);
 
     // Connect events and objects
-    itemStaticText3->Connect(wxID_STATIC, wxEVT_LEFT_DOWN, wxMouseEventHandler(WGetKey::OnLeftDown), NULL, this);
+    m_txtKey->Connect(ID_TEXTCTRL, wxEVT_LEFT_DOWN, wxMouseEventHandler(WGetKey::OnLeftDown), NULL, this);
+    m_txtKey->Connect(ID_TEXTCTRL, wxEVT_KEY_UP, wxKeyEventHandler(WGetKey::OnKeyUp), NULL, this);
 ////@end WGetKey content construction
-	m_timer.Start(50);
+	//m_timer.Start(50);
+	m_txtKey->SetFocus();
 }
 
 
@@ -180,7 +183,7 @@ wxIcon WGetKey::GetIconResource( const wxString& name )
 ////@end WGetKey icon retrieval
 }
 
-
+/*
 void WGetKey::OnTimer(wxTimerEvent& event)
 {
 	CKeyboardCode kc = CKeyboardCode::ReadKeyCode();
@@ -195,6 +198,25 @@ void WGetKey::OnTimer(wxTimerEvent& event)
 		m_timer.Stop();	
 	}
 	event.Skip(false);
+}*/
+
+/*!
+ * wxEVT_KEY_UP event handler for ID_ACTIVATIONKEY
+ */
+
+void WGetKey::OnKeyUp( wxKeyEvent& event )
+{
+	if (event.GetKeyCode()== WXK_ESCAPE) {
+		EndModal(wxID_NO);
+	}
+	else {
+		// Note that GetRawKeyCode() returns the KeySym on wxGTK (untested for
+		// wxMSW) instead of the hardware scan code (KeyCode) as the documentation
+		// explains
+		m_keyCode= CKeyboardCode::FromVirtualKeyCode(event.GetRawKeyCode()); 
+		EndModal(wxID_YES);
+	}
+    event.Skip(false);
 }
 
 CKeyboardCode WGetKey::GetKeyCode()
@@ -209,7 +231,6 @@ CKeyboardCode WGetKey::GetKeyCode()
 void WGetKey::OnLeftDown( wxMouseEvent& event )
 {
 	EndModal(wxID_NO);
-	m_timer.Stop();	
+	//m_timer.Stop();	
 	event.Skip(false);
 }
-

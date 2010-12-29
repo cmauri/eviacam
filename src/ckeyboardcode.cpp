@@ -136,6 +136,13 @@ CKeyboardCode CKeyboardCode::FromScanCode (unsigned int scanCode)
 #endif
 }
 
+// Given a platform dependent virtual-key or KeySym returns the 
+// corresponding CKeyboardCode object
+CKeyboardCode CKeyboardCode::FromVirtualKeyCode (unsigned int vkCode)
+{
+	return CKeyboardCode (vkCode);
+}
+
 // Given an ASCII code returns the corresponding CKeyboardCode object
 CKeyboardCode CKeyboardCode::FromASCII (char ascii)
 {
@@ -293,13 +300,15 @@ CKeyboardCode CKeyboardCode::FromWXKeyCode (wxKeyCode kc)
 		case WXK_SPECIAL19:
 		case WXK_SPECIAL20:
 		case WXK_CAPITAL:
+			assert (false);
+			return CKeyboardCode(0);
 			break;
 	}
 
 	// If the code reaches this point it means that wxKeyCode kc carries 
 	// an unicode character (see wxKeyEvent::GetUnicodeKey)
 	// TODO: translate these unicode char to a keysym
-	return CKeyboardCode();
+	return CKeyboardCode(kc);
 #else
 	// Still not available for Windows
 	assert(0);

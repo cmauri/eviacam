@@ -60,6 +60,10 @@ public:
 	// Given an scan code returns the corresponding CKeyboardCode object
 	static CKeyboardCode FromScanCode (unsigned int scanCode);
 
+	// Given a platform dependent virtual-key or KeySym returns the 
+	// corresponding CKeyboardCode object
+	static CKeyboardCode FromVirtualKeyCode (unsigned int vkCode);
+
 	// Given an ASCII code returns the corresponding CKeyboardCode object
 	static CKeyboardCode FromASCII (char ascii);
 

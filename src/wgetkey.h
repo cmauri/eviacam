@@ -26,8 +26,10 @@
 /*!
  * Includes
  */
+
+//#include <wx/timer.h>
+#include <wx/dialog.h>
 #include "ckeyboardcode.h"
-#include <wx/timer.h>
 
 ////@begin includes
 ////@end includes
@@ -39,18 +41,17 @@
 ////@begin forward declarations
 ////@end forward declarations
 
-//class CViacamController;
-
 /*!
  * Control identifiers
  */
 
 ////@begin control identifiers
 #define ID_ACTIVATIONKEY 10070
-#define SYMBOL_WGETKEY_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxTAB_TRAVERSAL
+#define ID_TEXTCTRL 10041
+#define SYMBOL_WGETKEY_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxWANTS_CHARS|wxTAB_TRAVERSAL
 #define SYMBOL_WGETKEY_TITLE _("Get key")
 #define SYMBOL_WGETKEY_IDNAME ID_ACTIVATIONKEY
-#define SYMBOL_WGETKEY_SIZE wxSize(400, 300)
+#define SYMBOL_WGETKEY_SIZE wxDefaultSize
 #define SYMBOL_WGETKEY_POSITION wxDefaultPosition
 ////@end control identifiers
 
@@ -88,12 +89,11 @@ private:
     /// wxEVT_LEFT_DOWN event handler for ID_ACTIVATIONKEY
     void OnLeftDown( wxMouseEvent& event );
 
+    /// wxEVT_KEY_UP event handler for ID_TEXTCTRL
+    void OnKeyUp( wxKeyEvent& event );
+
 ////@end WGetKey event handler declarations
-	void OnTimer(wxTimerEvent& event);
-	
-//	wxString GetKeyName();
-	void StartTimer();
-	void StopTimer();
+//	void OnTimer(wxTimerEvent& event);
 
 ////@begin WGetKey member function declarations
 
@@ -108,9 +108,10 @@ private:
     static bool ShowToolTips();
 
 ////@begin WGetKey member variables
+    wxTextCtrl* m_txtKey;
 ////@end WGetKey member variables
 private:
-	wxTimer m_timer;
+	//wxTimer m_timer;
 	CKeyboardCode m_keyCode;
 };
 
