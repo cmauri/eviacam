@@ -455,7 +455,7 @@ void CViacamController::ProcessImage (IplImage *pImage)
 #if defined(__WXGTK__) 
 	// Read keyboard
 	if (m_enabledActivationKey) {
-		//BEGIN_GUI_CALL_MUTEX()
+		BEGIN_GUI_CALL_MUTEX()
 		CKeyboardCode kc = CKeyboardCode::ReadKeyCode();
 		//int keyCode = kbCode.GetKeyboardCode();
 		if (kc== m_keyCode and kc!= m_lastKeyCode) {
@@ -463,7 +463,7 @@ void CViacamController::ProcessImage (IplImage *pImage)
 			SetEnabled(!m_pMouseOutput->GetEnabled(),true);
 		}
 		m_lastKeyCode = kc;
-		//END_GUI_CALL_MUTEX()
+		END_GUI_CALL_MUTEX()
 	}
 #endif // __WXGTK___
 }
