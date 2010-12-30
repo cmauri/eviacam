@@ -27,6 +27,7 @@
 
 class CVisualAlert {
 public:
+	// Non virtual destructor is OK
 	~CVisualAlert();
 protected:
 	CVisualAlert();
