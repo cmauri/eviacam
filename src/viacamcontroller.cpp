@@ -19,20 +19,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
-
-// For compilers that support precompilation, includes "wx/wx.h".
-/*
-#include "wx/wxprec.h"
-
-#ifdef __BORLANDC__
-#pragma hdrstop
-#endif
-
-#ifndef WX_PRECOMP
-#include "wx/wx.h"
-#endif
-*/
-
 #include "viacamcontroller.h"
 
 #include "wviacam.h"
@@ -46,24 +32,20 @@
 #include "wcameradialog.h"
 #include "eviacamdefs.h"
 #include "configmanager.h"
-//#include <wx/utils.h>
-//#include <wx/debug.h>
 #include "cautostart.h"
-//#include <wx/stdpaths.h>
-
 #include "hotkeymanager.h"
 
 CViacamController::CViacamController(void)
-: m_wizardManager()
-, m_pMainWindow(NULL)
+: m_pMainWindow(NULL) 
 , m_pCamera(NULL)
 , m_pCaptureThread(NULL)
 , m_pClickWindowController(NULL)
 , m_pMouseOutput(NULL)
-
+, m_pAutostart(NULL)
+, m_pConfiguration(NULL)
+, m_wizardManager()
 , m_enabled(false)
 , m_frameRate(0)
-, m_pConfiguration(NULL)
 {
 	m_hotKeyManager= new CHotkeyManager();
 	m_configManager= new CConfigManager(this);	
@@ -239,7 +221,7 @@ bool CViacamController::Initialize ()
 
 	// Register track area
 	if (retval)
-		m_pMainWindow->GetCamWindow()->RegisterControl (m_motionTracker.GetTrackAreaControl());
+		m_pMainWindow->GetCamWindow()->RegisterControl (m_visionPipeline.GetTrackAreaControl());
 	
 
 	// Load configuration
@@ -283,7 +265,7 @@ void CViacamController::Finalize ()
 		m_pClickWindowController= NULL;
 	}
 	if (m_pMainWindow) {
-		m_pMainWindow->GetCamWindow()->UnregisterControl (m_motionTracker.GetTrackAreaControl());
+		m_pMainWindow->GetCamWindow()->UnregisterControl (m_visionPipeline.GetTrackAreaControl());
 		// Main window is self-destroyed
 		m_pMainWindow= NULL;
 	}
@@ -306,7 +288,7 @@ void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 	// Propagates calls
 	m_pMouseOutput->WriteProfileData (pConfObj);
 	m_pClickWindowController->WriteProfileData (pConfObj);
-	m_motionTracker.WriteProfileData (pConfObj);
+	m_visionPipeline.WriteProfileData (pConfObj);
 	m_hotKeyManager->WriteProfileData (pConfObj);
 } 
 
@@ -326,7 +308,7 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 	// Propagates calls
 	m_pMouseOutput->ReadProfileData (pConfObj);
 	m_pClickWindowController->ReadProfileData (pConfObj);
-	m_motionTracker.ReadProfileData (pConfObj);	
+	m_visionPipeline.ReadProfileData (pConfObj);	
 	m_hotKeyManager->ReadProfileData (pConfObj);
 }
 
@@ -416,7 +398,7 @@ void CViacamController::ProcessImage (IplImage *pImage)
 	m_pMainWindow->SetFPS (iFrameRate, cond);
 
 	// Proces frame
-	m_motionTracker.ProcessImage (image, vx, vy);
+	m_visionPipeline.ProcessImage (image, vx, vy);
 
 	// Send mouse motion
 	BEGIN_GUI_CALL_MUTEX()

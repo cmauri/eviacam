@@ -9,7 +9,7 @@ noinst_HEADERS = wgetkey.h \
 	cmotioncalibration.h \
 	eviacamapp.h \
 	langnames-utf8.h \
-	motiontracker.h \
+	visionpipeline.h \
 	mouseoutput.h \
 	version.h \
 	viacamcontroller.h \
@@ -100,7 +100,7 @@ eviacam_SOURCES = wgetkey.cpp \
 	clickwindowtext.cpp \
 	cmotioncalibration.cpp \
 	eviacamapp.cpp \
-	motiontracker.cpp \
+	visionpipeline.cpp \
 	mouseoutput.cpp \
 	viacamcontroller.cpp \
 	wabout.cpp \

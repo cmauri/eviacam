@@ -35,7 +35,7 @@
 #include "eviacamapp.h"
 #include "viacamcontroller.h"
 #include "mouseoutput.h"
-#include "motiontracker.h"
+#include "visionpipeline.h"
 #include "clickwindowcontroller.h"
 #include "cautostart.h"
 #include "configmanager.h"
@@ -936,9 +936,9 @@ void WConfiguration::InitializeData ()
 		wxGetApp().GetController().GetClickWindowController().GetOpenClickWinAtStartup());
 	
 	// Advanced
-	m_chkAutoLocateFace->SetValue (wxGetApp().GetController().GetMotionTracker().GetTrackFace());
+	m_chkAutoLocateFace->SetValue (wxGetApp().GetController().GetVisionPipeline().GetTrackFace());
 	m_chkShowAutoLocateFaceFilter->Enable (m_chkAutoLocateFace->GetValue());
-	m_chkShowAutoLocateFaceFilter->SetValue (wxGetApp().GetController().GetMotionTracker().GetShowTrackFaceFilter());
+	m_chkShowAutoLocateFaceFilter->SetValue (wxGetApp().GetController().GetVisionPipeline().GetShowTrackFaceFilter());
 	m_txtOnScreenKeyboardCommand->SetValue(wxGetApp().GetController().GetOnScreenKeyboardCommand());
 #if defined(__WXGTK__)
 	m_chkActivationKey->SetValue(wxGetApp().GetController().getHotkeyManager().GetEnabledActivationKey());
@@ -1287,7 +1287,7 @@ void WConfiguration::OnCheckboxShowClickwinClick( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxAutoLocateFaceClick( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMotionTracker().SetTrackFace (m_chkAutoLocateFace->GetValue());
+	wxGetApp().GetController().GetVisionPipeline().SetTrackFace (m_chkAutoLocateFace->GetValue());
 	m_chkShowAutoLocateFaceFilter->Enable (m_chkAutoLocateFace->GetValue());
 	event.Skip(false);
 	Changed ();
@@ -1300,7 +1300,7 @@ void WConfiguration::OnCheckboxAutoLocateFaceClick( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxShowLocateFaceFilterClick( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMotionTracker().SetShowTrackFaceFilter (m_chkShowAutoLocateFaceFilter->GetValue());
+	wxGetApp().GetController().GetVisionPipeline().SetShowTrackFaceFilter (m_chkShowAutoLocateFaceFilter->GetValue());
 	event.Skip(false);
 	Changed ();
 }

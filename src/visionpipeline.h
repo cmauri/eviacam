@@ -1,10 +1,10 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        motiontracker.h
+// Name:        visionpipeline.h
 // Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,26 +20,29 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef MOTIONTRACKER_H
-#define MOTIONTRACKER_H
+#ifndef VISIONPIPELINE_H
+#define VISIONPIPELINE_H
 
 #include "crvimage.h"
 #include "crvhistogram.h"
-#include "visiblenormroi.h"
 #include "configbase.h"
+#include "visiblenormroi.h"
 
-class CMotionTracker : public CConfigBase
+
+class CVisionPipeline : public CConfigBase
 {
 	// Methods
 public:
-	CMotionTracker ();
+	CVisionPipeline ();
 
 	void ProcessImage (CIplImage& image, float& xVel, float& yVel);
 
 	const bool GetTrackFace () const { return m_trackFace; }
 	void SetTrackFace (bool state) { m_trackFace= state; }
 	
-	inline const bool GetShowTrackFaceFilter () const;
+	const bool GetShowTrackFaceFilter () const { 
+		return m_showColorTrackerResult; 
+	}
 	void SetShowTrackFaceFilter (bool state) { m_showColorTrackerResult= state; }
 
 	CVisibleNormROI* GetTrackAreaControl () { return &m_trackArea; }
@@ -60,22 +63,14 @@ private:
 	CIplImage m_imgPrevProc, m_imgCurrProc;
 	CIplImage m_imgPrev, m_imgCurr;
 	CIplImage m_imgVelX, m_imgVelY;
-//	CIplImage m_imgSqrVelX, m_imgSqrVelY;
 	TCrvLookupTable m_prevLut;
-//	CCriticalSection m_critSect;
 	
-  // Private methods
+	// Private methods
 	void AllocWorkingSpace (CIplImage &image);
 	void TrackMotion (CIplImage &image, float &xVel, float &yVel);
 	int PreprocessImage ();
 	void PostProcessImage ();
 	void ComputeFaceTrackArea (CIplImage &image);
-
 };
 
-inline const bool CMotionTracker::GetShowTrackFaceFilter () const 
-{ 
-	return m_showColorTrackerResult; 
-}
-
-#endif // MOTIONTRACKER_H
+#endif

@@ -24,7 +24,7 @@
 #define VIACAMCONTROLLER_H
 
 #include "capturethread.h"
-#include "motiontracker.h"
+#include "visionpipeline.h"
 #include "configbase.h"
 #include "wwizardmanager.h"
 
@@ -94,7 +94,7 @@ public:
 		assert(m_pMouseOutput); return *m_pMouseOutput; 
 	}
 
-	CMotionTracker& GetMotionTracker() { return m_motionTracker; }
+	CVisionPipeline& GetVisionPipeline() { return m_visionPipeline; }
 
 	CClickWindowController& GetClickWindowController() {
 		assert(m_pClickWindowController); return *m_pClickWindowController;
@@ -142,7 +142,7 @@ private:
 	CCaptureThread* m_pCaptureThread;	
 	CClickWindowController* m_pClickWindowController;
 	CMouseOutput* m_pMouseOutput;
-	CMotionTracker m_motionTracker;
+	CVisionPipeline m_visionPipeline;
 	CHotkeyManager* m_hotKeyManager;
 	CConfigManager* m_configManager;
 	wxLocale* m_locale;
@@ -160,67 +160,5 @@ private:
 	bool m_motionCalibrationEnabled;
 	bool m_runWizardAtStartup;	
 };
-
-
-
-
-
-
-/*
-inline wxLocale* CViacamController::GetLocale()
-{
-	return m_locale;
-}*/
-
-/*
-inline CAutostart* CViacamController::GetAutostart()
-{
-	return m_pAutostart;
-}
-
-inline WConfiguration* CViacamController::GetConfiguration()
-{
-	return m_pConfiguration;
-}
-
-
-inline CMouseOutput* CViacamController::GetMouseOutput()
-{
-	return m_pMouseOutput;
-}
-
-inline const bool CViacamController::GetEnabled () const
-{
-	return m_enabled;
-}*/
-
-/*
-inline CMotionTracker* CViacamController::GetMotionTracker()
-{
-	return &m_motionTracker;
-}
-
-inline CClickWindowController* CViacamController::GetClickWindowController()
-{
-	return m_pClickWindowController;
-}
-
-inline WViacam* CViacamController::GetMainWindow()
-{
-	return CViacamController::m_pMainWindow;
-}
-*/
-
-/*
-inline CConfigManager* CViacamController::GetConfigManager()
-{
-	return m_configManager;
-}
-
-inline CCamera* CViacamController::GetCamera()
-{
-	return m_pCamera;
-}
-*/
 
 #endif

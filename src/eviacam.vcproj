@@ -243,13 +243,13 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 				RelativePath=".\hotkeymanager.cpp">
 			</File>
 			<File
-				RelativePath=".\motiontracker.cpp">
-			</File>
-			<File
 				RelativePath=".\mouseoutput.cpp">
 			</File>
 			<File
 				RelativePath=".\viacamcontroller.cpp">
+			</File>
+			<File
+				RelativePath=".\visionpipeline.cpp">
 			</File>
 			<File
 				RelativePath=".\wabout.cpp">
@@ -323,9 +323,6 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 				RelativePath=".\langnames-utf16.h">
 			</File>
 			<File
-				RelativePath=".\motiontracker.h">
-			</File>
-			<File
 				RelativePath=".\mouseoutput.h">
 			</File>
 			<File
@@ -333,6 +330,9 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 			</File>
 			<File
 				RelativePath=".\viacamcontroller.h">
+			</File>
+			<File
+				RelativePath=".\visionpipeline.h">
 			</File>
 			<File
 				RelativePath=".\wabout.h">

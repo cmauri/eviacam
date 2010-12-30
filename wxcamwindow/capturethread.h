@@ -25,7 +25,8 @@
 #define _CAPTURETHREAD_H_
 
 #include <wx/thread.h>
-#include <cv.h>
+//#include <cv.h>
+typedef struct _IplImage IplImage;
 
 // Forward class definitions
 class CCamera;

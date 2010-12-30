@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        motiontracker.cpp
+// Name:        visionpipeline.cpp
 // Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
@@ -19,10 +19,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
-#include "motiontracker.h"
+#include "visionpipeline.h"
+
 #include "crvcolor.h"
 #include "crvmisc.h"
 #include "crvskindetection.h"
+#include "crvimage.h"
+
 #include <math.h>
 
 // Constants
@@ -32,19 +35,19 @@
 #define DEFAULT_TRACK_AREA_Y_CENTER_PERCENT 0.5f
 
 
-CMotionTracker::CMotionTracker () 
+CVisionPipeline::CVisionPipeline () 
 {
 	InitDefaults();	
 }
 
-void CMotionTracker::AllocWorkingSpace (CIplImage &image)
+void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
 {
 	bool retval;
 
 	if (!m_imgVelX.Initialized () ||
 		image.Width() != m_imgVelX.Width() ||
-		image.Height() != m_imgVelX.Height() )
-	{
+		image.Height() != m_imgVelX.Height() ) {
+
 		retval= m_imgBinFace.Create (image.Width(), image.Height(), 
 									IPL_DEPTH_8U, "GRAY");
 		assert (retval);
@@ -75,7 +78,7 @@ void CMotionTracker::AllocWorkingSpace (CIplImage &image)
 	}
 }
 
-void CMotionTracker::ComputeFaceTrackArea (CIplImage &image)
+void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 {
 	CvRect rect;
 	CvTermCriteria criteria;
@@ -108,7 +111,7 @@ void CMotionTracker::ComputeFaceTrackArea (CIplImage &image)
 	m_trackArea.SetCenterImg (&image, cx, cy);
 }
 
-int CMotionTracker::PreprocessImage ()
+int CVisionPipeline::PreprocessImage ()
 {
 	TCrvHistogram his;
 	int range;
@@ -122,7 +125,7 @@ int CMotionTracker::PreprocessImage ()
 	return 0;
 }
 
-void CMotionTracker::PostProcessImage ()
+void CVisionPipeline::PostProcessImage ()
 {
 	/*
 	Histogram his;
@@ -154,31 +157,27 @@ void MatrixMeanImageCells (CIplImage *pCImg, TAnalisysMatrix &m)
 	float compBoxHeight= ((float) (yLim - yIni + 1)) / COMP_MATRIX_HEIGHT;
 	int iCompBoxHeight= (int) compBoxHeight;
 
-	for (my= 0; my< COMP_MATRIX_HEIGHT; my++)
-	{
-		for (mx= 0; mx< COMP_MATRIX_WIDTH; mx++)
-		{
+	for (my= 0; my< COMP_MATRIX_HEIGHT; ++my) {
+		for (mx= 0; mx< COMP_MATRIX_WIDTH; ++mx) {
 			m[mx][my]= 0.0f;
 
-			y= (int) (yIni + my * compBoxHeight);
-			for (yCount= 0; yCount< iCompBoxHeight; yCount++)
-			{
-				x= (int) (xIni + mx * compBoxWidth);
+			y= yIni + (int)((float) my * compBoxHeight);
+			for (yCount= 0; yCount< iCompBoxHeight; ++yCount) {
+				x= xIni + (int) ((float) mx * compBoxWidth);
 				pSrc= (float *) crvImgOffset (pCImg->ptr(), x, y);
 
-				for (xCount= 0; xCount< iCompBoxWidth; xCount++)
-				{
+				for (xCount= 0; xCount< iCompBoxWidth; ++xCount) {
 					m[mx][my]+= *pSrc;
-					pSrc++;
+					++pSrc;
 				}
 				m[mx][my]/= (float) (iCompBoxWidth * iCompBoxHeight);
-				y++;
+				++y;
 			}			
 		}
 	}
 }
 
-void CMotionTracker::TrackMotion (CIplImage &image, float &xVel, float &yVel)
+void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 {
 	CvTermCriteria term;
 	CvRect box;
@@ -219,13 +218,10 @@ void CMotionTracker::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	float velModulusMax= 0;		
 
 	// Compute modulus for every motion cell
-	for (x= 0; x< COMP_MATRIX_WIDTH; x++)
-	{
-		for (y= 0; y< COMP_MATRIX_HEIGHT; y++)
-		{
+	for (x= 0; x< COMP_MATRIX_WIDTH; ++x) {
+		for (y= 0; y< COMP_MATRIX_HEIGHT; ++y) {
 			velModulusMatrix[x][y]= 
-				(velXMatrix[x][y] * velXMatrix[x][y] + velYMatrix[x][y] * velYMatrix[x][y]); //);
-			
+				(velXMatrix[x][y] * velXMatrix[x][y] + velYMatrix[x][y] * velYMatrix[x][y]);
 			
 			if (velModulusMax< velModulusMatrix[x][y]) velModulusMax= velModulusMatrix[x][y];			
 		}		
@@ -234,13 +230,10 @@ void CMotionTracker::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	// Select valid cells (i.e. those with enough motion)
 	int validCells= 0;
 	xVel= yVel= 0;
-	for (x= 0; x< COMP_MATRIX_WIDTH; x++)
-	{
-		for (y= 0; y< COMP_MATRIX_HEIGHT; y++)
-		{
-			if (velModulusMatrix[x][y]> (0.05 * velModulusMax) ) 
-			{
-				validCells++;
+	for (x= 0; x< COMP_MATRIX_WIDTH; ++x) {
+		for (y= 0; y< COMP_MATRIX_HEIGHT; ++y) {
+			if (velModulusMatrix[x][y]> (0.05 * velModulusMax) ) {
+				++validCells;
 				xVel+= velXMatrix[x][y];
 				yVel+= velYMatrix[x][y];				
 			}
@@ -264,27 +257,25 @@ void CMotionTracker::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	m_imgVelY.PopROI ();
 }
 
-void CMotionTracker::ProcessImage (CIplImage& image, float& xVel, float& yVel)
+void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 {
 	AllocWorkingSpace (image);
 
 	if (m_trackFace) ComputeFaceTrackArea (image);
 
-	TrackMotion (image, xVel, yVel);
-	
+	TrackMotion (image, xVel, yVel);	
 
-	if (m_trackFace && m_showColorTrackerResult)
-	{
+	if (m_trackFace && m_showColorTrackerResult) {
 		// Copy face tracker output image to resulting image
 		cvMerge( m_imgBinFace.ptr(), m_imgBinFace.ptr(), m_imgBinFace.ptr(), NULL, image.ptr());
 	}
 
-	// Store actual image as previous
+	// Store current image as previous
 	m_imgPrev.Swap (&m_imgCurr);	
 }
 
 // Configuration methods
-void CMotionTracker::InitDefaults()
+void CVisionPipeline::InitDefaults()
 {
 	m_trackFace= false;
 	m_showColorTrackerResult= false;	
@@ -292,22 +283,20 @@ void CMotionTracker::InitDefaults()
 	m_trackArea.SetCenter (DEFAULT_TRACK_AREA_X_CENTER_PERCENT, DEFAULT_TRACK_AREA_Y_CENTER_PERCENT);
 }
 
-void CMotionTracker::WriteProfileData(wxConfigBase* pConfObj)
+void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)
 {
 	float xc, yc, width, height;
 
 	pConfObj->SetPath (_T("motionTracker"));	
 
 	pConfObj->Write(_T("trackFace"), m_trackFace);
-//	pConfObj->Write(_T("showColorTrackerResult"), m_showColorTrackerResult);
 
 	m_trackArea.GetSize (width, height);
 	
 	pConfObj->Write (_T("trackAreaWidth"), (double) width);
 	pConfObj->Write (_T("trackAreaHeight"), (double) height);
 
-	if (!m_trackFace)
-	{		
+	if (!m_trackFace) {		
 		m_trackArea.GetCenter (xc, yc);
 		pConfObj->Write (_T("trackAreaCenterX"), (double) xc);
 		pConfObj->Write (_T("trackAreaCenterY"), (double) yc);
@@ -316,7 +305,7 @@ void CMotionTracker::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->SetPath (_T(".."));
 }
 
-void CMotionTracker::ReadProfileData(wxConfigBase* pConfObj)
+void CVisionPipeline::ReadProfileData(wxConfigBase* pConfObj)
 {
 	// Ensure proper default values if read fails
 	double	xc= DEFAULT_TRACK_AREA_X_CENTER_PERCENT, 
@@ -331,14 +320,12 @@ void CMotionTracker::ReadProfileData(wxConfigBase* pConfObj)
 	
 	m_trackArea.SetSize ((float) width, (float)height);
 
-	if (!m_trackFace)
-	{
+	if (!m_trackFace) {
 		pConfObj->Read (_T("trackAreaCenterX"), &xc);
 		pConfObj->Read (_T("trackAreaCenterY"), &yc);
 
 		m_trackArea.SetCenter ((float)xc, (float)yc);		
 	}
-//	pConfObj->Read(_T("showColorTrackerResult"), &m_showColorTrackerResult);
 
 	pConfObj->SetPath (_T(".."));
 }
