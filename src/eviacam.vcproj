@@ -237,7 +237,10 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 				RelativePath=".\cvisualalert.cpp">
 			</File>
 			<File
-				RelativePath=".\guiapp.cpp">
+				RelativePath=".\eviacamapp.cpp">
+			</File>
+			<File
+				RelativePath=".\hotkeymanager.cpp">
 			</File>
 			<File
 				RelativePath=".\motiontracker.cpp">
@@ -308,7 +311,10 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 				RelativePath=".\cvisualalert.h">
 			</File>
 			<File
-				RelativePath=".\guiapp.h">
+				RelativePath=".\eviacamapp.h">
+			</File>
+			<File
+				RelativePath=".\hotkeymanager.h">
 			</File>
 			<File
 				RelativePath=".\langnames-utf16.h">

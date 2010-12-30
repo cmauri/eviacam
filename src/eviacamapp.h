@@ -1,10 +1,10 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        guiapp.h
+// Name:        eviacamapp.h
 // Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     09/01/2008 21:40:06
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef _GUIAPP_H_
-#define _GUIAPP_H_
+#ifndef _EVIACAMAPP_H_
+#define _EVIACAMAPP_H_
 
 
 /*!
@@ -50,40 +50,37 @@ class CViacamController;
 ////@end control identifiers
 
 /*!
- * GuiApp class declaration
+ * EViacamApp class declaration
  */
 
-class GuiApp: public wxApp
+class EViacamApp: public wxApp
 {    
-    DECLARE_CLASS( GuiApp )
-    DECLARE_EVENT_TABLE()
+	DECLARE_CLASS( EViacamApp )
+	DECLARE_EVENT_TABLE()
 
 public:
-
-    /// Constructor
-    GuiApp();
-
-    void Init();
-
-    /// Initialises the application
-    virtual bool OnInit();
-
-    /// Called on exit
-    virtual int OnExit();
-
-////@begin GuiApp event handler declarations
-
-////@end GuiApp event handler declarations
-
-////@begin GuiApp member function declarations
-
-////@end GuiApp member function declarations
-
-////@begin GuiApp member variables
-////@end GuiApp member variables
+	/// Constructor
+	EViacamApp();
 
 private:
-	
+	void Init();
+
+	/// Initialises the application
+	virtual bool OnInit();
+
+	/// Called on exit
+	virtual int OnExit();
+
+////@begin EViacamApp event handler declarations
+
+////@end EViacamApp event handler declarations
+
+////@begin EViacamApp member function declarations
+
+////@end EViacamApp member function declarations
+
+////@begin EViacamApp member variables
+////@end EViacamApp member variables
 	CViacamController* m_pController;
 #if defined(NDEBUG)
 	wxLogNull m_disableErrorMessages;
@@ -95,7 +92,7 @@ private:
  */
 
 ////@begin declare app
-DECLARE_APP(GuiApp)
+DECLARE_APP(EViacamApp)
 ////@end declare app
 
 #endif

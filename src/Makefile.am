@@ -1,7 +1,7 @@
 # these are the headers for your project
 noinst_HEADERS = wgetkey.h cautostart.h ckeyboardcode.h clickwindow.h \
 	clickwindowbitmap.h clickwindowcontroller.h clickwindowtext.h \
-	cmotioncalibration.h guiapp.h langnames-utf8.h motiontracker.h \
+	cmotioncalibration.h eviacamapp.h langnames-utf8.h motiontracker.h \
 	mouseoutput.h version.h viacamcontroller.h wabout.h \
 	wconfiguration.h wconfirmcalibration.h wmotioncalibrationx.h \
 	wmotioncalibrationy.h wviacam.h cvisualalert.h wwizard.h \
@@ -47,7 +47,7 @@ install-exec-hook:
 # the application source, library search path, and link libraries
 eviacam_SOURCES = wgetkey.cpp cautostart.cpp ckeyboardcode.cpp clickwindow.cpp \
 	clickwindowbitmap.cpp clickwindowcontroller.cpp clickwindowtext.cpp cmotioncalibration.cpp \
-	guiapp.cpp motiontracker.cpp mouseoutput.cpp \
+	eviacamapp.cpp motiontracker.cpp mouseoutput.cpp \
 	viacamcontroller.cpp wabout.cpp wconfiguration.cpp wconfirmcalibration.cpp \
 	wmotioncalibrationx.cpp wmotioncalibrationy.cpp wviacam.cpp cvisualalert.cpp wwizard.cpp wwizardmanager.cpp wcameradialog.cpp
 	

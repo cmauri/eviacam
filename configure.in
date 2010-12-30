@@ -1,4 +1,4 @@
-AC_INIT(src/guiapp.cpp)
+AC_INIT(src/eviacamapp.cpp)
 AC_PREREQ(2.61)
 AM_CONFIG_HEADER(config.h)
 

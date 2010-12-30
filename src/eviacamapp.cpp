@@ -1,10 +1,10 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        guiapp.cpp
+// Name:        eviacamapp.cpp
 // Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     09/01/2008 21:40:06
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
 ////@begin includes
 ////@end includes
 #include <wx/tooltip.h>
-#include "guiapp.h"
+#include "eviacamapp.h"
 #include "viacamcontroller.h"
 
 ////@begin XPM images
@@ -50,12 +50,12 @@
 
 /*
 ////@begin implement app
-IMPLEMENT_APP( GuiApp )
+IMPLEMENT_APP( EViacamApp )
 ////@end implement app
 */
 // Under X11 it's necessary enable threading support (for XTestFakeRelativeMotionEvent call)
 #if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXX11__)
-IMPLEMENT_APP_NO_MAIN(GuiApp)
+IMPLEMENT_APP_NO_MAIN(EViacamApp)
 #include <X11/Xlib.h>
 #ifndef NDEBUG
 #include <mcheck.h>
@@ -72,32 +72,32 @@ exit( EXIT_FAILURE );
 return wxEntry(argc, argv);
 }
 #else
-IMPLEMENT_APP(GuiApp)
+IMPLEMENT_APP(EViacamApp)
 #endif
 
 /*!
- * GuiApp type definition
+ * EViacamApp type definition
  */
 
-IMPLEMENT_CLASS( GuiApp, wxApp )
+IMPLEMENT_CLASS( EViacamApp, wxApp )
 
 
 /*!
- * GuiApp event table definition
+ * EViacamApp event table definition
  */
 
-BEGIN_EVENT_TABLE( GuiApp, wxApp )
+BEGIN_EVENT_TABLE( EViacamApp, wxApp )
 
-////@begin GuiApp event table entries
-////@end GuiApp event table entries
+////@begin EViacamApp event table entries
+////@end EViacamApp event table entries
 
 END_EVENT_TABLE()
 
 /*!
- * Constructor for GuiApp
+ * Constructor for EViacamApp
  */
 
-GuiApp::GuiApp()
+EViacamApp::EViacamApp()
 {
 	Init();
 }
@@ -106,21 +106,21 @@ GuiApp::GuiApp()
 /*!
  * Member initialisation
  */
-void GuiApp::Init()
+void EViacamApp::Init()
 {
 	m_pController= NULL;
 
-////@begin GuiApp member initialisation
-////@end GuiApp member initialisation
+////@begin EViacamApp member initialisation
+////@end EViacamApp member initialisation
 }
 
 /*!
- * Initialisation for GuiApp
+ * Initialisation for EViacamApp
  */
 
-bool GuiApp::OnInit()
+bool EViacamApp::OnInit()
 {     	
-/* ////@begin GuiApp initialisation */
+/* ////@begin EViacamApp initialisation */
 	// Remove the comment markers above and below this block
 	// to make permanent changes to the code.
 
@@ -136,7 +136,7 @@ bool GuiApp::OnInit()
 #if wxUSE_GIF
 	wxImage::AddHandler(new wxGIFHandler);
 #endif		
-/* ////@end GuiApp initialisation */
+/* ////@end EViacamApp initialisation */
 
 	// Uncomment this to enable a console in Windows for debug purposes
 	//AllocConsole();
@@ -156,15 +156,15 @@ bool GuiApp::OnInit()
 
 
 /*!
- * Cleanup for GuiApp
+ * Cleanup for EViacamApp
  */
 
-int GuiApp::OnExit()
+int EViacamApp::OnExit()
 {    
 	m_pController->Finalize();
 	delete m_pController;
 
-////@begin GuiApp cleanup
+////@begin EViacamApp cleanup
 	return wxApp::OnExit();
-////@end GuiApp cleanup
+////@end EViacamApp cleanup
 }
