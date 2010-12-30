@@ -24,24 +24,21 @@
 #define VIACAMCONTROLLER_H
 
 #include "capturethread.h"
-#include "waittime.h"
-#include "clickwindowcontroller.h"
 #include "motiontracker.h"
 #include "configbase.h"
-#include "configmanager.h"
-#include "crvcamera.h"
-#include <cv.h>
-#include "wconfiguration.h"
-#include "ckeyboardcode.h"
-#include "cautostart.h"
-#include "cmotioncalibration.h"
 #include "wwizardmanager.h"
 
 class WViacam;
+class CClickWindowController;
 class CMouseOutput;
 class WConfiguration;
 class CMotionCalibration;
 class wxWindow;
+class CConfigManager;
+class CHotkeyManager;
+class CCamera;
+class CAutostart;
+class wxLocale;
 
 class CViacamController : public CProcessImage, public CConfigBase
 {
@@ -49,56 +46,73 @@ class CViacamController : public CProcessImage, public CConfigBase
 public:
 	CViacamController(void);
 	virtual ~CViacamController(void);
-
-	// Initialize application. false if failed
-	bool Initialize ();
-	void Finalize ();	
-
-	virtual void ProcessImage (IplImage *pImage);
-
-	inline const bool GetEnabled () const;
+		
+	const bool GetEnabled () const { return m_enabled; }
 	void SetEnabled (bool value, bool silent= false, wxWindow* parent= NULL);
 	
-	inline const bool GetEnabledAtStartup () const;
-	inline void SetEnabledAtStartup (bool value);	
+	const bool GetEnabledAtStartup () const { return m_enabledAtStartup; }
+	void SetEnabledAtStartup (bool value) { m_enabledAtStartup= value; }
 
-	inline const bool GetEnabledActivationKey () const;
-	inline void SetEnabledActivationKey (bool value);
-
-	inline void SetActivationKeyCode (CKeyboardCode value);
-	inline const CKeyboardCode GetActivationKey () const;
-
-	inline const bool GetMotionCalibration () const;
-	inline void SetMotionCalibration (bool value);
+	const bool GetMotionCalibrationEnabled () const {
+		return m_motionCalibrationEnabled;
+	}
+	void SetMotionCalibrationEnabled (bool value) {
+		m_motionCalibrationEnabled= value;
+	}
 	bool StartMotionCalibration (void);
 	
-	inline const bool GetRunWizardAtStartup () const;
-	inline void SetRunWizardAtStartup (bool value);	
-	
+	const bool GetRunWizardAtStartup () const {	return m_runWizardAtStartup; }
+	void SetRunWizardAtStartup (bool value) { m_runWizardAtStartup= value; }
+		
 	void SetLanguage (const int id);
-	inline const int GetLanguage () const;
+	const int GetLanguage () const { return m_languageId; }
 
-	inline CAutostart* GetAutostart();
-	inline WConfiguration* GetConfiguration();
-	inline CMouseOutput* GetMouseOutput();
-	inline CMotionTracker* GetMotionTracker();
-	inline CClickWindowController* GetClickWindowController();
-	inline WViacam* GetMainWindow();
-	inline CConfigManager* GetConfigManager();
-	inline CCamera* GetCamera();
-	
-	inline const wxString& GetOnScreenKeyboardCommand() const;
-	inline void SetOnScreenKeyboardCommand(const wxString& value);
+	const wxString& GetOnScreenKeyboardCommand() const {
+		return m_onScreenKeyboardCommand;
+	}
+	void SetOnScreenKeyboardCommand(const wxString& value) {
+		m_onScreenKeyboardCommand= value;
+	}
 
-	inline const wxString& GetCameraName () const;
-	inline const bool CameraHasSettingsDialog () const;
+	const wxString& GetCameraName () const;
+	const bool CameraHasSettingsDialog () const;
 	void ShowCameraSettingsDialog () const;
-	inline void ChangeCamera ();
-	inline wxLocale* GetLocale();
-
+	void ChangeCamera ();
+	
 	void OpenConfiguration();
 	void OpenOnScreenKeyboard();
 	void StartWizard();
+
+	// Getters of objects that compose the controller
+	CAutostart& GetAutostart() { assert (m_pAutostart);	return *m_pAutostart; }
+
+	WConfiguration& GetConfiguration() { 
+		assert(m_pConfiguration); return *m_pConfiguration; 
+	}
+
+	CMouseOutput& GetMouseOutput() { 
+		assert(m_pMouseOutput); return *m_pMouseOutput; 
+	}
+
+	CMotionTracker& GetMotionTracker() { return m_motionTracker; }
+
+	CClickWindowController& GetClickWindowController() {
+		assert(m_pClickWindowController); return *m_pClickWindowController;
+	}
+
+	WViacam* GetMainWindow() { return m_pMainWindow; }
+	
+	CConfigManager& GetConfigManager() {
+		assert(m_configManager); return *m_configManager;
+	}
+
+	CCamera& GetCamera() { assert(m_pCamera); return *m_pCamera; }
+
+	CHotkeyManager& getHotkeyManager() { 
+		assert (m_hotKeyManager); return *m_hotKeyManager;
+	}
+
+	wxLocale* GetLocale() { return m_locale; }
 
 	// Configuration methods
 	virtual void InitDefaults();
@@ -111,37 +125,54 @@ public:
 
 	virtual void StartupRun();
 
+	// Initialize application. false if failed
+	bool Initialize ();
+	void Finalize ();
+
+	// Image callback
+	virtual void ProcessImage (IplImage *pImage);
 private:
 	void ReleaseResources();
 	void SetUpLanguage();		
 	CCamera* SetUpCamera();
-	
+
+	// objects that compose the controller
 	WViacam* m_pMainWindow;
 	CCamera* m_pCamera;
 	CCaptureThread* m_pCaptureThread;	
 	CClickWindowController* m_pClickWindowController;
 	CMouseOutput* m_pMouseOutput;
 	CMotionTracker m_motionTracker;
+	CHotkeyManager* m_hotKeyManager;
 	CConfigManager* m_configManager;
 	wxLocale* m_locale;
-	wxString m_cameraName;
+	CAutostart* m_pAutostart;
+	WConfiguration* m_pConfiguration;
+	CMotionCalibration* m_pMotionCalibration;
+	WWizardManager m_wizardManager;
 
+	wxString m_cameraName;
 	bool m_enabled;
 	bool m_enabledAtStartup;
 	int m_languageId;
 	wxString m_onScreenKeyboardCommand;
 	float m_frameRate;
-	bool m_enabledActivationKey;
 	bool m_motionCalibrationEnabled;
-	bool m_runWizardAtStartup;
-	CKeyboardCode m_keyCode;
-	CKeyboardCode m_lastKeyCode;
-	CAutostart* m_pAutostart;
-	WConfiguration* m_pConfiguration;
-	CMotionCalibration* m_pMotionCalibration;
-	WWizardManager m_wizardManager;
+	bool m_runWizardAtStartup;	
 };
 
+
+
+
+
+
+/*
+inline wxLocale* CViacamController::GetLocale()
+{
+	return m_locale;
+}*/
+
+/*
 inline CAutostart* CViacamController::GetAutostart()
 {
 	return m_pAutostart;
@@ -152,6 +183,7 @@ inline WConfiguration* CViacamController::GetConfiguration()
 	return m_pConfiguration;
 }
 
+
 inline CMouseOutput* CViacamController::GetMouseOutput()
 {
 	return m_pMouseOutput;
@@ -160,8 +192,9 @@ inline CMouseOutput* CViacamController::GetMouseOutput()
 inline const bool CViacamController::GetEnabled () const
 {
 	return m_enabled;
-}
+}*/
 
+/*
 inline CMotionTracker* CViacamController::GetMotionTracker()
 {
 	return &m_motionTracker;
@@ -172,51 +205,13 @@ inline CClickWindowController* CViacamController::GetClickWindowController()
 	return m_pClickWindowController;
 }
 
-inline const bool CViacamController::GetEnabledAtStartup () const
-{
-	return m_enabledAtStartup;
-}
-
-inline void CViacamController::SetEnabledAtStartup (bool value)
-{
-	m_enabledAtStartup= value;
-}
-
-inline const int CViacamController::GetLanguage () const
-{
-	return m_languageId;
-}
-
 inline WViacam* CViacamController::GetMainWindow()
 {
 	return CViacamController::m_pMainWindow;
 }
+*/
 
-inline const wxString& CViacamController::GetOnScreenKeyboardCommand() const
-{
-	return m_onScreenKeyboardCommand;
-}
-
-inline const wxString& CViacamController::GetCameraName () const
-{
-	return m_cameraName;
-}
-
-inline const bool CViacamController::CameraHasSettingsDialog () const
-{
-	return (m_pCamera->HasSettingsDialog() || m_pCamera->HasCameraControls());
-}
-
-inline void CViacamController::ChangeCamera ()
-{
-	m_cameraName.Clear();
-}
-
-inline void CViacamController::SetOnScreenKeyboardCommand(const wxString& value)
-{
-	m_onScreenKeyboardCommand= value;
-}
-
+/*
 inline CConfigManager* CViacamController::GetConfigManager()
 {
 	return m_configManager;
@@ -226,52 +221,6 @@ inline CCamera* CViacamController::GetCamera()
 {
 	return m_pCamera;
 }
-
-inline const bool CViacamController::GetEnabledActivationKey () const
-{
-    return m_enabledActivationKey;
-}
-
-inline void CViacamController::SetEnabledActivationKey (bool value)
-{
-	m_enabledActivationKey= value;
-}
-
-inline void CViacamController::SetActivationKeyCode (CKeyboardCode value)
-{
-	m_keyCode= value;
-	m_lastKeyCode= value;
-}
-
-inline const CKeyboardCode CViacamController::GetActivationKey () const
-{
-	return m_keyCode;
-}
-
-inline const bool CViacamController::GetMotionCalibration () const
-{
-	return m_motionCalibrationEnabled;
-}
-
-inline void CViacamController::SetMotionCalibration (bool value)
-{
-	m_motionCalibrationEnabled= value;
-}
-
-inline const bool CViacamController::GetRunWizardAtStartup () const
-{
-	return m_runWizardAtStartup;
-}
-
-inline void CViacamController::SetRunWizardAtStartup (bool value)
-{
-	m_runWizardAtStartup= value;
-}
-
-inline wxLocale* CViacamController::GetLocale()
-{
-	return m_locale;
-}
-
+*/
 
 #endif

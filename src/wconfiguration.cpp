@@ -21,43 +21,37 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
-// For compilers that support precompilation, includes "wx/wx.h".
-#include <wx/imaglist.h>
-#include "wx/wxprec.h"
-
-#ifdef __BORLANDC__
-#pragma hdrstop
-#endif
-
-#ifndef WX_PRECOMP
-#include "wx/wx.h"
-#endif
+#include "wconfiguration.h"
 
 ////@begin includes
 #include "wx/imaglist.h"
 ////@end includes
+#include <wx/sizer.h>
+#include <wx/msgdlg.h>
+#include <wx/textdlg.h>
+#include <wx/filedlg.h>
+#include <wx/panel.h>
 
-#include "wconfiguration.h"
+#include "eviacamapp.h"
+#include "viacamcontroller.h"
+#include "mouseoutput.h"
+#include "motiontracker.h"
+#include "clickwindowcontroller.h"
+#include "cautostart.h"
+#include "configmanager.h"
+#include "hotkeymanager.h"
+#include "wgetkey.h"
 
 ////@begin XPM images
 #include "icons/eviacam.xpm"
 #include "icons/user.xpm"
 ////@end XPM images
 
-#include "viacamcontroller.h"
-#include "mouseoutput.h"
-#include "motiontracker.h"
-#include "clickwindowcontroller.h"
-#include "cautostart.h"
-
 // Trick to properly compile & display native language names
 #if defined(__WXMSW__)
 #include "langnames-utf16.h"
 #else
 #include "langnames-utf8.h"
-#include "wgetkey.h"
-#include "cautostart.h"
-#include <wx/stdpaths.h>
 #endif
 
 const wxLanguage s_langIds[] = {
@@ -224,18 +218,6 @@ WConfiguration::WConfiguration( wxWindow* parent, wxWindowID id, const wxString&
     Init();
     Create(parent, id, caption, pos, size, style);
 }
-
-WConfiguration::WConfiguration( wxWindow* parent, CViacamController* pViacamController, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
-{
-	m_pViacamController= pViacamController;
-	#if defined(__WXGTK__)
-		m_pAutostart = m_pViacamController->GetAutostart();
-	#endif
-
-	Init();
-    Create(parent, id, caption, pos, size, style);
-}
-
 
 /*!
  * WConfiguration creator
@@ -846,11 +828,11 @@ void WConfiguration::CreateControls()
 
 ////@end WConfiguration content construction
 #if defined(__WXGTK__)
-	for (unsigned int i=0; i<m_pViacamController->GetMouseOutput()->GetKeyEventsCount(); i++) {
-		m_choLeft->Append(_("Key:") + wxString(m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetName(), wxConvLocal));
-		m_choRight->Append(_("Key:") + wxString(m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetName(), wxConvLocal));
-		m_choUp->Append(_("Key:") + wxString(m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetName(), wxConvLocal));
-		m_choDown->Append(_("Key:") + wxString(m_pViacamController->GetMouseOutput()->GetKeyboardCode(i).GetName(), wxConvLocal));
+	for (unsigned int i=0; i<wxGetApp().GetController().GetMouseOutput().GetKeyEventsCount(); i++) {
+		m_choLeft->Append(_("Key:") + wxString(wxGetApp().GetController().GetMouseOutput().GetKeyboardCode(i).GetName(), wxConvLocal));
+		m_choRight->Append(_("Key:") + wxString(wxGetApp().GetController().GetMouseOutput().GetKeyboardCode(i).GetName(), wxConvLocal));
+		m_choUp->Append(_("Key:") + wxString(wxGetApp().GetController().GetMouseOutput().GetKeyboardCode(i).GetName(), wxConvLocal));
+		m_choDown->Append(_("Key:") + wxString(wxGetApp().GetController().GetMouseOutput().GetKeyboardCode(i).GetName(), wxConvLocal));
 	}
 #endif
 }
@@ -908,74 +890,73 @@ void WConfiguration::InitializeData ()
 	//
 	
 	// Motion options
-	m_spinXSpeed->SetValue (m_pViacamController->GetMouseOutput()->GetXSpeed());
-	m_spinYSpeed->SetValue (m_pViacamController->GetMouseOutput()->GetYSpeed());
-	m_spinAcceleration->SetValue (m_pViacamController->GetMouseOutput()->GetAcceleration());
-	m_spinSmoothness->SetValue (m_pViacamController->GetMouseOutput()->GetSmoothness());
-	m_spinEasyStop->SetValue (m_pViacamController->GetMouseOutput()->GetEasyStopValue());
+	m_spinXSpeed->SetValue (wxGetApp().GetController().GetMouseOutput().GetXSpeed());
+	m_spinYSpeed->SetValue (wxGetApp().GetController().GetMouseOutput().GetYSpeed());
+	m_spinAcceleration->SetValue (wxGetApp().GetController().GetMouseOutput().GetAcceleration());
+	m_spinSmoothness->SetValue (wxGetApp().GetController().GetMouseOutput().GetSmoothness());
+	m_spinEasyStop->SetValue (wxGetApp().GetController().GetMouseOutput().GetEasyStopValue());
 	
 	// Workspace
-	m_chkEnabledWorkspace->SetValue (m_pViacamController->GetMouseOutput()->GetRestrictedWorkingArea());
-	if (m_pViacamController->GetMouseOutput()->GetRestrictedWorkingArea()) {
+	m_chkEnabledWorkspace->SetValue (wxGetApp().GetController().GetMouseOutput().GetRestrictedWorkingArea());
+	if (wxGetApp().GetController().GetMouseOutput().GetRestrictedWorkingArea()) {
 	m_spin_top_workspace->Enable(true);
 	m_spin_left_workspace->Enable(true);
 	m_spin_right_workspace->Enable(true);
 	m_spin_bottom_workspace->Enable(true);
 	}
-	m_spin_top_workspace->SetValue (m_pViacamController->GetMouseOutput()->GetTopWorkspace());
-	m_spin_left_workspace->SetValue (m_pViacamController->GetMouseOutput()->GetLeftWorkspace());
-	m_spin_right_workspace->SetValue (m_pViacamController->GetMouseOutput()->GetRightWorkspace());
-	m_spin_bottom_workspace->SetValue (m_pViacamController->GetMouseOutput()->GetBottomWorkspace());
+	m_spin_top_workspace->SetValue (wxGetApp().GetController().GetMouseOutput().GetTopWorkspace());
+	m_spin_left_workspace->SetValue (wxGetApp().GetController().GetMouseOutput().GetLeftWorkspace());
+	m_spin_right_workspace->SetValue (wxGetApp().GetController().GetMouseOutput().GetRightWorkspace());
+	m_spin_bottom_workspace->SetValue (wxGetApp().GetController().GetMouseOutput().GetBottomWorkspace());
 	
 	// Clic
-	m_chkDwellClickEnabled->SetValue (m_pViacamController->GetMouseOutput()->GetClickMode()!= CMouseOutput::NONE);
+	m_chkDwellClickEnabled->SetValue (wxGetApp().GetController().GetMouseOutput().GetClickMode()!= CMouseOutput::NONE);
 #if defined(__WXGTK__)
-	m_chkEnableGestureClick->SetValue (m_pViacamController->GetMouseOutput()->GetClickMode()== CMouseOutput::GESTURE);
+	m_chkEnableGestureClick->SetValue (wxGetApp().GetController().GetMouseOutput().GetClickMode()== CMouseOutput::GESTURE);
 #endif
-	m_chkAllowConsecutiveClick->SetValue (m_pViacamController->GetMouseOutput()->GetConsecutiveClicksAllowed());
-	m_chkBeepOnClick->SetValue (m_pViacamController->GetMouseOutput()->GetBeepOnClick());
-	//m_chkShowClickCountdown->SetValue (m_pViacamController->GetMouseOutput()->GetShowClickCountdown());
-	m_spinDwellTime->SetValue (m_pViacamController->GetMouseOutput()->GetDwellTime());
-	m_spinDwellArea->SetValue ( m_pViacamController->GetMouseOutput()->GetDwellToleranceArea () );
-	m_chkShowClickWin->SetValue ( m_pViacamController->GetClickWindowController()->IsShown() );
-	m_choClickWindowBehaviour->Select (m_pViacamController->GetClickWindowController()->GetFastMode() ? 1 : 0);
-	m_choClickWindowDesign->Select (m_pViacamController->GetClickWindowController()->GetDesign());
+	m_chkAllowConsecutiveClick->SetValue (wxGetApp().GetController().GetMouseOutput().GetConsecutiveClicksAllowed());
+	m_chkBeepOnClick->SetValue (wxGetApp().GetController().GetMouseOutput().GetBeepOnClick());
+	m_spinDwellTime->SetValue (wxGetApp().GetController().GetMouseOutput().GetDwellTime());
+	m_spinDwellArea->SetValue ( wxGetApp().GetController().GetMouseOutput().GetDwellToleranceArea () );
+	m_chkShowClickWin->SetValue ( wxGetApp().GetController().GetClickWindowController().IsShown() );
+	m_choClickWindowBehaviour->Select (wxGetApp().GetController().GetClickWindowController().GetFastMode() ? 1 : 0);
+	m_choClickWindowDesign->Select (wxGetApp().GetController().GetClickWindowController().GetDesign());
 #if defined(__WXGTK__)
-	m_choLeft->Select (m_pViacamController->GetMouseOutput()->GetActionLeft());
-	m_choRight->Select (m_pViacamController->GetMouseOutput()->GetActionRight());
-	m_choUp->Select (m_pViacamController->GetMouseOutput()->GetActionTop());
-	m_choDown->Select (m_pViacamController->GetMouseOutput()->GetActionBottom());
-	m_chkAllowVisualAlerts->SetValue (m_pViacamController->GetMouseOutput()->GetVisualAlerts());
+	m_choLeft->Select (wxGetApp().GetController().GetMouseOutput().GetActionLeft());
+	m_choRight->Select (wxGetApp().GetController().GetMouseOutput().GetActionRight());
+	m_choUp->Select (wxGetApp().GetController().GetMouseOutput().GetActionTop());
+	m_choDown->Select (wxGetApp().GetController().GetMouseOutput().GetActionBottom());
+	m_chkAllowVisualAlerts->SetValue (wxGetApp().GetController().GetMouseOutput().GetVisualAlerts());
 #endif
 	UpdateGUIClickOptions();
 
 	// Startup
-	m_chkEnabledAtStartup->SetValue (m_pViacamController->GetEnabledAtStartup());
+	m_chkEnabledAtStartup->SetValue (wxGetApp().GetController().GetEnabledAtStartup());
 	m_chkOpenClickWinAtStartup->SetValue (
-		m_pViacamController->GetClickWindowController()->GetOpenClickWinAtStartup());
+		wxGetApp().GetController().GetClickWindowController().GetOpenClickWinAtStartup());
 	
 	// Advanced
-	m_chkAutoLocateFace->SetValue (m_pViacamController->GetMotionTracker()->GetTrackFace());
+	m_chkAutoLocateFace->SetValue (wxGetApp().GetController().GetMotionTracker().GetTrackFace());
 	m_chkShowAutoLocateFaceFilter->Enable (m_chkAutoLocateFace->GetValue());
-	m_chkShowAutoLocateFaceFilter->SetValue (m_pViacamController->GetMotionTracker()->GetShowTrackFaceFilter());
-	m_txtOnScreenKeyboardCommand->SetValue(m_pViacamController->GetOnScreenKeyboardCommand());
+	m_chkShowAutoLocateFaceFilter->SetValue (wxGetApp().GetController().GetMotionTracker().GetShowTrackFaceFilter());
+	m_txtOnScreenKeyboardCommand->SetValue(wxGetApp().GetController().GetOnScreenKeyboardCommand());
 #if defined(__WXGTK__)
-	m_chkActivationKey->SetValue(m_pViacamController->GetEnabledActivationKey());
-	m_txtActivationKey->SetValue(wxString(m_pViacamController->GetActivationKey().GetName(), wxConvLocal));
+	m_chkActivationKey->SetValue(wxGetApp().GetController().getHotkeyManager().GetEnabledActivationKey());
+	m_txtActivationKey->SetValue(wxString(wxGetApp().GetController().getHotkeyManager().GetActivationKey().GetName(), wxConvLocal));
 	    
 	// 
 	// App data
 	//
 
-	m_chkStartup->SetValue(m_pAutostart->IsEnabled());
+	m_chkStartup->SetValue(wxGetApp().GetController().GetAutostart().IsEnabled());
 #endif
 	// Profile combo
 	m_choProfile->Clear();
-	m_choProfile->Append (m_pViacamController->GetConfigManager()->GetProfileList());
-	m_choProfile->Select (m_pViacamController->GetConfigManager()->GetCurrentProfile());
+	m_choProfile->Append (wxGetApp().GetController().GetConfigManager().GetProfileList());
+	m_choProfile->Select (wxGetApp().GetController().GetConfigManager().GetCurrentProfile());
 
 	// Profile buttons
-	if (m_pViacamController->GetConfigManager()->GetCurrentProfile()== 0)
+	if (wxGetApp().GetController().GetConfigManager().GetCurrentProfile()== 0)
 		m_btnDeleteProfile->Enable (false);
 	else
 		m_btnDeleteProfile->Enable (true);
@@ -990,12 +971,12 @@ void WConfiguration::InitializeData ()
 	}		
 	// Select current language
 	for (unsigned int i= 0; i< WXSIZEOF(s_langNames); i++)
-		if (s_langIds[i]== m_pViacamController->GetLanguage())
+		if (s_langIds[i]== wxGetApp().GetController().GetLanguage())
 			m_choLanguage->SetSelection(i);
 	
 	// Camera
-	m_txtSelectedCamera->SetValue (m_pViacamController->GetCameraName());
-	if (m_pViacamController->CameraHasSettingsDialog ())
+	m_txtSelectedCamera->SetValue (wxGetApp().GetController().GetCameraName());
+	if (wxGetApp().GetController().CameraHasSettingsDialog ())
 		m_btnCameraSettings->Enable (true);
 	else
 		m_btnCameraSettings->Enable (false);
@@ -1056,6 +1037,8 @@ void WConfiguration::EnableGUIGestureOptions (bool enable)
 	m_stMoveRight->Enable(enable);
 	m_stMoveUp->Enable(enable);
 	m_stMoveDown->Enable(enable);
+#else
+	wxUnusedVar(enable);
 #endif
 }
 
@@ -1093,7 +1076,7 @@ void WConfiguration::UnChanged ()
 
 void WConfiguration::OnCheckboxEnableAtStartupClick( wxCommandEvent& event )
 {
-	m_pViacamController->SetEnabledAtStartup (m_chkEnabledAtStartup->GetValue());
+	wxGetApp().GetController().SetEnabledAtStartup (m_chkEnabledAtStartup->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1105,7 +1088,7 @@ void WConfiguration::OnCheckboxEnableAtStartupClick( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxClickwinAtStartupClick( wxCommandEvent& event )
 {
-	m_pViacamController->GetClickWindowController()->SetOpenClickWinAtStartup (
+	wxGetApp().GetController().GetClickWindowController().SetOpenClickWinAtStartup (
 		m_chkOpenClickWinAtStartup->GetValue());
 	event.Skip(false);
 	Changed ();
@@ -1118,7 +1101,7 @@ void WConfiguration::OnCheckboxClickwinAtStartupClick( wxCommandEvent& event )
 
 void WConfiguration::OnSpinctrlXspeedUpdated( wxSpinEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetXSpeed(m_spinXSpeed->GetValue());
+	wxGetApp().GetController().GetMouseOutput().SetXSpeed(m_spinXSpeed->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1130,7 +1113,7 @@ void WConfiguration::OnSpinctrlXspeedUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlYspeedUpdated( wxSpinEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetYSpeed(m_spinYSpeed->GetValue());
+	wxGetApp().GetController().GetMouseOutput().SetYSpeed(m_spinYSpeed->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1142,7 +1125,7 @@ void WConfiguration::OnSpinctrlYspeedUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlAccelerationUpdated( wxSpinEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetAcceleration(m_spinAcceleration->GetValue());
+	wxGetApp().GetController().GetMouseOutput().SetAcceleration(m_spinAcceleration->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1153,7 +1136,7 @@ void WConfiguration::OnSpinctrlAccelerationUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlSmoothnessUpdated( wxSpinEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetSmoothness(m_spinSmoothness->GetValue());
+	wxGetApp().GetController().GetMouseOutput().SetSmoothness(m_spinSmoothness->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1165,7 +1148,7 @@ void WConfiguration::OnSpinctrlSmoothnessUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlEasystopUpdated( wxSpinEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetEasyStopValue(m_spinEasyStop->GetValue());
+	wxGetApp().GetController().GetMouseOutput().SetEasyStopValue(m_spinEasyStop->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1178,7 +1161,7 @@ void WConfiguration::OnSpinctrlEasystopUpdated( wxSpinEvent& event )
 void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 {
 	if (!m_chkDwellClickEnabled->GetValue()) {
-		if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::NONE, false, this)) {
+		if (wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::NONE, false, this)) {
 			EnableGUIGeneralClickOptions(false);
 			EnableGUIGestureOptions(false);
 			EnableGUIClickWindowOptions(false);
@@ -1190,7 +1173,7 @@ void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 #if defined(__WXGTK__)
 		if (m_chkEnableGestureClick->IsChecked()) {
 			// Gesture click
-			if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE, false, this)) {
+			if (wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::GESTURE, false, this)) {
 				EnableGUIGeneralClickOptions(true);
 				EnableGUIGestureOptions(true);
 				EnableGUIClickWindowOptions(false);
@@ -1199,14 +1182,14 @@ void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 		}
 		else
 #endif
-			if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL, false, this)) {
+			if (wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::DWELL, false, this)) {
 				EnableGUIGeneralClickOptions(true);
 				EnableGUIGestureOptions(false);
 				EnableGUIClickWindowOptions(true);
 				Changed ();
 			}
 	}		
-	m_chkDwellClickEnabled->SetValue (m_pViacamController->GetMouseOutput()->GetClickMode()!= CMouseOutput::NONE);
+	m_chkDwellClickEnabled->SetValue (wxGetApp().GetController().GetMouseOutput().GetClickMode()!= CMouseOutput::NONE);
 	event.Skip(false);	
 }
 
@@ -1219,7 +1202,7 @@ void WConfiguration::OnCheckboxEnableGestureClick( wxCommandEvent& event )
 {
 	if (m_chkEnableGestureClick->IsChecked())
 	{
-		if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::GESTURE, false, this)) {
+		if (wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::GESTURE, false, this)) {
 			EnableGUIGestureOptions(true);
 			EnableGUIClickWindowOptions(false);
 		}
@@ -1228,7 +1211,7 @@ void WConfiguration::OnCheckboxEnableGestureClick( wxCommandEvent& event )
 		}
 	}
 	else {
-		if (m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::DWELL, false, this)) {
+		if (wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::DWELL, false, this)) {
 			EnableGUIGestureOptions(false);
 			EnableGUIClickWindowOptions(true);
 		}
@@ -1244,7 +1227,7 @@ void WConfiguration::OnCheckboxEnableGestureClick( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxAllowConsecutiveClick( wxCommandEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetConsecutiveClicksAllowed (m_chkAllowConsecutiveClick->GetValue());
+	wxGetApp().GetController().GetMouseOutput().SetConsecutiveClicksAllowed (m_chkAllowConsecutiveClick->GetValue());
 	Changed ();
 	event.Skip(false);	
 }
@@ -1256,7 +1239,7 @@ void WConfiguration::OnCheckboxAllowConsecutiveClick( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxBeepOnClickClick( wxCommandEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetBeepOnClick (m_chkBeepOnClick->GetValue());
+	wxGetApp().GetController().GetMouseOutput().SetBeepOnClick (m_chkBeepOnClick->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1268,7 +1251,7 @@ void WConfiguration::OnCheckboxBeepOnClickClick( wxCommandEvent& event )
 
 void WConfiguration::OnSpinctrlDwellTimeUpdated( wxSpinEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetDwellTime (m_spinDwellTime->GetValue());
+	wxGetApp().GetController().GetMouseOutput().SetDwellTime (m_spinDwellTime->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1280,7 +1263,7 @@ void WConfiguration::OnSpinctrlDwellTimeUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlDwellAreaUpdated( wxSpinEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetDwellToleranceArea (m_spinDwellArea->GetValue());		
+	wxGetApp().GetController().GetMouseOutput().SetDwellToleranceArea (m_spinDwellArea->GetValue());		
 	event.Skip(false);
 	Changed ();
 }
@@ -1292,8 +1275,8 @@ void WConfiguration::OnSpinctrlDwellAreaUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnCheckboxShowClickwinClick( wxCommandEvent& event )
 {
-	m_pViacamController->GetClickWindowController()->Show (
-		! m_pViacamController->GetClickWindowController()->IsShown() );
+	wxGetApp().GetController().GetClickWindowController().Show (
+		! wxGetApp().GetController().GetClickWindowController().IsShown() );
 	event.Skip(false);
 	Changed ();
 }
@@ -1304,7 +1287,7 @@ void WConfiguration::OnCheckboxShowClickwinClick( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxAutoLocateFaceClick( wxCommandEvent& event )
 {
-	m_pViacamController->GetMotionTracker()->SetTrackFace (m_chkAutoLocateFace->GetValue());
+	wxGetApp().GetController().GetMotionTracker().SetTrackFace (m_chkAutoLocateFace->GetValue());
 	m_chkShowAutoLocateFaceFilter->Enable (m_chkAutoLocateFace->GetValue());
 	event.Skip(false);
 	Changed ();
@@ -1317,7 +1300,7 @@ void WConfiguration::OnCheckboxAutoLocateFaceClick( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxShowLocateFaceFilterClick( wxCommandEvent& event )
 {
-	m_pViacamController->GetMotionTracker()->SetShowTrackFaceFilter (m_chkShowAutoLocateFaceFilter->GetValue());
+	wxGetApp().GetController().GetMotionTracker().SetShowTrackFaceFilter (m_chkShowAutoLocateFaceFilter->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1332,7 +1315,7 @@ void WConfiguration::OnChoiceLanguageSelected( wxCommandEvent& event )
 	int index= m_choLanguage->GetCurrentSelection();
 	if (index!= wxNOT_FOUND)
 	{
-        m_pViacamController->SetLanguage (s_langIds[index]);
+        wxGetApp().GetController().SetLanguage (s_langIds[index]);
 		wxMessageDialog dlg (NULL, _("You should restart the application to apply this change"), 
 			_T("Enable Viacam"), wxICON_INFORMATION );
 		dlg.ShowModal ();
@@ -1367,11 +1350,11 @@ void WConfiguration::OnChoiceProfileSelected( wxCommandEvent& event )
 
 	if (fail)
 		// Restore old selection
-		m_choProfile->Select (m_pViacamController->GetConfigManager()->GetCurrentProfile());		
+		m_choProfile->Select (wxGetApp().GetController().GetConfigManager().GetCurrentProfile());		
 	else
 	{
 		// Change profile
-		m_pViacamController->GetConfigManager()->ChangeCurrentProfile (event.GetSelection());
+		wxGetApp().GetController().GetConfigManager().ChangeCurrentProfile (event.GetSelection());
 
 		// Refresh dialog values
 		InitializeData ();		
@@ -1395,7 +1378,7 @@ void WConfiguration::OnButtonDelProfileClick( wxCommandEvent& event )
 	wxMessageDialog dlg (NULL, msg, _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
 	if (dlg.ShowModal()== wxID_YES)
 	{
-		m_pViacamController->GetConfigManager()->DeleteCurrentProfile();
+		wxGetApp().GetController().GetConfigManager().DeleteCurrentProfile();
 		InitializeData ();
 		UnChanged ();
 	}
@@ -1412,7 +1395,7 @@ void WConfiguration::OnButtonAddProfileClick( wxCommandEvent& event )
 	wxTextEntryDialog dlg (this, _("Enter new profile name"), _("Add profile"));
 	if (dlg.ShowModal()== wxID_OK)
 	{
-		switch (m_pViacamController->GetConfigManager()->AddNewProfile (dlg.GetValue()))
+		switch (wxGetApp().GetController().GetConfigManager().AddNewProfile (dlg.GetValue()))
 		{
 		case 0:
 			InitializeData ();
@@ -1444,7 +1427,7 @@ void WConfiguration::OnButtonAddProfileClick( wxCommandEvent& event )
 
 void WConfiguration::OnChoiceBehaviourSelected( wxCommandEvent& event )
 {
-	m_pViacamController->GetClickWindowController()->SetFastMode ( event.GetSelection()!= 0);
+	wxGetApp().GetController().GetClickWindowController().SetFastMode ( event.GetSelection()!= 0);
 	event.Skip(false);
 }
 
@@ -1456,7 +1439,7 @@ void WConfiguration::OnChoiceBehaviourSelected( wxCommandEvent& event )
 void WConfiguration::OnChoiceDesignSelected( wxCommandEvent& event )
 {
 	CClickWindowController::EDesign design= (CClickWindowController::EDesign) event.GetSelection();
-	m_pViacamController->GetClickWindowController()->SetDesign (design);
+	wxGetApp().GetController().GetClickWindowController().SetDesign (design);
 	event.Skip(false);
 }
 
@@ -1484,9 +1467,9 @@ void WConfiguration::OnButtonOnscreenkeyboardcommandClick( wxCommandEvent& event
 
 void WConfiguration::OnTextctrlOnscreenkeyboardcommandTextUpdated( wxCommandEvent& event )
 {
-	if (event.GetString().Cmp(m_pViacamController->GetOnScreenKeyboardCommand()))
+	if (event.GetString().Cmp(wxGetApp().GetController().GetOnScreenKeyboardCommand()))
 	{
-		m_pViacamController->SetOnScreenKeyboardCommand	(event.GetString());
+		wxGetApp().GetController().SetOnScreenKeyboardCommand	(event.GetString());
 		Changed ();
 	}
 	event.Skip(false);
@@ -1500,7 +1483,7 @@ void WConfiguration::OnTextctrlOnscreenkeyboardcommandTextUpdated( wxCommandEven
 
 void WConfiguration::OnButtonCameraSettingsClick( wxCommandEvent& event )
 {
-	m_pViacamController->ShowCameraSettingsDialog ();
+	wxGetApp().GetController().ShowCameraSettingsDialog ();
 
 	event.Skip (false);
 }
@@ -1512,7 +1495,7 @@ void WConfiguration::OnButtonCameraSettingsClick( wxCommandEvent& event )
 
 void WConfiguration::OnButtonChangeCameraClick( wxCommandEvent& event )
 {
-    m_pViacamController->ChangeCamera ();
+    wxGetApp().GetController().ChangeCamera ();
 	wxMessageDialog dlg (NULL, _("You should restart the application to apply this change"), 
 		_T("Enable Viacam"), wxICON_INFORMATION );
 	dlg.ShowModal ();
@@ -1528,7 +1511,7 @@ void WConfiguration::OnButtonChangeCameraClick( wxCommandEvent& event )
 
 void WConfiguration::OnSpinctrlTopWorkspaceUpdated( wxSpinEvent& event )
 {
-    m_pViacamController->GetMouseOutput()->SetTopWorkspace(m_spin_top_workspace->GetValue());
+    wxGetApp().GetController().GetMouseOutput().SetTopWorkspace(m_spin_top_workspace->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1540,7 +1523,7 @@ void WConfiguration::OnSpinctrlTopWorkspaceUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlRightWorkspaceUpdated( wxSpinEvent& event )
 {
-    m_pViacamController->GetMouseOutput()->SetRightWorkspace(m_spin_right_workspace->GetValue());
+    wxGetApp().GetController().GetMouseOutput().SetRightWorkspace(m_spin_right_workspace->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1552,7 +1535,7 @@ void WConfiguration::OnSpinctrlRightWorkspaceUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlLeftWorkspaceUpdated( wxSpinEvent& event )
 {
-    m_pViacamController->GetMouseOutput()->SetLeftWorkspace(m_spin_left_workspace->GetValue());
+    wxGetApp().GetController().GetMouseOutput().SetLeftWorkspace(m_spin_left_workspace->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1564,7 +1547,7 @@ void WConfiguration::OnSpinctrlLeftWorkspaceUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlBottomWorkspaceUpdated( wxSpinEvent& event )
 {
-    m_pViacamController->GetMouseOutput()->SetBottomWorkspace(m_spin_bottom_workspace->GetValue());
+    wxGetApp().GetController().GetMouseOutput().SetBottomWorkspace(m_spin_bottom_workspace->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1581,14 +1564,14 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
         if (dlg.ShowModal()== wxID_YES)
         {
             m_chkEnabledWorkspace->SetValue(true);
-            m_pViacamController->GetMouseOutput()->SetRestrictedWorkingArea(m_chkEnabledWorkspace->GetValue());
+            wxGetApp().GetController().GetMouseOutput().SetRestrictedWorkingArea(m_chkEnabledWorkspace->GetValue());
             m_spin_top_workspace->Enable(m_chkEnabledWorkspace->GetValue());
             m_spin_left_workspace->Enable(m_chkEnabledWorkspace->GetValue());
             m_spin_right_workspace->Enable(m_chkEnabledWorkspace->GetValue());
             m_spin_bottom_workspace->Enable(m_chkEnabledWorkspace->GetValue());
         }		
 	} else {
-        m_pViacamController->GetMouseOutput()->SetRestrictedWorkingArea(m_chkEnabledWorkspace->GetValue());
+        wxGetApp().GetController().GetMouseOutput().SetRestrictedWorkingArea(m_chkEnabledWorkspace->GetValue());
         m_spin_top_workspace->Enable(m_chkEnabledWorkspace->GetValue());
         m_spin_left_workspace->Enable(m_chkEnabledWorkspace->GetValue());
         m_spin_right_workspace->Enable(m_chkEnabledWorkspace->GetValue());
@@ -1607,16 +1590,16 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
 
 void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
 {
-	bool isEnabled = m_pViacamController->GetEnabled();
+	bool isEnabled = wxGetApp().GetController().GetEnabled();
 	WGetKey dlgGetKey(this);
 
 	if (dlgGetKey.ShowModal()== wxID_YES) {
 		CKeyboardCode kc= dlgGetKey.GetKeyCode();
 		m_txtActivationKey->SetValue(wxString(kc.GetName(), wxConvLocal));
-		m_pViacamController->SetActivationKeyCode(kc);
+		wxGetApp().GetController().getHotkeyManager().SetActivationKeyCode(kc);
 		Changed ();
 	}
-	m_pViacamController->SetEnabled(isEnabled);
+	wxGetApp().GetController().SetEnabled(isEnabled);
 		
 	event.Skip(false);    
 }
@@ -1629,7 +1612,7 @@ void WConfiguration::OnButtonActivationKeyClick( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxActivationKeyClick( wxCommandEvent& event )
 {
-    m_pViacamController->SetEnabledActivationKey(m_chkActivationKey->GetValue());
+    wxGetApp().GetController().getHotkeyManager().SetEnabledActivationKey(m_chkActivationKey->GetValue());
     event.Skip(false);
     Changed ();
 }
@@ -1642,7 +1625,7 @@ void WConfiguration::OnCheckboxActivationKeyClick( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxStartupClick( wxCommandEvent& event )
 {
-	m_pAutostart->Enable(m_chkStartup->GetValue());
+	wxGetApp().GetController().GetAutostart().Enable(m_chkStartup->GetValue());
     event.Skip();
     Changed ();
 }
@@ -1655,7 +1638,7 @@ void WConfiguration::OnCheckboxStartupClick( wxCommandEvent& event )
 
 void WConfiguration::OnButtonClick( wxCommandEvent& event )
 {
-	if (m_pViacamController->StartMotionCalibration()) {
+	if (wxGetApp().GetController().StartMotionCalibration()) {
 		InitializeData();
 		Changed ();	
 	}	
@@ -1670,8 +1653,7 @@ void WConfiguration::OnButtonClick( wxCommandEvent& event )
 
 void WConfiguration::OnComboboxLeftSelected( wxCommandEvent& event )
 {
-	int action = event.GetInt();
-	m_pViacamController->GetMouseOutput()->SetActionLeft (action);
+	wxGetApp().GetController().GetMouseOutput().SetActionLeft (event.GetInt());
 	event.Skip(false);
 }
 
@@ -1682,8 +1664,7 @@ void WConfiguration::OnComboboxLeftSelected( wxCommandEvent& event )
 
 void WConfiguration::OnComboboxRightSelected( wxCommandEvent& event )
 {
-	int action = event.GetInt();
-	m_pViacamController->GetMouseOutput()->SetActionRight (action);
+	wxGetApp().GetController().GetMouseOutput().SetActionRight (event.GetInt());
 	event.Skip(false);
 }
 
@@ -1694,8 +1675,7 @@ void WConfiguration::OnComboboxRightSelected( wxCommandEvent& event )
 
 void WConfiguration::OnComboboxTopSelected( wxCommandEvent& event )
 {
-	int action = event.GetInt();
-	m_pViacamController->GetMouseOutput()->SetActionTop (action);
+	wxGetApp().GetController().GetMouseOutput().SetActionTop (event.GetInt());
 	event.Skip(false);
 }
 
@@ -1706,8 +1686,7 @@ void WConfiguration::OnComboboxTopSelected( wxCommandEvent& event )
 
 void WConfiguration::OnComboboxBottomSelected( wxCommandEvent& event )
 {
-	int action = event.GetInt();
-	m_pViacamController->GetMouseOutput()->SetActionBottom (action);
+	wxGetApp().GetController().GetMouseOutput().SetActionBottom (event.GetInt());
 	event.Skip(false);
 }
 
@@ -1718,10 +1697,9 @@ void WConfiguration::OnComboboxBottomSelected( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxAllowVisualAlertsClick( wxCommandEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetVisualAlerts(m_chkAllowVisualAlerts->IsChecked());
-	event.Skip(false);
-	event.Skip(false);
+	wxGetApp().GetController().GetMouseOutput().SetVisualAlerts(m_chkAllowVisualAlerts->IsChecked());
 	Changed ();
+	event.Skip(false);	
 }
 #endif
 
@@ -1760,7 +1738,7 @@ void WConfiguration::OnCancelClick( wxCommandEvent& event )
 
 void WConfiguration::OnLeftGestureChoiceSelected( wxCommandEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetActionLeft (event.GetInt());
+	wxGetApp().GetController().GetMouseOutput().SetActionLeft (event.GetInt());
 	Changed();
 	event.Skip(false);
 }
@@ -1774,7 +1752,7 @@ void WConfiguration::OnLeftGestureChoiceSelected( wxCommandEvent& event )
 
 void WConfiguration::OnRightGestureChoiceSelected( wxCommandEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetActionRight (event.GetInt());
+	wxGetApp().GetController().GetMouseOutput().SetActionRight (event.GetInt());
 	Changed();
 	event.Skip(false);
 }
@@ -1788,7 +1766,7 @@ void WConfiguration::OnRightGestureChoiceSelected( wxCommandEvent& event )
 
 void WConfiguration::OnUpGestureChoiceSelected( wxCommandEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetActionTop (event.GetInt());
+	wxGetApp().GetController().GetMouseOutput().SetActionTop (event.GetInt());
 	Changed();
 	event.Skip(false);
 }
@@ -1802,7 +1780,7 @@ void WConfiguration::OnUpGestureChoiceSelected( wxCommandEvent& event )
 
 void WConfiguration::OnDownGestureChoiceSelected( wxCommandEvent& event )
 {
-	m_pViacamController->GetMouseOutput()->SetActionBottom (event.GetInt());
+	wxGetApp().GetController().GetMouseOutput().SetActionBottom (event.GetInt());
 	Changed();
 	event.Skip(false);
 }

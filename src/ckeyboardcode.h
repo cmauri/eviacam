@@ -43,15 +43,6 @@ public:
 	// Send a keystoke to the system
 	void SendKey();
 
-
-	// Get the internal raw value. NOTE: intended only
-	// for storage purposes not to work with
-	unsigned int GetRawValue() const;
-
-	// Set the internal raw value. NOTE: intended only
-	// for storage purposes not to work with
-	void SetRawValue(unsigned int value);
-
 	bool IsValid() const { return m_virtualKeyCode!= 0; }
 	
 	// Reads a keycode from keyboard and returns a CKeyboardCode object
@@ -69,6 +60,14 @@ public:
 
 	// Given an wxKeyCode code returns the corresponding CKeyboardCode object
 	static CKeyboardCode FromWXKeyCode (wxKeyCode kc);
+
+	// Set the internal raw value. NOTE: intended only
+	// for storage purposes not to work with
+	static CKeyboardCode FromRawValue (unsigned int kc);
+
+	// Get the internal raw value. NOTE: intended only
+	// for storage purposes not to work with
+	unsigned int GetRawValue() const;
 
 #if !defined(NDEBUG)
 	void Dump() const;

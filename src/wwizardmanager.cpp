@@ -25,17 +25,16 @@
 #include "wwizardmanager.h"
 #include "wwizard.h"
 
-WWizardManager::WWizardManager (CViacamController& controller)
-{
-	m_wizard= NULL;
-	m_controller= &controller;
+WWizardManager::WWizardManager ()
+: m_wizard(NULL)
+{	
 }
 
 void WWizardManager::Open(wxWindow* parent)
 {
 	if (m_wizard) m_wizard->Raise();
 	else {
-		m_wizard = new WWizard(parent, m_controller);
+		m_wizard = new WWizard(parent);
 		m_wizard->Connect (ID_WWIZARD, wxEVT_WIZARD_FINISHED, wxWizardEventHandler (WWizardManager::OnWwizardClosed), NULL, this);
 		m_wizard->Connect (ID_WWIZARD, wxEVT_WIZARD_CANCEL, wxWizardEventHandler (WWizardManager::OnWwizardClosed), NULL, this);
 		m_wizard->Run();

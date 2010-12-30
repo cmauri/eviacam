@@ -30,8 +30,8 @@
 
 ////@begin includes
 #include "wx/image.h"
-#include "wviacam.h"
 ////@end includes
+#include <wx/app.h>
 #include <assert.h>
 
 /*!
@@ -50,6 +50,7 @@ class CViacamController;
 ////@begin control identifiers
 ////@end control identifiers
 
+
 /*!
  * EViacamApp class declaration
  */
@@ -64,9 +65,9 @@ public:
 	EViacamApp();
 
 	// Return controller
-	CViacamController* GetController() {
+	CViacamController& GetController() {
 		assert (m_pController);
-		return m_pController;
+		return *m_pController;
 	}
 
 private:

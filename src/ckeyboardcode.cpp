@@ -73,20 +73,6 @@ void CKeyboardCode::SendKey()
 #endif
 }
 
-// Get the internal raw value. NOTE: intended only
-// for storage purposes not to work with
-unsigned int CKeyboardCode::GetRawValue() const
-{
-	return m_virtualKeyCode;
-}
-
-// Set the internal raw value. NOTE: intended only
-// for storage purposes not to work with
-void CKeyboardCode::SetRawValue(unsigned int value)
-{
-	m_virtualKeyCode= value;
-}
-
 // Reads a keycode from keyboard and returns a CKeyboardCode object
 CKeyboardCode CKeyboardCode::ReadKeyCode()
 {
@@ -311,8 +297,20 @@ CKeyboardCode CKeyboardCode::FromWXKeyCode (wxKeyCode kc)
 	return CKeyboardCode(kc);
 #else
 	// Still not available for Windows
-	assert(0);
+//	assert(0);
 	wxUnusedVar(kc);
 	return CKeyboardCode();
 #endif
+}
+
+CKeyboardCode CKeyboardCode::FromRawValue (unsigned int kc)
+{
+	return CKeyboardCode(kc);
+}
+
+// Get the internal raw value. NOTE: intended only
+// for storage purposes not to work with
+unsigned int CKeyboardCode::GetRawValue() const
+{
+	return m_virtualKeyCode;
 }

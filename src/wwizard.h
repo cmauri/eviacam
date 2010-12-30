@@ -55,7 +55,6 @@ class WizardPage7;
 class WizardPage3;
 class WizardPage4;
 ////@end forward declarations
-class CViacamController;
 class wxCheckBox;
 class wxRadioButton;
 class wxStaticText;
@@ -104,8 +103,7 @@ public:
 	
 	/// Constructors
     WWizard();
-    WWizard( wxWindow* parent, wxWindowID id = SYMBOL_WWIZARD_IDNAME, const wxPoint& pos = wxDefaultPosition );
-    WWizard( wxWindow* parent, CViacamController* pViacamController, wxWindowID id = SYMBOL_WWIZARD_IDNAME, const wxPoint& pos = wxDefaultPosition );	
+    WWizard( wxWindow* parent, wxWindowID id = SYMBOL_WWIZARD_IDNAME, const wxPoint& pos = wxDefaultPosition );  
 
     /// Creation
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_WWIZARD_IDNAME, const wxPoint& pos = wxDefaultPosition );
@@ -113,6 +111,19 @@ public:
     /// Destructor
     ~WWizard();
 
+	inline const bool GetRunAtStartup() const;
+	inline void SetRunAtStartup(bool value);
+
+	const bool GetPerformCalibration() const { return m_performCalibration;	}
+	void SetPerformCalibration(bool value) { m_performCalibration= value; }
+	
+	inline const bool GetIsMotionEnabled() const;
+	inline void SetIsMotionEnabled(bool value);
+	
+	/// Runs the wizard
+    bool Run();
+
+private:
     /// Initialises member variables
     void Init();
 
@@ -128,9 +139,6 @@ public:
 
 ////@begin WWizard member function declarations
 
-    /// Runs the wizard
-    bool Run();
-
     /// Retrieves bitmap resources
     wxBitmap GetBitmapResource( const wxString& name );
 
@@ -141,40 +149,12 @@ public:
     /// Should we show tooltips?
     static bool ShowToolTips();
 	
-	inline CViacamController* GetViacamController();
-	
-	inline const bool GetRunAtStartup() const;
-	inline void SetRunAtStartup(bool value);
-
-	inline const bool GetPerformCalibration() const;
-	inline void SetPerformCalibration(bool value);
-	
-	inline const bool GetIsMotionEnabled() const;
-	inline void SetIsMotionEnabled(bool value);
-
-private:
 ////@begin WWizard member variables
 ////@end WWizard member variables
 	
-	CViacamController* m_pViacamController;
 	bool m_performCalibration;
 };
-
-	inline CViacamController* WWizard::GetViacamController()
-	{
-		return m_pViacamController;
-	}
-
-	inline const bool WWizard::GetPerformCalibration() const
-	{
-		return m_performCalibration;	
-	}
 	
-	inline void WWizard::SetPerformCalibration(bool value)
-	{
-		m_performCalibration = value;
-	}
-
 /*!
  * WizardPage class declaration
  */

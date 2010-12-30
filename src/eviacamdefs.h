@@ -1,12 +1,11 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        wwizardmanager.h
-// Purpose: helper class to open wizard only once
-// Author:      Cesar Mauri Loba
-// Modified by: 
-// Created:     Mon 10 Nov 2010 09:57:22 CEST
-// RCS-ID:      
-// Copyright:   (C) 2010 Cesar Mauri from CREA Sistemes Informatics
-// License:
+// Name:        eviacamdefs.h
+// Purpose:  
+// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
+// Modified by: Common definitions
+// Created:     30/12/2010
+// Copyright:   (C) 2010 Cesar Mauri Loba - CREA Software Systems
+// 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -19,27 +18,18 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 /////////////////////////////////////////////////////////////////////////////
-#ifndef _WWIZARDMANAGER_H_
-#define _WWIZARDMANAGER_H_
-#include <wx/event.h>
+#ifndef EVIACAMDEFS_H
+#define EVIACAMDEFS_H
 
-class WWizard;
-class wxWizardEvent;
-
-// Class to manage wizard open
-class WWizardManager : public wxEvtHandler
-{
-public:
-	WWizardManager ();
-	virtual ~WWizardManager() {};
-	void Open(wxWindow* parent= NULL);
-private:
-	void OnWwizardClosed( wxWizardEvent& event );
-	
-	WWizard* m_wizard;
-};
+// Under wxGTK we should protect calls to GUI. Under Windows is not needed
+#if defined(__WXGTK__) 
+#include <wx/thread.h>
+#define BEGIN_GUI_CALL_MUTEX() if (!wxIsMainThread()) wxMutexGuiEnter();
+#define END_GUI_CALL_MUTEX() if (!wxIsMainThread()) wxMutexGuiLeave();
+#else
+#define BEGIN_GUI_CALL_MUTEX()
+#define END_GUI_CALL_MUTEX()
+#endif // __WXGTK___
 
 #endif
-    // _WWIZARDMANAGER_H_

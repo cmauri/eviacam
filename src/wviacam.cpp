@@ -41,6 +41,8 @@
 #include "camwindow.h"
 #include "viacamcontroller.h"
 #include "mouseoutput.h"
+#include "configmanager.h"
+#include "clickwindowcontroller.h"
 
 ////@begin XPM images
 #include "icons/eviacam_mini.xpm"
@@ -413,6 +415,7 @@ void WViacam::OnMenuAboutClick( wxCommandEvent& event )
     int returnValue = window->ShowModal();
     window->Destroy();
 ////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_ABOUT in WViacam. 
+	wxUnusedVar(returnValue);
 	event.Skip(false);
 }
 
@@ -523,8 +526,8 @@ void WViacam::OnToolDisableUpdate( wxUpdateUIEvent& event )
 
 void WViacam::OnToolClickwinClick( wxCommandEvent& event )
 {
-	m_pController->GetClickWindowController()->Show (
-		!m_pController->GetClickWindowController()->IsShown());		
+	m_pController->GetClickWindowController().Show (
+		!m_pController->GetClickWindowController().IsShown());		
 	event.Skip(false);
 }
 
@@ -535,7 +538,7 @@ void WViacam::OnToolClickwinClick( wxCommandEvent& event )
 
 void WViacam::OnToolClickwinUpdate( wxUpdateUIEvent& event )
 {	
-	event.Check (m_pController->GetClickWindowController()->IsShown());
+	event.Check (m_pController->GetClickWindowController().IsShown());
 	event.Skip(false);
 }
 

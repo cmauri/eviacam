@@ -35,7 +35,7 @@
 #include "wx/notebook.h"
 #include "wx/spinctrl.h"
 ////@end includes
-#include "cautostart.h"
+
 #include <wx/dialog.h>
 #include <wx/checkbox.h>
 #include <wx/combobox.h>
@@ -43,7 +43,6 @@
 #include <wx/button.h>
 #include <wx/stattext.h>
 #include <wx/statbox.h>
-//#include "cmotioncalibration.h"
 
 /*!
  * Forward declarations
@@ -52,7 +51,7 @@
 ////@begin forward declarations
 class wxSpinCtrl;
 ////@end forward declarations
-class CViacamController;
+//class CViacamController;
 class wxPanel;
 
 /*!
@@ -146,7 +145,6 @@ public:
     /// Constructors
     WConfiguration();
     WConfiguration( wxWindow* parent, wxWindowID id = SYMBOL_WCONFIGURATION_IDNAME, const wxString& caption = SYMBOL_WCONFIGURATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIGURATION_POSITION, const wxSize& size = SYMBOL_WCONFIGURATION_SIZE, long style = SYMBOL_WCONFIGURATION_STYLE );
-	WConfiguration( wxWindow* parent, CViacamController* pViacamController, wxWindowID id = SYMBOL_WCONFIGURATION_IDNAME, const wxString& caption = SYMBOL_WCONFIGURATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIGURATION_POSITION, const wxSize& size = SYMBOL_WCONFIGURATION_SIZE, long style = SYMBOL_WCONFIGURATION_STYLE );
 	
     /// Creation
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_WCONFIGURATION_IDNAME, const wxString& caption = SYMBOL_WCONFIGURATION_TITLE, const wxPoint& pos = SYMBOL_WCONFIGURATION_POSITION, const wxSize& size = SYMBOL_WCONFIGURATION_SIZE, long style = SYMBOL_WCONFIGURATION_STYLE );
@@ -437,9 +435,6 @@ private:
     wxComboBox* m_cmbTop;
     wxComboBox* m_cmbBottom;
 
-
-	CViacamController* m_pViacamController;
-    CAutostart* m_pAutostart;
 	bool m_dirty;
 };
 

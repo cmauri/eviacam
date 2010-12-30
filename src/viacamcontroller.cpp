@@ -21,6 +21,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 // For compilers that support precompilation, includes "wx/wx.h".
+/*
 #include "wx/wxprec.h"
 
 #ifdef __BORLANDC__
@@ -30,51 +31,63 @@
 #ifndef WX_PRECOMP
 #include "wx/wx.h"
 #endif
+*/
 
 #include "viacamcontroller.h"
+
 #include "wviacam.h"
 #include "crvcamera_enum.h"
+#include "crvcamera.h"
 #include "clickwindow.h"
 #include "mouseoutput.h"
 #include "camwindow.h"
 #include "wconfiguration.h"
 #include "cmotioncalibration.h"
 #include "wcameradialog.h"
-#include <wx/utils.h>
-#include <wx/debug.h>
-
-// Under wxGTK we should protect calls to GUI. Under Windows is not needed
-#if defined(__WXGTK__) 
+#include "eviacamdefs.h"
+#include "configmanager.h"
+//#include <wx/utils.h>
+//#include <wx/debug.h>
 #include "cautostart.h"
-#include <wx/stdpaths.h>
-#include <wx/thread.h>
-#define BEGIN_GUI_CALL_MUTEX() if (!wxIsMainThread()) wxMutexGuiEnter();
-#define END_GUI_CALL_MUTEX() if (!wxIsMainThread()) wxMutexGuiLeave();
-#else
-#define BEGIN_GUI_CALL_MUTEX()
-#define END_GUI_CALL_MUTEX()
-#endif // __WXGTK___
+//#include <wx/stdpaths.h>
 
-CViacamController::CViacamController(void) :
-	m_wizardManager(*this)
+#include "hotkeymanager.h"
+
+CViacamController::CViacamController(void)
+: m_wizardManager()
+, m_pMainWindow(NULL)
+, m_pCamera(NULL)
+, m_pCaptureThread(NULL)
+, m_pClickWindowController(NULL)
+, m_pMouseOutput(NULL)
+
+, m_enabled(false)
+, m_frameRate(0)
+, m_pConfiguration(NULL)
 {
-	m_pMainWindow = NULL;
-	m_pCamera= NULL;
-	m_pCaptureThread= NULL;
-	m_pClickWindowController= NULL;
-	m_pMouseOutput= NULL;
-	m_enabled= false;
+	m_hotKeyManager= new CHotkeyManager();
+	m_configManager= new CConfigManager(this);	
 	m_locale= new wxLocale ();
-	m_configManager= new CConfigManager(this);
-	m_frameRate= 0;
+
+	// TODO: check this!!!
 	m_pMotionCalibration= new CMotionCalibration(this);
-	m_motionCalibrationEnabled= false;
-	m_runWizardAtStartup= true;
+	m_motionCalibrationEnabled= false;	
 #if defined(__WXGTK__) 
 	m_pAutostart = new CAutostart(wxT("eviacam.desktop"));
 #endif
 	InitDefaults();
 }
+
+void CViacamController::InitDefaults()
+{
+	m_runWizardAtStartup= true;
+	m_languageId= wxLANGUAGE_DEFAULT;
+	m_enabledAtStartup= false;	
+#if defined(__WXMSW__)
+	m_onScreenKeyboardCommand= _T("osk.exe");
+#endif
+}
+
 
 CViacamController::~CViacamController(void)
 {
@@ -85,6 +98,7 @@ CViacamController::~CViacamController(void)
 	delete m_locale;
 	delete m_configManager;
 	delete m_pMotionCalibration;
+	delete m_hotKeyManager;
 }
 
 void CViacamController::SetUpLanguage ()
@@ -103,16 +117,13 @@ void CViacamController::SetUpLanguage ()
 void CViacamController::SetLanguage (const int id)
 {
 	// Simply store new language id
-	if (id!= m_languageId)
-	{
+	if (id!= m_languageId) {
 		// Check if valid
 		const wxLanguageInfo *info= wxLocale::GetLanguageInfo (id);
-		if (info)
-		{
+		if (info) {
 			m_languageId= id;
 		}
-		else
-		{
+		else {
 			assert (false);
 		}
 	}
@@ -128,8 +139,7 @@ CCamera* CViacamController::SetUpCamera()
 	ReadAppData(wxConfigBase::Get());
 
 	numDevices= CCameraEnum::GetNumDevices ();
-	if (numDevices== 0)
-	{
+	if (numDevices== 0) {
 		wxMessageDialog errorMsg (NULL, _("Not detected any camera. Aborting"), _T("Enable Viacam"), wxOK | wxICON_ERROR);
 		errorMsg.ShowModal();
 
@@ -137,16 +147,14 @@ CCamera* CViacamController::SetUpCamera()
 	}	
 	
 	// Try to find previously used camera
-	if (m_cameraName.Length()> 0)
-	{
+	if (m_cameraName.Length()> 0) {
 		for (camId= 0; camId< numDevices; camId++)
 			if (wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc)== m_cameraName) break;			
 		if (camId== numDevices) camId= -1;	// Not found
 	}
 
 	// Show selection dialog when needed
-	if (camId== -1)
-	{
+	if (camId== -1) {
 		wxArrayString strArray;
 
 		for (camId= 0; camId< numDevices; camId++)
@@ -166,8 +174,7 @@ CCamera* CViacamController::SetUpCamera()
 	cam->SetHorizontalFlip (true);
 
 	// Try to open the camera to ensure it works
-	if (!cam->Open ())
-	{
+	if (!cam->Open ()) {
 		wxMessageDialog errorMsg (NULL, _("Can not initialize the camera.\nPerhaps is being used by other application."), _T("Enable Viacam"), wxOK | wxICON_ERROR);
 		errorMsg.ShowModal();
 		delete cam;
@@ -197,8 +204,7 @@ bool CViacamController::Initialize ()
 	if (m_pCamera== NULL) retval= false;
 
 	// Create main window
-	if (retval)
-	{
+	if (retval) {
 		m_pMainWindow = new WViacam( NULL, ID_WVIACAM );
 		globalWindow = m_pMainWindow;		
 		assert (m_pMainWindow);
@@ -207,22 +213,19 @@ bool CViacamController::Initialize ()
 	}
 
 	// Create click window controller
-	if (retval)
-	{
+	if (retval) {
 		m_pClickWindowController= new CClickWindowController (*this);
 		assert (m_pClickWindowController);
 	}
 	
 	// Create mouse controller
-	if (retval)
-	{
+	if (retval) {
 		m_pMouseOutput= new CMouseOutput(*m_pClickWindowController);
 		assert (m_pMouseOutput);
 	}
 		
 	// Create and start worker thread
-	if (retval)
-	{
+	if (retval) {
 		m_pCaptureThread = new CCaptureThread (m_pCamera, m_pMainWindow->GetCamWindow(), this, wxTHREAD_JOINABLE );	
 		assert (m_pCaptureThread);
 		if (m_pCaptureThread->Create()!= wxTHREAD_NO_ERROR) retval= false;
@@ -255,8 +258,7 @@ void CViacamController::Finalize ()
 {
 	SetEnabled (false, true);
 
-	if (m_pCaptureThread)
-	{
+	if (m_pCaptureThread) {
 		// Save config
 		m_configManager->WriteAll();
 
@@ -265,46 +267,32 @@ void CViacamController::Finalize ()
 		delete m_pCaptureThread;
 		m_pCaptureThread= NULL;
 	}
-	if (m_pCamera)
-	{
+	if (m_pCamera) {
 		delete m_pCamera;
 		m_pCamera= NULL;
 	}
 
-	if (m_pMouseOutput)
-	{
+	if (m_pMouseOutput) {
 		delete m_pMouseOutput;
 		m_pMouseOutput= NULL;
 	}
 
-	if (m_pClickWindowController)
-	{
+	if (m_pClickWindowController) {
 		m_pClickWindowController->Finalize();
 		delete m_pClickWindowController;
 		m_pClickWindowController= NULL;
 	}
-	if (m_pMainWindow)
-	{
+	if (m_pMainWindow) {
 		m_pMainWindow->GetCamWindow()->UnregisterControl (m_motionTracker.GetTrackAreaControl());
 		// Main window is self-destroyed
 		m_pMainWindow= NULL;
 	}
 }
 
-void CViacamController::InitDefaults()
-{
-	m_languageId= wxLANGUAGE_DEFAULT;
-	m_enabledAtStartup= false;	
-#if defined(__WXMSW__)
-	m_onScreenKeyboardCommand= _T("osk.exe");
-#endif
-	m_keyCode= CKeyboardCode::FromWXKeyCode (WXK_SCROLL);
-}
 
 void CViacamController::WriteAppData(wxConfigBase* pConfObj)
 {
 	// General options
-	//pConfObj->Write(_T("onScreenKeyboardCommand"), m_onScreenKeyboardCommand);
 	m_configManager->WriteLanguage (m_languageId);
 	pConfObj->Write(_T("cameraName"), m_cameraName);
 }
@@ -315,19 +303,16 @@ void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("onScreenKeyboardCommand"), m_onScreenKeyboardCommand);
 	pConfObj->Write(_T("runWizardAtStartup"), m_runWizardAtStartup);	
 
-	pConfObj->Write(_T("enabledActivationKey"), m_enabledActivationKey);
-	pConfObj->Write(_T("keyCode"), (int) m_keyCode.GetRawValue());
-
 	// Propagates calls
 	m_pMouseOutput->WriteProfileData (pConfObj);
 	m_pClickWindowController->WriteProfileData (pConfObj);
-	m_motionTracker.WriteProfileData (pConfObj);	
+	m_motionTracker.WriteProfileData (pConfObj);
+	m_hotKeyManager->WriteProfileData (pConfObj);
 } 
 
 void CViacamController::ReadAppData(wxConfigBase* pConfObj)
 {
 	// General options
-	//pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
 	SetLanguage (m_configManager->ReadLanguage());	// Only load, dont't apply
 	pConfObj->Read(_T("cameraName"), &m_cameraName);
 }
@@ -337,20 +322,18 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
 	pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
 	pConfObj->Read(_T("runWizardAtStartup"), &m_runWizardAtStartup);
-	pConfObj->Read(_T("enabledActivationKey"), &m_enabledActivationKey);
-	int rawKeyCode;
-	pConfObj->Read(_T("keyCode"), &rawKeyCode);
-	m_keyCode.SetRawValue((unsigned int) rawKeyCode);
+
 	// Propagates calls
 	m_pMouseOutput->ReadProfileData (pConfObj);
 	m_pClickWindowController->ReadProfileData (pConfObj);
 	m_motionTracker.ReadProfileData (pConfObj);	
+	m_hotKeyManager->ReadProfileData (pConfObj);
 }
 
 void CViacamController::StartupRun()
 {
 	if (m_enabledAtStartup) SetEnabled (true);
-	GetClickWindowController()->StartupRun();	
+	GetClickWindowController().StartupRun();	
 }
 
 
@@ -365,6 +348,8 @@ void CViacamController::SetEnabled (bool value, bool silent, wxWindow* parent)
 			{
 				m_enabled= value;
 				m_pMouseOutput->SetEnabled (m_enabled);
+				// TODO: move this call to the mouse controller
+				m_pMouseOutput->EndVisualAlerts();
 			}
 		}
 		else
@@ -377,7 +362,7 @@ void CViacamController::SetEnabled (bool value, bool silent, wxWindow* parent)
 
 void CViacamController::OpenConfiguration()
 {
-	m_pConfiguration = new WConfiguration(m_pMainWindow, this);
+	m_pConfiguration = new WConfiguration(m_pMainWindow); //, this);
 	int returnValue = m_pConfiguration->ShowModal();
 	m_pConfiguration->Destroy();
 	if (returnValue== wxID_OK)
@@ -441,20 +426,7 @@ void CViacamController::ProcessImage (IplImage *pImage)
 		m_pMouseOutput->ProcessRelativePointerMove (-vx, vy);
 	END_GUI_CALL_MUTEX()
 
-#if defined(__WXGTK__) 
-	// Read keyboard
-	if (m_enabledActivationKey) {
-		BEGIN_GUI_CALL_MUTEX()
-		CKeyboardCode kc = CKeyboardCode::ReadKeyCode();
-		//int keyCode = kbCode.GetKeyboardCode();
-		if (kc== m_keyCode and kc!= m_lastKeyCode) {
-			m_pMouseOutput->EndVisualAlerts();
-			SetEnabled(!m_pMouseOutput->GetEnabled(),true);
-		}
-		m_lastKeyCode = kc;
-		END_GUI_CALL_MUTEX()
-	}
-#endif // __WXGTK___
+	m_hotKeyManager->CheckKeyboardStatus();	
 }
 
 bool CViacamController::StartMotionCalibration (void)
@@ -465,6 +437,21 @@ bool CViacamController::StartMotionCalibration (void)
 void CViacamController::StartWizard()
 {
 	m_wizardManager.Open (m_pMainWindow);
+}
+
+const wxString& CViacamController::GetCameraName () const
+{
+	return m_cameraName;
+}
+
+const bool CViacamController::CameraHasSettingsDialog () const
+{
+	return (m_pCamera->HasSettingsDialog() || m_pCamera->HasCameraControls());
+}
+
+void CViacamController::ChangeCamera ()
+{
+	m_cameraName.Clear();
 }
 
 void CViacamController::ShowCameraSettingsDialog () const

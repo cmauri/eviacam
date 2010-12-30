@@ -314,6 +314,9 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 				RelativePath=".\eviacamapp.h">
 			</File>
 			<File
+				RelativePath=".\eviacamdefs.h">
+			</File>
+			<File
 				RelativePath=".\hotkeymanager.h">
 			</File>
 			<File

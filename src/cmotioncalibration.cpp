@@ -80,17 +80,17 @@ bool CMotionCalibration::InitMotionCalibration()
 {
 	bool changes = false;	
 	
-	m_xSpeedBackup = m_pViacamController->GetMouseOutput()->GetXSpeed();
-	m_ySpeedBackup = m_pViacamController->GetMouseOutput()->GetYSpeed();
+	m_xSpeedBackup = m_pViacamController->GetMouseOutput().GetXSpeed();
+	m_ySpeedBackup = m_pViacamController->GetMouseOutput().GetYSpeed();
 	m_state = WAITING_X;
 	
 	// Store previous values
 	bool isEnabled= m_pViacamController->GetEnabled();
-	CMouseOutput::EClickMode clickMode= m_pViacamController->GetMouseOutput()->GetClickMode();
+	CMouseOutput::EClickMode clickMode= m_pViacamController->GetMouseOutput().GetClickMode();
 		
 	while (m_state != FINISHED) {
 		InitValues();
-		m_pViacamController->SetMotionCalibration(true);
+		m_pViacamController->SetMotionCalibrationEnabled(true);
 
 		m_pDialog = new WMotionCalibrationX(NULL);
 		m_pDialog->ShowModal();
@@ -104,7 +104,7 @@ bool CMotionCalibration::InitMotionCalibration()
 			m_pDialog= NULL;
 		}
 		
-		m_pViacamController->SetMotionCalibration(false);
+		m_pViacamController->SetMotionCalibrationEnabled(false);
 		
 		if (m_state == CONFIRMATION) {
 			// Compute new speed parameters
@@ -119,11 +119,11 @@ bool CMotionCalibration::InitMotionCalibration()
 			else if (newSpeedY< 10.0f) newSpeedY= 10.0f;
 			
 			// Set new parameters
-			m_pViacamController->GetMouseOutput()->SetXSpeed(newSpeedX);
-			m_pViacamController->GetMouseOutput()->SetYSpeed(newSpeedY);
+			m_pViacamController->GetMouseOutput().SetXSpeed(newSpeedX);
+			m_pViacamController->GetMouseOutput().SetYSpeed(newSpeedY);
 			
 			// Disable click generation & enable motion to test
-			m_pViacamController->GetMouseOutput()->SetClickMode(CMouseOutput::NONE);
+			m_pViacamController->GetMouseOutput().SetClickMode(CMouseOutput::NONE);
 			m_pViacamController->SetEnabled(true, true);			
 						
 			// Request user acknowledgment
@@ -133,12 +133,12 @@ bool CMotionCalibration::InitMotionCalibration()
 			else {
 				if (retvalConfirm== BUTTON_OK) changes = true;
 				else if (retvalConfirm== BUTTON_CANCEL) {
-					m_pViacamController->GetMouseOutput()->SetXSpeed(m_xSpeedBackup);
-					m_pViacamController->GetMouseOutput()->SetYSpeed(m_ySpeedBackup);	
+					m_pViacamController->GetMouseOutput().SetXSpeed(m_xSpeedBackup);
+					m_pViacamController->GetMouseOutput().SetYSpeed(m_ySpeedBackup);	
 				}
 				else assert (false);
 				// Restore previous settings
-				m_pViacamController->GetMouseOutput()->SetClickMode(clickMode);
+				m_pViacamController->GetMouseOutput().SetClickMode(clickMode);
 				m_pViacamController->SetEnabled(isEnabled, true);
 				
 				m_state = FINISHED;
