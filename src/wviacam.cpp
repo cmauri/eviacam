@@ -159,6 +159,7 @@ WViacam::~WViacam()
 ////@begin WViacam destruction
 ////@end WViacam destruction
 	delete m_taskBarIcon;
+	delete m_helpController;
 
 	assert (!m_pController);
 }
@@ -170,11 +171,12 @@ WViacam::~WViacam()
 
 void WViacam::Init()
 {
-	m_pCamWindow= NULL;
-	m_prevFPS= 0;
 ////@begin WViacam member initialisation
     m_statusBar = NULL;
 ////@end WViacam member initialisation
+	m_pCamWindow= NULL;
+	m_prevFPS= 0;
+	m_helpController= NULL;
 }
 
 
@@ -560,14 +562,12 @@ void WViacam::OnToolOptionsClick( wxCommandEvent& event )
 
 void WViacam::OnToolHelpClick( wxCommandEvent& event )
 {
-	wxHtmlHelpController* m_wxHtmlHelpController;
-	m_wxHtmlHelpController = new wxHtmlHelpController();
-	
-	wxString path;
-		
-	switch(m_pController->GetLocale()->GetLanguage())
-	{
-		
+	if (m_helpController== NULL) {
+		//wxHtmlHelpController* hc= new wxHtmlHelpController(wxHF_DEFAULT_STYLE, this);
+		m_helpController= new wxHtmlHelpController(wxHF_DEFAULT_STYLE, this);
+		wxString path;
+			
+		switch(m_pController->GetLocale()->GetLanguage()) {		
 		case (wxLANGUAGE_CATALAN):
 			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/ca/help.hhp"));
 			break;
@@ -583,10 +583,12 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 		default:
 			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/en/help.hhp"));
 			break;
-	}		
+		}		
 	
-	m_wxHtmlHelpController->AddBook(path,false);
-	m_wxHtmlHelpController->DisplayContents();
+		m_helpController->AddBook(path, false);
+	}
+
+	m_helpController->DisplayContents();
 	
 	event.Skip(false);
 }

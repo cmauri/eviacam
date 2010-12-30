@@ -45,6 +45,7 @@ class wxStatusBar;
 ////@end forward declarations
 
 class CCamWindow;
+class wxHtmlHelpController;
 class CViacamController;
 
 /*!
@@ -95,6 +96,7 @@ public:
     /// Destructor
     ~WViacam();
 
+
     /// Initialises member variables
     void Init();
 
@@ -104,6 +106,8 @@ public:
     CCamWindow* GetCamWindow() { return m_pCamWindow; }
     void SetController (CViacamController* pController) { m_pController= pController; }
 
+	virtual bool Show(bool show);
+
 	// 
 	// Custom events
 	//
@@ -112,7 +116,7 @@ public:
 	enum EFPSCondition { GOOD, FAIR, POOR };
 	void SetFPS (long value, EFPSCondition cond);
 	void OnSetFPS( wxCommandEvent &event );
-
+private:
 	// For sending mouse system commands from worker thread
 //	void SendMouseMotionUpdate (float vx, float vy);
 //	void OnSendMouseMotionUpdate ( wxCommandEvent &event );
@@ -184,17 +188,18 @@ public:
     /// Should we show tooltips?
     static bool ShowToolTips();
 
-	virtual bool Show(bool show);
+	
 
 	void OnTaskBarIconLeftUp ( wxTaskBarIconEvent& event );
 
 ////@begin WViacam member variables
     wxStatusBar* m_statusBar;
 ////@end WViacam member variables	
-private:
+
 	CCamWindow* m_pCamWindow;
 	CViacamController* m_pController;
-	wxTaskBarIcon* m_taskBarIcon;	
+	wxTaskBarIcon* m_taskBarIcon;
+	wxHtmlHelpController* m_helpController;
 
 	long m_prevFPS;
 };
