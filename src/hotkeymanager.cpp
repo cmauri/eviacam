@@ -24,6 +24,12 @@
 #include "eviacamapp.h"
 #include "viacamcontroller.h"
 
+// TODO: to avoid problems with synchronization, implement this by deriving 
+// from wxEvtHandler and sending hot-key messages using wxPostEvent. This
+// way we make sure that all hot-key driven actions are always executed from
+// the main thread. This approach will also make easier the transition to 
+// an implementation based on keyboard hooks
+
 CHotkeyManager::CHotkeyManager()
 {
 	InitDefaults();
