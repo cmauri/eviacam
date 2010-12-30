@@ -32,6 +32,7 @@
 #include "wx/image.h"
 #include "wviacam.h"
 ////@end includes
+#include <assert.h>
 
 /*!
  * Forward declarations
@@ -61,6 +62,12 @@ class EViacamApp: public wxApp
 public:
 	/// Constructor
 	EViacamApp();
+
+	// Return controller
+	CViacamController* GetController() {
+		assert (m_pController);
+		return m_pController;
+	}
 
 private:
 	void Init();

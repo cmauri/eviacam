@@ -163,6 +163,7 @@ int EViacamApp::OnExit()
 {    
 	m_pController->Finalize();
 	delete m_pController;
+	m_pController= NULL;
 
 ////@begin EViacamApp cleanup
 	return wxApp::OnExit();
