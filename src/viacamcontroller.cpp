@@ -45,8 +45,6 @@
 
 // Under wxGTK we should protect calls to GUI. Under Windows is not needed
 #if defined(__WXGTK__) 
-//#include "activationkey.h"
-//#include "ckeyboardcontrol.h"
 #include "cautostart.h"
 #include <wx/stdpaths.h>
 #include <wx/thread.h>
@@ -56,8 +54,6 @@
 #define BEGIN_GUI_CALL_MUTEX()
 #define END_GUI_CALL_MUTEX()
 #endif // __WXGTK___
-//#define ESCAPE_KEYSYM 65307
-//#define SCROLL_LOCK_KEYSYM 65300
 
 CViacamController::CViacamController(void) :
 	m_wizardManager(*this)
@@ -341,16 +337,10 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
 	pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
 	pConfObj->Read(_T("runWizardAtStartup"), &m_runWizardAtStartup);
-	//m_keyCode = 0;
 	pConfObj->Read(_T("enabledActivationKey"), &m_enabledActivationKey);
 	int rawKeyCode;
 	pConfObj->Read(_T("keyCode"), &rawKeyCode);
 	m_keyCode.SetRawValue((unsigned int) rawKeyCode);
-/*
-	if (m_keyCode == 0) {
-            m_keyCode = SCROLL_LOCK_KEYSYM;
-	}
-*/
 	// Propagates calls
 	m_pMouseOutput->ReadProfileData (pConfObj);
 	m_pClickWindowController->ReadProfileData (pConfObj);

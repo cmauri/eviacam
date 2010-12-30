@@ -36,7 +36,6 @@
 #include <wx/tooltip.h>
 #include "guiapp.h"
 #include "viacamcontroller.h"
-#include "crvcamera_enum.h"
 
 ////@begin XPM images
 ////@end XPM images

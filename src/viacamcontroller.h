@@ -32,10 +32,6 @@
 #include "crvcamera.h"
 #include <cv.h>
 #include "wconfiguration.h"
-
-#if defined(__WXGTK__) 
-#include "wgetkey.h"
-#endif // __WXGTK___
 #include "ckeyboardcode.h"
 #include "cautostart.h"
 #include "cmotioncalibration.h"
@@ -63,13 +59,15 @@ public:
 	inline const bool GetEnabled () const;
 	void SetEnabled (bool value, bool silent= false, wxWindow* parent= NULL);
 	
-        inline const bool GetEnabledAtStartup () const;
-        inline void SetEnabledAtStartup (bool value);	
+	inline const bool GetEnabledAtStartup () const;
+	inline void SetEnabledAtStartup (bool value);	
 
-        inline const bool GetEnabledActivationKey () const;
-        inline void SetEnabledActivationKey (bool value);
+	inline const bool GetEnabledActivationKey () const;
+	inline void SetEnabledActivationKey (bool value);
+
 	inline void SetActivationKeyCode (CKeyboardCode value);
 	inline const CKeyboardCode GetActivationKey () const;
+
 	inline const bool GetMotionCalibration () const;
 	inline void SetMotionCalibration (bool value);
 	bool StartMotionCalibration (void);
@@ -115,8 +113,7 @@ public:
 
 private:
 	void ReleaseResources();
-	void SetUpLanguage();
-		
+	void SetUpLanguage();		
 	CCamera* SetUpCamera();
 	
 	WViacam* m_pMainWindow;
@@ -137,12 +134,8 @@ private:
 	bool m_enabledActivationKey;
 	bool m_motionCalibrationEnabled;
 	bool m_runWizardAtStartup;
-//#if defined(__WXGTK__) 
-	//int m_keyCode;
-	//int m_lastKeyCode;
 	CKeyboardCode m_keyCode;
 	CKeyboardCode m_lastKeyCode;
-//#endif
 	CAutostart* m_pAutostart;
 	WConfiguration* m_pConfiguration;
 	CMotionCalibration* m_pMotionCalibration;
@@ -250,8 +243,6 @@ inline void CViacamController::SetActivationKeyCode (CKeyboardCode value)
 	m_lastKeyCode= value;
 }
 
-
-//inline const wxString CViacamController::GetActivationKeyName () const
 inline const CKeyboardCode CViacamController::GetActivationKey () const
 {
 	return m_keyCode;
