@@ -37,6 +37,28 @@ public:
 	void SetRestrictedWorkingArea (bool value) { m_enabledRestrictedWorkingArea = value; }
 	bool GetRestrictedWorkingArea() const { return m_enabledRestrictedWorkingArea; }
 	void SetWorkingArea (float leftPercent, float rightPercent, float topPercent, float bottomPercent);
+
+	float GetTopPercent () const { return m_topPercent; }
+	void SetTopPercent (float topPercent) { 
+		//assert (0.009f < topPercent && topPercent <= 1.0f);
+		assert (0 <= topPercent && topPercent <= 1.0f);
+		m_topPercent = topPercent; 
+	}
+	float GetLeftPercent () const { return m_leftPercent; }
+	void SetLeftPercent (float leftPercent) { 
+		assert (0 <=  leftPercent && leftPercent <= 1.0f);
+		m_leftPercent = leftPercent; 
+	}
+	float GetRightPercent () const { return m_rightPercent; }
+	void SetRightPercent (float rightPercent) { 
+		assert (0 <=  rightPercent && rightPercent <= 1.0f);
+		m_rightPercent = rightPercent; 
+	}
+	float GetBottomPercent () const { return m_bottomPercent; }
+	void SetBottomPercent (float bottomPercent) { 
+		assert (0 <=  bottomPercent && bottomPercent <= 1.0f);
+		m_bottomPercent = bottomPercent;
+	}
 	
 	void SetClickArea (long minX, long minY, long maxX, long maxY);
 	void ResetClickArea ();
@@ -45,10 +67,7 @@ public:
 								  float width, float height);
 	void SetRelFactorX (float fDx) { m_fDx= fDx; }
 	void SetRelFactorY (float fDy) { m_fDy= fDy; }
-        void SetTopPercent (float topWorkspace) { m_topPercent = topWorkspace; }
-        void SetLeftPercent (float leftWorkspace) { m_leftPercent = leftWorkspace; }
-        void SetRightPercent (float rightWorkspace) { m_rightPercent = rightWorkspace; }
-        void SetBottomPercent (float bottomWorkspace) { m_bottomPercent = bottomWorkspace; }
+        
 	void SetRelFactors (float fDx, float fDy) {	SetRelFactorX (fDx); SetRelFactorY (fDy); }
 	void SetRelAcceleration2 (long delta0= 9999, float factor0= 1.0f,
 					long delta1= 9999, float factor1= 1.0f);
@@ -60,7 +79,8 @@ public:
 	inline void SetLowPassFilterWeight (float w);
 	
 	void MovePointerAbs (float x, float y);
-	float MovePointerRel (float dx, float dy);
+	void DoMovePointerAbs (long x, long y);
+	float MovePointerRel (float dx, float dy, int* dxRes= NULL, int* dyRes= NULL);
 
 	// Click actions
 	bool LeftDown ();
@@ -70,7 +90,9 @@ public:
 	bool LeftClick ();
 	bool RightClick ();
 	bool LeftDblClick ();
-	
+
+	void GetPointerLocation (long& x, long& y);
+
 	// Display properties change (resolution)
 	void OnDisplayChanged ();
 
@@ -80,13 +102,13 @@ protected:
 	bool CheckClickArea ();
 	bool EnforceWorkingAreaLimits (long &x, long &y);
 	void SendMouseCommand (long x, long y, int flags);
-	void DoMovePointerAbs (long x, long y);
+	
 	void DoMovePointerRel (long dx, long dy);
 	void RecomputeWorkingArea ();
 
 	// TODO: derive a X11 file stuff for these
 	void GetScreenSize();
-	void GetPointerLocation (long& x, long& y);
+	
 	
 private:	
 	int m_ScreenWidth, m_ScreenHeight;

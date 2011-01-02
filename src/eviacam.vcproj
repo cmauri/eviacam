@@ -237,13 +237,22 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 				RelativePath=".\cvisualalert.cpp">
 			</File>
 			<File
+				RelativePath=".\dwellclick.cpp">
+			</File>
+			<File
 				RelativePath=".\eviacamapp.cpp">
+			</File>
+			<File
+				RelativePath=".\gestureclick.cpp">
 			</File>
 			<File
 				RelativePath=".\hotkeymanager.cpp">
 			</File>
 			<File
 				RelativePath=".\mouseoutput.cpp">
+			</File>
+			<File
+				RelativePath=".\pointeraction.cpp">
 			</File>
 			<File
 				RelativePath=".\viacamcontroller.cpp">
@@ -311,10 +320,16 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 				RelativePath=".\cvisualalert.h">
 			</File>
 			<File
+				RelativePath=".\dwellclick.h">
+			</File>
+			<File
 				RelativePath=".\eviacamapp.h">
 			</File>
 			<File
 				RelativePath=".\eviacamdefs.h">
+			</File>
+			<File
+				RelativePath=".\gestureclick.h">
 			</File>
 			<File
 				RelativePath=".\hotkeymanager.h">
@@ -324,6 +339,9 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 			</File>
 			<File
 				RelativePath=".\mouseoutput.h">
+			</File>
+			<File
+				RelativePath=".\pointeraction.h">
 			</File>
 			<File
 				RelativePath=".\version.h">

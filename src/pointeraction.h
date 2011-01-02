@@ -1,0 +1,161 @@
+/////////////////////////////////////////////////////////////////////////////
+// Name:        pointeraction.h
+// Purpose:
+// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
+// Modified by:
+// Created:
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+/////////////////////////////////////////////////////////////////////////////
+#ifndef POINTERACTION_H
+#define POINTERACTION_H
+
+#include "mousecontrol.h"
+#include "configbase.h"
+#include <math.h>
+
+class wxSound;
+class wxWindow;
+class CMouseControl;
+class CDellClick;
+class CGestureClick;
+
+class CPointerAction : public CConfigBase
+{
+public:
+	CPointerAction ();
+	~CPointerAction ();
+
+	// Call from machine vision tracker
+	void ProcessMotion (float dxSensor, float dySensor);
+
+	// Enable/disable processing motion and generating actions
+	bool GetEnabled() const { return m_enabled; }
+	void SetEnabled(bool value);
+
+	// Allows to choose among diferent types of click generation modes
+	enum EClickMode { NONE, DWELL, GESTURE };
+	EClickMode GetClickMode() const { return m_clickMode; }
+	bool SetClickMode(EClickMode mode, bool silent= true, wxWindow* parent= NULL);
+
+	unsigned int GetXSpeed() const { return  m_xSpeed; }
+	void SetXSpeed(unsigned int value) {
+		if (value> 30) value= 30;
+		m_xSpeed= value;
+		m_pMouseControl->SetRelFactorX (GetSpeedFactor(m_xSpeed));
+	}
+
+	unsigned int GetYSpeed() const { return m_ySpeed; }
+	void SetYSpeed(unsigned int value) {
+		if (value> 30) value= 30;
+		m_ySpeed= value;
+		m_pMouseControl->SetRelFactorY (GetSpeedFactor(m_ySpeed));
+	}
+
+	unsigned int GetAcceleration() const {
+		return m_acceleration;
+	}
+	void SetAcceleration(unsigned int acceleration);
+
+	unsigned int GetSmoothness() const {
+		return (unsigned int) (powf (10.0f, m_pMouseControl->GetLowPassFilterWeight ()));
+	}
+	void SetSmoothness (unsigned int smoothness) {
+		if (smoothness> 9) smoothness= 9;
+		//SetLowPassFilterWeight (((float) smoothness) / 10.0f);
+		m_pMouseControl->SetLowPassFilterWeight (log10f((float) smoothness));
+	}
+
+	unsigned int GetEasyStopValue() const { 
+		return (unsigned int) m_pMouseControl->GetRelDeltaThreshold (); 
+	}
+	void SetEasyStopValue (unsigned int value) {
+		if (value> 10) value= 10;
+		m_pMouseControl->SetRelDeltaThreshold ( (float) value);
+	}
+
+	bool GetBeepOnClick() const { return m_beepOnClick; }
+	void SetBeepOnClick(bool value) { m_beepOnClick = value; }
+	
+	bool GetVisualAlerts() const;
+	void SetVisualAlerts(bool value);
+
+	// Common dwell time setting for dwell and gesture click
+	unsigned int GetDwellTime() const;
+	void SetDwellTime (unsigned int ds);
+
+	void SetRestrictedWorkingArea (bool value) { 
+		m_pMouseControl->SetRestrictedWorkingArea(value); 
+	}
+	bool GetRestrictedWorkingArea() const { 
+		return m_pMouseControl->GetRestrictedWorkingArea();
+	}
+
+	unsigned int GetTopWorkspace() const { 
+		return (unsigned int) ((1.0f - m_pMouseControl->GetTopPercent()) * 50.0f);
+	}
+	void SetTopWorkspace(unsigned int value) {
+	    if (value > 50) value = 50;
+	    //m_topWorkspace = value;
+		m_pMouseControl->SetTopPercent((float) (50 - value) / 50.0f);
+	}
+
+	unsigned int GetLeftWorkspace() const { 
+		return (unsigned int) ((1.0f - m_pMouseControl->GetLeftPercent()) * 50.0f);
+	}
+	void SetLeftWorkspace(unsigned int value) {
+		if (value > 50) value = 50;
+		//m_leftWorkspace = value;
+		m_pMouseControl->SetLeftPercent((float) (50 - value) / 50.0f);
+	}
+	
+	unsigned int GetRightWorkspace() const { 
+		return (unsigned int) ((1.0f - m_pMouseControl->GetRightPercent()) * 50.0f);
+	}
+	void SetRightWorkspace(unsigned int value) {
+		if (value > 50) value = 50;
+		//m_rightWorkspace = value;
+		m_pMouseControl->SetRightPercent((float) (50 - value) / 50.0f);
+	}
+
+	unsigned int GetBottomWorkspace() {
+		return (unsigned int) ((1.0f - m_pMouseControl->GetBottomPercent()) * 50.0f);
+	}
+	void SetBottomWorkspace(unsigned int value) {
+		if (value > 50) value = 50;
+		//m_bottomWorkspace = value;
+		m_pMouseControl->SetBottomPercent((float) (50 - value) / 50.0f);
+	}
+
+    // Configuration methods
+	virtual void InitDefaults();
+	virtual void WriteProfileData(wxConfigBase* pConfObj);
+	virtual void ReadProfileData(wxConfigBase* pConfObj);
+
+private:
+	float GetSpeedFactor(unsigned int speed) const;
+	
+	bool m_enabled;
+	unsigned int m_xSpeed, m_ySpeed;
+	unsigned int m_acceleration;
+	EClickMode m_clickMode;
+	bool m_beepOnClick;
+	wxSound* m_pClickSound;
+	CMouseControl* m_pMouseControl;
+	CDellClick* m_pDwellClick;
+	CGestureClick* m_pGestureClick;
+};
+
+#endif

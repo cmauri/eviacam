@@ -169,6 +169,7 @@ void CMouseControl::SetAbsVirtualResolution (float xIni, float yIni, float width
 
 void CMouseControl::SetWorkingArea (float leftPercent, float rightPercent, float topPercent, float bottomPercent)
 {
+	/*
 	assert (0.009f < leftPercent && leftPercent <= 1.0f);
 	assert (0.009f < rightPercent && rightPercent <= 1.0f);
 	assert (0.009f < topPercent && topPercent <= 1.0f);
@@ -178,8 +179,13 @@ void CMouseControl::SetWorkingArea (float leftPercent, float rightPercent, float
 	m_rightPercent= rightPercent;
 	m_topPercent= topPercent;
 	m_bottomPercent= bottomPercent;
+	*/
+	SetTopPercent (topPercent);		
+	SetLeftPercent (leftPercent);
+	SetRightPercent (rightPercent);
+	SetBottomPercent (bottomPercent);
 
-	RecomputeWorkingArea();
+//	RecomputeWorkingArea();
 }
 
 void CMouseControl::RecomputeWorkingArea ()
@@ -303,7 +309,7 @@ void CMouseControl::MovePointerAbs (float x, float y)
 	DoMovePointerAbs (iX, iY);
 }
 
-float CMouseControl::MovePointerRel (float dx, float dy)
+float CMouseControl::MovePointerRel (float dx, float dy, int* dxRes, int* dyRes)
 {
 	OnDisplayChanged ();
 
@@ -328,8 +334,8 @@ float CMouseControl::MovePointerRel (float dx, float dy)
 	if (-m_minDeltaThreshold < dx && dx < m_minDeltaThreshold) dx= 0.0f;
 	if (-m_minDeltaThreshold < dy && dy < m_minDeltaThreshold) dy= 0.0f;
 	
-	long idx= (long) roundf(dx);
-	long idy= (long) roundf(dy);
+	int idx= (int) roundf(dx);
+	int idy= (int) roundf(dy);
 	if (m_enabledRestrictedWorkingArea) {
 		long mouseX, mouseY;
 		GetPointerLocation (mouseX, mouseY);
@@ -337,9 +343,11 @@ float CMouseControl::MovePointerRel (float dx, float dy)
 		else if (mouseX + idx > m_maxScreenX) idx= m_maxScreenX - mouseX;
 		if (mouseY + idy < m_minScreenY) idy= m_minScreenY - mouseY;
 		else if (mouseY + idy > m_maxScreenY) idy= m_maxScreenY - mouseY;
-        }
+	}
 
-        DoMovePointerRel (idx, idy);
+	DoMovePointerRel (idx, idy);
+	if (dxRes) *dxRes= idx;
+	if (dyRes) *dyRes= idy;
 
 	return (float) sqrt((double)(idx * idx + idy * idy));
 }

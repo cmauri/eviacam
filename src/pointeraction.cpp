@@ -1,0 +1,269 @@
+/////////////////////////////////////////////////////////////////////////////
+// Name:        pointeraction.cpp
+// Purpose:  
+// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
+// Modified by:
+// Created:
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// 
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+/////////////////////////////////////////////////////////////////////////////
+#include "pointeraction.h"
+#include "dwellclick.h"
+#include "gestureclick.h"
+
+#include <wx/stdpaths.h>
+#include <wx/sound.h>
+#include <wx/msgdlg.h>
+
+
+CPointerAction::CPointerAction() 
+: m_enabled(false)
+{
+	m_pClickSound= new wxSound (wxStandardPaths::Get().GetDataDir() + _T("/click.wav"));
+#if defined(__WXGTK__)
+	m_pMouseControl= new CMouseControl ((void *) wxGetDisplay());
+#else
+	m_pMouseControl= new CMouseControl ();
+#endif
+	m_pDwellClick= new CDellClick (*m_pMouseControl);
+	m_pGestureClick= new CGestureClick (*m_pMouseControl);
+	
+	InitDefaults ();
+}
+
+CPointerAction::~CPointerAction ()
+{
+	delete m_pGestureClick;
+	m_pGestureClick= NULL;
+	delete m_pDwellClick;
+	m_pDwellClick= NULL;
+	delete m_pMouseControl;
+	m_pMouseControl= NULL;
+	delete m_pClickSound;
+	m_pClickSound= NULL;
+}
+
+// Configuration methods
+void CPointerAction::InitDefaults()
+{
+	// General attributes
+	SetXSpeed (12);
+	SetYSpeed (10);
+	SetAcceleration (2);
+	SetClickMode (CPointerAction::DWELL);
+	SetBeepOnClick (true);
+	
+	// Workspace limits
+	SetRestrictedWorkingArea (false);
+	SetTopWorkspace(1);
+	SetLeftWorkspace(1);
+	SetRightWorkspace(1);
+	SetBottomWorkspace(1);
+}
+
+void CPointerAction::WriteProfileData(wxConfigBase* pConfObj)
+{
+	pConfObj->SetPath (_T("pointerAction"));
+
+	pConfObj->Write(_T("xSpeed"), (long) GetXSpeed());
+	pConfObj->Write(_T("ySpeed"), (long) GetYSpeed());
+	pConfObj->Write(_T("acceleration"), (long) GetAcceleration());
+	pConfObj->Write(_T("smoothness"), (long) GetSmoothness());
+	pConfObj->Write(_T("easyStop"), (long) GetEasyStopValue());
+	pConfObj->Write(_T("enabledWorkspace"), (bool) GetRestrictedWorkingArea());
+	pConfObj->Write(_T("topWorkspace"), (long) GetTopWorkspace());
+	pConfObj->Write(_T("leftWorkspace"), (long) GetLeftWorkspace());
+	pConfObj->Write(_T("rightWorkspace"), (long) GetRightWorkspace());
+	pConfObj->Write(_T("bottomWorkspace"), (long) GetBottomWorkspace());	
+	pConfObj->Write(_T("clickMode"), (long) GetClickMode());
+	pConfObj->Write(_T("beepOnClick"), (bool) GetBeepOnClick());
+
+	m_pDwellClick->WriteProfileData(pConfObj);
+	m_pGestureClick->WriteProfileData(pConfObj);
+
+	pConfObj->SetPath (_T(".."));
+}
+
+void CPointerAction::ReadProfileData(wxConfigBase* pConfObj)
+{
+	long val;
+	bool valb;
+
+	pConfObj->SetPath (_T("pointerAction"));
+
+	if (pConfObj->Read(_T("xSpeed"), &val))	SetXSpeed(val);
+	if (pConfObj->Read(_T("ySpeed"), &val))	SetYSpeed(val);
+	if (pConfObj->Read(_T("acceleration"), &val)) SetAcceleration(val);
+	if (pConfObj->Read(_T("smoothness"), &val)) SetSmoothness(val);
+	if (pConfObj->Read(_T("easyStop"), &valb)) SetEasyStopValue(valb);
+	if (pConfObj->Read(_T("enabledWorkspace"), &valb)) SetRestrictedWorkingArea(valb);
+	if (pConfObj->Read(_T("topWorkspace"), &val)) SetTopWorkspace(val);
+	if (pConfObj->Read(_T("leftWorkspace"), &val)) SetLeftWorkspace(val);
+	if (pConfObj->Read(_T("rightWorkspace"), &val)) SetRightWorkspace(val);
+	if (pConfObj->Read(_T("bottomWorkspace"), &val)) SetBottomWorkspace(val);
+	if (pConfObj->Read(_T("clickMode"), &val)) SetClickMode((CPointerAction::EClickMode) val);
+	pConfObj->Read(_T("beepOnClick"), &m_beepOnClick);	
+
+	m_pDwellClick->ReadProfileData(pConfObj);
+	m_pGestureClick->ReadProfileData(pConfObj);
+
+	pConfObj->SetPath (_T(".."));
+}
+
+bool CPointerAction::GetVisualAlerts() const
+{
+	// This setting affects both dwell and gesture click
+	return m_pDwellClick->AreVisualAlertsEnabled() ||
+		m_pGestureClick->AreVisualAlertsEnabled();	
+}
+
+void CPointerAction::SetVisualAlerts(bool value)
+{
+	// This setting affects both dwell and gesture click
+	m_pDwellClick->EnableVisualAlerts(value);
+	m_pGestureClick->EnableVisualAlerts(value);	
+}
+	
+// Common dwell time setting for dwell and gesture click
+unsigned int CPointerAction::GetDwellTime() const
+{
+	// This setting affects both dwell and gesture click
+	assert (m_pDwellClick->GetDwellTime()== m_pGestureClick->GetDwellTime());
+	return m_pDwellClick->GetDwellTime();		
+}
+
+void CPointerAction::SetDwellTime (unsigned int ds)
+{
+	// This setting affects both dwell and gesture click
+	m_pDwellClick->SetDwellTime(ds);
+	m_pGestureClick->SetDwellTime(ds);
+}
+
+float CPointerAction::GetSpeedFactor(unsigned int speed) const
+{
+	return (float) pow (2.718281828459045235, speed / 6.0);	
+}
+
+void CPointerAction::SetAcceleration(unsigned int acceleration)
+{
+	if (acceleration> 5) acceleration= 5;
+
+	switch (acceleration) {
+	case 0: m_pMouseControl->SetRelAcceleration2 (); break;
+	case 1: m_pMouseControl->SetRelAcceleration2 (7, 1.5f); break;
+	case 2: m_pMouseControl->SetRelAcceleration2 (7, 2.0f); break;
+	case 3: m_pMouseControl->SetRelAcceleration2 (7, 1.5f, 14, 2.0f); break;
+	case 4: m_pMouseControl->SetRelAcceleration2 (7, 2.0f, 14, 1.5f); break;
+	case 5: m_pMouseControl->SetRelAcceleration2 (7, 2.0f, 14, 2.0f); break;
+	default: assert (0);
+	}
+
+	m_acceleration= acceleration;
+}
+
+void CPointerAction::ProcessMotion (float dxSensor, float dySensor)
+{
+	if (!m_enabled) return;
+	
+	// Do move.
+	int dxPix, dyPix;
+	//float despl= 
+	m_pMouseControl->MovePointerRel (dxSensor, dySensor, &dxPix, &dyPix);
+
+	// Get current pointer location
+	long xCurr, yCurr;
+	m_pMouseControl->GetPointerLocation (xCurr, yCurr);
+
+	bool actionDone= false;
+
+	switch (m_clickMode) {
+	case CPointerAction::DWELL:
+		// DWell click
+		actionDone= m_pDwellClick->ProcessMotion
+			(dxPix, dyPix, (unsigned int) xCurr, (unsigned int) yCurr);
+		break;
+	case CPointerAction::GESTURE:
+		// Gesture click
+		actionDone= m_pGestureClick->ProcessMotion
+			(dxPix, dyPix, (unsigned int) xCurr, (unsigned int) yCurr);
+		break;
+	case CPointerAction::NONE:
+		// Do nothing
+		break;
+	default:
+		assert (false);
+	}
+
+	if (actionDone && m_beepOnClick) m_pClickSound->Play (wxSOUND_ASYNC);
+}
+
+void CPointerAction::SetEnabled(bool value)
+{
+	if (value!= m_enabled) {		
+		m_pDwellClick->Reset();
+		m_pGestureClick->Reset();
+		m_enabled= value;
+	}
+}
+
+// Return true is the change has been applied, or false otherwise
+bool CPointerAction::SetClickMode(CPointerAction::EClickMode mode, bool silent, wxWindow* parent)
+{
+	if (mode!= m_clickMode)	{
+		if (!silent) {
+			if (mode== CPointerAction::NONE) {
+				wxMessageDialog dlg (parent, _("This action will disable eViacam click generation.\nAre you sure?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
+				if (dlg.ShowModal()!= wxID_YES) return false;
+			}
+			else {
+				wxMessageDialog dlg (parent, _("This action will change the click generation method.\nAre you sure?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
+				if (dlg.ShowModal()!= wxID_YES) return false;
+			}
+		}
+		
+		if (mode== CPointerAction::DWELL) {
+			// disable gesture click if enabled
+			m_pGestureClick->SetEnabled(false);
+			
+			// Enable dwell click
+			m_pDwellClick->SetEnabled(true);
+
+			m_clickMode= mode;
+		}
+		else if (mode== CPointerAction::GESTURE)
+		{
+			// Enable gesture click
+			m_pDwellClick->SetEnabled(false);
+
+			// enable gesture click
+			m_pGestureClick->SetEnabled(true);
+
+			m_clickMode= mode;
+		}		
+		else if (mode== CPointerAction::NONE)
+		{
+			// Disable dwell and gesture click
+			m_pGestureClick->SetEnabled(false);
+			m_pDwellClick->SetEnabled(false);
+
+			m_clickMode= mode;
+		}
+		else {
+			assert(false);
+		}
+	}
+	return true;
+}
+
