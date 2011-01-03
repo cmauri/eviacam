@@ -369,7 +369,7 @@ void WViacam::OnSetFPS( wxCommandEvent &event )
 
 void WViacam::OnMenuitemExitClick( wxCommandEvent& event )
 {
-	event.Skip();	
+	event.Skip(false);
 	Close();	
 }
 
