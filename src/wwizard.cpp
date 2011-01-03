@@ -38,13 +38,13 @@
 
 #include "wwizard.h"
 #include "viacamcontroller.h"
-#include "mouseoutput.h"
 #include "configmanager.h"
 #include <wx/timer.h>
-#include "clickwindowcontroller.h"
 #include "crvcamera.h"
 #include "eviacamapp.h"
 #include "cautostart.h"
+#include "pointeraction.h"
+#include "dwellclick.h"
 
 ////@begin XPM images
 #include "icons/eviacam.xpm"
@@ -127,8 +127,6 @@ void WWizard::Init()
 {
 ////@begin WWizard member initialisation
 ////@end WWizard member initialisation
-//	m_pViacamController = NULL;
-//	m_runWizardAtStartup = true;
 	m_performCalibration = true;
 }
 
@@ -750,7 +748,6 @@ void WizardPage2::OnWizardpage2Changed( wxWizardEvent& event )
 {
 	if (m_wizardParent->GetPerformCalibration() && event.GetDirection())
 	{
-		//m_wizardParent->SetIsMotionEnabled(wxGetApp().GetController().GetEnabled());
 		bool isEnabled= wxGetApp().GetController().GetEnabled();
 		wxGetApp().GetController().StartMotionCalibration();
 		wxGetApp().GetController().SetEnabled(isEnabled);
@@ -976,18 +973,18 @@ void WizardPage3::UpdateRadioButtons()
 	m_rbGestureClick->SetValue(false);
 	m_rbNoneClick->SetValue(false);
 #endif
-	switch (wxGetApp().GetController().GetMouseOutput().GetClickMode()) {
-	case CMouseOutput::DWELL:
+	switch (wxGetApp().GetController().GetPointerAction().GetClickMode()) {
+	case CPointerAction::DWELL:
 		m_rbDwellClick->SetValue(true);
-		// Just in case
-		wxGetApp().GetController().GetClickWindowController().Show(true);
+		// Force open click window
+		wxGetApp().GetController().GetPointerAction().GetDwellClick().SetUseClickWindow(true);
 		break;
 #if defined(__WXGTK__)
-	case CMouseOutput::GESTURE:
+	case CPointerAction::GESTURE:
 		m_rbGestureClick->SetValue(true);
 		break;
 #endif
-	case CMouseOutput::NONE:
+	case CPointerAction::NONE:
 		m_rbNoneClick->SetValue(true);
 		break;
 	default:
@@ -1001,8 +998,7 @@ void WizardPage3::UpdateRadioButtons()
 
 void WizardPage3::OnRadiobuttonNoneClickSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetClickWindowController().Show(false);
-	wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::NONE, false);
+	wxGetApp().GetController().GetPointerAction().SetClickMode(CPointerAction::NONE, false);
 	UpdateRadioButtons();
 	event.Skip(false);
 }
@@ -1026,7 +1022,7 @@ void WizardPage3::OnWizardpage3Changed( wxWizardEvent& event )
 
 void WizardPage3::OnRadiobuttonDwellClickSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::DWELL, false);
+	wxGetApp().GetController().GetPointerAction().SetClickMode(CPointerAction::DWELL, false);
 	UpdateRadioButtons();
 	event.Skip(false);
 }
@@ -1038,7 +1034,7 @@ void WizardPage3::OnRadiobuttonDwellClickSelected( wxCommandEvent& event )
 #if defined(__WXGTK__)
 void WizardPage3::OnRadiobuttonGestureClickSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::GESTURE, false);
+	wxGetApp().GetController().GetPointerAction().SetClickMode(CPointerAction::GESTURE, false);
 	UpdateRadioButtons();
 	event.Skip(false);
 }
@@ -1693,7 +1689,7 @@ wxIcon WizardPage6::GetIconResource( const wxString& name )
 
 void WizardPage6::OnSpinctrlXSpeedUpdated( wxSpinEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetXSpeed(event.GetInt());
+	wxGetApp().GetController().GetPointerAction().SetXSpeed(event.GetInt());
     event.Skip(false);
 }
 
@@ -1704,7 +1700,7 @@ void WizardPage6::OnSpinctrlXSpeedUpdated( wxSpinEvent& event )
 
 void WizardPage6::OnSpinctrlYSpeedUpdated( wxSpinEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetYSpeed(event.GetInt());
+	wxGetApp().GetController().GetPointerAction().SetYSpeed(event.GetInt());
     event.Skip(false);
 }
 
@@ -1753,8 +1749,8 @@ void WizardPage6::OnTogglebuttonUpdate( wxUpdateUIEvent& event )
 
 void WizardPage6::OnWizardpageCalib3PageChanged( wxWizardEvent& event )
 {
-	m_spinXSpeed->SetValue(wxGetApp().GetController().GetMouseOutput().GetXSpeed());
-	m_spinYSpeed->SetValue(wxGetApp().GetController().GetMouseOutput().GetYSpeed());
+	m_spinXSpeed->SetValue(wxGetApp().GetController().GetPointerAction().GetXSpeed());
+	m_spinYSpeed->SetValue(wxGetApp().GetController().GetPointerAction().GetYSpeed());
 	event.Skip(false);
 }
 

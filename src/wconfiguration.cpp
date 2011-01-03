@@ -34,13 +34,16 @@
 
 #include "eviacamapp.h"
 #include "viacamcontroller.h"
-#include "mouseoutput.h"
 #include "visionpipeline.h"
 #include "clickwindowcontroller.h"
+#include "pointeraction.h"
+
 #include "cautostart.h"
 #include "configmanager.h"
 #include "hotkeymanager.h"
 #include "wgetkey.h"
+#include "dwellclick.h"
+#include "gestureclick.h"
 
 ////@begin XPM images
 #include "icons/eviacam.xpm"
@@ -128,8 +131,6 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
     EVT_CHOICE( ID_CHOICE_DESIGN, WConfiguration::OnChoiceDesignSelected )
 
     EVT_CHOICE( ID_CHOICE_BEHAVIOUR, WConfiguration::OnChoiceBehaviourSelected )
-
-    EVT_CHECKBOX( ID_CHECKBOX_CLICKWIN_AT_STARTUP, WConfiguration::OnCheckboxClickwinAtStartupClick )
 
     EVT_CHECKBOX( ID_CHECKBOX_SHOW_CLICKWIN, WConfiguration::OnCheckboxShowClickwinClick )
 
@@ -288,7 +289,6 @@ void WConfiguration::Init()
     m_choClickWindowDesign = NULL;
     m_stBehaviour = NULL;
     m_choClickWindowBehaviour = NULL;
-    m_chkOpenClickWinAtStartup = NULL;
     m_chkShowClickWin = NULL;
 #if defined(__WXGTK__)
     m_sboxGestureClick = NULL;
@@ -367,7 +367,7 @@ void WConfiguration::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxListbook* itemListbook3 = new wxListbook( itemDialog1, ID_LISTBOOK, wxDefaultPosition, wxDefaultSize, wxLB_DEFAULT );
+    wxListbook* itemListbook3 = new wxListbook( itemDialog1, ID_LISTBOOK, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
     wxImageList* itemListbook3ImageList = new wxImageList(32, 32, true, 2);
     {
         wxIcon itemListbook3Icon0(itemDialog1->GetIconResource(wxT("icons/user.xpm")));
@@ -377,7 +377,7 @@ void WConfiguration::CreateControls()
     }
     itemListbook3->AssignImageList(itemListbook3ImageList);
 
-    wxNotebook* itemNotebook4 = new wxNotebook( itemListbook3, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, wxNB_DEFAULT );
+    wxNotebook* itemNotebook4 = new wxNotebook( itemListbook3, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
 
     wxPanel* itemPanel5 = new wxPanel( itemNotebook4, ID_PANEL_MOTION, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxVERTICAL);
@@ -596,30 +596,24 @@ void WConfiguration::CreateControls()
 
     wxBoxSizer* itemBoxSizer64 = new wxBoxSizer(wxVERTICAL);
     itemGridSizer58->Add(itemBoxSizer64, 0, wxGROW|wxALIGN_TOP|wxALL, 5);
-    m_chkOpenClickWinAtStartup = new wxCheckBox( m_panelClick, ID_CHECKBOX_CLICKWIN_AT_STARTUP, _("Open Click Window at startup"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_chkOpenClickWinAtStartup->SetValue(false);
-    if (WConfiguration::ShowToolTips())
-        m_chkOpenClickWinAtStartup->SetToolTip(_("If checked the Click Window is automatically\nopened at program startup."));
-    itemBoxSizer64->Add(m_chkOpenClickWinAtStartup, 0, wxALIGN_LEFT|wxALL, 5);
-
     m_chkShowClickWin = new wxCheckBox( m_panelClick, ID_CHECKBOX_SHOW_CLICKWIN, _("Show Click Window"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkShowClickWin->SetValue(false);
     itemBoxSizer64->Add(m_chkShowClickWin, 0, wxALIGN_LEFT|wxALL, 5);
 
 #if defined(__WXGTK__)
     m_sboxGestureClick = new wxStaticBox(m_panelClick, ID_STATICBOX_GESTURE_CLICK, _("Gesture click"));
-    wxStaticBoxSizer* itemStaticBoxSizer67 = new wxStaticBoxSizer(m_sboxGestureClick, wxVERTICAL);
-    itemStaticBoxSizer45->Add(itemStaticBoxSizer67, 0, wxGROW|wxALL, 5);
+    wxStaticBoxSizer* itemStaticBoxSizer66 = new wxStaticBoxSizer(m_sboxGestureClick, wxVERTICAL);
+    itemStaticBoxSizer45->Add(itemStaticBoxSizer66, 0, wxGROW|wxALL, 5);
     m_chkEnableGestureClick = new wxCheckBox( m_panelClick, ID_CHECKBOX, _("Enable gesture click"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkEnableGestureClick->SetValue(false);
-    itemStaticBoxSizer67->Add(m_chkEnableGestureClick, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer66->Add(m_chkEnableGestureClick, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxFlexGridSizer* itemFlexGridSizer69 = new wxFlexGridSizer(0, 4, 0, 0);
-    itemFlexGridSizer69->AddGrowableCol(1);
-    itemFlexGridSizer69->AddGrowableCol(3);
-    itemStaticBoxSizer67->Add(itemFlexGridSizer69, 0, wxGROW, 5);
+    wxFlexGridSizer* itemFlexGridSizer68 = new wxFlexGridSizer(0, 4, 0, 0);
+    itemFlexGridSizer68->AddGrowableCol(1);
+    itemFlexGridSizer68->AddGrowableCol(3);
+    itemStaticBoxSizer66->Add(itemFlexGridSizer68, 0, wxGROW, 5);
     m_stMoveLeft = new wxStaticText( m_panelClick, ID_STATIC_MOVE_LEFT, _("Move left:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer69->Add(m_stMoveLeft, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer68->Add(m_stMoveLeft, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choLeftStrings;
     m_choLeftStrings.Add(_("Disable"));
@@ -628,10 +622,10 @@ void WConfiguration::CreateControls()
     m_choLeftStrings.Add(_("Double click"));
     m_choLeftStrings.Add(_("Drag click"));
     m_choLeft = new wxChoice( m_panelClick, ID_CHOICE, wxDefaultPosition, wxDefaultSize, m_choLeftStrings, 0 );
-    itemFlexGridSizer69->Add(m_choLeft, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer68->Add(m_choLeft, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_stMoveRight = new wxStaticText( m_panelClick, ID_STATIC_MOVE_RIGHT, _("Move right:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer69->Add(m_stMoveRight, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer68->Add(m_stMoveRight, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choRightStrings;
     m_choRightStrings.Add(_("Disable"));
@@ -640,10 +634,10 @@ void WConfiguration::CreateControls()
     m_choRightStrings.Add(_("Double click"));
     m_choRightStrings.Add(_("Drag click"));
     m_choRight = new wxChoice( m_panelClick, ID_CHOICE1, wxDefaultPosition, wxDefaultSize, m_choRightStrings, 0 );
-    itemFlexGridSizer69->Add(m_choRight, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer68->Add(m_choRight, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_stMoveUp = new wxStaticText( m_panelClick, ID_STATIC_MOVE_UP, _("Move up:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer69->Add(m_stMoveUp, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer68->Add(m_stMoveUp, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choUpStrings;
     m_choUpStrings.Add(_("Disable"));
@@ -652,10 +646,10 @@ void WConfiguration::CreateControls()
     m_choUpStrings.Add(_("Double click"));
     m_choUpStrings.Add(_("Drag click"));
     m_choUp = new wxChoice( m_panelClick, ID_CHOICE2, wxDefaultPosition, wxDefaultSize, m_choUpStrings, 0 );
-    itemFlexGridSizer69->Add(m_choUp, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer68->Add(m_choUp, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_stMoveDown = new wxStaticText( m_panelClick, ID_STATIC_MOVE_DOWN, _("Move down:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer69->Add(m_stMoveDown, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer68->Add(m_stMoveDown, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choDownStrings;
     m_choDownStrings.Add(_("Disable"));
@@ -664,175 +658,175 @@ void WConfiguration::CreateControls()
     m_choDownStrings.Add(_("Double click"));
     m_choDownStrings.Add(_("Drag click"));
     m_choDown = new wxChoice( m_panelClick, ID_CHOICE3, wxDefaultPosition, wxDefaultSize, m_choDownStrings, 0 );
-    itemFlexGridSizer69->Add(m_choDown, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer68->Add(m_choDown, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 #endif
 
     itemNotebook4->AddPage(m_panelClick, _("Click"));
 
-    wxPanel* itemPanel78 = new wxPanel( itemNotebook4, ID_PANEL_ADVANCED, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    wxBoxSizer* itemBoxSizer79 = new wxBoxSizer(wxVERTICAL);
-    itemPanel78->SetSizer(itemBoxSizer79);
+    wxPanel* itemPanel77 = new wxPanel( itemNotebook4, ID_PANEL_ADVANCED, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxBoxSizer* itemBoxSizer78 = new wxBoxSizer(wxVERTICAL);
+    itemPanel77->SetSizer(itemBoxSizer78);
 
-    wxStaticBox* itemStaticBoxSizer80Static = new wxStaticBox(itemPanel78, wxID_ANY, _("Startup"));
-    wxStaticBoxSizer* itemStaticBoxSizer80 = new wxStaticBoxSizer(itemStaticBoxSizer80Static, wxVERTICAL);
-    itemBoxSizer79->Add(itemStaticBoxSizer80, 0, wxGROW|wxALL, 5);
+    wxStaticBox* itemStaticBoxSizer79Static = new wxStaticBox(itemPanel77, wxID_ANY, _("Startup"));
+    wxStaticBoxSizer* itemStaticBoxSizer79 = new wxStaticBoxSizer(itemStaticBoxSizer79Static, wxVERTICAL);
+    itemBoxSizer78->Add(itemStaticBoxSizer79, 0, wxGROW|wxALL, 5);
 #if defined(__WXGTK__)
-    m_chkStartup = new wxCheckBox( itemPanel78, ID_CHECKBOX_STARTUP, _("Start eViacam at user logon"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkStartup = new wxCheckBox( itemPanel77, ID_CHECKBOX_STARTUP, _("Start eViacam at user logon"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkStartup->SetValue(false);
-    itemStaticBoxSizer80->Add(m_chkStartup, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer79->Add(m_chkStartup, 0, wxALIGN_LEFT|wxALL, 5);
 #endif
 
-    m_chkEnabledAtStartup = new wxCheckBox( itemPanel78, ID_CHECKBOX_ENABLE_AT_STARTUP, _("Enable eViacam at startup"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkEnabledAtStartup = new wxCheckBox( itemPanel77, ID_CHECKBOX_ENABLE_AT_STARTUP, _("Enable eViacam at startup"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkEnabledAtStartup->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkEnabledAtStartup->SetToolTip(_("If checked the program automatically \nenables cursor control at startup."));
-    itemStaticBoxSizer80->Add(m_chkEnabledAtStartup, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer79->Add(m_chkEnabledAtStartup, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxStaticBox* itemStaticBoxSizer83Static = new wxStaticBox(itemPanel78, wxID_ANY, _("On-screen keyboard command"));
-    wxStaticBoxSizer* itemStaticBoxSizer83 = new wxStaticBoxSizer(itemStaticBoxSizer83Static, wxVERTICAL);
-    itemBoxSizer79->Add(itemStaticBoxSizer83, 0, wxGROW|wxALL, 5);
-    wxFlexGridSizer* itemFlexGridSizer84 = new wxFlexGridSizer(0, 2, 0, 0);
-    itemFlexGridSizer84->AddGrowableCol(0);
-    itemStaticBoxSizer83->Add(itemFlexGridSizer84, 0, wxGROW, 5);
-    m_txtOnScreenKeyboardCommand = new wxTextCtrl( itemPanel78, ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticBox* itemStaticBoxSizer82Static = new wxStaticBox(itemPanel77, wxID_ANY, _("On-screen keyboard command"));
+    wxStaticBoxSizer* itemStaticBoxSizer82 = new wxStaticBoxSizer(itemStaticBoxSizer82Static, wxVERTICAL);
+    itemBoxSizer78->Add(itemStaticBoxSizer82, 0, wxGROW|wxALL, 5);
+    wxFlexGridSizer* itemFlexGridSizer83 = new wxFlexGridSizer(0, 2, 0, 0);
+    itemFlexGridSizer83->AddGrowableCol(0);
+    itemStaticBoxSizer82->Add(itemFlexGridSizer83, 0, wxGROW, 5);
+    m_txtOnScreenKeyboardCommand = new wxTextCtrl( itemPanel77, ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
     if (WConfiguration::ShowToolTips())
         m_txtOnScreenKeyboardCommand->SetToolTip(_("Command to run an external on-screen keyboard application."));
-    itemFlexGridSizer84->Add(m_txtOnScreenKeyboardCommand, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer83->Add(m_txtOnScreenKeyboardCommand, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_btntOnScreenKeyboardCommand = new wxButton( itemPanel78, ID_BUTTON_ONSCREENKEYBOARDCOMMAND, _("Browse..."), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer84->Add(m_btntOnScreenKeyboardCommand, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_btntOnScreenKeyboardCommand = new wxButton( itemPanel77, ID_BUTTON_ONSCREENKEYBOARDCOMMAND, _("Browse..."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer83->Add(m_btntOnScreenKeyboardCommand, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 #if defined(__WXGTK__)
-    wxStaticBox* itemStaticBoxSizer87Static = new wxStaticBox(itemPanel78, wxID_ANY, _("Activation key"));
-    wxStaticBoxSizer* itemStaticBoxSizer87 = new wxStaticBoxSizer(itemStaticBoxSizer87Static, wxVERTICAL);
-    itemBoxSizer79->Add(itemStaticBoxSizer87, 0, wxGROW|wxALL, 5);
+    wxStaticBox* itemStaticBoxSizer86Static = new wxStaticBox(itemPanel77, wxID_ANY, _("Activation key"));
+    wxStaticBoxSizer* itemStaticBoxSizer86 = new wxStaticBoxSizer(itemStaticBoxSizer86Static, wxVERTICAL);
+    itemBoxSizer78->Add(itemStaticBoxSizer86, 0, wxGROW|wxALL, 5);
 #if defined(__WXGTK__)
-    m_chkActivationKey = new wxCheckBox( itemPanel78, ID_CHECKBOX_ACTIVATION_KEY, _("Use activation key"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkActivationKey = new wxCheckBox( itemPanel77, ID_CHECKBOX_ACTIVATION_KEY, _("Use activation key"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkActivationKey->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkActivationKey->SetToolTip(_("When checked it allows to enable or \ndisable eViacam by pressing a key."));
-    itemStaticBoxSizer87->Add(m_chkActivationKey, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer86->Add(m_chkActivationKey, 0, wxALIGN_LEFT|wxALL, 5);
 #endif
 
-    wxFlexGridSizer* itemFlexGridSizer89 = new wxFlexGridSizer(0, 2, 0, 0);
-    itemFlexGridSizer89->AddGrowableCol(0);
-    itemStaticBoxSizer87->Add(itemFlexGridSizer89, 0, wxGROW, 5);
+    wxFlexGridSizer* itemFlexGridSizer88 = new wxFlexGridSizer(0, 2, 0, 0);
+    itemFlexGridSizer88->AddGrowableCol(0);
+    itemStaticBoxSizer86->Add(itemFlexGridSizer88, 0, wxGROW, 5);
 #if defined(__WXGTK__)
-    m_txtActivationKey = new wxTextCtrl( itemPanel78, ID_TEXTCTRL_ACTIVATION_KEY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+    m_txtActivationKey = new wxTextCtrl( itemPanel77, ID_TEXTCTRL_ACTIVATION_KEY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
     if (WConfiguration::ShowToolTips())
         m_txtActivationKey->SetToolTip(_("Shows the selected key."));
     m_txtActivationKey->Enable(false);
-    itemFlexGridSizer89->Add(m_txtActivationKey, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer88->Add(m_txtActivationKey, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 #endif
 
 #if defined(__WXGTK__)
-    m_buttonActivationKey = new wxButton( itemPanel78, ID_BUTTON_ACTIVATION_KEY, _("Set key..."), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer89->Add(m_buttonActivationKey, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_buttonActivationKey = new wxButton( itemPanel77, ID_BUTTON_ACTIVATION_KEY, _("Set key..."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer88->Add(m_buttonActivationKey, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 #endif
 
 #endif
 
-    wxStaticBox* itemStaticBoxSizer92Static = new wxStaticBox(itemPanel78, wxID_ANY, _("Face localization"));
-    wxStaticBoxSizer* itemStaticBoxSizer92 = new wxStaticBoxSizer(itemStaticBoxSizer92Static, wxVERTICAL);
-    itemBoxSizer79->Add(itemStaticBoxSizer92, 0, wxGROW|wxALL, 5);
-    wxFlexGridSizer* itemFlexGridSizer93 = new wxFlexGridSizer(0, 2, 0, 0);
-    itemFlexGridSizer93->AddGrowableCol(0);
-    itemFlexGridSizer93->AddGrowableCol(1);
-    itemStaticBoxSizer92->Add(itemFlexGridSizer93, 0, wxGROW, 5);
-    m_chkAutoLocateFace = new wxCheckBox( itemPanel78, ID_CHECKBOX_AUTO_LOCATE_FACE, _("Locate face automatically"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticBox* itemStaticBoxSizer91Static = new wxStaticBox(itemPanel77, wxID_ANY, _("Face localization"));
+    wxStaticBoxSizer* itemStaticBoxSizer91 = new wxStaticBoxSizer(itemStaticBoxSizer91Static, wxVERTICAL);
+    itemBoxSizer78->Add(itemStaticBoxSizer91, 0, wxGROW|wxALL, 5);
+    wxFlexGridSizer* itemFlexGridSizer92 = new wxFlexGridSizer(0, 2, 0, 0);
+    itemFlexGridSizer92->AddGrowableCol(0);
+    itemFlexGridSizer92->AddGrowableCol(1);
+    itemStaticBoxSizer91->Add(itemFlexGridSizer92, 0, wxGROW, 5);
+    m_chkAutoLocateFace = new wxCheckBox( itemPanel77, ID_CHECKBOX_AUTO_LOCATE_FACE, _("Locate face automatically"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkAutoLocateFace->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkAutoLocateFace->SetToolTip(_("When enabled tries to automatically\ndetect your face and center the\ntracking area."));
-    itemFlexGridSizer93->Add(m_chkAutoLocateFace, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer92->Add(m_chkAutoLocateFace, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_chkShowAutoLocateFaceFilter = new wxCheckBox( itemPanel78, ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER, _("Show locate face filter"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkShowAutoLocateFaceFilter = new wxCheckBox( itemPanel77, ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER, _("Show locate face filter"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkShowAutoLocateFaceFilter->SetValue(false);
     m_chkShowAutoLocateFaceFilter->Enable(false);
-    itemFlexGridSizer93->Add(m_chkShowAutoLocateFaceFilter, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer92->Add(m_chkShowAutoLocateFaceFilter, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    itemNotebook4->AddPage(itemPanel78, _("Advanced"));
+    itemNotebook4->AddPage(itemPanel77, _("Advanced"));
 
     itemListbook3->AddPage(itemNotebook4, _("Profile options"), false, 0);
 
-    wxPanel* itemPanel96 = new wxPanel( itemListbook3, ID_PANEL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    wxBoxSizer* itemBoxSizer97 = new wxBoxSizer(wxVERTICAL);
-    itemPanel96->SetSizer(itemBoxSizer97);
+    wxPanel* itemPanel95 = new wxPanel( itemListbook3, ID_PANEL, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxBoxSizer* itemBoxSizer96 = new wxBoxSizer(wxVERTICAL);
+    itemPanel95->SetSizer(itemBoxSizer96);
 
-    wxStaticBox* itemStaticBoxSizer98Static = new wxStaticBox(itemPanel96, wxID_ANY, _("Profile management"));
-    wxStaticBoxSizer* itemStaticBoxSizer98 = new wxStaticBoxSizer(itemStaticBoxSizer98Static, wxVERTICAL);
-    itemBoxSizer97->Add(itemStaticBoxSizer98, 0, wxGROW|wxALL, 5);
-    wxFlexGridSizer* itemFlexGridSizer99 = new wxFlexGridSizer(0, 4, 0, 0);
-    itemFlexGridSizer99->AddGrowableCol(1);
-    itemStaticBoxSizer98->Add(itemFlexGridSizer99, 0, wxGROW, 5);
-    wxStaticText* itemStaticText100 = new wxStaticText( itemPanel96, wxID_STATIC, _("Select profile:"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticBox* itemStaticBoxSizer97Static = new wxStaticBox(itemPanel95, wxID_ANY, _("Profile management"));
+    wxStaticBoxSizer* itemStaticBoxSizer97 = new wxStaticBoxSizer(itemStaticBoxSizer97Static, wxVERTICAL);
+    itemBoxSizer96->Add(itemStaticBoxSizer97, 0, wxGROW|wxALL, 5);
+    wxFlexGridSizer* itemFlexGridSizer98 = new wxFlexGridSizer(0, 4, 0, 0);
+    itemFlexGridSizer98->AddGrowableCol(1);
+    itemStaticBoxSizer97->Add(itemFlexGridSizer98, 0, wxGROW, 5);
+    wxStaticText* itemStaticText99 = new wxStaticText( itemPanel95, wxID_STATIC, _("Select profile:"), wxDefaultPosition, wxDefaultSize, 0 );
     if (WConfiguration::ShowToolTips())
-        itemStaticText100->SetToolTip(_("Chooses desired active profile"));
-    itemFlexGridSizer99->Add(itemStaticText100, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+        itemStaticText99->SetToolTip(_("Chooses desired active profile"));
+    itemFlexGridSizer98->Add(itemStaticText99, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choProfileStrings;
-    m_choProfile = new wxChoice( itemPanel96, ID_CHOICE_PROFILE, wxDefaultPosition, wxDefaultSize, m_choProfileStrings, 0 );
+    m_choProfile = new wxChoice( itemPanel95, ID_CHOICE_PROFILE, wxDefaultPosition, wxDefaultSize, m_choProfileStrings, 0 );
     if (WConfiguration::ShowToolTips())
         m_choProfile->SetToolTip(_("Chooses desired active profile"));
-    itemFlexGridSizer99->Add(m_choProfile, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer98->Add(m_choProfile, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_btnAddProfile = new wxButton( itemPanel96, ID_BUTTON_ADD_PROFILE, _("Add profile"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer99->Add(m_btnAddProfile, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_btnAddProfile = new wxButton( itemPanel95, ID_BUTTON_ADD_PROFILE, _("Add profile"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer98->Add(m_btnAddProfile, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_btnDeleteProfile = new wxButton( itemPanel96, ID_BUTTON_DEL_PROFILE, _("Delete profile"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer99->Add(m_btnDeleteProfile, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_btnDeleteProfile = new wxButton( itemPanel95, ID_BUTTON_DEL_PROFILE, _("Delete profile"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer98->Add(m_btnDeleteProfile, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticBox* itemStaticBoxSizer104Static = new wxStaticBox(itemPanel96, wxID_ANY, _("Camera"));
-    wxStaticBoxSizer* itemStaticBoxSizer104 = new wxStaticBoxSizer(itemStaticBoxSizer104Static, wxVERTICAL);
-    itemBoxSizer97->Add(itemStaticBoxSizer104, 0, wxGROW|wxALL, 5);
-    wxFlexGridSizer* itemFlexGridSizer105 = new wxFlexGridSizer(0, 3, 0, 0);
-    itemFlexGridSizer105->AddGrowableCol(0);
-    itemStaticBoxSizer104->Add(itemFlexGridSizer105, 0, wxGROW, 5);
-    m_txtSelectedCamera = new wxTextCtrl( itemPanel96, ID_TEXTCTRL_SELECTED_CAMERA, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
+    wxStaticBox* itemStaticBoxSizer103Static = new wxStaticBox(itemPanel95, wxID_ANY, _("Camera"));
+    wxStaticBoxSizer* itemStaticBoxSizer103 = new wxStaticBoxSizer(itemStaticBoxSizer103Static, wxVERTICAL);
+    itemBoxSizer96->Add(itemStaticBoxSizer103, 0, wxGROW|wxALL, 5);
+    wxFlexGridSizer* itemFlexGridSizer104 = new wxFlexGridSizer(0, 3, 0, 0);
+    itemFlexGridSizer104->AddGrowableCol(0);
+    itemStaticBoxSizer103->Add(itemFlexGridSizer104, 0, wxGROW, 5);
+    m_txtSelectedCamera = new wxTextCtrl( itemPanel95, ID_TEXTCTRL_SELECTED_CAMERA, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
     m_txtSelectedCamera->Enable(false);
-    itemFlexGridSizer105->Add(m_txtSelectedCamera, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    itemFlexGridSizer104->Add(m_txtSelectedCamera, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_btnCameraSettings = new wxButton( itemPanel96, ID_BUTTON_CAMERA_SETTINGS, _("Settings..."), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer105->Add(m_btnCameraSettings, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_btnCameraSettings = new wxButton( itemPanel95, ID_BUTTON_CAMERA_SETTINGS, _("Settings..."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer104->Add(m_btnCameraSettings, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton108 = new wxButton( itemPanel96, ID_BUTTON_CHANGE_CAMERA, _("Change"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer105->Add(itemButton108, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxButton* itemButton107 = new wxButton( itemPanel95, ID_BUTTON_CHANGE_CAMERA, _("Change"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer104->Add(itemButton107, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticBox* itemStaticBoxSizer109Static = new wxStaticBox(itemPanel96, wxID_ANY, _("Language"));
-    wxStaticBoxSizer* itemStaticBoxSizer109 = new wxStaticBoxSizer(itemStaticBoxSizer109Static, wxVERTICAL);
-    itemBoxSizer97->Add(itemStaticBoxSizer109, 0, wxGROW|wxALL, 5);
-    wxFlexGridSizer* itemFlexGridSizer110 = new wxFlexGridSizer(0, 2, 0, 0);
-    itemStaticBoxSizer109->Add(itemFlexGridSizer110, 0, wxALIGN_LEFT, 5);
-    wxStaticText* itemStaticText111 = new wxStaticText( itemPanel96, wxID_STATIC, _("Language:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer110->Add(itemStaticText111, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticBox* itemStaticBoxSizer108Static = new wxStaticBox(itemPanel95, wxID_ANY, _("Language"));
+    wxStaticBoxSizer* itemStaticBoxSizer108 = new wxStaticBoxSizer(itemStaticBoxSizer108Static, wxVERTICAL);
+    itemBoxSizer96->Add(itemStaticBoxSizer108, 0, wxGROW|wxALL, 5);
+    wxFlexGridSizer* itemFlexGridSizer109 = new wxFlexGridSizer(0, 2, 0, 0);
+    itemStaticBoxSizer108->Add(itemFlexGridSizer109, 0, wxALIGN_LEFT, 5);
+    wxStaticText* itemStaticText110 = new wxStaticText( itemPanel95, wxID_STATIC, _("Language:"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer109->Add(itemStaticText110, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choLanguageStrings;
-    m_choLanguage = new wxChoice( itemPanel96, ID_CHOICE_LANGUAGE, wxDefaultPosition, wxDefaultSize, m_choLanguageStrings, 0 );
-    itemFlexGridSizer110->Add(m_choLanguage, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_choLanguage = new wxChoice( itemPanel95, ID_CHOICE_LANGUAGE, wxDefaultPosition, wxDefaultSize, m_choLanguageStrings, 0 );
+    itemFlexGridSizer109->Add(m_choLanguage, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    itemListbook3->AddPage(itemPanel96, _("General options"), false, 1);
+    itemListbook3->AddPage(itemPanel95, _("General options"), false, 1);
 
     itemBoxSizer2->Add(itemListbook3, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxStdDialogButtonSizer* itemStdDialogButtonSizer113 = new wxStdDialogButtonSizer;
+    wxStdDialogButtonSizer* itemStdDialogButtonSizer112 = new wxStdDialogButtonSizer;
 
-    itemBoxSizer2->Add(itemStdDialogButtonSizer113, 0, wxALIGN_RIGHT|wxALL, 5);
-    wxButton* itemButton114 = new wxButton( itemDialog1, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStdDialogButtonSizer113->AddButton(itemButton114);
+    itemBoxSizer2->Add(itemStdDialogButtonSizer112, 0, wxALIGN_RIGHT|wxALL, 5);
+    wxButton* itemButton113 = new wxButton( itemDialog1, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStdDialogButtonSizer112->AddButton(itemButton113);
 
     m_btnCancel = new wxButton( itemDialog1, wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     m_btnCancel->Enable(false);
-    itemStdDialogButtonSizer113->AddButton(m_btnCancel);
+    itemStdDialogButtonSizer112->AddButton(m_btnCancel);
 
-    itemStdDialogButtonSizer113->Realize();
+    itemStdDialogButtonSizer112->Realize();
 
 ////@end WConfiguration content construction
 #if defined(__WXGTK__)
-	for (unsigned int i=0; i<wxGetApp().GetController().GetMouseOutput().GetKeyEventsCount(); i++) {
-		m_choLeft->Append(_("Key:") + wxString(wxGetApp().GetController().GetMouseOutput().GetKeyboardCode(i).GetName(), wxConvLocal));
-		m_choRight->Append(_("Key:") + wxString(wxGetApp().GetController().GetMouseOutput().GetKeyboardCode(i).GetName(), wxConvLocal));
-		m_choUp->Append(_("Key:") + wxString(wxGetApp().GetController().GetMouseOutput().GetKeyboardCode(i).GetName(), wxConvLocal));
-		m_choDown->Append(_("Key:") + wxString(wxGetApp().GetController().GetMouseOutput().GetKeyboardCode(i).GetName(), wxConvLocal));
+	for (unsigned int i=0; i<wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyEventsCount(); i++) {
+		m_choLeft->Append(_("Key:") + wxString(wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName(), wxConvLocal));
+		m_choRight->Append(_("Key:") + wxString(wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName(), wxConvLocal));
+		m_choUp->Append(_("Key:") + wxString(wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName(), wxConvLocal));
+		m_choDown->Append(_("Key:") + wxString(wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName(), wxConvLocal));
 	}
 #endif
 }
@@ -890,59 +884,87 @@ void WConfiguration::InitializeData ()
 	//
 	
 	// Motion options
-	m_spinXSpeed->SetValue (wxGetApp().GetController().GetMouseOutput().GetXSpeed());
-	m_spinYSpeed->SetValue (wxGetApp().GetController().GetMouseOutput().GetYSpeed());
-	m_spinAcceleration->SetValue (wxGetApp().GetController().GetMouseOutput().GetAcceleration());
-	m_spinSmoothness->SetValue (wxGetApp().GetController().GetMouseOutput().GetSmoothness());
-	m_spinEasyStop->SetValue (wxGetApp().GetController().GetMouseOutput().GetEasyStopValue());
+	m_spinXSpeed->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetXSpeed());
+	m_spinYSpeed->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetYSpeed());
+	m_spinAcceleration->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetAcceleration());
+	m_spinSmoothness->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetSmoothness());
+	m_spinEasyStop->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetEasyStopValue());
 	
 	// Workspace
-	m_chkEnabledWorkspace->SetValue (wxGetApp().GetController().GetMouseOutput().GetRestrictedWorkingArea());
-	if (wxGetApp().GetController().GetMouseOutput().GetRestrictedWorkingArea()) {
-	m_spin_top_workspace->Enable(true);
-	m_spin_left_workspace->Enable(true);
-	m_spin_right_workspace->Enable(true);
-	m_spin_bottom_workspace->Enable(true);
+	m_chkEnabledWorkspace->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetRestrictedWorkingArea());
+	if (wxGetApp().GetController().GetPointerAction().GetRestrictedWorkingArea()) {
+		m_spin_top_workspace->Enable(true);
+		m_spin_left_workspace->Enable(true);
+		m_spin_right_workspace->Enable(true);
+		m_spin_bottom_workspace->Enable(true);
 	}
-	m_spin_top_workspace->SetValue (wxGetApp().GetController().GetMouseOutput().GetTopWorkspace());
-	m_spin_left_workspace->SetValue (wxGetApp().GetController().GetMouseOutput().GetLeftWorkspace());
-	m_spin_right_workspace->SetValue (wxGetApp().GetController().GetMouseOutput().GetRightWorkspace());
-	m_spin_bottom_workspace->SetValue (wxGetApp().GetController().GetMouseOutput().GetBottomWorkspace());
+	m_spin_top_workspace->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetTopWorkspace());
+	m_spin_left_workspace->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetLeftWorkspace());
+	m_spin_right_workspace->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetRightWorkspace());
+	m_spin_bottom_workspace->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetBottomWorkspace());
 	
 	// Clic
-	m_chkDwellClickEnabled->SetValue (wxGetApp().GetController().GetMouseOutput().GetClickMode()!= CMouseOutput::NONE);
+	m_chkDwellClickEnabled->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetClickMode()!= CPointerAction::NONE);
 #if defined(__WXGTK__)
-	m_chkEnableGestureClick->SetValue (wxGetApp().GetController().GetMouseOutput().GetClickMode()== CMouseOutput::GESTURE);
+	m_chkEnableGestureClick->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetClickMode()== CPointerAction::GESTURE);
 #endif
-	m_chkAllowConsecutiveClick->SetValue (wxGetApp().GetController().GetMouseOutput().GetConsecutiveClicksAllowed());
-	m_chkBeepOnClick->SetValue (wxGetApp().GetController().GetMouseOutput().GetBeepOnClick());
-	m_spinDwellTime->SetValue (wxGetApp().GetController().GetMouseOutput().GetDwellTime());
-	m_spinDwellArea->SetValue ( wxGetApp().GetController().GetMouseOutput().GetDwellToleranceArea () );
-	m_chkShowClickWin->SetValue ( wxGetApp().GetController().GetClickWindowController().IsShown() );
-	m_choClickWindowBehaviour->Select (wxGetApp().GetController().GetClickWindowController().GetFastMode() ? 1 : 0);
-	m_choClickWindowDesign->Select (wxGetApp().GetController().GetClickWindowController().GetDesign());
+	m_chkAllowConsecutiveClick->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetConsecutiveClicksAllowed());
+	m_chkBeepOnClick->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetBeepOnClick());
+	m_spinDwellTime->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetDwellTime());
+	m_spinDwellArea->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetDwellToleranceArea () );
+	m_chkShowClickWin->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetUseClickWindow());		
+	m_choClickWindowBehaviour->Select (
+		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetFastMode() ? 1 : 0);
+	m_choClickWindowDesign->Select (
+		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetDesign());
 #if defined(__WXGTK__)
-	m_choLeft->Select (wxGetApp().GetController().GetMouseOutput().GetActionLeft());
-	m_choRight->Select (wxGetApp().GetController().GetMouseOutput().GetActionRight());
-	m_choUp->Select (wxGetApp().GetController().GetMouseOutput().GetActionTop());
-	m_choDown->Select (wxGetApp().GetController().GetMouseOutput().GetActionBottom());
-	m_chkAllowVisualAlerts->SetValue (wxGetApp().GetController().GetMouseOutput().GetVisualAlerts());
+	m_choLeft->Select (
+		wxGetApp().GetController().GetPointerAction().GetGestureClick().GetActionLeft());
+	m_choRight->Select (
+		wxGetApp().GetController().GetPointerAction().GetGestureClick().GetActionRight());
+	m_choUp->Select (
+		wxGetApp().GetController().GetPointerAction().GetGestureClick().GetActionTop());
+	m_choDown->Select (
+		wxGetApp().GetController().GetPointerAction().GetGestureClick().GetActionBottom());
+	m_chkAllowVisualAlerts->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetVisualAlerts());
 #endif
 	UpdateGUIClickOptions();
 
 	// Startup
-	m_chkEnabledAtStartup->SetValue (wxGetApp().GetController().GetEnabledAtStartup());
-	m_chkOpenClickWinAtStartup->SetValue (
-		wxGetApp().GetController().GetClickWindowController().GetOpenClickWinAtStartup());
+	m_chkEnabledAtStartup->SetValue (
+		wxGetApp().GetController().GetEnabledAtStartup());
 	
 	// Advanced
-	m_chkAutoLocateFace->SetValue (wxGetApp().GetController().GetVisionPipeline().GetTrackFace());
+	m_chkAutoLocateFace->SetValue (
+		wxGetApp().GetController().GetVisionPipeline().GetTrackFace());
 	m_chkShowAutoLocateFaceFilter->Enable (m_chkAutoLocateFace->GetValue());
-	m_chkShowAutoLocateFaceFilter->SetValue (wxGetApp().GetController().GetVisionPipeline().GetShowTrackFaceFilter());
-	m_txtOnScreenKeyboardCommand->SetValue(wxGetApp().GetController().GetOnScreenKeyboardCommand());
+	m_chkShowAutoLocateFaceFilter->SetValue (
+		wxGetApp().GetController().GetVisionPipeline().GetShowTrackFaceFilter());
+	m_txtOnScreenKeyboardCommand->SetValue(
+		wxGetApp().GetController().GetOnScreenKeyboardCommand());
 #if defined(__WXGTK__)
-	m_chkActivationKey->SetValue(wxGetApp().GetController().getHotkeyManager().GetEnabledActivationKey());
-	m_txtActivationKey->SetValue(wxString(wxGetApp().GetController().getHotkeyManager().GetActivationKey().GetName(), wxConvLocal));
+	m_chkActivationKey->SetValue(
+		wxGetApp().GetController().getHotkeyManager().GetEnabledActivationKey());
+	m_txtActivationKey->SetValue(
+		wxString(wxGetApp().GetController().getHotkeyManager().GetActivationKey().GetName(), wxConvLocal));
 	    
 	// 
 	// App data
@@ -952,8 +974,10 @@ void WConfiguration::InitializeData ()
 #endif
 	// Profile combo
 	m_choProfile->Clear();
-	m_choProfile->Append (wxGetApp().GetController().GetConfigManager().GetProfileList());
-	m_choProfile->Select (wxGetApp().GetController().GetConfigManager().GetCurrentProfile());
+	m_choProfile->Append (
+		wxGetApp().GetController().GetConfigManager().GetProfileList());
+	m_choProfile->Select (
+		wxGetApp().GetController().GetConfigManager().GetCurrentProfile());
 
 	// Profile buttons
 	if (wxGetApp().GetController().GetConfigManager().GetCurrentProfile()== 0)
@@ -965,9 +989,7 @@ void WConfiguration::InitializeData ()
 	m_choLanguage->Clear();
 	m_choLanguage->Append (wxGetTranslation(s_langNames[0]));
 	for (unsigned int i= 1; i< WXSIZEOF(s_langNames); i++) {
-		//m_choLanguage->Append (wxGetTranslation(s_langNames[i]));
 		m_choLanguage->Append (s_langNames[i]);
-		
 	}		
 	// Select current language
 	for (unsigned int i= 0; i< WXSIZEOF(s_langNames); i++)
@@ -1012,7 +1034,6 @@ void WConfiguration::EnableGUIGeneralClickOptions (bool enable)
 	m_spinDwellArea->Enable(enable);
 	m_chkAllowConsecutiveClick->Enable(enable);
 	m_chkBeepOnClick->Enable(enable);
-	m_chkOpenClickWinAtStartup->Enable(enable);
 	m_chkShowClickWin->Enable(enable);
 	m_choClickWindowDesign->Enable(enable);
 	m_choClickWindowBehaviour->Enable(enable);
@@ -1044,7 +1065,6 @@ void WConfiguration::EnableGUIGestureOptions (bool enable)
 
 void WConfiguration::EnableGUIClickWindowOptions(bool enable)
 {
-	m_chkOpenClickWinAtStartup->Enable(enable);
 	m_chkShowClickWin->Enable(enable);
 	m_choClickWindowDesign->Enable(enable);
 	m_choClickWindowBehaviour->Enable(enable);
@@ -1082,17 +1102,6 @@ void WConfiguration::OnCheckboxEnableAtStartupClick( wxCommandEvent& event )
 }
 
 
-/*!
- * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_CLICKWIN_AT_STARTUP
- */
-
-void WConfiguration::OnCheckboxClickwinAtStartupClick( wxCommandEvent& event )
-{
-	wxGetApp().GetController().GetClickWindowController().SetOpenClickWinAtStartup (
-		m_chkOpenClickWinAtStartup->GetValue());
-	event.Skip(false);
-	Changed ();
-}
 
 
 /*!
@@ -1101,7 +1110,7 @@ void WConfiguration::OnCheckboxClickwinAtStartupClick( wxCommandEvent& event )
 
 void WConfiguration::OnSpinctrlXspeedUpdated( wxSpinEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetXSpeed(m_spinXSpeed->GetValue());
+	wxGetApp().GetController().GetPointerAction().SetXSpeed(m_spinXSpeed->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1113,7 +1122,7 @@ void WConfiguration::OnSpinctrlXspeedUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlYspeedUpdated( wxSpinEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetYSpeed(m_spinYSpeed->GetValue());
+	wxGetApp().GetController().GetPointerAction().SetYSpeed(m_spinYSpeed->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1125,7 +1134,7 @@ void WConfiguration::OnSpinctrlYspeedUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlAccelerationUpdated( wxSpinEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetAcceleration(m_spinAcceleration->GetValue());
+	wxGetApp().GetController().GetPointerAction().SetAcceleration(m_spinAcceleration->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1136,7 +1145,7 @@ void WConfiguration::OnSpinctrlAccelerationUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlSmoothnessUpdated( wxSpinEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetSmoothness(m_spinSmoothness->GetValue());
+	wxGetApp().GetController().GetPointerAction().SetSmoothness(m_spinSmoothness->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1148,7 +1157,7 @@ void WConfiguration::OnSpinctrlSmoothnessUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlEasystopUpdated( wxSpinEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetEasyStopValue(m_spinEasyStop->GetValue());
+	wxGetApp().GetController().GetPointerAction().SetEasyStopValue(m_spinEasyStop->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1161,7 +1170,7 @@ void WConfiguration::OnSpinctrlEasystopUpdated( wxSpinEvent& event )
 void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 {
 	if (!m_chkDwellClickEnabled->GetValue()) {
-		if (wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::NONE, false, this)) {
+		if (wxGetApp().GetController().GetPointerAction().SetClickMode(CPointerAction::NONE, false, this)) {
 			EnableGUIGeneralClickOptions(false);
 			EnableGUIGestureOptions(false);
 			EnableGUIClickWindowOptions(false);
@@ -1173,7 +1182,7 @@ void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 #if defined(__WXGTK__)
 		if (m_chkEnableGestureClick->IsChecked()) {
 			// Gesture click
-			if (wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::GESTURE, false, this)) {
+			if (wxGetApp().GetController().GetPointerAction().SetClickMode(CPointerAction::GESTURE, false, this)) {
 				EnableGUIGeneralClickOptions(true);
 				EnableGUIGestureOptions(true);
 				EnableGUIClickWindowOptions(false);
@@ -1182,14 +1191,14 @@ void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 		}
 		else
 #endif
-			if (wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::DWELL, false, this)) {
+			if (wxGetApp().GetController().GetPointerAction().SetClickMode(CPointerAction::DWELL, false, this)) {
 				EnableGUIGeneralClickOptions(true);
 				EnableGUIGestureOptions(false);
 				EnableGUIClickWindowOptions(true);
 				Changed ();
 			}
 	}		
-	m_chkDwellClickEnabled->SetValue (wxGetApp().GetController().GetMouseOutput().GetClickMode()!= CMouseOutput::NONE);
+	m_chkDwellClickEnabled->SetValue (wxGetApp().GetController().GetPointerAction().GetClickMode()!= CPointerAction::NONE);
 	event.Skip(false);	
 }
 
@@ -1202,7 +1211,7 @@ void WConfiguration::OnCheckboxEnableGestureClick( wxCommandEvent& event )
 {
 	if (m_chkEnableGestureClick->IsChecked())
 	{
-		if (wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::GESTURE, false, this)) {
+		if (wxGetApp().GetController().GetPointerAction().SetClickMode(CPointerAction::GESTURE, false, this)) {
 			EnableGUIGestureOptions(true);
 			EnableGUIClickWindowOptions(false);
 		}
@@ -1211,7 +1220,7 @@ void WConfiguration::OnCheckboxEnableGestureClick( wxCommandEvent& event )
 		}
 	}
 	else {
-		if (wxGetApp().GetController().GetMouseOutput().SetClickMode(CMouseOutput::DWELL, false, this)) {
+		if (wxGetApp().GetController().GetPointerAction().SetClickMode(CPointerAction::DWELL, false, this)) {
 			EnableGUIGestureOptions(false);
 			EnableGUIClickWindowOptions(true);
 		}
@@ -1227,7 +1236,8 @@ void WConfiguration::OnCheckboxEnableGestureClick( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxAllowConsecutiveClick( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetConsecutiveClicksAllowed (m_chkAllowConsecutiveClick->GetValue());
+	wxGetApp().GetController().GetPointerAction().GetDwellClick().
+		SetConsecutiveClicksAllowed (m_chkAllowConsecutiveClick->GetValue());
 	Changed ();
 	event.Skip(false);	
 }
@@ -1239,7 +1249,7 @@ void WConfiguration::OnCheckboxAllowConsecutiveClick( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxBeepOnClickClick( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetBeepOnClick (m_chkBeepOnClick->GetValue());
+	wxGetApp().GetController().GetPointerAction().SetBeepOnClick (m_chkBeepOnClick->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1251,7 +1261,7 @@ void WConfiguration::OnCheckboxBeepOnClickClick( wxCommandEvent& event )
 
 void WConfiguration::OnSpinctrlDwellTimeUpdated( wxSpinEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetDwellTime (m_spinDwellTime->GetValue());
+	wxGetApp().GetController().GetPointerAction().SetDwellTime (m_spinDwellTime->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1263,7 +1273,7 @@ void WConfiguration::OnSpinctrlDwellTimeUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlDwellAreaUpdated( wxSpinEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetDwellToleranceArea (m_spinDwellArea->GetValue());		
+	wxGetApp().GetController().GetPointerAction().SetDwellToleranceArea (m_spinDwellArea->GetValue());		
 	event.Skip(false);
 	Changed ();
 }
@@ -1275,8 +1285,9 @@ void WConfiguration::OnSpinctrlDwellAreaUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnCheckboxShowClickwinClick( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetClickWindowController().Show (
-		! wxGetApp().GetController().GetClickWindowController().IsShown() );
+	wxGetApp().GetController().GetPointerAction().GetDwellClick().SetUseClickWindow(
+		!wxGetApp().GetController().GetPointerAction().GetDwellClick().GetUseClickWindow()
+	);
 	event.Skip(false);
 	Changed ();
 }
@@ -1427,7 +1438,8 @@ void WConfiguration::OnButtonAddProfileClick( wxCommandEvent& event )
 
 void WConfiguration::OnChoiceBehaviourSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetClickWindowController().SetFastMode ( event.GetSelection()!= 0);
+	wxGetApp().GetController().GetPointerAction().GetDwellClick().
+		GetClickWindowController().SetFastMode ( event.GetSelection()!= 0);
 	event.Skip(false);
 }
 
@@ -1438,8 +1450,12 @@ void WConfiguration::OnChoiceBehaviourSelected( wxCommandEvent& event )
 
 void WConfiguration::OnChoiceDesignSelected( wxCommandEvent& event )
 {
-	CClickWindowController::EDesign design= (CClickWindowController::EDesign) event.GetSelection();
-	wxGetApp().GetController().GetClickWindowController().SetDesign (design);
+	CClickWindowController::EDesign design= 
+		(CClickWindowController::EDesign) event.GetSelection();
+
+	wxGetApp().GetController().GetPointerAction().GetDwellClick().
+		GetClickWindowController().SetDesign (design);
+
 	event.Skip(false);
 }
 
@@ -1450,9 +1466,11 @@ void WConfiguration::OnChoiceDesignSelected( wxCommandEvent& event )
 void WConfiguration::OnButtonOnscreenkeyboardcommandClick( wxCommandEvent& event )
 {
 #if defined(__WXMSW__)
-	wxFileDialog dlg (this, _("Choose on-screen keyboard command"), _T(""), _T(""), _("Executable files|*.exe"), wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_CHANGE_DIR);
+	wxFileDialog dlg (this, _("Choose on-screen keyboard command"), _T(""), _T(""),
+		_("Executable files|*.exe"), wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_CHANGE_DIR);
 #else
-	wxFileDialog dlg (this, _("Choose on-screen keyboard command"), _T(""), _T(""), _T("*"), wxOPEN | wxFILE_MUST_EXIST | wxCHANGE_DIR);
+	wxFileDialog dlg (this, _("Choose on-screen keyboard command"), 
+		_T(""), _T(""), _T("*"), wxOPEN | wxFILE_MUST_EXIST | wxCHANGE_DIR);
 #endif
 
 	if (dlg.ShowModal()== wxID_OK) m_txtOnScreenKeyboardCommand->SetValue(dlg.GetPath());
@@ -1511,7 +1529,8 @@ void WConfiguration::OnButtonChangeCameraClick( wxCommandEvent& event )
 
 void WConfiguration::OnSpinctrlTopWorkspaceUpdated( wxSpinEvent& event )
 {
-    wxGetApp().GetController().GetMouseOutput().SetTopWorkspace(m_spin_top_workspace->GetValue());
+    wxGetApp().GetController().GetPointerAction().SetTopWorkspace(m_spin_top_workspace->GetValue());
+	m_spin_top_workspace->SetValue (wxGetApp().GetController().GetPointerAction().GetTopWorkspace());
 	event.Skip(false);
 	Changed ();
 }
@@ -1523,7 +1542,8 @@ void WConfiguration::OnSpinctrlTopWorkspaceUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlRightWorkspaceUpdated( wxSpinEvent& event )
 {
-    wxGetApp().GetController().GetMouseOutput().SetRightWorkspace(m_spin_right_workspace->GetValue());
+    wxGetApp().GetController().GetPointerAction().SetRightWorkspace(m_spin_right_workspace->GetValue());
+	m_spin_right_workspace->SetValue (wxGetApp().GetController().GetPointerAction().GetRightWorkspace());
 	event.Skip(false);
 	Changed ();
 }
@@ -1535,7 +1555,8 @@ void WConfiguration::OnSpinctrlRightWorkspaceUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlLeftWorkspaceUpdated( wxSpinEvent& event )
 {
-    wxGetApp().GetController().GetMouseOutput().SetLeftWorkspace(m_spin_left_workspace->GetValue());
+    wxGetApp().GetController().GetPointerAction().SetLeftWorkspace(m_spin_left_workspace->GetValue());
+	m_spin_left_workspace->SetValue (wxGetApp().GetController().GetPointerAction().GetLeftWorkspace());
 	event.Skip(false);
 	Changed ();
 }
@@ -1547,7 +1568,8 @@ void WConfiguration::OnSpinctrlLeftWorkspaceUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnSpinctrlBottomWorkspaceUpdated( wxSpinEvent& event )
 {
-    wxGetApp().GetController().GetMouseOutput().SetBottomWorkspace(m_spin_bottom_workspace->GetValue());
+    wxGetApp().GetController().GetPointerAction().SetBottomWorkspace(m_spin_bottom_workspace->GetValue());
+	m_spin_bottom_workspace->SetValue (wxGetApp().GetController().GetPointerAction().GetBottomWorkspace());
 	event.Skip(false);
 	Changed ();
 }
@@ -1564,14 +1586,14 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
         if (dlg.ShowModal()== wxID_YES)
         {
             m_chkEnabledWorkspace->SetValue(true);
-            wxGetApp().GetController().GetMouseOutput().SetRestrictedWorkingArea(m_chkEnabledWorkspace->GetValue());
+            wxGetApp().GetController().GetPointerAction().SetRestrictedWorkingArea(m_chkEnabledWorkspace->GetValue());
             m_spin_top_workspace->Enable(m_chkEnabledWorkspace->GetValue());
             m_spin_left_workspace->Enable(m_chkEnabledWorkspace->GetValue());
             m_spin_right_workspace->Enable(m_chkEnabledWorkspace->GetValue());
             m_spin_bottom_workspace->Enable(m_chkEnabledWorkspace->GetValue());
         }		
 	} else {
-        wxGetApp().GetController().GetMouseOutput().SetRestrictedWorkingArea(m_chkEnabledWorkspace->GetValue());
+        wxGetApp().GetController().GetPointerAction().SetRestrictedWorkingArea(m_chkEnabledWorkspace->GetValue());
         m_spin_top_workspace->Enable(m_chkEnabledWorkspace->GetValue());
         m_spin_left_workspace->Enable(m_chkEnabledWorkspace->GetValue());
         m_spin_right_workspace->Enable(m_chkEnabledWorkspace->GetValue());
@@ -1653,7 +1675,8 @@ void WConfiguration::OnButtonClick( wxCommandEvent& event )
 
 void WConfiguration::OnComboboxLeftSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetActionLeft (event.GetInt());
+	wxGetApp().GetController().GetPointerAction().GetGestureClick().
+		SetActionLeft ((CGestureClick::EAction) event.GetInt());
 	event.Skip(false);
 }
 
@@ -1664,7 +1687,8 @@ void WConfiguration::OnComboboxLeftSelected( wxCommandEvent& event )
 
 void WConfiguration::OnComboboxRightSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetActionRight (event.GetInt());
+	wxGetApp().GetController().GetPointerAction().GetGestureClick().
+		SetActionRight ((CGestureClick::EAction) event.GetInt());
 	event.Skip(false);
 }
 
@@ -1675,7 +1699,8 @@ void WConfiguration::OnComboboxRightSelected( wxCommandEvent& event )
 
 void WConfiguration::OnComboboxTopSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetActionTop (event.GetInt());
+	wxGetApp().GetController().GetPointerAction().GetGestureClick().
+		SetActionTop ((CGestureClick::EAction) event.GetInt());
 	event.Skip(false);
 }
 
@@ -1686,7 +1711,8 @@ void WConfiguration::OnComboboxTopSelected( wxCommandEvent& event )
 
 void WConfiguration::OnComboboxBottomSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetActionBottom (event.GetInt());
+	wxGetApp().GetController().GetPointerAction().GetGestureClick().
+		SetActionBottom ((CGestureClick::EAction) event.GetInt());
 	event.Skip(false);
 }
 
@@ -1697,7 +1723,7 @@ void WConfiguration::OnComboboxBottomSelected( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxAllowVisualAlertsClick( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetVisualAlerts(m_chkAllowVisualAlerts->IsChecked());
+	wxGetApp().GetController().GetPointerAction().SetVisualAlerts(m_chkAllowVisualAlerts->IsChecked());
 	Changed ();
 	event.Skip(false);	
 }
@@ -1738,7 +1764,8 @@ void WConfiguration::OnCancelClick( wxCommandEvent& event )
 
 void WConfiguration::OnLeftGestureChoiceSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetActionLeft (event.GetInt());
+	wxGetApp().GetController().GetPointerAction().GetGestureClick().
+		SetActionLeft ( (CGestureClick::EAction) event.GetInt());
 	Changed();
 	event.Skip(false);
 }
@@ -1752,7 +1779,8 @@ void WConfiguration::OnLeftGestureChoiceSelected( wxCommandEvent& event )
 
 void WConfiguration::OnRightGestureChoiceSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetActionRight (event.GetInt());
+	wxGetApp().GetController().GetPointerAction().GetGestureClick().
+		SetActionRight ((CGestureClick::EAction) event.GetInt());
 	Changed();
 	event.Skip(false);
 }
@@ -1766,7 +1794,8 @@ void WConfiguration::OnRightGestureChoiceSelected( wxCommandEvent& event )
 
 void WConfiguration::OnUpGestureChoiceSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetActionTop (event.GetInt());
+	wxGetApp().GetController().GetPointerAction().GetGestureClick().
+		SetActionTop ((CGestureClick::EAction) event.GetInt());
 	Changed();
 	event.Skip(false);
 }
@@ -1780,7 +1809,8 @@ void WConfiguration::OnUpGestureChoiceSelected( wxCommandEvent& event )
 
 void WConfiguration::OnDownGestureChoiceSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetMouseOutput().SetActionBottom (event.GetInt());
+	wxGetApp().GetController().GetPointerAction().GetGestureClick().
+		SetActionBottom ((CGestureClick::EAction) event.GetInt());
 	Changed();
 	event.Skip(false);
 }

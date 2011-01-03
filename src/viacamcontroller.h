@@ -29,8 +29,7 @@
 #include "wwizardmanager.h"
 
 class WViacam;
-class CClickWindowController;
-class CMouseOutput;
+class CPointerAction;
 class WConfiguration;
 class CMotionCalibration;
 class wxWindow;
@@ -90,15 +89,11 @@ public:
 		assert(m_pConfiguration); return *m_pConfiguration; 
 	}
 
-	CMouseOutput& GetMouseOutput() { 
-		assert(m_pMouseOutput); return *m_pMouseOutput; 
+	CPointerAction& GetPointerAction() {
+		assert (m_pointerAction); return *m_pointerAction;
 	}
 
 	CVisionPipeline& GetVisionPipeline() { return m_visionPipeline; }
-
-	CClickWindowController& GetClickWindowController() {
-		assert(m_pClickWindowController); return *m_pClickWindowController;
-	}
 
 	WViacam* GetMainWindow() { return m_pMainWindow; }
 	
@@ -140,8 +135,7 @@ private:
 	WViacam* m_pMainWindow;
 	CCamera* m_pCamera;
 	CCaptureThread* m_pCaptureThread;	
-	CClickWindowController* m_pClickWindowController;
-	CMouseOutput* m_pMouseOutput;
+	CPointerAction* m_pointerAction;
 	CVisionPipeline m_visionPipeline;
 	CHotkeyManager* m_hotKeyManager;
 	CConfigManager* m_configManager;
@@ -152,7 +146,7 @@ private:
 	WWizardManager m_wizardManager;
 
 	wxString m_cameraName;
-	bool m_enabled;
+	volatile bool m_enabled;
 	bool m_enabledAtStartup;
 	int m_languageId;
 	wxString m_onScreenKeyboardCommand;

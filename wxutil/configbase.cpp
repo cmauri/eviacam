@@ -24,14 +24,12 @@ void CConfigBase::StartupRun()
 {
 }
 
-void CConfigBase::ReadAppData(wxConfigBase* pConfObj)
+void CConfigBase::ReadAppData(wxConfigBase*)
 {
-	wxUnusedVar(pConfObj);
 }
 	
-void CConfigBase::WriteAppData(wxConfigBase* pConfObj)
+void CConfigBase::WriteAppData(wxConfigBase*)
 {
-	wxUnusedVar(pConfObj);
 }
 
 CConfigBase::~CConfigBase()

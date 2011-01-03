@@ -108,17 +108,17 @@ Name: Arabic; MessagesFile: compiler:Languages\Arabic.isl
 Name: Hebrew; MessagesFile: compiler:Languages\Hebrew.isl
 
 [Registry]
-Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: english; Languages: English
-Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: spanish; Languages: Castellano
-Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: catalan; Languages: Catala
-Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: gl; Languages: Galego
-Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: it; Languages: Italiano
-Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: tr; Languages: Turkish
-Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: de; Languages: Deutsch
-Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: oc; Languages: Occitan
-Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: fr; Languages: French
-Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: ar; Languages: Arabic
-Root: HKCU; Subkey: Software\eviacam; ValueType: string; ValueName: language; ValueData: he; Languages: Hebrew
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: english; Languages: English
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: spanish; Languages: Castellano
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: catalan; Languages: Catala
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: gl; Languages: Galego
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: it; Languages: Italiano
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: tr; Languages: Turkish
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: de; Languages: Deutsch
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: oc; Languages: Occitan
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: fr; Languages: French
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: ar; Languages: Arabic
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: he; Languages: Hebrew
 
 [_ISTool]
 Use7zip=false

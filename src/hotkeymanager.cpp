@@ -31,8 +31,19 @@
 // an implementation based on keyboard hooks
 
 CHotkeyManager::CHotkeyManager()
+: m_enabledActivationKey(false)
+, m_keyCode()
+, m_lastKeyCode()
 {
 	InitDefaults();
+}
+
+void CHotkeyManager::InitDefaults()
+{
+#if defined(__WXGTK__) 
+	SetActivationKeyCode(CKeyboardCode::FromWXKeyCode (WXK_SCROLL));
+	SetEnabledActivationKey (true);
+#endif // __WXGTK___
 }
 
 void CHotkeyManager::CheckKeyboardStatus()
@@ -42,9 +53,7 @@ void CHotkeyManager::CheckKeyboardStatus()
 	if (m_enabledActivationKey) {
 		BEGIN_GUI_CALL_MUTEX()
 		CKeyboardCode kc = CKeyboardCode::ReadKeyCode();
-		//int keyCode = kbCode.GetKeyboardCode();
 		if (kc== m_keyCode and kc!= m_lastKeyCode) {
-			//m_pMouseOutput->EndVisualAlerts();
 			wxGetApp().GetController().SetEnabled(!wxGetApp().GetController().GetEnabled(), true);
 		}
 		m_lastKeyCode = kc;
@@ -53,29 +62,25 @@ void CHotkeyManager::CheckKeyboardStatus()
 #endif // __WXGTK___
 }
 
-void CHotkeyManager::InitDefaults()
-{
-	SetActivationKeyCode(CKeyboardCode::FromWXKeyCode (WXK_SCROLL));
-}
-
-void CHotkeyManager::WriteAppData(wxConfigBase*)
-{
-}
 
 void CHotkeyManager::WriteProfileData(wxConfigBase* pConfObj)
 {
+	pConfObj->SetPath (_T("hotKeyManager"));
+#if defined(__WXGTK__) 
 	pConfObj->Write(_T("enabledActivationKey"), m_enabledActivationKey);
-	pConfObj->Write(_T("keyCode"), (int) GetActivationKey().GetRawValue());
+	pConfObj->Write(_T("keyCode"), (long) GetActivationKey().GetRawValue());
+#endif // __WXGTK___
+	pConfObj->SetPath (_T(".."));
 } 
-
-void CHotkeyManager::ReadAppData(wxConfigBase*)
-{
-}
 
 void CHotkeyManager::ReadProfileData(wxConfigBase* pConfObj)
 {
+	pConfObj->SetPath (_T("hotKeyManager"));
+#if defined(__WXGTK__) 
 	pConfObj->Read(_T("enabledActivationKey"), &m_enabledActivationKey);
-	int rawKeyCode;
-	pConfObj->Read(_T("keyCode"), &rawKeyCode);
-	SetActivationKeyCode(CKeyboardCode::FromRawValue(rawKeyCode));
+	long rawKeyCode;
+	if (pConfObj->Read(_T("keyCode"), &rawKeyCode))
+		SetActivationKeyCode(CKeyboardCode::FromRawValue((unsigned int) rawKeyCode));
+#endif // __WXGTK___
+	pConfObj->SetPath (_T(".."));
 }

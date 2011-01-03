@@ -19,20 +19,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
-
 #pragma once
 
-#include "viacamcontroller.h"
-#include "wmotioncalibrationx.h"
-#include "wmotioncalibrationy.h"
-#include "wconfirmcalibration.h"
-#include "mouseoutput.h"
-#include <wx/msgdlg.h>
+class wxDialog;
 
-class CMotionCalibration{
+class CMotionCalibration {
 
 public:
-	CMotionCalibration(CViacamController* pViacamController);
+	CMotionCalibration();
 	~CMotionCalibration();
 	bool InitMotionCalibration();
 	void ComputeMotionRange (float vx, float vy);
@@ -40,7 +34,6 @@ public:
 private:
 	void InitValues();
 	
-	CViacamController* m_pViacamController;
 	wxDialog* m_pDialog;		
 	unsigned long m_xSpeedBackup, m_ySpeedBackup;
 	float m_posXVirt, m_posYVirt;

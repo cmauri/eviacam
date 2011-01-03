@@ -133,17 +133,7 @@ protected:
 	wxBitmap m_bmpButtonRightSelected;
 	wxBitmap m_bmpButtonRight;
 	wxBitmap m_bmpButtonShowMainWindow;
-
-
-	/*
-	virtual void UpdateNoClickButton (bool status);
 	
-	virtual void UpdateSelectedButtons ( wxControl* btnSelected, wxControl* btnNoSelected1, 
-								 wxControl* btnNoSelected2,wxControl* btnNoSelected3);
-
-	virtual void UpdateLockedButtons ( wxControl* btnLocked, wxControl* btnNoLocked1, 
-							   wxControl* btnNoLocked2, wxControl* btnNoLocked3);
-   */
 ////@begin CClickWindowBitmap member variables
     wxBitmapButton* m_btnNoClick;
     wxBitmapButton* m_btnLeft;

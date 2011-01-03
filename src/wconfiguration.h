@@ -51,7 +51,7 @@
 ////@begin forward declarations
 class wxSpinCtrl;
 ////@end forward declarations
-//class CViacamController;
+
 class wxPanel;
 
 /*!
@@ -89,7 +89,6 @@ class wxPanel;
 #define ID_CHOICE_DESIGN 10087
 #define ID_STATIC_BEHAVIOUR 10082
 #define ID_CHOICE_BEHAVIOUR 10006
-#define ID_CHECKBOX_CLICKWIN_AT_STARTUP 10022
 #define ID_CHECKBOX_SHOW_CLICKWIN 10037
 #define ID_STATICBOX_GESTURE_CLICK 10008
 #define ID_CHECKBOX 10034
@@ -119,7 +118,7 @@ class wxPanel;
 #define ID_BUTTON_CAMERA_SETTINGS 10053
 #define ID_BUTTON_CHANGE_CAMERA 10054
 #define ID_CHOICE_LANGUAGE 10012
-#define SYMBOL_WCONFIGURATION_STYLE wxCAPTION|wxSYSTEM_MENU|wxDIALOG_MODAL|wxTAB_TRAVERSAL
+#define SYMBOL_WCONFIGURATION_STYLE wxCAPTION|wxSYSTEM_MENU|wxTAB_TRAVERSAL
 #define SYMBOL_WCONFIGURATION_TITLE _("Configuration")
 #define SYMBOL_WCONFIGURATION_IDNAME ID_WCONFIGURATION
 #define SYMBOL_WCONFIGURATION_SIZE wxDefaultSize
@@ -219,9 +218,6 @@ private:
 
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_BEHAVIOUR
     void OnChoiceBehaviourSelected( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_CLICKWIN_AT_STARTUP
-    void OnCheckboxClickwinAtStartupClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SHOW_CLICKWIN
     void OnCheckboxShowClickwinClick( wxCommandEvent& event );
@@ -373,7 +369,6 @@ private:
     wxChoice* m_choClickWindowDesign;
     wxStaticText* m_stBehaviour;
     wxChoice* m_choClickWindowBehaviour;
-    wxCheckBox* m_chkOpenClickWinAtStartup;
     wxCheckBox* m_chkShowClickWin;
 #if defined(__WXGTK__)
     wxStaticBox* m_sboxGestureClick;

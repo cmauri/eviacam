@@ -37,7 +37,7 @@ CPointerAction::CPointerAction()
 #else
 	m_pMouseControl= new CMouseControl ();
 #endif
-	m_pDwellClick= new CDellClick (*m_pMouseControl);
+	m_pDwellClick= new CDwellClick (*m_pMouseControl);
 	m_pGestureClick= new CGestureClick (*m_pMouseControl);
 	
 	InitDefaults ();
@@ -64,6 +64,8 @@ void CPointerAction::InitDefaults()
 	SetAcceleration (2);
 	SetClickMode (CPointerAction::DWELL);
 	SetBeepOnClick (true);
+	SetSmoothness (5);
+	SetEasyStopValue (1); 
 	
 	// Workspace limits
 	SetRestrictedWorkingArea (false);
@@ -107,7 +109,7 @@ void CPointerAction::ReadProfileData(wxConfigBase* pConfObj)
 	if (pConfObj->Read(_T("ySpeed"), &val))	SetYSpeed(val);
 	if (pConfObj->Read(_T("acceleration"), &val)) SetAcceleration(val);
 	if (pConfObj->Read(_T("smoothness"), &val)) SetSmoothness(val);
-	if (pConfObj->Read(_T("easyStop"), &valb)) SetEasyStopValue(valb);
+	if (pConfObj->Read(_T("easyStop"), &val)) SetEasyStopValue(val);
 	if (pConfObj->Read(_T("enabledWorkspace"), &valb)) SetRestrictedWorkingArea(valb);
 	if (pConfObj->Read(_T("topWorkspace"), &val)) SetTopWorkspace(val);
 	if (pConfObj->Read(_T("leftWorkspace"), &val)) SetLeftWorkspace(val);
@@ -149,6 +151,21 @@ void CPointerAction::SetDwellTime (unsigned int ds)
 	// This setting affects both dwell and gesture click
 	m_pDwellClick->SetDwellTime(ds);
 	m_pGestureClick->SetDwellTime(ds);
+}
+
+unsigned int CPointerAction::GetDwellToleranceArea() const
+{
+	// This setting affects both dwell and gesture click
+	assert (m_pDwellClick->GetDwellToleranceArea()== 
+		m_pGestureClick->GetDwellToleranceArea());
+	return m_pDwellClick->GetDwellToleranceArea();
+}
+
+void CPointerAction::SetDwellToleranceArea(unsigned int value)
+{
+	// This setting affects both dwell and gesture click
+	m_pDwellClick->SetDwellToleranceArea(value);
+	m_pGestureClick->SetDwellToleranceArea(value);
 }
 
 float CPointerAction::GetSpeedFactor(unsigned int speed) const
@@ -211,9 +228,23 @@ void CPointerAction::ProcessMotion (float dxSensor, float dySensor)
 
 void CPointerAction::SetEnabled(bool value)
 {
-	if (value!= m_enabled) {		
-		m_pDwellClick->Reset();
-		m_pGestureClick->Reset();
+	if (value!= m_enabled) {
+		switch (m_clickMode) {
+		case CPointerAction::NONE:
+			// Do nothing
+			break;
+		case CPointerAction::DWELL:
+			m_pDwellClick->SetEnabled(value);
+			//m_pDwellClick->Reset();
+			break;
+		case CPointerAction::GESTURE:
+			m_pGestureClick->SetEnabled(value);
+			//m_pGestureClick->Reset();
+			break;
+		default:
+			assert (false);
+			break;
+		}		
 		m_enabled= value;
 	}
 }
@@ -233,37 +264,31 @@ bool CPointerAction::SetClickMode(CPointerAction::EClickMode mode, bool silent, 
 			}
 		}
 		
-		if (mode== CPointerAction::DWELL) {
-			// disable gesture click if enabled
-			m_pGestureClick->SetEnabled(false);
-			
-			// Enable dwell click
-			m_pDwellClick->SetEnabled(true);
-
-			m_clickMode= mode;
-		}
-		else if (mode== CPointerAction::GESTURE)
-		{
-			// Enable gesture click
-			m_pDwellClick->SetEnabled(false);
-
-			// enable gesture click
-			m_pGestureClick->SetEnabled(true);
-
-			m_clickMode= mode;
-		}		
-		else if (mode== CPointerAction::NONE)
-		{
+		switch (mode) {
+		case CPointerAction::NONE:
 			// Disable dwell and gesture click
 			m_pGestureClick->SetEnabled(false);
 			m_pDwellClick->SetEnabled(false);
-
-			m_clickMode= mode;
-		}
-		else {
-			assert(false);
-		}
+			break;
+		case CPointerAction::DWELL:
+			// disable gesture click if enabled
+			m_pGestureClick->SetEnabled(false);			
+			// Enable dwell click
+			if (m_enabled) m_pDwellClick->SetEnabled(true);
+			break;
+		case CPointerAction::GESTURE:
+			// Enable gesture click
+			m_pDwellClick->SetEnabled(false);
+			// enable gesture click
+			if (m_enabled) m_pGestureClick->SetEnabled(true);
+			break;
+		default:
+			assert (false);
+			break;
+		}		
+		m_clickMode= mode;
 	}
+
 	return true;
 }
 

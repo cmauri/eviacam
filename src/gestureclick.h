@@ -77,10 +77,10 @@ public:
 	// Possible actions that can be generated. Values equal or greater than
 	// EActionLast are keystrokes picked from  m_keyboardCodes
 	enum EAction { DISABLE= 0, SINGLE, SECONDARY, DOUBLE, DRAG, EActionLast };
-	enum { MOUSE_EVENTS_COUNT= (EActionLast - 1) };
+	enum { MOUSE_EVENTS_COUNT= EActionLast };
 
 	int GetPossibleActionsCount() const {
-		return MOUSE_EVENTS_COUNT - 1 + m_keyboardCodes.size();
+		return MOUSE_EVENTS_COUNT + m_keyboardCodes.size();
 	}
 
 	EAction GetActionLeft() const {	return m_actionLeft; }
@@ -113,7 +113,7 @@ public:
 
 	CKeyboardCode GetKeyboardCode(unsigned int position) {
 		assert (position< m_keyboardCodes.size());
-		m_keyboardCodes[position];
+		return m_keyboardCodes[position];
 	}
 	unsigned int GetKeyEventsCount() const {
 		return m_keyboardCodes.size();

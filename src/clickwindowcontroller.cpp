@@ -285,7 +285,6 @@ void CClickWindowController::NotifyShowMainWindowClick ()
 // Configuration methods
 void CClickWindowController::InitDefaults()
 {
-	SetOpenClickWinAtStartup(true);
 	SetFastMode (false);
 	SetDesign (CClickWindowController::NORMAL);	
 }
@@ -294,7 +293,6 @@ void CClickWindowController::WriteProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->SetPath (_T("clickWindow"));	
 
-	pConfObj->Write(_T("openClickWinAtStartup"), m_openClickWinAtStartup);
 	pConfObj->Write(_T("fastMode"), m_fastMode);
 	pConfObj->Write(_T("design"), (long) m_design);
 
@@ -305,18 +303,12 @@ void CClickWindowController::ReadProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->SetPath (_T("clickWindow"));
 
-	pConfObj->Read(_T("openClickWinAtStartup"), &m_openClickWinAtStartup);
 	pConfObj->Read(_T("fastMode"), &m_fastMode);
 	long design;
 	if (pConfObj->Read(_T("design"), &design))
 		SetDesign ((CClickWindowController::EDesign) design);
 
 	pConfObj->SetPath (_T(".."));
-}
-
-void CClickWindowController::StartupRun()
-{
-	if (m_openClickWinAtStartup) Show (true);	
 }
 
 const bool CClickWindowController::IsShown () const

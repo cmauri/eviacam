@@ -10,7 +10,6 @@ noinst_HEADERS = wgetkey.h \
 	eviacamapp.h \
 	langnames-utf8.h \
 	visionpipeline.h \
-	mouseoutput.h \
 	version.h \
 	viacamcontroller.h \
 	wabout.h \
@@ -104,7 +103,6 @@ eviacam_SOURCES = wgetkey.cpp \
 	cmotioncalibration.cpp \
 	eviacamapp.cpp \
 	visionpipeline.cpp \
-	mouseoutput.cpp \
 	viacamcontroller.cpp \
 	wabout.cpp \
 	wconfiguration.cpp \

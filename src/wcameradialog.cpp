@@ -191,7 +191,7 @@ void WCameraDialog::CreateCameraControlWidget (const CCameraControl& cc, wxWindo
 		case CCameraControl::CCTYPE_BOOLEAN:
 		{	
 			wxCheckBox* itemCheckBox = new wxCheckBox( parent, m_lastId+2, _(""), wxDefaultPosition, wxDefaultSize, 0 );
-			itemCheckBox->SetValue(cc.GetValue());
+			itemCheckBox->SetValue( (bool) cc.GetValue());
 			sizer->Add(itemCheckBox, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 			sizer->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
             

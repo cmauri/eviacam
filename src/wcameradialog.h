@@ -43,6 +43,8 @@ class wxFlexGridSizer;
 ////@end forward declarations
 class CCamera;
 class CCameraControl;
+class wxScrolledWindow;
+class wxSlider;
 
 /*!
  * Control identifiers

@@ -22,7 +22,6 @@
 #ifndef CLICKWINDOWCONTROLLER_H
 #define CLICKWINDOWCONTROLLER_H
 
-//#include "clickwindow.h"
 #include "configbase.h"
 
 class CViacamController;
@@ -64,14 +63,10 @@ class CClickWindowController  : public CConfigBase
 
 	inline const bool GetEnabled () const;
 
-	inline const bool GetOpenClickWinAtStartup() const;
-    inline void SetOpenClickWinAtStartup(bool value);
-
 	// Configuration methods
 	virtual void InitDefaults();
     virtual void ReadProfileData(wxConfigBase* pConfObj);
     virtual void WriteProfileData(wxConfigBase* pConfObj);
-	virtual void StartupRun();
 
 	//
 	// Called from window. 
@@ -99,7 +94,6 @@ class CClickWindowController  : public CConfigBase
 	bool m_halfDragClick;
     bool m_fastMode;
     EDesign m_design;
-	bool m_openClickWinAtStartup;
 };
 
 inline const CClickWindowController::EDesign CClickWindowController::GetDesign()
@@ -125,16 +119,6 @@ inline const CClickWindowController::EButton CClickWindowController::GetLockedBu
 inline const bool CClickWindowController::GetEnabled () const
 {
 	return  m_enabled;
-}
-
-inline const bool CClickWindowController::GetOpenClickWinAtStartup() const
-{
-	return m_openClickWinAtStartup;
-}
-
-inline void CClickWindowController::SetOpenClickWinAtStartup(bool value)
-{
-	m_openClickWinAtStartup= value;
 }
 
 #endif

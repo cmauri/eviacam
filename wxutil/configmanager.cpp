@@ -20,23 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
-// For compilers that support precompilation, includes "wx/wx.h".
-#include "wx/wxprec.h"
-
-#ifdef __BORLANDC__
-#pragma hdrstop
-#endif
-
-#ifndef WX_PRECOMP
-#include "wx/wx.h"
-#endif
-
 #include "configmanager.h"
+
+#include <wx/intl.h>
+#include <wx/arrstr.h>
 
 #define DEFAULT_PROFILE_KEY _T("currentProfile")
 #define DEFAULT_PROFILE_GROUP_KEY _T("default")
 #define DEFAULT_PROFILE_NAME _("default")
-#define LANGUAGE_KEY _T("language") 
+#define LANGUAGE_KEY _T("language")
+#define BASE_PATH _T("/settings")
 
 CConfigManager::CConfigManager(CConfigBase* configRoot)
 {
@@ -44,12 +37,16 @@ CConfigManager::CConfigManager(CConfigBase* configRoot)
 
 	m_configRoot= configRoot;
 	m_currentProfile= DEFAULT_PROFILE_GROUP_KEY;
+	wxConfigBase::Get()->SetPath (BASE_PATH);
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
 }
 
 int CConfigManager::ReadLanguage()
 {
 	wxString language;
 	const wxLanguageInfo *info= NULL;
+
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
 
 	// Load language name
 	wxConfigBase::Get()->Read(LANGUAGE_KEY, &language);
@@ -69,6 +66,8 @@ int CConfigManager::ReadLanguage()
 
 void CConfigManager::WriteLanguage (const int id)
 {
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
+
 	// Assumes a valid language id
 	if (id== wxLANGUAGE_DEFAULT)
 	{
@@ -106,10 +105,14 @@ void CConfigManager::ReadAll (bool callStartupRun)
 	pConfObj->SetPath (_T(".."));
 
 	if (callStartupRun) m_configRoot->StartupRun();
+
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
 }
 
 void CConfigManager::WriteAll()
 {
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
+
 	wxConfigBase* pConfObj= wxConfigBase::Get();
 	
 	// App wide data
@@ -127,6 +130,8 @@ void CConfigManager::WriteAll()
 	pConfObj->SetPath (_T(".."));
 	
 	pConfObj->Flush();
+
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
 }
 
 int CConfigManager::GetCurrentProfile() const
@@ -141,6 +146,7 @@ int CConfigManager::GetCurrentProfile() const
 
 void CConfigManager::ChangeCurrentProfile(int index)
 {
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
 	if (index!= GetCurrentProfile())
 	{
 		if (index== 0) m_currentProfile= DEFAULT_PROFILE_GROUP_KEY;
@@ -160,11 +166,13 @@ void CConfigManager::ChangeCurrentProfile(int index)
 
 		ReadAll ();		
 	}
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
 }
 
 // Return 0 is ok, 1 if profile exists or 2 if profile name is invalid
 int CConfigManager::AddNewProfile(const wxString& name)
 {
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
 	if (name== DEFAULT_PROFILE_GROUP_KEY) return 2;
 	if (name== DEFAULT_PROFILE_KEY) return 2;
 	if (name== DEFAULT_PROFILE_NAME) return 2;
@@ -180,11 +188,13 @@ int CConfigManager::AddNewProfile(const wxString& name)
 
 	WriteAll();
 
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
 	return 0;
 }
 
 void CConfigManager::DeleteCurrentProfile()
 {
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
 	// Default profile deletion not allowed
 	if (m_currentProfile!= DEFAULT_PROFILE_GROUP_KEY)
 	{
@@ -198,6 +208,7 @@ void CConfigManager::DeleteCurrentProfile()
 		pConfObj->DeleteGroup(oldProfile);
 		pConfObj->Flush();
 	}	
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
 }
 
 wxArrayString CConfigManager::GetProfileList () const
@@ -206,15 +217,22 @@ wxArrayString CConfigManager::GetProfileList () const
 	wxConfigBase* pConfObj= wxConfigBase::Get();
 	wxString str;
 	long dummy;
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
 
 	// Add default profile name (is always id=0)
 	pList.Add (DEFAULT_PROFILE_NAME);
 
 	bool bCont = pConfObj->GetFirstGroup(str, dummy);
-	while (bCont) 
-	{
-		if (str!= DEFAULT_PROFILE_GROUP_KEY) pList.Add (str);		
+	while (bCont) {
+		// FIXME: this condition ensures that:
+		//  1) the default entry is not already added to the list
+		//  2) another entry in the parent directory called "wxWidgets"
+		//     is not added to the list. This only happens with wxConfigFile
+		//     and it looks like a wxConfigFile bug
+		if (str!= DEFAULT_PROFILE_GROUP_KEY && str!= _T("wxWidgets")) 
+			pList.Add (str);	
 		bCont = pConfObj->GetNextGroup(str, dummy);
 	}
+	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
   	return pList;
 }

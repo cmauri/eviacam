@@ -29,11 +29,11 @@
 class CMouseControl;
 class CClickWindowController;
 
-class CDellClick : public CConfigBase
+class CDwellClick : public CConfigBase
 {
 public:
-	CDellClick (CMouseControl& mc);
-	~CDellClick ();
+	CDwellClick (CMouseControl& mc);
+	~CDwellClick ();
 
 	// Main entry point to signal that the pointer has been moved.
 	// Expect motion performed by the pointer in pixels and current
@@ -41,7 +41,7 @@ public:
 	// Return true is an action (i.e. click) was generated
 	bool ProcessMotion (int dxPix, int dyPix, unsigned int xCurr, unsigned int yCurr);
 	
-	//bool GetEnabled() const { return m_enabled; }
+	bool GetEnabled() const { return m_enabled; }
 	void SetEnabled(bool value);
 
 	// Reset internal state. Useful before start calling ProcessMotion
@@ -75,6 +75,10 @@ public:
 	void SetDwellToleranceArea(unsigned int value) {
 		if (value> 8) value= 8;
 		m_dwellToleranceArea= (float) value;
+	}
+
+	CClickWindowController& GetClickWindowController() {
+		return *m_pClickWindowController;
 	}
 	
 	// Configuration methods

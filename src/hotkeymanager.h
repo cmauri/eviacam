@@ -61,10 +61,10 @@ public:
 	// Configuration methods
 	virtual void InitDefaults();
 
-	virtual void ReadAppData(wxConfigBase* pConfObj);
+//	virtual void ReadAppData(wxConfigBase* pConfObj);
 	virtual void ReadProfileData(wxConfigBase* pConfObj);
 
-	virtual void WriteAppData(wxConfigBase* pConfObj);
+//	virtual void WriteAppData(wxConfigBase* pConfObj);
 	virtual void WriteProfileData(wxConfigBase* pConfObj);  
 
 private:

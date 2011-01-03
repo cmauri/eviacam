@@ -29,7 +29,7 @@
 class wxSound;
 class wxWindow;
 class CMouseControl;
-class CDellClick;
+class CDwellClick;
 class CGestureClick;
 
 class CPointerAction : public CConfigBase
@@ -89,12 +89,17 @@ public:
 	bool GetBeepOnClick() const { return m_beepOnClick; }
 	void SetBeepOnClick(bool value) { m_beepOnClick = value; }
 	
+	// Common for dwell and gesture click
 	bool GetVisualAlerts() const;
 	void SetVisualAlerts(bool value);
 
-	// Common dwell time setting for dwell and gesture click
+	// Common for dwell and gesture click
 	unsigned int GetDwellTime() const;
 	void SetDwellTime (unsigned int ds);
+
+	// Common for dwell and gesture click
+	unsigned int GetDwellToleranceArea() const;
+	void SetDwellToleranceArea(unsigned int value);
 
 	void SetRestrictedWorkingArea (bool value) { 
 		m_pMouseControl->SetRestrictedWorkingArea(value); 
@@ -104,40 +109,40 @@ public:
 	}
 
 	unsigned int GetTopWorkspace() const { 
-		return (unsigned int) ((1.0f - m_pMouseControl->GetTopPercent()) * 50.0f);
+		return (unsigned int) ((1.0f - m_pMouseControl->GetTopPercent()) * 50.0f + 0.5f);
 	}
 	void SetTopWorkspace(unsigned int value) {
 	    if (value > 50) value = 50;
-	    //m_topWorkspace = value;
-		m_pMouseControl->SetTopPercent((float) (50 - value) / 50.0f);
+	    m_pMouseControl->SetTopPercent((float) (50 - value) / 50.0f);
 	}
 
 	unsigned int GetLeftWorkspace() const { 
-		return (unsigned int) ((1.0f - m_pMouseControl->GetLeftPercent()) * 50.0f);
+		return (unsigned int) ((1.0f - m_pMouseControl->GetLeftPercent()) * 50.0f + 0.5f);
 	}
 	void SetLeftWorkspace(unsigned int value) {
 		if (value > 50) value = 50;
-		//m_leftWorkspace = value;
 		m_pMouseControl->SetLeftPercent((float) (50 - value) / 50.0f);
 	}
 	
 	unsigned int GetRightWorkspace() const { 
-		return (unsigned int) ((1.0f - m_pMouseControl->GetRightPercent()) * 50.0f);
+		return (unsigned int) ((1.0f - m_pMouseControl->GetRightPercent()) * 50.0f + 0.5f);
 	}
 	void SetRightWorkspace(unsigned int value) {
 		if (value > 50) value = 50;
-		//m_rightWorkspace = value;
 		m_pMouseControl->SetRightPercent((float) (50 - value) / 50.0f);
 	}
 
 	unsigned int GetBottomWorkspace() {
-		return (unsigned int) ((1.0f - m_pMouseControl->GetBottomPercent()) * 50.0f);
+		return (unsigned int) ((1.0f - m_pMouseControl->GetBottomPercent()) * 50.0f + 0.5f);
 	}
 	void SetBottomWorkspace(unsigned int value) {
 		if (value > 50) value = 50;
-		//m_bottomWorkspace = value;
 		m_pMouseControl->SetBottomPercent((float) (50 - value) / 50.0f);
 	}
+
+	//
+	CDwellClick& GetDwellClick() { assert (m_pDwellClick); return *m_pDwellClick; }
+	CGestureClick& GetGestureClick() { assert (m_pGestureClick); return *m_pGestureClick; }
 
     // Configuration methods
 	virtual void InitDefaults();
@@ -154,7 +159,7 @@ private:
 	bool m_beepOnClick;
 	wxSound* m_pClickSound;
 	CMouseControl* m_pMouseControl;
-	CDellClick* m_pDwellClick;
+	CDwellClick* m_pDwellClick;
 	CGestureClick* m_pGestureClick;
 };
 

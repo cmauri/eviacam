@@ -104,22 +104,6 @@ void CClickWindow::Init()
 
 void CClickWindow::ConnectEvents()
 {  
-	
-	// these events seems that are no more needed
-	
-	/*
-	  EVT_TOGGLEBUTTON( ID_BUTTON_NOCLICK, CClickWindow::OnButtonNoclickClick )
-
-    EVT_TOGGLEBUTTON( ID_BTN_LEFT, CClickWindow::OnBtnLeftClick )
-
-    EVT_TOGGLEBUTTON( ID_BTN_RIGHT, CClickWindow::OnBtnRightClick )
-
-    EVT_TOGGLEBUTTON( ID_BTN_DRAG, CClickWindow::OnBtnDragClick )
-
-    EVT_TOGGLEBUTTON( ID_BTN_DBLCLICK, CClickWindow::OnBtnDblclickClick )
-	 EVT_BUTTON( ID_BUTTON_SHOW_FRAME, CClickWindow::OnButtonShowFrameClick )
-	 */
-	 
     GetNoClickButton()->Connect(GetNoClickButton()->GetId(), wxEVT_LEFT_DOWN, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
     GetNoClickButton()->Connect(GetNoClickButton()->GetId(), wxEVT_LEFT_UP, wxMouseEventHandler(CClickWindow::OnLeftUp), NULL, this);
     GetNoClickButton()->Connect(GetNoClickButton()->GetId(), wxEVT_LEFT_DCLICK, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);

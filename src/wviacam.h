@@ -46,7 +46,6 @@ class wxStatusBar;
 
 class CCamWindow;
 class wxHtmlHelpController;
-class CViacamController;
 
 /*!
  * Control identifiers
@@ -104,7 +103,7 @@ public:
     void CreateControls();
 
     CCamWindow* GetCamWindow() { return m_pCamWindow; }
-    void SetController (CViacamController* pController) { m_pController= pController; }
+//    void SetController (CViacamController* pController) { m_pController= pController; }
 
 	virtual bool Show(bool show);
 
@@ -117,10 +116,7 @@ public:
 	void SetFPS (long value, EFPSCondition cond);
 	void OnSetFPS( wxCommandEvent &event );
 private:
-	// For sending mouse system commands from worker thread
-//	void SendMouseMotionUpdate (float vx, float vy);
-//	void OnSendMouseMotionUpdate ( wxCommandEvent &event );
-
+	
 ////@begin WViacam event handler declarations
 
     /// wxEVT_CLOSE_WINDOW event handler for ID_WVIACAM
@@ -197,7 +193,6 @@ private:
 ////@end WViacam member variables	
 
 	CCamWindow* m_pCamWindow;
-	CViacamController* m_pController;
 	wxTaskBarIcon* m_taskBarIcon;
 	wxHtmlHelpController* m_helpController;
 

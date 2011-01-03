@@ -40,9 +40,10 @@
 #include "wviacam.h"
 #include "camwindow.h"
 #include "viacamcontroller.h"
-#include "mouseoutput.h"
 #include "configmanager.h"
-#include "clickwindowcontroller.h"
+#include "eviacamapp.h"
+#include "pointeraction.h"
+#include "dwellclick.h"
 
 ////@begin XPM images
 #include "icons/eviacam_mini.xpm"
@@ -160,8 +161,6 @@ WViacam::~WViacam()
 ////@end WViacam destruction
 	delete m_taskBarIcon;
 	delete m_helpController;
-
-	assert (!m_pController);
 }
 
 
@@ -389,8 +388,8 @@ void WViacam::OnCloseWindow( wxCloseEvent& event )
 	}
 	
 	// Shutdown application
-	m_pController->Finalize();
-	m_pController= NULL;
+	wxGetApp().GetController().Finalize();
+
 	Destroy ();
 }
 
@@ -400,7 +399,7 @@ void WViacam::OnCloseWindow( wxCloseEvent& event )
 
 void WViacam::OnMenuitemEnableClick( wxCommandEvent& event )
 {
-	m_pController->SetEnabled (!m_pController->GetEnabled());
+	wxGetApp().GetController().SetEnabled (!wxGetApp().GetController().GetEnabled());
 	event.Skip(false);
 }
 
@@ -428,7 +427,7 @@ void WViacam::OnMenuAboutClick( wxCommandEvent& event )
 
 void WViacam::OnMenuitemEnableUpdate( wxUpdateUIEvent& event )
 {
-	event.Check (m_pController->GetEnabled());
+	event.Check (wxGetApp().GetController().GetEnabled());
 	event.Skip(false);
 }
 
@@ -439,7 +438,7 @@ void WViacam::OnMenuitemEnableUpdate( wxUpdateUIEvent& event )
 
 void WViacam::OnMenuOptionsClick( wxCommandEvent& event )
 {
-	m_pController->OpenConfiguration();   
+	wxGetApp().GetController().OpenConfiguration();   
 	event.Skip(false);
 }
 
@@ -484,7 +483,7 @@ void WViacam::OnTaskBarIconLeftUp ( wxTaskBarIconEvent& event )
 
 void WViacam::OnToolEnableClick( wxCommandEvent& event )
 {
-	m_pController->SetEnabled (true);
+	wxGetApp().GetController().SetEnabled (true);
 	event.Skip(false);
 }
 
@@ -495,7 +494,7 @@ void WViacam::OnToolEnableClick( wxCommandEvent& event )
 
 void WViacam::OnToolEnableUpdate( wxUpdateUIEvent& event )
 {
-	event.Enable (!m_pController->GetEnabled ());
+	event.Enable (!wxGetApp().GetController().GetEnabled ());
 	event.Skip(false);
 }
 
@@ -506,7 +505,7 @@ void WViacam::OnToolEnableUpdate( wxUpdateUIEvent& event )
 
 void WViacam::OnToolDisableClick( wxCommandEvent& event )
 {
-	m_pController->SetEnabled (false);
+	wxGetApp().GetController().SetEnabled (false);
 	event.Skip(false);
 }
 
@@ -517,7 +516,7 @@ void WViacam::OnToolDisableClick( wxCommandEvent& event )
 
 void WViacam::OnToolDisableUpdate( wxUpdateUIEvent& event )
 {
-	event.Enable (m_pController->GetEnabled ());
+	event.Enable (wxGetApp().GetController().GetEnabled ());
 	event.Skip(false);
 }
 
@@ -528,8 +527,9 @@ void WViacam::OnToolDisableUpdate( wxUpdateUIEvent& event )
 
 void WViacam::OnToolClickwinClick( wxCommandEvent& event )
 {
-	m_pController->GetClickWindowController().Show (
-		!m_pController->GetClickWindowController().IsShown());		
+	wxGetApp().GetController().GetPointerAction().GetDwellClick().SetUseClickWindow(
+		!wxGetApp().GetController().GetPointerAction().GetDwellClick().GetUseClickWindow()
+	);		
 	event.Skip(false);
 }
 
@@ -540,7 +540,8 @@ void WViacam::OnToolClickwinClick( wxCommandEvent& event )
 
 void WViacam::OnToolClickwinUpdate( wxUpdateUIEvent& event )
 {	
-	event.Check (m_pController->GetClickWindowController().IsShown());
+	event.Enable (wxGetApp().GetController().GetPointerAction().GetDwellClick().GetEnabled());
+	event.Check (wxGetApp().GetController().GetPointerAction().GetDwellClick().GetUseClickWindow());
 	event.Skip(false);
 }
 
@@ -551,7 +552,7 @@ void WViacam::OnToolClickwinUpdate( wxUpdateUIEvent& event )
 
 void WViacam::OnToolOptionsClick( wxCommandEvent& event )
 {
-	m_pController->OpenConfiguration();   
+	wxGetApp().GetController().OpenConfiguration();   
 	event.Skip(false);
 }
 
@@ -563,11 +564,10 @@ void WViacam::OnToolOptionsClick( wxCommandEvent& event )
 void WViacam::OnToolHelpClick( wxCommandEvent& event )
 {
 	if (m_helpController== NULL) {
-		//wxHtmlHelpController* hc= new wxHtmlHelpController(wxHF_DEFAULT_STYLE, this);
 		m_helpController= new wxHtmlHelpController(wxHF_DEFAULT_STYLE, this);
 		wxString path;
 			
-		switch(m_pController->GetLocale()->GetLanguage()) {		
+		switch(wxGetApp().GetController().GetLocale()->GetLanguage()) {		
 		case (wxLANGUAGE_CATALAN):
 			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/ca/help.hhp"));
 			break;
@@ -600,7 +600,7 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 
 void WViacam::OnToolKeyboardClick( wxCommandEvent& event )
 {
-	m_pController->OpenOnScreenKeyboard();
+	wxGetApp().GetController().OpenOnScreenKeyboard();
 	event.Skip(false);
 }
 
@@ -611,7 +611,7 @@ void WViacam::OnToolKeyboardClick( wxCommandEvent& event )
 
 void WViacam::OnMenuWizardClick( wxCommandEvent& event )
 {
-	m_pController->StartWizard();
+	wxGetApp().GetController().StartWizard();
 	event.Skip(false);
 }
 

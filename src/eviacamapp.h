@@ -89,6 +89,7 @@ private:
 
 ////@begin EViacamApp member variables
 ////@end EViacamApp member variables
+	//volatile
 	CViacamController* m_pController;
 #if defined(NDEBUG)
 	wxLogNull m_disableErrorMessages;

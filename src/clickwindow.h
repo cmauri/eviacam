@@ -35,7 +35,6 @@
 
 class CClickWindow: public WXAppBar
 {    
-   // DECLARE_DYNAMIC_CLASS( CClickWindow )
     DECLARE_EVENT_TABLE()
 
 public:
@@ -77,7 +76,6 @@ protected:
 	
 	void OnEventSkipperFocus( wxFocusEvent& event );
 	
-	//void OnEventSkipper( wxCommandEvent& event );	
 	CClickWindowController::EButton ButtonId2EButton (int id);
 	
 	CClickWindowController* m_pController;

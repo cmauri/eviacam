@@ -24,8 +24,7 @@
 #include "wviacam.h"
 #include "crvcamera_enum.h"
 #include "crvcamera.h"
-#include "clickwindow.h"
-#include "mouseoutput.h"
+#include "pointeraction.h"
 #include "camwindow.h"
 #include "wconfiguration.h"
 #include "cmotioncalibration.h"
@@ -35,28 +34,34 @@
 #include "cautostart.h"
 #include "hotkeymanager.h"
 
+#include <wx/msgdlg.h>
+#include <wx/choicdlg.h>
+
 CViacamController::CViacamController(void)
-: m_pMainWindow(NULL) 
+: m_pMainWindow(NULL)
 , m_pCamera(NULL)
 , m_pCaptureThread(NULL)
-, m_pClickWindowController(NULL)
-, m_pMouseOutput(NULL)
+, m_pointerAction(NULL)
+, m_visionPipeline()
+, m_hotKeyManager(NULL)
+, m_configManager(NULL)
+, m_locale(NULL)
 , m_pAutostart(NULL)
 , m_pConfiguration(NULL)
+, m_pMotionCalibration(NULL)
 , m_wizardManager()
+, m_cameraName()
 , m_enabled(false)
+, m_enabledAtStartup(false)
+, m_languageId(wxLANGUAGE_DEFAULT)
+, m_onScreenKeyboardCommand()
 , m_frameRate(0)
+, m_motionCalibrationEnabled(false)
+, m_runWizardAtStartup(false)
 {
-	m_hotKeyManager= new CHotkeyManager();
-	m_configManager= new CConfigManager(this);	
 	m_locale= new wxLocale ();
+	m_configManager= new CConfigManager(this);	
 
-	// TODO: check this!!!
-	m_pMotionCalibration= new CMotionCalibration(this);
-	m_motionCalibrationEnabled= false;	
-#if defined(__WXGTK__) 
-	m_pAutostart = new CAutostart(wxT("eviacam.desktop"));
-#endif
 	InitDefaults();
 }
 
@@ -74,6 +79,7 @@ void CViacamController::InitDefaults()
 CViacamController::~CViacamController(void)
 {
 	assert (!m_pCaptureThread && !m_pCamera && !m_pCaptureThread);
+	delete m_pointerAction;
 #if defined(__WXGTK__) 
 	delete m_pAutostart;
 #endif
@@ -168,11 +174,10 @@ CCamera* CViacamController::SetUpCamera()
 		cam->Close();
 	
 	WriteAppData(wxConfigBase::Get());
+	wxConfigBase::Get()->Flush();
 
 	return cam;
 }
-
-wxWindow* globalWindow;
 
 bool CViacamController::Initialize ()
 {	
@@ -185,25 +190,33 @@ bool CViacamController::Initialize ()
 	m_pCamera= SetUpCamera();	
 	if (m_pCamera== NULL) retval= false;
 
+	if (retval) {
+		// TODO: check this!!!
+		assert (!m_pMotionCalibration);
+		m_pMotionCalibration= new CMotionCalibration(); //this);	
+#if defined(__WXGTK__) 
+		assert (!m_pAutostart);
+		m_pAutostart = new CAutostart(wxT("eviacam.desktop"));
+#endif
+	}
+	
 	// Create main window
 	if (retval) {
 		m_pMainWindow = new WViacam( NULL, ID_WVIACAM );
-		globalWindow = m_pMainWindow;		
 		assert (m_pMainWindow);
-		m_pMainWindow->SetController (this);
 		m_pMainWindow->Show (true);	
 	}
 
-	// Create click window controller
+	// Create hotkey manager
 	if (retval) {
-		m_pClickWindowController= new CClickWindowController (*this);
-		assert (m_pClickWindowController);
+		assert (!m_hotKeyManager);
+		m_hotKeyManager= new CHotkeyManager();
 	}
-	
-	// Create mouse controller
+
+	// Create pointer action object
 	if (retval) {
-		m_pMouseOutput= new CMouseOutput(*m_pClickWindowController);
-		assert (m_pMouseOutput);
+		assert (!m_pointerAction);
+		m_pointerAction= new CPointerAction();
 	}
 		
 	// Create and start worker thread
@@ -222,16 +235,16 @@ bool CViacamController::Initialize ()
 	// Register track area
 	if (retval)
 		m_pMainWindow->GetCamWindow()->RegisterControl (m_visionPipeline.GetTrackAreaControl());
-	
 
 	// Load configuration
 	if (retval) m_configManager->ReadAll (true);
 	
+	// Enable pointeraction object
+	if (retval) m_pointerAction->SetEnabled(true);
 	
 	// Run the wizard at startup
 	if (retval && m_runWizardAtStartup)
 		StartWizard();
-	
 	
 	return retval;
 }
@@ -253,17 +266,18 @@ void CViacamController::Finalize ()
 		delete m_pCamera;
 		m_pCamera= NULL;
 	}
-
-	if (m_pMouseOutput) {
-		delete m_pMouseOutput;
-		m_pMouseOutput= NULL;
+	
+	if (m_pointerAction) {
+		m_pointerAction->SetEnabled(false);
+		delete m_pointerAction;
+		m_pointerAction= NULL;
 	}
 
-	if (m_pClickWindowController) {
-		m_pClickWindowController->Finalize();
-		delete m_pClickWindowController;
-		m_pClickWindowController= NULL;
-	}
+	if (m_hotKeyManager) {
+		delete m_hotKeyManager;
+		m_hotKeyManager= NULL;		
+	}	
+
 	if (m_pMainWindow) {
 		m_pMainWindow->GetCamWindow()->UnregisterControl (m_visionPipeline.GetTrackAreaControl());
 		// Main window is self-destroyed
@@ -286,8 +300,7 @@ void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("runWizardAtStartup"), m_runWizardAtStartup);	
 
 	// Propagates calls
-	m_pMouseOutput->WriteProfileData (pConfObj);
-	m_pClickWindowController->WriteProfileData (pConfObj);
+	m_pointerAction->WriteProfileData (pConfObj);
 	m_visionPipeline.WriteProfileData (pConfObj);
 	m_hotKeyManager->WriteProfileData (pConfObj);
 } 
@@ -306,8 +319,7 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("runWizardAtStartup"), &m_runWizardAtStartup);
 
 	// Propagates calls
-	m_pMouseOutput->ReadProfileData (pConfObj);
-	m_pClickWindowController->ReadProfileData (pConfObj);
+	m_pointerAction->ReadProfileData (pConfObj);
 	m_visionPipeline.ReadProfileData (pConfObj);	
 	m_hotKeyManager->ReadProfileData (pConfObj);
 }
@@ -315,30 +327,17 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 void CViacamController::StartupRun()
 {
 	if (m_enabledAtStartup) SetEnabled (true);
-	GetClickWindowController().StartupRun();	
 }
 
 
 void CViacamController::SetEnabled (bool value, bool silent, wxWindow* parent)
 {
-	if (value!= m_enabled)
-	{
-		if (value== false && !silent)
-		{
+	if (value!= m_enabled) {
+		if (value== false && !silent) {
 			wxMessageDialog dlg (parent, _("This action will disable eViacam.\nAre you sure?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
-			if (dlg.ShowModal()== wxID_YES)
-			{
-				m_enabled= value;
-				m_pMouseOutput->SetEnabled (m_enabled);
-				// TODO: move this call to the mouse controller
-				m_pMouseOutput->EndVisualAlerts();
-			}
+			if (dlg.ShowModal()== wxID_NO) return;
 		}
-		else
-		{
-			m_enabled= value;
-			m_pMouseOutput->SetEnabled (m_enabled);
-		}
+		m_enabled= value;				
 	}
 }
 
@@ -400,13 +399,15 @@ void CViacamController::ProcessImage (IplImage *pImage)
 	// Proces frame
 	m_visionPipeline.ProcessImage (image, vx, vy);
 
-	// Send mouse motion
-	BEGIN_GUI_CALL_MUTEX()
-	if (m_motionCalibrationEnabled)
-		m_pMotionCalibration->ComputeMotionRange (-vx, vy);
-	else
-		m_pMouseOutput->ProcessRelativePointerMove (-vx, vy);
-	END_GUI_CALL_MUTEX()
+	if (m_enabled || m_motionCalibrationEnabled) {
+		// Send mouse motion
+		BEGIN_GUI_CALL_MUTEX()
+		if (m_motionCalibrationEnabled)
+			m_pMotionCalibration->ComputeMotionRange (-vx, vy);
+		else
+			m_pointerAction->ProcessMotion (-vx, vy);
+		END_GUI_CALL_MUTEX()
+	}
 
 	m_hotKeyManager->CheckKeyboardStatus();	
 }

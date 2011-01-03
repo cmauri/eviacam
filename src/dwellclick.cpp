@@ -25,7 +25,7 @@
 #include "mousecontrol.h"
 #include <math.h>
 
-CDellClick::CDellClick(CMouseControl& mc)
+CDwellClick::CDwellClick(CMouseControl& mc)
 : m_enabled(false)
 , m_consecutiveClicksAllowed(false)
 , m_visualAlertsEnabled(false)
@@ -37,7 +37,7 @@ CDellClick::CDellClick(CMouseControl& mc)
 	InitDefaults ();
 }
 
-CDellClick::~CDellClick ()
+CDwellClick::~CDwellClick ()
 {
 	SetEnabled(false);
 	delete m_pClickWindowController;
@@ -45,7 +45,7 @@ CDellClick::~CDellClick ()
 }
 
 // Configuration methods
-void CDellClick::InitDefaults()
+void CDwellClick::InitDefaults()
 {
 	SetConsecutiveClicksAllowed (false);
 	EnableVisualAlerts (true);
@@ -54,13 +54,13 @@ void CDellClick::InitDefaults()
 	SetDwellTime (10);	
 }
 
-void CDellClick::WriteProfileData(wxConfigBase* pConfObj)
+void CDwellClick::WriteProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->SetPath (_T("dwellclick"));
 
 	pConfObj->Write(_T("consecutiveClicksAllowed"), (bool) GetConsecutiveClicksAllowed());
 	pConfObj->Write(_T("visualAlertsEnabled"), (bool) AreVisualAlertsEnabled());
-	pConfObj->Write(_T("useClickWindow"), (bool) AreVisualAlertsEnabled());
+	pConfObj->Write(_T("useClickWindow"), (bool) GetUseClickWindow());
 	pConfObj->Write(_T("dwellToleranceArea"), (double) GetDwellToleranceArea());	
 	pConfObj->Write(_T("dwellTime"), (long) GetDwellTime());
 
@@ -68,7 +68,7 @@ void CDellClick::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->SetPath (_T(".."));
 }
 
-void CDellClick::ReadProfileData(wxConfigBase* pConfObj)
+void CDwellClick::ReadProfileData(wxConfigBase* pConfObj)
 {
 	long val;
 	bool valb;
@@ -87,9 +87,7 @@ void CDellClick::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->SetPath (_T(".."));
 }
 
-
-//float CDellClick::ProcessRelativePointerMove(float dx, float dy) 
-bool CDellClick::ProcessMotion (int dxPix, int dyPix,
+bool CDwellClick::ProcessMotion (int dxPix, int dyPix,
 		unsigned int xCurr, unsigned int yCurr)
 {
 	//assert (m_enabled);
@@ -158,12 +156,11 @@ bool CDellClick::ProcessMotion (int dxPix, int dyPix,
 	return false;
 }
 
-void CDellClick::SetEnabled(bool value)
+void CDwellClick::SetEnabled(bool value)
 {
 	if (value!= m_enabled) {
 		if (value) {
 			// Enabling dwell click
-			//m_dwellCountdown.Reset();
 			Reset();
 
 			// Show click window when needed
@@ -172,20 +169,19 @@ void CDellClick::SetEnabled(bool value)
 		}
 		else {
 			// Hide click window
-			//if (m_clickWindowEnabled)
 			m_pClickWindowController->Show(false);
 		}
 		m_enabled= value;
 	}
 }
 
-void CDellClick::Reset()
+void CDwellClick::Reset()
 {
 	m_dwellCountdown.Reset();
 	m_progressVisualAlert.End();
 }
 
-void CDellClick::SetUseClickWindow(bool value)
+void CDwellClick::SetUseClickWindow(bool value)
 {
 	if (value!= m_useClickWindow) {
 		if (m_enabled) {
@@ -198,7 +194,7 @@ void CDellClick::SetUseClickWindow(bool value)
 	}
 }
 
-void CDellClick::EnableVisualAlerts(bool value)
+void CDwellClick::EnableVisualAlerts(bool value)
 { 
 	if (value!= m_visualAlertsEnabled) {
 		m_visualAlertsEnabled = value;

@@ -20,20 +20,26 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
-#include <wx/app.h>
-#include <wx/event.h>
-#include <stdlib.h>
-#include <math.h>
 #include "cmotioncalibration.h"
-#include "mouseoutput.h"
+#include "viacamcontroller.h"
 #include "wmotioncalibrationx.h"
 #include "wmotioncalibrationy.h"
 #include "wconfirmcalibration.h"
 #include "timeutil.h"
+#include "pointeraction.h"
+#include "eviacamapp.h"
+
+#include <stdlib.h>
+#include <math.h>
+#include <wx/app.h>
+#include <wx/event.h>
+
 #if defined(_WIN32) || defined(_WIN64)
 #define fmax max
 #define fmin min
 #endif
+
+
 
 #define BUTTON_OK 1
 #define BUTTON_CANCEL 2
@@ -52,9 +58,8 @@
 #define MIN_THRESHOLD_SPEED 1.0f
 
 
-CMotionCalibration::CMotionCalibration(CViacamController* pViacamController)
+CMotionCalibration::CMotionCalibration()
 {
-	m_pViacamController= pViacamController;
 	m_pDialog = NULL;		
 	m_xSpeedBackup = 0; m_ySpeedBackup = 0;
 	InitValues();
@@ -80,17 +85,17 @@ bool CMotionCalibration::InitMotionCalibration()
 {
 	bool changes = false;	
 	
-	m_xSpeedBackup = m_pViacamController->GetMouseOutput().GetXSpeed();
-	m_ySpeedBackup = m_pViacamController->GetMouseOutput().GetYSpeed();
+	m_xSpeedBackup = wxGetApp().GetController().GetPointerAction().GetXSpeed();
+	m_ySpeedBackup = wxGetApp().GetController().GetPointerAction().GetYSpeed();
 	m_state = WAITING_X;
 	
 	// Store previous values
-	bool isEnabled= m_pViacamController->GetEnabled();
-	CMouseOutput::EClickMode clickMode= m_pViacamController->GetMouseOutput().GetClickMode();
+	bool isEnabled= wxGetApp().GetController().GetEnabled();
+	CPointerAction::EClickMode clickMode= wxGetApp().GetController().GetPointerAction().GetClickMode();
 		
 	while (m_state != FINISHED) {
 		InitValues();
-		m_pViacamController->SetMotionCalibrationEnabled(true);
+		wxGetApp().GetController().SetMotionCalibrationEnabled(true);
 
 		m_pDialog = new WMotionCalibrationX(NULL);
 		m_pDialog->ShowModal();
@@ -104,7 +109,7 @@ bool CMotionCalibration::InitMotionCalibration()
 			m_pDialog= NULL;
 		}
 		
-		m_pViacamController->SetMotionCalibrationEnabled(false);
+		wxGetApp().GetController().SetMotionCalibrationEnabled(false);
 		
 		if (m_state == CONFIRMATION) {
 			// Compute new speed parameters
@@ -119,12 +124,12 @@ bool CMotionCalibration::InitMotionCalibration()
 			else if (newSpeedY< 10.0f) newSpeedY= 10.0f;
 			
 			// Set new parameters
-			m_pViacamController->GetMouseOutput().SetXSpeed(newSpeedX);
-			m_pViacamController->GetMouseOutput().SetYSpeed(newSpeedY);
+			wxGetApp().GetController().GetPointerAction().SetXSpeed(newSpeedX);
+			wxGetApp().GetController().GetPointerAction().SetYSpeed(newSpeedY);
 			
 			// Disable click generation & enable motion to test
-			m_pViacamController->GetMouseOutput().SetClickMode(CMouseOutput::NONE);
-			m_pViacamController->SetEnabled(true, true);			
+			wxGetApp().GetController().GetPointerAction().SetClickMode(CPointerAction::NONE);
+			wxGetApp().GetController().SetEnabled(true, true);			
 						
 			// Request user acknowledgment
 			m_pDialog = new WConfirmCalibration(NULL);
@@ -133,13 +138,13 @@ bool CMotionCalibration::InitMotionCalibration()
 			else {
 				if (retvalConfirm== BUTTON_OK) changes = true;
 				else if (retvalConfirm== BUTTON_CANCEL) {
-					m_pViacamController->GetMouseOutput().SetXSpeed(m_xSpeedBackup);
-					m_pViacamController->GetMouseOutput().SetYSpeed(m_ySpeedBackup);	
+					wxGetApp().GetController().GetPointerAction().SetXSpeed(m_xSpeedBackup);
+					wxGetApp().GetController().GetPointerAction().SetYSpeed(m_ySpeedBackup);	
 				}
 				else assert (false);
 				// Restore previous settings
-				m_pViacamController->GetMouseOutput().SetClickMode(clickMode);
-				m_pViacamController->SetEnabled(isEnabled, true);
+				wxGetApp().GetController().GetPointerAction().SetClickMode(clickMode);
+				wxGetApp().GetController().SetEnabled(isEnabled, true);
 				
 				m_state = FINISHED;
 			}
