@@ -34,9 +34,8 @@
 // Make sure that m_virtualKeyCode is wide enough to store a KeySym
 // On windows it seems that virtual-key codes are 16bit wide, so no problem.
 #if defined(__WXGTK__)
-#include <boost/static_assert.hpp>
-BOOST_STATIC_ASSERT(sizeof(KeySym)<= sizeof(unsigned int));
-BOOST_STATIC_ASSERT(sizeof(KeyCode)<= sizeof(unsigned int));
+wxCOMPILE_TIME_ASSERT( sizeof(KeySym)<= sizeof(unsigned int), KeySymGreaterThanIntError );
+wxCOMPILE_TIME_ASSERT( sizeof(KeyCode)<= sizeof(unsigned int), KeyCodeGreaterThanIntError );
 #endif
 
 // Default constructor. Initializes internal keycode to a invalid value
@@ -45,15 +44,15 @@ CKeyboardCode::CKeyboardCode() : m_virtualKeyCode(0)
 }
 
 // Private constructor which initializes to the internal 
-// state given a raw scan code
+// state given virtual key code or KeySym
 CKeyboardCode::CKeyboardCode (unsigned int vkCode)
 {
-	m_virtualKeyCode= vkCode;
+	m_virtualKeyCode= vkCode;	
 }
 
 const char* CKeyboardCode::GetName() const
 {	 
-#if defined(__WXGTK__)
+#if defined(__WXGTK__)	
 	return XKeysymToString((KeySym) m_virtualKeyCode);
 #else
 	// Still not available for Windows
