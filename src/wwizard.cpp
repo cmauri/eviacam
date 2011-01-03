@@ -1862,7 +1862,7 @@ void WizardPage7::CreateControls()
     wxBoxSizer* itemBoxSizer79 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer73->Add(itemBoxSizer79, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticText80 = new wxStaticText( itemWizardPageSimple72, wxID_STATIC, _("eViacam provides several several methods to generate mouse click actions:"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText80 = new wxStaticText( itemWizardPageSimple72, wxID_STATIC, _("eViacam provides several methods to generate mouse click actions:"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText80->Wrap(450);
     itemBoxSizer79->Add(itemStaticText80, 0, wxGROW|wxALL, 5);
 

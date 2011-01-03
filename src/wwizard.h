@@ -120,9 +120,6 @@ public:
 	inline const bool GetIsMotionEnabled() const;
 	inline void SetIsMotionEnabled(bool value);
 	
-	/// Runs the wizard
-    bool Run();
-
 private:
     /// Initialises member variables
     void Init();
@@ -136,8 +133,11 @@ private:
     void OnWwizardFinished( wxWizardEvent& event );
 
 ////@end WWizard event handler declarations
-
+public:
 ////@begin WWizard member function declarations
+
+    /// Runs the wizard
+    bool Run();
 
     /// Retrieves bitmap resources
     wxBitmap GetBitmapResource( const wxString& name );
@@ -145,7 +145,7 @@ private:
     /// Retrieves icon resources
     wxIcon GetIconResource( const wxString& name );
 ////@end WWizard member function declarations
-
+private:
     /// Should we show tooltips?
     static bool ShowToolTips();
 	

@@ -14,21 +14,19 @@ src/wabout.cpp
 src/wviacam.cpp
 src/clickwindow.h
 src/langnames-utf8.h
-src/activationkey.cpp
-src/activationkey.h
+src/pointeraction.cpp
+src/wgetkey.cpp
+src/wgetkey.h
 src/wmotioncalibrationx.cpp
 src/cmotioncalibration.cpp
 src/wwizard.cpp
 src/wconfirmcalibration.cpp
-src/activationkey.cpp
 src/wmotioncalibrationy.cpp
 src/wcameradialog.cpp
 src/wconfirmcalibration.h
-src/activationkey.h
 src/wmotioncalibrationx.h
 src/wmotioncalibrationy.h
 src/wcameradialog.h
-src/mouseoutput.cpp
 wxcamwindow/capturethread.cpp
 wxcamwindow/camwindow.cpp
 
