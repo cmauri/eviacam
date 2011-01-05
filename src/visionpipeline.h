@@ -27,6 +27,7 @@
 #include "crvhistogram.h"
 #include "configbase.h"
 #include "visiblenormroi.h"
+#include "wxutil/waittime.h"
 
 
 class CVisionPipeline : public CConfigBase
@@ -62,7 +63,7 @@ private:
 	bool m_trackFace;
 	bool m_showColorTrackerResult;
 	bool m_enableWhenFaceDetected;
-	int m_framesWithFaceDetected;	
+	CWaitTime* m_waitTime;
 
 	CIplImage m_imgBinFace;
 	CIplImage m_imgPrevProc, m_imgCurrProc;

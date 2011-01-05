@@ -35,8 +35,7 @@
 #define DEFAULT_TRACK_AREA_HEIGHT_PERCENT 0.30f
 #define DEFAULT_TRACK_AREA_X_CENTER_PERCENT 0.5f
 #define DEFAULT_TRACK_AREA_Y_CENTER_PERCENT 0.5f
-#define FACE_DETECTED_THRESHOLD 0
-#define FRAMES_TO_EVALUATE_FACE_DETECTION 100
+#define FACE_DETECTION_TIMEOUT 5000
 
 
 CVisionPipeline::CVisionPipeline () 
@@ -113,13 +112,7 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		// Set new box centre
 		m_trackArea.SetCenterImg (&image, cx, cy);
 		
-		//Consider the use of a timer.
-		m_framesWithFaceDetected = FRAMES_TO_EVALUATE_FACE_DETECTION;
-
-	} else 
-	{
-		if (m_framesWithFaceDetected > 0)
-			m_framesWithFaceDetected--;
+		m_waitTime->Reset();
 	}
 	
 	if (GetEnableWhenFaceDetected() && IsFaceDetected() != wxGetApp().GetController().GetEnabled())
@@ -130,7 +123,7 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 
 bool CVisionPipeline::IsFaceDetected ()
 {
-	return (m_framesWithFaceDetected > FACE_DETECTED_THRESHOLD);
+	return !m_waitTime->HasExpired();
 }
 
 int CVisionPipeline::PreprocessImage ()
@@ -299,7 +292,6 @@ void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 // Configuration methods
 void CVisionPipeline::InitDefaults()
 {
-	m_framesWithFaceDetected = 0;
 	m_trackFace= true;
 	m_enableWhenFaceDetected= false;
 	m_showColorTrackerResult= false;
@@ -307,6 +299,7 @@ void CVisionPipeline::InitDefaults()
 	m_trackArea.SetCenter (DEFAULT_TRACK_AREA_X_CENTER_PERCENT, DEFAULT_TRACK_AREA_Y_CENTER_PERCENT);
 	m_faceCascade = (CvHaarClassifierCascade*)cvLoad("data/haarcascade_frontalface_alt.xml", 0, 0, 0);
 	m_storage = cvCreateMemStorage(0);
+	m_waitTime = new CWaitTime(FACE_DETECTION_TIMEOUT);
 }
 
 void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)
