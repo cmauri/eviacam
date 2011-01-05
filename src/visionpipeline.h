@@ -39,6 +39,9 @@ public:
 
 	const bool GetTrackFace () const { return m_trackFace; }
 	void SetTrackFace (bool state) { m_trackFace= state; }
+	const bool GetEnableWhenFaceDetected () const { return m_enableWhenFaceDetected; }
+	void SetEnableWhenFaceDetected (bool state) { m_enableWhenFaceDetected= state; }
+	bool IsFaceDetected ();
 	
 	const bool GetShowTrackFaceFilter () const { 
 		return m_showColorTrackerResult; 
@@ -58,12 +61,17 @@ private:
 
 	bool m_trackFace;
 	bool m_showColorTrackerResult;
+	bool m_enableWhenFaceDetected;
+	int m_framesWithFaceDetected;	
 
 	CIplImage m_imgBinFace;
 	CIplImage m_imgPrevProc, m_imgCurrProc;
 	CIplImage m_imgPrev, m_imgCurr;
 	CIplImage m_imgVelX, m_imgVelY;
 	TCrvLookupTable m_prevLut;
+	
+	CvHaarClassifierCascade* m_faceCascade;
+	CvMemStorage* m_storage;
 	
 	// Private methods
 	void AllocWorkingSpace (CIplImage &image);

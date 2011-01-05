@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "visionpipeline.h"
+#include "eviacamapp.h"
+#include "viacamcontroller.h"
 
 #include "crvcolor.h"
 #include "crvmisc.h"
@@ -33,6 +35,8 @@
 #define DEFAULT_TRACK_AREA_HEIGHT_PERCENT 0.30f
 #define DEFAULT_TRACK_AREA_X_CENTER_PERCENT 0.5f
 #define DEFAULT_TRACK_AREA_Y_CENTER_PERCENT 0.5f
+#define FACE_DETECTED_THRESHOLD 0
+#define FRAMES_TO_EVALUATE_FACE_DETECTION 100
 
 
 CVisionPipeline::CVisionPipeline () 
@@ -80,35 +84,53 @@ void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
 
 void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 {
-	CvRect rect;
-	CvTermCriteria criteria;
-	CvConnectedComp ccomp;
-	CvBox2D box;
 	int cx, cy;
-
-	// Binarize skin color
-	CSkinRegionModel::crvBinarizeSkin (image.ptr(), m_imgBinFace.ptr());
+	float sx,sy;
+	CvRect curBox;
+	CvSeq *face = cvHaarDetectObjects(
+		image.ptr(),
+		m_faceCascade,
+		m_storage,
+  		1.25, 2, 0,
+		cvSize(120./3, 90./3)
+	);
 	
-	// Mass center
-	rect.x= 0; rect.y= 0;
-	rect.width= m_imgBinFace.Width();
-	rect.height= m_imgBinFace.Height ();
+	if (face && face->total>0)
+	{
+		CvRect* faceRect = (CvRect*)cvGetSeqElem(face, 0);
 
-	criteria.type= CV_TERMCRIT_ITER;
-	criteria.max_iter= 2;
-	cvCamShift (m_imgBinFace.ptr(), rect, criteria, &ccomp, &box);
+		m_trackArea.GetBoxImg(&image, curBox);
+		
+		sx= (faceRect->width * 0.1f + curBox.width * 0.9f);
+		sy= (faceRect->height * 0.1f +  curBox.height * 0.9f);
 
-	//
-	// Set track area position
-	//
-	// Get old box centre 
+		m_trackArea.SetSizeImg(&image,sx,sy);
+
+		// Combine with new detected location
+		cx= (int) ((faceRect->x+faceRect->width/2) * 0.1f + (curBox.x+curBox.width/2) * 0.9f);
+		cy= (int) ((faceRect->y+faceRect->height/2) * 0.1f + (curBox.y+curBox.height/2) * 0.9f);
+
+		// Set new box centre
+		m_trackArea.SetCenterImg (&image, cx, cy);
+		
+		//Consider the use of a timer.
+		m_framesWithFaceDetected = FRAMES_TO_EVALUATE_FACE_DETECTION;
+
+	} else 
+	{
+		if (m_framesWithFaceDetected > 0)
+			m_framesWithFaceDetected--;
+	}
 	
-	m_trackArea.GetCenterImg (&image, cx, cy);
-	// Combine with new detected location
-	cx= (int) (box.center.x * 0.1f + (float) cx * 0.9f);
-	cy= (int) (box.center.y * 0.1f + (float) cy * 0.9f);
-	// Set new box centre
-	m_trackArea.SetCenterImg (&image, cx, cy);
+	if (GetEnableWhenFaceDetected() && IsFaceDetected() != wxGetApp().GetController().GetEnabled())
+		wxGetApp().GetController().SetEnabled(IsFaceDetected(), true);
+		
+	cvClearMemStorage(m_storage);
+}
+
+bool CVisionPipeline::IsFaceDetected ()
+{
+	return (m_framesWithFaceDetected > FACE_DETECTED_THRESHOLD);
 }
 
 int CVisionPipeline::PreprocessImage ()
@@ -277,10 +299,14 @@ void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 // Configuration methods
 void CVisionPipeline::InitDefaults()
 {
-	m_trackFace= false;
-	m_showColorTrackerResult= false;	
+	m_framesWithFaceDetected = 0;
+	m_trackFace= true;
+	m_enableWhenFaceDetected= false;
+	m_showColorTrackerResult= false;
 	m_trackArea.SetSize (DEFAULT_TRACK_AREA_WIDTH_PERCENT, DEFAULT_TRACK_AREA_HEIGHT_PERCENT);
 	m_trackArea.SetCenter (DEFAULT_TRACK_AREA_X_CENTER_PERCENT, DEFAULT_TRACK_AREA_Y_CENTER_PERCENT);
+	m_faceCascade = (CvHaarClassifierCascade*)cvLoad("data/haarcascade_frontalface_alt.xml", 0, 0, 0);
+	m_storage = cvCreateMemStorage(0);
 }
 
 void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)
@@ -290,6 +316,7 @@ void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->SetPath (_T("motionTracker"));	
 
 	pConfObj->Write(_T("trackFace"), m_trackFace);
+	pConfObj->Write(_T("enableWhenFaceDetected"), m_enableWhenFaceDetected);
 
 	m_trackArea.GetSize (width, height);
 	
@@ -315,6 +342,7 @@ void CVisionPipeline::ReadProfileData(wxConfigBase* pConfObj)
 
 	pConfObj->SetPath (_T("motionTracker"));
 	pConfObj->Read(_T("trackFace"), &m_trackFace);
+	pConfObj->Read(_T("enableWhenFaceDetected"), &m_enableWhenFaceDetected);
 	pConfObj->Read (_T("trackAreaWidth"), &width);
 	pConfObj->Read (_T("trackAreaHeight"), &height);
 	
