@@ -33,6 +33,9 @@
 ////@end includes
 #include <wx/app.h>
 #include <assert.h>
+#if !defined(NDEBUG)
+#include <wx/log.h>
+#endif
 
 /*!
  * Forward declarations
@@ -91,7 +94,7 @@ private:
 ////@end EViacamApp member variables
 	//volatile
 	CViacamController* m_pController;
-#if defined(NDEBUG)
+#if !defined(NDEBUG)
 	wxLogNull m_disableErrorMessages;
 #endif
 };
