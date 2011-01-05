@@ -1829,14 +1829,6 @@ necessary."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -6940,7 +6932,7 @@ tracking area."</string>
                           <string name="proxy-Custom ctor arguments">""</string>
                         </document>
                         <document>
-                          <string name="title">"wxCheckBox: ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER"</string>
+                          <string name="title">"wxCheckBox: ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED"</string>
                           <string name="type">"dialog-control-document"</string>
                           <string name="filename">""</string>
                           <string name="icon-name">"checkbox"</string>
@@ -6949,8 +6941,8 @@ tracking area."</string>
                           <long name="title-mode">0</long>
                           <long name="locked">0</long>
                           <string name="proxy-type">"wbCheckBoxProxy"</string>
-                          <string name="event-handler-0">"wxEVT_COMMAND_CHECKBOX_CLICKED|OnCheckboxShowLocateFaceFilterClick|NONE||WConfiguration"</string>
-                          <string name="proxy-Id name">"ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER"</string>
+                          <string name="event-handler-0">"wxEVT_COMMAND_CHECKBOX_CLICKED|OnCheckboxEnableWhenFaceDetectedClick|NONE||WConfiguration"</string>
+                          <string name="proxy-Id name">"ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED"</string>
                           <long name="proxy-Id value">10039</long>
                           <string name="proxy-Name">""</string>
                           <string name="proxy-Class">"wxCheckBox"</string>
@@ -6959,11 +6951,11 @@ tracking area."</string>
                           <bool name="proxy-Separate files">0</bool>
                           <string name="proxy-Implementation filename">""</string>
                           <string name="proxy-Header filename">""</string>
-                          <string name="proxy-Member variable name">"m_chkShowAutoLocateFaceFilter"</string>
-                          <string name="proxy-Label">"Show locate face filter"</string>
+                          <string name="proxy-Member variable name">"m_chkEnableWhenFaceDetected"</string>
+                          <string name="proxy-Label">"Enable eViacam when face detected"</string>
                           <bool name="proxy-Initial value">0</bool>
                           <string name="proxy-Help text">""</string>
-                          <string name="proxy-Tooltip text">""</string>
+                          <string name="proxy-Tooltip text">"eViacam is only enabled when face is detected."</string>
                           <string name="proxy-Data variable">""</string>
                           <string name="proxy-Data validator">""</string>
                           <string name="proxy-Data source">""</string>

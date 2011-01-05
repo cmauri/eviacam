@@ -174,7 +174,7 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
 
     EVT_CHECKBOX( ID_CHECKBOX_AUTO_LOCATE_FACE, WConfiguration::OnCheckboxAutoLocateFaceClick )
 
-    EVT_CHECKBOX( ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER, WConfiguration::OnCheckboxShowLocateFaceFilterClick )
+    EVT_CHECKBOX( ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED, WConfiguration::OnCheckboxEnableWhenFaceDetectedClick )
 
     EVT_CHOICE( ID_CHOICE_PROFILE, WConfiguration::OnChoiceProfileSelected )
 
@@ -336,7 +336,7 @@ void WConfiguration::Init()
     m_buttonActivationKey = NULL;
 #endif
     m_chkAutoLocateFace = NULL;
-    m_chkShowAutoLocateFaceFilter = NULL;
+    m_chkEnableWhenFaceDetected = NULL;
     m_choProfile = NULL;
     m_btnAddProfile = NULL;
     m_btnDeleteProfile = NULL;
@@ -740,10 +740,12 @@ void WConfiguration::CreateControls()
         m_chkAutoLocateFace->SetToolTip(_("When enabled tries to automatically\ndetect your face and center the\ntracking area."));
     itemFlexGridSizer92->Add(m_chkAutoLocateFace, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_chkShowAutoLocateFaceFilter = new wxCheckBox( itemPanel77, ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER, _("Show locate face filter"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_chkShowAutoLocateFaceFilter->SetValue(false);
-    m_chkShowAutoLocateFaceFilter->Enable(false);
-    itemFlexGridSizer92->Add(m_chkShowAutoLocateFaceFilter, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_chkEnableWhenFaceDetected = new wxCheckBox( itemPanel77, ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED, _("Enable eViacam when face detected"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkEnableWhenFaceDetected->SetValue(false);
+    if (WConfiguration::ShowToolTips())
+        m_chkEnableWhenFaceDetected->SetToolTip(_("eViacam is only enabled when face is detected."));
+    m_chkEnableWhenFaceDetected->Enable(false);
+    itemFlexGridSizer92->Add(m_chkEnableWhenFaceDetected, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     itemNotebook4->AddPage(itemPanel77, _("Advanced"));
 
@@ -955,9 +957,9 @@ void WConfiguration::InitializeData ()
 	// Advanced
 	m_chkAutoLocateFace->SetValue (
 		wxGetApp().GetController().GetVisionPipeline().GetTrackFace());
-	m_chkShowAutoLocateFaceFilter->Enable (m_chkAutoLocateFace->GetValue());
-	m_chkShowAutoLocateFaceFilter->SetValue (
-		wxGetApp().GetController().GetVisionPipeline().GetShowTrackFaceFilter());
+	m_chkEnableWhenFaceDetected->Enable (m_chkAutoLocateFace->GetValue());
+	m_chkEnableWhenFaceDetected->SetValue (
+		wxGetApp().GetController().GetVisionPipeline().GetEnableWhenFaceDetected());
 	m_txtOnScreenKeyboardCommand->SetValue(
 		wxGetApp().GetController().GetOnScreenKeyboardCommand());
 #if defined(__WXGTK__)
@@ -1299,7 +1301,7 @@ void WConfiguration::OnCheckboxShowClickwinClick( wxCommandEvent& event )
 void WConfiguration::OnCheckboxAutoLocateFaceClick( wxCommandEvent& event )
 {
 	wxGetApp().GetController().GetVisionPipeline().SetTrackFace (m_chkAutoLocateFace->GetValue());
-	m_chkShowAutoLocateFaceFilter->Enable (m_chkAutoLocateFace->GetValue());
+	m_chkEnableWhenFaceDetected->Enable (m_chkAutoLocateFace->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1309,9 +1311,9 @@ void WConfiguration::OnCheckboxAutoLocateFaceClick( wxCommandEvent& event )
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SHOW_LOCATE_FACE_FILTER
  */
 
-void WConfiguration::OnCheckboxShowLocateFaceFilterClick( wxCommandEvent& event )
+void WConfiguration::OnCheckboxEnableWhenFaceDetectedClick( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetVisionPipeline().SetShowTrackFaceFilter (m_chkShowAutoLocateFaceFilter->GetValue());
+	wxGetApp().GetController().GetVisionPipeline().SetEnableWhenFaceDetected(m_chkEnableWhenFaceDetected->GetValue());
 	event.Skip(false);
 	Changed ();
 }
