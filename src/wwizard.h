@@ -69,6 +69,8 @@ class wxStaticText;
 #define ID_WIZARDPAGE_CAMERA 10115
 #define ID_BUTTON5 10124
 #define ID_WIZARDPAGE_TRACKER 10016
+#define ID_CHECKBOX_LOCATE_FACE 10022
+#define ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED 10106
 #define ID_WIZARDPAGE_CALIB1 10093
 #define ID_CHECKBOX_PERFORM_CALIBRATION 10095
 #define ID_WIZARDPAGE_CALIB2 10096
@@ -663,6 +665,12 @@ public:
 
 ////@begin WizardPage8 event handler declarations
 
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_LOCATE_FACE
+    void OnCheckboxLocateFaceClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED
+    void OnCheckboxEnableWhenFaceDetectedClick( wxCommandEvent& event );
+
 ////@end WizardPage8 event handler declarations
 
 ////@begin WizardPage8 member function declarations
@@ -678,6 +686,8 @@ public:
     static bool ShowToolTips();
 
 ////@begin WizardPage8 member variables
+    wxCheckBox* m_chkLocateFace;
+    wxCheckBox* m_chkEnableWhenFaceDetected;
 ////@end WizardPage8 member variables
 };
 
