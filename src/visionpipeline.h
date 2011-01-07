@@ -27,7 +27,7 @@
 #include "crvhistogram.h"
 #include "configbase.h"
 #include "visiblenormroi.h"
-#include "wxutil/waittime.h"
+#include "waittime.h"
 
 
 class CVisionPipeline : public CConfigBase
