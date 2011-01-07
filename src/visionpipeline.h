@@ -43,7 +43,10 @@ public:
 	const bool GetEnableWhenFaceDetected () const { return m_enableWhenFaceDetected; }
 	void SetEnableWhenFaceDetected (bool state) { m_enableWhenFaceDetected= state; }
 	bool IsFaceDetected ();
-	CWaitTime* GetWaitTime () { return m_waitTime; }
+	CWaitTime GetWaitTime () { return m_waitTime; }
+	const int GetTimeout () const { return m_waitTime.GetWaitTimeMs(); }
+	void SetTimeout (int timeout) { m_waitTime.SetWaitTimeMs(timeout); }
+	
 	
 	const bool GetShowTrackFaceFilter () const { 
 		return m_showColorTrackerResult; 
@@ -64,7 +67,7 @@ private:
 	bool m_trackFace;
 	bool m_showColorTrackerResult;
 	bool m_enableWhenFaceDetected;
-	CWaitTime* m_waitTime;
+	CWaitTime m_waitTime;
 
 	CIplImage m_imgBinFace;
 	CIplImage m_imgPrevProc, m_imgCurrProc;

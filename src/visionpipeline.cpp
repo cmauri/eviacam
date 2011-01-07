@@ -112,7 +112,7 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		// Set new box centre
 		m_trackArea.SetCenterImg (&image, cx, cy);
 		
-		m_waitTime->Reset();
+		m_waitTime.Reset();
 	}
 	
 	if (GetEnableWhenFaceDetected() && IsFaceDetected() != wxGetApp().GetController().GetEnabled())
@@ -123,7 +123,7 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 
 bool CVisionPipeline::IsFaceDetected ()
 {
-	return !m_waitTime->HasExpired();
+	return !m_waitTime.HasExpired();
 }
 
 int CVisionPipeline::PreprocessImage ()
@@ -299,7 +299,7 @@ void CVisionPipeline::InitDefaults()
 	m_trackArea.SetCenter (DEFAULT_TRACK_AREA_X_CENTER_PERCENT, DEFAULT_TRACK_AREA_Y_CENTER_PERCENT);
 	m_faceCascade = (CvHaarClassifierCascade*)cvLoad("data/haarcascade_frontalface_alt.xml", 0, 0, 0);
 	m_storage = cvCreateMemStorage(0);
-	m_waitTime = new CWaitTime(DEFAULT_FACE_DETECTION_TIMEOUT);
+	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
 }
 
 void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)
@@ -310,7 +310,7 @@ void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)
 
 	pConfObj->Write(_T("trackFace"), m_trackFace);
 	pConfObj->Write(_T("enableWhenFaceDetected"), m_enableWhenFaceDetected);
-	pConfObj->Write(_T("locateFaceTimeout"), (int) m_waitTime->GetWaitTimeMs());
+	pConfObj->Write(_T("locateFaceTimeout"), (int) m_waitTime.GetWaitTimeMs());
 
 	m_trackArea.GetSize (width, height);
 	
@@ -344,7 +344,7 @@ void CVisionPipeline::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read (_T("trackAreaHeight"), &height);
 	
 	m_trackArea.SetSize ((float) width, (float)height);
-	m_waitTime->SetWaitTimeMs(locateFaceTimeout);
+	m_waitTime.SetWaitTimeMs(locateFaceTimeout);
 
 	if (!m_trackFace) {
 		pConfObj->Read (_T("trackAreaCenterX"), &xc);
