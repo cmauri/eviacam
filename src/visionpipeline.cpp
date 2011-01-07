@@ -297,7 +297,7 @@ void CVisionPipeline::InitDefaults()
 	m_showColorTrackerResult= false;
 	m_trackArea.SetSize (DEFAULT_TRACK_AREA_WIDTH_PERCENT, DEFAULT_TRACK_AREA_HEIGHT_PERCENT);
 	m_trackArea.SetCenter (DEFAULT_TRACK_AREA_X_CENTER_PERCENT, DEFAULT_TRACK_AREA_Y_CENTER_PERCENT);
-	m_faceCascade = (CvHaarClassifierCascade*)cvLoad("data/haarcascade_frontalface_alt.xml", 0, 0, 0);
+	m_faceCascade = (CvHaarClassifierCascade*)cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml", 0, 0, 0);
 	m_storage = cvCreateMemStorage(0);
 	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
 }
