@@ -46,10 +46,10 @@
 class WizardPage;
 class WizardPage5;
 class WizardPage8;
+class wxSpinCtrl;
 class WizardPage1;
 class WizardPage2;
 class WizardPage6;
-class wxSpinCtrl;
 class wxToggleButton;
 class WizardPage7;
 class WizardPage3;
@@ -71,6 +71,7 @@ class wxStaticText;
 #define ID_WIZARDPAGE_TRACKER 10016
 #define ID_CHECKBOX_LOCATE_FACE 10022
 #define ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED 10106
+#define ID_SPINCTRL_LOCATE_FACE_TIMEOUT 10108
 #define ID_WIZARDPAGE_CALIB1 10093
 #define ID_CHECKBOX_PERFORM_CALIBRATION 10095
 #define ID_WIZARDPAGE_CALIB2 10096
@@ -671,6 +672,9 @@ public:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED
     void OnCheckboxEnableWhenFaceDetectedClick( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_LOCATE_FACE_TIMEOUT
+    void OnSpinctrlLocateFaceTimeoutUpdated( wxSpinEvent& event );
+
 ////@end WizardPage8 event handler declarations
 
 ////@begin WizardPage8 member function declarations
@@ -688,6 +692,7 @@ public:
 ////@begin WizardPage8 member variables
     wxCheckBox* m_chkLocateFace;
     wxCheckBox* m_chkEnableWhenFaceDetected;
+    wxSpinCtrl* m_spinLocateFaceTimeout;
 ////@end WizardPage8 member variables
 };
 

@@ -974,7 +974,7 @@ void WConfiguration::InitializeData ()
 	m_chkEnableWhenFaceDetected->Enable (m_chkAutoLocateFace->GetValue());
 	m_chkEnableWhenFaceDetected->SetValue (
 		wxGetApp().GetController().GetVisionPipeline().GetEnableWhenFaceDetected());
-	m_spinLocateFaceTimeout->SetValue(wxGetApp().GetController().GetVisionPipeline().GetTimeout()/1000);
+	m_spinLocateFaceTimeout->SetValue(wxGetApp().GetController().GetVisionPipeline().GetTimeout());
 	m_spinLocateFaceTimeout->Enable(m_chkAutoLocateFace->GetValue() && m_chkEnableWhenFaceDetected->GetValue());
 	m_txtOnScreenKeyboardCommand->SetValue(
 		wxGetApp().GetController().GetOnScreenKeyboardCommand());
@@ -1843,7 +1843,7 @@ void WConfiguration::OnDownGestureChoiceSelected( wxCommandEvent& event )
 
 void WConfiguration::OnSpinLocateFaceTimeoutUpdated( wxSpinEvent& event )
 {
-	wxGetApp().GetController().GetVisionPipeline().SetTimeout(m_spinLocateFaceTimeout->GetValue()*1000);
+	wxGetApp().GetController().GetVisionPipeline().SetTimeout(m_spinLocateFaceTimeout->GetValue());
     event.Skip();
 }
 

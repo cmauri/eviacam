@@ -44,8 +44,8 @@ public:
 	void SetEnableWhenFaceDetected (bool state) { m_enableWhenFaceDetected= state; }
 	bool IsFaceDetected ();
 	CWaitTime GetWaitTime () { return m_waitTime; }
-	const int GetTimeout () const { return m_waitTime.GetWaitTimeMs(); }
-	void SetTimeout (int timeout) { m_waitTime.SetWaitTimeMs(timeout); }
+	const int GetTimeout () const { return m_waitTime.GetWaitTimeMs()/1000; }
+	void SetTimeout (int timeout) { m_waitTime.SetWaitTimeMs(timeout*1000); }
 	
 	
 	const bool GetShowTrackFaceFilter () const { 
