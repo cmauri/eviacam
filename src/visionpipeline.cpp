@@ -35,7 +35,7 @@
 #define DEFAULT_TRACK_AREA_HEIGHT_PERCENT 0.30f
 #define DEFAULT_TRACK_AREA_X_CENTER_PERCENT 0.5f
 #define DEFAULT_TRACK_AREA_Y_CENTER_PERCENT 0.5f
-#define FACE_DETECTION_TIMEOUT 5000
+#define DEFAULT_FACE_DETECTION_TIMEOUT 5000
 
 
 CVisionPipeline::CVisionPipeline () 
@@ -299,7 +299,7 @@ void CVisionPipeline::InitDefaults()
 	m_trackArea.SetCenter (DEFAULT_TRACK_AREA_X_CENTER_PERCENT, DEFAULT_TRACK_AREA_Y_CENTER_PERCENT);
 	m_faceCascade = (CvHaarClassifierCascade*)cvLoad("data/haarcascade_frontalface_alt.xml", 0, 0, 0);
 	m_storage = cvCreateMemStorage(0);
-	m_waitTime = new CWaitTime(FACE_DETECTION_TIMEOUT);
+	m_waitTime = new CWaitTime(DEFAULT_FACE_DETECTION_TIMEOUT);
 }
 
 void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)
@@ -310,6 +310,7 @@ void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)
 
 	pConfObj->Write(_T("trackFace"), m_trackFace);
 	pConfObj->Write(_T("enableWhenFaceDetected"), m_enableWhenFaceDetected);
+	pConfObj->Write(_T("locateFaceTimeout"), (int) m_waitTime->GetWaitTimeMs());
 
 	m_trackArea.GetSize (width, height);
 	
@@ -329,17 +330,21 @@ void CVisionPipeline::ReadProfileData(wxConfigBase* pConfObj)
 {
 	// Ensure proper default values if read fails
 	double	xc= DEFAULT_TRACK_AREA_X_CENTER_PERCENT, 
-				yc= DEFAULT_TRACK_AREA_Y_CENTER_PERCENT,
+		yc= DEFAULT_TRACK_AREA_Y_CENTER_PERCENT,
                 width= DEFAULT_TRACK_AREA_WIDTH_PERCENT,
-				height= DEFAULT_TRACK_AREA_HEIGHT_PERCENT;
+		height= DEFAULT_TRACK_AREA_HEIGHT_PERCENT;
+				
+	int locateFaceTimeout = DEFAULT_FACE_DETECTION_TIMEOUT;
 
 	pConfObj->SetPath (_T("motionTracker"));
 	pConfObj->Read(_T("trackFace"), &m_trackFace);
 	pConfObj->Read(_T("enableWhenFaceDetected"), &m_enableWhenFaceDetected);
+	pConfObj->Read(_T("locateFaceTimeout"), &locateFaceTimeout);
 	pConfObj->Read (_T("trackAreaWidth"), &width);
 	pConfObj->Read (_T("trackAreaHeight"), &height);
 	
 	m_trackArea.SetSize ((float) width, (float)height);
+	m_waitTime->SetWaitTimeMs(locateFaceTimeout);
 
 	if (!m_trackFace) {
 		pConfObj->Read (_T("trackAreaCenterX"), &xc);

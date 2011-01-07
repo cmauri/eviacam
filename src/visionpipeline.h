@@ -43,6 +43,7 @@ public:
 	const bool GetEnableWhenFaceDetected () const { return m_enableWhenFaceDetected; }
 	void SetEnableWhenFaceDetected (bool state) { m_enableWhenFaceDetected= state; }
 	bool IsFaceDetected ();
+	CWaitTime* GetWaitTime () { return m_waitTime; }
 	
 	const bool GetShowTrackFaceFilter () const { 
 		return m_showColorTrackerResult; 
