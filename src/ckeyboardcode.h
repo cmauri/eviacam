@@ -53,7 +53,7 @@ public:
 
 	// Given a platform dependent virtual-key or KeySym returns the 
 	// corresponding CKeyboardCode object
-	static CKeyboardCode FromVirtualKeyCode (unsigned int vkCode);
+	static CKeyboardCode FromVirtualKeyCode (unsigned long vkCode);
 
 	// Given an ASCII code returns the corresponding CKeyboardCode object
 	static CKeyboardCode FromASCII (char ascii);
@@ -63,11 +63,11 @@ public:
 
 	// Set the internal raw value. NOTE: intended only
 	// for storage purposes not to work with
-	static CKeyboardCode FromRawValue (unsigned int kc);
+	static CKeyboardCode FromRawValue (unsigned long kc);
 
 	// Get the internal raw value. NOTE: intended only
 	// for storage purposes not to work with
-	unsigned int GetRawValue() const;
+	unsigned long GetRawValue() const;
 
 #if !defined(NDEBUG)
 	void Dump() const;
@@ -78,10 +78,10 @@ private:
 	// returns a scan code which, using the layout, is converted to 
 	// this value). In Unix systems this corresponds to KeySym
 	// while for Windows systems it is called virtual-key code.
-	unsigned int m_virtualKeyCode;
+	unsigned long m_virtualKeyCode;
 
 	// Construct object from an KeySym or virtual-key
-	CKeyboardCode(unsigned int vkCode);
+	CKeyboardCode(unsigned long vkCode);
 };
 
 #endif

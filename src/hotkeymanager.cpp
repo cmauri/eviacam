@@ -68,7 +68,7 @@ void CHotkeyManager::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->SetPath (_T("hotKeyManager"));
 #if defined(__WXGTK__) 
 	pConfObj->Write(_T("enabledActivationKey"), m_enabledActivationKey);
-	pConfObj->Write(_T("keyCode"), (long) GetActivationKey().GetRawValue());
+	pConfObj->Write(_T("keyCode"), static_cast<long>(GetActivationKey().GetRawValue()));
 #endif // __WXGTK___
 	pConfObj->SetPath (_T(".."));
 } 
@@ -80,7 +80,7 @@ void CHotkeyManager::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("enabledActivationKey"), &m_enabledActivationKey);
 	long rawKeyCode;
 	if (pConfObj->Read(_T("keyCode"), &rawKeyCode))
-		SetActivationKeyCode(CKeyboardCode::FromRawValue((unsigned int) rawKeyCode));
+		SetActivationKeyCode(CKeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
 #endif // __WXGTK___
 	pConfObj->SetPath (_T(".."));
 }

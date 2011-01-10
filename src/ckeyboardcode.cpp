@@ -34,7 +34,7 @@
 // Make sure that m_virtualKeyCode is wide enough to store a KeySym
 // On windows it seems that virtual-key codes are 16bit wide, so no problem.
 #if defined(__WXGTK__)
-wxCOMPILE_TIME_ASSERT( sizeof(KeySym)<= sizeof(unsigned int), KeySymGreaterThanIntError );
+wxCOMPILE_TIME_ASSERT( sizeof(KeySym)== sizeof(unsigned long), KeySymDifferentThanLongError );
 wxCOMPILE_TIME_ASSERT( sizeof(KeyCode)<= sizeof(unsigned int), KeyCodeGreaterThanIntError );
 #endif
 
@@ -45,7 +45,7 @@ CKeyboardCode::CKeyboardCode() : m_virtualKeyCode(0)
 
 // Private constructor which initializes to the internal 
 // state given virtual key code or KeySym
-CKeyboardCode::CKeyboardCode (unsigned int vkCode)
+CKeyboardCode::CKeyboardCode (unsigned long vkCode)
 {
 	m_virtualKeyCode= vkCode;	
 }
@@ -111,8 +111,8 @@ CKeyboardCode CKeyboardCode::ReadKeyCode()
 CKeyboardCode CKeyboardCode::FromScanCode (unsigned int scanCode)
 {	
 #if defined(__WXGTK__)
-	return CKeyboardCode ((unsigned int) XKeycodeToKeysym(
-			(Display *) wxGetDisplay(), (KeyCode) scanCode, 0));
+	return CKeyboardCode (static_cast<unsigned long> (XKeycodeToKeysym(
+			(Display *) wxGetDisplay(), (KeyCode) scanCode, 0)));
 #else
 	// Still not available for Windows
 	wxUnusedVar(scanCode);
@@ -123,7 +123,7 @@ CKeyboardCode CKeyboardCode::FromScanCode (unsigned int scanCode)
 
 // Given a platform dependent virtual-key or KeySym returns the 
 // corresponding CKeyboardCode object
-CKeyboardCode CKeyboardCode::FromVirtualKeyCode (unsigned int vkCode)
+CKeyboardCode CKeyboardCode::FromVirtualKeyCode (unsigned long vkCode)
 {
 	return CKeyboardCode (vkCode);
 }
@@ -133,7 +133,7 @@ CKeyboardCode CKeyboardCode::FromASCII (char ascii)
 {
 #if defined(__WXGTK__)
 	char c[2]= { ascii, '\0'};
-	return CKeyboardCode ((unsigned int) XStringToKeysym(c));
+	return CKeyboardCode (static_cast<unsigned long>(XStringToKeysym(c)));
 #else
 	// Still not available for Windows
 	assert(0);
@@ -302,14 +302,14 @@ CKeyboardCode CKeyboardCode::FromWXKeyCode (wxKeyCode kc)
 #endif
 }
 
-CKeyboardCode CKeyboardCode::FromRawValue (unsigned int kc)
+CKeyboardCode CKeyboardCode::FromRawValue (unsigned long kc)
 {
 	return CKeyboardCode(kc);
 }
 
 // Get the internal raw value. NOTE: intended only
 // for storage purposes not to work with
-unsigned int CKeyboardCode::GetRawValue() const
+unsigned long CKeyboardCode::GetRawValue() const
 {
 	return m_virtualKeyCode;
 }
