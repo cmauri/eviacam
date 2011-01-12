@@ -57,6 +57,8 @@ public:
 
 	float GetRotation () { return CNormROI::GetRotation(); }
 	void SetRotation (float value) { CNormROI::SetRotation(value); }
+	
+	void SetDegradation (int value) { m_degradation= value; }
 
 	bool GetShowOrientation () const { return m_showOrientation; }
 	void SetShowOrientation (const bool value) { m_showOrientation= value; }
@@ -90,6 +92,7 @@ private:
 	wxCriticalSection m_CriticalSection;
 	int m_cursorOver;
 	bool m_showOrientation;
+	int m_degradation;
 };
 
 #endif

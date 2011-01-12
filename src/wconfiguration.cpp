@@ -1317,6 +1317,7 @@ void WConfiguration::OnCheckboxShowClickwinClick( wxCommandEvent& event )
 void WConfiguration::OnCheckboxAutoLocateFaceClick( wxCommandEvent& event )
 {
 	wxGetApp().GetController().GetVisionPipeline().SetTrackFace (m_chkAutoLocateFace->GetValue());
+	wxGetApp().GetController().GetVisionPipeline().SetDegradation(0);
 	m_chkEnableWhenFaceDetected->Enable (m_chkAutoLocateFace->GetValue());
 	m_spinLocateFaceTimeout->Enable(m_chkAutoLocateFace->GetValue() && m_chkEnableWhenFaceDetected->GetValue());
 	event.Skip(false);

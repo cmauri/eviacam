@@ -36,6 +36,10 @@
 #define DEFAULT_TRACK_AREA_X_CENTER_PERCENT 0.5f
 #define DEFAULT_TRACK_AREA_Y_CENTER_PERCENT 0.5f
 #define DEFAULT_FACE_DETECTION_TIMEOUT 5000
+#define COLOR_DEGRADATION_TIME 5000
+#define MOTION_THRESHOLD 10
+#define HIGH_SPEED 2
+#define LOW_SPEED 15
 
 
 CVisionPipeline::CVisionPipeline () 
@@ -51,9 +55,8 @@ void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
 		image.Width() != m_imgVelX.Width() ||
 		image.Height() != m_imgVelX.Height() ) {
 
-		retval= m_imgBinFace.Create (image.Width(), image.Height(), 
-									IPL_DEPTH_8U, "GRAY");
-		assert (retval);
+		//retval= m_imgBinFace.Create (image.Width(), image.Height(), IPL_DEPTH_8U, "GRAY");
+		//assert (retval);
 
 		retval= m_imgPrev.Create (image.Width(), image.Height(), 
 								  IPL_DEPTH_8U, "GRAY");
@@ -90,8 +93,8 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		image.ptr(),
 		m_faceCascade,
 		m_storage,
-  		1.25, 2, 0,
-		cvSize(120./3, 90./3)
+		1.1, 2, CV_HAAR_DO_CANNY_PRUNING,
+		cvSize(120./2, 90./2)
 	);
 	
 	if (face && face->total>0)
@@ -106,19 +109,30 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		m_trackArea.SetSizeImg(&image,sx,sy);
 
 		// Combine with new detected location
-		cx= (int) ((faceRect->x+faceRect->width/2) * 0.1f + (curBox.x+curBox.width/2) * 0.9f);
-		cy= (int) ((faceRect->y+faceRect->height/2) * 0.1f + (curBox.y+curBox.height/2) * 0.9f);
+		cx= (int) ((faceRect->x+faceRect->width/2) * 0.5f + (curBox.x+curBox.width/2) * 0.5f);
+		cy= (int) ((faceRect->y+faceRect->height/2) * 0.5f + (curBox.y+curBox.height/2) * 0.5f);
 
 		// Set new box centre
 		m_trackArea.SetCenterImg (&image, cx, cy);
 		
+		if (abs(curBox.x-faceRect->x) > MOTION_THRESHOLD || abs(curBox.y-faceRect->y) > MOTION_THRESHOLD)
+		{
+			m_speed = HIGH_SPEED;
+		} else {
+			m_speed = LOW_SPEED;
+		}
+		
 		m_waitTime.Reset();
+		m_trackAreaTimeout.Reset();
+	} else {
+		m_speed = LOW_SPEED;
+	}
+	if (GetEnableWhenFaceDetected() && IsFaceDetected() != wxGetApp().GetController().GetEnabled())
+	{
+		wxGetApp().GetController().SetEnabled(IsFaceDetected(), true);
+		cvClearMemStorage(m_storage);
 	}
 	
-	if (GetEnableWhenFaceDetected() && IsFaceDetected() != wxGetApp().GetController().GetEnabled())
-		wxGetApp().GetController().SetEnabled(IsFaceDetected(), true);
-		
-	cvClearMemStorage(m_storage);
 }
 
 bool CVisionPipeline::IsFaceDetected ()
@@ -276,14 +290,21 @@ void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 {
 	AllocWorkingSpace (image);
 
-	if (m_trackFace) ComputeFaceTrackArea (image);
+	if (m_trackFace) {
+		if (m_lag == 0) ComputeFaceTrackArea (image);
+		m_lag = (m_lag + 1) % m_speed;
+		
+		m_trackArea.SetDegradation(255 - m_trackAreaTimeout.PercentagePassed() * 255 / 100);
+	}
+
 
 	TrackMotion (image, xVel, yVel);	
 
+	/*
 	if (m_trackFace && m_showColorTrackerResult) {
 		// Copy face tracker output image to resulting image
 		cvMerge( m_imgBinFace.ptr(), m_imgBinFace.ptr(), m_imgBinFace.ptr(), NULL, image.ptr());
-	}
+	}*/
 
 	// Store current image as previous
 	m_imgPrev.Swap (&m_imgCurr);	
@@ -297,9 +318,12 @@ void CVisionPipeline::InitDefaults()
 	m_showColorTrackerResult= false;
 	m_trackArea.SetSize (DEFAULT_TRACK_AREA_WIDTH_PERCENT, DEFAULT_TRACK_AREA_HEIGHT_PERCENT);
 	m_trackArea.SetCenter (DEFAULT_TRACK_AREA_X_CENTER_PERCENT, DEFAULT_TRACK_AREA_Y_CENTER_PERCENT);
-	m_faceCascade = (CvHaarClassifierCascade*)cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml", 0, 0, 0);
+	m_faceCascade = (CvHaarClassifierCascade*)cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml", 0, 0, 0);
 	m_storage = cvCreateMemStorage(0);
 	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
+	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);
+	m_lag= 0;
+	m_speed= LOW_SPEED;
 }
 
 void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)

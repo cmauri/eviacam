@@ -46,6 +46,7 @@ public:
 	CWaitTime GetWaitTime () { return m_waitTime; }
 	const int GetTimeout () const { return m_waitTime.GetWaitTimeMs()/1000; }
 	void SetTimeout (int timeout) { m_waitTime.SetWaitTimeMs(timeout*1000); }
+	void SetDegradation (int value) { m_trackArea.SetDegradation(value); }
 	
 	
 	const bool GetShowTrackFaceFilter () const { 
@@ -68,8 +69,11 @@ private:
 	bool m_showColorTrackerResult;
 	bool m_enableWhenFaceDetected;
 	CWaitTime m_waitTime;
+	CWaitTime m_trackAreaTimeout;
+	int m_lag;
+	int m_speed;
 
-	CIplImage m_imgBinFace;
+	//CIplImage m_imgBinFace;
 	CIplImage m_imgPrevProc, m_imgCurrProc;
 	CIplImage m_imgPrev, m_imgCurr;
 	CIplImage m_imgVelX, m_imgVelY;

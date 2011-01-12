@@ -27,6 +27,7 @@ CVisibleNormROI::CVisibleNormROI(void) : CNormROI()
 {		
 	m_cursorOver= OVER_NONE;
 	m_showOrientation= false;
+	m_degradation= 0;
 }
 
 CVisibleNormROI::CVisibleNormROI(float width, float height, float x, float y) : 
@@ -34,6 +35,7 @@ CVisibleNormROI::CVisibleNormROI(float width, float height, float x, float y) :
 {
 	m_cursorOver= OVER_NONE;
 	m_showOrientation= false;
+	m_degradation= 0;
 }
 
 CVisibleNormROI::~CVisibleNormROI(void)
@@ -434,7 +436,7 @@ void CVisibleNormROI::OnPaint0 (const CvSize& winSize, CIplImage *pImg)
 
 	if (m_cursorOver>= OVER_LEFT_LINE && m_cursorOver<= OVER_BR_CORNER)  thickness= 3;
 	else thickness= 1;
-	cvRectangle (pImg->ptr(), p1, p2, CV_RGB( 255,255,0 ), thickness, 4);
+	cvRectangle (pImg->ptr(), p1, p2, CV_RGB( 255-m_degradation, 255-m_degradation, m_degradation ), thickness, 4);
 
 	// Affordances
 	CvPoint pa, pb;
@@ -443,14 +445,14 @@ void CVisibleNormROI::OnPaint0 (const CvSize& winSize, CIplImage *pImg)
 	pb.x= p1.x + thickness;
 	pb.y= p1.y + thickness;
 
-	cvRectangle (pImg->ptr(), pa, pb, CV_RGB( 255,255,0 ), CV_FILLED );
+	cvRectangle (pImg->ptr(), pa, pb, CV_RGB( 255-m_degradation, 255-m_degradation, m_degradation ), CV_FILLED );
 
 	pa.x= p2.x - thickness;
 	pa.y= p2.y - thickness;
 	pb.x= p2.x + thickness;
 	pb.y= p2.y + thickness;
 
-	cvRectangle (pImg->ptr(), pa, pb, CV_RGB( 255,255,0 ), CV_FILLED );
+	cvRectangle (pImg->ptr(), pa, pb, CV_RGB( 255-m_degradation, 255-m_degradation, m_degradation ), CV_FILLED );
 
 	GetDirectionSegment (winSize, p1, p2);
 	

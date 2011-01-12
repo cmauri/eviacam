@@ -2202,6 +2202,7 @@ wxIcon WizardPage8::GetIconResource( const wxString& name )
 void WizardPage8::OnCheckboxLocateFaceClick( wxCommandEvent& event )
 {
 	wxGetApp().GetController().GetVisionPipeline().SetTrackFace (m_chkLocateFace->GetValue());
+	wxGetApp().GetController().GetVisionPipeline().SetDegradation(0);
 	m_chkEnableWhenFaceDetected->Enable (m_chkLocateFace->GetValue());
 	m_spinLocateFaceTimeout->Enable (m_chkLocateFace->GetValue() && m_chkEnableWhenFaceDetected->GetValue());
 	event.Skip();
