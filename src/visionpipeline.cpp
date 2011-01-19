@@ -38,13 +38,24 @@
 #define DEFAULT_TRACK_AREA_Y_CENTER_PERCENT 0.5f
 #define DEFAULT_FACE_DETECTION_TIMEOUT 5000
 #define COLOR_DEGRADATION_TIME 5000
-#define THREAD_FREQUENCY 10000
+#define THREAD_FREQUENCY 100
 
 
 CVisionPipeline::CVisionPipeline (wxThreadKind kind) : wxThread (kind), m_condition(m_mutex)
 {
-	m_mutex.Lock();
 	InitDefaults();
+
+	// Create and start face detection thread	
+	m_mutex.Lock();	// the mutex should be initially locked
+	if (Create() == wxTHREAD_NO_ERROR) {
+#if defined (WIN32)
+		// On linux this ends up calling setpriority syscall which changes
+		// the priority of the whole process :-( (see wxWidgets threadpsx.cpp)
+		// TODO: implement it using pthreads
+		SetPriority (WXTHREAD_MIN_PRIORITY);
+#endif
+		Run();
+	}
 }
 
 CVisionPipeline::~CVisionPipeline ()
@@ -95,17 +106,17 @@ wxThreadError CVisionPipeline::Create(unsigned int stackSize)
 wxThread::ExitCode CVisionPipeline::Entry( )
 {
 	bool retval;
-	for (;;) {
-		unsigned long ts1 = CTimeUtil::GetMiliCount();
-		
-		printf("wait signal\n");
+	unsigned long ts1 = 0;
+	for (;;) {		
 		m_condition.Wait();
-		printf("signal received\n");
+//		printf("signal received\n");
 		
 		if (!IsRunning()) break;
 		
-		unsigned long ts2 = CTimeUtil::GetMiliCount();
-		if (ts2 - ts1 < THREAD_FREQUENCY) {
+		unsigned long now = CTimeUtil::GetMiliCount();
+		if (now - ts1>= THREAD_FREQUENCY) {
+			ts1 = CTimeUtil::GetMiliCount();
+//			printf("run\n");
 			m_imageCopyMutex.Enter();
 			
 			if (!m_imgCurrProc.Initialized ()) {
@@ -115,21 +126,17 @@ wxThread::ExitCode CVisionPipeline::Entry( )
 			
 			if (!m_imgThread.Initialized () ||
 				m_imgCurrProc.Width() != m_imgThread.Width() ||
-				m_imgCurrProc.Height() != m_imgThread.Height() ) {
-				
-				printf("!m_imgThread.Initialized\n");
-				
+				m_imgCurrProc.Height() != m_imgThread.Height() ) {				
+
 				retval= m_imgThread.Create (m_imgCurrProc.Width(), m_imgCurrProc.Height(), 
 					IPL_DEPTH_8U, "GRAY");
 				assert (retval);
 			}
 			
-			printf("start cvCopy\n");
 			cvCopy(m_imgCurrProc.ptr(), m_imgThread.ptr());
-			printf("end cvCopy\n");
 			m_imageCopyMutex.Leave();
-			ComputeFaceTrackArea(m_imgThread);
 
+			ComputeFaceTrackArea(m_imgThread);
 		}
 	}
 }
@@ -262,6 +269,7 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	m_imgCurr.PushROI ();
 	m_imgVelX.PushROI ();
 	m_imgVelY.PushROI ();
+	m_imgCurrProc.PushROI ();
 
 	m_trackArea.GetBoxImg (&image, box);
 
@@ -325,6 +333,7 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	yVel= (yVel / (float) validCells) * 80;
 	
 	// Restore ROI's
+	m_imgCurrProc.PopROI ();
 	m_imgPrev.PopROI ();
 	m_imgCurr.PopROI ();
 	m_imgVelX.PopROI ();
@@ -337,15 +346,17 @@ void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 {
 	AllocWorkingSpace (image);
 
-	if (m_trackFace) {
-		m_trackArea.SetDegradation(255 - m_trackAreaTimeout.PercentagePassed() * 255 / 100);
-		printf("send signal\n");
-		m_condition.Signal();
-	}
-
+	// TODO: fine grained synchronization
 	m_imageCopyMutex.Enter();
 	TrackMotion (image, xVel, yVel);
 	m_imageCopyMutex.Leave();
+
+	// Notifies face detection thread when needed
+	if (m_trackFace) {
+		m_trackArea.SetDegradation(255 - m_trackAreaTimeout.PercentagePassed() * 255 / 100);
+		m_condition.Signal();
+//		printf("signal sent\n");
+	}
 
 	// Store current image as previous
 	m_imgPrev.Swap (&m_imgCurr);
@@ -362,14 +373,7 @@ void CVisionPipeline::InitDefaults()
 	m_faceCascade = (CvHaarClassifierCascade*)cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml", 0, 0, 0);
 	m_storage = cvCreateMemStorage(0);
 	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
-	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);
-	
-	// Create and start worker thread
-	if (Create() == wxTHREAD_NO_ERROR)
-	{
-		SetPriority (WXTHREAD_MIN_PRIORITY);
-		Run();
-	}
+	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);	
 }
 
 void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)

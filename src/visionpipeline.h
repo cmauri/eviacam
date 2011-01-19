@@ -76,11 +76,7 @@ private:
 	bool m_enableWhenFaceDetected;
 	CWaitTime m_waitTime;
 	CWaitTime m_trackAreaTimeout;
-	wxCriticalSection m_imageCopyMutex;
-	wxMutex m_mutex;
-	wxCondition m_condition;
-	
-	
+		
 	CIplImage m_imgThread;
 	CIplImage m_imgPrevProc, m_imgCurrProc;
 	CIplImage m_imgPrev, m_imgCurr;
@@ -89,6 +85,10 @@ private:
 	
 	CvHaarClassifierCascade* m_faceCascade;
 	CvMemStorage* m_storage;
+
+	wxCriticalSection m_imageCopyMutex;
+	wxMutex m_mutex;
+	wxCondition m_condition;
 	
 	// Private methods
 	void AllocWorkingSpace (CIplImage &image);
