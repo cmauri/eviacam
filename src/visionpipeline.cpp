@@ -27,6 +27,7 @@
 #include "crvmisc.h"
 #include "crvskindetection.h"
 #include "crvimage.h"
+#include "timeutil.h"
 
 #include <math.h>
 
@@ -37,14 +38,17 @@
 #define DEFAULT_TRACK_AREA_Y_CENTER_PERCENT 0.5f
 #define DEFAULT_FACE_DETECTION_TIMEOUT 5000
 #define COLOR_DEGRADATION_TIME 5000
-#define MOTION_THRESHOLD 10
-#define HIGH_SPEED 2
-#define LOW_SPEED 15
+#define THREAD_FREQUENCY 10000
 
 
-CVisionPipeline::CVisionPipeline () 
+CVisionPipeline::CVisionPipeline (wxThreadKind kind) : wxThread (kind), m_condition(m_mutex)
 {
-	InitDefaults();	
+	m_mutex.Lock();
+	InitDefaults();
+}
+
+CVisionPipeline::~CVisionPipeline ()
+{
 }
 
 void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
@@ -54,9 +58,6 @@ void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
 	if (!m_imgVelX.Initialized () ||
 		image.Width() != m_imgVelX.Width() ||
 		image.Height() != m_imgVelX.Height() ) {
-
-		//retval= m_imgBinFace.Create (image.Width(), image.Height(), IPL_DEPTH_8U, "GRAY");
-		//assert (retval);
 
 		retval= m_imgPrev.Create (image.Width(), image.Height(), 
 								  IPL_DEPTH_8U, "GRAY");
@@ -70,9 +71,11 @@ void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
 								  IPL_DEPTH_8U, "GRAY");
 		assert (retval);
 
+		m_imageCopyMutex.Enter();
 		retval= m_imgCurrProc.Create (image.Width(), image.Height(), 
-								  IPL_DEPTH_8U, "GRAY");
+					      IPL_DEPTH_8U, "GRAY");
 		assert (retval);
+		m_imageCopyMutex.Leave();
 
 		retval= m_imgVelX.Create (image.Width(), image.Height(), 
 								  IPL_DEPTH_32F, "GRAY");
@@ -83,6 +86,55 @@ void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
 		assert (retval);
 	}
 }
+
+wxThreadError CVisionPipeline::Create(unsigned int stackSize)
+{
+	return wxThread::Create (stackSize);
+}
+
+wxThread::ExitCode CVisionPipeline::Entry( )
+{
+	bool retval;
+	for (;;) {
+		unsigned long ts1 = CTimeUtil::GetMiliCount();
+		
+		printf("wait signal\n");
+		m_condition.Wait();
+		printf("signal received\n");
+		
+		if (!IsRunning()) break;
+		
+		unsigned long ts2 = CTimeUtil::GetMiliCount();
+		if (ts2 - ts1 < THREAD_FREQUENCY) {
+			m_imageCopyMutex.Enter();
+			
+			if (!m_imgCurrProc.Initialized ()) {
+				m_imageCopyMutex.Leave();
+				continue;
+			}
+			
+			if (!m_imgThread.Initialized () ||
+				m_imgCurrProc.Width() != m_imgThread.Width() ||
+				m_imgCurrProc.Height() != m_imgThread.Height() ) {
+				
+				printf("!m_imgThread.Initialized\n");
+				
+				retval= m_imgThread.Create (m_imgCurrProc.Width(), m_imgCurrProc.Height(), 
+					IPL_DEPTH_8U, "GRAY");
+				assert (retval);
+			}
+			
+			printf("start cvCopy\n");
+			cvCopy(m_imgCurrProc.ptr(), m_imgThread.ptr());
+			printf("end cvCopy\n");
+			m_imageCopyMutex.Leave();
+			ComputeFaceTrackArea(m_imgThread);
+
+		}
+	}
+}
+
+
 
 void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 {
@@ -115,21 +167,12 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		// Set new box centre
 		m_trackArea.SetCenterImg (&image, cx, cy);
 		
-		if (abs(curBox.x-faceRect->x) > MOTION_THRESHOLD || abs(curBox.y-faceRect->y) > MOTION_THRESHOLD)
-		{
-			m_speed = HIGH_SPEED;
-		} else {
-			m_speed = LOW_SPEED;
-		}
-		
 		m_waitTime.Reset();
 		m_trackAreaTimeout.Reset();
-	} else {
-		m_speed = LOW_SPEED;
 	}
 	if (GetEnableWhenFaceDetected() && IsFaceDetected() != wxGetApp().GetController().GetEnabled())
 	{
-		wxGetApp().GetController().SetEnabled(IsFaceDetected(), true);
+		//wxGetApp().GetController().SetEnabled(IsFaceDetected(), true);
 		cvClearMemStorage(m_storage);
 	}
 	
@@ -226,6 +269,8 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	m_imgCurr.SetROI (box);
 
 	m_imgPrevProc.SetROI (box);
+	
+	//Mutex is not needed.
 	m_imgCurrProc.SetROI (box);
 
 	m_imgVelX.SetROI (box); 
@@ -284,6 +329,8 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	m_imgCurr.PopROI ();
 	m_imgVelX.PopROI ();
 	m_imgVelY.PopROI ();
+	
+	
 }
 
 void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
@@ -291,23 +338,17 @@ void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 	AllocWorkingSpace (image);
 
 	if (m_trackFace) {
-		if (m_lag == 0) ComputeFaceTrackArea (image);
-		m_lag = (m_lag + 1) % m_speed;
-		
 		m_trackArea.SetDegradation(255 - m_trackAreaTimeout.PercentagePassed() * 255 / 100);
+		printf("send signal\n");
+		m_condition.Signal();
 	}
 
-
-	TrackMotion (image, xVel, yVel);	
-
-	/*
-	if (m_trackFace && m_showColorTrackerResult) {
-		// Copy face tracker output image to resulting image
-		cvMerge( m_imgBinFace.ptr(), m_imgBinFace.ptr(), m_imgBinFace.ptr(), NULL, image.ptr());
-	}*/
+	m_imageCopyMutex.Enter();
+	TrackMotion (image, xVel, yVel);
+	m_imageCopyMutex.Leave();
 
 	// Store current image as previous
-	m_imgPrev.Swap (&m_imgCurr);	
+	m_imgPrev.Swap (&m_imgCurr);
 }
 
 // Configuration methods
@@ -322,8 +363,13 @@ void CVisionPipeline::InitDefaults()
 	m_storage = cvCreateMemStorage(0);
 	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
 	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);
-	m_lag= 0;
-	m_speed= LOW_SPEED;
+	
+	// Create and start worker thread
+	if (Create() == wxTHREAD_NO_ERROR)
+	{
+		SetPriority (WXTHREAD_MIN_PRIORITY);
+		Run();
+	}
 }
 
 void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)

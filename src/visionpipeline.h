@@ -29,13 +29,19 @@
 #include "visiblenormroi.h"
 #include "waittime.h"
 
+#include <wx/thread.h>
 
-class CVisionPipeline : public CConfigBase
+
+class CVisionPipeline : public CConfigBase, wxThread
 {
 	// Methods
 public:
-	CVisionPipeline ();
+	CVisionPipeline (wxThreadKind kind = wxTHREAD_JOINABLE);
+	~CVisionPipeline();
 
+	// Thread entry point
+	virtual wxThread::ExitCode Entry();
+	virtual wxThreadError Create(unsigned int stackSize = 0);
 	void ProcessImage (CIplImage& image, float& xVel, float& yVel);
 
 	const bool GetTrackFace () const { return m_trackFace; }
@@ -70,10 +76,12 @@ private:
 	bool m_enableWhenFaceDetected;
 	CWaitTime m_waitTime;
 	CWaitTime m_trackAreaTimeout;
-	int m_lag;
-	int m_speed;
-
-	//CIplImage m_imgBinFace;
+	wxCriticalSection m_imageCopyMutex;
+	wxMutex m_mutex;
+	wxCondition m_condition;
+	
+	
+	CIplImage m_imgThread;
 	CIplImage m_imgPrevProc, m_imgCurrProc;
 	CIplImage m_imgPrev, m_imgCurr;
 	CIplImage m_imgVelX, m_imgVelY;
