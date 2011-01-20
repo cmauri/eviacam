@@ -60,6 +60,7 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind) : wxThread (kind), m_condit
 
 CVisionPipeline::~CVisionPipeline ()
 {
+	Delete();
 }
 
 void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
@@ -108,15 +109,14 @@ wxThread::ExitCode CVisionPipeline::Entry( )
 	bool retval;
 	unsigned long ts1 = 0;
 	for (;;) {		
-		m_condition.Wait();
-//		printf("signal received\n");
-		
-		if (!IsRunning()) break;
+		m_condition.WaitTimeout(100);
+		if (TestDestroy()) {
+			break;
+		}
 		
 		unsigned long now = CTimeUtil::GetMiliCount();
 		if (now - ts1>= THREAD_FREQUENCY) {
 			ts1 = CTimeUtil::GetMiliCount();
-//			printf("run\n");
 			m_imageCopyMutex.Enter();
 			
 			if (!m_imgCurrProc.Initialized ()) {
@@ -355,7 +355,6 @@ void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 	if (m_trackFace) {
 		m_trackArea.SetDegradation(255 - m_trackAreaTimeout.PercentagePassed() * 255 / 100);
 		m_condition.Signal();
-//		printf("signal sent\n");
 	}
 
 	// Store current image as previous
