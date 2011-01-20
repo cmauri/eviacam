@@ -156,7 +156,7 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		cvSize(120./2, 90./2)
 	);
 	
-	if (face && face->total>0)
+	if (m_trackFace && face->total>0)
 	{
 		CvRect* faceRect = (CvRect*)cvGetSeqElem(face, 0);
 
@@ -177,12 +177,7 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		m_waitTime.Reset();
 		m_trackAreaTimeout.Reset();
 	}
-	if (GetEnableWhenFaceDetected() && IsFaceDetected() != wxGetApp().GetController().GetEnabled())
-	{
-		//wxGetApp().GetController().SetEnabled(IsFaceDetected(), true);
-		cvClearMemStorage(m_storage);
-	}
-	
+	cvClearMemStorage(m_storage);
 }
 
 bool CVisionPipeline::IsFaceDetected ()
@@ -298,46 +293,51 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	cvCalcOpticalFlowHS (m_imgPrevProc.ptr(), m_imgCurrProc.ptr(), 0,
 						 m_imgVelX.ptr(), m_imgVelY.ptr(), 0.001, term);
 	m_imageCopyMutex.Leave();
-
-	MatrixMeanImageCells (&m_imgVelX, velXMatrix);
-	MatrixMeanImageCells (&m_imgVelY, velYMatrix);
-
-	int x, y;
-	float velModulusMax= 0;		
-
-	// Compute modulus for every motion cell
-	for (x= 0; x< COMP_MATRIX_WIDTH; ++x) {
-		for (y= 0; y< COMP_MATRIX_HEIGHT; ++y) {
-			velModulusMatrix[x][y]= 
-				(velXMatrix[x][y] * velXMatrix[x][y] + velYMatrix[x][y] * velYMatrix[x][y]);
-			
-			if (velModulusMax< velModulusMatrix[x][y]) velModulusMax= velModulusMatrix[x][y];			
-		}		
-	}
-
-	// Select valid cells (i.e. those with enough motion)
-	int validCells= 0;
-	xVel= yVel= 0;
-	for (x= 0; x< COMP_MATRIX_WIDTH; ++x) {
-		for (y= 0; y< COMP_MATRIX_HEIGHT; ++y) {
-			if (velModulusMatrix[x][y]> (0.05 * velModulusMax) ) {
-				++validCells;
-				xVel+= velXMatrix[x][y];
-				yVel+= velYMatrix[x][y];				
+	
+	if (!(m_enableWhenFaceDetected && !IsFaceDetected())) {
+		MatrixMeanImageCells (&m_imgVelX, velXMatrix);
+		MatrixMeanImageCells (&m_imgVelY, velYMatrix);
+	
+		int x, y;
+		float velModulusMax= 0;		
+	
+		// Compute modulus for every motion cell
+		for (x= 0; x< COMP_MATRIX_WIDTH; ++x) {
+			for (y= 0; y< COMP_MATRIX_HEIGHT; ++y) {
+				velModulusMatrix[x][y]= 
+					(velXMatrix[x][y] * velXMatrix[x][y] + velYMatrix[x][y] * velYMatrix[x][y]);
+				
+				if (velModulusMax< velModulusMatrix[x][y]) velModulusMax= velModulusMatrix[x][y];			
+			}		
+		}
+	
+		// Select valid cells (i.e. those with enough motion)
+		int validCells= 0;
+		xVel= yVel= 0;
+		for (x= 0; x< COMP_MATRIX_WIDTH; ++x) {
+			for (y= 0; y< COMP_MATRIX_HEIGHT; ++y) {
+				if (velModulusMatrix[x][y]> (0.05 * velModulusMax) ) {
+					++validCells;
+					xVel+= velXMatrix[x][y];
+					yVel+= velYMatrix[x][y];				
+				}
 			}
 		}
-	}
-
-	// Ensure minimal area to avoid extremely high values
-	int cellArea= (box.width * box.height) / (COMP_MATRIX_WIDTH * COMP_MATRIX_HEIGHT);
-	if (cellArea== 0) cellArea= 1;
-	int minValidCells= (3000 / cellArea);
-	if (validCells< minValidCells) validCells= minValidCells;
-
-	// Calcula velocitat.
-	xVel= - (xVel / (float) validCells) * 40;
-	yVel= (yVel / (float) validCells) * 80;
 	
+		// Ensure minimal area to avoid extremely high values
+		int cellArea= (box.width * box.height) / (COMP_MATRIX_WIDTH * COMP_MATRIX_HEIGHT);
+		if (cellArea== 0) cellArea= 1;
+		int minValidCells= (3000 / cellArea);
+		if (validCells< minValidCells) validCells= minValidCells;
+	
+		// Calcula velocitat.
+		xVel= - (xVel / (float) validCells) * 40;
+		yVel= (yVel / (float) validCells) * 80;
+	} else {
+		xVel= 0;
+		yVel= 0;
+	}
+		
 	// Restore ROI's
 	m_imageCopyMutex.Enter();
 	m_imgCurrProc.PopROI ();
