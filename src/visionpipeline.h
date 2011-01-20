@@ -53,6 +53,8 @@ public:
 	const int GetTimeout () const { return m_waitTime.GetWaitTimeMs()/1000; }
 	void SetTimeout (int timeout) { m_waitTime.SetWaitTimeMs(timeout*1000); }
 	void SetDegradation (int value) { m_trackArea.SetDegradation(value); }
+	const int GetThreadPeriod () const { return m_threadPeriod; }
+	void SetThreadPeriod (int value) { m_threadPeriod= value; }
 	
 	
 	const bool GetShowTrackFaceFilter () const { 
@@ -85,7 +87,8 @@ private:
 	
 	CvHaarClassifierCascade* m_faceCascade;
 	CvMemStorage* m_storage;
-
+	int m_threadPeriod;
+	
 	wxCriticalSection m_imageCopyMutex;
 	wxMutex m_mutex;
 	wxCondition m_condition;

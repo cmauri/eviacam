@@ -110,6 +110,7 @@ class wxPanel;
 #define ID_BUTTON_ACTIVATION_KEY 10069
 #define ID_CHECKBOX_AUTO_LOCATE_FACE 10038
 #define ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED 10039
+#define ID_SPINCTRL3 10109
 #define ID_SPINCTRL2 10107
 #define ID_PANEL 10050
 #define ID_CHOICE_PROFILE 10015
@@ -278,6 +279,9 @@ private:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED
     void OnCheckboxEnableWhenFaceDetectedClick( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL3
+    void OnSpinctrlThreadPeriodUpdated( wxSpinEvent& event );
+
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL2
     void OnSpinLocateFaceTimeoutUpdated( wxSpinEvent& event );
 
@@ -421,6 +425,7 @@ private:
 #endif
     wxCheckBox* m_chkAutoLocateFace;
     wxCheckBox* m_chkEnableWhenFaceDetected;
+    wxSpinCtrl* m_spinThreadPeriod;
     wxSpinCtrl* m_spinLocateFaceTimeout;
     wxChoice* m_choProfile;
     wxButton* m_btnAddProfile;

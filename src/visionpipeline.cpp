@@ -38,7 +38,7 @@
 #define DEFAULT_TRACK_AREA_Y_CENTER_PERCENT 0.5f
 #define DEFAULT_FACE_DETECTION_TIMEOUT 5000
 #define COLOR_DEGRADATION_TIME 5000
-#define THREAD_FREQUENCY 100
+#define DEFAULT_THREAD_PERIOD 100
 
 
 CVisionPipeline::CVisionPipeline (wxThreadKind kind) : wxThread (kind), m_condition(m_mutex)
@@ -115,7 +115,7 @@ wxThread::ExitCode CVisionPipeline::Entry( )
 		}
 		
 		unsigned long now = CTimeUtil::GetMiliCount();
-		if (now - ts1>= THREAD_FREQUENCY) {
+		if (now - ts1>= m_threadPeriod) {
 			ts1 = CTimeUtil::GetMiliCount();
 			m_imageCopyMutex.Enter();
 			
@@ -199,7 +199,9 @@ int CVisionPipeline::PreprocessImage ()
 	range= crvNormalizeHistogram (his, m_prevLut, 50);
 
 	crvLUTTransform (m_imgPrev.ptr(), m_imgPrevProc.ptr(), m_prevLut);
+	m_imageCopyMutex.Enter();
 	crvLUTTransform (m_imgCurr.ptr(), m_imgCurrProc.ptr(), m_prevLut);		
+	m_imageCopyMutex.Leave();
 
 	return 0;
 }
@@ -269,7 +271,9 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	m_imgCurr.PushROI ();
 	m_imgVelX.PushROI ();
 	m_imgVelY.PushROI ();
+	m_imageCopyMutex.Enter();
 	m_imgCurrProc.PushROI ();
+	m_imageCopyMutex.Leave();
 
 	m_trackArea.GetBoxImg (&image, box);
 
@@ -277,7 +281,7 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	m_imgCurr.SetROI (box);
 
 	m_imgPrevProc.SetROI (box);
-	
+		
 	//Mutex is not needed.
 	m_imgCurrProc.SetROI (box);
 
@@ -290,8 +294,10 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	// Compute optical flow
 	term.type= CV_TERMCRIT_ITER;
 	term.max_iter= 6;
+	m_imageCopyMutex.Enter();
 	cvCalcOpticalFlowHS (m_imgPrevProc.ptr(), m_imgCurrProc.ptr(), 0,
 						 m_imgVelX.ptr(), m_imgVelY.ptr(), 0.001, term);
+	m_imageCopyMutex.Leave();
 
 	MatrixMeanImageCells (&m_imgVelX, velXMatrix);
 	MatrixMeanImageCells (&m_imgVelY, velYMatrix);
@@ -333,7 +339,9 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	yVel= (yVel / (float) validCells) * 80;
 	
 	// Restore ROI's
+	m_imageCopyMutex.Enter();
 	m_imgCurrProc.PopROI ();
+	m_imageCopyMutex.Leave();
 	m_imgPrev.PopROI ();
 	m_imgCurr.PopROI ();
 	m_imgVelX.PopROI ();
@@ -347,9 +355,7 @@ void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 	AllocWorkingSpace (image);
 
 	// TODO: fine grained synchronization
-	m_imageCopyMutex.Enter();
 	TrackMotion (image, xVel, yVel);
-	m_imageCopyMutex.Leave();
 
 	// Notifies face detection thread when needed
 	if (m_trackFace) {
@@ -372,7 +378,8 @@ void CVisionPipeline::InitDefaults()
 	m_faceCascade = (CvHaarClassifierCascade*)cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml", 0, 0, 0);
 	m_storage = cvCreateMemStorage(0);
 	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
-	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);	
+	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);
+	m_threadPeriod = DEFAULT_THREAD_PERIOD;
 }
 
 void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)
@@ -384,6 +391,7 @@ void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("trackFace"), m_trackFace);
 	pConfObj->Write(_T("enableWhenFaceDetected"), m_enableWhenFaceDetected);
 	pConfObj->Write(_T("locateFaceTimeout"), (int) m_waitTime.GetWaitTimeMs());
+	pConfObj->Write(_T("threadPeriod"), (int) m_threadPeriod);
 
 	m_trackArea.GetSize (width, height);
 	
@@ -415,6 +423,7 @@ void CVisionPipeline::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("locateFaceTimeout"), &locateFaceTimeout);
 	pConfObj->Read (_T("trackAreaWidth"), &width);
 	pConfObj->Read (_T("trackAreaHeight"), &height);
+	pConfObj->Read (_T("threadPeriod"), &m_threadPeriod);
 	
 	m_trackArea.SetSize ((float) width, (float)height);
 	m_waitTime.SetWaitTimeMs(locateFaceTimeout);
