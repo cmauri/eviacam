@@ -38,7 +38,6 @@
 #define DEFAULT_TRACK_AREA_Y_CENTER_PERCENT 0.5f
 #define DEFAULT_FACE_DETECTION_TIMEOUT 5000
 #define COLOR_DEGRADATION_TIME 5000
-#define DEFAULT_THREAD_PERIOD 100
 
 
 CVisionPipeline::CVisionPipeline (wxThreadKind kind) : wxThread (kind), m_condition(m_mutex)
@@ -71,9 +70,11 @@ void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
 		image.Width() != m_imgVelX.Width() ||
 		image.Height() != m_imgVelX.Height() ) {
 
+		m_imageCopyMutex.Enter();
 		retval= m_imgPrev.Create (image.Width(), image.Height(), 
 								  IPL_DEPTH_8U, "GRAY");
 		assert (retval);
+		m_imageCopyMutex.Leave();
 
 		retval= m_imgCurr.Create (image.Width(), image.Height(), 
 								  IPL_DEPTH_8U, "GRAY");
@@ -83,11 +84,9 @@ void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
 								  IPL_DEPTH_8U, "GRAY");
 		assert (retval);
 
-		m_imageCopyMutex.Enter();
 		retval= m_imgCurrProc.Create (image.Width(), image.Height(), 
 					      IPL_DEPTH_8U, "GRAY");
 		assert (retval);
-		m_imageCopyMutex.Leave();
 
 		retval= m_imgVelX.Create (image.Width(), image.Height(), 
 								  IPL_DEPTH_32F, "GRAY");
@@ -109,7 +108,7 @@ wxThread::ExitCode CVisionPipeline::Entry( )
 	bool retval;
 	unsigned long ts1 = 0;
 	for (;;) {		
-		m_condition.WaitTimeout(100);
+		m_condition.WaitTimeout(1000);
 		if (TestDestroy()) {
 			break;
 		}
@@ -118,22 +117,21 @@ wxThread::ExitCode CVisionPipeline::Entry( )
 		if (now - ts1>= m_threadPeriod) {
 			ts1 = CTimeUtil::GetMiliCount();
 			m_imageCopyMutex.Enter();
-			
-			if (!m_imgCurrProc.Initialized ()) {
+			if (!m_imgPrev.Initialized ()) {
 				m_imageCopyMutex.Leave();
 				continue;
 			}
 			
 			if (!m_imgThread.Initialized () ||
-				m_imgCurrProc.Width() != m_imgThread.Width() ||
-				m_imgCurrProc.Height() != m_imgThread.Height() ) {				
+						  m_imgPrev.Width() != m_imgThread.Width() ||
+						  m_imgPrev.Height() != m_imgThread.Height() ) {				
 
-				retval= m_imgThread.Create (m_imgCurrProc.Width(), m_imgCurrProc.Height(), 
+				retval= m_imgThread.Create (m_imgPrev.Width(), m_imgPrev.Height(), 
 					IPL_DEPTH_8U, "GRAY");
 				assert (retval);
 			}
 			
-			cvCopy(m_imgCurrProc.ptr(), m_imgThread.ptr());
+			cvCopy(m_imgPrev.ptr(), m_imgThread.ptr());
 			m_imageCopyMutex.Leave();
 
 			ComputeFaceTrackArea(m_imgThread);
@@ -194,9 +192,7 @@ int CVisionPipeline::PreprocessImage ()
 	range= crvNormalizeHistogram (his, m_prevLut, 50);
 
 	crvLUTTransform (m_imgPrev.ptr(), m_imgPrevProc.ptr(), m_prevLut);
-	m_imageCopyMutex.Enter();
 	crvLUTTransform (m_imgCurr.ptr(), m_imgCurrProc.ptr(), m_prevLut);		
-	m_imageCopyMutex.Leave();
 
 	return 0;
 }
@@ -260,15 +256,13 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	static TAnalisysMatrix velXMatrix, velYMatrix, velModulusMatrix;
 
 	crvColorToGray (image.ptr(), m_imgCurr.ptr());
-	
+
 	// Prepare ROI's
 	m_imgPrev.PushROI ();
 	m_imgCurr.PushROI ();
 	m_imgVelX.PushROI ();
 	m_imgVelY.PushROI ();
-	m_imageCopyMutex.Enter();
 	m_imgCurrProc.PushROI ();
-	m_imageCopyMutex.Leave();
 
 	m_trackArea.GetBoxImg (&image, box);
 
@@ -279,21 +273,16 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 		
 	//Mutex is not needed.
 	m_imgCurrProc.SetROI (box);
-
 	m_imgVelX.SetROI (box); 
 	m_imgVelY.SetROI (box);
 
 	// Pre-processing
 	PreprocessImage ();
-
 	// Compute optical flow
 	term.type= CV_TERMCRIT_ITER;
 	term.max_iter= 6;
-	m_imageCopyMutex.Enter();
 	cvCalcOpticalFlowHS (m_imgPrevProc.ptr(), m_imgCurrProc.ptr(), 0,
 						 m_imgVelX.ptr(), m_imgVelY.ptr(), 0.001, term);
-	m_imageCopyMutex.Leave();
-	
 	if (!(m_enableWhenFaceDetected && !IsFaceDetected())) {
 		MatrixMeanImageCells (&m_imgVelX, velXMatrix);
 		MatrixMeanImageCells (&m_imgVelY, velYMatrix);
@@ -337,17 +326,13 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 		xVel= 0;
 		yVel= 0;
 	}
-		
+
 	// Restore ROI's
-	m_imageCopyMutex.Enter();
 	m_imgCurrProc.PopROI ();
-	m_imageCopyMutex.Leave();
 	m_imgPrev.PopROI ();
 	m_imgCurr.PopROI ();
 	m_imgVelX.PopROI ();
 	m_imgVelY.PopROI ();
-	
-	
 }
 
 void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
@@ -355,7 +340,12 @@ void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 	AllocWorkingSpace (image);
 
 	// TODO: fine grained synchronization
+	m_imageCopyMutex.Enter();
 	TrackMotion (image, xVel, yVel);
+
+	// Store current image as previous
+	m_imgPrev.Swap (&m_imgCurr);
+	m_imageCopyMutex.Leave();
 
 	// Notifies face detection thread when needed
 	if (m_trackFace) {
@@ -363,8 +353,6 @@ void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 		m_condition.Signal();
 	}
 
-	// Store current image as previous
-	m_imgPrev.Swap (&m_imgCurr);
 }
 
 // Configuration methods
@@ -379,7 +367,55 @@ void CVisionPipeline::InitDefaults()
 	m_storage = cvCreateMemStorage(0);
 	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
 	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);
-	m_threadPeriod = DEFAULT_THREAD_PERIOD;
+	m_threadPeriod = CPU_NORMAL;
+}
+
+int CVisionPipeline::GetCpuUsage ()
+{
+	enum ECpuValues {LOWEST= 1000, LOW=500, NORMAL= 100, HIGH= 66, HIGHEST= 0};
+
+	switch (m_threadPeriod)
+	{
+		case LOWEST:
+			return (int) CVisionPipeline::ECpuUsage(CPU_LOWEST);
+			break;
+		case LOW:
+			return (int) CVisionPipeline::ECpuUsage(CPU_LOW);
+			break;
+		case HIGH:
+			return (int) CVisionPipeline::ECpuUsage(CPU_HIGH);
+			break;
+		case HIGHEST:
+			return (int) CVisionPipeline::ECpuUsage(CPU_HIGHEST);
+			break;
+		default:
+			return (int) CVisionPipeline::ECpuUsage(CPU_NORMAL);
+			break;
+	}
+}
+
+void CVisionPipeline::SetCpuUsage (int value)
+{
+	enum ECpuValues {LOWEST= 1000, LOW=500, NORMAL= 100, HIGH= 66, HIGHEST= 0};
+
+	switch (value)
+	{
+		case (int) CVisionPipeline::ECpuUsage(CPU_LOWEST):
+			m_threadPeriod= LOWEST;
+			break;
+		case (int) CVisionPipeline::ECpuUsage(CPU_LOW):
+			m_threadPeriod= LOW;
+			break;
+		case (int) CVisionPipeline::ECpuUsage(CPU_NORMAL):
+			m_threadPeriod= NORMAL;
+			break;
+		case (int) CVisionPipeline::ECpuUsage(CPU_HIGH):
+			m_threadPeriod= HIGH;
+			break;
+		case (int) CVisionPipeline::ECpuUsage(CPU_HIGHEST):
+			m_threadPeriod= HIGHEST;
+			break;
+	}
 }
 
 void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)

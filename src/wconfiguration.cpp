@@ -176,7 +176,7 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
 
     EVT_CHECKBOX( ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED, WConfiguration::OnCheckboxEnableWhenFaceDetectedClick )
 
-    EVT_SPINCTRL( ID_SPINCTRL3, WConfiguration::OnSpinctrlThreadPeriodUpdated )
+    EVT_CHOICE( ID_CHOICE4, WConfiguration::OnChoCpuUsageSelected )
 
     EVT_SPINCTRL( ID_SPINCTRL2, WConfiguration::OnSpinLocateFaceTimeoutUpdated )
 
@@ -341,7 +341,7 @@ void WConfiguration::Init()
 #endif
     m_chkAutoLocateFace = NULL;
     m_chkEnableWhenFaceDetected = NULL;
-    m_spinThreadPeriod = NULL;
+    m_choCpuUsage = NULL;
     m_spinLocateFaceTimeout = NULL;
     m_choProfile = NULL;
     m_btnAddProfile = NULL;
@@ -757,11 +757,17 @@ void WConfiguration::CreateControls()
     itemStaticBoxSizer91->Add(itemGridSizer95, 0, wxGROW|wxLEFT|wxRIGHT, 5);
     wxBoxSizer* itemBoxSizer96 = new wxBoxSizer(wxHORIZONTAL);
     itemGridSizer95->Add(itemBoxSizer96, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    wxStaticText* itemStaticText97 = new wxStaticText( itemPanel77, wxID_STATIC, _("Thread period (ms)"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText97 = new wxStaticText( itemPanel77, wxID_STATIC, _("CPU usage"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer96->Add(itemStaticText97, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spinThreadPeriod = new wxSpinCtrl( itemPanel77, ID_SPINCTRL3, _T("0"), wxDefaultPosition, wxSize(50, -1), wxSP_ARROW_KEYS, 0, 999, 0 );
-    itemBoxSizer96->Add(m_spinThreadPeriod, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxArrayString m_choCpuUsageStrings;
+    m_choCpuUsageStrings.Add(_("Lowest"));
+    m_choCpuUsageStrings.Add(_("Low"));
+    m_choCpuUsageStrings.Add(_("Normal"));
+    m_choCpuUsageStrings.Add(_("High"));
+    m_choCpuUsageStrings.Add(_("Highest"));
+    m_choCpuUsage = new wxChoice( itemPanel77, ID_CHOICE4, wxDefaultPosition, wxDefaultSize, m_choCpuUsageStrings, 0 );
+    itemBoxSizer96->Add(m_choCpuUsage, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer99 = new wxBoxSizer(wxHORIZONTAL);
     itemGridSizer95->Add(itemBoxSizer99, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -858,6 +864,7 @@ void WConfiguration::CreateControls()
 		m_choDown->Append(_("Key:") + wxString(wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName(), wxConvLocal));
 	}
 #endif
+
 }
 
 
@@ -989,8 +996,8 @@ void WConfiguration::InitializeData ()
 		wxGetApp().GetController().GetVisionPipeline().GetEnableWhenFaceDetected());
 	m_spinLocateFaceTimeout->SetValue(wxGetApp().GetController().GetVisionPipeline().GetTimeout());
 	m_spinLocateFaceTimeout->Enable(m_chkAutoLocateFace->GetValue() && m_chkEnableWhenFaceDetected->GetValue());
-	m_spinThreadPeriod->SetValue(wxGetApp().GetController().GetVisionPipeline().GetThreadPeriod());
-	m_spinThreadPeriod->Enable(m_chkAutoLocateFace->GetValue());
+	m_choCpuUsage->Select(wxGetApp().GetController().GetVisionPipeline().GetCpuUsage());
+	m_choCpuUsage->Enable(m_chkAutoLocateFace->GetValue());
 	m_txtOnScreenKeyboardCommand->SetValue(
 		wxGetApp().GetController().GetOnScreenKeyboardCommand());
 #if defined(__WXGTK__)
@@ -1335,7 +1342,7 @@ void WConfiguration::OnCheckboxAutoLocateFaceClick( wxCommandEvent& event )
 	wxGetApp().GetController().GetVisionPipeline().SetDegradation(0);
 	m_chkEnableWhenFaceDetected->Enable (m_chkAutoLocateFace->GetValue());
 	m_spinLocateFaceTimeout->Enable(m_chkAutoLocateFace->GetValue() && m_chkEnableWhenFaceDetected->GetValue());
-	m_spinThreadPeriod->Enable(m_chkAutoLocateFace->GetValue());
+	m_choCpuUsage->Enable(m_chkAutoLocateFace->GetValue());
 	event.Skip(false);
 	Changed ();
 }
@@ -1865,13 +1872,15 @@ void WConfiguration::OnSpinLocateFaceTimeoutUpdated( wxSpinEvent& event )
 }
 
 
+
+
 /*!
- * wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL3
+ * wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE4
  */
 
-void WConfiguration::OnSpinctrlThreadPeriodUpdated( wxSpinEvent& event )
+void WConfiguration::OnChoCpuUsageSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetVisionPipeline().SetThreadPeriod(m_spinThreadPeriod->GetValue());
+	wxGetApp().GetController().GetVisionPipeline().SetCpuUsage(m_choCpuUsage->GetCurrentSelection());
     event.Skip();
 }
 
