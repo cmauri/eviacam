@@ -30,6 +30,7 @@
 #include "timeutil.h"
 
 #include <math.h>
+#include <wx/msgdlg.h>
 
 // Constants
 #define DEFAULT_TRACK_AREA_WIDTH_PERCENT 0.50f
@@ -44,25 +45,29 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind) : wxThread (kind), m_condit
 {
 	InitDefaults();
 
-	// Create and start face detection thread	
-	m_mutex.Lock();	// the mutex should be initially locked
-	if (Create() == wxTHREAD_NO_ERROR) {
+	// Create and start face detection thread
+	if (m_faceCascade) {	
+		m_mutex.Lock();	// the mutex should be initially locked
+		if (Create() == wxTHREAD_NO_ERROR) {
 #if defined (WIN32)
-		// On linux this ends up calling setpriority syscall which changes
-		// the priority of the whole process :-( (see wxWidgets threadpsx.cpp)
-		// TODO: implement it using pthreads
-		SetPriority (WXTHREAD_MIN_PRIORITY);
+			// On linux this ends up calling setpriority syscall which changes
+			// the priority of the whole process :-( (see wxWidgets threadpsx.cpp)
+			// TODO: implement it using pthreads
+			SetPriority (WXTHREAD_MIN_PRIORITY);
 #endif
-		m_isRunning= true;
-		Run();
+			m_isRunning= true;
+			Run();
+		}
 	}
 }
 
 CVisionPipeline::~CVisionPipeline ()
 {
-	m_isRunning= false;
-	m_condition.Signal();
-	Wait();
+	if (m_faceCascade) {
+		m_isRunning= false;
+		m_condition.Signal();
+		Wait();
+	}
 }
 
 void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
@@ -111,7 +116,7 @@ wxThread::ExitCode CVisionPipeline::Entry( )
 	bool retval;
 	unsigned long ts1 = 0;
 	for (;;) {		
-		m_condition.Wait();
+		m_condition.WaitTimeout(1000);
 		if (!m_isRunning) {
 			break;
 		}
@@ -367,7 +372,12 @@ void CVisionPipeline::InitDefaults()
 	m_showColorTrackerResult= false;
 	m_trackArea.SetSize (DEFAULT_TRACK_AREA_WIDTH_PERCENT, DEFAULT_TRACK_AREA_HEIGHT_PERCENT);
 	m_trackArea.SetCenter (DEFAULT_TRACK_AREA_X_CENTER_PERCENT, DEFAULT_TRACK_AREA_Y_CENTER_PERCENT);
+	m_faceCascade = 0;
 	m_faceCascade = (CvHaarClassifierCascade*)cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml", 0, 0, 0);
+	if (!m_faceCascade) {
+		wxMessageDialog dlg (NULL, _("The face localization option is not enabled."), _T("Enable Viacam"), wxICON_ERROR | wxOK );
+		dlg.ShowModal();
+	}
 	m_storage = cvCreateMemStorage(0);
 	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
 	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);

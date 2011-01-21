@@ -57,6 +57,7 @@ public:
 	void SetDegradation (int value) { m_trackArea.SetDegradation(value); }
 	int GetCpuUsage ();
 	void SetCpuUsage (int value);
+	const bool IsTrackFaceAllowed () { return m_faceCascade; }
 	
 	
 	const bool GetShowTrackFaceFilter () const { 

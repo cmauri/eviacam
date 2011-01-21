@@ -423,10 +423,14 @@ private:
 #if defined(__WXGTK__)
     wxButton* m_buttonActivationKey;
 #endif
+    wxStaticBox* m_sizerFaceLocalization;
     wxCheckBox* m_chkAutoLocateFace;
     wxCheckBox* m_chkEnableWhenFaceDetected;
+    wxStaticText* m_staticCpuUsage;
     wxChoice* m_choCpuUsage;
+    wxStaticText* m_staticLocateFaceTimeout1;
     wxSpinCtrl* m_spinLocateFaceTimeout;
+    wxStaticText* m_staticLocateFaceTimeout2;
     wxChoice* m_choProfile;
     wxButton* m_btnAddProfile;
     wxButton* m_btnDeleteProfile;

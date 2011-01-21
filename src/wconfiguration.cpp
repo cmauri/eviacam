@@ -339,10 +339,14 @@ void WConfiguration::Init()
 #if defined(__WXGTK__)
     m_buttonActivationKey = NULL;
 #endif
+    m_sizerFaceLocalization = NULL;
     m_chkAutoLocateFace = NULL;
     m_chkEnableWhenFaceDetected = NULL;
+    m_staticCpuUsage = NULL;
     m_choCpuUsage = NULL;
+    m_staticLocateFaceTimeout1 = NULL;
     m_spinLocateFaceTimeout = NULL;
+    m_staticLocateFaceTimeout2 = NULL;
     m_choProfile = NULL;
     m_btnAddProfile = NULL;
     m_btnDeleteProfile = NULL;
@@ -733,8 +737,8 @@ void WConfiguration::CreateControls()
 
 #endif
 
-    wxStaticBox* itemStaticBoxSizer91Static = new wxStaticBox(itemPanel77, wxID_ANY, _("Face localization"));
-    wxStaticBoxSizer* itemStaticBoxSizer91 = new wxStaticBoxSizer(itemStaticBoxSizer91Static, wxVERTICAL);
+    m_sizerFaceLocalization = new wxStaticBox(itemPanel77, wxID_ANY, _("Face localization"));
+    wxStaticBoxSizer* itemStaticBoxSizer91 = new wxStaticBoxSizer(m_sizerFaceLocalization, wxVERTICAL);
     itemBoxSizer78->Add(itemStaticBoxSizer91, 0, wxGROW|wxALL, 5);
     wxFlexGridSizer* itemFlexGridSizer92 = new wxFlexGridSizer(0, 2, 0, 0);
     itemFlexGridSizer92->AddGrowableCol(0);
@@ -757,8 +761,8 @@ void WConfiguration::CreateControls()
     itemStaticBoxSizer91->Add(itemGridSizer95, 0, wxGROW|wxLEFT|wxRIGHT, 5);
     wxBoxSizer* itemBoxSizer96 = new wxBoxSizer(wxHORIZONTAL);
     itemGridSizer95->Add(itemBoxSizer96, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    wxStaticText* itemStaticText97 = new wxStaticText( itemPanel77, wxID_STATIC, _("CPU usage"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer96->Add(itemStaticText97, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_staticCpuUsage = new wxStaticText( itemPanel77, wxID_STATIC, _("CPU usage"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer96->Add(m_staticCpuUsage, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choCpuUsageStrings;
     m_choCpuUsageStrings.Add(_("Lowest"));
@@ -771,14 +775,14 @@ void WConfiguration::CreateControls()
 
     wxBoxSizer* itemBoxSizer99 = new wxBoxSizer(wxHORIZONTAL);
     itemGridSizer95->Add(itemBoxSizer99, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-    wxStaticText* itemStaticText100 = new wxStaticText( itemPanel77, wxID_STATIC, _("Disable after"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer99->Add(itemStaticText100, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_staticLocateFaceTimeout1 = new wxStaticText( itemPanel77, wxID_STATIC, _("Disable after"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer99->Add(m_staticLocateFaceTimeout1, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_spinLocateFaceTimeout = new wxSpinCtrl( itemPanel77, ID_SPINCTRL2, _T("1"), wxDefaultPosition, wxSize(50, -1), wxSP_ARROW_KEYS, 1, 59, 1 );
     itemBoxSizer99->Add(m_spinLocateFaceTimeout, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText102 = new wxStaticText( itemPanel77, wxID_STATIC, _("seconds"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer99->Add(itemStaticText102, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_staticLocateFaceTimeout2 = new wxStaticText( itemPanel77, wxID_STATIC, _("seconds"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer99->Add(m_staticLocateFaceTimeout2, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     itemNotebook4->AddPage(itemPanel77, _("Advanced"));
 
@@ -998,6 +1002,16 @@ void WConfiguration::InitializeData ()
 	m_spinLocateFaceTimeout->Enable(m_chkAutoLocateFace->GetValue() && m_chkEnableWhenFaceDetected->GetValue());
 	m_choCpuUsage->Select(wxGetApp().GetController().GetVisionPipeline().GetCpuUsage());
 	m_choCpuUsage->Enable(m_chkAutoLocateFace->GetValue());
+	if (!wxGetApp().GetController().GetVisionPipeline().IsTrackFaceAllowed()) {
+		m_sizerFaceLocalization->Enable(false);
+		m_chkAutoLocateFace->Enable(false);
+		m_chkEnableWhenFaceDetected->Enable(false);
+		m_staticCpuUsage->Enable(false);
+		m_choCpuUsage->Enable(false);
+		m_staticLocateFaceTimeout1->Enable(false);
+		m_spinLocateFaceTimeout->Enable(false);
+		m_staticLocateFaceTimeout2->Enable(false);
+	}
 	m_txtOnScreenKeyboardCommand->SetValue(
 		wxGetApp().GetController().GetOnScreenKeyboardCommand());
 #if defined(__WXGTK__)
