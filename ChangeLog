@@ -5,6 +5,7 @@
 * Fixes
 	* Removed memory leak when opening help
 	* Bug that freezed capture on debian lenny when reading keyboard status
+	* Broken link in Catalan help
 	* [SF:3152009] Compilation error on 64bit platforms
 	* [SF:3141920] Bug that asked confirmation on close twice
 
