@@ -4,7 +4,6 @@ noinst_HEADERS = crvimage.h crvskindetection.h crvcamera.h \
 	crvcamera_enum.h colorspaces.h defs.h
 	
 dist_noinst_DATA = crvcamera_wdm.cpp videoInput.cpp \
-	fixvfwfps/fixvfwfps.vcproj  fixvfwfps/main.cpp \
 	CreaVision_eviacam.vcproj crvcamera_wdm.h videoInput.h
 
 libcreavision_la_LIBADD = $(OPENCV_LIBS) 
