@@ -1,3 +1,14 @@
+2011-01-21 - Release 1.4.2
+* Added Hebrew translation (thanks to Yaron Shahrabani)
+* Updated Italiano translation (thanks to Giuseppe Masciopinto)
+* Code refactoring and cleanup
+* Fixes
+	* Removed memory leak when opening help
+	* Bug that freezed capture on debian lenny when reading keyboard status
+	* Broken link in Catalan help
+	* [SF:3152009] Compilation error on 64bit platforms
+	* [SF:3141920] Bug that asked confirmation on close twice
+
 2010-12-21 - Release 1.4.1
 * Added wxWidgets message catalog files for Windows
 * Added wx2.6-i18n | wx2.8-i18n as recommended dependencies on debian/control

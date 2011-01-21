@@ -19,11 +19,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wxutil", "..\wxutil\wxutil.
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fixvfwfps", "..\creavision\fixvfwfps\fixvfwfps.vcproj", "{8A780191-9BC0-4A8A-B0C8-5E3219F33FD2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FF220E89-E196-48A7-8FD6-6382A32502E7} = {FF220E89-E196-48A7-8FD6-6382A32502E7}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -48,10 +43,6 @@ Global
 		{EF4CBA03-871C-48CE-998D-66F326B8A99A}.Debug.Build.0 = Debug|Win32
 		{EF4CBA03-871C-48CE-998D-66F326B8A99A}.Release.ActiveCfg = Release|Win32
 		{EF4CBA03-871C-48CE-998D-66F326B8A99A}.Release.Build.0 = Release|Win32
-		{8A780191-9BC0-4A8A-B0C8-5E3219F33FD2}.Debug.ActiveCfg = Debug|Win32
-		{8A780191-9BC0-4A8A-B0C8-5E3219F33FD2}.Debug.Build.0 = Debug|Win32
-		{8A780191-9BC0-4A8A-B0C8-5E3219F33FD2}.Release.ActiveCfg = Release|Win32
-		{8A780191-9BC0-4A8A-B0C8-5E3219F33FD2}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
