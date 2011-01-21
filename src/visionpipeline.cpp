@@ -292,49 +292,44 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	cvCalcOpticalFlowHS (m_imgPrevProc.ptr(), m_imgCurrProc.ptr(), 0,
 						 m_imgVelX.ptr(), m_imgVelY.ptr(), 0.001, term);
 	
-	if (!(m_enableWhenFaceDetected && !IsFaceDetected())) {
-		MatrixMeanImageCells (&m_imgVelX, velXMatrix);
-		MatrixMeanImageCells (&m_imgVelY, velYMatrix);
-	
-		int x, y;
-		float velModulusMax= 0;		
-	
-		// Compute modulus for every motion cell
-		for (x= 0; x< COMP_MATRIX_WIDTH; ++x) {
-			for (y= 0; y< COMP_MATRIX_HEIGHT; ++y) {
-				velModulusMatrix[x][y]= 
-					(velXMatrix[x][y] * velXMatrix[x][y] + velYMatrix[x][y] * velYMatrix[x][y]);
-				
-				if (velModulusMax< velModulusMatrix[x][y]) velModulusMax= velModulusMatrix[x][y];			
-			}		
-		}
-	
-		// Select valid cells (i.e. those with enough motion)
-		int validCells= 0;
-		xVel= yVel= 0;
-		for (x= 0; x< COMP_MATRIX_WIDTH; ++x) {
-			for (y= 0; y< COMP_MATRIX_HEIGHT; ++y) {
-				if (velModulusMatrix[x][y]> (0.05 * velModulusMax) ) {
-					++validCells;
-					xVel+= velXMatrix[x][y];
-					yVel+= velYMatrix[x][y];				
-				}
+	MatrixMeanImageCells (&m_imgVelX, velXMatrix);
+	MatrixMeanImageCells (&m_imgVelY, velYMatrix);
+
+	int x, y;
+	float velModulusMax= 0;		
+
+	// Compute modulus for every motion cell
+	for (x= 0; x< COMP_MATRIX_WIDTH; ++x) {
+		for (y= 0; y< COMP_MATRIX_HEIGHT; ++y) {
+			velModulusMatrix[x][y]= 
+				(velXMatrix[x][y] * velXMatrix[x][y] + velYMatrix[x][y] * velYMatrix[x][y]);
+			
+			if (velModulusMax< velModulusMatrix[x][y]) velModulusMax= velModulusMatrix[x][y];			
+		}		
+	}
+
+	// Select valid cells (i.e. those with enough motion)
+	int validCells= 0;
+	xVel= yVel= 0;
+	for (x= 0; x< COMP_MATRIX_WIDTH; ++x) {
+		for (y= 0; y< COMP_MATRIX_HEIGHT; ++y) {
+			if (velModulusMatrix[x][y]> (0.05 * velModulusMax) ) {
+				++validCells;
+				xVel+= velXMatrix[x][y];
+				yVel+= velYMatrix[x][y];				
 			}
 		}
-	
-		// Ensure minimal area to avoid extremely high values
-		int cellArea= (box.width * box.height) / (COMP_MATRIX_WIDTH * COMP_MATRIX_HEIGHT);
-		if (cellArea== 0) cellArea= 1;
-		int minValidCells= (3000 / cellArea);
-		if (validCells< minValidCells) validCells= minValidCells;
-	
-		// Calcula velocitat.
-		xVel= - (xVel / (float) validCells) * 40;
-		yVel= (yVel / (float) validCells) * 80;
-	} else {
-		xVel= 0;
-		yVel= 0;
 	}
+
+	// Ensure minimal area to avoid extremely high values
+	int cellArea= (box.width * box.height) / (COMP_MATRIX_WIDTH * COMP_MATRIX_HEIGHT);
+	if (cellArea== 0) cellArea= 1;
+	int minValidCells= (3000 / cellArea);
+	if (validCells< minValidCells) validCells= minValidCells;
+
+	// Calcula velocitat.
+	xVel= - (xVel / (float) validCells) * 40;
+	yVel= (yVel / (float) validCells) * 80;
 
 	// Restore ROI's
 	m_imgCurrProc.PopROI ();
@@ -344,7 +339,7 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	m_imgVelY.PopROI ();
 }
 
-void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
+bool CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 {
 	AllocWorkingSpace (image);
 
@@ -361,7 +356,12 @@ void CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 		m_trackArea.SetDegradation(255 - m_trackAreaTimeout.PercentagePassed() * 255 / 100);
 		m_condition.Signal();
 	}
-
+	
+	
+	if (m_enableWhenFaceDetected && !IsFaceDetected())
+		return false;
+	else
+		return true;
 }
 
 // Configuration methods

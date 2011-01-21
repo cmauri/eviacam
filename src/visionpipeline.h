@@ -44,7 +44,7 @@ public:
 	// Thread entry point
 	virtual wxThread::ExitCode Entry();
 	virtual wxThreadError Create(unsigned int stackSize = 0);
-	void ProcessImage (CIplImage& image, float& xVel, float& yVel);
+	bool ProcessImage (CIplImage& image, float& xVel, float& yVel);
 
 	const bool GetTrackFace () const { return m_trackFace; }
 	void SetTrackFace (bool state) { m_trackFace= state; }

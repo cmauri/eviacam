@@ -384,6 +384,7 @@ void CViacamController::ProcessImage (IplImage *pImage)
 	long iFrameRate;
 	float vx, vy;
 	CIplImage image(pImage);
+	bool allowedByFaceLocalizationSystem;
 
 	// Refresh fps meter
 	m_frameRate= 0.5f * m_pCamera->GetRealFrameRate() + 0.5f * m_frameRate;
@@ -397,9 +398,9 @@ void CViacamController::ProcessImage (IplImage *pImage)
 	m_pMainWindow->SetFPS (iFrameRate, cond);
 
 	// Proces frame
-	m_visionPipeline.ProcessImage (image, vx, vy);
+	allowedByFaceLocalizationSystem = m_visionPipeline.ProcessImage (image, vx, vy);
 
-	if (m_enabled || m_motionCalibrationEnabled) {
+	if ((m_enabled && allowedByFaceLocalizationSystem) || m_motionCalibrationEnabled) {
 		// Send mouse motion
 		BEGIN_GUI_CALL_MUTEX()
 		if (m_motionCalibrationEnabled)
