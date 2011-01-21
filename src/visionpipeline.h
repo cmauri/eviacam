@@ -103,6 +103,7 @@ private:
 	int PreprocessImage ();
 	void PostProcessImage ();
 	void ComputeFaceTrackArea (CIplImage &image);
+	void SetThreadPeriod (int value);
 };
 
 #endif

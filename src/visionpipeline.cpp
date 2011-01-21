@@ -381,7 +381,7 @@ void CVisionPipeline::InitDefaults()
 	m_storage = cvCreateMemStorage(0);
 	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
 	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);
-	m_threadPeriod = CPU_NORMAL;
+	SetThreadPeriod(CPU_NORMAL);
 }
 
 int CVisionPipeline::GetCpuUsage ()
@@ -415,19 +415,43 @@ void CVisionPipeline::SetCpuUsage (int value)
 	switch (value)
 	{
 		case (int) CVisionPipeline::ECpuUsage(CPU_LOWEST):
-			m_threadPeriod= LOWEST;
+			SetThreadPeriod(LOWEST);
 			break;
 		case (int) CVisionPipeline::ECpuUsage(CPU_LOW):
-			m_threadPeriod= LOW;
+			SetThreadPeriod(LOW);
 			break;
 		case (int) CVisionPipeline::ECpuUsage(CPU_NORMAL):
-			m_threadPeriod= NORMAL;
+			SetThreadPeriod(NORMAL);
 			break;
 		case (int) CVisionPipeline::ECpuUsage(CPU_HIGH):
-			m_threadPeriod= HIGH;
+			SetThreadPeriod(HIGH);
 			break;
 		case (int) CVisionPipeline::ECpuUsage(CPU_HIGHEST):
+			SetThreadPeriod(HIGHEST);
+			break;
+	}
+}
+
+void CVisionPipeline::SetThreadPeriod (int value)
+{
+	enum ECpuValues {LOWEST= 1000, LOW=500, NORMAL= 100, HIGH= 66, HIGHEST= 0};
+	
+	switch (value)
+	{
+		case LOWEST:
+			m_threadPeriod= LOWEST;
+			break;
+		case LOW:
+			m_threadPeriod= LOWEST;
+			break;
+		case HIGH:
+			m_threadPeriod= HIGH;
+			break;
+		case HIGHEST:
 			m_threadPeriod= HIGHEST;
+			break;
+		default:
+			m_threadPeriod= NORMAL;
 			break;
 	}
 }
@@ -466,6 +490,7 @@ void CVisionPipeline::ReadProfileData(wxConfigBase* pConfObj)
 		height= DEFAULT_TRACK_AREA_HEIGHT_PERCENT;
 				
 	int locateFaceTimeout = DEFAULT_FACE_DETECTION_TIMEOUT;
+	int threadPeriod = -1;
 
 	pConfObj->SetPath (_T("motionTracker"));
 	pConfObj->Read(_T("trackFace"), &m_trackFace);
@@ -473,7 +498,9 @@ void CVisionPipeline::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("locateFaceTimeout"), &locateFaceTimeout);
 	pConfObj->Read (_T("trackAreaWidth"), &width);
 	pConfObj->Read (_T("trackAreaHeight"), &height);
-	pConfObj->Read (_T("threadPeriod"), &m_threadPeriod);
+	pConfObj->Read (_T("threadPeriod"), &threadPeriod);
+	
+	SetThreadPeriod(threadPeriod);
 	
 	m_trackArea.SetSize ((float) width, (float)height);
 	m_waitTime.SetWaitTimeMs(locateFaceTimeout);
