@@ -122,7 +122,7 @@ wxThread::ExitCode CVisionPipeline::Entry( )
 		}
 		
 		unsigned long now = CTimeUtil::GetMiliCount();
-		if (now - ts1>= m_threadPeriod) {
+		if (now - ts1>= (unsigned long) m_threadPeriod) {
 			ts1 = CTimeUtil::GetMiliCount();
 			m_imageCopyMutex.Enter();
 			if (!m_imgPrev.Initialized ()) {
@@ -145,6 +145,7 @@ wxThread::ExitCode CVisionPipeline::Entry( )
 			ComputeFaceTrackArea(m_imgThread);
 		}
 	}
+	return 0;
 }
 
 
@@ -168,14 +169,14 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 
 		m_trackArea.GetBoxImg(&image, curBox);
 		
-		sx= (faceRect->width * 0.1f + curBox.width * 0.9f);
-		sy= (faceRect->height * 0.1f +  curBox.height * 0.9f);
+		sx= ((float)faceRect->width * 0.1f + (float)curBox.width * 0.9f);
+		sy= ((float)faceRect->height * 0.1f +  (float)curBox.height * 0.9f);
 
-		m_trackArea.SetSizeImg(&image,sx,sy);
+		m_trackArea.SetSizeImg(&image, (int)sx, (int)sy);
 
 		// Combine with new detected location
-		cx= (int) ((faceRect->x+faceRect->width/2) * 0.5f + (curBox.x+curBox.width/2) * 0.5f);
-		cy= (int) ((faceRect->y+faceRect->height/2) * 0.5f + (curBox.y+curBox.height/2) * 0.5f);
+		cx= (int) ((float)(faceRect->x+faceRect->width/2) * 0.5f + (float)(curBox.x+curBox.width/2) * 0.5f);
+		cy= (int) ((float)(faceRect->y+faceRect->height/2) * 0.5f + (float)(curBox.y+curBox.height/2) * 0.5f);
 
 		// Set new box centre
 		m_trackArea.SetCenterImg (&image, cx, cy);
