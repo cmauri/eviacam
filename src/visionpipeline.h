@@ -78,6 +78,7 @@ private:
 	bool m_trackFace;
 	bool m_showColorTrackerResult;
 	bool m_enableWhenFaceDetected;
+	bool m_isRunning;
 	CWaitTime m_waitTime;
 	CWaitTime m_trackAreaTimeout;
 		

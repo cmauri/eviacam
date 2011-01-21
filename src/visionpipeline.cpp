@@ -53,13 +53,16 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind) : wxThread (kind), m_condit
 		// TODO: implement it using pthreads
 		SetPriority (WXTHREAD_MIN_PRIORITY);
 #endif
+		m_isRunning= true;
 		Run();
 	}
 }
 
 CVisionPipeline::~CVisionPipeline ()
 {
-	Delete();
+	m_isRunning= false;
+	m_condition.Signal();
+	Wait();
 }
 
 void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
@@ -108,8 +111,8 @@ wxThread::ExitCode CVisionPipeline::Entry( )
 	bool retval;
 	unsigned long ts1 = 0;
 	for (;;) {		
-		m_condition.WaitTimeout(1000);
-		if (TestDestroy()) {
+		m_condition.Wait();
+		if (!m_isRunning) {
 			break;
 		}
 		
@@ -283,6 +286,7 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	term.max_iter= 6;
 	cvCalcOpticalFlowHS (m_imgPrevProc.ptr(), m_imgCurrProc.ptr(), 0,
 						 m_imgVelX.ptr(), m_imgVelY.ptr(), 0.001, term);
+	
 	if (!(m_enableWhenFaceDetected && !IsFaceDetected())) {
 		MatrixMeanImageCells (&m_imgVelX, velXMatrix);
 		MatrixMeanImageCells (&m_imgVelY, velYMatrix);
