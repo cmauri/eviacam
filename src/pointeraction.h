@@ -141,7 +141,7 @@ public:
 	}
 
 	//
-	CMouseControl& GetMouseControl() { assert (m_pMouseControl); return *m_pMouseControl; }
+	void CenterPointer () { m_pMouseControl->CenterPointer(); };
 	CDwellClick& GetDwellClick() { assert (m_pDwellClick); return *m_pDwellClick; }
 	CGestureClick& GetGestureClick() { assert (m_pGestureClick); return *m_pGestureClick; }
 

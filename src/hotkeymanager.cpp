@@ -166,7 +166,7 @@ void CKeyCommandWorkspace::Command()
 
 void CKeyCommandCenterMouse::Command()
 {
-	wxGetApp().GetController().GetPointerAction().GetMouseControl().CenterPointer();
+	wxGetApp().GetController().GetPointerAction().CenterPointer();
 }
 
 void CKeyCommandIncreaseXAxisSpeed::Command()
