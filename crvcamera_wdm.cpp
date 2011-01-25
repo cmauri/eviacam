@@ -61,8 +61,8 @@ bool CCameraWDM::DoOpen ()
 	assert (m_VI);
 
 	// BGR channel sequence assumed
-	m_pImage= new CIplImage (m_Width, m_Height, IPL_DEPTH_8U, "BGR");
-	assert (m_pImage);	
+	//m_pImage= new CIplImage (m_Width, m_Height, IPL_DEPTH_8U, "BGR");
+	//assert (m_pImage);	
 
 	m_VI->setIdealFramerate(m_Id, (int) m_FrameRate);
 	if (!m_VI->setupDevice (m_Id, m_Width, m_Height)) {
@@ -78,22 +78,37 @@ void CCameraWDM::DoClose ()
 	if (m_VI) {
 		m_VI->stopDevice(m_Id);
 		delete m_VI;
-		m_VI= NULL;
-		delete m_pImage;
+		//m_VI= NULL;
+		//delete m_pImage;
 	}
 }
 
 IplImage *CCameraWDM::DoQueryFrame()
 {
-	if (!m_VI) return NULL;
+	if (!CCameraWDM::DoQueryFrame(m_Image)) return NULL;
 
-	assert (m_pImage->ptr()->imageSize== m_VI->getSize(m_Id));
+	return m_Image.ptr();
+}
+
+bool CCameraWDM::DoQueryFrame(CIplImage& image)
+{
+	if (!m_VI) return false;
+
+	if (!image.Initialized() || m_VI->getWidth(m_Id)!= image.Width() || m_VI->getHeight(m_Id)!= image.Height()) {
+		// Allocate image in case is not properly set up
+		if (!image.Create (m_Width, m_Height, IPL_DEPTH_8U, "BGR", 1)) {
+			assert (!"CCameraWDM::DoQueryFrame: cannot create image");
+			return false;
+		}
+	}		
+	assert (image.Initialized());
+	assert (image.ptr()->imageSize== m_VI->getSize(m_Id));
 	
-	m_VI->getPixels(m_Id, (unsigned char *) m_pImage->ptr()->imageData, false, false);
+	m_VI->getPixels(m_Id, reinterpret_cast<unsigned char *>(image.ptr()->imageData), false, false);
 	// Set appropiate origin
-	m_pImage->ptr()->origin= 1;
-	
-	return m_pImage->ptr();
+	m_Image.ptr()->origin= 1;
+
+	return true;
 }
 
 void CCameraWDM::ShowSettingsDialog ()

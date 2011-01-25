@@ -194,6 +194,7 @@ bool CCameraV4L2::DoOpen ()
 		Close();
 		return false;
 	}
+	/*
 	// Result image	
 	// TODO: correct the V4L2_PIX_FMT_YUV420 conversion routine
 	const char* planeOrder;
@@ -204,7 +205,7 @@ bool CCameraV4L2::DoOpen ()
 		fprintf (stderr, "Cannot create result image\n");		
 		Close();
 		return false;
-	}
+	}*/
 	if (!EnableVideo(true)) {
 		fprintf (stderr, "Unable to enable video\n");
 		DeallocateBuffers();
@@ -1165,7 +1166,14 @@ bool CCameraV4L2::DecodeToRGB (void* src, void* dst, int width, int height, uint
 
 IplImage *CCameraV4L2::DoQueryFrame()
 {
-	if (!m_isStreaming) return NULL;
+	if (!DoQueryFrame(m_resultImage)) return NULL;
+	
+	return m_resultImage.ptr();
+}
+
+bool CCameraV4L2::DoQueryFrame(CIplImage& image)
+{
+	if (!m_isStreaming) return false;
 	fd_set rdset;
 	struct timeval timeout;
 		
@@ -1178,16 +1186,16 @@ IplImage *CCameraV4L2::DoQueryFrame()
 	int retval = select(c_get_file_descriptor (m_libWebcamHandle) + 1, &rdset, NULL, NULL, &timeout);
 	if (retval < 0) {
 		perror(" Could not grab image (select error)");
-		return NULL;
+		return false;
 	} else if (retval == 0) {
 		perror(" Could not grab image (select timeout)");
-		return NULL;
+		return false;
 	}
 	else if ((retval > 0) && (FD_ISSET(c_get_file_descriptor (m_libWebcamHandle), &rdset))) {
 		switch (m_captureMethod) {
 		case CAP_READ:
 			// TODO
-			return NULL;	
+			return false;	
 		case CAP_STREAMING_MMAP: {
 			struct v4l2_buffer buffer;
 			
@@ -1197,31 +1205,49 @@ IplImage *CCameraV4L2::DoQueryFrame()
 			buffer.memory = V4L2_MEMORY_MMAP;
 			if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_DQBUF, &buffer)!= 0) {
 				perror("VIDIOC_DQBUF - Unable to dequeue buffer ");
-				return NULL;
+				return false;
 			}
 			
+			// Allocate result image when necessary
+			bool allocFailed= false;
+			if (!image.Initialized() || 
+				m_currentFormat.width!= static_cast<unsigned int>(image.Width()) || 
+				m_currentFormat.height!= static_cast<unsigned int>(image.Height())) {
+				
+				// TODO: correct the V4L2_PIX_FMT_YUV420 conversion routine
+				const char* planeOrder;
+				if (m_currentFormat.pixelformat== V4L2_PIX_FMT_YUV420) planeOrder= "BGR";
+				else planeOrder= "RGB";
+				// TODO: make sure that image is not initialized with padded rows
+				if (!image.Create (m_currentFormat.width, m_currentFormat.height, IPL_DEPTH_8U, planeOrder, IPL_ORIGIN_TL, IPL_ALIGN_DWORD )) {
+					fprintf (stderr, "Cannot create result image\n");
+					allocFailed= true;					
+				}
+			}
 			// Convert to destination format (always RGB 24bit)
 			// TODO: check return value
-			DecodeToRGB (m_captureBuffersPtr[buffer.index], (BYTE*) m_resultImage.ptr()->imageData, 
-				     m_resultImage.Width(), m_resultImage.Height(), m_currentFormat.pixelformat);
+			if (!allocFailed) 
+				DecodeToRGB (m_captureBuffersPtr[buffer.index], (BYTE*) image.ptr()->imageData, 
+				     image.Width(), image.Height(), m_currentFormat.pixelformat);
 			
 			// Queue buffer again
 			if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_QBUF, &buffer)!= 0) {
 				perror("VIDIOC_QBUF - Unable to queue buffer");			
-				return NULL;
+				return false;
 			}
-			break;
+			return (!allocFailed);
+			//break;
 		}
 		case CAP_STREAMING_USR:
 			fprintf (stderr, "Capture method not implemented yet\n");
-			return NULL;			
+			return false;			
 		default:
 			assert (false);
-			return NULL;
+			return false;
 		}		
 	}
 		
-	return m_resultImage.ptr();
+	return true;
 
 #if 0
 	if (-1 == read (c_get_file_descriptor (m_libWebcamHandle), m_buffer.start, m_buffer.length)) {
@@ -1229,7 +1255,6 @@ IplImage *CCameraV4L2::DoQueryFrame()
 	case EAGAIN:
 	return 0;
 #endif
-
 }
 
 #if !defined(NDEBUG)
