@@ -69,7 +69,23 @@ class CKeyCommandIncreaseXAxisSpeed : public CKeyCommand {
 		void Command();
 };
 
+class CKeyCommandIncreaseYAxisSpeed : public CKeyCommand {
+	public:
+		CKeyCommandIncreaseYAxisSpeed();
+		void Command();
+};
 
+class CKeyCommandDecreaseXAxisSpeed : public CKeyCommand {
+	public:
+		CKeyCommandDecreaseXAxisSpeed();
+		void Command();
+};
+
+class CKeyCommandDecreaseYAxisSpeed : public CKeyCommand {
+	public:
+		CKeyCommandDecreaseYAxisSpeed();
+		void Command();
+};
 
 
 class CHotkeyManager : public CConfigBase {
@@ -134,6 +150,13 @@ private:
 	CKeyboardCode m_keyCode;
 	CKeyboardCode m_lastKeyCode;
 	vector<CKeyCommand*> m_keyCommands;
+	CKeyCommandEnable* m_keyCommandEnable;
+	CKeyCommandWorkspace* m_keyCommandWorkspace;
+	CKeyCommandCenterMouse* m_keyCommandCenterMouse;
+	CKeyCommandIncreaseXAxisSpeed* m_keyCommandIncreaseXAxisSpeed;
+	CKeyCommandIncreaseYAxisSpeed* m_keyCommandIncreaseYAxisSpeed;
+	CKeyCommandDecreaseXAxisSpeed* m_keyCommandDecreaseXAxisSpeed;
+	CKeyCommandDecreaseYAxisSpeed* m_keyCommandDecreaseYAxisSpeed;
 };
 
 #endif
