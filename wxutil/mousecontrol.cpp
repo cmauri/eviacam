@@ -432,6 +432,11 @@ void CMouseControl::SendMouseCommand (long x, long y, int flags)
 #endif
 }
 
+void CMouseControl::CenterPointer ()
+{
+	DoMovePointerAbs(m_ScreenWidth/2, m_ScreenHeight/2);
+}
+
 bool CMouseControl::LeftDown ()
 {
 	if (CheckClickArea ()) {

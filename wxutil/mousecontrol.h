@@ -81,6 +81,8 @@ public:
 	void MovePointerAbs (float x, float y);
 	void DoMovePointerAbs (long x, long y);
 	float MovePointerRel (float dx, float dy, int* dxRes= NULL, int* dyRes= NULL);
+	
+	void CenterPointer ();
 
 	// Click actions
 	bool LeftDown ();
