@@ -25,6 +25,53 @@
 #include "ckeyboardcode.h"
 #include "configbase.h"
 
+#include <vector>
+
+using namespace std;
+
+class CKeyCommand {
+public:
+	wxString GetDescription () const { return description; }
+	void SetDescription (wxString s) { description= s; }
+	CKeyboardCode GetKey () const { return key; }
+	void SetKey (CKeyboardCode kc) { key= kc; }
+	bool IsEnabled () const { return enabled; }
+	void SetEnabled (bool value) { enabled= value; }
+	virtual void Command() =0;
+
+private:
+	wxString description;
+	CKeyboardCode key;
+	bool enabled;
+};
+
+class CKeyCommandEnable : public CKeyCommand {
+public:
+	CKeyCommandEnable();
+	void Command();
+};
+
+class CKeyCommandWorkspace : public CKeyCommand {
+	public:
+		CKeyCommandWorkspace();
+		void Command();
+};
+
+class CKeyCommandCenterMouse : public CKeyCommand {
+	public:
+		CKeyCommandCenterMouse();
+		void Command();
+};
+
+class CKeyCommandIncreaseXAxisSpeed : public CKeyCommand {
+	public:
+		CKeyCommandIncreaseXAxisSpeed();
+		void Command();
+};
+
+
+
+
 class CHotkeyManager : public CConfigBase {
 public:
 	CHotkeyManager();
@@ -52,6 +99,21 @@ public:
 	const CKeyboardCode GetActivationKey () const {
 		return m_keyCode;
 	}
+	
+	const int GetNumKeyCommands () const {
+		return m_keyCommands.size();
+	}
+	
+	CKeyCommand* GetKeyCommand (int index) {
+		assert (index < m_keyCommands.size());
+		return m_keyCommands[index];
+	}
+	
+	int IsKeyUsed (CKeyboardCode kc);
+	
+	void SetKeyCommand (int index, CKeyboardCode kc);
+	
+	
 
 	// This method must be called periodically to check
 	// the keyboard status and perform actions accordingly
@@ -71,6 +133,7 @@ private:
 	bool m_enabledActivationKey;
 	CKeyboardCode m_keyCode;
 	CKeyboardCode m_lastKeyCode;
+	vector<CKeyCommand*> m_keyCommands;
 };
 
 #endif
