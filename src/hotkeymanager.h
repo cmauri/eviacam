@@ -29,8 +29,10 @@
 using namespace std;
 
 class CKeyCommand {
-public:
+protected:
 	void SetKey (CKeyboardCode kc) { key= kc; }
+
+public:
 	wxString GetName () const { return name; }
 	void SetName (wxString s) { name= s; }
 	wxString GetDescription () const { return description; }
@@ -39,6 +41,7 @@ public:
 	bool IsEnabled () const { return enabled; }
 	void SetEnabled (bool value) { enabled= value; }
 	virtual void Command() =0;
+	friend class CHotkeyManager;
 
 private:
 	wxString name;	
