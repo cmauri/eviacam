@@ -24,82 +24,35 @@
 
 #include "ckeyboardcode.h"
 #include "configbase.h"
-
 #include <vector>
 
 using namespace std;
 
 class CKeyCommand {
 public:
+	void SetKey (CKeyboardCode kc) { key= kc; }
+	wxString GetName () const { return name; }
+	void SetName (wxString s) { name= s; }
 	wxString GetDescription () const { return description; }
 	void SetDescription (wxString s) { description= s; }
 	CKeyboardCode GetKey () const { return key; }
-	void SetKey (CKeyboardCode kc) { key= kc; }
 	bool IsEnabled () const { return enabled; }
 	void SetEnabled (bool value) { enabled= value; }
 	virtual void Command() =0;
 
 private:
+	wxString name;	
 	wxString description;
 	CKeyboardCode key;
 	bool enabled;
-};
-
-class CKeyCommandEnable : public CKeyCommand {
-public:
-	CKeyCommandEnable();
-	void Command();
-};
-
-class CKeyCommandWorkspace : public CKeyCommand {
-	public:
-		CKeyCommandWorkspace();
-		void Command();
-};
-
-class CKeyCommandCenterMouse : public CKeyCommand {
-	public:
-		CKeyCommandCenterMouse();
-		void Command();
-};
-
-class CKeyCommandIncreaseXAxisSpeed : public CKeyCommand {
-	public:
-		CKeyCommandIncreaseXAxisSpeed();
-		void Command();
-};
-
-class CKeyCommandIncreaseYAxisSpeed : public CKeyCommand {
-	public:
-		CKeyCommandIncreaseYAxisSpeed();
-		void Command();
-};
-
-class CKeyCommandDecreaseXAxisSpeed : public CKeyCommand {
-	public:
-		CKeyCommandDecreaseXAxisSpeed();
-		void Command();
-};
-
-class CKeyCommandDecreaseYAxisSpeed : public CKeyCommand {
-	public:
-		CKeyCommandDecreaseYAxisSpeed();
-		void Command();
 };
 
 
 class CHotkeyManager : public CConfigBase {
 public:
 	CHotkeyManager();
+	~CHotkeyManager();
 	
-	// TODO: change the interface of this class to allow to iterate multiple
-	// hot key assignements. Each hot key should carry the follwing information
-	// struct CHotKey {
-	//	CKeyboardCode key : key, should be always valid
-	//	bool enabled :
-	//  wxString description : 
-	// }
-
 	const bool GetEnabledActivationKey () const {
 		return m_enabledActivationKey;
 	}
@@ -127,7 +80,9 @@ public:
 	
 	int IsKeyUsed (CKeyboardCode kc);
 	
-	void SetKeyCommand (int index, CKeyboardCode kc);
+	bool SetKeyCommand (int index, CKeyboardCode kc);
+	
+	vector<CKeyCommand*> GetKeyCommands () { return m_keyCommands; }
 	
 	
 
@@ -150,13 +105,6 @@ private:
 	CKeyboardCode m_keyCode;
 	CKeyboardCode m_lastKeyCode;
 	vector<CKeyCommand*> m_keyCommands;
-	CKeyCommandEnable* m_keyCommandEnable;
-	CKeyCommandWorkspace* m_keyCommandWorkspace;
-	CKeyCommandCenterMouse* m_keyCommandCenterMouse;
-	CKeyCommandIncreaseXAxisSpeed* m_keyCommandIncreaseXAxisSpeed;
-	CKeyCommandIncreaseYAxisSpeed* m_keyCommandIncreaseYAxisSpeed;
-	CKeyCommandDecreaseXAxisSpeed* m_keyCommandDecreaseXAxisSpeed;
-	CKeyCommandDecreaseYAxisSpeed* m_keyCommandDecreaseYAxisSpeed;
 };
 
 #endif

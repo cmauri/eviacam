@@ -25,6 +25,119 @@
 #include "viacamcontroller.h"
 #include "pointeraction.h"
 
+class CKeyCommandEnable : public CKeyCommand {
+public:
+	CKeyCommandEnable()
+	{
+		SetName(_("hotKeyEnable"));
+		SetDescription(_("Enable eViacam"));
+		SetKey(CKeyboardCode::FromASCII('e'));
+		SetEnabled(false);
+	}
+
+	void Command()
+	{
+		wxGetApp().GetController().SetEnabled(!wxGetApp().GetController().GetEnabled(), true);
+	}
+};
+
+class CKeyCommandWorkspace : public CKeyCommand {
+public:
+	CKeyCommandWorkspace()
+	{
+		SetName(_("hotKeyWorkspace"));
+		SetDescription(_("Enable workspace limit"));
+		SetKey(CKeyboardCode::FromASCII('w'));
+		SetEnabled(false);
+	}
+
+	void Command()
+	{
+		wxGetApp().GetController().GetPointerAction().SetRestrictedWorkingArea(!wxGetApp().GetController().GetPointerAction().GetRestrictedWorkingArea());
+	}
+};
+
+class CKeyCommandCenterPointer : public CKeyCommand {
+public:
+	CKeyCommandCenterPointer()
+	{
+		SetName(_("hotKeyCenterPointer"));
+		SetDescription(_("Center the pointer on the screen"));
+		SetKey(CKeyboardCode::FromASCII('c'));
+		SetEnabled(false);
+	}
+
+	void Command()
+	{
+		wxGetApp().GetController().GetPointerAction().CenterPointer();
+	}
+};
+
+class CKeyCommandIncreaseX : public CKeyCommand {
+public:
+	CKeyCommandIncreaseX()
+	{
+		SetName(_("hotKeyIncreaseX"));
+		SetDescription(_("Increase the X axis speed"));
+		SetKey(CKeyboardCode::FromWXKeyCode (WXK_RIGHT));
+		SetEnabled(false);
+	}
+
+	void Command()
+	{
+		wxGetApp().GetController().GetPointerAction().SetXSpeed(wxGetApp().GetController().GetPointerAction().GetXSpeed()+1);
+	}
+};
+
+class CKeyCommandIncreaseY : public CKeyCommand {
+public:
+	CKeyCommandIncreaseY()
+	{
+		SetName(_("hotKeyIncreaseY"));
+		SetDescription(_("Increase the Y axis speed"));
+		SetKey(CKeyboardCode::FromWXKeyCode (WXK_UP));
+		SetEnabled(false);
+	}
+
+	void Command()
+	{
+		wxGetApp().GetController().GetPointerAction().SetYSpeed(wxGetApp().GetController().GetPointerAction().GetYSpeed()+1);
+	}
+};
+
+class CKeyCommandDecreaseX : public CKeyCommand {
+public:
+	CKeyCommandDecreaseX()
+	{
+		SetName(_("hotKeyDecreaseX"));
+		SetDescription(_("Decrease the X axis speed"));
+		SetKey(CKeyboardCode::FromWXKeyCode (WXK_LEFT));
+		SetEnabled(false);	
+	}
+
+	void Command()
+	{
+		wxGetApp().GetController().GetPointerAction().SetXSpeed(wxGetApp().GetController().GetPointerAction().GetXSpeed()-1);
+	}
+};
+
+class CKeyCommandDecreaseY : public CKeyCommand {
+public:
+	CKeyCommandDecreaseY()
+	{
+		SetName(_("hotKeyDecreaseY"));
+		SetDescription(_("Decrease the Y axis speed"));
+		SetKey(CKeyboardCode::FromWXKeyCode (WXK_DOWN));
+		SetEnabled(false);
+	}
+
+	void Command()
+	{
+		wxGetApp().GetController().GetPointerAction().SetYSpeed(wxGetApp().GetController().GetPointerAction().GetYSpeed()-1);
+	}
+};
+
+
 // TODO: to avoid problems with synchronization, implement this by deriving 
 // from wxEvtHandler and sending hot-key messages using wxPostEvent. This
 // way we make sure that all hot-key driven actions are always executed from
@@ -39,28 +152,23 @@ CHotkeyManager::CHotkeyManager()
 	InitDefaults();
 }
 
+CHotkeyManager::~CHotkeyManager()
+{
+	while (!m_keyCommands.empty()) m_keyCommands.pop_back();
+}
+
 void CHotkeyManager::InitDefaults()
 {
 #if defined(__WXGTK__) 
 	SetActivationKeyCode(CKeyboardCode::FromWXKeyCode (WXK_SCROLL));
 	SetEnabledActivationKey (true);
-	
-	m_keyCommandEnable = new CKeyCommandEnable();
-	m_keyCommandWorkspace = new CKeyCommandWorkspace();
-	m_keyCommandCenterMouse = new CKeyCommandCenterMouse();
-	m_keyCommandIncreaseXAxisSpeed = new CKeyCommandIncreaseXAxisSpeed();
-	m_keyCommandIncreaseYAxisSpeed = new CKeyCommandIncreaseYAxisSpeed();
-	m_keyCommandDecreaseXAxisSpeed = new CKeyCommandDecreaseXAxisSpeed();
-	m_keyCommandDecreaseYAxisSpeed = new CKeyCommandDecreaseYAxisSpeed();
-	
-	m_keyCommands.push_back((CKeyCommand*) m_keyCommandEnable);
-	m_keyCommands.push_back((CKeyCommand*) m_keyCommandWorkspace);
-	m_keyCommands.push_back((CKeyCommand*) m_keyCommandCenterMouse);
-	m_keyCommands.push_back((CKeyCommand*) m_keyCommandIncreaseXAxisSpeed);
-	m_keyCommands.push_back((CKeyCommand*) m_keyCommandIncreaseYAxisSpeed);
-	m_keyCommands.push_back((CKeyCommand*) m_keyCommandDecreaseXAxisSpeed);
-	m_keyCommands.push_back((CKeyCommand*) m_keyCommandDecreaseYAxisSpeed);
-
+	m_keyCommands.push_back(new CKeyCommandEnable());
+	m_keyCommands.push_back(new CKeyCommandWorkspace());
+	m_keyCommands.push_back(new CKeyCommandCenterPointer());
+	m_keyCommands.push_back(new CKeyCommandIncreaseX());
+	m_keyCommands.push_back(new CKeyCommandIncreaseY());
+	m_keyCommands.push_back(new CKeyCommandDecreaseX());
+	m_keyCommands.push_back(new CKeyCommandDecreaseY());
 #endif // __WXGTK___
 }
 
@@ -84,26 +192,10 @@ void CHotkeyManager::WriteProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->SetPath (_T("hotKeyManager"));
 #if defined(__WXGTK__) 
-	pConfObj->Write(_T("enable"), m_keyCommandEnable->IsEnabled());
-	pConfObj->Write(_T("enableKey"), static_cast<long>(m_keyCommandEnable->GetKey().GetRawValue()));
-	
-	pConfObj->Write(_T("workspace"), m_keyCommandWorkspace->IsEnabled());
-	pConfObj->Write(_T("workspaceKey"), static_cast<long>(m_keyCommandWorkspace->GetKey().GetRawValue()));
-	
-	pConfObj->Write(_T("centerMouse"), m_keyCommandCenterMouse->IsEnabled());
-	pConfObj->Write(_T("centerMouseKey"), static_cast<long>(m_keyCommandCenterMouse->GetKey().GetRawValue()));
-	
-	pConfObj->Write(_T("increaseX"), m_keyCommandIncreaseXAxisSpeed->IsEnabled());
-	pConfObj->Write(_T("increaseXKey"), static_cast<long>(m_keyCommandIncreaseXAxisSpeed->GetKey().GetRawValue()));
-	
-	pConfObj->Write(_T("increaseY"), m_keyCommandIncreaseYAxisSpeed->IsEnabled());
-	pConfObj->Write(_T("increaseYKey"), static_cast<long>(m_keyCommandIncreaseYAxisSpeed->GetKey().GetRawValue()));
-	
-	pConfObj->Write(_T("decreaseX"), m_keyCommandDecreaseXAxisSpeed->IsEnabled());
-	pConfObj->Write(_T("decreaseXKey"), static_cast<long>(m_keyCommandDecreaseXAxisSpeed->GetKey().GetRawValue()));
-	
-	pConfObj->Write(_T("decreaseY"), m_keyCommandDecreaseYAxisSpeed->IsEnabled());
-	pConfObj->Write(_T("decreaseYKey"), static_cast<long>(m_keyCommandDecreaseYAxisSpeed->GetKey().GetRawValue()));
+	for (int i=0; i<m_keyCommands.size(); i++) {
+		pConfObj->Write(m_keyCommands[i]->GetName(), m_keyCommands[i]->IsEnabled());
+		pConfObj->Write(m_keyCommands[i]->GetName() + _T("Key"), static_cast<long>(m_keyCommands[i]->GetKey().GetRawValue()));
+	}
 #endif // __WXGTK___
 	pConfObj->SetPath (_T(".."));
 } 
@@ -115,41 +207,13 @@ void CHotkeyManager::ReadProfileData(wxConfigBase* pConfObj)
 	bool isEnabled;
 	long rawKeyCode;
 	
-	if(pConfObj->Read(_T("enable"), &isEnabled))
-		m_keyCommandEnable->SetEnabled(isEnabled);
-	if (pConfObj->Read(_T("enableKey"), &rawKeyCode))
-		m_keyCommandEnable->SetKey(CKeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
-	
-	if(pConfObj->Read(_T("workspace"), &isEnabled))
-		  m_keyCommandWorkspace->SetEnabled(isEnabled);
-	if (pConfObj->Read(_T("workspaceKey"), &rawKeyCode))
-		m_keyCommandWorkspace->SetKey(CKeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
-	
-	if(pConfObj->Read(_T("centerMouse"), &isEnabled))
-		  m_keyCommandCenterMouse->SetEnabled(isEnabled);
-	if (pConfObj->Read(_T("centerMouseKey"), &rawKeyCode))
-		m_keyCommandCenterMouse->SetKey(CKeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
-	
-	if(pConfObj->Read(_T("increaseX"), &isEnabled))
-		  m_keyCommandIncreaseXAxisSpeed->SetEnabled(isEnabled);
-	if (pConfObj->Read(_T("increaseXKey"), &rawKeyCode))
-		m_keyCommandIncreaseXAxisSpeed->SetKey(CKeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
-
-	if(pConfObj->Read(_T("increaseY"), &isEnabled))
-		  m_keyCommandIncreaseYAxisSpeed->SetEnabled(isEnabled);
-	if (pConfObj->Read(_T("increaseYKey"), &rawKeyCode))
-		m_keyCommandIncreaseYAxisSpeed->SetKey(CKeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
-	
-	if(pConfObj->Read(_T("decreaseX"), &isEnabled))
-		  m_keyCommandDecreaseXAxisSpeed->SetEnabled(isEnabled);
-	if (pConfObj->Read(_T("decreaseXKey"), &rawKeyCode))
-		m_keyCommandDecreaseXAxisSpeed->SetKey(CKeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
-	
-	if(pConfObj->Read(_T("decreaseY"), &isEnabled))
-		  m_keyCommandDecreaseYAxisSpeed->SetEnabled(isEnabled);
-	if (pConfObj->Read(_T("decreaseYKey"), &rawKeyCode))
-		m_keyCommandDecreaseYAxisSpeed->SetKey(CKeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
-
+	for (int i=0; i<m_keyCommands.size(); i++) {
+		if(pConfObj->Read(m_keyCommands[i]->GetName(), &isEnabled))
+			m_keyCommands[i]->SetEnabled(isEnabled);
+		
+		if (pConfObj->Read(m_keyCommands[i]->GetName() + _T("Key"), &rawKeyCode))
+			m_keyCommands[i]->SetKey(CKeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
+	}
 #endif // __WXGTK___
 	pConfObj->SetPath (_T(".."));
 }
@@ -164,95 +228,13 @@ int CHotkeyManager::IsKeyUsed (CKeyboardCode kc)
 	return -1;
 }
 
-void CHotkeyManager::SetKeyCommand (int index, CKeyboardCode kc)
+bool CHotkeyManager::SetKeyCommand (int index, CKeyboardCode kc)
 {
 	assert (index < m_keyCommands.size());
-	m_keyCommands[index]->SetKey(kc);
-	m_keyCommands[index]->SetEnabled(true);
+	if (IsKeyUsed(kc) == -1) {
+		m_keyCommands[index]->SetKey(kc);
+		return true;
+	} else {
+		return false;
+	}
 }
-
-CKeyCommandEnable::CKeyCommandEnable()
-{
-	SetDescription(_("Enable eViacam"));
-	SetKey(CKeyboardCode::FromASCII('e'));
-	SetEnabled(true);
-}
-
-CKeyCommandWorkspace::CKeyCommandWorkspace()
-{
-	SetDescription(_("Enable workspace limit"));
-	SetKey(CKeyboardCode::FromASCII('w'));
-	SetEnabled(true);
-}
-
-CKeyCommandCenterMouse::CKeyCommandCenterMouse()
-{
-	SetDescription(_("Center the pointer on the screen"));
-	SetKey(CKeyboardCode::FromASCII('c'));
-	SetEnabled(true);
-}
-
-CKeyCommandIncreaseXAxisSpeed::CKeyCommandIncreaseXAxisSpeed()
-{
-	SetDescription(_("Increase the X axis speed"));
-	SetKey(CKeyboardCode::FromWXKeyCode (WXK_RIGHT));
-	SetEnabled(true);
-}
-
-CKeyCommandIncreaseYAxisSpeed::CKeyCommandIncreaseYAxisSpeed()
-{
-	SetDescription(_("Increase the Y axis speed"));
-	SetKey(CKeyboardCode::FromWXKeyCode (WXK_UP));
-	SetEnabled(true);
-}
-
-CKeyCommandDecreaseXAxisSpeed::CKeyCommandDecreaseXAxisSpeed()
-{
-	SetDescription(_("Decrease the X axis speed"));
-	SetKey(CKeyboardCode::FromWXKeyCode (WXK_LEFT));
-	SetEnabled(true);
-}
-
-CKeyCommandDecreaseYAxisSpeed::CKeyCommandDecreaseYAxisSpeed()
-{
-	SetDescription(_("Decrease the Y axis speed"));
-	SetKey(CKeyboardCode::FromWXKeyCode (WXK_DOWN));
-	SetEnabled(true);
-}
-
-void CKeyCommandEnable::Command()
-{
-	wxGetApp().GetController().SetEnabled(!wxGetApp().GetController().GetEnabled(), true);
-}
-
-void CKeyCommandWorkspace::Command()
-{
-	wxGetApp().GetController().GetPointerAction().SetRestrictedWorkingArea(!wxGetApp().GetController().GetPointerAction().GetRestrictedWorkingArea());
-}
-
-void CKeyCommandCenterMouse::Command()
-{
-	wxGetApp().GetController().GetPointerAction().CenterPointer();
-}
-
-void CKeyCommandIncreaseXAxisSpeed::Command()
-{
-	wxGetApp().GetController().GetPointerAction().SetXSpeed(wxGetApp().GetController().GetPointerAction().GetXSpeed()+1);
-}
-
-void CKeyCommandIncreaseYAxisSpeed::Command()
-{
-	wxGetApp().GetController().GetPointerAction().SetYSpeed(wxGetApp().GetController().GetPointerAction().GetYSpeed()+1);
-}
-
-void CKeyCommandDecreaseXAxisSpeed::Command()
-{
-	wxGetApp().GetController().GetPointerAction().SetXSpeed(wxGetApp().GetController().GetPointerAction().GetXSpeed()-1);
-}
-
-void CKeyCommandDecreaseYAxisSpeed::Command()
-{
-	wxGetApp().GetController().GetPointerAction().SetYSpeed(wxGetApp().GetController().GetPointerAction().GetYSpeed()-1);
-}
-
-

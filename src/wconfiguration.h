@@ -30,6 +30,8 @@
  * Includes
  */
 
+#include "hotkeymanager.h"
+
 ////@begin includes
 #include "wx/listbook.h"
 #include "wx/notebook.h"
@@ -50,8 +52,8 @@
 
 ////@begin forward declarations
 class wxSpinCtrl;
+class wxFlexGridSizer;
 ////@end forward declarations
-
 class wxPanel;
 
 /*!
@@ -100,6 +102,7 @@ class wxPanel;
 #define ID_CHOICE2 10102
 #define ID_STATIC_MOVE_DOWN 10086
 #define ID_CHOICE3 10105
+#define ID_PANEL_KEYS 10110
 #define ID_PANEL_ADVANCED 10025
 #define ID_CHECKBOX_STARTUP 10071
 #define ID_CHECKBOX_ENABLE_AT_STARTUP 10023
@@ -323,6 +326,8 @@ private:
     /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_COMBOBOX_BOTTOM
     void OnComboboxBottomSelected( wxCommandEvent& event );
 
+	void OnHotkeyCheckboxClick( wxCommandEvent& event );
+	void OnHotkeyButtonClick( wxCommandEvent& event );
 
 ////@begin WConfiguration member function declarations
 
@@ -332,6 +337,8 @@ private:
     /// Retrieves icon resources
     wxIcon GetIconResource( const wxString& name );
 ////@end WConfiguration member function declarations
+
+	void CreateHotkey (const CKeyCommand* kc, wxWindow* parent, wxSizer* sizer);
 
     /// Should we show tooltips?
     static bool ShowToolTips();
@@ -408,6 +415,8 @@ private:
 #if defined(__WXGTK__)
     wxChoice* m_choDown;
 #endif
+    wxPanel* m_panelKeys;
+    wxFlexGridSizer* m_hotkeysSizer;
 #if defined(__WXGTK__)
     wxCheckBox* m_chkStartup;
 #endif
@@ -443,7 +452,8 @@ private:
     wxComboBox* m_cmbRight;
     wxComboBox* m_cmbTop;
     wxComboBox* m_cmbBottom;
-
+	vector<wxControl*> m_controlList;
+	int m_lastId;
 	bool m_dirty;
 };
 
