@@ -53,22 +53,6 @@ public:
 	CHotkeyManager();
 	~CHotkeyManager();
 	
-	const bool GetEnabledActivationKey () const {
-		return m_enabledActivationKey;
-	}
-	void SetEnabledActivationKey (bool value) {
-		m_enabledActivationKey= value;
-	}
-
-	void SetActivationKeyCode (CKeyboardCode value) {
-		m_keyCode= value;
-		m_lastKeyCode= value;
-	}
-
-	const CKeyboardCode GetActivationKey () const {
-		return m_keyCode;
-	}
-	
 	const int GetNumKeyCommands () const {
 		return m_keyCommands.size();
 	}
@@ -79,12 +63,8 @@ public:
 	}
 	
 	int IsKeyUsed (CKeyboardCode kc);
-	
 	bool SetKeyCommand (int index, CKeyboardCode kc);
-	
 	vector<CKeyCommand*> GetKeyCommands () { return m_keyCommands; }
-	
-	
 
 	// This method must be called periodically to check
 	// the keyboard status and perform actions accordingly
@@ -101,8 +81,6 @@ public:
 	virtual void WriteProfileData(wxConfigBase* pConfObj);  
 
 private:
-	bool m_enabledActivationKey;
-	CKeyboardCode m_keyCode;
 	CKeyboardCode m_lastKeyCode;
 	vector<CKeyCommand*> m_keyCommands;
 };

@@ -108,9 +108,6 @@ class wxPanel;
 #define ID_CHECKBOX_ENABLE_AT_STARTUP 10023
 #define ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND 10036
 #define ID_BUTTON_ONSCREENKEYBOARDCOMMAND 10049
-#define ID_CHECKBOX_ACTIVATION_KEY 10067
-#define ID_TEXTCTRL_ACTIVATION_KEY 10068
-#define ID_BUTTON_ACTIVATION_KEY 10069
 #define ID_CHECKBOX_AUTO_LOCATE_FACE 10038
 #define ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED 10039
 #define ID_CHOICE4 10109
@@ -266,16 +263,6 @@ private:
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_ONSCREENKEYBOARDCOMMAND
     void OnButtonOnscreenkeyboardcommandClick( wxCommandEvent& event );
 
-#if defined(__WXGTK__)
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ACTIVATION_KEY
-    void OnCheckboxActivationKeyClick( wxCommandEvent& event );
-
-#endif
-#if defined(__WXGTK__)
-    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_ACTIVATION_KEY
-    void OnButtonActivationKeyClick( wxCommandEvent& event );
-
-#endif
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTO_LOCATE_FACE
     void OnCheckboxAutoLocateFaceClick( wxCommandEvent& event );
 
@@ -342,8 +329,6 @@ private:
 
     /// Should we show tooltips?
     static bool ShowToolTips();
-
-	void SetActivationKey(wxString keyName);
 
 	// Enable/disable GUI areas
 	void UpdateGUIClickOptions();
@@ -423,15 +408,6 @@ private:
     wxCheckBox* m_chkEnabledAtStartup;
     wxTextCtrl* m_txtOnScreenKeyboardCommand;
     wxButton* m_btntOnScreenKeyboardCommand;
-#if defined(__WXGTK__)
-    wxCheckBox* m_chkActivationKey;
-#endif
-#if defined(__WXGTK__)
-    wxTextCtrl* m_txtActivationKey;
-#endif
-#if defined(__WXGTK__)
-    wxButton* m_buttonActivationKey;
-#endif
     wxStaticBox* m_sizerFaceLocalization;
     wxCheckBox* m_chkAutoLocateFace;
     wxCheckBox* m_chkEnableWhenFaceDetected;

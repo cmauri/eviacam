@@ -144,10 +144,7 @@ public:
 // the main thread. This approach will also make easier the transition to 
 // an implementation based on keyboard hooks
 
-CHotkeyManager::CHotkeyManager()
-: m_enabledActivationKey(false)
-, m_keyCode()
-, m_lastKeyCode()
+CHotkeyManager::CHotkeyManager() : m_lastKeyCode()
 {
 	InitDefaults();
 }
@@ -160,8 +157,6 @@ CHotkeyManager::~CHotkeyManager()
 void CHotkeyManager::InitDefaults()
 {
 #if defined(__WXGTK__) 
-	SetActivationKeyCode(CKeyboardCode::FromWXKeyCode (WXK_SCROLL));
-	SetEnabledActivationKey (true);
 	m_keyCommands.push_back(new CKeyCommandEnable());
 	m_keyCommands.push_back(new CKeyCommandWorkspace());
 	m_keyCommands.push_back(new CKeyCommandCenterPointer());
