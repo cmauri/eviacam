@@ -60,7 +60,7 @@ message(STATUS "OpenCV_FOUND. ${OpenCV_FOUND}")
 message(STATUS "OpenCV_LIBS. ${OpenCV_LIBS}")
 message(STATUS "OpenCV_INCLUDE_DIR. ${OpenCV_INCLUDE_DIR}")
 
-add_library (creavision SHARED ${creavision_SRCS})
+add_library (creavision STATIC ${creavision_SRCS})
 TARGET_LINK_LIBRARIES(creavision ${OpenCV_LIBS} )
 if(WIN32)
 	TARGET_LINK_LIBRARIES(creavision ole32.lib strmiids.lib uuid.lib dxguid.lib)

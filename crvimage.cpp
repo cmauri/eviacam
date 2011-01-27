@@ -155,6 +155,7 @@ bool CIplImage::Import (IplImage *pImage, bool autodelete)
 
 void CIplImage::Free ()
 {
+	/*
 	if (!m_pIplImage) return;
 
 	if (m_importedImage) 
@@ -166,7 +167,27 @@ void CIplImage::Free ()
 	}
 	
 	CIplImage ();
-}	
+	*/
+
+	IplImage* retval= Detach();
+	if (retval) cvReleaseImage( &retval );
+}
+
+IplImage* CIplImage::Detach()
+{
+	if (!m_pIplImage) return NULL;
+
+	if (m_importedImage) 
+		m_pIplImage->roi= m_importedROI;
+	else 
+		m_pIplImage->roi= NULL;
+
+	IplImage* retval= m_pIplImage;
+	
+	CIplImage ();
+
+	return retval;	
+}
 
 void CIplImage::Swap (CIplImage *pOtherImg)
 {

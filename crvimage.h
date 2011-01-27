@@ -34,8 +34,7 @@ public:
 	// Construction
 	CIplImage ();
 	CIplImage (IplImage *pImg);
-	CIplImage (	int width, int height, 
-				int depth= IPL_DEPTH_8U,  
+	CIplImage (	int width, int height, int depth= IPL_DEPTH_8U,  
 				const char *pColorOrder= "GRAY");
 	~CIplImage ();
 
@@ -45,6 +44,10 @@ public:
 				int origin= IPL_ORIGIN_TL, int align= IPL_ALIGN_QWORD );
 
 	bool Import (IplImage *pImage, bool autodelete= false);
+	
+	// Returns the internal pointer, which is set to NULL, and forgets 
+	// about its deallocation
+	IplImage* Detach();
 	void Free ();
 	void Swap (CIplImage *pOtherImg);
 	void Reset ();
@@ -65,7 +68,7 @@ public:
 	void PopROI ();
 
 	// Data accessors
-	bool Initialized () { return m_pIplImage!= NULL; }
+	bool Initialized () const { return m_pIplImage!= NULL; }
 	IplImage *ptr () { return m_pIplImage; }
 	int Width () const { assert (m_pIplImage); return m_pIplImage->width; }
 	int Height () const { assert (m_pIplImage); return m_pIplImage->height; }
