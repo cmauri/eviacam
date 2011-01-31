@@ -62,6 +62,9 @@ message(STATUS "OpenCV_INCLUDE_DIR. ${OpenCV_INCLUDE_DIR}")
 
 add_library (creavision STATIC ${creavision_SRCS})
 TARGET_LINK_LIBRARIES(creavision ${OpenCV_LIBS} )
-if(WIN32)
+
+IF(CMAKE_SYSTEM_NAME MATCHES "Linux")
+	TARGET_LINK_LIBRARIES(creavision libwebcam)
+ELSEIF(WIN32)
 	TARGET_LINK_LIBRARIES(creavision ole32.lib strmiids.lib uuid.lib dxguid.lib)
-endif(WIN32)
+ENDIF(CMAKE_SYSTEM_NAME MATCHES "Linux")
