@@ -168,9 +168,23 @@ CCameraV4L2::~CCameraV4L2(void)
 
 bool CCameraV4L2::DoOpen ()
 {
-	if (m_libWebcamHandle!= 0) return true;	// Already open	
-	if (!InternalOpen()) return false;
+#if !defined(NDEBUG)
+	fprintf (stderr, "CCameraV4L2::DoOpen: begin\n");
+#endif
+	if (m_libWebcamHandle!= 0) {
+#if !defined(NDEBUG)
+		fprintf (stderr, "CCameraV4L2::DoOpen: already open\n");
+#endif
+		return true;	// Already open	
+	}
+	if (!InternalOpen()) {
+#if !defined(NDEBUG)
+		fprintf (stderr, "CCameraV4L2::DoOpen: open failed\n");
+#endif
+		return false;
+	}
 	
+	assert (m_desiredFormat.width && m_desiredFormat.height && m_desiredFormat.frame_rate);
 	m_currentFormat= m_desiredFormat;
 		
 	if (!DetectBestImageFormat()) {
