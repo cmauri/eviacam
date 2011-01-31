@@ -54,9 +54,10 @@ CCameraWDM::~CCameraWDM(void)
 
 bool CCameraWDM::DoOpen ()
 {
-	// Create a videoInput object
-	if (m_VI) return false;
+	// Already open? Do nothing
+	if (m_VI) return true;
 
+	// Create a videoInput object
 	m_VI= new videoInput;
 	assert (m_VI);
 
@@ -78,7 +79,7 @@ void CCameraWDM::DoClose ()
 	if (m_VI) {
 		m_VI->stopDevice(m_Id);
 		delete m_VI;
-		//m_VI= NULL;
+		m_VI= NULL;
 		//delete m_pImage;
 	}
 }
@@ -106,7 +107,7 @@ bool CCameraWDM::DoQueryFrame(CIplImage& image)
 	
 	m_VI->getPixels(m_Id, reinterpret_cast<unsigned char *>(image.ptr()->imageData), false, false);
 	// Set appropiate origin
-	m_Image.ptr()->origin= 1;
+	image.ptr()->origin= 1;
 
 	return true;
 }
