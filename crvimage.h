@@ -95,6 +95,7 @@ private:
 
   // Private methods
 	void InitROIStack (int width, int height);
+	void Init(); 
 };
 
 #endif	// IPLIMAGE_H

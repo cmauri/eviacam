@@ -27,28 +27,18 @@
 // Construction
 CIplImage::CIplImage ()
 {
-	m_pIplImage= NULL;
-	m_importedImage= false;
-	m_importedROI= NULL;
-	m_roiStackPtr= 0;
+	Init();
 }
 
 CIplImage::CIplImage (IplImage *pImg)
 {
-	m_pIplImage= NULL;
-	m_importedImage= false;
-	m_importedROI= NULL;
-	m_roiStackPtr= 0;
-
+	Init();
 	Import (pImg);
 }
 
 CIplImage::CIplImage (int width, int height, int depth, const char *pColorOrder)
 {
-	m_pIplImage= NULL;
-	m_importedImage= false;
-	m_importedROI= NULL;
-	m_roiStackPtr= 0;
+	Init();
 
 	bool retval= Create (width, height, depth, pColorOrder);
 #ifndef NDEBUG
@@ -59,6 +49,14 @@ CIplImage::CIplImage (int width, int height, int depth, const char *pColorOrder)
 CIplImage::~CIplImage ()
 {
 	Free ();
+}
+
+void CIplImage::Init()
+{
+	m_pIplImage= NULL;
+	m_importedImage= false;
+	m_importedROI= NULL;
+	m_roiStackPtr= 0;
 }
 
 void CIplImage::InitROIStack (int width, int height)
@@ -169,8 +167,8 @@ void CIplImage::Free ()
 	CIplImage ();
 	*/
 
-	IplImage* retval= Detach();
-	if (retval) cvReleaseImage( &retval );
+	IplImage* retval= this->Detach();
+	if (retval && !m_importedImage) cvReleaseImage( &retval );
 }
 
 IplImage* CIplImage::Detach()
@@ -184,7 +182,7 @@ IplImage* CIplImage::Detach()
 
 	IplImage* retval= m_pIplImage;
 	
-	CIplImage ();
+	Init ();
 
 	return retval;	
 }
