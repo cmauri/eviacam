@@ -109,8 +109,8 @@ class wxPanel;
 #define ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND 10036
 #define ID_BUTTON_ONSCREENKEYBOARDCOMMAND 10049
 #define ID_CHECKBOX_AUTO_LOCATE_FACE 10038
-#define ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED 10039
 #define ID_CHOICE4 10109
+#define ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED 10039
 #define ID_SPINCTRL2 10107
 #define ID_PANEL 10050
 #define ID_CHOICE_PROFILE 10015
@@ -266,11 +266,11 @@ private:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTO_LOCATE_FACE
     void OnCheckboxAutoLocateFaceClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED
-    void OnCheckboxEnableWhenFaceDetectedClick( wxCommandEvent& event );
-
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE4
     void OnChoCpuUsageSelected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED
+    void OnCheckboxEnableWhenFaceDetectedClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL2
     void OnSpinLocateFaceTimeoutUpdated( wxSpinEvent& event );
@@ -410,12 +410,11 @@ private:
     wxButton* m_btntOnScreenKeyboardCommand;
     wxStaticBox* m_sizerFaceLocalization;
     wxCheckBox* m_chkAutoLocateFace;
-    wxCheckBox* m_chkEnableWhenFaceDetected;
     wxStaticText* m_staticCpuUsage;
     wxChoice* m_choCpuUsage;
-    wxStaticText* m_staticLocateFaceTimeout1;
+    wxCheckBox* m_chkEnableWhenFaceDetected;
     wxSpinCtrl* m_spinLocateFaceTimeout;
-    wxStaticText* m_staticLocateFaceTimeout2;
+    wxStaticText* m_staticLocateFaceTimeout;
     wxChoice* m_choProfile;
     wxButton* m_btnAddProfile;
     wxButton* m_btnDeleteProfile;
