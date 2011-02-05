@@ -1558,7 +1558,7 @@ void CCameraV4L2::InstanceDestroyed()
 
 	if (--g_numInstances== 0) {
 		c_cleanup();
-		g_numDevices= 0;
+		g_numDevices= -1;
 	}
 }
 
