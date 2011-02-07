@@ -848,7 +848,7 @@ void WConfiguration::CreateControls()
 	}
 	
 	//Add hotkeys.
-	for (int j=0; j<wxGetApp().GetController().getHotkeyManager().GetKeyCommands().size(); j++) {
+	for (unsigned int j=0; j<wxGetApp().GetController().getHotkeyManager().GetKeyCommands().size(); j++) {
 		CreateHotkey (wxGetApp().GetController().getHotkeyManager().GetKeyCommands()[j], m_panelKeys, m_hotkeysSizer);
 	}
 	

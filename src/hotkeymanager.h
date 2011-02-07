@@ -60,13 +60,13 @@ public:
 		return m_keyCommands.size();
 	}
 	
-	CKeyCommand* GetKeyCommand (int index) {
+	CKeyCommand* GetKeyCommand (unsigned int index) {
 		assert (index < m_keyCommands.size());
 		return m_keyCommands[index];
 	}
 	
 	int IsKeyUsed (CKeyboardCode kc);
-	bool SetKeyCommand (int index, CKeyboardCode kc);
+	bool SetKeyCommand (unsigned int index, CKeyboardCode kc);
 	vector<CKeyCommand*> GetKeyCommands () { return m_keyCommands; }
 
 	// This method must be called periodically to check

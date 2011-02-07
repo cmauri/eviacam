@@ -62,7 +62,7 @@ public:
 	CKeyCommandCenterPointer()
 	{
 		SetName(_("hotKeyCenterPointer"));
-		SetDescription(_("Center the pointer on the screen"));
+		SetDescription(_("Center the pointer"));
 		SetKey(CKeyboardCode::FromASCII('c'));
 		SetEnabled(false);
 	}
@@ -187,7 +187,7 @@ void CHotkeyManager::WriteProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->SetPath (_T("hotKeyManager"));
 #if defined(__WXGTK__) 
-	for (int i=0; i<m_keyCommands.size(); i++) {
+	for (unsigned int i=0; i<m_keyCommands.size(); i++) {
 		pConfObj->Write(m_keyCommands[i]->GetName(), m_keyCommands[i]->IsEnabled());
 		pConfObj->Write(m_keyCommands[i]->GetName() + _T("Key"), static_cast<long>(m_keyCommands[i]->GetKey().GetRawValue()));
 	}
@@ -202,7 +202,7 @@ void CHotkeyManager::ReadProfileData(wxConfigBase* pConfObj)
 	bool isEnabled;
 	long rawKeyCode;
 	
-	for (int i=0; i<m_keyCommands.size(); i++) {
+	for (unsigned int i=0; i<m_keyCommands.size(); i++) {
 		if(pConfObj->Read(m_keyCommands[i]->GetName(), &isEnabled))
 			m_keyCommands[i]->SetEnabled(isEnabled);
 		
@@ -215,7 +215,7 @@ void CHotkeyManager::ReadProfileData(wxConfigBase* pConfObj)
 
 int CHotkeyManager::IsKeyUsed (CKeyboardCode kc)
 {
-	for (int i=0; i<m_keyCommands.size(); i++)
+	for (unsigned int i=0; i<m_keyCommands.size(); i++)
 	{
 		if (m_keyCommands[i]->GetKey() == kc)
 			return i;
@@ -223,7 +223,7 @@ int CHotkeyManager::IsKeyUsed (CKeyboardCode kc)
 	return -1;
 }
 
-bool CHotkeyManager::SetKeyCommand (int index, CKeyboardCode kc)
+bool CHotkeyManager::SetKeyCommand (unsigned int index, CKeyboardCode kc)
 {
 	assert (index < m_keyCommands.size());
 	if (IsKeyUsed(kc) == -1) {
