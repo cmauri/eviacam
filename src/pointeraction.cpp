@@ -89,6 +89,7 @@ void CPointerAction::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("leftWorkspace"), (long) GetLeftWorkspace());
 	pConfObj->Write(_T("rightWorkspace"), (long) GetRightWorkspace());
 	pConfObj->Write(_T("bottomWorkspace"), (long) GetBottomWorkspace());	
+	pConfObj->Write(_T("enabledWrapPointer"), (bool) GetWrapPointer());
 	pConfObj->Write(_T("clickMode"), (long) GetClickMode());
 	pConfObj->Write(_T("beepOnClick"), (bool) GetBeepOnClick());
 
@@ -111,6 +112,7 @@ void CPointerAction::ReadProfileData(wxConfigBase* pConfObj)
 	if (pConfObj->Read(_T("smoothness"), &val)) SetSmoothness(val);
 	if (pConfObj->Read(_T("easyStop"), &val)) SetEasyStopValue(val);
 	if (pConfObj->Read(_T("enabledWorkspace"), &valb)) SetRestrictedWorkingArea(valb);
+	if (pConfObj->Read(_T("enabledWrapPointer"), &valb)) SetWrapPointer(valb);
 	if (pConfObj->Read(_T("topWorkspace"), &val)) SetTopWorkspace(val);
 	if (pConfObj->Read(_T("leftWorkspace"), &val)) SetLeftWorkspace(val);
 	if (pConfObj->Read(_T("rightWorkspace"), &val)) SetRightWorkspace(val);

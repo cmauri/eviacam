@@ -37,6 +37,9 @@ public:
 	void SetRestrictedWorkingArea (bool value) { m_enabledRestrictedWorkingArea = value; }
 	bool GetRestrictedWorkingArea() const { return m_enabledRestrictedWorkingArea; }
 	void SetWorkingArea (float leftPercent, float rightPercent, float topPercent, float bottomPercent);
+	
+	void SetWrapPointer (bool value) { m_enabledWrapPointer = value; }
+	bool GetWrapPointer() const { return m_enabledWrapPointer; }
 
 	float GetTopPercent () const { return m_topPercent; }
 	void SetTopPercent (float topPercent) { 
@@ -123,6 +126,7 @@ private:
 	float m_minDeltaThreshold;
 	float m_dxant, m_dyant;
 	bool m_enabledRestrictedWorkingArea;
+	bool m_enabledWrapPointer;
 
 	// Motion low pass filter (relative motion)
 	float m_actualMotionWeight;

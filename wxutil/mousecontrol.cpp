@@ -27,6 +27,7 @@
 //exit(1);
 //}
 #include <math.h>
+#include <stdio.h>
 
 #if defined(WIN32)
 //
@@ -336,13 +337,33 @@ float CMouseControl::MovePointerRel (float dx, float dy, int* dxRes, int* dyRes)
 	
 	int idx= (int) roundf(dx);
 	int idy= (int) roundf(dy);
+	long mouseX, mouseY;
 	if (m_enabledRestrictedWorkingArea) {
-		long mouseX, mouseY;
 		GetPointerLocation (mouseX, mouseY);
 		if (mouseX + idx< m_minScreenX) idx= m_minScreenX - mouseX;
 		else if (mouseX + idx > m_maxScreenX) idx= m_maxScreenX - mouseX;
 		if (mouseY + idy < m_minScreenY) idy= m_minScreenY - mouseY;
 		else if (mouseY + idy > m_maxScreenY) idy= m_maxScreenY - mouseY;
+	}
+	
+	if (m_enabledWrapPointer) {
+		GetPointerLocation(mouseX, mouseY);
+		if (mouseX + idx < 0) {
+			idx -= mouseX;
+			DoMovePointerAbs(m_ScreenWidth, mouseY);
+		}		
+		if (mouseX + idx > m_ScreenWidth) {
+			idx -= m_ScreenWidth-mouseX;
+			DoMovePointerAbs(0, mouseY);
+		}
+		if (mouseY + idy < 0) {
+			idy -= mouseY;
+			DoMovePointerAbs(mouseX, m_ScreenHeight);
+		}
+		if (mouseY + idy > m_ScreenHeight) {
+			idy -= m_ScreenHeight-mouseY;
+			DoMovePointerAbs(mouseX, 0);
+		}
 	}
 
 	DoMovePointerRel (idx, idy);

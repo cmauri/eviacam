@@ -139,6 +139,13 @@ public:
 		if (value > 50) value = 50;
 		m_pMouseControl->SetBottomPercent((float) (50 - value) / 50.0f);
 	}
+	
+	void SetWrapPointer (bool value) { 
+		m_pMouseControl->SetWrapPointer(value); 
+	}
+	bool GetWrapPointer() const { 
+		return m_pMouseControl->GetWrapPointer();
+	}
 
 	//
 	void CenterPointer () { m_pMouseControl->CenterPointer(); };

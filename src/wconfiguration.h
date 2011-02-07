@@ -71,6 +71,7 @@ class wxPanel;
 #define ID_SPINCTRL_SMOOTHNESS 10002
 #define ID_SPINCTRL_EASYSTOP 10003
 #define ID_BUTTON 10074
+#define ID_CHECKBOX2 10067
 #define ID_PANEL_WORKSPACE 10061
 #define ID_CHECKBOX_WORKSPACE_LIMIT 10062
 #define ID_SPINCTRL_TOP_WORKSPACE 10063
@@ -179,6 +180,9 @@ private:
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON
     void OnButtonClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX2
+    void OnCheckboxWrapPointer( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_WORKSPACE_LIMIT
     void OnCheckboxWorkspaceLimitClick( wxCommandEvent& event );
@@ -348,6 +352,7 @@ private:
     wxSpinCtrl* m_spinSmoothness;
     wxSpinCtrl* m_spinEasyStop;
     wxButton* m_buttonCalibrateMotion;
+    wxCheckBox* m_chkWrapPointer;
     wxCheckBox* m_chkEnabledWorkspace;
     wxSpinCtrl* m_spin_top_workspace;
     wxSpinCtrl* m_spin_left_workspace;
