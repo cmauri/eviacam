@@ -338,7 +338,7 @@ float CMouseControl::MovePointerRel (float dx, float dy, int* dxRes, int* dyRes)
 	int idx= (int) roundf(dx);
 	int idy= (int) roundf(dy);
 	long mouseX, mouseY;
-	if (m_enabledRestrictedWorkingArea) {
+	if (m_enabledRestrictedWorkingArea && !m_enabledWrapPointer) {
 		GetPointerLocation (mouseX, mouseY);
 		if (mouseX + idx< m_minScreenX) idx= m_minScreenX - mouseX;
 		else if (mouseX + idx > m_maxScreenX) idx= m_maxScreenX - mouseX;
@@ -347,22 +347,35 @@ float CMouseControl::MovePointerRel (float dx, float dy, int* dxRes, int* dyRes)
 	}
 	
 	if (m_enabledWrapPointer) {
+		int minWrapX= 0;
+		int maxWrapX= m_ScreenWidth;
+		int minWrapY= 0;
+		int maxWrapY= m_ScreenHeight;
+				
+		if (m_enabledRestrictedWorkingArea) {
+			printf("");
+			minWrapX= m_minScreenX;
+			maxWrapX= m_maxScreenX;
+			minWrapY= m_minScreenY;
+			maxWrapY= m_maxScreenY;
+		}
+
 		GetPointerLocation(mouseX, mouseY);
-		if (mouseX + idx < 0) {
-			idx -= mouseX;
-			DoMovePointerAbs(m_ScreenWidth, mouseY);
+		if (mouseX + idx < minWrapX) {
+			idx -= mouseX - minWrapX;
+			DoMovePointerAbs(maxWrapX, mouseY);
 		}		
-		if (mouseX + idx > m_ScreenWidth) {
-			idx -= m_ScreenWidth-mouseX;
-			DoMovePointerAbs(0, mouseY);
+		if (mouseX + idx > maxWrapX) {
+			idx -= maxWrapX - mouseX;
+			DoMovePointerAbs(minWrapX, mouseY);
 		}
-		if (mouseY + idy < 0) {
-			idy -= mouseY;
-			DoMovePointerAbs(mouseX, m_ScreenHeight);
+		if (mouseY + idy < minWrapY) {
+			idy -= mouseY - minWrapY;
+			DoMovePointerAbs(mouseX, maxWrapY);
 		}
-		if (mouseY + idy > m_ScreenHeight) {
-			idy -= m_ScreenHeight-mouseY;
-			DoMovePointerAbs(mouseX, 0);
+		if (mouseY + idy > maxWrapY) {
+			idy -= maxWrapY - mouseY;
+			DoMovePointerAbs(mouseX, minWrapY);
 		}
 	}
 

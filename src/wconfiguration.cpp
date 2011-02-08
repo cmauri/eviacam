@@ -105,8 +105,6 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
 
     EVT_BUTTON( ID_BUTTON, WConfiguration::OnButtonClick )
 
-    EVT_CHECKBOX( ID_CHECKBOX2, WConfiguration::OnCheckboxWrapPointer )
-
     EVT_CHECKBOX( ID_CHECKBOX_WORKSPACE_LIMIT, WConfiguration::OnCheckboxWorkspaceLimitClick )
 
     EVT_SPINCTRL( ID_SPINCTRL_TOP_WORKSPACE, WConfiguration::OnSpinctrlTopWorkspaceUpdated )
@@ -116,6 +114,8 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
     EVT_SPINCTRL( ID_SPINCTRL_RIGHT_WORKSPACE, WConfiguration::OnSpinctrlRightWorkspaceUpdated )
 
     EVT_SPINCTRL( ID_SPINCTRL_BOTTOM_WORKSPACE, WConfiguration::OnSpinctrlBottomWorkspaceUpdated )
+
+    EVT_CHECKBOX( ID_CHECKBOX2, WConfiguration::OnCheckboxWrapPointer )
 
     EVT_CHECKBOX( ID_CHECKBOX_ENABLE_DWELL, WConfiguration::OnCheckboxEnableDwellClick )
 
@@ -267,12 +267,12 @@ void WConfiguration::Init()
     m_spinSmoothness = NULL;
     m_spinEasyStop = NULL;
     m_buttonCalibrateMotion = NULL;
-    m_chkWrapPointer = NULL;
     m_chkEnabledWorkspace = NULL;
     m_spin_top_workspace = NULL;
     m_spin_left_workspace = NULL;
     m_spin_right_workspace = NULL;
     m_spin_bottom_workspace = NULL;
+    m_chkWrapPointer = NULL;
     m_panelClick = NULL;
     m_chkDwellClickEnabled = NULL;
     m_stDwellTime = NULL;
@@ -437,87 +437,87 @@ void WConfiguration::CreateControls()
     m_buttonCalibrateMotion = new wxButton( itemPanel5, ID_BUTTON, _("Assisted calibration"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizer7->Add(m_buttonCalibrateMotion, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxStaticBox* itemStaticBoxSizer22Static = new wxStaticBox(itemPanel5, wxID_ANY, _("Wrap pointer"));
-    wxStaticBoxSizer* itemStaticBoxSizer22 = new wxStaticBoxSizer(itemStaticBoxSizer22Static, wxVERTICAL);
-    itemBoxSizer6->Add(itemStaticBoxSizer22, 0, wxGROW|wxALL, 5);
-    m_chkWrapPointer = new wxCheckBox( itemPanel5, ID_CHECKBOX2, _("Allow wrap the pointer"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_chkWrapPointer->SetValue(false);
-    itemStaticBoxSizer22->Add(m_chkWrapPointer, 0, wxALIGN_LEFT|wxALL, 5);
-
     itemNotebook4->AddPage(itemPanel5, _("Motion"));
 
-    wxPanel* itemPanel24 = new wxPanel( itemNotebook4, ID_PANEL_WORKSPACE, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-    wxBoxSizer* itemBoxSizer25 = new wxBoxSizer(wxVERTICAL);
-    itemPanel24->SetSizer(itemBoxSizer25);
+    wxPanel* itemPanel22 = new wxPanel( itemNotebook4, ID_PANEL_WORKSPACE, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+    wxBoxSizer* itemBoxSizer23 = new wxBoxSizer(wxVERTICAL);
+    itemPanel22->SetSizer(itemBoxSizer23);
 
-    wxStaticBox* itemStaticBoxSizer26Static = new wxStaticBox(itemPanel24, wxID_ANY, _("Workspace limit"));
-    wxStaticBoxSizer* itemStaticBoxSizer26 = new wxStaticBoxSizer(itemStaticBoxSizer26Static, wxVERTICAL);
-    itemBoxSizer25->Add(itemStaticBoxSizer26, 0, wxGROW|wxALL, 5);
-    m_chkEnabledWorkspace = new wxCheckBox( itemPanel24, ID_CHECKBOX_WORKSPACE_LIMIT, _("Enable workspace limit"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticBox* itemStaticBoxSizer24Static = new wxStaticBox(itemPanel22, wxID_ANY, _("Workspace limit"));
+    wxStaticBoxSizer* itemStaticBoxSizer24 = new wxStaticBoxSizer(itemStaticBoxSizer24Static, wxVERTICAL);
+    itemBoxSizer23->Add(itemStaticBoxSizer24, 0, wxGROW|wxALL, 5);
+    m_chkEnabledWorkspace = new wxCheckBox( itemPanel22, ID_CHECKBOX_WORKSPACE_LIMIT, _("Enable workspace limit"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkEnabledWorkspace->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkEnabledWorkspace->SetToolTip(_("Confines the mouse pointer\nto the selected area."));
-    itemStaticBoxSizer26->Add(m_chkEnabledWorkspace, 0, wxALIGN_LEFT|wxALL, 5);
+    itemStaticBoxSizer24->Add(m_chkEnabledWorkspace, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxBoxSizer* itemBoxSizer28 = new wxBoxSizer(wxHORIZONTAL);
-    itemStaticBoxSizer26->Add(itemBoxSizer28, 0, wxALIGN_CENTER_HORIZONTAL|wxLEFT|wxRIGHT, 5);
-    wxBoxSizer* itemBoxSizer29 = new wxBoxSizer(wxVERTICAL);
-    itemBoxSizer28->Add(itemBoxSizer29, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
-    wxGridSizer* itemGridSizer30 = new wxGridSizer(0, 3, 0, 0);
-    itemBoxSizer29->Add(itemGridSizer30, 0, wxALIGN_CENTER_HORIZONTAL, 5);
-    wxStaticText* itemStaticText31 = new wxStaticText( itemPanel24, wxID_STATIC, _("Top"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer30->Add(itemStaticText31, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxBoxSizer* itemBoxSizer26 = new wxBoxSizer(wxHORIZONTAL);
+    itemStaticBoxSizer24->Add(itemBoxSizer26, 0, wxALIGN_CENTER_HORIZONTAL|wxLEFT|wxRIGHT, 5);
+    wxBoxSizer* itemBoxSizer27 = new wxBoxSizer(wxVERTICAL);
+    itemBoxSizer26->Add(itemBoxSizer27, 0, wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT, 5);
+    wxGridSizer* itemGridSizer28 = new wxGridSizer(0, 3, 0, 0);
+    itemBoxSizer27->Add(itemGridSizer28, 0, wxALIGN_CENTER_HORIZONTAL, 5);
+    wxStaticText* itemStaticText29 = new wxStaticText( itemPanel22, wxID_STATIC, _("Top"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer28->Add(itemStaticText29, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spin_top_workspace = new wxSpinCtrl( itemPanel24, ID_SPINCTRL_TOP_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
+    m_spin_top_workspace = new wxSpinCtrl( itemPanel22, ID_SPINCTRL_TOP_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
     if (WConfiguration::ShowToolTips())
         m_spin_top_workspace->SetToolTip(_("Top limit workspace."));
     m_spin_top_workspace->Enable(false);
-    itemGridSizer30->Add(m_spin_top_workspace, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 5);
+    itemGridSizer28->Add(m_spin_top_workspace, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 5);
 
-    wxStaticText* itemStaticText33 = new wxStaticText( itemPanel24, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer30->Add(itemStaticText33, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxTOP|wxBOTTOM, 5);
+    wxStaticText* itemStaticText31 = new wxStaticText( itemPanel22, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer28->Add(itemStaticText31, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxTOP|wxBOTTOM, 5);
 
-    wxGridSizer* itemGridSizer34 = new wxGridSizer(0, 6, 0, 0);
-    itemBoxSizer29->Add(itemGridSizer34, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
-    wxStaticText* itemStaticText35 = new wxStaticText( itemPanel24, wxID_STATIC, _("Left"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer34->Add(itemStaticText35, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxGridSizer* itemGridSizer32 = new wxGridSizer(0, 6, 0, 0);
+    itemBoxSizer27->Add(itemGridSizer32, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+    wxStaticText* itemStaticText33 = new wxStaticText( itemPanel22, wxID_STATIC, _("Left"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer32->Add(itemStaticText33, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spin_left_workspace = new wxSpinCtrl( itemPanel24, ID_SPINCTRL_LEFT_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
+    m_spin_left_workspace = new wxSpinCtrl( itemPanel22, ID_SPINCTRL_LEFT_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
     if (WConfiguration::ShowToolTips())
         m_spin_left_workspace->SetToolTip(_("Left limit workspace."));
     m_spin_left_workspace->Enable(false);
-    itemGridSizer34->Add(m_spin_left_workspace, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 5);
+    itemGridSizer32->Add(m_spin_left_workspace, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 5);
 
-    wxStaticText* itemStaticText37 = new wxStaticText( itemPanel24, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer34->Add(itemStaticText37, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxTOP|wxBOTTOM, 5);
+    wxStaticText* itemStaticText35 = new wxStaticText( itemPanel22, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer32->Add(itemStaticText35, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxTOP|wxBOTTOM, 5);
 
-    wxStaticText* itemStaticText38 = new wxStaticText( itemPanel24, wxID_STATIC, _("Right"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer34->Add(itemStaticText38, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticText* itemStaticText36 = new wxStaticText( itemPanel22, wxID_STATIC, _("Right"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer32->Add(itemStaticText36, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spin_right_workspace = new wxSpinCtrl( itemPanel24, ID_SPINCTRL_RIGHT_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
+    m_spin_right_workspace = new wxSpinCtrl( itemPanel22, ID_SPINCTRL_RIGHT_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
     if (WConfiguration::ShowToolTips())
         m_spin_right_workspace->SetToolTip(_("Right limit workspace."));
     m_spin_right_workspace->Enable(false);
-    itemGridSizer34->Add(m_spin_right_workspace, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 5);
+    itemGridSizer32->Add(m_spin_right_workspace, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 5);
 
-    wxStaticText* itemStaticText40 = new wxStaticText( itemPanel24, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer34->Add(itemStaticText40, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxStaticText* itemStaticText38 = new wxStaticText( itemPanel22, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer32->Add(itemStaticText38, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxGridSizer* itemGridSizer41 = new wxGridSizer(0, 3, 0, 0);
-    itemBoxSizer29->Add(itemGridSizer41, 0, wxALIGN_CENTER_HORIZONTAL, 5);
-    wxStaticText* itemStaticText42 = new wxStaticText( itemPanel24, wxID_STATIC, _("Bottom"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer41->Add(itemStaticText42, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxRIGHT|wxTOP|wxBOTTOM, 5);
+    wxGridSizer* itemGridSizer39 = new wxGridSizer(0, 3, 0, 0);
+    itemBoxSizer27->Add(itemGridSizer39, 0, wxALIGN_CENTER_HORIZONTAL, 5);
+    wxStaticText* itemStaticText40 = new wxStaticText( itemPanel22, wxID_STATIC, _("Bottom"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer39->Add(itemStaticText40, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxRIGHT|wxTOP|wxBOTTOM, 5);
 
-    m_spin_bottom_workspace = new wxSpinCtrl( itemPanel24, ID_SPINCTRL_BOTTOM_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
+    m_spin_bottom_workspace = new wxSpinCtrl( itemPanel22, ID_SPINCTRL_BOTTOM_WORKSPACE, _T("1"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 50, 1 );
     if (WConfiguration::ShowToolTips())
         m_spin_bottom_workspace->SetToolTip(_("Bottom limit workspace."));
     m_spin_bottom_workspace->Enable(false);
-    itemGridSizer41->Add(m_spin_bottom_workspace, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 5);
+    itemGridSizer39->Add(m_spin_bottom_workspace, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 5);
 
-    wxStaticText* itemStaticText44 = new wxStaticText( itemPanel24, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridSizer41->Add(itemStaticText44, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 5);
+    wxStaticText* itemStaticText42 = new wxStaticText( itemPanel22, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridSizer39->Add(itemStaticText42, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 5);
 
-    itemNotebook4->AddPage(itemPanel24, _("Workspace"));
+    wxStaticBox* itemStaticBoxSizer43Static = new wxStaticBox(itemPanel22, wxID_ANY, _("Wrap pointer"));
+    wxStaticBoxSizer* itemStaticBoxSizer43 = new wxStaticBoxSizer(itemStaticBoxSizer43Static, wxVERTICAL);
+    itemBoxSizer23->Add(itemStaticBoxSizer43, 0, wxGROW|wxALL, 5);
+    m_chkWrapPointer = new wxCheckBox( itemPanel22, ID_CHECKBOX2, _("Allow wrap the pointer"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkWrapPointer->SetValue(false);
+    itemStaticBoxSizer43->Add(m_chkWrapPointer, 0, wxALIGN_LEFT|wxALL, 5);
+
+    itemNotebook4->AddPage(itemPanel22, _("Workspace"));
 
     m_panelClick = new wxPanel( itemNotebook4, ID_PANEL_CLICK, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer46 = new wxBoxSizer(wxVERTICAL);
@@ -946,9 +946,7 @@ void WConfiguration::InitializeData ()
 		wxGetApp().GetController().GetPointerAction().GetSmoothness());
 	m_spinEasyStop->SetValue (
 		wxGetApp().GetController().GetPointerAction().GetEasyStopValue());
-	m_chkWrapPointer->SetValue (
-		wxGetApp().GetController().GetPointerAction().GetWrapPointer());
-	
+		
 	// Workspace
 	m_chkEnabledWorkspace->SetValue (
 		wxGetApp().GetController().GetPointerAction().GetRestrictedWorkingArea());
@@ -966,6 +964,8 @@ void WConfiguration::InitializeData ()
 		wxGetApp().GetController().GetPointerAction().GetRightWorkspace());
 	m_spin_bottom_workspace->SetValue (
 		wxGetApp().GetController().GetPointerAction().GetBottomWorkspace());
+	m_chkWrapPointer->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetWrapPointer());	
 	
 	// Clic
 	m_chkDwellClickEnabled->SetValue (
