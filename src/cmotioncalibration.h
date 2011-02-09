@@ -29,7 +29,7 @@ public:
 	CMotionCalibration();
 	~CMotionCalibration();
 	bool InitMotionCalibration();
-	void ComputeMotionRange (float vx, float vy);
+	void ComputeMotionRange (float vx, float vy, bool warnFaceNotDetected);
 
 private:
 	void InitValues();

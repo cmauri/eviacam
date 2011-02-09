@@ -358,8 +358,7 @@ bool CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 		m_condition.Signal();
 	}
 	
-	
-	if (m_enableWhenFaceDetected && !IsFaceDetected())
+	if (m_trackFace && m_enableWhenFaceDetected && !IsFaceDetected())
 		return false;
 	else
 		return true;

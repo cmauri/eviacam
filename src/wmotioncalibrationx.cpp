@@ -48,6 +48,11 @@
 
 IMPLEMENT_DYNAMIC_CLASS( WMotionCalibrationX, wxDialog )
 
+DECLARE_EVENT_TYPE(wxEVT_FACE_NOT_DETECTED, -1)
+DECLARE_EVENT_TYPE(wxEVT_FACE_DETECTED, -1)
+
+DEFINE_EVENT_TYPE(wxEVT_FACE_NOT_DETECTED)
+DEFINE_EVENT_TYPE(wxEVT_FACE_DETECTED)
 
 /*!
  * WMotionCalibrationX event table definition
@@ -57,6 +62,9 @@ BEGIN_EVENT_TABLE( WMotionCalibrationX, wxDialog )
 
 ////@begin WMotionCalibrationX event table entries
 ////@end WMotionCalibrationX event table entries
+
+EVT_COMMAND  (wxID_ANY, wxEVT_FACE_NOT_DETECTED, WMotionCalibrationX::OnFaceNotDetected)
+EVT_COMMAND  (wxID_ANY, wxEVT_FACE_DETECTED, WMotionCalibrationX::OnFaceDetected)
 
 END_EVENT_TABLE()
 
@@ -117,6 +125,7 @@ void WMotionCalibrationX::Init()
 {
 ////@begin WMotionCalibrationX member initialisation
     m_staticText = NULL;
+    m_staticTextFaceNotDetected = NULL;
 ////@end WMotionCalibrationX member initialisation
 }
 
@@ -138,6 +147,9 @@ void WMotionCalibrationX::CreateControls()
 
     m_staticText = new wxStaticText( itemDialog1, wxID_STATIC, _("Move your head left and right."), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(m_staticText, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    m_staticTextFaceNotDetected = new wxStaticText( itemDialog1, wxID_STATIC, _("Face is not detected. This may cause a wrong calibration."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(m_staticTextFaceNotDetected, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
 ////@end WMotionCalibrationX content construction
 }
@@ -181,4 +193,25 @@ wxIcon WMotionCalibrationX::GetIconResource( const wxString& name )
     wxUnusedVar(name);
     return wxNullIcon;
 ////@end WMotionCalibrationX icon retrieval
+}
+
+void WMotionCalibrationX::OnFaceNotDetected( wxCommandEvent& )
+{
+	m_staticTextFaceNotDetected->Show(true);
+}
+
+void WMotionCalibrationX::OnFaceDetected( wxCommandEvent& )
+{
+	m_staticTextFaceNotDetected->Show(false);
+}
+
+void WMotionCalibrationX::SetFaceDetected( bool isFaceDetected )
+{
+	if (isFaceDetected) {
+		wxCommandEvent event (wxEVT_FACE_DETECTED);
+		wxPostEvent(this, event);
+	} else {
+		wxCommandEvent event (wxEVT_FACE_NOT_DETECTED);
+		wxPostEvent(this, event);
+	}
 }

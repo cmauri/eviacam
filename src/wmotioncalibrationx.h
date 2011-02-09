@@ -83,6 +83,8 @@ public:
 ////@begin WMotionCalibrationX event handler declarations
 
 ////@end WMotionCalibrationX event handler declarations
+	void OnFaceNotDetected( wxCommandEvent& event );
+	void OnFaceDetected( wxCommandEvent& event );
 	
 ////@begin WMotionCalibrationX member function declarations
 
@@ -92,12 +94,14 @@ public:
     /// Retrieves icon resources
     wxIcon GetIconResource( const wxString& name );
 ////@end WMotionCalibrationX member function declarations
+	void SetFaceDetected( bool isFaceDetected );
 
     /// Should we show tooltips?
     static bool ShowToolTips();
 
 ////@begin WMotionCalibrationX member variables
     wxStaticText* m_staticText;
+    wxStaticText* m_staticTextFaceNotDetected;
 ////@end WMotionCalibrationX member variables
 };
 

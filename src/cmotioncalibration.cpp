@@ -165,11 +165,12 @@ bool CMotionCalibration::InitMotionCalibration()
 }
 
 
-void CMotionCalibration::ComputeMotionRange (float vx, float vy)
+void CMotionCalibration::ComputeMotionRange (float vx, float vy, bool warnFaceNotDetected)
 {
 	switch (m_state)
 	{
 		case WAITING_X:
+			((WMotionCalibrationX*)m_pDialog)->SetFaceDetected(warnFaceNotDetected);
 			m_posXVirt += vx;
 			if (fabs(vx) > MOTION_THRESHOLD_X) {
 				m_state = MEASURING_X;
@@ -184,6 +185,8 @@ void CMotionCalibration::ComputeMotionRange (float vx, float vy)
 			break;
 			
 		case MEASURING_X:
+			((WMotionCalibrationX*)m_pDialog)->SetFaceDetected(warnFaceNotDetected);
+			
 			m_posXVirt += vx;
 			if (m_posXVirt > m_posXVirtMax) {
 				m_posXVirtMax = m_posXVirt;
@@ -204,6 +207,7 @@ void CMotionCalibration::ComputeMotionRange (float vx, float vy)
 			break;
 			
 		case WAITING_Y:
+			((WMotionCalibrationY*)m_pDialog)->SetFaceDetected(warnFaceNotDetected);
 			m_posYVirt += vy;
 			if (fabs(vy) > MOTION_THRESHOLD_Y) {
 				m_state = MEASURING_Y;
@@ -218,6 +222,7 @@ void CMotionCalibration::ComputeMotionRange (float vx, float vy)
 			break;
 			
 		case MEASURING_Y:
+			((WMotionCalibrationY*)m_pDialog)->SetFaceDetected(warnFaceNotDetected);
 			m_posYVirt += vy;
 			if (m_posYVirt > m_posYVirtMax) {
 				m_posYVirtMax = m_posYVirt;

@@ -47,6 +47,8 @@
 
 IMPLEMENT_DYNAMIC_CLASS( WMotionCalibrationY, wxDialog )
 
+DEFINE_EVENT_TYPE(wxEVT_FACE_NOT_DETECTED)
+DEFINE_EVENT_TYPE(wxEVT_FACE_DETECTED)
 
 /*!
  * WMotionCalibrationY event table definition
@@ -56,6 +58,8 @@ BEGIN_EVENT_TABLE( WMotionCalibrationY, wxDialog )
 
 ////@begin WMotionCalibrationY event table entries
 ////@end WMotionCalibrationY event table entries
+EVT_COMMAND  (wxID_ANY, wxEVT_FACE_NOT_DETECTED, WMotionCalibrationY::OnFaceNotDetected)
+EVT_COMMAND  (wxID_ANY, wxEVT_FACE_DETECTED, WMotionCalibrationY::OnFaceDetected)
 
 END_EVENT_TABLE()
 
@@ -116,6 +120,7 @@ void WMotionCalibrationY::Init()
 {
 ////@begin WMotionCalibrationY member initialisation
     m_staticText = NULL;
+    m_staticTextFaceNotDetected = NULL;
 ////@end WMotionCalibrationY member initialisation
 }
 
@@ -137,6 +142,9 @@ void WMotionCalibrationY::CreateControls()
 
     m_staticText = new wxStaticText( itemDialog1, wxID_STATIC, _("Move your head up and down."), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(m_staticText, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+
+    m_staticTextFaceNotDetected = new wxStaticText( itemDialog1, wxID_STATIC, _("Face is not detected. This may cause a wrong calibration."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer2->Add(m_staticTextFaceNotDetected, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
 ////@end WMotionCalibrationY content construction
 }
@@ -180,4 +188,25 @@ wxIcon WMotionCalibrationY::GetIconResource( const wxString& name )
     wxUnusedVar(name);
     return wxNullIcon;
 ////@end WMotionCalibrationY icon retrieval
+}
+
+void WMotionCalibrationY::OnFaceNotDetected( wxCommandEvent& )
+{
+	m_staticTextFaceNotDetected->Show(true);
+}
+
+void WMotionCalibrationY::OnFaceDetected( wxCommandEvent& )
+{
+	m_staticTextFaceNotDetected->Show(false);
+}
+
+void WMotionCalibrationY::SetFaceDetected( bool isFaceDetected )
+{
+	if (isFaceDetected) {
+		wxCommandEvent event (wxEVT_FACE_DETECTED);
+		wxPostEvent(this, event);
+	} else {
+		wxCommandEvent event (wxEVT_FACE_NOT_DETECTED);
+		wxPostEvent(this, event);
+	}
 }

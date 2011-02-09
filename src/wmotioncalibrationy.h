@@ -46,7 +46,7 @@
 
 ////@begin control identifiers
 #define ID_WMOTIONCALIBRATIONY 10076
-#define SYMBOL_WMOTIONCALIBRATIONY_STYLE wxCAPTION|wxSTAY_ON_TOP|wxDIALOG_MODAL|wxTAB_TRAVERSAL
+#define SYMBOL_WMOTIONCALIBRATIONY_STYLE wxCAPTION|wxSTAY_ON_TOP|wxTAB_TRAVERSAL
 #define SYMBOL_WMOTIONCALIBRATIONY_TITLE _("Motion Calibration Y")
 #define SYMBOL_WMOTIONCALIBRATIONY_IDNAME ID_WMOTIONCALIBRATIONY
 #define SYMBOL_WMOTIONCALIBRATIONY_SIZE wxSize(400, 300)
@@ -83,6 +83,8 @@ public:
 ////@begin WMotionCalibrationY event handler declarations
 
 ////@end WMotionCalibrationY event handler declarations
+	void OnFaceNotDetected( wxCommandEvent& event );
+	void OnFaceDetected( wxCommandEvent& event );
 
 ////@begin WMotionCalibrationY member function declarations
 
@@ -92,12 +94,14 @@ public:
     /// Retrieves icon resources
     wxIcon GetIconResource( const wxString& name );
 ////@end WMotionCalibrationY member function declarations
-
+	void SetFaceDetected( bool isFaceDetected );
+	
     /// Should we show tooltips?
     static bool ShowToolTips();
 
 ////@begin WMotionCalibrationY member variables
     wxStaticText* m_staticText;
+    wxStaticText* m_staticTextFaceNotDetected;
 ////@end WMotionCalibrationY member variables
 };
 

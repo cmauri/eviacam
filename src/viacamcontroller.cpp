@@ -404,11 +404,12 @@ void CViacamController::ProcessImage (IplImage *pImage)
 		// Send mouse motion
 		BEGIN_GUI_CALL_MUTEX()
 		if (m_motionCalibrationEnabled)
-			m_pMotionCalibration->ComputeMotionRange (-vx, vy);
+			m_pMotionCalibration->ComputeMotionRange (-vx, vy, !(m_visionPipeline.GetTrackFace() && !m_visionPipeline.IsFaceDetected()));
 		else
 			m_pointerAction->ProcessMotion (-vx, vy);
 		END_GUI_CALL_MUTEX()
 	}
+	
 
 	m_hotKeyManager->CheckKeyboardStatus();	
 }
