@@ -141,7 +141,6 @@ CClickWindowBitmap::CClickWindowBitmap( wxWindow* parent, wxWindowID id, const w
     Create(parent, id, caption, pos, size, style);
 }
 
-
 /*!
  * CClickWindowBitmap creator
  */

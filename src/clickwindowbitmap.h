@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        clickwindowbitmap.h
 // Purpose:     
-// Author:      César Mauri Loba
+// Author:      Cï¿½sar Mauri Loba
 // Modified by: 
 // Created:     16/11/2009 15:10:47
 // RCS-ID:      
@@ -51,13 +51,15 @@
 #define ID_BITMAPBUTTON_DRAG 10058
 #define ID_BITMAPBUTTON_DBLCLICK 10059
 #define ID_BITMAPBUTTON 10060
-#define SYMBOL_CCLICKWINDOWBITMAP_STYLE wxSTAY_ON_TOP|wxSIMPLE_BORDER
+#define SYMBOL_CCLICKWINDOWBITMAP_STYLE wxCAPTION|wxSTAY_ON_TOP|wxTAB_TRAVERSAL
 #define SYMBOL_CCLICKWINDOWBITMAP_TITLE _("Click Window Bitmap")
 #define SYMBOL_CCLICKWINDOWBITMAP_IDNAME ID_CCLICKWINDOWBITMAP
 #define SYMBOL_CCLICKWINDOWBITMAP_SIZE wxDefaultSize
 #define SYMBOL_CCLICKWINDOWBITMAP_POSITION wxPoint(0, 0)
 ////@end control identifiers
-
+//#define SYMBOL_CCLICKWINDOWBITMAP_STYLE_NO_DOCKING wxCAPTION|wxSTAY_ON_TOP|wxDIALOG_MODAL|wxTAB_TRAVERSAL
+#define SYMBOL_CCLICKWINDOWBITMAP_STYLE_NO_DOCKING wxSTAY_ON_TOP
+#define SYMBOL_CCLICKWINDOWBITMAP_STYLE_TOP_DOCKING wxSTAY_ON_TOP|wxSIMPLE_BORDER
 
 /*!
  * CClickWindowBitmap class declaration

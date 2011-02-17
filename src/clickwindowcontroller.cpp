@@ -22,9 +22,9 @@
 
 #include <wx/gdicmn.h>
 #include "clickwindowcontroller.h"
+#include "viacamcontroller.h"
 #include "clickwindowtext.h"
 #include "clickwindowbitmap.h"
-#include "viacamcontroller.h"
 #include "wviacam.h"
 
 CClickWindowController::CClickWindowController(CViacamController & pViacamController)
@@ -84,7 +84,7 @@ void CClickWindowController::Show(bool show)
 {
 	if (show!= m_pWindow->IsShown())
 	{
-		m_pWindow->Show(show);
+		m_pWindow->SetDockingStyle((CClickWindow::EDocking)m_dockingMode, show);
 		if (show) m_pWindow->UpdateButtons(GetEnabled(),GetCurrentButton(), GetLockedButton());
 	}
 }
@@ -191,6 +191,14 @@ void CClickWindowController::SetDesign(CClickWindowController::EDesign design)
 	}
 }
 
+void CClickWindowController::SetDockingMode(CClickWindowController::EDocking dockingMode) 
+{	
+	if (m_dockingMode== dockingMode) return;
+	m_dockingMode = dockingMode;
+	m_pWindow->SetDockingStyle((CClickWindow::EDocking)m_dockingMode, IsShown());
+}
+
+
 // Called from mouse controller. Notifies click bar that the click action has 
 // to be sent and where. Updates internal state.
 void CClickWindowController::ActionDone(long x, long y) 
@@ -287,6 +295,7 @@ void CClickWindowController::InitDefaults()
 {
 	SetFastMode (false);
 	SetDesign (CClickWindowController::NORMAL);	
+	SetDockingMode(CClickWindowController::NO_DOCKING);
 }
 
 void CClickWindowController::WriteProfileData(wxConfigBase* pConfObj)
@@ -295,6 +304,7 @@ void CClickWindowController::WriteProfileData(wxConfigBase* pConfObj)
 
 	pConfObj->Write(_T("fastMode"), m_fastMode);
 	pConfObj->Write(_T("design"), (long) m_design);
+	pConfObj->Write(_T("dockingMode"), (long) m_dockingMode);
 
 	pConfObj->SetPath (_T(".."));
 }
@@ -304,10 +314,12 @@ void CClickWindowController::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->SetPath (_T("clickWindow"));
 
 	pConfObj->Read(_T("fastMode"), &m_fastMode);
-	long design;
+	long design, dockingMode;
 	if (pConfObj->Read(_T("design"), &design))
 		SetDesign ((CClickWindowController::EDesign) design);
-
+	if (pConfObj->Read(_T("dockingMode"), &dockingMode))
+		SetDockingMode((CClickWindowController::EDocking) dockingMode);
+	
 	pConfObj->SetPath (_T(".."));
 }
 

@@ -93,6 +93,7 @@ class wxPanel;
 #define ID_STATIC_BEHAVIOUR 10082
 #define ID_CHOICE_BEHAVIOUR 10006
 #define ID_CHECKBOX_SHOW_CLICKWIN 10037
+#define ID_CHOICE5 10068
 #define ID_STATICBOX_GESTURE_CLICK 10008
 #define ID_CHECKBOX 10034
 #define ID_STATIC_MOVE_LEFT 10083
@@ -227,6 +228,9 @@ private:
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SHOW_CLICKWIN
     void OnCheckboxShowClickwinClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE5
+    void OnChoiceClickWindowModeSelected( wxCommandEvent& event );
 
 #if defined(__WXGTK__)
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
@@ -375,6 +379,7 @@ private:
     wxStaticText* m_stBehaviour;
     wxChoice* m_choClickWindowBehaviour;
     wxCheckBox* m_chkShowClickWin;
+    wxChoice* m_choDockingMode;
 #if defined(__WXGTK__)
     wxStaticBox* m_sboxGestureClick;
 #endif

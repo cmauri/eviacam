@@ -301,8 +301,11 @@ bool WXAppBar::ProcessEvent(wxEvent& event)
 	return wxDialog::ProcessEvent (event);
 }
 
-bool WXAppBar::Show (bool show)
+
+bool WXAppBar::SetDockingStyle (EDocking dockingMode, bool show)
 {
+	wxDialog::Show (false);
+	
 	if (show== IsShown ()) return false;
 		
 #if defined(__WXMSW__)
@@ -372,7 +375,6 @@ bool WXAppBar::Show (bool show)
 		// Try to get real work area to set metrics
 		// TOP location only supported for the moment
 		atomTmp = XInternAtom(dd, "_NET_WORKAREA", False);
-		
 		Atom actual_type;
 		int actual_format;
 		unsigned long nitems;
@@ -401,6 +403,8 @@ bool WXAppBar::Show (bool show)
 		// Set metrics (TOP location only)
 		wxSize proposedSize= DoGetBestSize();
 		m_Height= proposedSize.GetHeight();	
+		if (dockingMode== WXAppBar::NO_DOCKING)
+			m_Width= proposedSize.GetWidth();
 	
 		SetSize(m_X, m_Y, m_Width, m_Height, 0);
 		wxDialog::Show (true);	// Do real show. If not, no underlying window is created the first time.
@@ -426,14 +430,23 @@ bool WXAppBar::Show (bool show)
 		XUnmapWindow(dd, w);
 		XSync(dd, False);
 		assert (!IsMappedWindow(dd,w));
-		
+	
 		//
 		// Reserves an area in the desktop
 		//
-		atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
 		//		CARD32 
-		unsigned long strut[] = { 0,0,m_Height + m_Y,0 };	// TOP		
-		XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
+		unsigned long strut[4];
+		atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
+		switch(dockingMode)
+		{
+			case (WXAppBar::NO_DOCKING):
+				XDeleteProperty(dd, w, atomTmp);
+				break;
+			case (WXAppBar::TOP_DOCKING):
+				strut = { 0,0,m_Height + m_Y,0 };	// TOP		
+				XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
+				break;
+		}
 	
 		//
 		// Set window in WIN_LAYER_ABOVE_DOCK (see GNOME Window Manager Compliance document for details)
@@ -442,7 +455,7 @@ bool WXAppBar::Show (bool show)
 		atomTmp= XInternAtom (dd, "_WIN_LAYER", False);
 		val= 10;
 		XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &val, 1);
-	
+			
 		// TODO: the same as above, also deprecated
 		atomTmp= XInternAtom (dd, "_NET_WM_LAYER", False);
 		val= _NET_WIN_LAYER_ABOVE_DOCK;
@@ -459,7 +472,7 @@ bool WXAppBar::Show (bool show)
 		// TODO: the same as above, also deprecated
 		atomTmp= XInternAtom (dd, "_NET_WM_HINTS", False);
 		val= _NET_WM_HINTS_SKIP_FOCUS | WIN_HINTS_SKIP_WINLIST | _NET_WM_HINTS_SKIP_WINLIST | WIN_HINTS_DO_NOT_COVER |
-		_NET_WM_HINTS_NO_AUTO_FOCUS | _NET_WM_HINTS_STANDALONE_MENUBAR | _NET_WM_HINTS_FIXED_POSITION | _NET_WM_HINTS_DO_NOT_COVER;
+				_NET_WM_HINTS_NO_AUTO_FOCUS | _NET_WM_HINTS_STANDALONE_MENUBAR | _NET_WM_HINTS_FIXED_POSITION | _NET_WM_HINTS_DO_NOT_COVER;
 		XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &val, 1);
 	
 		//
@@ -472,9 +485,16 @@ bool WXAppBar::Show (bool show)
 		unsigned long propInfo[2];
 		propInfo[0]= atom_NET_WM_WINDOW_TYPE_DOCK;
 		propInfo[1]= atom_NET_WM_WINDOW_TYPE_NORMAL;
-		
-		XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo[0], 2);	
-		
+		switch (dockingMode)
+		{
+			case (WXAppBar::NO_DOCKING):
+				XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo[1], 2);
+				break;
+			case (WXAppBar::TOP_DOCKING):
+				XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo[0], 2);
+				break;
+		}
+	
 		//
 		atomTmp= XInternAtom (dd, "_WIN_STATE", False);
 		val= WIN_STATE_STICKY | WIN_STATE_FIXED_POSITION;

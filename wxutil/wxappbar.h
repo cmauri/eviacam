@@ -49,6 +49,7 @@ class WXAppBar: public wxDialog
     DECLARE_EVENT_TABLE()
 
 public:
+	enum EDocking { NO_DOCKING= 0, TOP_DOCKING };
     /// Constructors
     WXAppBar();
     WXAppBar( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = SYMBOL_CWXAPPBAR_STYLE );
@@ -63,8 +64,7 @@ public:
     void Init();
     //void OnSize( wxSizeEvent& event );
 	void OnMove( wxMoveEvent& event );		
-	
-	virtual bool Show (bool show = true);
+	virtual bool SetDockingStyle (EDocking dockingMode, bool show = true);
 	virtual bool ProcessEvent(wxEvent& event);
 private:
 #if defined(__WXMSW__)

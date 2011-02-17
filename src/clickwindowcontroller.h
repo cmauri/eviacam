@@ -26,6 +26,7 @@
 
 class CViacamController;
 class CClickWindow;
+class WXAppBar;
 
 class CClickWindowController  : public CConfigBase
 {
@@ -33,6 +34,7 @@ class CClickWindowController  : public CConfigBase
 	enum EButton { NO_CLICK= 0, LEFT, RIGHT, DRAG, DBLCLICK };
 	enum EAction { ACT_NO_CLICK = 0, ACT_LEFT_CLICK, ACT_RIGHT_CLICK, ACT_LEFT_DOWN, ACT_LEFT_UP, ACT_DOUBLE_CLICK };
 	enum EDesign { NORMAL= 0, THIN };
+	enum EDocking { NO_DOCKING= 0, TOP_DOCKING };
 
     CClickWindowController(CViacamController & pViacamController);
 	~CClickWindowController();
@@ -57,6 +59,9 @@ class CClickWindowController  : public CConfigBase
 
 	inline const bool GetFastMode() const;
     void SetFastMode(bool enable);
+    
+    inline const CClickWindowController::EDocking GetDockingMode() const;
+    void SetDockingMode(CClickWindowController::EDocking dockingMode);
 
 	inline const EButton GetCurrentButton () const;
 	inline const EButton GetLockedButton () const;
@@ -94,6 +99,7 @@ class CClickWindowController  : public CConfigBase
 	bool m_halfDragClick;
     bool m_fastMode;
     EDesign m_design;
+    CClickWindowController::EDocking m_dockingMode;
 };
 
 inline const CClickWindowController::EDesign CClickWindowController::GetDesign()
@@ -104,6 +110,11 @@ inline const CClickWindowController::EDesign CClickWindowController::GetDesign()
 inline const bool CClickWindowController::GetFastMode() const
 {
 	return m_fastMode;
+}
+
+inline const CClickWindowController::EDocking CClickWindowController::GetDockingMode() const
+{
+	return m_dockingMode;
 }
 
 inline const CClickWindowController::EButton CClickWindowController::GetCurrentButton () const
