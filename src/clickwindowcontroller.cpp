@@ -275,8 +275,11 @@ void CClickWindowController::SetFastMode(bool enable)
 inline
 bool CClickWindowController::IsCursorOverNoClickButton(long x, long y)
 {
+	wxRect parentPos= m_pWindow->GetRect();
 	wxRect pos= m_pWindow->GetNoClickButton()->GetRect();
-
+	pos.SetX (parentPos.GetX() + pos.GetX());
+	pos.SetY (parentPos.GetY() + pos.GetY());
+	
 	if (y<= pos.GetBottom() && y>= pos.GetTop() && x>= pos.GetLeft() && x<= pos.GetRight())
 		return true;
 	else	
