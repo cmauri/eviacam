@@ -101,11 +101,9 @@ void CClickWindowController::Reset()
 inline
 bool CClickWindowController::IsCursorOverWindow(long x, long y)
 {
-	// FIXME: fix this, not working properly 
-	wxRect parentPos= m_pWindow->GetNoClickButton()->GetRect();
 	wxRect pos= m_pWindow->GetRect();
-	pos.SetX (pos.GetX() + parentPos.GetX());
-	pos.SetY (pos.GetY() + parentPos.GetY());
+	wxRect parentPos= m_pWindow->GetNoClickButton()->GetScreenRect();
+	pos.Offset(0, parentPos.GetY() - pos.GetY());
 
 	if (y<= pos.GetBottom() && y>= pos.GetTop() && x>= pos.GetLeft() && x<= pos.GetRight())
 		return true;
@@ -275,11 +273,7 @@ void CClickWindowController::SetFastMode(bool enable)
 inline
 bool CClickWindowController::IsCursorOverNoClickButton(long x, long y)
 {
-	wxRect parentPos= m_pWindow->GetRect();
-	wxRect pos= m_pWindow->GetNoClickButton()->GetRect();
-	pos.SetX (parentPos.GetX() + pos.GetX());
-	pos.SetY (parentPos.GetY() + pos.GetY());
-	
+	wxRect pos= m_pWindow->GetNoClickButton()->GetScreenRect();
 	if (y<= pos.GetBottom() && y>= pos.GetTop() && x>= pos.GetLeft() && x<= pos.GetRight())
 		return true;
 	else	

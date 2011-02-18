@@ -424,6 +424,7 @@ bool WXAppBar::SetDockingStyle (EDocking dockingMode, bool show)
 		wxWMspecSetState(dd, w, _NET_WM_STATE_ADD, atomTmp);
 		atomTmp= XInternAtom (dd, "_NET_WM_STATE_ABOVE", False);
 		wxWMspecSetState(dd, w, _NET_WM_STATE_ADD, atomTmp);
+		
 		XSync(dd, False);
 		
 		// Unmap window before set properties
