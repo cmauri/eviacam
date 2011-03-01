@@ -88,12 +88,13 @@ class wxPanel;
 #define ID_CHECKBOX_BEEP_ON_CLICK 10033
 #define ID_CHECKBOX_ALLOW_VISUAL_ALERTS 10089
 #define ID_STATICBOX_CLICK_WIN 10007
+#define ID_CHECKBOX_SHOW_CLICKWIN 10037
 #define ID_STATIC_DESIGN 10081
 #define ID_CHOICE_DESIGN 10087
+#define ID_CHOICE5 10068
 #define ID_STATIC_BEHAVIOUR 10082
 #define ID_CHOICE_BEHAVIOUR 10006
-#define ID_CHECKBOX_SHOW_CLICKWIN 10037
-#define ID_CHOICE5 10068
+#define ID_CHECKBOX_AUTOHIDE 10113
 #define ID_STATICBOX_GESTURE_CLICK 10008
 #define ID_CHECKBOX 10034
 #define ID_STATIC_MOVE_LEFT 10083
@@ -220,17 +221,20 @@ private:
     void OnCheckboxAllowVisualAlertsClick( wxCommandEvent& event );
 
 #endif
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SHOW_CLICKWIN
+    void OnCheckboxShowClickwinClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_DESIGN
     void OnChoiceDesignSelected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE5
+    void OnChoiceClickWindowModeSelected( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_BEHAVIOUR
     void OnChoiceBehaviourSelected( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_SHOW_CLICKWIN
-    void OnCheckboxShowClickwinClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE5
-    void OnChoiceClickWindowModeSelected( wxCommandEvent& event );
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTOHIDE
+    void OnCheckboxAutohideClick( wxCommandEvent& event );
 
 #if defined(__WXGTK__)
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
@@ -374,12 +378,13 @@ private:
     wxCheckBox* m_chkAllowVisualAlerts;
 #endif
     wxStaticBox* m_sboxClickWin;
+    wxCheckBox* m_chkShowClickWin;
     wxStaticText* m_stDesign;
     wxChoice* m_choClickWindowDesign;
+    wxChoice* m_choDockingMode;
     wxStaticText* m_stBehaviour;
     wxChoice* m_choClickWindowBehaviour;
-    wxCheckBox* m_chkShowClickWin;
-    wxChoice* m_choDockingMode;
+    wxCheckBox* m_chkAutohide;
 #if defined(__WXGTK__)
     wxStaticBox* m_sboxGestureClick;
 #endif
