@@ -25,7 +25,10 @@
 #include "viacamcontroller.h"
 #include "clickwindowtext.h"
 #include "clickwindowbitmap.h"
+#include "clickwindowbitmapvertical.h"
+#include "clickwindowvertical.h"
 #include "wviacam.h"
+#include "wx/window.h"
 
 CClickWindowController::CClickWindowController(CViacamController & pViacamController)
 {
@@ -43,7 +46,22 @@ CClickWindowController::CClickWindowController(CViacamController & pViacamContro
 	m_pWindowBitmap->SetController (*this);	
 	// FIXME: implement this using the observer pattern
 	m_pViacamController->GetMainWindow()->Connect 
-		(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowBitmap);
+			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowBitmap);
+	
+	// Create bitmap vertical window
+	m_pWindowBitmapVertical= new CClickWindowBitmapVertical (NULL);
+	m_pWindowBitmapVertical->SetController (*this);	
+	// FIXME: implement this using the observer pattern
+	m_pViacamController->GetMainWindow()->Connect 
+			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowBitmapVertical);
+	
+	// Create text vertical window
+	m_pWindowTextVertical= new CClickWindowTextVertical (NULL);
+	m_pWindowTextVertical->SetController (*this);	
+	// FIXME: implement this using the observer pattern
+	m_pViacamController->GetMainWindow()->Connect 
+			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowTextVertical);
+	
 	
 	// Set current window
 	m_pWindow= m_pWindowBitmap;
@@ -66,6 +84,11 @@ void CClickWindowController::Finalize ()
 			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowText);
 		m_pViacamController->GetMainWindow()->Disconnect 
 			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowBitmap);
+		m_pViacamController->GetMainWindow()->Disconnect 
+			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowBitmapVertical);
+		m_pViacamController->GetMainWindow()->Disconnect 
+				(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowTextVertical);
+	
 	}
 	if (m_pWindow)
 	{
@@ -75,7 +98,12 @@ void CClickWindowController::Finalize ()
 		m_pWindowBitmap->Show(false);
 		m_pWindowBitmap->Destroy ();
 		m_pWindowBitmap= NULL;
-
+		m_pWindowBitmapVertical->Show(false);
+		m_pWindowBitmapVertical->Destroy ();
+		m_pWindowBitmapVertical= NULL;
+		m_pWindowTextVertical->Show(false);
+		m_pWindowTextVertical->Destroy ();
+		m_pWindowTextVertical= NULL;
 		m_pWindow= NULL;
 	}	
 }
@@ -104,7 +132,7 @@ bool CClickWindowController::IsCursorOverWindow(long x, long y)
 	wxRect pos= m_pWindow->GetRect();
 	wxRect parentPos= m_pWindow->GetNoClickButton()->GetScreenRect();
 	pos.Offset(0, parentPos.GetY() - pos.GetY());
-
+	
 	if (y<= pos.GetBottom() && y>= pos.GetTop() && x>= pos.GetLeft() && x<= pos.GetRight())
 		return true;
 	else
@@ -177,9 +205,21 @@ void CClickWindowController::SetDesign(CClickWindowController::EDesign design)
 		if (isShown) Show(false);
 
 		if (design== CClickWindowController::NORMAL)
-			m_pWindow= m_pWindowBitmap;
+		{
+			if (m_dockingMode== CClickWindowController::LEFT_DOCKING ||
+						 m_dockingMode== CClickWindowController::RIGHT_DOCKING)	
+				m_pWindow= m_pWindowBitmapVertical;
+			else
+				m_pWindow= m_pWindowBitmap;
+		}
 		else
-			m_pWindow= m_pWindowText;
+		{
+			if (m_dockingMode== CClickWindowController::LEFT_DOCKING ||
+						 m_dockingMode== CClickWindowController::RIGHT_DOCKING)	
+				m_pWindow= m_pWindowTextVertical;
+			else
+				m_pWindow= m_pWindowText;
+		}
 
 		if (isShown) Show(true);	
 	}
@@ -192,8 +232,41 @@ void CClickWindowController::SetDesign(CClickWindowController::EDesign design)
 void CClickWindowController::SetDockingMode(CClickWindowController::EDocking dockingMode) 
 {	
 	if (m_dockingMode== dockingMode) return;
-	m_dockingMode = dockingMode;
-	m_pWindow->SetDockingStyle((CClickWindow::EDocking)m_dockingMode, IsShown());
+
+	if (dockingMode== CClickWindowController::NO_DOCKING	||
+		   dockingMode== CClickWindowController::TOP_DOCKING	||
+		   dockingMode== CClickWindowController::BOTTOM_DOCKING	||
+		   dockingMode== CClickWindowController::LEFT_DOCKING	||
+		   dockingMode== CClickWindowController::RIGHT_DOCKING)
+	{
+		m_dockingMode= dockingMode;
+		
+		bool isShown= IsShown();
+		
+		if (isShown) Show(false);
+		
+		if (dockingMode== CClickWindowController::LEFT_DOCKING ||
+				  dockingMode== CClickWindowController::RIGHT_DOCKING)
+		{
+			if (m_design== CClickWindowController::NORMAL)
+				m_pWindow= m_pWindowBitmapVertical;
+			else
+				m_pWindow= m_pWindowTextVertical;
+		}
+		else
+		{
+			if (m_design== CClickWindowController::NORMAL)
+				m_pWindow= m_pWindowBitmap;
+			else
+				m_pWindow= m_pWindowText;
+		}
+		if (isShown) Show(true);
+	}
+	else
+	{
+		m_dockingMode= CClickWindowController::NO_DOCKING;
+	}
+	
 }
 
 

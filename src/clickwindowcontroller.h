@@ -34,7 +34,7 @@ class CClickWindowController  : public CConfigBase
 	enum EButton { NO_CLICK= 0, LEFT, RIGHT, DRAG, DBLCLICK };
 	enum EAction { ACT_NO_CLICK = 0, ACT_LEFT_CLICK, ACT_RIGHT_CLICK, ACT_LEFT_DOWN, ACT_LEFT_UP, ACT_DOUBLE_CLICK };
 	enum EDesign { NORMAL= 0, THIN };
-	enum EDocking { NO_DOCKING= 0, TOP_DOCKING };
+	enum EDocking { NO_DOCKING= 0, TOP_DOCKING, BOTTOM_DOCKING, LEFT_DOCKING, RIGHT_DOCKING };
 
     CClickWindowController(CViacamController & pViacamController);
 	~CClickWindowController();
@@ -91,6 +91,9 @@ class CClickWindowController  : public CConfigBase
     CClickWindow * m_pWindow;
 	CClickWindow* m_pWindowText;
 	CClickWindow* m_pWindowBitmap;
+	CClickWindow* m_pWindowBitmapVertical;
+	CClickWindow* m_pWindowTextVertical;
+	
     CViacamController * m_pViacamController;
 	
 	bool m_enabled;

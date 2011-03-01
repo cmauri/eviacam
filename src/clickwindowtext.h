@@ -60,8 +60,6 @@ class wxToggleButton;
 #define SYMBOL_CCLICKWINDOWTEXT_SIZE wxDefaultSize
 #define SYMBOL_CCLICKWINDOWTEXT_POSITION wxPoint(0, 0)
 ////@end control identifiers
-#define SYMBOL_CCLICKWINDOWBITMAP_STYLE_NO_DOCKING wxSTAY_ON_TOP
-#define SYMBOL_CCLICKWINDOWBITMAP_STYLE_TOP_DOCKING wxSTAY_ON_TOP|wxSIMPLE_BORDER
 
 /*!
  * CClickWindowText class declaration

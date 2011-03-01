@@ -49,7 +49,7 @@ class WXAppBar: public wxDialog
     DECLARE_EVENT_TABLE()
 
 public:
-	enum EDocking { NO_DOCKING= 0, TOP_DOCKING };
+	enum EDocking { NO_DOCKING= 0, TOP_DOCKING, BOTTOM_DOCKING, LEFT_DOCKING, RIGHT_DOCKING };
     /// Constructors
     WXAppBar();
     WXAppBar( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = SYMBOL_CWXAPPBAR_STYLE );
@@ -71,6 +71,7 @@ private:
 //	void AppBarCallback (UINT uMsg, WPARAM wParam, LPARAM lParam);
 #endif
 	int m_X, m_Y, m_Width, m_Height;
+	int m_barX, m_barY, m_barWidth, m_barHeight;
 };
 
 #endif

@@ -4,8 +4,10 @@ noinst_HEADERS = wgetkey.h \
 	ckeyboardcode.h \
 	clickwindow.h \
 	clickwindowbitmap.h \
+	clickwindowbitmapvertical.h \
 	clickwindowcontroller.h \
 	clickwindowtext.h \
+	clickwindowvertical.h \
 	cmotioncalibration.h \
 	eviacamapp.h \
 	langnames-utf8.h \
@@ -98,8 +100,10 @@ eviacam_SOURCES = wgetkey.cpp \
 	ckeyboardcode.cpp \
 	clickwindow.cpp \
 	clickwindowbitmap.cpp \
+	clickwindowbitmapvertical.cpp \
 	clickwindowcontroller.cpp \
 	clickwindowtext.cpp \
+	clickwindowvertical.cpp \
 	cmotioncalibration.cpp \
 	eviacamapp.cpp \
 	visionpipeline.cpp \

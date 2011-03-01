@@ -618,6 +618,9 @@ void WConfiguration::CreateControls()
     wxArrayString m_choDockingModeStrings;
     m_choDockingModeStrings.Add(_("NO_DOCKING"));
     m_choDockingModeStrings.Add(_("TOP_DOCKING"));
+    m_choDockingModeStrings.Add(_("BOTTOM_DOCKING"));
+    m_choDockingModeStrings.Add(_("LEFT_DOCKING"));
+    m_choDockingModeStrings.Add(_("RIGHT_DOCKING"));
     m_choDockingMode = new wxChoice( m_panelClick, ID_CHOICE5, wxDefaultPosition, wxDefaultSize, m_choDockingModeStrings, 0 );
     itemFlexGridSizer68->Add(m_choDockingMode, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -1951,6 +1954,7 @@ void WConfiguration::OnChoiceClickWindowModeSelected( wxCommandEvent& event )
 {
 	wxGetApp().GetController().GetPointerAction().GetDwellClick().
 		GetClickWindowController().SetDockingMode ( (CClickWindowController::EDocking)event.GetSelection() );
+	
 	event.Skip(false);
 }
 
