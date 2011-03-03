@@ -292,6 +292,7 @@ void WConfiguration::Init()
     m_chkShowClickWin = NULL;
     m_stDesign = NULL;
     m_choClickWindowDesign = NULL;
+    m_stDocking = NULL;
     m_choDockingMode = NULL;
     m_stBehaviour = NULL;
     m_choClickWindowBehaviour = NULL;
@@ -598,11 +599,12 @@ void WConfiguration::CreateControls()
     m_choClickWindowDesign = new wxChoice( m_panelClick, ID_CHOICE_DESIGN, wxDefaultPosition, wxDefaultSize, m_choClickWindowDesignStrings, 0 );
     itemFlexGridSizer61->Add(m_choClickWindowDesign, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticText* itemStaticText64 = new wxStaticText( m_panelClick, wxID_STATIC, _("Docking mode:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer61->Add(itemStaticText64, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_stDocking = new wxStaticText( m_panelClick, wxID_STATIC, _("Docking mode:"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer61->Add(m_stDocking, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxArrayString m_choDockingModeStrings;
-    m_choDockingModeStrings.Add(_("None"));
+    m_choDockingModeStrings.Add(_("None horizontal"));
+    m_choDockingModeStrings.Add(_("None vertical"));
     m_choDockingModeStrings.Add(_("Top"));
     m_choDockingModeStrings.Add(_("Bottom"));
     m_choDockingModeStrings.Add(_("Left"));
@@ -1154,8 +1156,26 @@ void WConfiguration::EnableGUIClickWindowOptions(bool enable)
 	m_chkShowClickWin->Enable(enable);
 	m_choClickWindowDesign->Enable(enable);
 	m_choClickWindowBehaviour->Enable(enable);
+	m_choDockingMode->Enable(enable);
+	m_chkAutohide->Enable(enable);
 	m_stDesign->Enable(enable);
 	m_stBehaviour->Enable(enable);
+	m_stDocking->Enable(enable);
+	if (enable)
+	{
+		m_stDesign->Enable(m_chkShowClickWin->IsChecked());
+		m_choClickWindowDesign->Enable(m_chkShowClickWin->IsChecked());
+		m_stBehaviour->Enable(m_chkShowClickWin->IsChecked());
+		m_choClickWindowBehaviour->Enable(m_chkShowClickWin->IsChecked());
+		m_stDocking->Enable(m_chkShowClickWin->IsChecked());
+		m_choDockingMode->Enable(m_chkShowClickWin->IsChecked());
+		m_chkAutohide->Enable(m_chkShowClickWin->IsChecked());
+	}
+	if (m_choDockingMode->GetCurrentSelection()== CClickWindowController::NO_DOCKING_HORIZONTAL || 
+		m_choDockingMode->GetCurrentSelection()== CClickWindowController::NO_DOCKING_VERTICAL)
+	{
+		m_chkAutohide->Enable(false);
+	}
 }
 
 void WConfiguration::Changed ()
@@ -1371,6 +1391,19 @@ void WConfiguration::OnSpinctrlDwellAreaUpdated( wxSpinEvent& event )
 
 void WConfiguration::OnCheckboxShowClickwinClick( wxCommandEvent& event )
 {
+	m_stDesign->Enable(m_chkShowClickWin->IsChecked());
+	m_choClickWindowDesign->Enable(m_chkShowClickWin->IsChecked());
+	m_stBehaviour->Enable(m_chkShowClickWin->IsChecked());
+	m_choClickWindowBehaviour->Enable(m_chkShowClickWin->IsChecked());
+	m_stDocking->Enable(m_chkShowClickWin->IsChecked());
+	m_choDockingMode->Enable(m_chkShowClickWin->IsChecked());
+	m_chkAutohide->Enable(m_chkShowClickWin->IsChecked());	
+	if (m_choDockingMode->GetCurrentSelection()== CClickWindowController::NO_DOCKING_HORIZONTAL || 
+		m_choDockingMode->GetCurrentSelection()== CClickWindowController::NO_DOCKING_VERTICAL)
+	{
+		m_chkAutohide->Enable(false);
+	}
+		
 	wxGetApp().GetController().GetPointerAction().GetDwellClick().SetUseClickWindow(
 		!wxGetApp().GetController().GetPointerAction().GetDwellClick().GetUseClickWindow()
 	);
@@ -1955,6 +1988,13 @@ void WConfiguration::OnChoiceClickWindowModeSelected( wxCommandEvent& event )
 {
 	wxGetApp().GetController().GetPointerAction().GetDwellClick().
 		GetClickWindowController().SetDockingMode ( (CClickWindowController::EDocking)event.GetSelection() );
+	
+	if (m_choDockingMode->GetCurrentSelection()== CClickWindowController::NO_DOCKING_HORIZONTAL || 
+		m_choDockingMode->GetCurrentSelection()== CClickWindowController::NO_DOCKING_VERTICAL)
+		
+		m_chkAutohide->Enable(false);
+	else
+		m_chkAutohide->Enable(true);
 	
 	event.Skip(false);
 }

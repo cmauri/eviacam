@@ -381,6 +381,7 @@ private:
     wxCheckBox* m_chkShowClickWin;
     wxStaticText* m_stDesign;
     wxChoice* m_choClickWindowDesign;
+    wxStaticText* m_stDocking;
     wxChoice* m_choDockingMode;
     wxStaticText* m_stBehaviour;
     wxChoice* m_choClickWindowBehaviour;
