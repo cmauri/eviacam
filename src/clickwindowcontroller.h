@@ -34,7 +34,8 @@ class CClickWindowController  : public CConfigBase
 	enum EButton { NO_CLICK= 0, LEFT, RIGHT, DRAG, DBLCLICK };
 	enum EAction { ACT_NO_CLICK = 0, ACT_LEFT_CLICK, ACT_RIGHT_CLICK, ACT_LEFT_DOWN, ACT_LEFT_UP, ACT_DOUBLE_CLICK };
 	enum EDesign { NORMAL= 0, THIN };
-	enum EDocking { NO_DOCKING= 0, TOP_DOCKING, BOTTOM_DOCKING, LEFT_DOCKING, RIGHT_DOCKING };
+	enum EDocking { NO_DOCKING_HORIZONTAL= 0, NO_DOCKING_VERTICAL, TOP_DOCKING, BOTTOM_DOCKING, LEFT_DOCKING, RIGHT_DOCKING };
+	enum EClickWindowStatus { VISIBLE= 0, HIDDEN, DOCKED };
 
     CClickWindowController(CViacamController & pViacamController);
 	~CClickWindowController();
@@ -67,6 +68,10 @@ class CClickWindowController  : public CConfigBase
 	inline const EButton GetLockedButton () const;
 
 	inline const bool GetEnabled () const;
+	
+	inline const bool GetAutohide() const;
+	void SetAutohide(bool enable);
+	void AutohideClickWindow(long x, long y);
 
 	// Configuration methods
 	virtual void InitDefaults();
@@ -100,9 +105,11 @@ class CClickWindowController  : public CConfigBase
 	EButton m_currentButton;
 	EButton m_lockedButton;
 	bool m_halfDragClick;
-    bool m_fastMode;
-    EDesign m_design;
-    CClickWindowController::EDocking m_dockingMode;
+	bool m_fastMode;
+	EDesign m_design;
+	CClickWindowController::EDocking m_dockingMode;
+	bool m_autohide;
+	CClickWindowController::EClickWindowStatus m_status;
 };
 
 inline const CClickWindowController::EDesign CClickWindowController::GetDesign()
@@ -134,5 +141,11 @@ inline const bool CClickWindowController::GetEnabled () const
 {
 	return  m_enabled;
 }
+
+inline const bool CClickWindowController::GetAutohide() const
+{
+	return m_autohide;
+}
+
 
 #endif

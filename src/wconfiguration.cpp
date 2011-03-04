@@ -1012,6 +1012,8 @@ void WConfiguration::InitializeData ()
 		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetDesign());
 	m_choDockingMode->Select (
 		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetDockingMode());	
+	m_chkAutohide->SetValue (
+		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetAutohide() ? 1 : 0);	
 #if defined(__WXGTK__)
 	m_choLeft->Select (
 		wxGetApp().GetController().GetPointerAction().GetGestureClick().GetActionLeft());
@@ -2006,9 +2008,9 @@ void WConfiguration::OnChoiceClickWindowModeSelected( wxCommandEvent& event )
 
 void WConfiguration::OnCheckboxAutohideClick( wxCommandEvent& event )
 {
-////@begin wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTOHIDE in WConfiguration.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTOHIDE in WConfiguration. 
+	wxGetApp().GetController().GetPointerAction().GetDwellClick().
+	GetClickWindowController().SetAutohide(m_chkAutohide->IsChecked());
+	
+	event.Skip(false);
 }
 

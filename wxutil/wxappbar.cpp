@@ -115,6 +115,8 @@ END_EVENT_TABLE()
 #define _NET_WM_STATE_REMOVE        0    /* remove/unset property */
 #define _NET_WM_STATE_ADD           1    /* add/set property */
 #define _NET_WM_STATE_TOGGLE        2    /* toggle property  */
+		
+#define AUTOHIDE_FLANGE 10
 
 /*
 typedef struct _mwmhints
@@ -306,10 +308,10 @@ bool WXAppBar::ProcessEvent(wxEvent& event)
 }
 
 
-bool WXAppBar::SetDockingStyle (EDocking dockingMode, bool show)
+bool WXAppBar::SetClickWindowStyle (EClickWindowStatus winStatus, EDocking dockingMode, bool show)
 {
 	if (show== IsShown ()) return false;
-	
+
 	wxDialog::Show (false);
 		
 #if defined(__WXMSW__)
@@ -408,51 +410,62 @@ bool WXAppBar::SetDockingStyle (EDocking dockingMode, bool show)
 		}
 		wxSize proposedSize= DoGetBestSize();
 				
+		m_barX= m_X;
+		m_barY= m_Y;
+		m_barWidth= proposedSize.GetWidth();
+		m_barHeight= proposedSize.GetHeight();
 		switch (dockingMode)
 		{
-			case (WXAppBar::NO_DOCKING):
-				m_barX= m_X;
-				m_barY= m_Y;
-				m_barWidth= proposedSize.GetWidth();
-				m_barHeight= proposedSize.GetHeight();
-				break;
-				
 			case (WXAppBar::TOP_DOCKING):
-				m_barX= m_X;
-				m_barY= m_Y;
-				m_barWidth= m_Width;
-				m_barHeight= proposedSize.GetHeight();
+				if (winStatus== WXAppBar::HIDDEN){
+					m_barY= AUTOHIDE_FLANGE - proposedSize.GetHeight();
+				}
+				if (winStatus== WXAppBar::VISIBLE){
+					m_barY= 0;
+				}
+				if (winStatus== WXAppBar::DOCKED){
+					m_barWidth= m_Width;
+				}
 				break;
-			
+
 			case (WXAppBar::BOTTOM_DOCKING):
-				m_barX= m_X;
-				m_barY= m_Y + m_Height - proposedSize.GetHeight();
-				m_barWidth= m_Width;
-				m_barHeight= proposedSize.GetHeight();
+				if (winStatus== WXAppBar::HIDDEN)
+					m_barY= DisplayHeight(dd, screen) - AUTOHIDE_FLANGE;
+				if (winStatus== WXAppBar::VISIBLE)
+					m_barY= DisplayHeight(dd, screen) - proposedSize.GetHeight();
+				if (winStatus== WXAppBar::DOCKED)
+				{
+					m_barY= m_Y + m_Height - proposedSize.GetHeight();
+					m_barWidth= m_Width;
+				}
 				break;
-				
+
 			case (WXAppBar::LEFT_DOCKING):
-				m_barX= m_X;
-				m_barY= m_Y;
-				m_barWidth= proposedSize.GetWidth();
-				m_barHeight= m_Height;
+				if (winStatus== WXAppBar::HIDDEN)
+					m_barX= AUTOHIDE_FLANGE - proposedSize.GetWidth();
+				if (winStatus== WXAppBar::DOCKED)
+					m_barHeight= m_Height;
 				break;
-				
+
 			case (WXAppBar::RIGHT_DOCKING):
-				m_barX= m_Width - proposedSize.GetWidth();
-				m_barY= m_Y;
-				m_barWidth= proposedSize.GetWidth();
-				m_barHeight= m_Height;
+				if (winStatus== WXAppBar::HIDDEN)
+					m_barX= DisplayWidth(dd, screen) - AUTOHIDE_FLANGE;
+				else
+					m_barX= m_Width - proposedSize.GetWidth();
+				if (winStatus== WXAppBar::DOCKED)
+					m_barHeight= m_Height;
+				break;
+
+			default:
 				break;
 		}
-		
+
 		SetSize(m_barX, m_barY, m_barWidth, m_barHeight);
 		wxDialog::Show (true);	// Do real show. If not, no underlying window is created the first time.
 	
 		// Window X11 handle
 		GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
 		Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
-		
 	
 		// TODO: this is uggly but ensures that the window is really mapped (FIXME)
 		while (!IsMappedWindow(dd,w))
@@ -479,57 +492,68 @@ bool WXAppBar::SetDockingStyle (EDocking dockingMode, bool show)
 		//		CARD32 
 		unsigned long strut[4] = {0, 0, 0, 0};
 		unsigned long strut2[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		switch(dockingMode)
+		if (winStatus== WXAppBar::DOCKED)
 		{
-			case (WXAppBar::NO_DOCKING):
-				atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
-				XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
+			switch(dockingMode)
+			{
+				case (WXAppBar::TOP_DOCKING):
+					atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
+					strut[2]= m_barHeight + m_barY;
+					XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
+					
+					atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
+					strut2[2]= m_barHeight + m_barY;
+					XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
+					break;
 				
-				atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
-				XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
-				break;
-			
-			case (WXAppBar::TOP_DOCKING):
-				atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
-				strut[2]= m_barHeight + m_barY;
-				XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
-				
-				atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
-				strut2[2]= m_barHeight + m_barY;
-				XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
-				break;
-			
-			case (WXAppBar::BOTTOM_DOCKING):
-				atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
-				strut[3]= DisplayHeight(dd, screen) - m_barY;
-				XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
-				
-				atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
-				strut2[3]= DisplayHeight(dd, screen) - m_barY;
-				XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
-				break;
-				
-			case (WXAppBar::LEFT_DOCKING):
-				atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
-				strut[0]= m_barWidth;
-				XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
-				
-				atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
-				strut2[0]= m_barWidth;
-				XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
-				break;
-
-			case (WXAppBar::RIGHT_DOCKING):
-				atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
-				strut[1]= DisplayWidth(dd, screen) - m_barX;
-				XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
-				
-				atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
-				strut2[1]= m_barWidth;
-				XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
-				break;
+				case (WXAppBar::BOTTOM_DOCKING):
+					atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
+					strut[3]= DisplayHeight(dd, screen) - m_barY;
+					XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
+					
+					atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
+					strut2[3]= DisplayHeight(dd, screen) - m_barY;
+					XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
+					break;
+					
+				case (WXAppBar::LEFT_DOCKING):
+					atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
+					strut[0]= m_barWidth;
+					XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
+					
+					atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
+					strut2[0]= m_barWidth;
+					XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
+					break;
+	
+				case (WXAppBar::RIGHT_DOCKING):
+					atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
+					strut[1]= DisplayWidth(dd, screen) - m_barX;
+					XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
+					
+					atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
+					strut2[1]= m_barWidth;
+					XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
+					break;
+					
+				default:
+					atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
+					XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
+					
+					atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
+					XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
+					break;
+			}
 		}
-		
+		else
+		{
+			atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
+			XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
+					
+			atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
+			XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
+		}
+			
 		//
 		// Set window in WIN_LAYER_ABOVE_DOCK (see GNOME Window Manager Compliance document for details)
 		// TODO: deprecated, here for compatibility reasons
@@ -556,7 +580,7 @@ bool WXAppBar::SetDockingStyle (EDocking dockingMode, bool show)
 		val= _NET_WM_HINTS_SKIP_FOCUS | WIN_HINTS_SKIP_WINLIST | _NET_WM_HINTS_SKIP_WINLIST | WIN_HINTS_DO_NOT_COVER |
 				_NET_WM_HINTS_NO_AUTO_FOCUS | _NET_WM_HINTS_STANDALONE_MENUBAR | _NET_WM_HINTS_FIXED_POSITION | _NET_WM_HINTS_DO_NOT_COVER;
 		XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &val, 1);
-	
+
 		//
 		// _NET_WM_WINDOW_TYPE 
 		//
@@ -567,7 +591,8 @@ bool WXAppBar::SetDockingStyle (EDocking dockingMode, bool show)
 		unsigned long propInfo[2];
 		propInfo[0]= atom_NET_WM_WINDOW_TYPE_DOCK;
 		propInfo[1]= atom_NET_WM_WINDOW_TYPE_NORMAL;
-		if (dockingMode == WXAppBar::NO_DOCKING)
+		if (dockingMode == WXAppBar::NO_DOCKING_HORIZONTAL ||
+			dockingMode == WXAppBar::NO_DOCKING_VERTICAL)
 		{
 			XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo[1], 2);
 		}
@@ -575,7 +600,9 @@ bool WXAppBar::SetDockingStyle (EDocking dockingMode, bool show)
 		{
 			XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo[0], 2);
 		}
-	
+		
+		
+		
 		atomTmp= XInternAtom (dd, "_WIN_STATE", False);
 		val= WIN_STATE_STICKY | WIN_STATE_FIXED_POSITION;
 		XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &val, 1);
@@ -601,6 +628,7 @@ bool WXAppBar::SetDockingStyle (EDocking dockingMode, bool show)
 	}
 	else
 	{
+		
 		Display *dd= (Display *) wxGetDisplay();
 
 		// Window X11 handle
@@ -636,7 +664,7 @@ bool WXAppBar::SetDockingStyle (EDocking dockingMode, bool show)
 		propInfo[0]= atom_NET_WM_WINDOW_TYPE_DOCK;
 		propInfo[1]= atom_NET_WM_WINDOW_TYPE_NORMAL;
 		XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo[0], 2);
-		
+
 		wxDialog::Show (false);
 	}
 #else

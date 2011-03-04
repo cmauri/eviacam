@@ -112,7 +112,13 @@ void CClickWindowController::Show(bool show)
 {
 	if (show!= m_pWindow->IsShown())
 	{
-		m_pWindow->SetDockingStyle((CClickWindow::EDocking)m_dockingMode, show);
+		if (m_autohide)
+			m_pWindow->SetClickWindowStyle((CClickWindow::EClickWindowStatus)m_status,
+				(CClickWindow::EDocking)m_dockingMode, show);
+		else
+			m_pWindow->SetClickWindowStyle(CClickWindow::DOCKED,
+				(CClickWindow::EDocking)m_dockingMode, show);
+		
 		if (show) m_pWindow->UpdateButtons(GetEnabled(),GetCurrentButton(), GetLockedButton());
 	}
 }
@@ -132,7 +138,7 @@ bool CClickWindowController::IsCursorOverWindow(long x, long y)
 	wxRect pos= m_pWindow->GetRect();
 	wxRect parentPos= m_pWindow->GetNoClickButton()->GetScreenRect();
 	pos.Offset(0, parentPos.GetY() - pos.GetY());
-	
+
 	if (y<= pos.GetBottom() && y>= pos.GetTop() && x>= pos.GetLeft() && x<= pos.GetRight())
 		return true;
 	else
@@ -149,11 +155,13 @@ CClickWindowController::EAction CClickWindowController::GetAction(long x, long y
 	if (m_enabled)
 	{
 		if (IsCursorOverWindow(x,y))
+		{
 #if defined(__WXMSW__)
 			retval= CClickWindowController::ACT_LEFT_UP;
 #else
 			retval= CClickWindowController::ACT_LEFT_CLICK;
 #endif
+		}
 		else
 		{
 			switch (m_currentButton)
@@ -233,7 +241,8 @@ void CClickWindowController::SetDockingMode(CClickWindowController::EDocking doc
 {	
 	if (m_dockingMode== dockingMode) return;
 
-	if (dockingMode== CClickWindowController::NO_DOCKING	||
+	if (dockingMode== CClickWindowController::NO_DOCKING_HORIZONTAL	||
+		   dockingMode== CClickWindowController::NO_DOCKING_VERTICAL ||
 		   dockingMode== CClickWindowController::TOP_DOCKING	||
 		   dockingMode== CClickWindowController::BOTTOM_DOCKING	||
 		   dockingMode== CClickWindowController::LEFT_DOCKING	||
@@ -245,7 +254,8 @@ void CClickWindowController::SetDockingMode(CClickWindowController::EDocking doc
 		
 		if (isShown) Show(false);
 		
-		if (dockingMode== CClickWindowController::LEFT_DOCKING ||
+		if (dockingMode== CClickWindowController::NO_DOCKING_VERTICAL ||
+				  dockingMode== CClickWindowController::LEFT_DOCKING ||
 				  dockingMode== CClickWindowController::RIGHT_DOCKING)
 		{
 			if (m_design== CClickWindowController::NORMAL)
@@ -260,11 +270,20 @@ void CClickWindowController::SetDockingMode(CClickWindowController::EDocking doc
 			else
 				m_pWindow= m_pWindowText;
 		}
+		
+		if (m_dockingMode!= CClickWindowController::NO_DOCKING_HORIZONTAL &&
+				  dockingMode!= CClickWindowController::NO_DOCKING_VERTICAL &&
+				  m_autohide)
+			m_status= CClickWindowController::HIDDEN;
+		else
+			m_status= CClickWindowController::DOCKED;
+
 		if (isShown) Show(true);
 	}
 	else
 	{
-		m_dockingMode= CClickWindowController::NO_DOCKING;
+		m_dockingMode= CClickWindowController::NO_DOCKING_HORIZONTAL;
+		m_status= CClickWindowController::DOCKED;
 	}
 	
 }
@@ -343,6 +362,18 @@ void CClickWindowController::SetFastMode(bool enable)
 	m_fastMode= enable;
 }
 
+void CClickWindowController::SetAutohide(bool enable) 
+{
+	bool isShown= IsShown();
+	if (isShown) Show (false);
+	
+	m_autohide= enable;
+	if (m_autohide) m_status= CClickWindowController::HIDDEN;
+	else m_status= CClickWindowController::DOCKED;
+	
+	if (isShown) Show (true);
+}
+
 inline
 bool CClickWindowController::IsCursorOverNoClickButton(long x, long y)
 {
@@ -360,12 +391,39 @@ void CClickWindowController::NotifyShowMainWindowClick ()
 	m_pViacamController->GetMainWindow()->Show (!m_pViacamController->GetMainWindow()->IsShown());
 }
 
+
+void CClickWindowController::AutohideClickWindow (long x, long y)
+{
+	if (IsCursorOverWindow(x, y))
+	{	
+		if (m_autohide && m_status == CClickWindowController::HIDDEN)
+		{
+			bool isShown= IsShown();
+			if (isShown) Show (false);
+			m_status= CClickWindowController::VISIBLE;
+			if (isShown) Show (true);
+		}
+	}
+	else
+	{
+		if (m_autohide && m_status == CClickWindowController::VISIBLE)
+		{
+			bool isShown= IsShown();
+			if (isShown) Show (false);
+			m_status= CClickWindowController::HIDDEN;
+			if (isShown) Show (true);
+		}
+	}
+}
+
 // Configuration methods
 void CClickWindowController::InitDefaults()
 {
 	SetFastMode (false);
 	SetDesign (CClickWindowController::NORMAL);	
-	SetDockingMode(CClickWindowController::NO_DOCKING);
+	SetDockingMode(CClickWindowController::TOP_DOCKING);
+	SetAutohide(false);
+	m_status= CClickWindowController::HIDDEN;
 }
 
 void CClickWindowController::WriteProfileData(wxConfigBase* pConfObj)
@@ -375,6 +433,7 @@ void CClickWindowController::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("fastMode"), m_fastMode);
 	pConfObj->Write(_T("design"), (long) m_design);
 	pConfObj->Write(_T("dockingMode"), (long) m_dockingMode);
+	pConfObj->Write(_T("autohide"), m_autohide);
 
 	pConfObj->SetPath (_T(".."));
 }
@@ -389,6 +448,7 @@ void CClickWindowController::ReadProfileData(wxConfigBase* pConfObj)
 		SetDesign ((CClickWindowController::EDesign) design);
 	if (pConfObj->Read(_T("dockingMode"), &dockingMode))
 		SetDockingMode((CClickWindowController::EDocking) dockingMode);
+	pConfObj->Read(_T("autohide"), &m_autohide);
 	
 	pConfObj->SetPath (_T(".."));
 }
