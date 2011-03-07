@@ -138,8 +138,18 @@ bool CClickWindowController::IsCursorOverWindow(long x, long y)
 	wxRect pos= m_pWindow->GetRect();
 	wxRect parentPos= m_pWindow->GetNoClickButton()->GetScreenRect();
 	pos.Offset(0, parentPos.GetY() - pos.GetY());
-
-	if (y<= pos.GetBottom() && y>= pos.GetTop() && x>= pos.GetLeft() && x<= pos.GetRight())
+	
+	
+	int top= pos.GetTop();
+	int bottom= pos.GetBottom();
+	int left= pos.GetLeft();
+	int right= pos.GetRight();
+	if (top < 0) top= 0;
+	if (bottom < 0) bottom= 0;
+	if (left < 0) left= 0;
+	if (right < 0) right= 0;
+	
+	if (y<= bottom && y>= top && x>= left && x<= right)
 		return true;
 	else
 		return false;

@@ -208,10 +208,41 @@ WXAppBar::~WXAppBar()
 
 void WXAppBar::Init()
 {
-	m_X= 0;
-	m_Y= 0;
-	m_Width= -1;
-	m_Height= -1;
+	// X11 low-level information
+	Display *dd= (Display *) wxGetDisplay();
+	int screen = DefaultScreen (dd);
+	Atom atomTmp= 0;
+		
+	// Try to get real work area to set metrics
+	atomTmp = XInternAtom(dd, "_NET_WORKAREA", False);
+	Atom actual_type;
+	int actual_format;
+	unsigned long nitems;
+	unsigned long bytes_after;
+			
+	//CARD32 *prop;
+	unsigned long *prop;
+		
+	// Get desktop size
+	XGetWindowProperty (dd, DefaultRootWindow(dd), atomTmp, 0, 4, False, AnyPropertyType, &actual_type, &actual_format, &nitems, &bytes_after, (unsigned char **) &prop);
+
+	if (prop!= NULL)
+	{			
+		m_X= (int) prop[0];
+		m_Y= (int) prop[1];
+		m_Width= (int)prop[2];
+		m_Height= (int)prop[3];
+		XFree (prop);
+	}
+	else
+	{
+		// Fallback
+		m_X= 0;
+		m_Y= 0;
+		m_Width = DisplayWidth (dd, screen);
+		m_Height = DisplayHeight (dd, screen);
+	}
+	
 	m_barX= 0;
 	m_barY= 0;
 	m_barWidth= -1;
@@ -374,40 +405,10 @@ bool WXAppBar::SetClickWindowStyle (EClickWindowStatus winStatus, EDocking docki
 
 	if (show)
 	{
+		
 		// X11 low-level information
 		Display *dd= (Display *) wxGetDisplay();
 		int screen = DefaultScreen (dd);
-		
-		// Try to get real work area to set metrics
-		if (m_X== 0 && m_Y== 0 && m_Width== -1 && m_Height== -1) {
-			atomTmp = XInternAtom(dd, "_NET_WORKAREA", False);
-			Atom actual_type;
-			int actual_format;
-			unsigned long nitems;
-			unsigned long bytes_after;
-			
-			//CARD32 *prop;
-			unsigned long *prop;
-			
-			// Get desktop size
-			XGetWindowProperty (dd, DefaultRootWindow(dd), atomTmp, 0, 4, False, AnyPropertyType, &actual_type, &actual_format, &nitems, &bytes_after, (unsigned char **) &prop);
-			
-			if (prop!= NULL)
-			{			
-				m_X= (int) prop[0];
-				m_Y= (int) prop[1];
-				m_Width= (int)prop[2];
-				m_Height= (int)prop[3];
-				XFree (prop);
-			}
-			else
-			{
-				// Fallback
-				m_X= 0;
-				m_Y= 0;
-				m_Width = DisplayWidth (dd, screen);
-			}
-		}
 		wxSize proposedSize= DoGetBestSize();
 				
 		m_barX= m_X;
@@ -443,6 +444,8 @@ bool WXAppBar::SetClickWindowStyle (EClickWindowStatus winStatus, EDocking docki
 			case (WXAppBar::LEFT_DOCKING):
 				if (winStatus== WXAppBar::HIDDEN)
 					m_barX= AUTOHIDE_FLANGE - proposedSize.GetWidth();
+				if (winStatus== WXAppBar::VISIBLE)
+					m_barX= 0;
 				if (winStatus== WXAppBar::DOCKED)
 					m_barHeight= m_Height;
 				break;
@@ -459,7 +462,7 @@ bool WXAppBar::SetClickWindowStyle (EClickWindowStatus winStatus, EDocking docki
 			default:
 				break;
 		}
-
+		
 		SetSize(m_barX, m_barY, m_barWidth, m_barHeight);
 		wxDialog::Show (true);	// Do real show. If not, no underlying window is created the first time.
 	
@@ -628,13 +631,17 @@ bool WXAppBar::SetClickWindowStyle (EClickWindowStatus winStatus, EDocking docki
 	}
 	else
 	{
-		
 		Display *dd= (Display *) wxGetDisplay();
 
 		// Window X11 handle
 		GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
 		Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
 	
+		// Unmap window before set properties
+		XUnmapWindow(dd, w);
+		XSync(dd, False);
+		assert (!IsMappedWindow(dd,w));
+		
 		// Reserves an area in the desktop
 		atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);	
 		//CARD32 strut[] = { 0,0,0,0 };
