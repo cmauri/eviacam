@@ -135,9 +135,9 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
 
     EVT_CHOICE( ID_CHOICE_DESIGN, WConfiguration::OnChoiceDesignSelected )
 
-    EVT_CHOICE( ID_CHOICE5, WConfiguration::OnChoiceClickWindowModeSelected )
-
     EVT_CHOICE( ID_CHOICE_BEHAVIOUR, WConfiguration::OnChoiceBehaviourSelected )
+
+    EVT_CHOICE( ID_CHOICE5, WConfiguration::OnChoiceClickWindowModeSelected )
 
     EVT_CHECKBOX( ID_CHECKBOX_AUTOHIDE, WConfiguration::OnCheckboxAutohideClick )
 
@@ -292,10 +292,10 @@ void WConfiguration::Init()
     m_chkShowClickWin = NULL;
     m_stDesign = NULL;
     m_choClickWindowDesign = NULL;
-    m_stDocking = NULL;
-    m_choDockingMode = NULL;
     m_stBehaviour = NULL;
     m_choClickWindowBehaviour = NULL;
+    m_stDocking = NULL;
+    m_choDockingMode = NULL;
     m_chkAutohide = NULL;
 #if defined(__WXGTK__)
     m_sboxGestureClick = NULL;
@@ -540,7 +540,7 @@ void WConfiguration::CreateControls()
     itemStaticBoxSizer47->Add(m_chkDwellClickEnabled, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxGridSizer* itemGridSizer49 = new wxGridSizer(0, 2, 0, 0);
-    itemStaticBoxSizer47->Add(itemGridSizer49, 0, wxGROW|wxLEFT|wxRIGHT, 5);
+    itemStaticBoxSizer47->Add(itemGridSizer49, 0, wxGROW, 5);
     wxFlexGridSizer* itemFlexGridSizer50 = new wxFlexGridSizer(0, 2, 0, 0);
     itemGridSizer49->Add(itemFlexGridSizer50, 0, wxGROW|wxALIGN_TOP|wxALL, 0);
     m_stDwellTime = new wxStaticText( m_panelClick, ID_STATIC_DWELL_TIME, _("Dwell time (ds)"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -599,19 +599,6 @@ void WConfiguration::CreateControls()
     m_choClickWindowDesign = new wxChoice( m_panelClick, ID_CHOICE_DESIGN, wxDefaultPosition, wxDefaultSize, m_choClickWindowDesignStrings, 0 );
     itemFlexGridSizer61->Add(m_choClickWindowDesign, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_stDocking = new wxStaticText( m_panelClick, wxID_STATIC, _("Docking mode:"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemFlexGridSizer61->Add(m_stDocking, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    wxArrayString m_choDockingModeStrings;
-    m_choDockingModeStrings.Add(_("None horizontal"));
-    m_choDockingModeStrings.Add(_("None vertical"));
-    m_choDockingModeStrings.Add(_("Top"));
-    m_choDockingModeStrings.Add(_("Bottom"));
-    m_choDockingModeStrings.Add(_("Left"));
-    m_choDockingModeStrings.Add(_("Right"));
-    m_choDockingMode = new wxChoice( m_panelClick, ID_CHOICE5, wxDefaultPosition, wxDefaultSize, m_choDockingModeStrings, 0 );
-    itemFlexGridSizer61->Add(m_choDockingMode, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
     m_stBehaviour = new wxStaticText( m_panelClick, ID_STATIC_BEHAVIOUR, _("Behaviour:"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer61->Add(m_stBehaviour, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxTOP, 5);
 
@@ -622,6 +609,19 @@ void WConfiguration::CreateControls()
     if (WConfiguration::ShowToolTips())
         m_choClickWindowBehaviour->SetToolTip(_("Fast mode enables click type\nselection by hovering the mouse\npointer over the click window\nbuttons."));
     itemFlexGridSizer61->Add(m_choClickWindowBehaviour, 0, wxGROW|wxGROW|wxLEFT|wxRIGHT|wxTOP, 5);
+
+    m_stDocking = new wxStaticText( m_panelClick, wxID_STATIC, _("Location:"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemFlexGridSizer61->Add(m_stDocking, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    wxArrayString m_choDockingModeStrings;
+    m_choDockingModeStrings.Add(_("Floating horizontal"));
+    m_choDockingModeStrings.Add(_("Floating vertical"));
+    m_choDockingModeStrings.Add(_("Top docked"));
+    m_choDockingModeStrings.Add(_("Bottom docked"));
+    m_choDockingModeStrings.Add(_("Left docked"));
+    m_choDockingModeStrings.Add(_("Right docked"));
+    m_choDockingMode = new wxChoice( m_panelClick, ID_CHOICE5, wxDefaultPosition, wxDefaultSize, m_choDockingModeStrings, 0 );
+    itemFlexGridSizer61->Add(m_choDockingMode, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_chkAutohide = new wxCheckBox( m_panelClick, ID_CHECKBOX_AUTOHIDE, _("Autohide"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkAutohide->SetValue(false);
