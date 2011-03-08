@@ -36,7 +36,7 @@ full) debug=true ;;
 no)  debug=false ;;
 *) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
 esac],[debug=false])
-AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
+AM_CONDITIONAL(DEBUG, test x"$debug" = x"true")
 
 
 # Checks for libraries.
@@ -162,11 +162,19 @@ COMPFLAGS="-Wall -fexceptions -Wconversion $WX_CPPFLAGS $OPENCV_CPPFLAGS $GTK_CP
 
 
 if ! "$debug"; then
-	COMPFLAGS="$COMPFLAGS -DNDEBUG"
+	COMPFLAGS="$COMPFLAGS -DNDEBUG -O2"
+else
+	COMPFLAGS="$COMPFLAGS -DDEBUG -g -O0"
 fi
 
-CPPFLAGS="$CPPFLAGS $COMPFLAGS"
-CXXFLAGS="$CXXFLAGS $COMPFLAGS"
+#CPPFLAGS="$CPPFLAGS $COMPFLAGS"
+CPPFLAGS="$COMPFLAGS"
+#CXXFLAGS="$CXXFLAGS $COMPFLAGS"
+CXXFLAGS="$COMPFLAGS"
+
+#AC_MSG_NOTICE([CPPFLAGS: $CPPFLAGS])
+#AC_MSG_NOTICE([CXXFLAGS: $CXXFLAGS])
+
 LDFLAGS="$LDFLAGS --as-needed"
 
 AC_SUBST(WX_LIBS)
