@@ -458,9 +458,21 @@ bool WXAppBar::Show (bool show)
 	// http://www.freedesktop.org/wiki/Specifications/wm-spec	
 
 	if (show) {
+		
+		
+		long style= this->GetWindowStyleFlag();
+		style= style & ~(wxCAPTION);
+		this->SetWindowStyleFlag(style);
+		Refresh();
+		style= this->GetWindowStyleFlag();
+		wxDialog::Show(true);
+		
+		
+		
 		// Get Display
 		Display* dd= (Display *) wxGetDisplay();
 		assert (dd);
+		XSync(dd, False);
 		//int screen = DefaultScreen (dd);
 		
 		// Get working area dimensions
@@ -539,7 +551,7 @@ bool WXAppBar::Show (bool show)
 		/* left, right, top, bottom, left_start_y, left_end_y, right_start_y, right_end_y, top_start_x, top_end_x, bottom_start_x, bottom_end_x*/
 		switch (m_currentDockingMode) {
 		case TOP_DOCKED:
-			strut[2]=  m_Height; // + m_Y;
+			strut[2]=  m_Height + m_Y;
 			strut_p[2]= strut[2];
 			break;
 		case BOTTOM_DOCKED:
@@ -671,6 +683,8 @@ bool WXAppBar::Show (bool show)
 		propInfo= atom_NET_WM_WINDOW_TYPE_NORMAL;
 		XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo, 1);
 
+		wxSize proposedSize= DoGetBestSize();
+		SetSize (0, 0, proposedSize.GetWidth(), proposedSize.GetHeight());
 		return wxDialog::Show (false);
 	}
 #else
