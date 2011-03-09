@@ -30,53 +30,54 @@ class WXAppBar;
 
 class CClickWindowController  : public CConfigBase
 {
-  public:
+public:
 	enum EButton { NO_CLICK= 0, LEFT, RIGHT, DRAG, DBLCLICK };
 	enum EAction { ACT_NO_CLICK = 0, ACT_LEFT_CLICK, ACT_RIGHT_CLICK, ACT_LEFT_DOWN, ACT_LEFT_UP, ACT_DOUBLE_CLICK };
 	enum EDesign { NORMAL= 0, THIN };
-	enum EDocking { NO_DOCKING_HORIZONTAL= 0, NO_DOCKING_VERTICAL, TOP_DOCKING, BOTTOM_DOCKING, LEFT_DOCKING, RIGHT_DOCKING };
-	enum EClickWindowStatus { VISIBLE= 0, HIDDEN, DOCKED };
+	enum ELocation { FLOATING_HORIZONTAL= 0, FLOATING_VERTICAL, TOP_DOCKED, BOTTOM_DOCKED, LEFT_DOCKED, RIGHT_DOCKED };
+	//enum EClickWindowStatus { VISIBLE= 0, HIDDEN, DOCKED };
 
-    CClickWindowController(CViacamController & pViacamController);
+	CClickWindowController(CViacamController & pViacamController);
 	~CClickWindowController();
 
 	void Finalize ();
 
-    void Show (bool show);
+	void Show (bool show);
 	const bool IsShown () const;
 
-    //Return to default state
-    void Reset();
+	//Return to default state
+	void Reset();
 
-    // Get the next action that should be sent. Called by the mouse controller.
-    EAction GetAction(long x, long y);
+	// Get the next action that should be sent. Called by the mouse controller.
+	EAction GetAction(long x, long y);
 	
-    // Notifies click bar that the click action has to be sent
-    // and where. Updates internal state. Called by the mouse controller.
-    void ActionDone(long x, long y);
+	// Notifies click bar that the click action has to be sent
+	// and where. Updates internal state. Called by the mouse controller.
+	void ActionDone(long x, long y);
 
 	inline const EDesign GetDesign();
 	void SetDesign(EDesign design);
 
 	inline const bool GetFastMode() const;
-    void SetFastMode(bool enable);
-    
-    inline const CClickWindowController::EDocking GetDockingMode() const;
-    void SetDockingMode(CClickWindowController::EDocking dockingMode);
+	void SetFastMode(bool enable);
+	
+	ELocation GetLocation() const { return m_location; }
+	void SetLocation(ELocation);
 
 	inline const EButton GetCurrentButton () const;
 	inline const EButton GetLockedButton () const;
 
-	inline const bool GetEnabled () const;
+	bool GetEnabled () const { return  m_enabled; }
 	
-	inline const bool GetAutohide() const;
+	bool GetAutohide() const { return m_autohide; }
 	void SetAutohide(bool enable);
-	void AutohideClickWindow(long x, long y);
+
+//	void AutohideClickWindow(long x, long y);
 
 	// Configuration methods
 	virtual void InitDefaults();
-    virtual void ReadProfileData(wxConfigBase* pConfObj);
-    virtual void WriteProfileData(wxConfigBase* pConfObj);
+	virtual void ReadProfileData(wxConfigBase* pConfObj);
+	virtual void WriteProfileData(wxConfigBase* pConfObj);
 
 	//
 	// Called from window. 
@@ -88,28 +89,30 @@ class CClickWindowController  : public CConfigBase
 	// Notifies that show/hide button has been clicked.
 	void NotifyShowMainWindowClick ();
 	
-  private:
-    bool IsCursorOverNoClickButton(long x, long y);
+private:
+	bool IsCursorOverNoClickButton(long x, long y);
 	bool IsCursorOverWindow(long x, long y);
+	void SelectAppropiateWindow (EDesign design, ELocation location);
 
 	// Associations
-    CClickWindow * m_pWindow;
+	CClickWindow* m_pWindow;
 	CClickWindow* m_pWindowText;
 	CClickWindow* m_pWindowBitmap;
 	CClickWindow* m_pWindowBitmapVertical;
 	CClickWindow* m_pWindowTextVertical;
 	
-    CViacamController * m_pViacamController;
+	CViacamController * m_pViacamController;
 	
 	bool m_enabled;
 	EButton m_currentButton;
 	EButton m_lockedButton;
 	bool m_halfDragClick;
+	
 	bool m_fastMode;
 	EDesign m_design;
-	CClickWindowController::EDocking m_dockingMode;
+	ELocation m_location;
 	bool m_autohide;
-	CClickWindowController::EClickWindowStatus m_status;
+	//EClickWindowStatus m_status;
 };
 
 inline const CClickWindowController::EDesign CClickWindowController::GetDesign()
@@ -122,11 +125,6 @@ inline const bool CClickWindowController::GetFastMode() const
 	return m_fastMode;
 }
 
-inline const CClickWindowController::EDocking CClickWindowController::GetDockingMode() const
-{
-	return m_dockingMode;
-}
-
 inline const CClickWindowController::EButton CClickWindowController::GetCurrentButton () const
 {
 	return m_currentButton;
@@ -136,16 +134,5 @@ inline const CClickWindowController::EButton CClickWindowController::GetLockedBu
 {
 	return m_lockedButton;
 }
-
-inline const bool CClickWindowController::GetEnabled () const
-{
-	return  m_enabled;
-}
-
-inline const bool CClickWindowController::GetAutohide() const
-{
-	return m_autohide;
-}
-
 
 #endif

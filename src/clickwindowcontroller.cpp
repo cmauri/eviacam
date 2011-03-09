@@ -87,7 +87,7 @@ void CClickWindowController::Finalize ()
 		m_pViacamController->GetMainWindow()->Disconnect 
 			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowBitmapVertical);
 		m_pViacamController->GetMainWindow()->Disconnect 
-				(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowTextVertical);
+			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowTextVertical);
 	
 	}
 	if (m_pWindow)
@@ -112,13 +112,15 @@ void CClickWindowController::Show(bool show)
 {
 	if (show!= m_pWindow->IsShown())
 	{
+	/*
 		if (m_autohide)
 			m_pWindow->SetClickWindowStyle((CClickWindow::EClickWindowStatus)m_status,
 				(CClickWindow::EDocking)m_dockingMode, show);
 		else
 			m_pWindow->SetClickWindowStyle(CClickWindow::DOCKED,
 				(CClickWindow::EDocking)m_dockingMode, show);
-		
+	*/
+		m_pWindow->Show(show);	
 		if (show) m_pWindow->UpdateButtons(GetEnabled(),GetCurrentButton(), GetLockedButton());
 	}
 }
@@ -209,93 +211,85 @@ CClickWindowController::EAction CClickWindowController::GetAction(long x, long y
 	return retval;
 }
 
-void CClickWindowController::SetDesign(CClickWindowController::EDesign design) 
+// Select appropiate window taking into account design and location
+void CClickWindowController::SelectAppropiateWindow (EDesign design, ELocation location)
+{
+	bool isHorizontal=
+		(location == FLOATING_HORIZONTAL || location == TOP_DOCKED || location == BOTTOM_DOCKED);
+		
+	if (design == CClickWindowController::NORMAL) {
+		if (isHorizontal)
+			m_pWindow= m_pWindowBitmap;
+		else
+			m_pWindow= m_pWindowBitmapVertical;
+	}
+	else {
+		if (isHorizontal)
+			m_pWindow= m_pWindowText;
+		else
+			m_pWindow= m_pWindowTextVertical;
+	}	
+}
+
+void CClickWindowController::SetDesign(CClickWindowController::EDesign design)
 {	
 	if (m_design== design) return;
 
-	if (design== CClickWindowController::NORMAL	|| 
-		design== CClickWindowController::THIN)
-	{
-		m_design= design;
-
-		bool isShown= IsShown();
-
-		if (isShown) Show(false);
-
-		if (design== CClickWindowController::NORMAL)
-		{
-			if (m_dockingMode== CClickWindowController::LEFT_DOCKING ||
-						 m_dockingMode== CClickWindowController::RIGHT_DOCKING)	
-				m_pWindow= m_pWindowBitmapVertical;
-			else
-				m_pWindow= m_pWindowBitmap;
-		}
-		else
-		{
-			if (m_dockingMode== CClickWindowController::LEFT_DOCKING ||
-						 m_dockingMode== CClickWindowController::RIGHT_DOCKING)	
-				m_pWindow= m_pWindowTextVertical;
-			else
-				m_pWindow= m_pWindowText;
-		}
-
-		if (isShown) Show(true);	
+	// Sanity check
+	if (design != CClickWindowController::NORMAL && design != CClickWindowController::THIN) {
+		SetDesign(CClickWindowController::NORMAL);
+		return;
 	}
-	else
-	{
-		m_design= CClickWindowController::NORMAL;
-	}
+
+	bool wasShown= IsShown();
+	if (wasShown) Show(false);
+
+	SelectAppropiateWindow (design, m_location);
+		
+	if (wasShown) Show(true);
+	
+	m_design= design;
 }
 
-void CClickWindowController::SetDockingMode(CClickWindowController::EDocking dockingMode) 
+void CClickWindowController::SetLocation(CClickWindowController::ELocation location)
 {	
-	if (m_dockingMode== dockingMode) return;
+	if (m_location== location) return;
 
-	if (dockingMode== CClickWindowController::NO_DOCKING_HORIZONTAL	||
-		   dockingMode== CClickWindowController::NO_DOCKING_VERTICAL ||
-		   dockingMode== CClickWindowController::TOP_DOCKING	||
-		   dockingMode== CClickWindowController::BOTTOM_DOCKING	||
-		   dockingMode== CClickWindowController::LEFT_DOCKING	||
-		   dockingMode== CClickWindowController::RIGHT_DOCKING)
-	{
-		m_dockingMode= dockingMode;
-		
-		bool isShown= IsShown();
-		
-		if (isShown) Show(false);
-		
-		if (dockingMode== CClickWindowController::NO_DOCKING_VERTICAL ||
-				  dockingMode== CClickWindowController::LEFT_DOCKING ||
-				  dockingMode== CClickWindowController::RIGHT_DOCKING)
-		{
-			if (m_design== CClickWindowController::NORMAL)
-				m_pWindow= m_pWindowBitmapVertical;
-			else
-				m_pWindow= m_pWindowTextVertical;
-		}
-		else
-		{
-			if (m_design== CClickWindowController::NORMAL)
-				m_pWindow= m_pWindowBitmap;
-			else
-				m_pWindow= m_pWindowText;
-		}
-		
-		if (m_dockingMode!= CClickWindowController::NO_DOCKING_HORIZONTAL &&
-				  dockingMode!= CClickWindowController::NO_DOCKING_VERTICAL &&
-				  m_autohide)
-			m_status= CClickWindowController::HIDDEN;
-		else
-			m_status= CClickWindowController::DOCKED;
-
-		if (isShown) Show(true);
-	}
-	else
-	{
-		m_dockingMode= CClickWindowController::NO_DOCKING_HORIZONTAL;
-		m_status= CClickWindowController::DOCKED;
+	// Sanity check
+	if (location< FLOATING_HORIZONTAL || location> RIGHT_DOCKED) {
+		SetLocation(TOP_DOCKED);
+		return;
 	}
 	
+	bool isShown= IsShown();	
+	if (isShown) Show(false);
+	
+	SelectAppropiateWindow (m_design, location);
+	
+	switch(location) {
+		case FLOATING_HORIZONTAL:
+		case FLOATING_VERTICAL:
+			m_pWindow->SetDockingMode(WXAppBar::NON_DOCKED);
+			break;
+		case TOP_DOCKED:
+			m_pWindow->SetDockingMode(WXAppBar::TOP_DOCKED);
+			break;
+		case BOTTOM_DOCKED:
+			m_pWindow->SetDockingMode(WXAppBar::BOTTOM_DOCKED);
+			break;
+		case LEFT_DOCKED:
+			m_pWindow->SetDockingMode(WXAppBar::LEFT_DOCKED);
+			break;
+		case RIGHT_DOCKED:
+			m_pWindow->SetDockingMode(WXAppBar::RIGHT_DOCKED);
+			break;
+		default:
+			assert (false);
+	}
+		
+	if (isShown) Show(true);
+	
+	m_location= location;	
 }
 
 
@@ -374,14 +368,15 @@ void CClickWindowController::SetFastMode(bool enable)
 
 void CClickWindowController::SetAutohide(bool enable) 
 {
-	bool isShown= IsShown();
-	if (isShown) Show (false);
+	// TODO
+//	bool isShown= IsShown();
+//	if (isShown) Show (false);
 	
 	m_autohide= enable;
-	if (m_autohide) m_status= CClickWindowController::HIDDEN;
-	else m_status= CClickWindowController::DOCKED;
+//	if (m_autohide) m_status= CClickWindowController::HIDDEN;
+//	else m_status= CClickWindowController::DOCKED;
 	
-	if (isShown) Show (true);
+//	if (isShown) Show (true);
 }
 
 inline
@@ -401,7 +396,7 @@ void CClickWindowController::NotifyShowMainWindowClick ()
 	m_pViacamController->GetMainWindow()->Show (!m_pViacamController->GetMainWindow()->IsShown());
 }
 
-
+/*
 void CClickWindowController::AutohideClickWindow (long x, long y)
 {
 	if (IsCursorOverWindow(x, y))
@@ -425,15 +420,17 @@ void CClickWindowController::AutohideClickWindow (long x, long y)
 		}
 	}
 }
+*/
 
 // Configuration methods
 void CClickWindowController::InitDefaults()
 {
 	SetFastMode (false);
 	SetDesign (CClickWindowController::NORMAL);	
-	SetDockingMode(CClickWindowController::TOP_DOCKING);
+	//SetDockingMode(CClickWindowController::TOP_DOCKING);
+	SetLocation (CClickWindowController::TOP_DOCKED);
 	SetAutohide(false);
-	m_status= CClickWindowController::HIDDEN;
+	//m_status= CClickWindowController::HIDDEN;
 }
 
 void CClickWindowController::WriteProfileData(wxConfigBase* pConfObj)
@@ -442,7 +439,7 @@ void CClickWindowController::WriteProfileData(wxConfigBase* pConfObj)
 
 	pConfObj->Write(_T("fastMode"), m_fastMode);
 	pConfObj->Write(_T("design"), (long) m_design);
-	pConfObj->Write(_T("dockingMode"), (long) m_dockingMode);
+	pConfObj->Write(_T("location"), (long) m_location);
 	pConfObj->Write(_T("autohide"), m_autohide);
 
 	pConfObj->SetPath (_T(".."));
@@ -453,11 +450,11 @@ void CClickWindowController::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->SetPath (_T("clickWindow"));
 
 	pConfObj->Read(_T("fastMode"), &m_fastMode);
-	long design, dockingMode;
+	long design, location;
 	if (pConfObj->Read(_T("design"), &design))
 		SetDesign ((CClickWindowController::EDesign) design);
-	if (pConfObj->Read(_T("dockingMode"), &dockingMode))
-		SetDockingMode((CClickWindowController::EDocking) dockingMode);
+	if (pConfObj->Read(_T("location"), &location))
+		SetLocation (static_cast<ELocation>(location));		
 	pConfObj->Read(_T("autohide"), &m_autohide);
 	
 	pConfObj->SetPath (_T(".."));

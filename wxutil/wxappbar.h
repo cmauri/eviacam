@@ -45,35 +45,43 @@
 
 class WXAppBar: public wxDialog
 {    
-    DECLARE_DYNAMIC_CLASS( WXAppBar )
-    DECLARE_EVENT_TABLE()
+	DECLARE_DYNAMIC_CLASS( WXAppBar )
+	DECLARE_EVENT_TABLE()
 
 public:
-	enum EClickWindowStatus { VISIBLE= 0, HIDDEN, DOCKED };
-	enum EDocking { NO_DOCKING_HORIZONTAL= 0, NO_DOCKING_VERTICAL, TOP_DOCKING, BOTTOM_DOCKING, LEFT_DOCKING, RIGHT_DOCKING };
+	//enum EClickWindowStatus { VISIBLE= 0, HIDDEN, DOCKED };
+	enum EDocking { NON_DOCKED= 0, TOP_DOCKED, BOTTOM_DOCKED, LEFT_DOCKED, RIGHT_DOCKED };
 	
-    /// Constructors
-    WXAppBar();
-    WXAppBar( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = SYMBOL_CWXAPPBAR_STYLE );
+	/// Constructors
+	WXAppBar();
+	WXAppBar( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = SYMBOL_CWXAPPBAR_STYLE );
+	
+	/// Creation
+	bool Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = SYMBOL_CWXAPPBAR_STYLE );
+	
+	/// Destructor
+	~WXAppBar();
+	
+	/// Initialises member variables
+	void Init();
+	//void OnSize( wxSizeEvent& event );
 
-    /// Creation
-    bool Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = SYMBOL_CWXAPPBAR_STYLE );
+	void OnMove( wxMoveEvent& event );
 
-    /// Destructor
-    ~WXAppBar();
+	//bool SetClickWindowStyle (EClickWindowStatus winStatus, EDocking dockingMode, bool show = true);
+	void SetDockingMode (EDocking dockingMode);
 
-    /// Initialises member variables
-    void Init();
-    //void OnSize( wxSizeEvent& event );
-	void OnMove( wxMoveEvent& event );		
-	virtual bool SetClickWindowStyle (EClickWindowStatus winStatus, EDocking dockingMode, bool show = true);
+	virtual bool Show(bool show = true);
+
 	virtual bool ProcessEvent(wxEvent& event);
+
 private:
 #if defined(__WXMSW__)
 //	void AppBarCallback (UINT uMsg, WPARAM wParam, LPARAM lParam);
 #endif
 	int m_X, m_Y, m_Width, m_Height;
-	int m_barX, m_barY, m_barWidth, m_barHeight;
+//	int m_barX, m_barY, m_barWidth, m_barHeight;
+	EDocking m_currentDockingMode; //, m_prevDockingMode;
 };
 
 #endif

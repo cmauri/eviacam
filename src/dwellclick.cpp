@@ -94,7 +94,7 @@ bool CDwellClick::ProcessMotion (int dxPix, int dyPix,
 	if (!m_enabled) return false;
 
 	//Check autohide window
-	m_pClickWindowController->AutohideClickWindow(xCurr, yCurr);
+	//m_pClickWindowController->AutohideClickWindow(xCurr, yCurr);
 	
 	// Compute cursor displacement
 	float despl= sqrtf ((float) (dxPix*dxPix + dyPix*dyPix));

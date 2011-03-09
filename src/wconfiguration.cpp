@@ -1011,7 +1011,7 @@ void WConfiguration::InitializeData ()
 	m_choClickWindowDesign->Select (
 		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetDesign());
 	m_choDockingMode->Select (
-		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetDockingMode());	
+		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetLocation());
 	m_chkAutohide->SetValue (
 		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetAutohide() ? 1 : 0);	
 #if defined(__WXGTK__)
@@ -1163,8 +1163,8 @@ void WConfiguration::EnableGUIClickWindowOptions(bool enable)
 	m_stDesign->Enable(enable);
 	m_stBehaviour->Enable(enable);
 	m_stDocking->Enable(enable);
-	if (enable)
-	{
+	
+	if (enable) {
 		m_stDesign->Enable(m_chkShowClickWin->IsChecked());
 		m_choClickWindowDesign->Enable(m_chkShowClickWin->IsChecked());
 		m_stBehaviour->Enable(m_chkShowClickWin->IsChecked());
@@ -1173,9 +1173,10 @@ void WConfiguration::EnableGUIClickWindowOptions(bool enable)
 		m_choDockingMode->Enable(m_chkShowClickWin->IsChecked());
 		m_chkAutohide->Enable(m_chkShowClickWin->IsChecked());
 	}
-	if (m_choDockingMode->GetCurrentSelection()== CClickWindowController::NO_DOCKING_HORIZONTAL || 
-		m_choDockingMode->GetCurrentSelection()== CClickWindowController::NO_DOCKING_VERTICAL)
-	{
+	
+	if (	m_choDockingMode->GetCurrentSelection()== CClickWindowController::FLOATING_VERTICAL ||
+		m_choDockingMode->GetCurrentSelection()== CClickWindowController::FLOATING_HORIZONTAL) {
+		
 		m_chkAutohide->Enable(false);
 	}
 }
@@ -1400,8 +1401,8 @@ void WConfiguration::OnCheckboxShowClickwinClick( wxCommandEvent& event )
 	m_stDocking->Enable(m_chkShowClickWin->IsChecked());
 	m_choDockingMode->Enable(m_chkShowClickWin->IsChecked());
 	m_chkAutohide->Enable(m_chkShowClickWin->IsChecked());	
-	if (m_choDockingMode->GetCurrentSelection()== CClickWindowController::NO_DOCKING_HORIZONTAL || 
-		m_choDockingMode->GetCurrentSelection()== CClickWindowController::NO_DOCKING_VERTICAL)
+	if (	m_choDockingMode->GetCurrentSelection()== CClickWindowController::FLOATING_VERTICAL ||
+		m_choDockingMode->GetCurrentSelection()== CClickWindowController::FLOATING_HORIZONTAL)
 	{
 		m_chkAutohide->Enable(false);
 	}
@@ -1988,11 +1989,11 @@ void WConfiguration::OnCheckboxWrapPointer( wxCommandEvent& event )
 
 void WConfiguration::OnChoiceClickWindowModeSelected( wxCommandEvent& event )
 {
-	wxGetApp().GetController().GetPointerAction().GetDwellClick().
-		GetClickWindowController().SetDockingMode ( (CClickWindowController::EDocking)event.GetSelection() );
+	wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().
+		SetLocation( (CClickWindowController::ELocation) event.GetSelection() );
 	
-	if (m_choDockingMode->GetCurrentSelection()== CClickWindowController::NO_DOCKING_HORIZONTAL || 
-		m_choDockingMode->GetCurrentSelection()== CClickWindowController::NO_DOCKING_VERTICAL)
+	if (	m_choDockingMode->GetCurrentSelection()== CClickWindowController::FLOATING_VERTICAL ||
+		m_choDockingMode->GetCurrentSelection()== CClickWindowController::FLOATING_HORIZONTAL)
 		
 		m_chkAutohide->Enable(false);
 	else
