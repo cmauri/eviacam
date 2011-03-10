@@ -102,6 +102,7 @@ private:
 	void SetDockedModeStep2();
 	void UnSetDockedModeStep1();
 	void UnSetDockedModeStep2();
+	void CheckCreateWindow();
 	
 	int m_X, m_Y, m_Width, m_Height;
 	EDocking m_currentDockingMode;

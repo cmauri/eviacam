@@ -227,14 +227,14 @@ void WXAppBar::Init()
 	m_currentDockingMode= NON_DOCKED;
 	m_dialogHadBorderDecorations= GetBorderDecorations();
 	m_firstTime= true;
-	m_autohide= false;
+	m_autohide=  false;
 }
 
 
 // Allows to know and change whether the dialog has borders or not
 bool WXAppBar::GetBorderDecorations () const
 {
-	// Honours the wxBORDER_NONE flag
+	// Honours the wxNO_BORDER flag
 	return (GetWindowStyleFlag() & wxNO_BORDER? false : true);	
 }
 
@@ -244,10 +244,16 @@ void WXAppBar::SetBorderDecorations (bool enable, bool apply)
 	
 	// Changes the flag
 	long style= GetWindowStyleFlag();
-	if (enable)
+	if (enable) {
+		// Enable decorations
 		style= style & ~wxNO_BORDER;
-	else
+//		style= style | wxCAPTION;
+	}
+	else {
+		// Disable decorations
 		style= style | wxNO_BORDER;
+//		style= style & ~wxCAPTION;
+	}
 	SetWindowStyleFlag(style);
 	// According to the manual, after changing flags a Refresh is needed
 	Refresh();
@@ -463,17 +469,45 @@ void WXAppBar::SetDockingMode (EDocking dockingMode)
 	bool isShown= IsShown();
 
 	if (isShown) Show(false);
-	
+
 	m_currentDockingMode= dockingMode;
 	
-	if (isShown) Show(true);	
+	if (isShown) Show(true);
 }
 
 void WXAppBar::SetAutohideMode (bool autohide)
 {
 	if (m_autohide == autohide) return;
+
+	// TODO: check this
 	
-	// TODO
+	// If is shown, hide
+	bool isShown= IsShown();
+	if (isShown) Show(false);
+	
+	m_autohide= autohide;
+
+	if (isShown) Show(true);
+}
+
+void WXAppBar::CheckCreateWindow()
+{
+#if defined(__WXGTK__)
+	//
+	// Show & update the window to make sure that is actually created the first time
+	//
+	if (m_firstTime) {
+		wxDialog::Show(true);
+		Refresh();
+		Update();
+		
+		wxDialog::Show(false);
+		Refresh();
+		Update();
+		m_firstTime= false;
+	}
+#endif
+	// TODO: check if it is needed for Windows
 }
 
 #if defined(__WXGTK__)
@@ -582,21 +616,11 @@ void SetStrutArea (Window w, WXAppBar::EDocking where, int area)
 	}	
 }
 
+
+
 void WXAppBar::SetDockedModeStep1()
 {
-	//
-	// Show & update the window to make sure that is actually created the first time
-	//
-	if (m_firstTime) {
-		wxDialog::Show(true);
-		Refresh();
-		Update();
-		
-		wxDialog::Show(false);
-		Refresh();
-		Update();
-		m_firstTime= false;
-	}
+	//CheckCreateWindow();
 
 	//
 	// Get X11 display
@@ -803,6 +827,8 @@ bool WXAppBar::Show (bool show)
 		return wxDialog::Show (show);
 	}
 	else {
+		CheckCreateWindow();
+		
 		// "Docking mode" enabled
 		if (!m_autohide) {
 			// Normal docking
@@ -819,6 +845,32 @@ bool WXAppBar::Show (bool show)
 		}
 		else {
 			// TODO: autohide
+			if (show) {
+				/*
+				m_dialogHadBorderDecorations= GetBorderDecorations();
+				SetBorderDecorations (false);
+				SetSize(-20, 50, wxDefaultCoord, wxDefaultCoord, wxSIZE_USE_EXISTING);
+				wxDialog::Show(true);
+				Refresh();
+				Update();
+				//::wxSafeYield();
+				//usleep (2000000);
+				
+				//Move (-20, 50);
+				//Update();
+				//::wxSafeYield();
+				//usleep (2000000);
+				*/
+			}
+			else {
+				/*
+				SetBorderDecorations (m_dialogHadBorderDecorations, true);
+				wxDialog::Show(false);
+				Refresh();
+				Update();
+				*/
+				
+			}
 		}
 	}
 	
