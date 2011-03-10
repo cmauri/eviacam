@@ -142,6 +142,7 @@ bool IsMappedWindow(Display *dd, Window w)
 	return (attr.map_state != IsUnmapped);
 }
 
+#if 0
 static 
 void wxWMspecSetState(Display *dd, Window w, int operation, Atom state)
 {
@@ -170,6 +171,7 @@ void wxWMspecSetState(Display *dd, Window w, int operation, Atom state)
 	
 	XSendEvent(dd, rootWin, False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
 }
+#endif
 
 #endif
 
@@ -225,6 +227,7 @@ void WXAppBar::Init()
 	m_currentDockingMode= NON_DOCKED;
 	m_dialogHadBorderDecorations= GetBorderDecorations();
 	m_firstTime= true;
+	m_autohide= false;
 }
 
 
@@ -466,6 +469,13 @@ void WXAppBar::SetDockingMode (EDocking dockingMode)
 	if (isShown) Show(true);	
 }
 
+void WXAppBar::SetAutohideMode (bool autohide)
+{
+	if (m_autohide == autohide) return;
+	
+	// TODO
+}
+
 #if defined(__WXGTK__)
 static
 void GetDesktopDimensions (Display* d, int& x, int& y, int& width, int& height, int& screenWidth, int& screenHeight)
@@ -557,229 +567,260 @@ void SetStrutArea (Window w, WXAppBar::EDocking where, int area)
 	XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
 	XSync(dd, False);
 	
-	// TODO: Wait until strut request is done	
-	if (area== 0 || where== WXAppBar::NON_DOCKED) {	
+	// If window mapped, then wait until strut applied
+	// TODO: is there a better way to do this?	
+	if (IsMappedWindow(dd, w)) {
 		int new_xDesktop, new_yDesktop, new_widthDesktop, new_heightDesktop, count= 0;
-		do {
-			
+		for (;;) {
 			GetDesktopDimensions (dd, new_xDesktop, new_yDesktop, new_widthDesktop, 
 				new_heightDesktop, screenWidth, screenHeight);
 			++count;
-			//printf ("Waiting strut: %d\n", count);
-			//wxSafeYield();
+			if (!(count< 20 && new_xDesktop== xDesktop && new_yDesktop== yDesktop &&
+			new_widthDesktop== widthDesktop && new_heightDesktop == heightDesktop)) break;
 			usleep (100000);
-		} while (count< 20 && new_xDesktop== xDesktop && new_yDesktop== yDesktop &&
-			new_widthDesktop== widthDesktop && new_heightDesktop == heightDesktop);
-	}
-	else {
-		//usleep (800000);
-	}
+		}
+	}	
 }
 
+void WXAppBar::SetDockedModeStep1()
+{
+	//
+	// Show & update the window to make sure that is actually created the first time
+	//
+	if (m_firstTime) {
+		wxDialog::Show(true);
+		Refresh();
+		Update();
+		
+		wxDialog::Show(false);
+		Refresh();
+		Update();
+		m_firstTime= false;
+	}
+
+	//
+	// Get X11 display
+	//
+	Display* dd= (Display *) wxGetDisplay(); assert (dd);
+	
+	//
+	// Get desktop working area dimensions
+	//
+	int xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight;
+	GetDesktopDimensions (dd, xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight);
+	
+	//
+	// As we need to dock the window disable decorations
+	//
+	m_dialogHadBorderDecorations= GetBorderDecorations();
+	SetBorderDecorations(false);
+	
+	//
+	// Get X11 handle for our window
+	//
+	GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
+	Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
+	
+	// Get original dimensions of the bar
+	wxSize proposedSize= GetBestSize();
+
+	// Compute bar position and size depending on docking mode
+	switch (m_currentDockingMode) {
+	case TOP_DOCKED:
+		m_X= xDesktop;
+		m_Y= yDesktop;
+		m_Width= widthDesktop;
+		m_Height= proposedSize.GetHeight();
+		break;
+	case BOTTOM_DOCKED:
+		m_X= xDesktop;
+		m_Y= yDesktop + heightDesktop - proposedSize.GetHeight();
+		m_Width= widthDesktop;
+		m_Height= proposedSize.GetHeight();
+		break;
+	case LEFT_DOCKED:
+		m_X= xDesktop;
+		m_Y= yDesktop;
+		m_Width= proposedSize.GetWidth();
+		m_Height= heightDesktop;
+		break; 
+	case RIGHT_DOCKED:
+		m_X= xDesktop + widthDesktop - proposedSize.GetWidth();
+		m_Y= yDesktop;
+		m_Width= proposedSize.GetWidth();
+		m_Height= heightDesktop;
+		break;
+	case NON_DOCKED:
+	default:
+		assert (false);
+	}
+	
+	//
+	// Reserves an area in the desktop.
+	//
+	switch (m_currentDockingMode) {
+	case TOP_DOCKED: 	SetStrutArea (w, TOP_DOCKED, m_Height); break;
+	case BOTTOM_DOCKED:	SetStrutArea (w, BOTTOM_DOCKED, m_Height); break;
+	case LEFT_DOCKED:	SetStrutArea (w, LEFT_DOCKED, m_Width); break; 	
+	case RIGHT_DOCKED:	SetStrutArea (w, RIGHT_DOCKED, m_Width); break;
+	case NON_DOCKED:
+	default:
+		assert (false);
+	}
+
+	//
+	// Functional type of the window (_NET_WM_WINDOW_TYPE)
+	//
+	Atom atomTmp= XInternAtom (dd, "_NET_WM_WINDOW_TYPE", False);
+	Atom atom_NET_WM_WINDOW_TYPE_DOCK= XInternAtom (dd, "_NET_WM_WINDOW_TYPE_DOCK", False);
+	Atom atom_NET_WM_WINDOW_TYPE_NORMAL= XInternAtom (dd, "_NET_WM_WINDOW_TYPE_NORMAL", False);
+	unsigned long propInfo[2];
+	propInfo[0]= atom_NET_WM_WINDOW_TYPE_DOCK;
+	propInfo[1]= atom_NET_WM_WINDOW_TYPE_NORMAL;		
+	XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo[0], 2);
+	SetSticky(true);
+	XSync(dd, False);
+
+	// Set desired location and dimensions
+	SetSize(m_X, m_Y, m_Width, m_Height);
+}
+
+void WXAppBar::SetDockedModeStep2()
+{
+	// Do nothing
+}
+
+void WXAppBar::UnSetDockedModeStep1()
+{
+	// Disable all special features
+	//Display *dd= (Display *) wxGetDisplay();
+
+	// Window X11 handle
+	GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
+	Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
+	
+	// Disables struts
+	SetStrutArea (w, NON_DOCKED, 0);
+}
+
+void WXAppBar::UnSetDockedModeStep2()
+{
+	Display *dd= (Display *) wxGetDisplay();
+
+	// Window X11 handle
+	GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
+	Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
+	
+	Refresh();
+	Update();
+	
+	//
+	// Set window style back to normal again
+	//
+	Atom atomTmp= XInternAtom (dd, "_NET_WM_WINDOW_TYPE", False);
+	Atom atom_NET_WM_WINDOW_TYPE_NORMAL= XInternAtom (dd, "_NET_WM_WINDOW_TYPE_NORMAL", False);
+	unsigned long propInfo= atom_NET_WM_WINDOW_TYPE_NORMAL;
+	XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo, 1);
+	XSync(dd, False);
+	
+	// The code above disables the sticky property, so we enable it again
+	SetSticky(true);
+	
+	// Restore decorations when needed
+	SetBorderDecorations(m_dialogHadBorderDecorations);
+	
+	// Restore original size
+	wxSize proposedSize= DoGetBestSize();
+	//SetSize (0, 0, proposedSize.GetWidth(), proposedSize.GetHeight());
+	SetSize (proposedSize.GetWidth(), proposedSize.GetHeight());
+}
+
+#elif defined(__WXMSW__)
+
+void WXAppBar::SetDockedModeStep1()
+{
+	// TODO: manage different docking locations on windows
+	APPBARDATA abd;		
+
+	// Set metrics (TOP location only)
+	wxSize proposedSize= DoGetBestSize();
+	m_X= 0;
+	m_Y= 0;
+	m_Width= GetSystemMetrics(SM_CXSCREEN);
+	m_Height= proposedSize.GetHeight();	
+
+	// Register appbar
+	abd.cbSize= sizeof(APPBARDATA);
+	abd.hWnd= (HWND) GetHandle();
+	abd.uCallbackMessage= 12345; //WX_APPBAR_CALLBACK; // TODO: respond to these callback messages
+	SHAppBarMessage (ABM_NEW, &abd);
+
+	// Set size
+	abd.uEdge= ABE_TOP;
+	abd.rc.left = m_X;
+	abd.rc.top = m_Y;
+	abd.rc.right = m_X + m_Width;
+	abd.rc.bottom = m_Y + m_Height;
+
+	SHAppBarMessage(ABM_QUERYPOS,&abd);	// Correct size if needed
+
+	m_X= abd.rc.left;
+	m_Y= abd.rc.top;		
+	m_Width= abd.rc.right - m_X;
+	// Re-calculate bottom corner
+	abd.rc.bottom = m_Y + m_Height;		
+	SHAppBarMessage(ABM_SETPOS, &abd);
+}
+
+void WXAppBar::SetDockedModeStep2()
+{
+	SetSize(m_X, m_Y, m_Width, m_Height, 0);
+	Raise();
+}
+
+void WXAppBar::UnSetDockedModeStep1()
+{
+	// Do nothing
+}
+
+void WXAppBar::UnSetDockedModeStep2()
+{
+	// Unregister app bar
+	APPBARDATA abd;	
+	abd.cbSize= sizeof(APPBARDATA);
+	abd.hWnd= (HWND) GetHandle();	
+	SHAppBarMessage (ABM_REMOVE, &abd);
+}
 #endif
 
-//bool WXAppBar::SetClickWindowStyle (EClickWindowStatus winStatus, EDocking dockingMode, bool show)
 bool WXAppBar::Show (bool show)
 {
 	if (show== IsShown ()) return false;
-
+	
 	// If no docking enabled, simply forward the call
 	if (m_currentDockingMode == NON_DOCKED) {
 		m_firstTime= false;
 		return wxDialog::Show (show);
 	}
-		
-#if defined(__WXMSW__)
-	if (show) {	
-		// TODO: manage different docking locations on windows
-		APPBARDATA abd;		
-	
-		// Set metrics (TOP location only)
-		wxSize proposedSize= DoGetBestSize();
-		m_X= 0;
-		m_Y= 0;
-		m_Width= GetSystemMetrics(SM_CXSCREEN);
-		m_Height= proposedSize.GetHeight();	
-	
-		// Register appbar
-		abd.cbSize= sizeof(APPBARDATA);
-		abd.hWnd= (HWND) GetHandle();
-		abd.uCallbackMessage= 12345; //WX_APPBAR_CALLBACK; // TODO: respond to these callback messages
-		SHAppBarMessage (ABM_NEW, &abd);
-	
-		// Set size
-		abd.uEdge= ABE_TOP;
-		abd.rc.left = m_X;
-		abd.rc.top = m_Y;
-		abd.rc.right = m_X + m_Width;
-		abd.rc.bottom = m_Y + m_Height;
-	
-		SHAppBarMessage(ABM_QUERYPOS,&abd);	// Correct size if needed
-	
-		m_X= abd.rc.left;
-		m_Y= abd.rc.top;		
-		m_Width= abd.rc.right - m_X;
-		// Re-calculate bottom corner
-		abd.rc.bottom = m_Y + m_Height;		
-		SHAppBarMessage(ABM_SETPOS, &abd);
-		wxDialog::Show (true);
-		SetSize(m_X, m_Y, m_Width, m_Height, 0);
-		Raise();
-	}
 	else {
-		
-		wxDialog::Show (false);
-		
-		// Unregister app bar
-		APPBARDATA abd;	
-		abd.cbSize= sizeof(APPBARDATA);
-		abd.hWnd= (HWND) GetHandle();	
-		SHAppBarMessage (ABM_REMOVE, &abd);
-	}
-
-#elif defined(__WXGTK__)
-
-	if (show) {
-		//
-		// Show & update the window to make sure that is actually created the first time
-		//
-		if (m_firstTime) {
-			wxDialog::Show(true);
-			Refresh();
-			Update();
-			
-			wxDialog::Show(false);
-			Refresh();
-			Update();
-			m_firstTime= false;
+		// "Docking mode" enabled
+		if (!m_autohide) {
+			// Normal docking
+			if (show) {
+				SetDockedModeStep1();
+				wxDialog::Show(true);
+				SetDockedModeStep2();
+			}
+			else {
+				UnSetDockedModeStep1();
+				wxDialog::Show(false);
+				UnSetDockedModeStep2();
+			}
 		}
-		
-		//
-		// Get X11 display
-		//
-		Display* dd= (Display *) wxGetDisplay(); assert (dd);
-		
-		//
-		// Get desktop working area dimensions
-		//
-		int xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight;
-		GetDesktopDimensions (dd, xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight);
-		
-		//
-		// As we need to dock the window disable decorations
-		//
-		m_dialogHadBorderDecorations= GetBorderDecorations();
-		SetBorderDecorations(false);
-		
-		//
-		// Get X11 handle for our window
-		//
-		GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
-		Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
-		
-		// Get original dimensions of the bar
-		wxSize proposedSize= GetBestSize();
-
-		// Compute bar position and size depending on docking mode
-		switch (m_currentDockingMode) {
-		case TOP_DOCKED:
-			m_X= xDesktop;
-			m_Y= yDesktop;
-			m_Width= widthDesktop;
-			m_Height= proposedSize.GetHeight();
-			break;
-		case BOTTOM_DOCKED:
-			m_X= xDesktop;
-			m_Y= yDesktop + heightDesktop - proposedSize.GetHeight();
-			m_Width= widthDesktop;
-			m_Height= proposedSize.GetHeight();
-			break;
-		case LEFT_DOCKED:
-			m_X= xDesktop;
-			m_Y= yDesktop;
-			m_Width= proposedSize.GetWidth();
-			m_Height= heightDesktop;
-			break; 
-		case RIGHT_DOCKED:
-			m_X= xDesktop + widthDesktop - proposedSize.GetWidth();
-			m_Y= yDesktop;
-			m_Width= proposedSize.GetWidth();
-			m_Height= heightDesktop;
-			break;
-		case NON_DOCKED:
-		default:
-			assert (false);
+		else {
+			// TODO: autohide
 		}
-		
-		//
-		// Reserves an area in the desktop.
-		//
-		switch (m_currentDockingMode) {
-		case TOP_DOCKED: 	SetStrutArea (w, TOP_DOCKED, m_Height); break;
-		case BOTTOM_DOCKED:	SetStrutArea (w, BOTTOM_DOCKED, m_Height); break;
-		case LEFT_DOCKED:	SetStrutArea (w, LEFT_DOCKED, m_Width); break; 	
-		case RIGHT_DOCKED:	SetStrutArea (w, RIGHT_DOCKED, m_Width); break;
-		case NON_DOCKED:
-		default:
-			assert (false);
-		}
-
-		//
-		// Functional type of the window (_NET_WM_WINDOW_TYPE)
-		//
-		Atom atomTmp= XInternAtom (dd, "_NET_WM_WINDOW_TYPE", False);
-		Atom atom_NET_WM_WINDOW_TYPE_DOCK= XInternAtom (dd, "_NET_WM_WINDOW_TYPE_DOCK", False);
-		Atom atom_NET_WM_WINDOW_TYPE_NORMAL= XInternAtom (dd, "_NET_WM_WINDOW_TYPE_NORMAL", False);
-		unsigned long propInfo[2];
-		propInfo[0]= atom_NET_WM_WINDOW_TYPE_DOCK;
-		propInfo[1]= atom_NET_WM_WINDOW_TYPE_NORMAL;		
-		XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo[0], 2);
-		SetSticky(true);
-		XSync(dd, False);
-
-		// Set desired location and dimensions
-		SetSize(m_X, m_Y, m_Width, m_Height);
-		wxDialog::Show(true);
 	}
-	else {
-		// Disable all special features
-		Display *dd= (Display *) wxGetDisplay();
-
-		// Window X11 handle
-		GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
-		Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
-		
-		// Disables struts
-		SetStrutArea (w, NON_DOCKED, 0);
-		
-		// Actual hide
-		wxDialog::Show (false);
-		Refresh();
-		Update();
-		
-		//
-		// Set window style back to normal again
-		//
-		Atom atomTmp= XInternAtom (dd, "_NET_WM_WINDOW_TYPE", False);
-		Atom atom_NET_WM_WINDOW_TYPE_NORMAL= XInternAtom (dd, "_NET_WM_WINDOW_TYPE_NORMAL", False);
-		unsigned long propInfo= atom_NET_WM_WINDOW_TYPE_NORMAL;
-		XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo, 1);
-		XSync(dd, False);
-		
-		// The code above disables the sticky property, so we enable it again
-		SetSticky(true);
-		
-		// Restore decorations when needed
-		SetBorderDecorations(m_dialogHadBorderDecorations);
-		
-		// Restore original size
-		wxSize proposedSize= DoGetBestSize();
-		//SetSize (0, 0, proposedSize.GetWidth(), proposedSize.GetHeight());
-		SetSize (proposedSize.GetWidth(), proposedSize.GetHeight());
-	}
-#else
-#error "GDK not found"
-#endif
-
+	
 	return true;
 }

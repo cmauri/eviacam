@@ -68,14 +68,15 @@ public:
 
 	void OnMove( wxMoveEvent& event );
 
-	void SetDockingMode (EDocking dockingMode);
 	EDocking GetDockingMode () const { return m_currentDockingMode; }
+	void SetDockingMode (EDocking dockingMode);
 	
+	bool GetAutohideMode () const { return m_autohide; }
+	void SetAutohideMode (bool autohide);
+		
 	// Allows to know and change whether the dialog has borders or not
 	bool GetBorderDecorations () const;
 	void SetBorderDecorations (bool enable, bool apply= false);
-	
-	
 	
 	void SetEntryInTaskBar (bool v);
 	
@@ -97,9 +98,15 @@ private:
 	// appear in the different desktops (GTK+ only)
 	void SetSticky (bool stick);
 	
+	void SetDockedModeStep1();
+	void SetDockedModeStep2();
+	void UnSetDockedModeStep1();
+	void UnSetDockedModeStep2();
+	
 	int m_X, m_Y, m_Width, m_Height;
 	EDocking m_currentDockingMode;
 	bool m_dialogHadBorderDecorations;
+	bool m_autohide;
 	
 	bool m_firstTime;
 };
