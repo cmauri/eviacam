@@ -742,11 +742,6 @@ bool WXAppBar::Show (bool show)
 		wxDialog::Show(true);
 	}
 	else {
-		// Actual hide
-		wxDialog::Show (false);
-		Refresh();
-		Update();
-		
 		// Disable all special features
 		Display *dd= (Display *) wxGetDisplay();
 
@@ -756,6 +751,11 @@ bool WXAppBar::Show (bool show)
 		
 		// Disables struts
 		SetStrutArea (w, NON_DOCKED, 0);
+		
+		// Actual hide
+		wxDialog::Show (false);
+		Refresh();
+		Update();
 		
 		//
 		// Set window style back to normal again
