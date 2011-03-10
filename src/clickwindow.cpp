@@ -76,7 +76,10 @@ bool CClickWindow::Create( wxWindow* parent, wxWindowID id, const wxString& capt
 {
 	SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
 	bool retval= WXAppBar::Create( parent, id, caption, pos, size, style );
-	SetSticky(true);
+	//SetSticky(true);
+	SetEntryInTaskBar (false);
+	SetEntryInPager (false);
+	SetAcceptFocus (false);
 	return retval;
 }
 

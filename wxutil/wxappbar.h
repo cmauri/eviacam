@@ -37,7 +37,7 @@
 /*!
  * Control identifiers
  */
-#define SYMBOL_CWXAPPBAR_STYLE wxSTAY_ON_TOP|wxNO_BORDER
+//#define SYMBOL_CWXAPPBAR_STYLE wxSTAY_ON_TOP|wxNO_BORDER
 
 /*!
  * WXAppBar class declaration
@@ -54,10 +54,10 @@ public:
 	
 	/// Constructors
 	WXAppBar();
-	WXAppBar( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = SYMBOL_CWXAPPBAR_STYLE );
+	WXAppBar( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style= 0); // = SYMBOL_CWXAPPBAR_STYLE );
 	
 	/// Creation
-	bool Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = SYMBOL_CWXAPPBAR_STYLE );
+	bool Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style= 0); // = SYMBOL_CWXAPPBAR_STYLE );
 	
 	/// Destructor
 	~WXAppBar();
@@ -73,23 +73,35 @@ public:
 	
 	// Allows to know and change whether the dialog has borders or not
 	bool GetBorderDecorations () const;
-	void SetBorderDecorations (bool enable);
+	void SetBorderDecorations (bool enable, bool apply= false);
 	
-	// Allows to set the stickness of the window, i.e. whether it should
-	// appear in the different desktops (GTK+ only)
-	void SetSticky (bool stick);
+	
+	
+	void SetEntryInTaskBar (bool v);
+	
+	void SetEntryInPager (bool v);
+	
+	void SetAcceptFocus (bool accept);
 	
 	virtual bool Show(bool show = true);
 
 	virtual bool ProcessEvent(wxEvent& event);
+	
+	
 
 private:
 #if defined(__WXMSW__)
 //	void AppBarCallback (UINT uMsg, WPARAM wParam, LPARAM lParam);
 #endif
+	// Allows to set the stickness of the window, i.e. whether it should
+	// appear in the different desktops (GTK+ only)
+	void SetSticky (bool stick);
+	
 	int m_X, m_Y, m_Width, m_Height;
 	EDocking m_currentDockingMode;
 	bool m_dialogHadBorderDecorations;
+	
+	bool m_firstTime;
 };
 
 #endif
