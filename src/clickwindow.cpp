@@ -75,7 +75,9 @@ CClickWindow::CClickWindow( wxWindow* parent, wxWindowID id, const wxString& cap
 bool CClickWindow::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
 	SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
-    return WXAppBar::Create( parent, id, caption, pos, size, style );    
+	bool retval= WXAppBar::Create( parent, id, caption, pos, size, style );
+	SetSticky(true);
+	return retval;
 }
 
 

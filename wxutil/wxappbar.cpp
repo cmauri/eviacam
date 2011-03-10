@@ -39,6 +39,8 @@
 
 #include <gdk/gdkx.h>
 #include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
+
 
 #endif
 
@@ -63,7 +65,7 @@ IMPLEMENT_DYNAMIC_CLASS( WXAppBar, wxDialog )
  */
 
 BEGIN_EVENT_TABLE( WXAppBar, wxDialog )
-//    EVT_SIZE( WXAppBar::OnSize )
+	EVT_SIZE( WXAppBar::OnSize )
 	EVT_MOVE( WXAppBar::OnMove )
 END_EVENT_TABLE()
 
@@ -144,6 +146,10 @@ static
 void wxWMspecSetState(Display *dd, Window w, int operation, Atom state)
 {
 	Atom atom= XInternAtom (dd, "_NET_WM_STATE", False);
+	assert (atom!= BadAlloc);
+	assert (atom!= BadAtom);
+	assert (atom!= BadValue);
+	
 	int screen = DefaultScreen (dd);
 	Window rootWin= RootWindow (dd, screen);
 	XEvent xev;
@@ -215,51 +221,82 @@ void WXAppBar::Init()
 	m_Width= -1;
 	m_Height= -1;
 	m_currentDockingMode= NON_DOCKED;
-	
-	/*
-	// X11 low-level information
-	Display *dd= (Display *) wxGetDisplay();
-	int screen = DefaultScreen (dd);
-	Atom atomTmp= 0;
-		
-	// Try to get real work area to set metrics
-	atomTmp = XInternAtom(dd, "_NET_WORKAREA", False);
-	Atom actual_type;
-	int actual_format;
-	unsigned long nitems;
-	unsigned long bytes_after;
-			
-	//CARD32 *prop;
-	unsigned long *prop;
-		
-	// Get desktop size
-	XGetWindowProperty (dd, DefaultRootWindow(dd), atomTmp, 0, 4, False, AnyPropertyType, &actual_type, &actual_format, &nitems, &bytes_after, (unsigned char **) &prop);
-
-	if (prop!= NULL)
-	{			
-		m_X= (int) prop[0];
-		m_Y= (int) prop[1];
-		m_Width= (int)prop[2];
-		m_Height= (int)prop[3];
-		XFree (prop);
-	}
-	else
-	{
-		// Fallback
-		m_X= 0;
-		m_Y= 0;
-		m_Width = DisplayWidth (dd, screen);
-		m_Height = DisplayHeight (dd, screen);
-	}
-	
-	m_barX= 0;
-	m_barY= 0;
-	m_barWidth= -1;
-	m_barHeight= -1;
-*/
-	
+	m_dialogHadBorderDecorations= GetBorderDecorations();
 }
 
+
+// Allows to know and change whether the dialog has borders or not
+bool WXAppBar::GetBorderDecorations () const
+{
+	// Honours the wxBORDER_NONE flag
+	return (GetWindowStyleFlag() & wxNO_BORDER? false : true);	
+}
+
+void WXAppBar::SetBorderDecorations (bool enable)
+{
+	if (enable == GetBorderDecorations()) return;
+	
+	// Changes the flag
+	long style= GetWindowStyleFlag();
+	if (enable)
+		style= style & ~wxNO_BORDER;
+	else
+		style= style | wxNO_BORDER;
+	SetWindowStyleFlag(style);
+	// According to the manual, after changing flags a Refresh is needed
+	Refresh();
+
+#if defined(__WXMSW__)
+	// TODO
+	assert (false);
+#elif defined(__WXGTK__)
+	//
+	// On WXGTK the above code is not enough, so we change this property
+	// using gtk+ directly
+	//
+	
+	// Get X11 handle for our window
+	GtkWindow *gtkWindow= (GtkWindow *) GetHandle();
+	assert (gtkWindow);
+	if (!gtkWindow) return;
+
+	bool isShown= IsShown();
+	if (isShown) {
+		wxDialog::Show(false);
+		//Refresh();
+		//Update();
+	}
+	
+	gtk_window_set_decorated ((GtkWindow *) GetHandle(), (enable? TRUE : FALSE));
+	if (isShown) {
+		wxDialog::Show(true);
+		Refresh();
+		Update();
+	}
+#else
+	assert (false);
+#endif
+}
+
+void WXAppBar::SetSticky (bool stick)
+{
+#if defined(__WXMSW__)
+	// TODO
+	assert (false);
+#elif defined(__WXGTK__)	
+	// Get X11 handle for our window
+	GtkWindow *gtkWindow= (GtkWindow *) GetHandle();
+	assert (gtkWindow);
+	if (!gtkWindow) return;
+
+	if (stick) 
+		gtk_window_stick (gtkWindow);
+	else 
+		gtk_window_unstick (gtkWindow);	
+#else
+	assert (false);
+#endif
+}
 
 #if defined(__WXMSW__)
 //void WXAppBar::AppBarCallback (UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -323,25 +360,41 @@ void WXAppBar::Init()
 
 #endif
 
-/*
+
 void WXAppBar::OnSize( wxSizeEvent& event )
 {
 	// TODO: delete
-	event.Skip(false);
-
+//	event.Skip(false);
+	
 #if defined(__WXMSW__)
 //	SetSize(m_X, m_Y, m_Width, m_Height, 0);
-//	Raise ();
+//	Raise ();	
+#else
+	wxSize s= event.GetSize();
+	printf ("onSize: %d, %d, orig: %d, %d\n", s.GetWidth(), s.GetHeight(), m_Width, m_Height);
+	/*
+	if (s.GetWidth()!= m_Width || s.GetHeight()!= m_Height) {
+		SetSize (m_Width, m_Height);
+		event.Skip(false);
+	}
+	else
+		wxDialog::OnSize (event);
+	*/
 #endif
 	wxDialog::OnSize (event);
-}*/
+}
 
-void WXAppBar::OnMove( wxMoveEvent& WXUNUSED(event) )
+void WXAppBar::OnMove( wxMoveEvent& event )
 {
 #if defined(__WXMSW__)
 	SetSize(m_X, m_Y, m_Width, m_Height, 0);
 	Raise ();
 #endif
+	wxPoint p= event.GetPosition();
+	
+	printf ("onMove: %d, %d, orig: %d, %d\n", p.x, p.y, m_X, m_Y);
+//	wxDialog::OnMove (event);
+	event.Skip();
 }
 
 bool WXAppBar::ProcessEvent(wxEvent& event)
@@ -365,7 +418,7 @@ void WXAppBar::SetDockingMode (EDocking dockingMode)
 
 #if defined(__WXGTK__)
 static
-void GetDesktopDimensions (Display* d, int& x, int& y, int& width, int& height)
+void GetDesktopDimensions (Display* d, int& x, int& y, int& width, int& height, int& screenWidth, int& screenHeight)
 {
 	// Try to get real work area to set metrics
 	Atom atomTmp = XInternAtom(d, "_NET_WORKAREA", False);
@@ -374,10 +427,14 @@ void GetDesktopDimensions (Display* d, int& x, int& y, int& width, int& height)
 	unsigned long nitems;
 	unsigned long bytes_after;
 	unsigned long *prop;
+	int screen = DefaultScreen (d);
 		
 	// Get desktop size
 	XGetWindowProperty (d, DefaultRootWindow(d), atomTmp, 0, 4, False, AnyPropertyType, &actual_type, &actual_format, &nitems, &bytes_after, (unsigned char **) &prop);
 
+	screenWidth= DisplayWidth (d, screen);
+	screenHeight= DisplayHeight (d, screen);
+	
 	if (prop!= NULL) {
 		x= (int) prop[0];
 		y= (int) prop[1];
@@ -386,12 +443,13 @@ void GetDesktopDimensions (Display* d, int& x, int& y, int& width, int& height)
 		XFree (prop);
 	}
 	else {
-		// Fallback, just in case
-		int screen = DefaultScreen (d);
+		// Fallback, just in case. Assert in debug mode
+		assert (false);
+		
 		x= 0;
 		y= 0;
-		width = DisplayWidth (d, screen);
-		height = DisplayHeight (d, screen);
+		width = screenWidth;
+		height = screenHeight;
 	}
 }
 #endif
@@ -458,29 +516,51 @@ bool WXAppBar::Show (bool show)
 	// http://www.freedesktop.org/wiki/Specifications/wm-spec	
 
 	if (show) {
-		
-		
-		long style= this->GetWindowStyleFlag();
-		style= style & ~(wxCAPTION);
-		this->SetWindowStyleFlag(style);
-		Refresh();
-		style= this->GetWindowStyleFlag();
-		wxDialog::Show(true);
-		
-		
-		
-		// Get Display
+		// DEBUG
+		//int (*old_handler) (Display *, XErrorEvent *) = XSetErrorHandler(NULL);
+		//int (*old_io_handler) (Display *) = XSetIOErrorHandler(NULL);
+		// DEBUG
+
+		//
+		// Get X11 display
+		//
 		Display* dd= (Display *) wxGetDisplay();
-		assert (dd);
-		XSync(dd, False);
 		//int screen = DefaultScreen (dd);
+		assert (dd);
 		
-		// Get working area dimensions
-		int xDesktop, yDesktop, widthDesktop, heightDesktop;		
-		GetDesktopDimensions (dd, xDesktop, yDesktop, widthDesktop, heightDesktop);
+		//
+		// Get desktop working area dimensions
+		//
+		int xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight;
+		GetDesktopDimensions (dd, xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight);
+		
+		//
+		// As we need to dock the window disable decorations
+		//
+		m_dialogHadBorderDecorations= GetBorderDecorations();
+		SetBorderDecorations(false);
+		
+		//
+		// Show & update the window to make sure that is actually created the first time
+		//
+		wxDialog::Show(true);
+		Refresh();
+		Update();
+		
+		//
+		// Get X11 handle for our window
+		//
+		GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
+		Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
+		
+		//
+		// Although the window must be already mapped, we check it just in case 
+		// FIXME: this is ugly but ensures that the window is really mapped
+		//
+		while (!IsMappedWindow(dd,w)) usleep (50000);	
 		
 		// Get original dimensions of the bar
-		wxSize proposedSize= DoGetBestSize();
+		wxSize proposedSize= GetBestSize();
 
 		// Compute bar position and size depending on docking mode
 		switch (m_currentDockingMode) {
@@ -492,7 +572,7 @@ bool WXAppBar::Show (bool show)
 			break;
 		case BOTTOM_DOCKED:
 			m_X= xDesktop;
-			m_Y= yDesktop - proposedSize.GetHeight();
+			m_Y= yDesktop + heightDesktop - proposedSize.GetHeight();
 			m_Width= widthDesktop;
 			m_Height= proposedSize.GetHeight();
 			break;
@@ -503,7 +583,7 @@ bool WXAppBar::Show (bool show)
 			m_Height= heightDesktop;
 			break; 
 		case RIGHT_DOCKED:
-			m_X= widthDesktop - proposedSize.GetWidth();
+			m_X= xDesktop + widthDesktop - proposedSize.GetWidth();
 			m_Y= yDesktop;
 			m_Width= proposedSize.GetWidth();
 			m_Height= heightDesktop;
@@ -515,33 +595,36 @@ bool WXAppBar::Show (bool show)
 		
 		// Set desired location and dimensions. Note that, at this point, the window
 		// still has decorations, so the location is not yet accurate.
-		SetSize(m_X, m_Y, m_Width, m_Height);
-		
+		//SetSize(m_X, m_Y, m_Width, m_Height);
+		//Update();		
 		// Do real show. If not, no underlying window is created the first time.
-		wxDialog::Show (true);	
-	
-		// Window X11 handle
-		GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
-		Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
+		//wxDialog::Show (true);
 	
 		// FIXME: this is ugly but ensures that the window is really mapped
-		while (!IsMappedWindow(dd,w)) usleep (100000);
+		//while (!IsMappedWindow(dd,w)) usleep (100000);
 		
-		//Atom atomTmp= 0;
-		int val= 0;
-		// Send root window _NET_WM_STATE properties
+		//
+		// Tell the root window:
+		//
+		// - _NET_WM_STATE_STICKY indicates that the Window Manager SHOULD keep the window's 
+		// position fixed on the screen, even when the virtual desktop scrolls.
+		// - _NET_WM_STATE_ABOVE indicates that the window should be on top of most windows
+		// 
 		Atom atomTmp= XInternAtom (dd, "_NET_WM_STATE_STICKY", False);
 		wxWMspecSetState(dd, w, _NET_WM_STATE_ADD, atomTmp);
 		atomTmp= XInternAtom (dd, "_NET_WM_STATE_ABOVE", False);
-		wxWMspecSetState(dd, w, _NET_WM_STATE_ADD, atomTmp);
-		
+		wxWMspecSetState(dd, w, _NET_WM_STATE_ADD, atomTmp);		
 		XSync(dd, False);
 		
-		// Unmap window before set properties
+		//
+		// Unmap our window before setting the following properties
+		//
+		#if 0
 		XUnmapWindow(dd, w);
 		XSync(dd, False);
 		assert (!IsMappedWindow(dd,w));
-	
+		#endif
+			
 		//
 		// Reserves an area in the desktop. Uses both _NET_WM_STRUT and 
 		// _NET_WM_STRUT_PARTIAL to ensure backwards compatibility
@@ -554,16 +637,16 @@ bool WXAppBar::Show (bool show)
 			strut[2]=  m_Height + m_Y;
 			strut_p[2]= strut[2];
 			break;
-		case BOTTOM_DOCKED:
-			strut[3]= m_Height;
+		case BOTTOM_DOCKED:	
+			strut[3]= screenHeight - heightDesktop - yDesktop + m_Height;
 			strut_p[3]= strut[3];
 			break;
 		case LEFT_DOCKED:
-			strut[0]= m_Width;
+			strut[0]= m_Width + m_X;
 			strut_p[0]= strut[0];
 			break; 
 		case RIGHT_DOCKED:
-			strut[1]= m_Width;
+			strut[1]= screenWidth - widthDesktop - xDesktop + m_Width;
 			strut_p[1]= strut[1];
 			break;
 		case NON_DOCKED:
@@ -579,12 +662,26 @@ bool WXAppBar::Show (bool show)
 		atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);		
 		XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
 		
+		// Wait until strut request is done
+		XSync(dd, False);
+		usleep (800000);
+		
+		//
+		// Unmap our window before setting the following properties
+		//
+		#if 0
+		XUnmapWindow(dd, w);
+		XSync(dd, False);
+		assert (!IsMappedWindow(dd,w));
+		#endif
+		
+		#if 0
 		//
 		// Set window in WIN_LAYER_ABOVE_DOCK (see GNOME Window Manager Compliance document for details)
 		// TODO: deprecated, here for compatibility reasons
 		//
 		atomTmp= XInternAtom (dd, "_WIN_LAYER", False);
-		val= 10;
+		int val= 10;
 		XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &val, 1);
 			
 		// TODO: the same as above, also deprecated
@@ -606,23 +703,25 @@ bool WXAppBar::Show (bool show)
 			WIN_HINTS_DO_NOT_COVER | _NET_WM_HINTS_NO_AUTO_FOCUS | _NET_WM_HINTS_STANDALONE_MENUBAR | 
 			_NET_WM_HINTS_FIXED_POSITION | _NET_WM_HINTS_DO_NOT_COVER;
 		XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &val, 1);
-
+		#endif
+		
 		//
 		// Functional type of the window (_NET_WM_WINDOW_TYPE)
-		//
+		//		
 		atomTmp= XInternAtom (dd, "_NET_WM_WINDOW_TYPE", False);
 		Atom atom_NET_WM_WINDOW_TYPE_DOCK= XInternAtom (dd, "_NET_WM_WINDOW_TYPE_DOCK", False);
-		Atom atom_NET_WM_WINDOW_TYPE_NORMAL= XInternAtom (dd, "_NET_WM_WINDOW_TYPE_NORMAL", False);
+		unsigned long propInfo= atom_NET_WM_WINDOW_TYPE_DOCK;
+		XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo, 1);
 		
-		unsigned long propInfo[2];
-		propInfo[0]= atom_NET_WM_WINDOW_TYPE_DOCK;
-		propInfo[1]= atom_NET_WM_WINDOW_TYPE_NORMAL;
-		XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo[0], 2);	
-
+		
+		#if 0
 		atomTmp= XInternAtom (dd, "_WIN_STATE", False);
 		val= WIN_STATE_STICKY | WIN_STATE_FIXED_POSITION;
 		XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &val, 1);
+		#endif
 			
+		XSync(dd, False);
+		
 		/* borderless motif hint */
 	/*
 		MWMHints mwm;
@@ -638,9 +737,24 @@ bool WXAppBar::Show (bool show)
 	//	sizeHints.flags = PPosition;	
 		//retval2= XChangeProperty (dd, w, XA_WM_NORMAL_HINTS, XA_WM_SIZE_HINTS, 32, PropModeReplace, (unsigned char *) &sizeHints, sizeof (XSizeHints) / 4);
 		
+		SetSize(m_X, m_Y, m_Width, m_Height);
+		
 		// Map window again
+		#if 0
 		XMapRaised(dd, w);
+		#endif
 		XSync(dd, False);
+		
+		//SetSize(m_Width, m_Height);
+		Refresh();
+		Update();
+		//XSync(dd, False);
+		//Refresh();
+		
+		// DEBUG
+		//XSetErrorHandler (old_handler);
+		//XSetIOErrorHandler (old_io_handler);
+		// DEBUG
 	}
 	else {
 		// Before hidding the window disable all special features
@@ -649,21 +763,38 @@ bool WXAppBar::Show (bool show)
 		// Window X11 handle
 		GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
 		Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
-	
-		// Unmap window before setting properties
-		XUnmapWindow(dd, w);
-		XSync(dd, False);
-		assert (!IsMappedWindow(dd,w));
 		
 		// Disables struts
 		Atom atomTmp = XInternAtom (dd, "_NET_WM_STRUT", False);
 		unsigned long strut[] = { 0,0,0,0 };
 		XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut, 4);
 	
-		atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
-		unsigned long strut2[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
+		//atomTmp = XInternAtom (dd, "_NET_WM_STRUT_PARTIAL", False);	
+		//unsigned long strut2[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		//XChangeProperty (dd, w, atomTmp, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &strut2, 12);
 	
+		//
+		// Tell the root window (remove):
+		//
+		// - _NET_WM_STATE_STICKY indicates that the Window Manager SHOULD keep the window's 
+		// position fixed on the screen, even when the virtual desktop scrolls.
+		// - _NET_WM_STATE_ABOVE indicates that the window should be on top of most windows
+		// 
+		atomTmp= XInternAtom (dd, "_NET_WM_STATE_STICKY", False);
+		wxWMspecSetState(dd, w, _NET_WM_STATE_REMOVE, atomTmp);
+		atomTmp= XInternAtom (dd, "_NET_WM_STATE_ABOVE", False);
+		wxWMspecSetState(dd, w, _NET_WM_STATE_REMOVE, atomTmp);
+		XSync(dd, False);
+		
+		// Unmap window before unsetting properties
+		#if 0
+		XUnmapWindow(dd, w);
+		XSync(dd, False);
+		assert (!IsMappedWindow(dd,w));
+		#endif
+		
+		
+		#if 0
 		atomTmp= XInternAtom (dd, "_WIN_LAYER", False);
 		XDeleteProperty (dd, w, atomTmp);
 		atomTmp= XInternAtom (dd, "_NET_WM_LAYER", False);
@@ -674,18 +805,32 @@ bool WXAppBar::Show (bool show)
 		XDeleteProperty (dd, w, atomTmp);
 		atomTmp= XInternAtom (dd, "_WIN_STATE", False);
 		XDeleteProperty (dd, w, atomTmp);
-
+		#endif
+		
+		
 		atomTmp= XInternAtom (dd, "_NET_WM_WINDOW_TYPE", False);
-		//Atom atom_NET_WM_WINDOW_TYPE_DOCK= XInternAtom (dd, "_NET_WM_WINDOW_TYPE_NORMAL", False);
 		Atom atom_NET_WM_WINDOW_TYPE_NORMAL= XInternAtom (dd, "_NET_WM_WINDOW_TYPE_NORMAL", False);
-		unsigned long propInfo;
-		//propInfo[0]= atom_NET_WM_WINDOW_TYPE_DOCK;
-		propInfo= atom_NET_WM_WINDOW_TYPE_NORMAL;
+		unsigned long propInfo= atom_NET_WM_WINDOW_TYPE_NORMAL;
 		XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo, 1);
-
+		
+		
+		wxDialog::Show (false);
+		Refresh();
+		Update();
+		
+		XSync(dd, False);
+		
 		wxSize proposedSize= DoGetBestSize();
 		SetSize (0, 0, proposedSize.GetWidth(), proposedSize.GetHeight());
-		return wxDialog::Show (false);
+		
+		SetBorderDecorations(m_dialogHadBorderDecorations);
+		
+		//
+		// FIXME: Ugly (again) but avoids that when reading desktop working area
+		// 	again the old struct would be reported
+		//
+		usleep (800000);
+		
 	}
 #else
 #error "GDK not found"

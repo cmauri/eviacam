@@ -64,13 +64,21 @@ public:
 	
 	/// Initialises member variables
 	void Init();
-	//void OnSize( wxSizeEvent& event );
+	void OnSize( wxSizeEvent& event );
 
 	void OnMove( wxMoveEvent& event );
 
-	//bool SetClickWindowStyle (EClickWindowStatus winStatus, EDocking dockingMode, bool show = true);
 	void SetDockingMode (EDocking dockingMode);
-
+	EDocking GetDockingMode () const { return m_currentDockingMode; }
+	
+	// Allows to know and change whether the dialog has borders or not
+	bool GetBorderDecorations () const;
+	void SetBorderDecorations (bool enable);
+	
+	// Allows to set the stickness of the window, i.e. whether it should
+	// appear in the different desktops (GTK+ only)
+	void SetSticky (bool stick);
+	
 	virtual bool Show(bool show = true);
 
 	virtual bool ProcessEvent(wxEvent& event);
@@ -80,8 +88,8 @@ private:
 //	void AppBarCallback (UINT uMsg, WPARAM wParam, LPARAM lParam);
 #endif
 	int m_X, m_Y, m_Width, m_Height;
-//	int m_barX, m_barY, m_barWidth, m_barHeight;
-	EDocking m_currentDockingMode; //, m_prevDockingMode;
+	EDocking m_currentDockingMode;
+	bool m_dialogHadBorderDecorations;
 };
 
 #endif

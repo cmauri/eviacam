@@ -217,6 +217,8 @@ void CClickWindowController::SelectAppropiateWindow (EDesign design, ELocation l
 	bool isHorizontal=
 		(location == FLOATING_HORIZONTAL || location == TOP_DOCKED || location == BOTTOM_DOCKED);
 		
+	WXAppBar::EDocking oldDocking= m_pWindow->GetDockingMode();
+	
 	if (design == CClickWindowController::NORMAL) {
 		if (isHorizontal)
 			m_pWindow= m_pWindowBitmap;
@@ -228,7 +230,9 @@ void CClickWindowController::SelectAppropiateWindow (EDesign design, ELocation l
 			m_pWindow= m_pWindowText;
 		else
 			m_pWindow= m_pWindowTextVertical;
-	}	
+	}
+	
+	m_pWindow->SetDockingMode(oldDocking);
 }
 
 void CClickWindowController::SetDesign(CClickWindowController::EDesign design)
