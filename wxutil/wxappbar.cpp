@@ -28,7 +28,7 @@
 #endif
 
 #include "wxappbar.h"
-
+#include "mousecontrol.h"
 // X11 includes
 #if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXX11__)
 
@@ -931,32 +931,11 @@ bool WXAppBar::Show (bool show)
 			if (show) {
 				SetAutohideModeStep();
 				wxDialog::Show(true);
-				/*
-				m_dialogHadBorderDecorations= GetBorderDecorations();
-				SetBorderDecorations (false);
-				SetSize(-20, 50, wxDefaultCoord, wxDefaultCoord, wxSIZE_USE_EXISTING);
-				wxDialog::Show(true);
-				Refresh();
-				Update();
-				//::wxSafeYield();
-				//usleep (2000000);
-				
-				//Move (-20, 50);
-				//Update();
-				//::wxSafeYield();
-				//usleep (2000000);
-				*/
 			}
 			else {
+				UnSetDockedModeStep1();
 				wxDialog::Show(false);
 				UnSetDockedModeStep2();
-				/*
-				SetBorderDecorations (m_dialogHadBorderDecorations, true);
-				wxDialog::Show(false);
-				Refresh();
-				Update();
-				*/
-				
 			}
 		}
 	}
@@ -1015,7 +994,18 @@ void WXAppBar::OnEnterWindow( wxMouseEvent& event )
 
 void WXAppBar::OnLeaveWindow( wxMouseEvent& event )
 {
-	if (m_autohide && m_currentDockingMode != NON_DOCKED && m_isAutohideWindowShown)
+	long x, y;
+	
+#if defined(__WXGTK__)
+	CMouseControl* m_pMouseControl = new CMouseControl ((void *) wxGetDisplay());
+#else
+	CMouseControl* m_pMouseControl= new CMouseControl ();
+#endif
+
+	m_pMouseControl->GetPointerLocation (x, y);
+	wxRect barRect = GetRect();
+	
+	if (m_autohide && m_currentDockingMode != NON_DOCKED && m_isAutohideWindowShown && !barRect.Contains(x,y))
 	{
 		// Get X11 display
 		Display* dd= (Display *) wxGetDisplay(); assert (dd);

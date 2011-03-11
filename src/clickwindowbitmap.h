@@ -86,6 +86,9 @@ public:
 
 ////@begin CClickWindowBitmap event handler declarations
 
+    /// wxEVT_ENTER_WINDOW event handler for ID_BITMAPBUTTON_NOCLICK
+    void OnEnterWindow( wxMouseEvent& event );
+
 ////@end CClickWindowBitmap event handler declarations
 
 ////@begin CClickWindowBitmap member function declarations

@@ -250,6 +250,8 @@ void CClickWindowBitmap::CreateControls()
         m_btnShowFrame->SetToolTip(_("Hide main window"));
     itemBoxSizer2->Add(m_btnShowFrame, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2);
 
+    // Connect events and objects
+    m_btnNoClick->Connect(ID_BITMAPBUTTON_NOCLICK, wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindowBitmap::OnEnterWindow), NULL, this);
 ////@end CClickWindowBitmap content construction
 
 	ConnectEvents ();
@@ -458,3 +460,14 @@ void CClickWindowBitmap::OnMainWindowShow ( wxShowEvent& event )
 	// Set to true to propagate events to the text mode clickwindow
 	event.Skip (true);
 }
+
+
+/*!
+ * wxEVT_ENTER_WINDOW event handler for ID_BITMAPBUTTON_NOCLICK
+ */
+
+void CClickWindowBitmap::OnEnterWindow( wxMouseEvent& event )
+{
+	event.Skip(true);
+}
+
