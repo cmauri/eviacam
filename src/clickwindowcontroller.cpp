@@ -214,6 +214,7 @@ CClickWindowController::EAction CClickWindowController::GetAction(long x, long y
 // Select appropiate window taking into account design and location
 void CClickWindowController::SelectAppropiateWindow (EDesign design, ELocation location)
 {
+	bool isAutohide= m_autohide;
 	bool isHorizontal=
 		(location == FLOATING_HORIZONTAL || location == TOP_DOCKED || location == BOTTOM_DOCKED);
 		
@@ -233,6 +234,7 @@ void CClickWindowController::SelectAppropiateWindow (EDesign design, ELocation l
 	}
 	
 	m_pWindow->SetDockingMode(oldDocking);
+	SetAutohide(isAutohide);
 }
 
 void CClickWindowController::SetDesign(CClickWindowController::EDesign design)
@@ -377,6 +379,7 @@ void CClickWindowController::SetAutohide(bool enable)
 //	if (isShown) Show (false);
 	
 	m_autohide= enable;
+	m_pWindow->SetAutohideMode(m_autohide);
 //	if (m_autohide) m_status= CClickWindowController::HIDDEN;
 //	else m_status= CClickWindowController::DOCKED;
 	
@@ -460,6 +463,7 @@ void CClickWindowController::ReadProfileData(wxConfigBase* pConfObj)
 	if (pConfObj->Read(_T("location"), &location))
 		SetLocation (static_cast<ELocation>(location));		
 	pConfObj->Read(_T("autohide"), &m_autohide);
+		SetAutohide(m_autohide);
 	
 	pConfObj->SetPath (_T(".."));
 }

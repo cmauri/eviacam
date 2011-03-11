@@ -67,6 +67,8 @@ IMPLEMENT_DYNAMIC_CLASS( WXAppBar, wxDialog )
 BEGIN_EVENT_TABLE( WXAppBar, wxDialog )
 	EVT_SIZE( WXAppBar::OnSize )
 	EVT_MOVE( WXAppBar::OnMove )
+	EVT_ENTER_WINDOW( WXAppBar::OnEnterWindow )
+	EVT_LEAVE_WINDOW( WXAppBar::OnLeaveWindow )
 END_EVENT_TABLE()
 
 // X11 definitions and structs
@@ -228,6 +230,7 @@ void WXAppBar::Init()
 	m_dialogHadBorderDecorations= GetBorderDecorations();
 	m_firstTime= true;
 	m_autohide=  false;
+	m_isAutohideWindowShown= false;
 }
 
 
@@ -759,6 +762,81 @@ void WXAppBar::UnSetDockedModeStep2()
 	SetSize (proposedSize.GetWidth(), proposedSize.GetHeight());
 }
 
+void WXAppBar::SetAutohideModeStep ()
+{
+	//CheckCreateWindow();
+
+	//
+	// Get X11 display
+	//
+	Display* dd= (Display *) wxGetDisplay(); assert (dd);
+	
+	//
+	// Get desktop working area dimensions
+	//
+	int xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight;
+	GetDesktopDimensions (dd, xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight);
+	
+	//
+	// As we need to dock the window disable decorations
+	//
+	m_dialogHadBorderDecorations= GetBorderDecorations();
+	SetBorderDecorations(false);
+	
+	//
+	// Get X11 handle for our window
+	//
+	GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
+	Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
+	
+	// Get original dimensions of the bar
+	wxSize proposedSize= GetBestSize();
+
+	// Compute bar position and size depending on docking mode
+	m_Width= proposedSize.GetWidth();
+	m_Height= proposedSize.GetHeight();
+	
+	switch (m_currentDockingMode) {
+		case TOP_DOCKED:
+			m_X= xDesktop;
+			m_Y= 0 - proposedSize.GetHeight() + AUTOHIDE_FLANGE;
+			break;
+		case BOTTOM_DOCKED:
+			m_X= xDesktop;
+			m_Y= screenHeight - AUTOHIDE_FLANGE;
+			break;
+		case LEFT_DOCKED:
+			m_X= 0 - proposedSize.GetWidth() + AUTOHIDE_FLANGE;
+			m_Y= yDesktop;
+			break; 
+		case RIGHT_DOCKED:
+			m_X= screenWidth - AUTOHIDE_FLANGE;
+			m_Y= yDesktop;
+			break;
+		case NON_DOCKED:
+		default:
+			assert (false);
+	}
+	
+	
+	//
+	// Functional type of the window (_NET_WM_WINDOW_TYPE)
+	//
+	Atom atomTmp= XInternAtom (dd, "_NET_WM_WINDOW_TYPE", False);
+	Atom atom_NET_WM_WINDOW_TYPE_DOCK= XInternAtom (dd, "_NET_WM_WINDOW_TYPE_DOCK", False);
+	Atom atom_NET_WM_WINDOW_TYPE_NORMAL= XInternAtom (dd, "_NET_WM_WINDOW_TYPE_NORMAL", False);
+	unsigned long propInfo[2];
+	propInfo[0]= atom_NET_WM_WINDOW_TYPE_DOCK;
+	propInfo[1]= atom_NET_WM_WINDOW_TYPE_NORMAL;		
+	XChangeProperty (dd, w, atomTmp, XA_ATOM, 32, PropModeReplace, (unsigned char *) &propInfo[0], 2);
+	SetSticky(true);
+	XSync(dd, False);
+
+	// Set desired location and dimensions
+	SetSize(m_X, m_Y, m_Width, m_Height);	
+}
+
+
 #elif defined(__WXMSW__)
 
 void WXAppBar::SetDockedModeStep1()
@@ -815,6 +893,11 @@ void WXAppBar::UnSetDockedModeStep2()
 	abd.hWnd= (HWND) GetHandle();	
 	SHAppBarMessage (ABM_REMOVE, &abd);
 }
+
+void WXAppBar::SetAutohideModeStep ()
+{
+	//TODO
+}
 #endif
 
 bool WXAppBar::Show (bool show)
@@ -846,6 +929,8 @@ bool WXAppBar::Show (bool show)
 		else {
 			// TODO: autohide
 			if (show) {
+				SetAutohideModeStep();
+				wxDialog::Show(true);
 				/*
 				m_dialogHadBorderDecorations= GetBorderDecorations();
 				SetBorderDecorations (false);
@@ -863,6 +948,8 @@ bool WXAppBar::Show (bool show)
 				*/
 			}
 			else {
+				wxDialog::Show(false);
+				UnSetDockedModeStep2();
 				/*
 				SetBorderDecorations (m_dialogHadBorderDecorations, true);
 				wxDialog::Show(false);
@@ -875,4 +962,101 @@ bool WXAppBar::Show (bool show)
 	}
 	
 	return true;
+}
+
+
+void WXAppBar::OnEnterWindow( wxMouseEvent& event )
+{
+	if (m_autohide && m_currentDockingMode != NON_DOCKED && !m_isAutohideWindowShown)
+	{
+		// Get X11 display
+		Display* dd= (Display *) wxGetDisplay(); assert (dd);
+		
+		// Get desktop working area dimensions
+		int xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight;
+		GetDesktopDimensions (dd, xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight);
+
+		// Get original dimensions of the bar
+		wxSize proposedSize= GetBestSize();
+
+		// Compute bar position and size depending on docking mode
+		m_Width= proposedSize.GetWidth();
+		m_Height= proposedSize.GetHeight();
+	
+		switch (m_currentDockingMode) {
+			case TOP_DOCKED:
+				m_X= xDesktop;
+				m_Y= 0;
+				break;
+			case BOTTOM_DOCKED:
+				m_X= xDesktop;
+				m_Y= screenHeight - proposedSize.GetHeight();
+				break;
+			case LEFT_DOCKED:
+				m_X= 0;
+				m_Y= yDesktop;
+				break; 
+			case RIGHT_DOCKED:
+				m_X= screenWidth - proposedSize.GetWidth();
+				m_Y= yDesktop;
+				break;
+			case NON_DOCKED:
+			default:
+				assert (false);
+		}
+		
+		// Set desired location and dimensions
+		SetSize(m_X, m_Y, m_Width, m_Height);
+		
+		m_isAutohideWindowShown= true;
+	}
+	event.Skip(true);
+}
+
+void WXAppBar::OnLeaveWindow( wxMouseEvent& event )
+{
+	if (m_autohide && m_currentDockingMode != NON_DOCKED && m_isAutohideWindowShown)
+	{
+		// Get X11 display
+		Display* dd= (Display *) wxGetDisplay(); assert (dd);
+		
+		// Get desktop working area dimensions
+		int xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight;
+		GetDesktopDimensions (dd, xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight);
+
+		// Get original dimensions of the bar
+		wxSize proposedSize= GetBestSize();
+
+		// Compute bar position and size depending on docking mode
+		m_Width= proposedSize.GetWidth();
+		m_Height= proposedSize.GetHeight();
+	
+		switch (m_currentDockingMode) {
+			case TOP_DOCKED:
+				m_X= xDesktop;
+				m_Y= 0 - proposedSize.GetHeight() + AUTOHIDE_FLANGE;
+				break;
+			case BOTTOM_DOCKED:
+				m_X= xDesktop;
+				m_Y= screenHeight - AUTOHIDE_FLANGE;
+				break;
+			case LEFT_DOCKED:
+				m_X= 0 - proposedSize.GetWidth() + AUTOHIDE_FLANGE;
+				m_Y= yDesktop;
+				break; 
+			case RIGHT_DOCKED:
+				m_X= screenWidth - AUTOHIDE_FLANGE;
+				m_Y= yDesktop;
+				break;
+			case NON_DOCKED:
+			default:
+				assert (false);
+		}
+		
+		// Set desired location and dimensions
+		SetSize(m_X, m_Y, m_Width, m_Height);
+		
+		m_isAutohideWindowShown= false;
+	}
+	event.Skip(true);
 }

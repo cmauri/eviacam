@@ -67,12 +67,15 @@ public:
 	void OnSize( wxSizeEvent& event );
 
 	void OnMove( wxMoveEvent& event );
+	void OnEnterWindow( wxMouseEvent& event );
+	void OnLeaveWindow( wxMouseEvent& event );
 
 	EDocking GetDockingMode () const { return m_currentDockingMode; }
 	void SetDockingMode (EDocking dockingMode);
 	
 	bool GetAutohideMode () const { return m_autohide; }
 	void SetAutohideMode (bool autohide);
+	void SetAutohideModeStep ();
 		
 	// Allows to know and change whether the dialog has borders or not
 	bool GetBorderDecorations () const;
@@ -108,6 +111,7 @@ private:
 	EDocking m_currentDockingMode;
 	bool m_dialogHadBorderDecorations;
 	bool m_autohide;
+	bool m_isAutohideWindowShown;
 	
 	bool m_firstTime;
 };
