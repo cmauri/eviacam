@@ -808,20 +808,20 @@ void WXAppBar::SetAutohideModeStep ()
 	
 	switch (m_currentDockingMode) {
 		case TOP_DOCKED:
-			m_X= xDesktop;
+			m_X= (screenWidth - proposedSize.GetWidth())/2;
 			m_Y= 0 - proposedSize.GetHeight() + AUTOHIDE_FLANGE;
 			break;
 		case BOTTOM_DOCKED:
-			m_X= xDesktop;
+			m_X= (screenWidth - proposedSize.GetWidth())/2;
 			m_Y= screenHeight - AUTOHIDE_FLANGE;
 			break;
 		case LEFT_DOCKED:
 			m_X= 0 - proposedSize.GetWidth() + AUTOHIDE_FLANGE;
-			m_Y= yDesktop;
+			m_Y= (screenHeight - proposedSize.GetHeight())/2;
 			break; 
 		case RIGHT_DOCKED:
 			m_X= screenWidth - AUTOHIDE_FLANGE;
-			m_Y= yDesktop;
+			m_Y= (screenHeight - proposedSize.GetHeight())/2;
 			break;
 		case NON_DOCKED:
 		default:
@@ -974,20 +974,20 @@ void WXAppBar::OnEnterWindow( wxMouseEvent& event )
 	
 		switch (m_currentDockingMode) {
 			case TOP_DOCKED:
-				m_X= xDesktop;
+				m_X= (screenWidth - proposedSize.GetWidth())/2;
 				m_Y= 0;
 				break;
 			case BOTTOM_DOCKED:
-				m_X= xDesktop;
+				m_X= (screenWidth - proposedSize.GetWidth())/2;
 				m_Y= screenHeight - proposedSize.GetHeight();
 				break;
 			case LEFT_DOCKED:
 				m_X= 0;
-				m_Y= yDesktop;
+				m_Y= (screenHeight - proposedSize.GetHeight())/2;
 				break; 
 			case RIGHT_DOCKED:
 				m_X= screenWidth - proposedSize.GetWidth();
-				m_Y= yDesktop;
+				m_Y= (screenHeight - proposedSize.GetHeight())/2;
 				break;
 			case NON_DOCKED:
 			default:
@@ -1041,20 +1041,20 @@ void WXAppBar::OnTimer(wxTimerEvent& event)
 	
 		switch (m_currentDockingMode) {
 			case TOP_DOCKED:
-				m_X= xDesktop;
+				m_X= (screenWidth - proposedSize.GetWidth())/2;
 				m_Y= 0 - proposedSize.GetHeight() + AUTOHIDE_FLANGE;
 				break;
 			case BOTTOM_DOCKED:
-				m_X= xDesktop;
+				m_X= (screenWidth - proposedSize.GetWidth())/2;
 				m_Y= screenHeight - AUTOHIDE_FLANGE;
 				break;
 			case LEFT_DOCKED:
 				m_X= 0 - proposedSize.GetWidth() + AUTOHIDE_FLANGE;
-				m_Y= yDesktop;
+				m_Y= (screenHeight - proposedSize.GetHeight())/2;
 				break; 
 			case RIGHT_DOCKED:
 				m_X= screenWidth - AUTOHIDE_FLANGE;
-				m_Y= yDesktop;
+				m_Y= (screenHeight - proposedSize.GetHeight())/2;
 				break;
 			case NON_DOCKED:
 			default:
