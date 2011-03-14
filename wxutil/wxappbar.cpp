@@ -40,36 +40,11 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtk.h>
+#include <wx/timer.h>
 
 
 #endif
 
-// Declare/define an event type for the appbar callback 
-// used only under MSW
-BEGIN_DECLARE_EVENT_TYPES()
-	DECLARE_EVENT_TYPE(WX_APPBAR_CALLBACK, -1)
-END_DECLARE_EVENT_TYPES()
-
-DEFINE_EVENT_TYPE(WX_APPBAR_CALLBACK)
-
-
-/*!
- * WXAppBar type definition
- */
-
-IMPLEMENT_DYNAMIC_CLASS( WXAppBar, wxDialog )
-
-
-/*!
- * WXAppBar event table definition
- */
-
-BEGIN_EVENT_TABLE( WXAppBar, wxDialog )
-	EVT_SIZE( WXAppBar::OnSize )
-	EVT_MOVE( WXAppBar::OnMove )
-	EVT_ENTER_WINDOW( WXAppBar::OnEnterWindow )
-	EVT_LEAVE_WINDOW( WXAppBar::OnLeaveWindow )
-END_EVENT_TABLE()
 
 // X11 definitions and structs
 #if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXX11__)
@@ -121,6 +96,35 @@ END_EVENT_TABLE()
 #define _NET_WM_STATE_TOGGLE        2    /* toggle property  */
 		
 #define AUTOHIDE_FLANGE 10
+#define TIMER_ID 1234
+
+// Declare/define an event type for the appbar callback 
+// used only under MSW
+BEGIN_DECLARE_EVENT_TYPES()
+		DECLARE_EVENT_TYPE(WX_APPBAR_CALLBACK, -1)
+		END_DECLARE_EVENT_TYPES()
+
+		DEFINE_EVENT_TYPE(WX_APPBAR_CALLBACK)
+
+
+/*!
+ * WXAppBar type definition
+ */
+
+		IMPLEMENT_DYNAMIC_CLASS( WXAppBar, wxDialog )
+
+
+/*!
+ * WXAppBar event table definition
+ */
+
+		BEGIN_EVENT_TABLE( WXAppBar, wxDialog )
+		EVT_SIZE( WXAppBar::OnSize )
+		EVT_MOVE( WXAppBar::OnMove )
+		EVT_ENTER_WINDOW( WXAppBar::OnEnterWindow )
+		EVT_LEAVE_WINDOW( WXAppBar::OnLeaveWindow )
+		EVT_TIMER( TIMER_ID, WXAppBar::OnTimer )
+		END_EVENT_TABLE()
 
 /*
 typedef struct _mwmhints
@@ -182,12 +186,12 @@ void wxWMspecSetState(Display *dd, Window w, int operation, Atom state)
  * WXAppBar constructors
  */
 
-WXAppBar::WXAppBar()
+WXAppBar::WXAppBar() : m_timer(this, TIMER_ID)
 {
 	Init();
 }
 
-WXAppBar::WXAppBar( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+WXAppBar::WXAppBar( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) : m_timer(this, TIMER_ID)
 {
 	Init();
 	Create(parent, id, caption, pos, size, style);	
@@ -237,7 +241,6 @@ void WXAppBar::Init()
 #else
 	m_pMouseControl= new CMouseControl ();
 #endif
-
 }
 
 
@@ -1008,6 +1011,20 @@ void WXAppBar::OnLeaveWindow( wxMouseEvent& event )
 	
 	if (m_autohide && m_currentDockingMode != NON_DOCKED && m_isAutohideWindowShown && !barRect.Contains(x,y))
 	{
+		m_timer.Start(1000);
+	}
+	event.Skip(true);
+}
+
+void WXAppBar::OnTimer(wxTimerEvent& event)
+{
+	long x, y;
+	
+	m_pMouseControl->GetPointerLocation (x, y);
+	wxRect barRect = GetRect();
+	
+	if (m_autohide && m_currentDockingMode != NON_DOCKED && m_isAutohideWindowShown && !barRect.Contains(x,y))
+	{
 		// Get X11 display
 		Display* dd= (Display *) wxGetDisplay(); assert (dd);
 		
@@ -1049,5 +1066,6 @@ void WXAppBar::OnLeaveWindow( wxMouseEvent& event )
 		
 		m_isAutohideWindowShown= false;
 	}
-	event.Skip(true);
+	event.Skip(false);
+
 }

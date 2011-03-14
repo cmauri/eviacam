@@ -27,6 +27,7 @@
  * Includes
  */
 #include "mousecontrol.h"
+#include <wx/timer.h>
 #ifndef WX_PRECOMP
 #include "wx/wx.h"
 #endif
@@ -70,6 +71,7 @@ public:
 	void OnMove( wxMoveEvent& event );
 	void OnEnterWindow( wxMouseEvent& event );
 	void OnLeaveWindow( wxMouseEvent& event );
+	void OnTimer(wxTimerEvent& event);
 
 	EDocking GetDockingMode () const { return m_currentDockingMode; }
 	void SetDockingMode (EDocking dockingMode);
@@ -114,6 +116,7 @@ private:
 	bool m_autohide;
 	bool m_isAutohideWindowShown;
 	CMouseControl* m_pMouseControl;
+	wxTimer m_timer;
 	bool m_firstTime;
 };
 
