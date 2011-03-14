@@ -26,6 +26,7 @@
 /*!
  * Includes
  */
+#include "mousecontrol.h"
 #ifndef WX_PRECOMP
 #include "wx/wx.h"
 #endif
@@ -112,7 +113,7 @@ private:
 	bool m_dialogHadBorderDecorations;
 	bool m_autohide;
 	bool m_isAutohideWindowShown;
-	
+	CMouseControl* m_pMouseControl;
 	bool m_firstTime;
 };
 

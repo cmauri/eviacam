@@ -28,7 +28,7 @@
 #endif
 
 #include "wxappbar.h"
-#include "mousecontrol.h"
+
 // X11 includes
 #if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXX11__)
 
@@ -213,6 +213,7 @@ bool WXAppBar::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
 
 WXAppBar::~WXAppBar()
 {
+	delete m_pMouseControl;
 }
 
 
@@ -231,6 +232,12 @@ void WXAppBar::Init()
 	m_firstTime= true;
 	m_autohide=  false;
 	m_isAutohideWindowShown= false;
+#if defined(__WXGTK__)
+	m_pMouseControl = new CMouseControl ((void *) wxGetDisplay());
+#else
+	m_pMouseControl= new CMouseControl ();
+#endif
+
 }
 
 
@@ -996,12 +1003,6 @@ void WXAppBar::OnLeaveWindow( wxMouseEvent& event )
 {
 	long x, y;
 	
-#if defined(__WXGTK__)
-	CMouseControl* m_pMouseControl = new CMouseControl ((void *) wxGetDisplay());
-#else
-	CMouseControl* m_pMouseControl= new CMouseControl ();
-#endif
-
 	m_pMouseControl->GetPointerLocation (x, y);
 	wxRect barRect = GetRect();
 	
