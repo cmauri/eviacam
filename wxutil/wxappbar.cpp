@@ -218,6 +218,7 @@ bool WXAppBar::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
 WXAppBar::~WXAppBar()
 {
 	delete m_pMouseControl;
+	delete m_pDialog;
 }
 
 
@@ -237,6 +238,7 @@ void WXAppBar::Init()
 	m_autohide=  false;
 	m_isAutohideWindowShown= false;
 	m_warnBarOverlap= true;
+	m_pDialog = new WarnBarOverlap(NULL);
 #if defined(__WXGTK__)
 	m_pMouseControl = new CMouseControl ((void *) wxGetDisplay());
 #else
@@ -938,13 +940,9 @@ bool WXAppBar::Show (bool show)
 			}
 		}
 		else {
-			// TODO: check if there is a bar
 			if (show) {
 				if (CheckForBar() && m_warnBarOverlap)
-				{
-					m_pDialog = new WarnBarOverlap();
 					SetWarnBarOverlap(!(m_pDialog->ShowModal() ? true : false));
-				}
 				SetAutohideModeStep();
 				wxDialog::Show(true);
 			}
