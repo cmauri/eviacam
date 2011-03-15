@@ -66,6 +66,7 @@ void CPointerAction::InitDefaults()
 	SetBeepOnClick (true);
 	SetSmoothness (5);
 	SetEasyStopValue (1); 
+	SetWrapPointer(false);
 	
 	// Workspace limits
 	SetRestrictedWorkingArea (false);
