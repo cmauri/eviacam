@@ -37,34 +37,25 @@ CClickWindowController::CClickWindowController(CViacamController & pViacamContro
 	// Create text window
 	m_pWindowText= new CClickWindowText (NULL);	
 	m_pWindowText->SetController (*this);	
-	// FIXME: implement this using the observer pattern
-	m_pViacamController->GetMainWindow()->Connect 
-		(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowText);
 	
 	// Create bitmap window
 	m_pWindowBitmap= new CClickWindowBitmap (NULL);
 	m_pWindowBitmap->SetController (*this);	
-	// FIXME: implement this using the observer pattern
-	m_pViacamController->GetMainWindow()->Connect 
-			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowBitmap);
 	
 	// Create bitmap vertical window
 	m_pWindowBitmapVertical= new CClickWindowBitmapVertical (NULL);
 	m_pWindowBitmapVertical->SetController (*this);	
-	// FIXME: implement this using the observer pattern
-	m_pViacamController->GetMainWindow()->Connect 
-			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowBitmapVertical);
 	
 	// Create text vertical window
 	m_pWindowTextVertical= new CClickWindowTextVertical (NULL);
 	m_pWindowTextVertical->SetController (*this);	
-	// FIXME: implement this using the observer pattern
-	m_pViacamController->GetMainWindow()->Connect 
-			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindowTextVertical);
-	
 	
 	// Set current window
 	m_pWindow= m_pWindowBitmap;
+	
+	// FIXME: implement this using the observer pattern
+	m_pViacamController->GetMainWindow()->Connect 
+			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindow);
 	
 	InitDefaults();
 
@@ -232,6 +223,10 @@ void CClickWindowController::SelectAppropiateWindow (EDesign design, ELocation l
 		else
 			m_pWindow= m_pWindowTextVertical;
 	}
+	
+	// FIXME: implement this using the observer pattern
+	m_pViacamController->GetMainWindow()->Connect 
+			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindow);
 	
 	m_pWindow->SetDockingMode(oldDocking);
 	SetAutohide(isAutohide);
