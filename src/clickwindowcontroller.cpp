@@ -403,31 +403,10 @@ void CClickWindowController::NotifyShowMainWindowClick ()
 	m_pViacamController->GetMainWindow()->Show (!m_pViacamController->GetMainWindow()->IsShown());
 }
 
-/*
-void CClickWindowController::AutohideClickWindow (long x, long y)
+void CClickWindowController::SetWarnBarOverlap (bool value)
 {
-	if (IsCursorOverWindow(x, y))
-	{	
-		if (m_autohide && m_status == CClickWindowController::HIDDEN)
-		{
-			bool isShown= IsShown();
-			if (isShown) Show (false);
-			m_status= CClickWindowController::VISIBLE;
-			if (isShown) Show (true);
-		}
-	}
-	else
-	{
-		if (m_autohide && m_status == CClickWindowController::VISIBLE)
-		{
-			bool isShown= IsShown();
-			if (isShown) Show (false);
-			m_status= CClickWindowController::HIDDEN;
-			if (isShown) Show (true);
-		}
-	}
+	m_pWindow->SetWarnBarOverlap(value);
 }
-*/
 
 // Configuration methods
 void CClickWindowController::InitDefaults()
@@ -448,7 +427,7 @@ void CClickWindowController::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("design"), (long) m_design);
 	pConfObj->Write(_T("location"), (long) m_location);
 	pConfObj->Write(_T("autohide"), m_autohide);
-
+	pConfObj->Write(_T("warnBarOverlap"), m_pWindow->GetWarnBarOverlap());
 	pConfObj->SetPath (_T(".."));
 }
 
@@ -456,14 +435,18 @@ void CClickWindowController::ReadProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->SetPath (_T("clickWindow"));
 
-	pConfObj->Read(_T("fastMode"), &m_fastMode);
 	long design, location;
+	bool warnBarOverlap= true;
+	
+	pConfObj->Read(_T("fastMode"), &m_fastMode);
 	if (pConfObj->Read(_T("design"), &design))
 		SetDesign ((CClickWindowController::EDesign) design);
 	if (pConfObj->Read(_T("location"), &location))
 		SetLocation (static_cast<ELocation>(location));		
 	pConfObj->Read(_T("autohide"), &m_autohide);
 		SetAutohide(m_autohide);
+	pConfObj->Read(_T("warnBarOverlap"), &warnBarOverlap);
+		m_pWindow->SetWarnBarOverlap(warnBarOverlap);
 	
 	pConfObj->SetPath (_T(".."));
 }

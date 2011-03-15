@@ -71,6 +71,8 @@ public:
 	
 	bool GetAutohide() const { return m_autohide; }
 	void SetAutohide(bool enable);
+	
+	void SetWarnBarOverlap(bool enable);
 
 //	void AutohideClickWindow(long x, long y);
 

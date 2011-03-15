@@ -28,10 +28,10 @@
 #endif
 
 #include "wxappbar.h"
+#include "warnbaroverlap.h"
 
 // X11 includes
 #if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXX11__)
-
 #include <X11/Xlib.h>
 #include <X11/Xproto.h>
 #include <X11/Xutil.h>
@@ -236,6 +236,7 @@ void WXAppBar::Init()
 	m_firstTime= true;
 	m_autohide=  false;
 	m_isAutohideWindowShown= false;
+	m_warnBarOverlap= true;
 #if defined(__WXGTK__)
 	m_pMouseControl = new CMouseControl ((void *) wxGetDisplay());
 #else
@@ -937,8 +938,13 @@ bool WXAppBar::Show (bool show)
 			}
 		}
 		else {
-			// TODO: autohide
+			// TODO: check if there is a bar
 			if (show) {
+				if (CheckForBar() && m_warnBarOverlap)
+				{
+					m_pDialog = new WarnBarOverlap();
+					SetWarnBarOverlap(!(m_pDialog->ShowModal() ? true : false));
+				}
 				SetAutohideModeStep();
 				wxDialog::Show(true);
 			}
@@ -1067,5 +1073,43 @@ void WXAppBar::OnTimer(wxTimerEvent& event)
 		m_isAutohideWindowShown= false;
 	}
 	event.Skip(false);
+}
 
+void WXAppBar::SetWarnBarOverlap(bool value)
+{
+	m_warnBarOverlap= value;
+}
+
+bool WXAppBar::CheckForBar()
+{
+	// Get X11 display
+	Display* dd= (Display *) wxGetDisplay(); assert (dd);
+		
+	// Get desktop working area dimensions
+	int xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight;
+	GetDesktopDimensions (dd, xDesktop, yDesktop, widthDesktop, heightDesktop, screenWidth, screenHeight);
+	
+	switch (m_currentDockingMode)
+	{
+		case TOP_DOCKED:
+			return (yDesktop > 0);
+			break;
+			
+		case BOTTOM_DOCKED:
+			return ((screenHeight - yDesktop - heightDesktop) > 0);
+			break;
+			
+		case LEFT_DOCKED:
+			return (xDesktop > 0);
+			break;
+			
+		case RIGHT_DOCKED:
+			return ((screenWidth - xDesktop - widthDesktop) > 0);
+			break;
+			
+		case NON_DOCKED:
+		default:
+			return false;
+			break;
+	}
 }

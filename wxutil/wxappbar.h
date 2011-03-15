@@ -79,6 +79,10 @@ public:
 	bool GetAutohideMode () const { return m_autohide; }
 	void SetAutohideMode (bool autohide);
 	void SetAutohideModeStep ();
+	
+	bool GetWarnBarOverlap () const { return m_warnBarOverlap; }
+	void SetWarnBarOverlap (bool value);
+	bool CheckForBar ();
 		
 	// Allows to know and change whether the dialog has borders or not
 	bool GetBorderDecorations () const;
@@ -118,6 +122,8 @@ private:
 	CMouseControl* m_pMouseControl;
 	wxTimer m_timer;
 	bool m_firstTime;
+	bool m_warnBarOverlap;
+	wxDialog* m_pDialog;		
 };
 
 #endif
