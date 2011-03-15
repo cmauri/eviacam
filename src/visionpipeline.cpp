@@ -31,6 +31,7 @@
 
 #include <math.h>
 #include <wx/msgdlg.h>
+#include <wx/stdpaths.h>
 
 // Constants
 #define DEFAULT_TRACK_AREA_WIDTH_PERCENT 0.50f
@@ -372,8 +373,14 @@ void CVisionPipeline::InitDefaults()
 	m_showColorTrackerResult= false;
 	m_trackArea.SetSize (DEFAULT_TRACK_AREA_WIDTH_PERCENT, DEFAULT_TRACK_AREA_HEIGHT_PERCENT);
 	m_trackArea.SetCenter (DEFAULT_TRACK_AREA_X_CENTER_PERCENT, DEFAULT_TRACK_AREA_Y_CENTER_PERCENT);
-	m_faceCascade = 0;
-	m_faceCascade = (CvHaarClassifierCascade*)cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml", 0, 0, 0);
+	wxString cascadePath (wxStandardPaths::Get().GetDataDir().Append(_T("/haarcascade_frontalface_default.xml")));
+	m_faceCascade = (CvHaarClassifierCascade*)cvLoad(cascadePath.mb_str(wxConvUTF8), 0, 0, 0);
+#ifdef __WX_DEBUG__
+	if (!m_faceCascade)
+		// If previous load attemp try to open it from the standard location.		
+		m_faceCascade = (CvHaarClassifierCascade*)
+			cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml", 0, 0, 0);
+#endif
 	if (!m_faceCascade) {
 		wxMessageDialog dlg (NULL, _("The face localization option is not enabled."), _T("Enable Viacam"), wxICON_ERROR | wxOK );
 		dlg.ShowModal();

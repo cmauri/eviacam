@@ -75,7 +75,7 @@ dist_noinst_DATA= version.h.in \
 	icons/usermovev64.xpm
 
 EXTRA_DIST = eviacam.desktop icons/eviacam.xpm
-dist_pkgdata_DATA= eviacam.desktop
+dist_pkgdata_DATA= eviacam.desktop data/haarcascade_frontalface_default.xml
 	
 desktopdir		=	$(datadir)/applications/
 desktop_DATA	=	eviacam.desktop
