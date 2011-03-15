@@ -52,16 +52,20 @@ public:
 
 	unsigned int GetXSpeed() const { return  m_xSpeed; }
 	void SetXSpeed(unsigned int value) {
-		if (value> 30) value= 30;
-		m_xSpeed= value;
-		m_pMouseControl->SetRelFactorX (GetSpeedFactor(m_xSpeed));
+		if (value >= 0 && value <= 30)
+		{
+			m_xSpeed= value;
+			m_pMouseControl->SetRelFactorX (GetSpeedFactor(m_xSpeed));
+		}
 	}
 
 	unsigned int GetYSpeed() const { return m_ySpeed; }
 	void SetYSpeed(unsigned int value) {
-		if (value> 30) value= 30;
-		m_ySpeed= value;
-		m_pMouseControl->SetRelFactorY (GetSpeedFactor(m_ySpeed));
+		if (value >= 0 && value <= 30)
+		{
+			m_ySpeed= value;
+			m_pMouseControl->SetRelFactorY (GetSpeedFactor(m_ySpeed));
+		}
 	}
 
 	unsigned int GetAcceleration() const {
