@@ -19,6 +19,8 @@
 
 ////@begin includes
 ////@end includes
+#include <wx/intl.h>
+
 
 /*!
  * Forward declarations
@@ -36,7 +38,7 @@
 #define ID_CHECKBOX5 10122
 #define ID_BUTTON4 10125
 #define SYMBOL_WARNBAROVERLAP_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxTAB_TRAVERSAL
-#define SYMBOL_WARNBAROVERLAP_TITLE _("Warn Bar Overlap")
+#define SYMBOL_WARNBAROVERLAP_TITLE _("Overlapping warning")
 #define SYMBOL_WARNBAROVERLAP_IDNAME ID_WARNBAROVERLAP
 #define SYMBOL_WARNBAROVERLAP_SIZE wxSize(400, 300)
 #define SYMBOL_WARNBAROVERLAP_POSITION wxDefaultPosition

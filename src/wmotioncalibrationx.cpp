@@ -148,7 +148,7 @@ void WMotionCalibrationX::CreateControls()
     m_staticText = new wxStaticText( itemDialog1, wxID_STATIC, _("Move your head left and right."), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(m_staticText, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    m_staticTextFaceNotDetected = new wxStaticText( itemDialog1, wxID_STATIC, _("Your face is not detected. This may cause a wrong calibration."), wxDefaultPosition, wxDefaultSize, 0 );
+    m_staticTextFaceNotDetected = new wxStaticText( itemDialog1, wxID_STATIC, _("Your face is not detected. This may produce wrong calibration results."), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(m_staticTextFaceNotDetected, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
 ////@end WMotionCalibrationX content construction

@@ -2119,13 +2119,13 @@ void WizardPage8::CreateControls()
 
     itemBoxSizer33->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    m_chkLocateFace = new wxCheckBox( itemWizardPageSimple26, ID_CHECKBOX_LOCATE_FACE, _("Locate face automatically"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkLocateFace = new wxCheckBox( itemWizardPageSimple26, ID_CHECKBOX_LOCATE_FACE, _("Locate face automatically (recommended)"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkLocateFace->SetValue(false);
     itemBoxSizer33->Add(m_chkLocateFace, 0, wxALIGN_LEFT|wxALL, 5);
 
     itemBoxSizer33->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    m_chkEnableWhenFaceDetected = new wxCheckBox( itemWizardPageSimple26, ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED, _("Enable eViacam when face detected"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkEnableWhenFaceDetected = new wxCheckBox( itemWizardPageSimple26, ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED, _("Disable eViacam if no face is found"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkEnableWhenFaceDetected->SetValue(false);
     itemBoxSizer33->Add(m_chkEnableWhenFaceDetected, 0, wxALIGN_LEFT|wxALL, 5);
 

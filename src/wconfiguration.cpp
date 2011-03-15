@@ -517,10 +517,10 @@ void WConfiguration::CreateControls()
     wxStaticText* itemStaticText42 = new wxStaticText( itemPanel22, wxID_STATIC, _("%"), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridSizer39->Add(itemStaticText42, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxTOP|wxBOTTOM, 5);
 
-    wxStaticBox* itemStaticBoxSizer43Static = new wxStaticBox(itemPanel22, wxID_ANY, _("Wrap pointer"));
+    wxStaticBox* itemStaticBoxSizer43Static = new wxStaticBox(itemPanel22, wxID_ANY, _("Pointer wrapping"));
     wxStaticBoxSizer* itemStaticBoxSizer43 = new wxStaticBoxSizer(itemStaticBoxSizer43Static, wxVERTICAL);
     itemBoxSizer23->Add(itemStaticBoxSizer43, 0, wxGROW|wxALL, 5);
-    m_chkWrapPointer = new wxCheckBox( itemPanel22, ID_CHECKBOX2, _("Allow wrap the pointer"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkWrapPointer = new wxCheckBox( itemPanel22, ID_CHECKBOX2, _("Allow wrapping the pointer around the working area"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkWrapPointer->SetValue(false);
     itemStaticBoxSizer43->Add(m_chkWrapPointer, 0, wxALIGN_LEFT|wxALL, 5);
 
@@ -623,7 +623,7 @@ void WConfiguration::CreateControls()
     m_choDockingMode = new wxChoice( m_panelClick, ID_CHOICE5, wxDefaultPosition, wxDefaultSize, m_choDockingModeStrings, 0 );
     itemFlexGridSizer61->Add(m_choDockingMode, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_chkAutohide = new wxCheckBox( m_panelClick, ID_CHECKBOX_AUTOHIDE, _("Autohide"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkAutohide = new wxCheckBox( m_panelClick, ID_CHECKBOX_AUTOHIDE, _("Auto-hide"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkAutohide->SetValue(false);
     itemFlexGridSizer61->Add(m_chkAutohide, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
@@ -698,7 +698,7 @@ void WConfiguration::CreateControls()
     wxStaticBox* itemStaticBoxSizer82Static = new wxStaticBox(m_panelKeys, wxID_ANY, _("Hotkeys"));
     wxStaticBoxSizer* itemStaticBoxSizer82 = new wxStaticBoxSizer(itemStaticBoxSizer82Static, wxVERTICAL);
     itemBoxSizer81->Add(itemStaticBoxSizer82, 0, wxGROW|wxALL, 5);
-    wxStaticText* itemStaticText83 = new wxStaticText( m_panelKeys, wxID_STATIC, _("In this tab you can associate a different hotkey for each function\nand enable or disable them."), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText83 = new wxStaticText( m_panelKeys, wxID_STATIC, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizer82->Add(itemStaticText83, 0, wxALIGN_LEFT|wxALL, 5);
 
     m_hotkeysSizer = new wxFlexGridSizer(0, 4, 0, 0);
@@ -772,7 +772,7 @@ void WConfiguration::CreateControls()
 
     wxBoxSizer* itemBoxSizer100 = new wxBoxSizer(wxHORIZONTAL);
     itemStaticBoxSizer94->Add(itemBoxSizer100, 0, wxGROW|wxALL, 5);
-    m_chkEnableWhenFaceDetected = new wxCheckBox( itemPanel85, ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED, _("Stop the pointer when face not detected after"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkEnableWhenFaceDetected = new wxCheckBox( itemPanel85, ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED, _("Stop the pointer when no face is detected after"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkEnableWhenFaceDetected->SetValue(false);
     if (WConfiguration::ShowToolTips())
         m_chkEnableWhenFaceDetected->SetToolTip(_("eViacam is only enabled when face is detected."));

@@ -124,7 +124,7 @@ void WarnBarOverlap::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, _("Another bar is docked in the same orientation.\nIt is recommended to change the click window\norientation to avoid overlap between both bars."), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText3 = new wxStaticText( itemDialog1, wxID_STATIC, _("The chosen Click window position is taken up by another bar.\nThis can prevent it from working properly when auto-hide mode is enabled.\nIt is recommended to move the Click window to a free position."), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemStaticText3, 0, wxALIGN_LEFT|wxALL, 5);
 
     itemBoxSizer2->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);

@@ -2389,14 +2389,6 @@ necessary."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -4766,7 +4758,7 @@ to the selected area."</string>
                       <string name="proxy-type">"wbStaticBoxSizerProxy"</string>
                       <string name="proxy-Id name">"wxID_ANY"</string>
                       <long name="proxy-Id value">-1</long>
-                      <string name="proxy-Label">"Wrap pointer"</string>
+                      <string name="proxy-Label">"Pointer wrapping"</string>
                       <string name="proxy-Member variable name">""</string>
                       <string name="proxy-Sizer member variable name">""</string>
                       <string name="proxy-Foreground colour">""</string>
@@ -4808,7 +4800,7 @@ to the selected area."</string>
                         <string name="proxy-Implementation filename">""</string>
                         <string name="proxy-Header filename">""</string>
                         <string name="proxy-Member variable name">"m_chkWrapPointer"</string>
-                        <string name="proxy-Label">"Allow wrap the pointer"</string>
+                        <string name="proxy-Label">"Allow wrapping the pointer around the working area"</string>
                         <bool name="proxy-Initial value">0</bool>
                         <string name="proxy-Help text">""</string>
                         <string name="proxy-Tooltip text">""</string>
@@ -6175,7 +6167,7 @@ buttons."</string>
                             <string name="proxy-Implementation filename">""</string>
                             <string name="proxy-Header filename">""</string>
                             <string name="proxy-Member variable name">"m_chkAutohide"</string>
-                            <string name="proxy-Label">"Autohide"</string>
+                            <string name="proxy-Label">"Auto-hide"</string>
                             <bool name="proxy-Initial value">0</bool>
                             <string name="proxy-Help text">""</string>
                             <string name="proxy-Tooltip text">""</string>
@@ -7027,8 +7019,7 @@ buttons."</string>
                         <string name="proxy-Implementation filename">""</string>
                         <string name="proxy-Header filename">""</string>
                         <string name="proxy-Member variable name">""</string>
-                        <string name="proxy-Label">"In this tab you can associate a different hotkey for each function
-and enable or disable them."</string>
+                        <string name="proxy-Label">""</string>
                         <long name="proxy-Wrapping width">-1</long>
                         <string name="proxy-Help text">""</string>
                         <string name="proxy-Tooltip text">""</string>
@@ -7923,7 +7914,7 @@ tracking area."</string>
                           <string name="proxy-Implementation filename">""</string>
                           <string name="proxy-Header filename">""</string>
                           <string name="proxy-Member variable name">"m_chkEnableWhenFaceDetected"</string>
-                          <string name="proxy-Label">"Stop the pointer when face not detected after"</string>
+                          <string name="proxy-Label">"Stop the pointer when no face is detected after"</string>
                           <bool name="proxy-Initial value">0</bool>
                           <string name="proxy-Help text">""</string>
                           <string name="proxy-Tooltip text">"eViacam is only enabled when face is detected."</string>
@@ -11196,7 +11187,7 @@ tracking area."</string>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
               <string name="proxy-Member variable name">"m_staticTextFaceNotDetected"</string>
-              <string name="proxy-Label">"Your face is not detected. This may cause a wrong calibration."</string>
+              <string name="proxy-Label">"Your face is not detected. This may produce wrong calibration results."</string>
               <long name="proxy-Wrapping width">-1</long>
               <string name="proxy-Help text">""</string>
               <string name="proxy-Tooltip text">""</string>
@@ -13614,7 +13605,7 @@ The system is able to detect the user's face automatically. But, if necessary, y
                   <string name="proxy-Implementation filename">""</string>
                   <string name="proxy-Header filename">""</string>
                   <string name="proxy-Member variable name">"m_chkLocateFace"</string>
-                  <string name="proxy-Label">"Locate face automatically"</string>
+                  <string name="proxy-Label">"Locate face automatically (recommended)"</string>
                   <bool name="proxy-Initial value">0</bool>
                   <string name="proxy-Help text">""</string>
                   <string name="proxy-Tooltip text">""</string>
@@ -13703,7 +13694,7 @@ The system is able to detect the user's face automatically. But, if necessary, y
                   <string name="proxy-Implementation filename">""</string>
                   <string name="proxy-Header filename">""</string>
                   <string name="proxy-Member variable name">"m_chkEnableWhenFaceDetected"</string>
-                  <string name="proxy-Label">"Enable eViacam when face detected"</string>
+                  <string name="proxy-Label">"Disable eViacam if no face is found"</string>
                   <bool name="proxy-Initial value">0</bool>
                   <string name="proxy-Help text">""</string>
                   <string name="proxy-Tooltip text">""</string>
@@ -18125,7 +18116,7 @@ Click finish to exit the wizard."</string>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
               <string name="proxy-Member variable name">"m_staticTextFaceNotDetected"</string>
-              <string name="proxy-Label">"Your face is not detected. This may cause a wrong calibration."</string>
+              <string name="proxy-Label">"Your face is not detected. This may produce wrong calibration results."</string>
               <long name="proxy-Wrapping width">-1</long>
               <string name="proxy-Help text">""</string>
               <string name="proxy-Tooltip text">""</string>
@@ -18643,6 +18634,14 @@ Click finish to exit the wizard."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
+            <string name="proxy-AlignH">"Centre"</string>
+            <string name="proxy-AlignV">"Centre"</string>
+            <long name="proxy-Stretch factor">0</long>
+            <long name="proxy-Border">5</long>
+            <bool name="proxy-wxLEFT">1</bool>
+            <bool name="proxy-wxRIGHT">1</bool>
+            <bool name="proxy-wxTOP">1</bool>
+            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>

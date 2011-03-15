@@ -29,4 +29,6 @@ src/wmotioncalibrationy.h
 src/wcameradialog.h
 wxcamwindow/capturethread.cpp
 wxcamwindow/camwindow.cpp
+wxutil/warnbaroverlap.h
+wxutil/warnbaroverlap.cpp
 
