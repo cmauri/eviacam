@@ -375,7 +375,7 @@ void CVisionPipeline::InitDefaults()
 	m_trackArea.SetCenter (DEFAULT_TRACK_AREA_X_CENTER_PERCENT, DEFAULT_TRACK_AREA_Y_CENTER_PERCENT);
 	wxString cascadePath (wxStandardPaths::Get().GetDataDir().Append(_T("/haarcascade_frontalface_default.xml")));
 	m_faceCascade = (CvHaarClassifierCascade*)cvLoad(cascadePath.mb_str(wxConvUTF8), 0, 0, 0);
-#ifdef __WX_DEBUG__
+#ifndef NDEBUG
 	if (!m_faceCascade)
 		// If previous load attemp try to open it from the standard location.		
 		m_faceCascade = (CvHaarClassifierCascade*)
