@@ -27,6 +27,8 @@ src/wconfirmcalibration.h
 src/wmotioncalibrationx.h
 src/wmotioncalibrationy.h
 src/wcameradialog.h
+src/hotkeymanager.h
+src/hotkeymanager.cpp
 wxcamwindow/capturethread.cpp
 wxcamwindow/camwindow.cpp
 wxutil/warnbaroverlap.h
