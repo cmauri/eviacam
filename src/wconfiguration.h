@@ -429,6 +429,7 @@ private:
     wxStaticText* m_staticCpuUsage;
     wxChoice* m_choCpuUsage;
     wxCheckBox* m_chkEnableWhenFaceDetected;
+    wxStaticText* m_staticLocateFaceTimeout2;
     wxSpinCtrl* m_spinLocateFaceTimeout;
     wxStaticText* m_staticLocateFaceTimeout;
     wxChoice* m_choProfile;
