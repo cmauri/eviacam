@@ -24,7 +24,6 @@
 
 #include <assert.h>
 #include <cv.h>
-#include <highgui.h>
 
 class CIplImage
 {
