@@ -6037,7 +6037,7 @@ buttons."</string>
                             <string name="proxy-Font">""</string>
                             <bool name="proxy-Hidden">0</bool>
                             <bool name="proxy-Enabled">1</bool>
-                            <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
+                            <string name="proxy-Platform">"__WXGTK__"</string>
                             <string name="proxy-Data variable">""</string>
                             <string name="proxy-Data validator">""</string>
                             <string name="proxy-Data source">""</string>
@@ -6112,7 +6112,7 @@ buttons."</string>
                             <string name="proxy-Font">""</string>
                             <bool name="proxy-Hidden">0</bool>
                             <bool name="proxy-Enabled">1</bool>
-                            <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
+                            <string name="proxy-Platform">"__WXGTK__"</string>
                             <string name="proxy-Data variable">""</string>
                             <string name="proxy-Data validator">""</string>
                             <string name="proxy-Data source">""</string>
@@ -6183,7 +6183,7 @@ buttons."</string>
                             <string name="proxy-Font">""</string>
                             <bool name="proxy-Hidden">0</bool>
                             <bool name="proxy-Enabled">1</bool>
-                            <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
+                            <string name="proxy-Platform">"__WXGTK__"</string>
                             <bool name="proxy-wxALIGN_RIGHT">0</bool>
                             <bool name="proxy-wxCHK_2STATE">0</bool>
                             <bool name="proxy-wxCHK_3STATE">0</bool>
@@ -6896,7 +6896,7 @@ buttons."</string>
                   <string name="proxy-Font">""</string>
                   <bool name="proxy-Hidden">0</bool>
                   <bool name="proxy-Enabled">1</bool>
-                  <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
+                  <string name="proxy-Platform">"__WXGTK__"</string>
                   <string name="proxy-Data source">""</string>
                   <string name="proxy-Data class name">""</string>
                   <string name="proxy-Data class implementation filename">""</string>

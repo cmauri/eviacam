@@ -32,9 +32,6 @@
 #include "wx/wx.h"
 #endif
 
-#ifdef __WXMSW__
-#include <shellapi.h>
-#endif
 
 /*!
  * Control identifiers

@@ -157,6 +157,9 @@
 				RelativePath=".\waittime.cpp">
 			</File>
 			<File
+				RelativePath=".\warnbaroverlap.cpp">
+			</File>
+			<File
 				RelativePath=".\wxappbar.cpp">
 			</File>
 		</Filter>
@@ -177,6 +180,9 @@
 			</File>
 			<File
 				RelativePath=".\waittime.h">
+			</File>
+			<File
+				RelativePath=".\warnbaroverlap.h">
 			</File>
 			<File
 				RelativePath=".\wxappbar.h">

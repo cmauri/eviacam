@@ -30,6 +30,10 @@
 #include "wxappbar.h"
 #include "warnbaroverlap.h"
 
+#ifdef __WXMSW__
+//#include <shellapi.h>
+#endif
+
 // X11 includes
 #if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXX11__)
 #include <X11/Xlib.h>
@@ -40,15 +44,15 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtk.h>
-#include <wx/timer.h>
-
 
 #endif
 
+#include <wx/timer.h>
+
+#define AUTOHIDE_FLANGE 10
+#define TIMER_ID 1234
 
 // X11 definitions and structs
-#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXX11__)
-
 #define WIN_STATE_STICKY          (1<<0)	/* everyone knows sticky */
 #define WIN_STATE_MINIMIZED       (1<<1)	/* ??? */
 #define WIN_STATE_MAXIMIZED_VERT  (1<<2)	/* window in maximized V state */
@@ -94,37 +98,34 @@
 #define _NET_WM_STATE_REMOVE        0    /* remove/unset property */
 #define _NET_WM_STATE_ADD           1    /* add/set property */
 #define _NET_WM_STATE_TOGGLE        2    /* toggle property  */
-		
-#define AUTOHIDE_FLANGE 10
-#define TIMER_ID 1234
 
 // Declare/define an event type for the appbar callback 
 // used only under MSW
 BEGIN_DECLARE_EVENT_TYPES()
-		DECLARE_EVENT_TYPE(WX_APPBAR_CALLBACK, -1)
-		END_DECLARE_EVENT_TYPES()
+	DECLARE_EVENT_TYPE(WX_APPBAR_CALLBACK, -1)
+END_DECLARE_EVENT_TYPES()
 
-		DEFINE_EVENT_TYPE(WX_APPBAR_CALLBACK)
+DEFINE_EVENT_TYPE(WX_APPBAR_CALLBACK)
 
 
 /*!
  * WXAppBar type definition
  */
 
-		IMPLEMENT_DYNAMIC_CLASS( WXAppBar, wxDialog )
+IMPLEMENT_DYNAMIC_CLASS( WXAppBar, wxDialog )
 
 
 /*!
  * WXAppBar event table definition
  */
 
-		BEGIN_EVENT_TABLE( WXAppBar, wxDialog )
-		EVT_SIZE( WXAppBar::OnSize )
-		EVT_MOVE( WXAppBar::OnMove )
-		EVT_ENTER_WINDOW( WXAppBar::OnEnterWindow )
-		EVT_LEAVE_WINDOW( WXAppBar::OnLeaveWindow )
-		EVT_TIMER( TIMER_ID, WXAppBar::OnTimer )
-		END_EVENT_TABLE()
+BEGIN_EVENT_TABLE( WXAppBar, wxDialog )
+	EVT_SIZE( WXAppBar::OnSize )
+	EVT_MOVE( WXAppBar::OnMove )
+	EVT_ENTER_WINDOW( WXAppBar::OnEnterWindow )
+	EVT_LEAVE_WINDOW( WXAppBar::OnLeaveWindow )
+	EVT_TIMER( TIMER_ID, WXAppBar::OnTimer )
+END_EVENT_TABLE()
 
 /*
 typedef struct _mwmhints
@@ -137,7 +138,7 @@ typedef struct _mwmhints
 }
 MWMHints;
 */
-
+#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXX11__)
 static 
 bool IsMappedWindow(Display *dd, Window w)
 {
@@ -178,8 +179,8 @@ void wxWMspecSetState(Display *dd, Window w, int operation, Atom state)
 	XSendEvent(dd, rootWin, False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
 }
 #endif
-
 #endif
+
 
 
 /*!
@@ -960,6 +961,7 @@ bool WXAppBar::Show (bool show)
 
 void WXAppBar::OnEnterWindow( wxMouseEvent& event )
 {
+#if defined(__WXGTK__)
 	if (m_autohide && m_currentDockingMode != NON_DOCKED && !m_isAutohideWindowShown)
 	{
 		// Get X11 display
@@ -1003,11 +1005,13 @@ void WXAppBar::OnEnterWindow( wxMouseEvent& event )
 		
 		m_isAutohideWindowShown= true;
 	}
+#endif
 	event.Skip(true);
 }
 
 void WXAppBar::OnLeaveWindow( wxMouseEvent& event )
 {
+#if defined(__WXGTK__)
 	long x, y;
 	
 	m_pMouseControl->GetPointerLocation (x, y);
@@ -1017,11 +1021,13 @@ void WXAppBar::OnLeaveWindow( wxMouseEvent& event )
 	{
 		m_timer.Start(1000);
 	}
+#endif
 	event.Skip(true);
 }
 
 void WXAppBar::OnTimer(wxTimerEvent& event)
 {
+#if defined(__WXGTK__)
 	long x, y;
 	
 	m_pMouseControl->GetPointerLocation (x, y);
@@ -1070,6 +1076,7 @@ void WXAppBar::OnTimer(wxTimerEvent& event)
 		
 		m_isAutohideWindowShown= false;
 	}
+#endif
 	event.Skip(false);
 }
 
@@ -1080,6 +1087,7 @@ void WXAppBar::SetWarnBarOverlap(bool value)
 
 bool WXAppBar::CheckForBar()
 {
+#if defined(__WXGTK__)
 	// Get X11 display
 	Display* dd= (Display *) wxGetDisplay(); assert (dd);
 		
@@ -1110,4 +1118,6 @@ bool WXAppBar::CheckForBar()
 			return false;
 			break;
 	}
+#endif
+	return false;
 }

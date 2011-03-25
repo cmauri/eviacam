@@ -137,9 +137,13 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
 
     EVT_CHOICE( ID_CHOICE_BEHAVIOUR, WConfiguration::OnChoiceBehaviourSelected )
 
+#if defined(__WXGTK__)
     EVT_CHOICE( ID_CHOICE5, WConfiguration::OnChoiceClickWindowModeSelected )
+#endif
 
+#if defined(__WXGTK__)
     EVT_CHECKBOX( ID_CHECKBOX_AUTOHIDE, WConfiguration::OnCheckboxAutohideClick )
+#endif
 
 #if defined(__WXGTK__)
     EVT_CHECKBOX( ID_CHECKBOX, WConfiguration::OnCheckboxEnableGestureClick )
@@ -294,9 +298,15 @@ void WConfiguration::Init()
     m_choClickWindowDesign = NULL;
     m_stBehaviour = NULL;
     m_choClickWindowBehaviour = NULL;
+#if defined(__WXGTK__)
     m_stDocking = NULL;
+#endif
+#if defined(__WXGTK__)
     m_choDockingMode = NULL;
+#endif
+#if defined(__WXGTK__)
     m_chkAutohide = NULL;
+#endif
 #if defined(__WXGTK__)
     m_sboxGestureClick = NULL;
 #endif
@@ -327,8 +337,12 @@ void WConfiguration::Init()
 #if defined(__WXGTK__)
     m_choDown = NULL;
 #endif
+#if defined(__WXGTK__)
     m_panelKeys = NULL;
+#endif
+#if defined(__WXGTK__)
     m_hotkeysSizer = NULL;
+#endif
 #if defined(__WXGTK__)
     m_chkStartup = NULL;
 #endif
@@ -611,9 +625,12 @@ void WConfiguration::CreateControls()
         m_choClickWindowBehaviour->SetToolTip(_("Fast mode enables click type\nselection by hovering the mouse\npointer over the click window\nbuttons."));
     itemFlexGridSizer61->Add(m_choClickWindowBehaviour, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxTOP, 5);
 
+#if defined(__WXGTK__)
     m_stDocking = new wxStaticText( m_panelClick, wxID_STATIC, _("Location:"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer61->Add(m_stDocking, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+#endif
 
+#if defined(__WXGTK__)
     wxArrayString m_choDockingModeStrings;
     m_choDockingModeStrings.Add(_("Floating horizontal"));
     m_choDockingModeStrings.Add(_("Floating vertical"));
@@ -623,10 +640,13 @@ void WConfiguration::CreateControls()
     m_choDockingModeStrings.Add(_("Right docked"));
     m_choDockingMode = new wxChoice( m_panelClick, ID_CHOICE5, wxDefaultPosition, wxDefaultSize, m_choDockingModeStrings, 0 );
     itemFlexGridSizer61->Add(m_choDockingMode, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+#endif
 
+#if defined(__WXGTK__)
     m_chkAutohide = new wxCheckBox( m_panelClick, ID_CHECKBOX_AUTOHIDE, _("Auto-hide"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkAutohide->SetValue(false);
     itemFlexGridSizer61->Add(m_chkAutohide, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+#endif
 
 #if defined(__WXGTK__)
     m_sboxGestureClick = new wxStaticBox(m_panelClick, ID_STATICBOX_GESTURE_CLICK, _("Gesture click"));
@@ -692,6 +712,7 @@ void WConfiguration::CreateControls()
 
     itemNotebook4->AddPage(m_panelClick, _("Click"));
 
+#if defined(__WXGTK__)
     m_panelKeys = new wxPanel( itemNotebook4, ID_PANEL_KEYS, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer81 = new wxBoxSizer(wxVERTICAL);
     m_panelKeys->SetSizer(itemBoxSizer81);
@@ -709,7 +730,11 @@ void WConfiguration::CreateControls()
     m_hotkeysSizer->AddGrowableCol(3);
     itemStaticBoxSizer82->Add(m_hotkeysSizer, 0, wxGROW|wxALL, 5);
 
+#endif
+
+#if defined(__WXGTK__)
     itemNotebook4->AddPage(m_panelKeys, _("Hotkeys"));
+#endif
 
     wxPanel* itemPanel85 = new wxPanel( itemNotebook4, ID_PANEL_ADVANCED, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer86 = new wxBoxSizer(wxVERTICAL);
@@ -1016,11 +1041,11 @@ void WConfiguration::InitializeData ()
 		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetFastMode() ? 1 : 0);
 	m_choClickWindowDesign->Select (
 		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetDesign());
+#if defined(__WXGTK__)
 	m_choDockingMode->Select (
 		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetLocation());
 	m_chkAutohide->SetValue (
 		wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetAutohide() ? 1 : 0);	
-#if defined(__WXGTK__)
 	m_choLeft->Select (
 		wxGetApp().GetController().GetPointerAction().GetGestureClick().GetActionLeft());
 	m_choRight->Select (
@@ -1165,27 +1190,32 @@ void WConfiguration::EnableGUIClickWindowOptions(bool enable)
 	m_chkShowClickWin->Enable(enable);
 	m_choClickWindowDesign->Enable(enable);
 	m_choClickWindowBehaviour->Enable(enable);
-	m_choDockingMode->Enable(enable);
-	m_chkAutohide->Enable(enable);
-	m_stDesign->Enable(enable);
+    m_stDesign->Enable(enable);
 	m_stBehaviour->Enable(enable);
-	m_stDocking->Enable(enable);
+#if defined(__WXGTK__)
+    m_stDocking->Enable(enable);
+    m_choDockingMode->Enable(enable);
+	m_chkAutohide->Enable(enable);
+#endif
 	
 	if (enable) {
 		m_stDesign->Enable(m_chkShowClickWin->IsChecked());
 		m_choClickWindowDesign->Enable(m_chkShowClickWin->IsChecked());
 		m_stBehaviour->Enable(m_chkShowClickWin->IsChecked());
 		m_choClickWindowBehaviour->Enable(m_chkShowClickWin->IsChecked());
+#if defined(__WXGTK__)
 		m_stDocking->Enable(m_chkShowClickWin->IsChecked());
 		m_choDockingMode->Enable(m_chkShowClickWin->IsChecked());
 		m_chkAutohide->Enable(m_chkShowClickWin->IsChecked());
+#endif        
 	}
-	
+#if defined(__WXGTK__)	
 	if (	m_choDockingMode->GetCurrentSelection()== CClickWindowController::FLOATING_VERTICAL ||
 		m_choDockingMode->GetCurrentSelection()== CClickWindowController::FLOATING_HORIZONTAL) {
 		
 		m_chkAutohide->Enable(false);
 	}
+#endif
 }
 
 void WConfiguration::Changed ()
@@ -1405,6 +1435,7 @@ void WConfiguration::OnCheckboxShowClickwinClick( wxCommandEvent& event )
 	m_choClickWindowDesign->Enable(m_chkShowClickWin->IsChecked());
 	m_stBehaviour->Enable(m_chkShowClickWin->IsChecked());
 	m_choClickWindowBehaviour->Enable(m_chkShowClickWin->IsChecked());
+#if defined(__WXGTK__)
 	m_stDocking->Enable(m_chkShowClickWin->IsChecked());
 	m_choDockingMode->Enable(m_chkShowClickWin->IsChecked());
 	m_chkAutohide->Enable(m_chkShowClickWin->IsChecked());	
@@ -1413,6 +1444,7 @@ void WConfiguration::OnCheckboxShowClickwinClick( wxCommandEvent& event )
 	{
 		m_chkAutohide->Enable(false);
 	}
+#endif
 		
 	wxGetApp().GetController().GetPointerAction().GetDwellClick().SetUseClickWindow(
 		!wxGetApp().GetController().GetPointerAction().GetDwellClick().GetUseClickWindow()
@@ -1990,7 +2022,7 @@ void WConfiguration::OnCheckboxWrapPointer( wxCommandEvent& event )
     event.Skip();
 }
 
-
+#if defined(__WXGTK__)
 /*!
  * wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE5
  */
@@ -2009,8 +2041,10 @@ void WConfiguration::OnChoiceClickWindowModeSelected( wxCommandEvent& event )
 	
 	event.Skip(false);
 }
+#endif
 
 
+#if defined(__WXGTK__)
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTOHIDE
  */
@@ -2022,4 +2056,5 @@ void WConfiguration::OnCheckboxAutohideClick( wxCommandEvent& event )
 	
 	event.Skip(false);
 }
+#endif
 

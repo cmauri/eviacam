@@ -225,10 +225,16 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 				RelativePath=".\clickwindowbitmap.cpp">
 			</File>
 			<File
+				RelativePath=".\clickwindowbitmapvertical.cpp">
+			</File>
+			<File
 				RelativePath=".\clickwindowcontroller.cpp">
 			</File>
 			<File
 				RelativePath=".\clickwindowtext.cpp">
+			</File>
+			<File
+				RelativePath=".\clickwindowvertical.cpp">
 			</File>
 			<File
 				RelativePath=".\cmotioncalibration.cpp">
@@ -305,10 +311,16 @@ rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
 				RelativePath=".\clickwindowbitmap.h">
 			</File>
 			<File
+				RelativePath=".\clickwindowbitmapvertical.h">
+			</File>
+			<File
 				RelativePath=".\clickwindowcontroller.h">
 			</File>
 			<File
 				RelativePath=".\clickwindowtext.h">
+			</File>
+			<File
+				RelativePath=".\clickwindowvertical.h">
 			</File>
 			<File
 				RelativePath=".\cmotioncalibration.h">

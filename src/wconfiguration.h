@@ -230,12 +230,16 @@ private:
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_BEHAVIOUR
     void OnChoiceBehaviourSelected( wxCommandEvent& event );
 
+#if defined(__WXGTK__)
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE5
     void OnChoiceClickWindowModeSelected( wxCommandEvent& event );
 
+#endif
+#if defined(__WXGTK__)
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTOHIDE
     void OnCheckboxAutohideClick( wxCommandEvent& event );
 
+#endif
 #if defined(__WXGTK__)
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
     void OnCheckboxEnableGestureClick( wxCommandEvent& event );
@@ -383,9 +387,15 @@ private:
     wxChoice* m_choClickWindowDesign;
     wxStaticText* m_stBehaviour;
     wxChoice* m_choClickWindowBehaviour;
+#if defined(__WXGTK__)
     wxStaticText* m_stDocking;
+#endif
+#if defined(__WXGTK__)
     wxChoice* m_choDockingMode;
+#endif
+#if defined(__WXGTK__)
     wxCheckBox* m_chkAutohide;
+#endif
 #if defined(__WXGTK__)
     wxStaticBox* m_sboxGestureClick;
 #endif
@@ -416,8 +426,12 @@ private:
 #if defined(__WXGTK__)
     wxChoice* m_choDown;
 #endif
+#if defined(__WXGTK__)
     wxPanel* m_panelKeys;
+#endif
+#if defined(__WXGTK__)
     wxFlexGridSizer* m_hotkeysSizer;
+#endif
 #if defined(__WXGTK__)
     wxCheckBox* m_chkStartup;
 #endif
