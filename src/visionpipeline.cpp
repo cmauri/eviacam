@@ -121,7 +121,7 @@ wxThread::ExitCode CVisionPipeline::Entry( )
 		if (!m_isRunning) {
 			break;
 		}
-		
+
 		unsigned long now = CTimeUtil::GetMiliCount();
 		if (now - ts1>= (unsigned long) m_threadPeriod) {
 			ts1 = CTimeUtil::GetMiliCount();

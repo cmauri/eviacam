@@ -307,7 +307,7 @@ void WXAppBar::SetSticky (bool stick)
 {
 #if defined(__WXMSW__)
 	// TODO
-	assert (false);
+	//assert (false);
 #elif defined(__WXGTK__)	
 	// Get X11 handle for our window
 	GtkWindow *gtkWindow= (GtkWindow *) GetHandle();
@@ -327,7 +327,7 @@ void WXAppBar::SetEntryInTaskBar (bool v)
 {
 #if defined(__WXMSW__)
 	// TODO
-	assert (false);
+	//assert (false);
 #elif defined(__WXGTK__)	
 	// Get X11 handle for our window
 	GtkWindow *gtkWindow= (GtkWindow *) GetHandle();
@@ -344,7 +344,7 @@ void WXAppBar::SetEntryInPager (bool v)
 {
 #if defined(__WXMSW__)
 	// TODO
-	assert (false);
+	//assert (false);
 #elif defined(__WXGTK__)	
 	// Get X11 handle for our window
 	GtkWindow *gtkWindow= (GtkWindow *) GetHandle();
@@ -361,7 +361,7 @@ void WXAppBar::SetAcceptFocus (bool accept)
 {
 #if defined(__WXMSW__)
 	// TODO
-	assert (false);
+	//assert (false);
 #elif defined(__WXGTK__)	
 	// Get X11 handle for our window
 	GtkWindow *gtkWindow= (GtkWindow *) GetHandle();
