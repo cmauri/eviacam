@@ -1,12 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <HTML>
 <HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="GENERATOR" content="HelpBlocks">
 <!-- Sitemap 1.0 -->
 </HEAD><BODY>
 <OBJECT type="text/site properties">
+<param name="Font" value="MS Sans Serif,8,0">
 </OBJECT>
 <UL>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Contents">
+      <param name="Local" value="contents.htm">
+      </OBJECT>
   <LI><OBJECT type="text/sitemap">
       <param name="Name" value="Introduction">
       <param name="Local" value="intro.htm">
@@ -28,16 +34,12 @@
       <param name="Local" value="calibration.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Configuration options">
-      <param name="Local" value="options.htm">
-      </OBJECT>
-  <LI><OBJECT type="text/sitemap">
       <param name="Name" value="Click modes">
       <param name="Local" value="click.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Click Window">
-      <param name="Local" value="click_bar.htm">
+      <param name="Name" value="Configuration options">
+      <param name="Local" value="options.htm">
       </OBJECT>
 </UL>
 </BODY></HTML>

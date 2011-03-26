@@ -4,23 +4,24 @@ Full-text search=Yes
 Contents file=help.hhc
 Compiled file=help.chm
 Default Window=Help
-Default topic=intro.htm
-Charset=utf-8
+Default topic=contents.htm
+Language=0x809 English (United Kingdom)
+Default Font=MS Sans Serif,8,0
 Index file=help.hhk
 Title=Enable Viacam
 
 [WINDOWS]
-Help=,"help.hhc","help.hhk","intro.htm",,,,,,0x2420,,0x380e,,,,,0,,,
+Help=,"help.hhc","help.hhk","contents.htm",,,,,,0x2420,,0x380e,,,,,0,,,
 
 [FILES]
+contents.htm
 intro.htm
 environment.htm
 webcam.htm
 wizard.htm
 calibration.htm
-options.htm
 click.htm
-click_bar.htm
+options.htm
 
 [ALIAS]
 #include "help_alias.h"
