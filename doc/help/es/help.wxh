@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <anthemion-project version="1.0.0.0" xmlns="http://www.anthemion.co.uk">
   <header>
-    <long name="name_counter">2</long>
+    <long name="name_counter">3</long>
     <string name="html_path">""</string>
-    <string name="title">"Ayuda Enable Viacam"</string>
+    <string name="title">"Enable Viacam"</string>
     <string name="author">"Cesar Mauri"</string>
-    <string name="description">""</string>
+    <string name="description">"Enable Viacam Help"</string>
     <long name="use-preprocessor">1</long>
     <long name="use-c-style-comments">0</long>
     <long name="auto-generate-filenames">1</long>
@@ -80,9 +80,9 @@
 "</string>
     <long name="use-page-header-footer">0</long>
     <string name="single-page-filename">""</string>
-    <string name="html-encoding">"iso-8859-1"</string>
+    <string name="html-encoding">"UTF-8"</string>
     <long name="chm-contents-encoding">0</long>
-    <long name="chm-contents-language">2057</long>
+    <long name="chm-contents-language">3082</long>
   </header>
   <data>
     <document>
@@ -118,7 +118,24 @@
         <long name="locked">1</long>
         <string name="created">"11/11/2010"</string>
         <document>
-          <string name="title">"Introducción"</string>
+          <string name="title">"Contents"</string>
+          <string name="type">"text-editor-document"</string>
+          <string name="filename">"contents.htm"</string>
+          <string name="icon-name">"htmldoc"</string>
+          <long name="is-transient">0</long>
+          <long name="owns-file">1</long>
+          <long name="title-mode">0</long>
+          <long name="locked">0</long>
+          <long name="is-folder">0</long>
+          <long name="link-icon-to-page">1</long>
+          <long name="is-visible-in-contents">1</long>
+          <long name="is-default-page">1</long>
+          <string name="topic-name">""</string>
+          <long name="use-header-footer">1</long>
+          <long name="page-break">1</long>
+        </document>
+        <document>
+          <string name="title">"Introduction"</string>
           <string name="type">"text-editor-document"</string>
           <string name="filename">"intro.htm"</string>
           <string name="icon-name">"htmldoc"</string>
@@ -130,13 +147,13 @@
           <long name="is-folder">0</long>
           <long name="link-icon-to-page">1</long>
           <long name="is-visible-in-contents">1</long>
-          <long name="is-default-page">1</long>
+          <long name="is-default-page">0</long>
           <string name="topic-name">""</string>
           <long name="use-header-footer">1</long>
           <long name="page-break">1</long>
         </document>
         <document>
-          <string name="title">"Entorno de trabajo"</string>
+          <string name="title">"Working environment"</string>
           <string name="type">"text-editor-document"</string>
           <string name="filename">"environment.htm"</string>
           <string name="icon-name">"htmldoc"</string>
@@ -154,7 +171,7 @@
           <long name="page-break">1</long>
         </document>
         <document>
-          <string name="title">"Sobre webcams"</string>
+          <string name="title">"About webcams"</string>
           <string name="type">"text-editor-document"</string>
           <string name="filename">"webcam.htm"</string>
           <string name="icon-name">"htmldoc"</string>
@@ -162,7 +179,6 @@
           <long name="owns-file">1</long>
           <long name="title-mode">0</long>
           <long name="locked">0</long>
-          <string name="created">"11/11/2010"</string>
           <long name="is-folder">0</long>
           <long name="link-icon-to-page">1</long>
           <long name="is-visible-in-contents">1</long>
@@ -172,7 +188,7 @@
           <long name="page-break">1</long>
         </document>
         <document>
-          <string name="title">"Asistente de configuración"</string>
+          <string name="title">"Configuration wizard"</string>
           <string name="type">"text-editor-document"</string>
           <string name="filename">"wizard.htm"</string>
           <string name="icon-name">"htmldoc"</string>
@@ -189,7 +205,7 @@
           <long name="page-break">1</long>
         </document>
         <document>
-          <string name="title">"Método de calibración automático"</string>
+          <string name="title">"Automatic calibration method"</string>
           <string name="type">"text-editor-document"</string>
           <string name="filename">"calibration.htm"</string>
           <string name="icon-name">"htmldoc"</string>
@@ -206,25 +222,7 @@
           <long name="page-break">1</long>
         </document>
         <document>
-          <string name="title">"Opciones de configuración"</string>
-          <string name="type">"text-editor-document"</string>
-          <string name="filename">"options.htm"</string>
-          <string name="icon-name">"htmldoc"</string>
-          <long name="is-transient">0</long>
-          <long name="owns-file">1</long>
-          <long name="title-mode">0</long>
-          <long name="locked">0</long>
-          <string name="created">"11/11/2010"</string>
-          <long name="is-folder">0</long>
-          <long name="link-icon-to-page">1</long>
-          <long name="is-visible-in-contents">1</long>
-          <long name="is-default-page">0</long>
-          <string name="topic-name">""</string>
-          <long name="use-header-footer">1</long>
-          <long name="page-break">1</long>
-        </document>
-        <document>
-          <string name="title">"Modos de hacer clic"</string>
+          <string name="title">"Click modes"</string>
           <string name="type">"text-editor-document"</string>
           <string name="filename">"click.htm"</string>
           <string name="icon-name">"htmldoc"</string>
@@ -232,7 +230,6 @@
           <long name="owns-file">1</long>
           <long name="title-mode">0</long>
           <long name="locked">0</long>
-          <string name="created">"11/11/2010"</string>
           <long name="is-folder">0</long>
           <long name="link-icon-to-page">1</long>
           <long name="is-visible-in-contents">1</long>
@@ -242,9 +239,9 @@
           <long name="page-break">1</long>
         </document>
         <document>
-          <string name="title">"Ventana del clic"</string>
+          <string name="title">"Configuration options"</string>
           <string name="type">"text-editor-document"</string>
-          <string name="filename">"click_bar.htm"</string>
+          <string name="filename">"options.htm"</string>
           <string name="icon-name">"htmldoc"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">1</long>
@@ -526,6 +523,18 @@
           <string name="title">"confirm_calibration.png"</string>
           <string name="type">"image-document"</string>
           <string name="filename">"confirm_calibration.png"</string>
+          <string name="icon-name">"image"</string>
+          <long name="is-transient">0</long>
+          <long name="owns-file">1</long>
+          <long name="title-mode">0</long>
+          <long name="locked">0</long>
+          <string name="created">"11/11/2010"</string>
+          <long name="zoom-level">100</long>
+        </document>
+        <document>
+          <string name="title">"advanced_options.prv.jpg"</string>
+          <string name="type">"image-document"</string>
+          <string name="filename">"advanced_options.prv.jpg"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">1</long>
