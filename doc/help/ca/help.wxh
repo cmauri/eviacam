@@ -3,7 +3,7 @@
   <header>
     <long name="name_counter">2</long>
     <string name="html_path">""</string>
-    <string name="title">"Ajuda Enable Viacam"</string>
+    <string name="title">"Manual d'usuari de Enable Viacam"</string>
     <string name="author">"Cesar Mauri"</string>
     <string name="description">""</string>
     <long name="use-preprocessor">1</long>
@@ -80,9 +80,9 @@
 "</string>
     <long name="use-page-header-footer">0</long>
     <string name="single-page-filename">""</string>
-    <string name="html-encoding">"iso-8859-1"</string>
-    <long name="chm-contents-encoding">0</long>
-    <long name="chm-contents-language">2057</long>
+    <string name="html-encoding">"ISO-8859-15"</string>
+    <long name="chm-contents-encoding">1</long>
+    <long name="chm-contents-language">1027</long>
   </header>
   <data>
     <document>
@@ -118,6 +118,24 @@
         <long name="locked">1</long>
         <string name="created">"12/11/2010"</string>
         <document>
+          <string name="title">"Contingut"</string>
+          <string name="type">"text-editor-document"</string>
+          <string name="filename">"contents.htm"</string>
+          <string name="icon-name">"htmldoc"</string>
+          <long name="is-transient">0</long>
+          <long name="owns-file">1</long>
+          <long name="title-mode">0</long>
+          <long name="locked">0</long>
+          <string name="created">"12/11/2010"</string>
+          <long name="is-folder">0</long>
+          <long name="link-icon-to-page">1</long>
+          <long name="is-visible-in-contents">1</long>
+          <long name="is-default-page">1</long>
+          <string name="topic-name">""</string>
+          <long name="use-header-footer">1</long>
+          <long name="page-break">1</long>
+        </document>
+        <document>
           <string name="title">"Introducció"</string>
           <string name="type">"text-editor-document"</string>
           <string name="filename">"intro.htm"</string>
@@ -130,7 +148,7 @@
           <long name="is-folder">0</long>
           <long name="link-icon-to-page">1</long>
           <long name="is-visible-in-contents">1</long>
-          <long name="is-default-page">1</long>
+          <long name="is-default-page">0</long>
           <string name="topic-name">""</string>
           <long name="use-header-footer">1</long>
           <long name="page-break">1</long>
@@ -172,9 +190,27 @@
           <long name="page-break">1</long>
         </document>
         <document>
-          <string name="title">"Opcions de configuració"</string>
+          <string name="title">"Assistent de configuració"</string>
           <string name="type">"text-editor-document"</string>
-          <string name="filename">"options.htm"</string>
+          <string name="filename">"wizard.htm"</string>
+          <string name="icon-name">"htmldoc"</string>
+          <long name="is-transient">0</long>
+          <long name="owns-file">1</long>
+          <long name="title-mode">0</long>
+          <long name="locked">0</long>
+          <string name="created">"12/11/2010"</string>
+          <long name="is-folder">0</long>
+          <long name="link-icon-to-page">1</long>
+          <long name="is-visible-in-contents">1</long>
+          <long name="is-default-page">0</long>
+          <string name="topic-name">""</string>
+          <long name="use-header-footer">1</long>
+          <long name="page-break">1</long>
+        </document>
+        <document>
+          <string name="title">"Mètode de calibració automàtic"</string>
+          <string name="type">"text-editor-document"</string>
+          <string name="filename">"calibration.htm"</string>
           <string name="icon-name">"htmldoc"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">1</long>
@@ -208,45 +244,9 @@
           <long name="page-break">1</long>
         </document>
         <document>
-          <string name="title">"Barra del Clic"</string>
+          <string name="title">"Opcions de configuració"</string>
           <string name="type">"text-editor-document"</string>
-          <string name="filename">"click_bar.htm"</string>
-          <string name="icon-name">"htmldoc"</string>
-          <long name="is-transient">0</long>
-          <long name="owns-file">1</long>
-          <long name="title-mode">0</long>
-          <long name="locked">0</long>
-          <string name="created">"12/11/2010"</string>
-          <long name="is-folder">0</long>
-          <long name="link-icon-to-page">1</long>
-          <long name="is-visible-in-contents">1</long>
-          <long name="is-default-page">0</long>
-          <string name="topic-name">""</string>
-          <long name="use-header-footer">1</long>
-          <long name="page-break">1</long>
-        </document>
-        <document>
-          <string name="title">"Assistent de configuració"</string>
-          <string name="type">"text-editor-document"</string>
-          <string name="filename">"wizard.htm"</string>
-          <string name="icon-name">"htmldoc"</string>
-          <long name="is-transient">0</long>
-          <long name="owns-file">1</long>
-          <long name="title-mode">0</long>
-          <long name="locked">0</long>
-          <string name="created">"12/11/2010"</string>
-          <long name="is-folder">0</long>
-          <long name="link-icon-to-page">1</long>
-          <long name="is-visible-in-contents">1</long>
-          <long name="is-default-page">0</long>
-          <string name="topic-name">""</string>
-          <long name="use-header-footer">1</long>
-          <long name="page-break">1</long>
-        </document>
-        <document>
-          <string name="title">"Mètode de calibració automàtic"</string>
-          <string name="type">"text-editor-document"</string>
-          <string name="filename">"calibration.htm"</string>
+          <string name="filename">"options.htm"</string>
           <string name="icon-name">"htmldoc"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">1</long>

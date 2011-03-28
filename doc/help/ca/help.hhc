@@ -8,7 +8,11 @@
 </OBJECT>
 <UL>
   <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="IntroducciÃ³">
+      <param name="Name" value="Contingut">
+      <param name="Local" value="contents.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Introducció">
       <param name="Local" value="intro.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
@@ -16,28 +20,24 @@
       <param name="Local" value="environment.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Factors importants de la cÃ mera web">
+      <param name="Name" value="Factors importants de la càmera web">
       <param name="Local" value="webcam.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Opcions de configuraciÃ³">
-      <param name="Local" value="options.htm">
+      <param name="Name" value="Assistent de configuració">
+      <param name="Local" value="wizard.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Mètode de calibració automàtic">
+      <param name="Local" value="calibration.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
       <param name="Name" value="Modes de fer clic">
       <param name="Local" value="click.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Barra del Clic">
-      <param name="Local" value="click_bar.htm">
-      </OBJECT>
-  <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Assistent de configuraciÃ³">
-      <param name="Local" value="wizard.htm">
-      </OBJECT>
-  <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="MÃ¨tode de calibraciÃ³ automÃ tic">
-      <param name="Local" value="calibration.htm">
+      <param name="Name" value="Opcions de configuració">
+      <param name="Local" value="options.htm">
       </OBJECT>
 </UL>
 </BODY></HTML>
