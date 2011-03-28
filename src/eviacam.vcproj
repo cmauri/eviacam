@@ -59,7 +59,7 @@ copy &quot;$(CVPATH)\bin\CV100.DLL&quot; $(TargetDir)
 copy &quot;$(CVPATH)\bin\CXCORE100.DLL&quot; $(TargetDir)
 copy &quot;$(CVPATH)\bin\LIBGUIDE40.DLL&quot; $(TargetDir)
 copy &quot;$(CVPATH)\bin\HIGHGUI100.DLL&quot; $(TargetDir)
-"/>
+copy &quot;$(CVPATH)\data\haarcascades\haarcascade_frontalface_default.xml&quot; $(TargetDir)"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -151,6 +151,7 @@ copy &quot;$(CVPATH)\bin\CV100.DLL&quot; $(TargetDir)
 copy &quot;$(CVPATH)\bin\CXCORE100.DLL&quot; $(TargetDir)
 copy &quot;$(CVPATH)\bin\LIBGUIDE40.DLL&quot; $(TargetDir)
 copy &quot;$(CVPATH)\bin\HIGHGUI100.DLL&quot; $(TargetDir)
+copy &quot;$(CVPATH)\data\haarcascades\haarcascade_frontalface_default.xml&quot; $(TargetDir)
 &quot;$(PSDK_DIR)\Bin\mt.exe&quot; -manifest &quot;$(SolutionDir)\eViacam.exe.manifest&quot; -outputresource:&quot;$(TargetDir)\eViacam.exe&quot;;#1
 "/>
 			<Tool

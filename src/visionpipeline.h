@@ -44,40 +44,39 @@ public:
 	// Thread entry point
 	virtual wxThread::ExitCode Entry();
 	virtual wxThreadError Create(unsigned int stackSize = 0);
+
 	bool ProcessImage (CIplImage& image, float& xVel, float& yVel);
 
-	const bool GetTrackFace () const { return m_trackFace; }
+	bool GetTrackFace () const { return m_trackFace; }
 	void SetTrackFace (bool state) { m_trackFace= state; }
-	const bool GetEnableWhenFaceDetected () const { return m_enableWhenFaceDetected; }
+	
+	bool GetEnableWhenFaceDetected () const { return m_enableWhenFaceDetected; }
 	void SetEnableWhenFaceDetected (bool state) { m_enableWhenFaceDetected= state; }
-	bool IsFaceDetected ();
-	CWaitTime GetWaitTime () { return m_waitTime; }
-	const int GetTimeout () const { return m_waitTime.GetWaitTimeMs()/1000; }
+	
+	bool IsFaceDetected () const;
+
+	int GetTimeout () const { return m_waitTime.GetWaitTimeMs()/1000; }
 	void SetTimeout (int timeout) { m_waitTime.SetWaitTimeMs(timeout*1000); }
+	
 	void SetDegradation (int value) { m_trackArea.SetDegradation(value); }
+
 	int GetCpuUsage ();
 	void SetCpuUsage (int value);
-	const bool IsTrackFaceAllowed () { return m_faceCascade; }
-	
-	
-	const bool GetShowTrackFaceFilter () const { 
-		return m_showColorTrackerResult; 
-	}
-	void SetShowTrackFaceFilter (bool state) { m_showColorTrackerResult= state; }
+
+	bool IsTrackFaceAllowed () { return (m_faceCascade!= NULL); }	
 
 	CVisibleNormROI* GetTrackAreaControl () { return &m_trackArea; }
 
 	// Configuration methods
 	virtual void InitDefaults();
-    virtual void WriteProfileData(wxConfigBase* pConfObj);
-    virtual void ReadProfileData(wxConfigBase* pConfObj);
+	virtual void WriteProfileData(wxConfigBase* pConfObj);
+	virtual void ReadProfileData(wxConfigBase* pConfObj);
 
 private:
 	// Track area
 	CVisibleNormROI m_trackArea;
 
 	bool m_trackFace;
-	bool m_showColorTrackerResult;
 	bool m_enableWhenFaceDetected;
 	bool m_isRunning;
 	CWaitTime m_waitTime;

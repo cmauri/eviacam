@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -42,13 +42,37 @@
 #define COLOR_DEGRADATION_TIME 5000
 
 
-CVisionPipeline::CVisionPipeline (wxThreadKind kind) : wxThread (kind), m_condition(m_mutex)
+CVisionPipeline::CVisionPipeline (wxThreadKind kind) 
+: wxThread (kind)
+// Actually it is not needed all the features a condition object offers, but
+// we use it because we need a timeout based wait call. The associated mutex
+// is not used at all.
+, m_condition(m_mutex)
 {
 	InitDefaults();
 
+	m_isRunning= false;
+	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);
+
+	//
+	// Open face haarcascade
+	// 
+	wxString cascadePath (wxStandardPaths::Get().GetDataDir().Append(_T("/haarcascade_frontalface_default.xml")));
+	m_faceCascade = (CvHaarClassifierCascade*)cvLoad(cascadePath.mb_str(wxConvUTF8), 0, 0, 0);
+	// In debug mode if previous load attemp try to open it from the standard location.
+#ifndef NDEBUG
+	if (!m_faceCascade)		
+		m_faceCascade = (CvHaarClassifierCascade*)
+			cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml", 0, 0, 0);
+#endif
+	if (!m_faceCascade) {
+		wxMessageDialog dlg (NULL, _("The face localization option is not enabled."), _T("Enable Viacam"), wxICON_ERROR | wxOK );
+		dlg.ShowModal();
+	}
+	m_storage = cvCreateMemStorage(0);
+
 	// Create and start face detection thread
 	if (m_faceCascade) {	
-		m_mutex.Lock();	// the mutex should be initially locked
 		if (Create() == wxTHREAD_NO_ERROR) {
 #if defined (WIN32)
 			// On linux this ends up calling setpriority syscall which changes
@@ -61,6 +85,7 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind) : wxThread (kind), m_condit
 		}
 	}
 }
+
 
 CVisionPipeline::~CVisionPipeline ()
 {
@@ -116,7 +141,7 @@ wxThread::ExitCode CVisionPipeline::Entry( )
 {
 	bool retval;
 	unsigned long ts1 = 0;
-	for (;;) {		
+	for (;;) {
 		m_condition.WaitTimeout(1000);
 		if (!m_isRunning) {
 			break;
@@ -188,7 +213,7 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 	cvClearMemStorage(m_storage);
 }
 
-bool CVisionPipeline::IsFaceDetected ()
+bool CVisionPipeline::IsFaceDetected () const
 {
 	return !m_waitTime.HasExpired();
 }
@@ -281,7 +306,7 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 
 	m_imgPrevProc.SetROI (box);
 		
-	//Mutex is not needed.
+	// Mutex is not needed
 	m_imgCurrProc.SetROI (box);
 	m_imgVelX.SetROI (box); 
 	m_imgVelY.SetROI (box);
@@ -329,7 +354,7 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	int minValidCells= (3000 / cellArea);
 	if (validCells< minValidCells) validCells= minValidCells;
 
-	// Calcula velocitat.
+	// Compute speed
 	xVel= - (xVel / (float) validCells) * 40;
 	yVel= (yVel / (float) validCells) * 80;
 
@@ -365,31 +390,6 @@ bool CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 		return true;
 }
 
-// Configuration methods
-void CVisionPipeline::InitDefaults()
-{
-	m_trackFace= true;
-	m_enableWhenFaceDetected= false;
-	m_showColorTrackerResult= false;
-	m_trackArea.SetSize (DEFAULT_TRACK_AREA_WIDTH_PERCENT, DEFAULT_TRACK_AREA_HEIGHT_PERCENT);
-	m_trackArea.SetCenter (DEFAULT_TRACK_AREA_X_CENTER_PERCENT, DEFAULT_TRACK_AREA_Y_CENTER_PERCENT);
-	wxString cascadePath (wxStandardPaths::Get().GetDataDir().Append(_T("/haarcascade_frontalface_default.xml")));
-	m_faceCascade = (CvHaarClassifierCascade*)cvLoad(cascadePath.mb_str(wxConvUTF8), 0, 0, 0);
-#ifndef NDEBUG
-	if (!m_faceCascade)
-		// If previous load attemp try to open it from the standard location.		
-		m_faceCascade = (CvHaarClassifierCascade*)
-			cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml", 0, 0, 0);
-#endif
-	if (!m_faceCascade) {
-		wxMessageDialog dlg (NULL, _("The face localization option is not enabled."), _T("Enable Viacam"), wxICON_ERROR | wxOK );
-		dlg.ShowModal();
-	}
-	m_storage = cvCreateMemStorage(0);
-	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
-	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);
-	SetThreadPeriod(CPU_NORMAL);
-}
 
 int CVisionPipeline::GetCpuUsage ()
 {
@@ -461,6 +461,20 @@ void CVisionPipeline::SetThreadPeriod (int value)
 			m_threadPeriod= NORMAL;
 			break;
 	}
+}
+
+//
+// Configuration methods
+//
+void CVisionPipeline::InitDefaults()
+{
+	m_trackFace= true;
+	m_enableWhenFaceDetected= false;
+	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
+	SetThreadPeriod(CPU_NORMAL);
+	m_trackArea.SetSize (DEFAULT_TRACK_AREA_WIDTH_PERCENT, DEFAULT_TRACK_AREA_HEIGHT_PERCENT);
+	m_trackArea.SetCenter (DEFAULT_TRACK_AREA_X_CENTER_PERCENT, DEFAULT_TRACK_AREA_Y_CENTER_PERCENT);
+	
 }
 
 void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)

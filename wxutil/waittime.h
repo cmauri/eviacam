@@ -34,8 +34,8 @@ public:
 	// If countdown expired returns true once and false for all
 	// subsequent calls until a Reset
 	bool OneShootAction();
-	bool HasExpired();
-	int PercentagePassed();
+	bool HasExpired() const;
+	int PercentagePassed() const;
 
 private:
 	unsigned long m_timeCountMs, m_waitTimeMs;

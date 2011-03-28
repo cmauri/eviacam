@@ -54,13 +54,13 @@ bool CWaitTime::OneShootAction()
 	return false;
 }
 
-bool CWaitTime::HasExpired()
+bool CWaitTime::HasExpired() const
 {
 	unsigned long now= CTimeUtil::GetMiliCount();
 	return ((now - m_timeCountMs)> m_waitTimeMs);
 }
 
-int CWaitTime::PercentagePassed()
+int CWaitTime::PercentagePassed() const
 {
 	unsigned long now= CTimeUtil::GetMiliCount();
 	if ((now - m_timeCountMs)> m_waitTimeMs) return 100;
