@@ -29,7 +29,7 @@ class CKeyCommandEnable : public CKeyCommand {
 public:
 	CKeyCommandEnable()
 	{
-		SetName(_("hotKeyEnable"));
+		SetName(_T("hotKeyEnable"));
 		SetDescription(_("Enable eViacam"));
 		SetKey(CKeyboardCode::FromASCII('e'));
 		SetEnabled(false);
@@ -45,7 +45,7 @@ class CKeyCommandWorkspace : public CKeyCommand {
 public:
 	CKeyCommandWorkspace()
 	{
-		SetName(_("hotKeyWorkspace"));
+		SetName(_T("hotKeyWorkspace"));
 		SetDescription(_("Enable workspace limit"));
 		SetKey(CKeyboardCode::FromASCII('w'));
 		SetEnabled(false);
@@ -61,7 +61,7 @@ class CKeyCommandCenterPointer : public CKeyCommand {
 public:
 	CKeyCommandCenterPointer()
 	{
-		SetName(_("hotKeyCenterPointer"));
+		SetName(_T("hotKeyCenterPointer"));
 		SetDescription(_("Center the pointer"));
 		SetKey(CKeyboardCode::FromASCII('c'));
 		SetEnabled(false);
@@ -77,7 +77,7 @@ class CKeyCommandIncreaseX : public CKeyCommand {
 public:
 	CKeyCommandIncreaseX()
 	{
-		SetName(_("hotKeyIncreaseX"));
+		SetName(_T("hotKeyIncreaseX"));
 		SetDescription(_("Increase the X axis speed"));
 		SetKey(CKeyboardCode::FromWXKeyCode (WXK_RIGHT));
 		SetEnabled(false);
@@ -93,7 +93,7 @@ class CKeyCommandIncreaseY : public CKeyCommand {
 public:
 	CKeyCommandIncreaseY()
 	{
-		SetName(_("hotKeyIncreaseY"));
+		SetName(_T("hotKeyIncreaseY"));
 		SetDescription(_("Increase the Y axis speed"));
 		SetKey(CKeyboardCode::FromWXKeyCode (WXK_UP));
 		SetEnabled(false);
@@ -109,7 +109,7 @@ class CKeyCommandDecreaseX : public CKeyCommand {
 public:
 	CKeyCommandDecreaseX()
 	{
-		SetName(_("hotKeyDecreaseX"));
+		SetName(_T("hotKeyDecreaseX"));
 		SetDescription(_("Decrease the X axis speed"));
 		SetKey(CKeyboardCode::FromWXKeyCode (WXK_LEFT));
 		SetEnabled(false);	
@@ -125,7 +125,7 @@ class CKeyCommandDecreaseY : public CKeyCommand {
 public:
 	CKeyCommandDecreaseY()
 	{
-		SetName(_("hotKeyDecreaseY"));
+		SetName(_T("hotKeyDecreaseY"));
 		SetDescription(_("Decrease the Y axis speed"));
 		SetKey(CKeyboardCode::FromWXKeyCode (WXK_DOWN));
 		SetEnabled(false);
