@@ -34,12 +34,12 @@ public:
 private:
 	void InitValues();
 	
-	wxDialog* m_pDialog;		
-	unsigned long m_xSpeedBackup, m_ySpeedBackup;
+	wxDialog * volatile m_pDialog;		
+	//unsigned long m_xSpeedBackup, m_ySpeedBackup;
 	float m_posXVirt, m_posYVirt;
 	float m_posXVirtMax, m_posYVirtMax;
 	float m_posXVirtMin, m_posYVirtMin;
 	unsigned long m_lastTimestamp;
-	enum EState {WAITING_X, MEASURING_X, WAITING_Y, MEASURING_Y, CONFIRMATION, ABORTING, FINISHED};
-	EState m_state;
+	enum EState {BEFORE_WAITING_X, WAITING_X, MEASURING_X, BEFORE_WAITING_Y, WAITING_Y, MEASURING_Y, CONFIRMATION, ABORTING, FINISHED};
+	EState volatile m_state;
 };

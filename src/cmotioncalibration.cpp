@@ -60,13 +60,9 @@
 
 CMotionCalibration::CMotionCalibration()
 {
-	m_pDialog = NULL;		
-	m_xSpeedBackup = 0; m_ySpeedBackup = 0;
+	m_pDialog = NULL;
+	m_state = BEFORE_WAITING_X;
 	InitValues();
-}
-
-CMotionCalibration::~CMotionCalibration()
-{
 }
 
 void CMotionCalibration::InitValues()
@@ -78,37 +74,71 @@ void CMotionCalibration::InitValues()
 	m_posXVirtMin = 0;
 	m_posYVirtMin = 0;
 	m_lastTimestamp = CTimeUtil::GetMiliCount();
-	m_state = WAITING_X;
+}
+
+CMotionCalibration::~CMotionCalibration()
+{
 }
 
 bool CMotionCalibration::InitMotionCalibration()
 {
 	bool changes = false;	
 	
-	m_xSpeedBackup = wxGetApp().GetController().GetPointerAction().GetXSpeed();
-	m_ySpeedBackup = wxGetApp().GetController().GetPointerAction().GetYSpeed();
-	m_state = WAITING_X;
+	unsigned long xSpeedBackup= wxGetApp().GetController().GetPointerAction().GetXSpeed();
+	unsigned long ySpeedBackup= wxGetApp().GetController().GetPointerAction().GetYSpeed();
+
+	m_state = BEFORE_WAITING_X;
 	
-	// Store previous values
-	bool isEnabled= wxGetApp().GetController().GetEnabled();
-	CPointerAction::EClickMode clickMode= wxGetApp().GetController().GetPointerAction().GetClickMode();
-		
-	while (m_state != FINISHED) {
+	do {	
+		//
+		// Store previous values
+		//
+		bool isEnabled= wxGetApp().GetController().GetEnabled();
+		CPointerAction::EClickMode clickMode= wxGetApp().GetController().GetPointerAction().GetClickMode();
+
+		//
+		// Begin calibration process. Initialise values
+		//
 		InitValues();
+		assert (m_state == BEFORE_WAITING_X);
+
+		// Externally enable motion calibration process, after this point, 
+		// ComputeMotionRange begins to get called
 		wxGetApp().GetController().SetMotionCalibrationEnabled(true);
 
+		//
+		// Calibration X dialogue
+		//
 		m_pDialog = new WMotionCalibrationX(NULL);
+		m_state = WAITING_X;
+
+		// Show. The dialogue is closed form ComputeMotionRange
 		m_pDialog->ShowModal();
+		assert (m_state == ABORTING || m_state == BEFORE_WAITING_Y);
+
+		// Close dialogue
 		m_pDialog->Destroy();
 		m_pDialog= NULL;
 
-		if (m_state == WAITING_Y) {
+		//
+		// Calibration X dialogue
+		//
+		if (m_state == BEFORE_WAITING_Y) {
+			assert (m_pDialog == NULL);
 			m_pDialog = new WMotionCalibrationY(NULL);
+			m_state = WAITING_Y;
+
+			// Show. The dialogue is closed form ComputeMotionRange
 			m_pDialog->ShowModal();
+			assert (m_state == ABORTING || m_state == CONFIRMATION);
+
+			// Close dialogue
 			m_pDialog->Destroy();
 			m_pDialog= NULL;
 		}
 		
+		// Externally disable motion calibration process, after this point, 
+		// ComputeMotionRange stops being called
 		wxGetApp().GetController().SetMotionCalibrationEnabled(false);
 		
 		if (m_state == CONFIRMATION) {
@@ -132,14 +162,15 @@ bool CMotionCalibration::InitMotionCalibration()
 			wxGetApp().GetController().SetEnabled(true, true);			
 						
 			// Request user acknowledgment
+			assert (m_pDialog== NULL);
 			m_pDialog = new WConfirmCalibration(NULL);
 			int retvalConfirm = m_pDialog->ShowModal();
-			if (retvalConfirm== BUTTON_REPEAT) m_state = WAITING_X;
+			if (retvalConfirm== BUTTON_REPEAT) m_state = BEFORE_WAITING_X;
 			else {
 				if (retvalConfirm== BUTTON_OK) changes = true;
 				else if (retvalConfirm== BUTTON_CANCEL) {
-					wxGetApp().GetController().GetPointerAction().SetXSpeed(m_xSpeedBackup);
-					wxGetApp().GetController().GetPointerAction().SetYSpeed(m_ySpeedBackup);	
+					wxGetApp().GetController().GetPointerAction().SetXSpeed(xSpeedBackup);
+					wxGetApp().GetController().GetPointerAction().SetYSpeed(ySpeedBackup);	
 				}
 				else assert (false);
 				// Restore previous settings
@@ -150,17 +181,18 @@ bool CMotionCalibration::InitMotionCalibration()
 			}
 			m_pDialog->Destroy();
 			m_pDialog= NULL;			
-		}
-		
-		if (m_state == ABORTING) {
-			wxMessageDialog dlg (NULL, _("No movement was detected.\nDo you want to repeat the calibration?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
-			if (dlg.ShowModal() == wxID_YES) {
-				m_state = WAITING_X;
-			} else {
+		} else if (m_state == ABORTING) {
+			wxMessageDialog dlg (NULL, _("No movement was detected.\nDo you want to repeat the calibration?"),
+								_("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
+			if (dlg.ShowModal() == wxID_YES)
+				m_state = BEFORE_WAITING_X;
+			else
 				m_state = FINISHED;
-			}
 		}
-	}
+	} while (m_state != FINISHED);
+
+	assert (m_pDialog== NULL);
+
 	return changes;
 }
 
@@ -186,7 +218,6 @@ void CMotionCalibration::ComputeMotionRange (float vx, float vy, bool warnFaceNo
 			
 		case MEASURING_X:
 			((WMotionCalibrationX*)m_pDialog)->SetFaceDetected(warnFaceNotDetected);
-			
 			m_posXVirt += vx;
 			if (m_posXVirt > m_posXVirtMax) {
 				m_posXVirtMax = m_posXVirt;
@@ -199,7 +230,7 @@ void CMotionCalibration::ComputeMotionRange (float vx, float vy, bool warnFaceNo
 			}
 	
 			if (CTimeUtil::GetMiliCount() - m_lastTimestamp > TIME_LIMIT_NO_X_RANGE_EXPANDED) {
-				m_state = WAITING_Y;
+				m_state = BEFORE_WAITING_Y;
 				m_lastTimestamp = CTimeUtil::GetMiliCount();
 				wxCommandEvent event (wxEVT_CLOSE_WINDOW);
 				wxPostEvent(m_pDialog, event);
@@ -241,7 +272,15 @@ void CMotionCalibration::ComputeMotionRange (float vx, float vy, bool warnFaceNo
 				wxPostEvent(m_pDialog, event);
 			}
 			break;
+		case BEFORE_WAITING_X:
+		case BEFORE_WAITING_Y:
+		case CONFIRMATION:
+		case ABORTING:
+		case FINISHED:
+			// Do nothing
+			break;
 		default:
+			assert (false);
 			break;	
 	}
 }
