@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.0\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2011-03-28 12:38+0200\n"
+"POT-Creation-Date: 2011-03-29 17:53+0200\n"
 "PO-Revision-Date: 2011-03-28 12:57+0100\n"
 "Last-Translator: Cesar Mauri <cesar@crea-si.com>\n"
 "Language-Team: Spanish <cesar@crea-si.com>\n"
@@ -577,7 +577,7 @@ msgstr ""
 
 #: src/wconfiguration.cpp:1753 src/wconfiguration.cpp:1883
 #: src/wconfiguration.cpp:2005 src/viacamcontroller.cpp:337
-#: src/cmotioncalibration.cpp:156
+#: src/cmotioncalibration.cpp:186
 msgid "eViacam warning"
 msgstr "Advertencia"
 
@@ -865,7 +865,7 @@ msgstr ""
 "Su rostro no se detecta. Esto puede producir resultados incorrectos de "
 "calibración."
 
-#: src/cmotioncalibration.cpp:156
+#: src/cmotioncalibration.cpp:185
 msgid ""
 "No movement was detected.\n"
 "Do you want to repeat the calibration?"

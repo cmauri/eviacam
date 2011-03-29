@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.3\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2011-03-28 12:38+0200\n"
-"PO-Revision-Date: 2011-01-04 09:34+0100\n"
+"POT-Creation-Date: 2011-03-29 17:53+0200\n"
+"PO-Revision-Date: 2011-03-29 15:58+0100\n"
 "Last-Translator: giuseppe <kktc.ags@gmail.com>\n"
 "Language-Team: Giuseppe Masciopinto <kktc.ags@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -136,13 +136,12 @@ msgid "Bottom limit workspace."
 msgstr "Llimite inferiore dell'area di lavoro."
 
 #: src/wconfiguration.cpp:535
-#, fuzzy
 msgid "Pointer wrapping"
-msgstr "Calibrazione puntatore."
+msgstr "Puntatore avviluppato"
 
 #: src/wconfiguration.cpp:538
 msgid "Allow wrapping the pointer around the working area"
-msgstr ""
+msgstr "Poter avvolgere il puntatore all'interno della zona di lavoro"
 
 #: src/wconfiguration.cpp:542
 msgid "Workspace"
@@ -258,40 +257,36 @@ msgstr ""
 "il click della finestra dei pulsanti."
 
 #: src/wconfiguration.cpp:629
-#, fuzzy
 msgid "Location:"
-msgstr "Moto"
+msgstr "Località:"
 
 #: src/wconfiguration.cpp:635
 msgid "Floating horizontal"
-msgstr ""
+msgstr "Fluttuazione orizzonte"
 
 #: src/wconfiguration.cpp:636
 msgid "Floating vertical"
-msgstr ""
+msgstr "Fluttuazione verticale"
 
 #: src/wconfiguration.cpp:637
 msgid "Top docked"
-msgstr ""
+msgstr "Ancoraggio in alto "
 
 #: src/wconfiguration.cpp:638
-#, fuzzy
 msgid "Bottom docked"
-msgstr "Parte inferiore"
+msgstr "ancoraggio inferiore"
 
 #: src/wconfiguration.cpp:639
-#, fuzzy
 msgid "Left docked"
-msgstr "Click sinistro"
+msgstr "ancoraggio sinistro"
 
 #: src/wconfiguration.cpp:640
-#, fuzzy
 msgid "Right docked"
-msgstr "Click sinistro"
+msgstr "ancoraggio destro"
 
 #: src/wconfiguration.cpp:646
 msgid "Auto-hide"
-msgstr ""
+msgstr "Nascondere automaticamente"
 
 #: src/wconfiguration.cpp:652 src/wwizard.cpp:906
 msgid "Gesture click"
@@ -348,7 +343,7 @@ msgstr "Click"
 
 #: src/wconfiguration.cpp:720 src/wconfiguration.cpp:736
 msgid "Hotkeys"
-msgstr ""
+msgstr "Tasti di scelta rapida"
 
 #: src/wconfiguration.cpp:743
 msgid "Startup"
@@ -402,42 +397,39 @@ msgstr ""
 
 #: src/wconfiguration.cpp:787
 msgid "CPU usage"
-msgstr ""
+msgstr "CPU usata"
 
 #: src/wconfiguration.cpp:791
-#, fuzzy
 msgid "Lowest"
-msgstr "Sinistra"
+msgstr "Più basso"
 
 #: src/wconfiguration.cpp:792
 msgid "Low"
-msgstr ""
+msgstr "Basso"
 
 #: src/wconfiguration.cpp:794
-#, fuzzy
 msgid "High"
-msgstr "Destra"
+msgstr "Elevato"
 
 #: src/wconfiguration.cpp:795
-#, fuzzy
 msgid "Highest"
-msgstr "Destra"
+msgstr "Più alto"
 
 #: src/wconfiguration.cpp:801
 msgid "Stop the pointer when no face is detected"
-msgstr ""
+msgstr "Arrestare il puntatore quando viene rilevato un volto"
 
 #: src/wconfiguration.cpp:804
 msgid "eViacam is only enabled when face is detected."
-msgstr ""
+msgstr "eViacam è attivo solo quando viene rilevato un volto"
 
 #: src/wconfiguration.cpp:810
 msgid "After"
-msgstr ""
+msgstr "Dopo"
 
 #: src/wconfiguration.cpp:816 src/wwizard.cpp:2141
 msgid "seconds"
-msgstr ""
+msgstr "secondi"
 
 #: src/wconfiguration.cpp:819
 msgid "Advanced"
@@ -505,9 +497,8 @@ msgid "Key:"
 msgstr "cChiave"
 
 #: src/wconfiguration.cpp:929
-#, fuzzy
 msgid "Set key"
-msgstr "Settaggio chiave."
+msgstr "Settaggio chiave. "
 
 #: src/wconfiguration.cpp:1498 src/wconfiguration.cpp:1685
 msgid "You should restart the application to apply this change"
@@ -569,7 +560,7 @@ msgstr ""
 
 #: src/wconfiguration.cpp:1753 src/wconfiguration.cpp:1883
 #: src/wconfiguration.cpp:2005 src/viacamcontroller.cpp:337
-#: src/cmotioncalibration.cpp:156
+#: src/cmotioncalibration.cpp:186
 msgid "eViacam warning"
 msgstr "eViacam attenzione"
 
@@ -582,6 +573,8 @@ msgid ""
 "This key is used by another command.\n"
 "Do you want to try another key?"
 msgstr ""
+"questo tasto è usato per altri comandi.\n"
+" Tu desideri provare con un altro tasto?"
 
 #: src/wviacam.h:71
 msgid "Enable Viacam"
@@ -851,8 +844,10 @@ msgstr "Spasta la tua testa a sinistra e a destra."
 #: src/wmotioncalibrationx.cpp:151 src/wmotioncalibrationy.cpp:146
 msgid "Your face is not detected. This may produce wrong calibration results."
 msgstr ""
+"Il tuo viso non viene rilevato. Ciò può produrre risultati di calibrazione "
+"sbagliata."
 
-#: src/cmotioncalibration.cpp:156
+#: src/cmotioncalibration.cpp:185
 msgid ""
 "No movement was detected.\n"
 "Do you want to repeat the calibration?"
@@ -1099,7 +1094,6 @@ msgid "Configure motion tracking area"
 msgstr "Configura l'area del movimento tracciabile"
 
 #: src/wwizard.cpp:2116
-#, fuzzy
 msgid ""
 "The user's face must appear inside the blue rectangle (tracking area) to "
 "move the pointer.\n"
@@ -1111,22 +1105,19 @@ msgstr ""
 "Il viso dell'utente deve apparire all'interno del rettangolo blu (areadel "
 "tracciamento) per spostare il puntatore.\n"
 " Spostare e ridimensionare questo settore, se necessario, e impostarlo "
-"intorno al viso."
+"intorno al viso. "
 
 #: src/wwizard.cpp:2122
-#, fuzzy
 msgid "Locate face automatically (recommended)"
-msgstr "Localizza automaticamente il volto"
+msgstr "Localizza automaticamente il volto "
 
 #: src/wwizard.cpp:2128
-#, fuzzy
 msgid "Disable eViacam if no face is found"
-msgstr "Abilita eViacam dall'inizio."
+msgstr "Disabilita eViacam se non  trova il viso"
 
 #: src/wwizard.cpp:2135
-#, fuzzy
 msgid "Disable after"
-msgstr "Disabilita"
+msgstr "Disabilita "
 
 #: src/wconfirmcalibration.cpp:158
 msgid "Move your head to see how it works"
@@ -1184,34 +1175,28 @@ msgid "Camera settings"
 msgstr "Camera settings"
 
 #: src/hotkeymanager.cpp:33
-#, fuzzy
 msgid "Enable eViacam"
-msgstr "Enable Viacam"
+msgstr "Abilita eViacam"
 
 #: src/hotkeymanager.cpp:65
-#, fuzzy
 msgid "Center the pointer"
-msgstr "Invio nome nuovo profilo"
+msgstr "Centrare il puntatore"
 
 #: src/hotkeymanager.cpp:81
-#, fuzzy
 msgid "Increase the X axis speed"
-msgstr "Velocità asse X"
+msgstr "Aumentare la velocità di asse X"
 
 #: src/hotkeymanager.cpp:97
-#, fuzzy
 msgid "Increase the Y axis speed"
-msgstr "Velocità asse Y"
+msgstr "Aumentare la velocità di asse Y"
 
 #: src/hotkeymanager.cpp:113
-#, fuzzy
 msgid "Decrease the X axis speed"
-msgstr "Velocità asse X"
+msgstr "Diminuire la velocità di asse X"
 
 #: src/hotkeymanager.cpp:129
-#, fuzzy
 msgid "Decrease the Y axis speed"
-msgstr "Velocità asse Y"
+msgstr "Diminuire la velocità di asse Y"
 
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
@@ -1219,7 +1204,7 @@ msgstr "Telecamera non trovata. Chiusura"
 
 #: wxutil/warnbaroverlap.h:41
 msgid "Overlapping warning"
-msgstr ""
+msgstr "Avvertimento di sovrapposizione "
 
 #: wxutil/warnbaroverlap.cpp:127
 msgid ""
@@ -1227,10 +1212,14 @@ msgid ""
 "This can prevent it from working properly when auto-hide mode is enabled.\n"
 "It is recommended to move the Click window to a free position."
 msgstr ""
+"La posizione  scelta della finestra Click è occupata da un altro barra.\n"
+" Questo può impedire il corretto funzionamento quando  la modalità  "
+"\"nascondi automatico\" è attivata.\n"
+" Si consiglia di spostare la finestra Clicca in una posizione  libera."
 
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
-msgstr ""
+msgstr "Non visualizzare più questo messaggio"
 
 #, fuzzy
 #~ msgid "hotKeyEnable"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2011-03-28 12:38+0200\n"
+"POT-Creation-Date: 2011-03-29 17:53+0200\n"
 "PO-Revision-Date: 2010-07-11 20:35+0300\n"
 "Last-Translator: Anıl Özbek <anil@artistanbulpr.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -587,7 +587,7 @@ msgstr ""
 
 #: src/wconfiguration.cpp:1753 src/wconfiguration.cpp:1883
 #: src/wconfiguration.cpp:2005 src/viacamcontroller.cpp:337
-#: src/cmotioncalibration.cpp:156
+#: src/cmotioncalibration.cpp:186
 msgid "eViacam warning"
 msgstr "eViacam uyarısı"
 
@@ -868,7 +868,7 @@ msgstr ""
 msgid "Your face is not detected. This may produce wrong calibration results."
 msgstr ""
 
-#: src/cmotioncalibration.cpp:156
+#: src/cmotioncalibration.cpp:185
 msgid ""
 "No movement was detected.\n"
 "Do you want to repeat the calibration?"
