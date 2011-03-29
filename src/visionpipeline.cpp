@@ -174,10 +174,10 @@ wxThread::ExitCode CVisionPipeline::Entry( )
 	return 0;
 }
 
-
-
 void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 {
+	if (!m_trackFace) return;
+
 	int cx, cy;
 	float sx,sy;
 	CvRect curBox;
@@ -189,8 +189,7 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		cvSize(120./2, 90./2)
 	);
 	
-	if (m_trackFace && face->total>0)
-	{
+	if (face->total>0) {
 		CvRect* faceRect = (CvRect*)cvGetSeqElem(face, 0);
 
 		m_trackArea.GetBoxImg(&image, curBox);
