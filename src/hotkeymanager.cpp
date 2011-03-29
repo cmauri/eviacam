@@ -31,8 +31,8 @@ public:
 	{
 		SetName(_T("hotKeyEnable"));
 		SetDescription(_("Enable eViacam"));
-		SetKey(CKeyboardCode::FromASCII('e'));
-		SetEnabled(false);
+		SetKey(CKeyboardCode::FromWXKeyCode(WXK_SCROLL));
+		SetEnabled(true);
 	}
 
 	void Command()
@@ -47,7 +47,7 @@ public:
 	{
 		SetName(_T("hotKeyWorkspace"));
 		SetDescription(_("Enable workspace limit"));
-		SetKey(CKeyboardCode::FromASCII('w'));
+		SetKey(CKeyboardCode::FromWXKeyCode(WXK_F12));
 		SetEnabled(false);
 	}
 
@@ -63,8 +63,8 @@ public:
 	{
 		SetName(_T("hotKeyCenterPointer"));
 		SetDescription(_("Center the pointer"));
-		SetKey(CKeyboardCode::FromASCII('c'));
-		SetEnabled(false);
+		SetKey(CKeyboardCode::FromWXKeyCode(WXK_HOME));
+		SetEnabled(true);
 	}
 
 	void Command()
