@@ -117,6 +117,24 @@
         <long name="title-mode">0</long>
         <long name="locked">1</long>
         <string name="created">"11/11/2010"</string>
+		<document>
+          <string name="title">"Contido"</string>
+          <string name="type">"text-editor-document"</string>
+          <string name="filename">"contents.htm"</string>
+          <string name="icon-name">"htmldoc"</string>
+          <long name="is-transient">0</long>
+          <long name="owns-file">1</long>
+          <long name="title-mode">0</long>
+          <long name="locked">0</long>
+          <string name="created">"11/11/2010"</string>
+          <long name="is-folder">0</long>
+          <long name="link-icon-to-page">1</long>
+          <long name="is-visible-in-contents">1</long>
+          <long name="is-default-page">1</long>
+          <string name="topic-name">""</string>
+          <long name="use-header-footer">1</long>
+          <long name="page-break">1</long>
+        </document>
         <document>
           <string name="title">"Introdución"</string>
           <string name="type">"text-editor-document"</string>
@@ -130,7 +148,7 @@
           <long name="is-folder">0</long>
           <long name="link-icon-to-page">1</long>
           <long name="is-visible-in-contents">1</long>
-          <long name="is-default-page">1</long>
+          <long name="is-default-page">0</long>
           <string name="topic-name">""</string>
           <long name="use-header-footer">1</long>
           <long name="page-break">1</long>
@@ -205,25 +223,7 @@
           <long name="use-header-footer">1</long>
           <long name="page-break">1</long>
         </document>
-        <document>
-          <string name="title">"Opcións de configuración"</string>
-          <string name="type">"text-editor-document"</string>
-          <string name="filename">"options.htm"</string>
-          <string name="icon-name">"htmldoc"</string>
-          <long name="is-transient">0</long>
-          <long name="owns-file">1</long>
-          <long name="title-mode">0</long>
-          <long name="locked">0</long>
-          <string name="created">"11/11/2010"</string>
-          <long name="is-folder">0</long>
-          <long name="link-icon-to-page">1</long>
-          <long name="is-visible-in-contents">1</long>
-          <long name="is-default-page">0</long>
-          <string name="topic-name">""</string>
-          <long name="use-header-footer">1</long>
-          <long name="page-break">1</long>
-        </document>
-        <document>
+		<document>
           <string name="title">"Modos de premer (facer clic)"</string>
           <string name="type">"text-editor-document"</string>
           <string name="filename">"click.htm"</string>
@@ -240,11 +240,11 @@
           <string name="topic-name">""</string>
           <long name="use-header-footer">1</long>
           <long name="page-break">1</long>
-        </document>
+        </document>		
         <document>
-          <string name="title">"Xanela do clic"</string>
+          <string name="title">"Opcións de configuración"</string>
           <string name="type">"text-editor-document"</string>
-          <string name="filename">"click_bar.htm"</string>
+          <string name="filename">"options.htm"</string>
           <string name="icon-name">"htmldoc"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">1</long>
