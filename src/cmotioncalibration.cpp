@@ -84,18 +84,17 @@ bool CMotionCalibration::InitMotionCalibration()
 {
 	bool changes = false;	
 	
+	//
+	// Store previous values
+	//
 	unsigned long xSpeedBackup= wxGetApp().GetController().GetPointerAction().GetXSpeed();
 	unsigned long ySpeedBackup= wxGetApp().GetController().GetPointerAction().GetYSpeed();
+	bool isEnabled= wxGetApp().GetController().GetEnabled();
+	CPointerAction::EClickMode clickMode= wxGetApp().GetController().GetPointerAction().GetClickMode();
 
 	m_state = BEFORE_WAITING_X;
-	
-	do {	
-		//
-		// Store previous values
-		//
-		bool isEnabled= wxGetApp().GetController().GetEnabled();
-		CPointerAction::EClickMode clickMode= wxGetApp().GetController().GetPointerAction().GetClickMode();
 
+	do {
 		//
 		// Begin calibration process. Initialise values
 		//
@@ -172,11 +171,9 @@ bool CMotionCalibration::InitMotionCalibration()
 					wxGetApp().GetController().GetPointerAction().SetXSpeed(xSpeedBackup);
 					wxGetApp().GetController().GetPointerAction().SetYSpeed(ySpeedBackup);	
 				}
-				else assert (false);
-				// Restore previous settings
-				wxGetApp().GetController().GetPointerAction().SetClickMode(clickMode);
-				wxGetApp().GetController().SetEnabled(isEnabled, true);
-				
+				else 
+					assert (false);
+
 				m_state = FINISHED;
 			}
 			m_pDialog->Destroy();
@@ -192,6 +189,10 @@ bool CMotionCalibration::InitMotionCalibration()
 	} while (m_state != FINISHED);
 
 	assert (m_pDialog== NULL);
+
+	// Restore previous settings
+	wxGetApp().GetController().GetPointerAction().SetClickMode(clickMode);
+	wxGetApp().GetController().SetEnabled(isEnabled, true);
 
 	return changes;
 }
