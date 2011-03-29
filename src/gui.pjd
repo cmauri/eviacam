@@ -3247,12 +3247,12 @@ necessary."</string>
                           <string name="proxy-Header filename">""</string>
                           <string name="proxy-Member variable name">"m_spinSmoothness"</string>
                           <long name="proxy-Minimum value">0</long>
-                          <long name="proxy-Maximum value">9</long>
+                          <long name="proxy-Maximum value">8</long>
                           <long name="proxy-Initial value">0</long>
                           <string name="proxy-Help text">""</string>
                           <string name="proxy-Tooltip text">"Tremor reduction filter.
 0 means no filter and 
-9 maximum filtering."</string>
+8 maximum filtering."</string>
                           <string name="proxy-Background colour">""</string>
                           <string name="proxy-Foreground colour">""</string>
                           <string name="proxy-Font">""</string>

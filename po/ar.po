@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: viacam 1.3.1\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2011-03-29 17:53+0200\n"
+"POT-Creation-Date: 2011-03-29 19:16+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Hatim Alahmadi <dr.hatim@hotmail.com>\n"
 "Language-Team: Hatim Alahmadi <dr.hatim@hotmail.com>\n"
@@ -58,11 +58,11 @@ msgstr "النعومة"
 msgid ""
 "Tremor reduction filter.\n"
 "0 means no filter and \n"
-"9 maximum filtering."
+"8 maximum filtering."
 msgstr ""
 "مرشح تخفيف الارتعاش.\n"
 "0 يعني لا يوجد فلتر و\n"
-"9 تعني أقصى قدرة للفلتر."
+"8 تعني أقصى قدرة للفلتر."
 
 #: src/wconfiguration.cpp:447
 msgid "Motion threshold"
@@ -569,7 +569,7 @@ msgstr ""
 
 #: src/wconfiguration.cpp:1753 src/wconfiguration.cpp:1883
 #: src/wconfiguration.cpp:2005 src/viacamcontroller.cpp:337
-#: src/cmotioncalibration.cpp:186
+#: src/cmotioncalibration.cpp:183
 msgid "eViacam warning"
 msgstr "تحذير من فيا كام"
 
@@ -840,7 +840,7 @@ msgstr ""
 msgid "Your face is not detected. This may produce wrong calibration results."
 msgstr ""
 
-#: src/cmotioncalibration.cpp:185
+#: src/cmotioncalibration.cpp:182
 msgid ""
 "No movement was detected.\n"
 "Do you want to repeat the calibration?"

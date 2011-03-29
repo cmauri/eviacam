@@ -64,7 +64,7 @@ void CPointerAction::InitDefaults()
 	SetAcceleration (2);
 	SetClickMode (CPointerAction::DWELL);
 	SetBeepOnClick (true);
-	SetSmoothness (5);
+	SetSmoothness (4);
 	SetEasyStopValue (1); 
 	SetWrapPointer(false);
 	
