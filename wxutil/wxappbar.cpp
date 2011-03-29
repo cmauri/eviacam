@@ -447,7 +447,7 @@ void WXAppBar::OnSize( wxSizeEvent& event )
 //	Raise ();	
 #else
 	wxSize s= event.GetSize();
-	printf ("onSize: %d, %d, orig: %d, %d\n", s.GetWidth(), s.GetHeight(), m_Width, m_Height);
+	//printf ("onSize: %d, %d, orig: %d, %d\n", s.GetWidth(), s.GetHeight(), m_Width, m_Height);
 	/*
 	if (s.GetWidth()!= m_Width || s.GetHeight()!= m_Height) {
 		SetSize (m_Width, m_Height);
@@ -468,7 +468,7 @@ void WXAppBar::OnMove( wxMoveEvent& event )
 #endif
 	wxPoint p= event.GetPosition();
 	
-	printf ("onMove: %d, %d, orig: %d, %d\n", p.x, p.y, m_X, m_Y);
+//	printf ("onMove: %d, %d, orig: %d, %d\n", p.x, p.y, m_X, m_Y);
 //	wxDialog::OnMove (event);
 	event.Skip();
 }
