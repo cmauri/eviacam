@@ -186,29 +186,28 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		m_faceCascade,
 		m_storage,
 		1.1, 2, CV_HAAR_DO_CANNY_PRUNING,
-		cvSize(120./2, 90./2)
+		cvSize(85, 64)
 	);
 	
 	if (face->total>0) {
-		CvRect* faceRect = (CvRect*)cvGetSeqElem(face, 0);
+		CvRect* faceRect = (CvRect*) cvGetSeqElem(face, 0);
 
 		m_trackArea.GetBoxImg(&image, curBox);
 		
-		sx= ((float)faceRect->width * 0.1f + (float)curBox.width * 0.9f);
-		sy= ((float)faceRect->height * 0.1f +  (float)curBox.height * 0.9f);
-
+		// Compute new face area size averaging with old area making it wider (horizontaly)
+		sx= ((float) faceRect->width  * 0.15f + (float) curBox.width  * 0.9f);
+		sy= ((float) faceRect->height * 0.1f + (float) curBox.height * 0.9f);
 		m_trackArea.SetSizeImg(&image, (int)sx, (int)sy);
 
-		// Combine with new detected location
+		// Computer new face position
 		cx= (int) ((float)(faceRect->x+faceRect->width/2) * 0.5f + (float)(curBox.x+curBox.width/2) * 0.5f);
 		cy= (int) ((float)(faceRect->y+faceRect->height/2) * 0.5f + (float)(curBox.y+curBox.height/2) * 0.5f);
-
-		// Set new box centre
 		m_trackArea.SetCenterImg (&image, cx, cy);
 		
 		m_waitTime.Reset();
 		m_trackAreaTimeout.Reset();
 	}
+
 	cvClearMemStorage(m_storage);
 }
 
