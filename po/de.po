@@ -1,10 +1,10 @@
 #: src/wcameradialog.cpp:193
 msgid ""
 msgstr ""
-"Project-Id-Version: eViacam 1.4\n"
+"Project-Id-Version: eViacam 1.5\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2011-03-29 19:16+0200\n"
-"PO-Revision-Date: 2010-11-20 19:42+0100\n"
+"PO-Revision-Date: 2011-03-30 09:08+0100\n"
 "Last-Translator: Christian Bieder <chb09@aon.at>\n"
 "Language-Team: Christian Bieder <chb09@aon.at>\n"
 "MIME-Version: 1.0\n"
@@ -139,13 +139,12 @@ msgid "Bottom limit workspace."
 msgstr "Begrenzung des unteren Arbeitsbereichs"
 
 #: src/wconfiguration.cpp:535
-#, fuzzy
 msgid "Pointer wrapping"
-msgstr "Mauszeiger Kalibrierung"
+msgstr "Arbeitsbereich  umrunden"
 
 #: src/wconfiguration.cpp:538
 msgid "Allow wrapping the pointer around the working area"
-msgstr ""
+msgstr "Ermögliche das Umrunden des Arbeitsbereichs"
 
 #: src/wconfiguration.cpp:542
 msgid "Workspace"
@@ -258,40 +257,36 @@ msgstr ""
 "auf den Schaltflächen der Klickleiste."
 
 #: src/wconfiguration.cpp:629
-#, fuzzy
 msgid "Location:"
-msgstr "Bewegung"
+msgstr "Position:"
 
 #: src/wconfiguration.cpp:635
 msgid "Floating horizontal"
-msgstr ""
+msgstr "Frei beweglich horizontal"
 
 #: src/wconfiguration.cpp:636
 msgid "Floating vertical"
-msgstr ""
+msgstr "Frei beweglich vertikal"
 
 #: src/wconfiguration.cpp:637
 msgid "Top docked"
-msgstr ""
+msgstr "Oben andocken"
 
 #: src/wconfiguration.cpp:638
-#, fuzzy
 msgid "Bottom docked"
-msgstr "Unten"
+msgstr "Unten andocken"
 
 #: src/wconfiguration.cpp:639
-#, fuzzy
 msgid "Left docked"
-msgstr "Linksklick"
+msgstr "Links andocken"
 
 #: src/wconfiguration.cpp:640
-#, fuzzy
 msgid "Right docked"
-msgstr "Rechtsklick"
+msgstr "Rechts andocken"
 
 #: src/wconfiguration.cpp:646
 msgid "Auto-hide"
-msgstr ""
+msgstr "Automatisch ausblenden"
 
 #: src/wconfiguration.cpp:652 src/wwizard.cpp:906
 msgid "Gesture click"
@@ -348,7 +343,7 @@ msgstr "Klick"
 
 #: src/wconfiguration.cpp:720 src/wconfiguration.cpp:736
 msgid "Hotkeys"
-msgstr ""
+msgstr "Hotkeys"
 
 #: src/wconfiguration.cpp:743
 msgid "Startup"
@@ -402,42 +397,39 @@ msgstr ""
 
 #: src/wconfiguration.cpp:787
 msgid "CPU usage"
-msgstr ""
+msgstr "CPU Auslastung"
 
 #: src/wconfiguration.cpp:791
-#, fuzzy
 msgid "Lowest"
-msgstr "Links"
+msgstr "Niedrigste"
 
 #: src/wconfiguration.cpp:792
 msgid "Low"
-msgstr ""
+msgstr "Niedrig"
 
 #: src/wconfiguration.cpp:794
-#, fuzzy
 msgid "High"
-msgstr "Rechts"
+msgstr "Hoch"
 
 #: src/wconfiguration.cpp:795
-#, fuzzy
 msgid "Highest"
-msgstr "Rechts"
+msgstr "Höchste"
 
 #: src/wconfiguration.cpp:801
 msgid "Stop the pointer when no face is detected"
-msgstr ""
+msgstr "Stoppe den Mauszeiger wenn kein Gesicht erkannt wurde"
 
 #: src/wconfiguration.cpp:804
 msgid "eViacam is only enabled when face is detected."
-msgstr ""
+msgstr "eViacam wird nur eingeschaltet wenn ein Gesicht erkannt wurde."
 
 #: src/wconfiguration.cpp:810
 msgid "After"
-msgstr ""
+msgstr "Nach"
 
 #: src/wconfiguration.cpp:816 src/wwizard.cpp:2141
 msgid "seconds"
-msgstr ""
+msgstr "Sekunden"
 
 #: src/wconfiguration.cpp:819
 msgid "Advanced"
@@ -505,7 +497,6 @@ msgid "Key:"
 msgstr "Taste:"
 
 #: src/wconfiguration.cpp:929
-#, fuzzy
 msgid "Set key"
 msgstr "Taste auswählen"
 
@@ -578,6 +569,8 @@ msgid ""
 "This key is used by another command.\n"
 "Do you want to try another key?"
 msgstr ""
+"Diese Taste wird bereits verwendet.\n"
+"Eine andere Taste auswählen?"
 
 #: src/wviacam.h:71
 msgid "Enable Viacam"
@@ -839,6 +832,8 @@ msgstr "Bewege den Kopf nach links und rechts."
 #: src/wmotioncalibrationx.cpp:151 src/wmotioncalibrationy.cpp:146
 msgid "Your face is not detected. This may produce wrong calibration results."
 msgstr ""
+"Das Gesicht wurde nicht erkannt. Dies könnte falsche Kalibrierungsergebnisse "
+"erzeugen."
 
 #: src/cmotioncalibration.cpp:182
 msgid ""
@@ -1089,7 +1084,6 @@ msgid "Configure motion tracking area"
 msgstr "Aufnahmebereich der Bewegungen konfigurieren"
 
 #: src/wwizard.cpp:2116
-#, fuzzy
 msgid ""
 "The user's face must appear inside the blue rectangle (tracking area) to "
 "move the pointer.\n"
@@ -1101,21 +1095,19 @@ msgstr ""
 "Das Gesicht muss innerhalb des Rechtecks (Aufnahmebereich) sein um den "
 "Mauszeiger zu steuern.\n"
 "\n"
-"Verschiebe und ändere die Größe falls notwendig um das Rechteck rund um das "
-"Gesicht zu positionieren."
+"eViacam versucht das Gesicht automatisch zu erkennen. Falls es nicht optimal "
+"erkannt wird,  kann diese Option deaktiviert werden und der Aufnahmebereich "
+"kann manuell rund um das Gesicht angepasst werden."
 
 #: src/wwizard.cpp:2122
-#, fuzzy
 msgid "Locate face automatically (recommended)"
-msgstr "Gesicht automatisch lokalisieren"
+msgstr "Gesicht automatisch lokalisieren (empfohlen)"
 
 #: src/wwizard.cpp:2128
-#, fuzzy
 msgid "Disable eViacam if no face is found"
-msgstr "eViacam mit eingeschalteter Mauszeigersteuerung starten"
+msgstr "eViacam ausschalten wenn kein Gesicht gefunden wurde"
 
 #: src/wwizard.cpp:2135
-#, fuzzy
 msgid "Disable after"
 msgstr "Ausschalten"
 
@@ -1175,34 +1167,28 @@ msgid "Camera settings"
 msgstr "Kamera Einstellungen"
 
 #: src/hotkeymanager.cpp:33
-#, fuzzy
 msgid "Enable eViacam"
-msgstr "Enable Viacam"
+msgstr "eViacam einschalten"
 
 #: src/hotkeymanager.cpp:65
-#, fuzzy
 msgid "Center the pointer"
-msgstr "Neuen Profilnamen eingeben"
+msgstr "Mauszeiger zentrieren"
 
 #: src/hotkeymanager.cpp:81
-#, fuzzy
 msgid "Increase the X axis speed"
-msgstr "Geschwindigkeit X Achse"
+msgstr "Geschwindigkeit der X Achse erhöhen"
 
 #: src/hotkeymanager.cpp:97
-#, fuzzy
 msgid "Increase the Y axis speed"
-msgstr "Geschwindigkeit Y Achse"
+msgstr "Geschwindigkeit der Y Achse erhöhen"
 
 #: src/hotkeymanager.cpp:113
-#, fuzzy
 msgid "Decrease the X axis speed"
-msgstr "Geschwindigkeit X Achse"
+msgstr "Geschwindigkeit der X Achse reduzieren"
 
 #: src/hotkeymanager.cpp:129
-#, fuzzy
 msgid "Decrease the Y axis speed"
-msgstr "Geschwindigkeit Y Achse"
+msgstr "Geschwindigkeit der Y Achse reduzieren"
 
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
@@ -1210,7 +1196,7 @@ msgstr "Kamera nicht erkannt. Abgebrochen"
 
 #: wxutil/warnbaroverlap.h:41
 msgid "Overlapping warning"
-msgstr ""
+msgstr "Überlappungswarnung"
 
 #: wxutil/warnbaroverlap.cpp:127
 msgid ""
@@ -1218,10 +1204,15 @@ msgid ""
 "This can prevent it from working properly when auto-hide mode is enabled.\n"
 "It is recommended to move the Click window to a free position."
 msgstr ""
+"Die gewählte Position der Klickleiste ist bereits von einer anderen Leiste "
+"belegt.\n"
+"Dadurch kann es vorkommen, dass die Klickleiste nicht mit dem Mauszeiger "
+"erreichbar ist, speziell wenn sie automatisch ausgeblendet wird.\n"
+"Es wird empfohlen die Klickleiste an eine freie Positon zu verschieben."
 
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
-msgstr ""
+msgstr "Zeige diese Nachricht nicht mehr an"
 
 #, fuzzy
 #~ msgid "hotKeyEnable"

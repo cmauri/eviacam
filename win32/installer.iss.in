@@ -86,7 +86,7 @@ Name: {group}\{#APPNAME} help; Filename: {app}\bin\help\en\contents.htm
 Name: {group}\{#APPNAME} ayuda; Filename: {app}\bin\help\es\contents.htm; Languages: Castellano
 Name: {group}\{#APPNAME} ajuda; Filename: {app}\bin\help\ca\contents.htm; Languages: Catala
 Name: {group}\{#APPNAME} axuda; Filename: {app}\bin\help\gl\contents.htm; Languages: Galego
-Name: {group}\{#APPNAME} helfen; Filename: {app}\bin\help\de\intro.htm; Languages: Deutsch
+Name: {group}\{#APPNAME} helfen; Filename: {app}\bin\help\de\contents.htm; Languages: Deutsch
 
 
 ;Name: {group}\README; Filename: {app}\doc\README.txt
