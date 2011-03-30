@@ -1,3 +1,28 @@
+2011-03-30 - Release 1.5
+* Added automated face localization based on haar-like cascade.
+	* Configuration options added to wizard and config dialogue.
+	* Added feature to disable eViacam when no face detected.
+	* Closes [SF:3066057] Face location detection
+	* Partially solves [SF:3135033] adjusting position of the green rectangle
+* Added hotkey manager which provides fast access to common actions such as
+  enable/disable pointer motion, pointer centring, etc. (GNU/Linux only)
+	* Partially closes [SF:3066060] Centering mouse pointer by pressing a key
+	* Partially closes [SF:3080636] switching off workspace limit by key	
+* Click Window improved (GNU/Linux only)
+	* Top, bottom, left and right docking modes supported.
+	* Floating horizontal and floating vertical.
+	* Auto-hide mode.
+	* Fixes [SF:3144118] Click window
+* Added option which allows the pointer to wrap around the work space.
+* Translations up to date
+	* English, Catalan and Spanish
+	* Français (thanks Sébastien Lecointre)
+	* Galego (thanks to Miguel Anxo Bouzada)
+	* Italiano (thanks to Giuseppe Masciopinto)
+* Help contents up to date
+	* English, Catalan and Spanish
+	* Galego (thanks to Miguel Anxo Bouzada)
+
 2011-01-21 - Release 1.4.2
 * Added Hebrew translation (thanks to Yaron Shahrabani)
 * Updated Italiano translation (thanks to Giuseppe Masciopinto)
