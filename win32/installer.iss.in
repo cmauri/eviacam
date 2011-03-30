@@ -82,15 +82,21 @@ Name: desktopicon; Description: {cm:CreateDesktopIcon}
 [Icons]
 Name: {group}\{#APPNAME}; Filename: {app}\bin\{#APPBIN}; WorkingDir: {app}\bin
 Name: {group}\{cm:UninstallProgram,{#APPNAME}}; Filename: {uninstallexe}
-Name: {group}\README; Filename: {app}\doc\README.txt
-Name: {group}\README.Català; Filename: {app}\doc\README.ca.txt
+Name: {group}\{#APPNAME} help; Filename: {app}\bin\help\en\contents.htm
+Name: {group}\{#APPNAME} ayuda; Filename: {app}\bin\help\es\contents.htm; Languages: Castellano
+Name: {group}\{#APPNAME} ajuda; Filename: {app}\bin\help\ca\contents.htm; Languages: Catala
+Name: {group}\{#APPNAME} axuda; Filename: {app}\bin\help\gl\contents.htm; Languages: Galego
+Name: {group}\{#APPNAME} helfen; Filename: {app}\bin\help\de\intro.htm; Languages: Deutsch
+
+
+;Name: {group}\README; Filename: {app}\doc\README.txt
+;Name: {group}\README.Català; Filename: {app}\doc\README.ca.txt
 Name: {userdesktop}\eViacam; Filename: {app}\bin\eViacam.exe; WorkingDir: {app}\bin; Tasks: desktopicon
 
 [Run]
-Filename: {app}\doc\README.txt; Flags: postinstall shellexec
+;Filename: {app}\doc\README.txt; Flags: postinstall shellexec
 ;Filename: {app}\doc\README.ca.txt; Flags: postinstall shellexec; Tasks: ; Languages: Catala; Verb: open
-;Filename: {app}\bin\{#APPBIN}; WorkingDir: {app}\bin; Flags: postinstall nowait; Tasks: ; Languages: 
-;Filename: {app}\bin\fixvfwfps.exe; Flags: runminimized; Tasks: 
+;Filename: {app}\bin\{#APPBIN}; WorkingDir: {app}\bin; Flags: postinstall nowait; Tasks: ; Languages:
 
 [Components]
 
@@ -119,6 +125,10 @@ Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: lan
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: fr; Languages: French
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: ar; Languages: Arabic
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: he; Languages: Hebrew
+
+; Enables face tracking by default for default profile, for upgrades only
+Root: HKCU; Subkey: Software\eviacam\settings\default; ValueType: dword; ValueName: motionTracker; ValueData: 1
+
 
 [_ISTool]
 Use7zip=false
