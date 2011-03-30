@@ -7,6 +7,10 @@
 <OBJECT type="text/site properties">
 </OBJECT>
 <UL>
+<LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Inhalt">
+      <param name="Local" value="contents.htm">
+      </OBJECT>
   <LI><OBJECT type="text/sitemap">
       <param name="Name" value="Einleitung">
       <param name="Local" value="intro.htm">
@@ -28,16 +32,12 @@
       <param name="Local" value="calibration.htm">
       </OBJECT>
   <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Konfigurationsoptionen">
-      <param name="Local" value="options.htm">
-      </OBJECT>
-  <LI><OBJECT type="text/sitemap">
       <param name="Name" value="Klickmethoden">
       <param name="Local" value="click.htm">
-      </OBJECT>
+      </OBJECT>	 
   <LI><OBJECT type="text/sitemap">
-      <param name="Name" value="Klickleiste">
-      <param name="Local" value="click_bar.htm">
+      <param name="Name" value="Konfigurationsoptionen">
+      <param name="Local" value="options.htm">
       </OBJECT>
 </UL>
 </BODY></HTML>
