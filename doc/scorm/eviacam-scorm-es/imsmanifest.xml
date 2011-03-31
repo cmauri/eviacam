@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This is a Reload version 2.5.5 SCORM 1.2 Content Package document-->
+<!--Spawned from the Reload Content Package Generator - http://www.reload.ac.uk-->
+<manifest xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" identifier="MANIFEST-38A0C762826C5B0B112DB368592112DD" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <organizations default="ORG-E5334AB1C182EAABF65821B3E3AA3D36">
+    <organization identifier="ORG-E5334AB1C182EAABF65821B3E3AA3D36" structure="hierarchical">
+      <title>eViacam</title>
+      <item identifier="ITEM-4B3FD3246EF4EC75B2B92E808C642AAE" isvisible="true" identifierref="RES-F9499633EDC0BE9DD1086A17AB04B637">
+        <title>Manual de usuario de Enable Viacam</title>
+      </item>
+      <item identifier="ITEM-71172E88723787C22F5A15BC274F8D37" identifierref="RES-3DB50D8380C236EEDC89386B888E7E1F" isvisible="true">
+        <title>Introducción</title>
+      </item>
+      <item identifier="ITEM-FF3B357A65D4DFB48C600C5C69E510D9" identifierref="RES-DA372A6B3507A21E625F92AD9728421E" isvisible="true">
+        <title>Entorno de trabajo</title>
+      </item>
+      <item identifier="ITEM-15DB5F6E1629C12148B7DE542546D044" identifierref="RES-78C0D3616ED9D78B1BB60552E6D5666F" isvisible="true">
+        <title>Factores importantes de la cámara web</title>
+      </item>
+      <item identifier="ITEM-A2340E0B2A95ADBF2D08FE99F3F43B5C" identifierref="RES-D13EA150331DF9DD3E6E947D8B156578" isvisible="true">
+        <title>El asistente de configuración</title>
+      </item>
+      <item identifier="ITEM-8E4FBD92D5E7D2EC1CB5EAF27E98F967" identifierref="RES-26B17769F612C3E3616BB97E7AA37FFF" isvisible="true">
+        <title>Método de calibración automático</title>
+      </item>
+      <item identifier="ITEM-A060D87BA4FA3C9953EADB4E7D7DD8FD" identifierref="RES-F53E4D673168857D2B161D087B7ECA6B" isvisible="true">
+        <title>Modos de hacer clic</title>
+      </item>
+      <item identifier="ITEM-637C15A228981A578129133D946C53DC" identifierref="RES-CB34E43BD1F5700977564D2DCB962E0E" isvisible="true">
+        <title>Opciones de configuración</title>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource href="html/contents.htm" identifier="RES-F9499633EDC0BE9DD1086A17AB04B637" type="webcontent">
+      <file href="html/contents.htm" />
+    </resource>
+    <resource identifier="RES-3DB50D8380C236EEDC89386B888E7E1F" type="webcontent" href="html/intro.htm">
+      <file href="html/intro.htm" />
+    </resource>
+    <resource identifier="RES-DA372A6B3507A21E625F92AD9728421E" type="webcontent" href="html/environment.htm">
+      <file href="html/environment.htm" />
+    </resource>
+    <resource identifier="RES-78C0D3616ED9D78B1BB60552E6D5666F" type="webcontent" href="html/webcam.htm">
+      <file href="html/webcam.htm" />
+    </resource>
+    <resource identifier="RES-D13EA150331DF9DD3E6E947D8B156578" type="webcontent" href="html/wizard.htm">
+      <file href="html/wizard.htm" />
+    </resource>
+    <resource identifier="RES-26B17769F612C3E3616BB97E7AA37FFF" type="webcontent" href="html/calibration.htm">
+      <file href="html/calibration.htm" />
+    </resource>
+    <resource identifier="RES-F53E4D673168857D2B161D087B7ECA6B" type="webcontent" href="html/click.htm">
+      <file href="html/click.htm" />
+    </resource>
+    <resource identifier="RES-CB34E43BD1F5700977564D2DCB962E0E" type="webcontent" href="html/options.htm">
+      <file href="html/options.htm" />
+    </resource>
+  </resources>
+</manifest>
+
