@@ -70,6 +70,7 @@ public:
 	// Data accessors
 	bool Initialized () const { return m_pIplImage!= NULL; }
 	IplImage *ptr () { return m_pIplImage; }
+	const IplImage *ptr () const { return m_pIplImage; }
 	int Width () const { assert (m_pIplImage); return m_pIplImage->width; }
 	int Height () const { assert (m_pIplImage); return m_pIplImage->height; }
 	CvSize GetSize() const { assert (m_pIplImage); return cvSize (m_pIplImage->width, m_pIplImage->height); }

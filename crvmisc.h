@@ -31,13 +31,13 @@ typedef struct {
 */
 
 // Dona l'adre�a de mem�ria del p�xel a la posici� X, Y
-void *crvImgOffset (IplImage *img, int x, int y);
+void *crvImgOffset (const IplImage *img, int x, int y);
 
 // Dona l'adre�a de mem�ria del p�xel a la posici� X, Y (DEPRECAT)
-char *crvImgByteOffset (IplImage *img, int x, int y);
+char *crvImgByteOffset (const IplImage *img, int x, int y);
 
 // Calcula limits en X, Y segons el ROI d'una imatge
-void crvGetROILimits (IplImage *img, int &xIni, int &yIni, 
+void crvGetROILimits (const IplImage *img, int &xIni, int &yIni, 
 				   int &xLim, int &yLim);
 
 // Dona la intersecci� entre les ROI de 2 imatges
