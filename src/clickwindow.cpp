@@ -119,6 +119,11 @@ void CClickWindow::ConnectEvents()
     GetLeftButton()->Connect(GetLeftButton()->GetId(), wxEVT_LEFT_DCLICK, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
     GetLeftButton()->Connect(GetLeftButton()->GetId(), wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindow::OnEnterWindow), NULL, this);
     GetLeftButton()->Connect(GetLeftButton()->GetId(), wxEVT_SET_FOCUS, wxFocusEventHandler(CClickWindow::OnEventSkipperFocus), NULL, this);
+   GetMiddleButton()->Connect(GetMiddleButton()->GetId(), wxEVT_LEFT_DOWN, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
+    GetMiddleButton()->Connect(GetMiddleButton()->GetId(), wxEVT_LEFT_UP, wxMouseEventHandler(CClickWindow::OnLeftUp), NULL, this);
+    GetMiddleButton()->Connect(GetMiddleButton()->GetId(), wxEVT_LEFT_DCLICK, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
+    GetMiddleButton()->Connect(GetMiddleButton()->GetId(), wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindow::OnEnterWindow), NULL, this);
+    GetMiddleButton()->Connect(GetMiddleButton()->GetId(), wxEVT_SET_FOCUS, wxFocusEventHandler(CClickWindow::OnEventSkipperFocus), NULL, this);
     GetRightButton()->Connect(GetRightButton()->GetId(), wxEVT_LEFT_DOWN, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
     GetRightButton()->Connect(GetRightButton()->GetId(), wxEVT_LEFT_UP, wxMouseEventHandler(CClickWindow::OnLeftUp), NULL, this);
     GetRightButton()->Connect(GetRightButton()->GetId(), wxEVT_LEFT_DCLICK, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
@@ -143,8 +148,9 @@ void CClickWindow::ConnectEvents()
 
 CClickWindowController::EButton CClickWindow::ButtonId2EButton (int id)
 {
-	if (id== GetNoClickButton()->GetId()) return CClickWindowController::NO_CLICK;	
+	if (id== GetNoClickButton()->GetId()) return CClickWindowController::NO_CLICK;
     if (id== GetLeftButton()->GetId()) return CClickWindowController::LEFT;
+    if (id== GetMiddleButton()->GetId()) return CClickWindowController::MIDDLE;
     if (id== GetRightButton()->GetId()) return CClickWindowController::RIGHT;
     if (id== GetDragButton()->GetId()) return CClickWindowController::DRAG;
     if (id== GetDblClickButton()->GetId()) return CClickWindowController::DBLCLICK;

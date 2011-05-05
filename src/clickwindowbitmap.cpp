@@ -42,6 +42,8 @@
 #include "icons/buttonNoClick.xpm"
 #include "icons/buttonLeft.xpm"
 #include "icons/buttonLeftDisabled.xpm"
+#include "icons/buttonMiddle.xpm"
+#include "icons/buttonMiddleDisabled.xpm"
 #include "icons/buttonRight.xpm"
 #include "icons/buttonRightDisabled.xpm"
 #include "icons/buttonDrag.xpm"
@@ -61,6 +63,9 @@
 #include "icons/buttonLeftSelectedLocked.xpm"
 #include "icons/buttonLeftSelected.xpm"
 #include "icons/buttonNoClickSelected.xpm"
+#include "icons/buttonMiddleLocked.xpm"
+#include "icons/buttonMiddleSelectedLocked.xpm"
+#include "icons/buttonMiddleSelected.xpm"
 #include "icons/buttonRightLocked.xpm"
 #include "icons/buttonRightSelectedLocked.xpm"
 #include "icons/buttonRightSelected.xpm"
@@ -106,6 +111,10 @@ CClickWindowBitmap::CClickWindowBitmap()
 , m_bmpButtonLeft(buttonLeft)
 , m_bmpButtonNoClickSelected(buttonNoClickSelected)
 , m_bmpButtonNoClick(buttonNoClick)
+, m_bmpButtonMiddleLocked(buttonMiddleLocked)
+, m_bmpButtonMiddleSelectedLocked(buttonMiddleSelectedLocked)
+, m_bmpButtonMiddleSelected(buttonMiddleSelected)
+, m_bmpButtonMiddle(buttonMiddle)
 , m_bmpButtonRightLocked(buttonRightLocked)
 , m_bmpButtonRightSelectedLocked(buttonRightSelectedLocked)
 , m_bmpButtonRightSelected(buttonRightSelected)
@@ -131,6 +140,10 @@ CClickWindowBitmap::CClickWindowBitmap( wxWindow* parent, wxWindowID id, const w
 , m_bmpButtonLeft(buttonLeft)
 , m_bmpButtonNoClickSelected(buttonNoClickSelected)
 , m_bmpButtonNoClick(buttonNoClick)
+, m_bmpButtonMiddleLocked(buttonMiddleLocked)
+, m_bmpButtonMiddleSelectedLocked(buttonMiddleSelectedLocked)
+, m_bmpButtonMiddleSelected(buttonMiddleSelected)
+, m_bmpButtonMiddle(buttonMiddle)
 , m_bmpButtonRightLocked(buttonRightLocked)
 , m_bmpButtonRightSelectedLocked(buttonRightSelectedLocked)
 , m_bmpButtonRightSelected(buttonRightSelected)
@@ -182,6 +195,7 @@ void CClickWindowBitmap::Init()
 ////@begin CClickWindowBitmap member initialisation
     m_btnNoClick = NULL;
     m_btnLeft = NULL;
+    m_btnMiddle = NULL;
     m_btnRight = NULL;
     m_btnDrag = NULL;
     m_btnDblLeft = NULL;
@@ -221,6 +235,13 @@ void CClickWindowBitmap::CreateControls()
     if (CClickWindowBitmap::ShowToolTips())
         m_btnLeft->SetToolTip(_("Left"));
     itemBoxSizer2->Add(m_btnLeft, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2);
+
+    m_btnMiddle = new wxBitmapButton( itemCClickWindow1, ID_BITMAPBUTTON_MIDDLE, itemCClickWindow1->GetBitmapResource(wxT("icons/buttonMiddle.xpm")), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
+    wxBitmap m_btnMiddleBitmapDisabled(itemCClickWindow1->GetBitmapResource(wxT("icons/buttonMiddleDisabled.xpm")));
+    m_btnMiddle->SetBitmapDisabled(m_btnMiddleBitmapDisabled);
+    if (CClickWindowBitmap::ShowToolTips())
+        m_btnMiddle->SetToolTip(_("Middle"));
+    itemBoxSizer2->Add(m_btnMiddle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2);
 
     m_btnRight = new wxBitmapButton( itemCClickWindow1, ID_BITMAPBUTTON_RIGHT, itemCClickWindow1->GetBitmapResource(wxT("icons/buttonRight.xpm")), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
     wxBitmap m_btnRightBitmapDisabled(itemCClickWindow1->GetBitmapResource(wxT("icons/buttonRightDisabled.xpm")));
@@ -296,6 +317,16 @@ wxBitmap CClickWindowBitmap::GetBitmapResource( const wxString& name )
         wxBitmap bitmap(buttonLeftDisabled);
         return bitmap;
     }
+    else if (name == _T("icons/buttonMiddle.xpm"))
+    {
+        wxBitmap bitmap(buttonMiddle);
+        return bitmap;
+    }
+    else if (name == _T("icons/buttonMiddleDisabled.xpm"))
+    {
+        wxBitmap bitmap(buttonMiddleDisabled);
+        return bitmap;
+    }
     else if (name == _T("icons/buttonRight.xpm"))
     {
         wxBitmap bitmap(buttonRight);
@@ -358,6 +389,11 @@ wxControl* CClickWindowBitmap::GetLeftButton()
 	return m_btnLeft;
 }
 
+wxControl* CClickWindowBitmap::GetMiddleButton()
+{
+	return m_btnMiddle;
+}
+
 wxControl* CClickWindowBitmap::GetRightButton()
 {
 	return m_btnRight;
@@ -386,6 +422,7 @@ void CClickWindowBitmap::UpdateButtons (bool noClickStatus, CClickWindowControll
 	{
 		m_btnNoClick->SetBitmapLabel (m_bmpButtonNoClick);
 		m_btnLeft->Enable();
+		m_btnMiddle->Enable();
 		m_btnRight->Enable();
 		m_btnDrag->Enable();
 		m_btnDblLeft->Enable();
@@ -394,6 +431,7 @@ void CClickWindowBitmap::UpdateButtons (bool noClickStatus, CClickWindowControll
 	{
 		m_btnNoClick->SetBitmapLabel (m_bmpButtonNoClickSelected);
 		m_btnLeft->Disable();
+		m_btnMiddle->Disable();
 		m_btnRight->Disable();
 		m_btnDrag->Disable();
 		m_btnDblLeft->Disable();
@@ -411,6 +449,17 @@ void CClickWindowBitmap::UpdateButtons (bool noClickStatus, CClickWindowControll
 		else
 			m_btnLeft->SetBitmapLabel (m_bmpButtonLeft);
 		
+	if (selected== CClickWindowController::MIDDLE)
+		if (locked== CClickWindowController::MIDDLE)
+			m_btnMiddle->SetBitmapLabel (m_bmpButtonMiddleSelectedLocked);
+		else
+			m_btnMiddle->SetBitmapLabel (m_bmpButtonMiddleSelected);
+	else
+		if (locked== CClickWindowController::MIDDLE)
+			m_btnMiddle->SetBitmapLabel (m_bmpButtonMiddleLocked);
+		else
+			m_btnMiddle->SetBitmapLabel (m_bmpButtonMiddle);
+
 	if (selected== CClickWindowController::RIGHT)
 		if (locked== CClickWindowController::RIGHT)
 			m_btnRight->SetBitmapLabel (m_bmpButtonRightSelectedLocked);

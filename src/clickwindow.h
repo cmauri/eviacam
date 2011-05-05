@@ -61,6 +61,7 @@ public:
 	virtual wxControl* GetNoClickButton()= 0;
 protected:
     virtual wxControl* GetLeftButton()= 0;
+    virtual wxControl* GetMiddleButton()= 0;
     virtual wxControl* GetRightButton()= 0;
     virtual wxControl* GetDragButton()= 0;
     virtual wxControl* GetDblClickButton()= 0;

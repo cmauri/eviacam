@@ -50,6 +50,7 @@ class wxToggleButton;
 #define ID_CCLICKWINDOW_TEXT 10003
 #define ID_BUTTON_NOCLICK 10004
 #define ID_BTN_LEFT 10007
+#define ID_BTN_MIDDLE 10208
 #define ID_BTN_RIGHT 10008
 #define ID_BTN_DRAG 10009
 #define ID_BTN_DBLCLICK 10010
@@ -115,20 +116,22 @@ protected:
 
 	virtual wxControl* GetNoClickButton();
     virtual wxControl* GetLeftButton();
+    virtual wxControl* GetMiddleButton();
     virtual wxControl* GetRightButton();
     virtual wxControl* GetDragButton();
     virtual wxControl* GetDblClickButton();
     virtual wxControl* GetShowFrame();
 
 	void UpdateSelectedButtons ( wxControl* btnSelected, wxControl* btnNoSelected1, 
-								 wxControl* btnNoSelected2,wxControl* btnNoSelected3);
+								 wxControl* btnNoSelected2, wxControl* btnNoSelected3, wxControl* btnNoSelected4);
 
 	void UpdateLockedButtons ( wxControl* btnLocked, wxControl* btnNoLocked1, 
-							   wxControl* btnNoLocked2, wxControl* btnNoLocked3);
+							   wxControl* btnNoLocked2, wxControl* btnNoLocked3, wxControl* btnNoLocked4);
 
 ////@begin CClickWindowText member variables
     wxToggleButton* m_noClickButton;
     wxToggleButton* m_leftButton;
+    wxToggleButton* m_middleButton;
     wxToggleButton* m_rightButton;
     wxToggleButton* m_dragButton;
     wxToggleButton* m_dblClickButton;

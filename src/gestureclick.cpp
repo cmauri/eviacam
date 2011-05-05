@@ -35,6 +35,7 @@ CGestureClick::CGestureClick(CMouseControl& mc)
 , m_visualAlertsEnabled(false)
 , m_dwellToleranceArea(0)
 , m_actionLeft(DISABLE)
+, m_actionMiddle(DISABLE)
 , m_actionRight(DISABLE)
 , m_actionTop(DISABLE)
 , m_actionBottom(DISABLE)
@@ -64,6 +65,7 @@ void CGestureClick::InitDefaults()
 	// Gesture click
 	SetActionLeft(SINGLE);
 	SetActionRight(SECONDARY);
+	SetActionMiddle(THIRD);
 	SetActionTop(DOUBLE);
 	SetActionBottom(DRAG);
 	SetFastGestureAction(false);
@@ -79,6 +81,7 @@ void CGestureClick::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("dwellToleranceArea"), (long) GetDwellToleranceArea());
 	pConfObj->Write(_T("actionTop"), (long) GetActionTop());
 	pConfObj->Write(_T("actionLeft"), (long) GetActionLeft());
+	pConfObj->Write(_T("actionMiddle"), (long) GetActionMiddle());
 	pConfObj->Write(_T("actionRight"), (long) GetActionRight());
 	pConfObj->Write(_T("actionBottom"), (long) GetActionBottom());
 	pConfObj->Write(_T("visualAlertsEnabled"), (bool) AreVisualAlertsEnabled());
@@ -100,6 +103,7 @@ void CGestureClick::ReadProfileData(wxConfigBase* pConfObj)
 		SetDwellToleranceArea((unsigned int) vall);		
 	if (pConfObj->Read(_T("actionTop"), &vall)) SetActionTop((EAction) vall);
 	if (pConfObj->Read(_T("actionLeft"), &vall)) SetActionLeft((EAction) vall);
+	if (pConfObj->Read(_T("actionMiddle"), &vall)) SetActionMiddle((EAction) vall);
 	if (pConfObj->Read(_T("actionRight"), &vall)) SetActionRight((EAction) vall);
 	if (pConfObj->Read(_T("actionBottom"), &vall)) SetActionBottom((EAction) vall);
 	if (pConfObj->Read(_T("visualAlertsEnabled"), &valb)) EnableVisualAlerts(valb);
@@ -275,6 +279,9 @@ void CGestureClick::DoAction (EAction action)
 			break;
 		case SECONDARY:
 			m_mouseControl->RightClick();
+			break;
+		case THIRD:
+			m_mouseControl->MiddleClick();
 			break;
 		case DRAG:
 			m_mouseControl->LeftDown();

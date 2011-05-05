@@ -35,6 +35,7 @@
 #define ID_CLICKWINDOWBITMAPVERTICAL 10069
 #define ID_BITMAPBUTTON_NOCLICK 10055
 #define ID_BITMAPBUTTON_LEFT 10056
+#define ID_BITMAPBUTTON_MIDDLE 10257
 #define ID_BITMAPBUTTON_RIGHT 10057
 #define ID_BITMAPBUTTON_DRAG 10058
 #define ID_BITMAPBUTTON_DBLCLICK 10059
@@ -96,6 +97,7 @@ protected:
 
 	virtual wxControl* GetNoClickButton();
     virtual wxControl* GetLeftButton();
+    virtual wxControl* GetMiddleButton();
     virtual wxControl* GetRightButton();
     virtual wxControl* GetDragButton();
     virtual wxControl* GetDblClickButton();
@@ -116,6 +118,10 @@ protected:
 	wxBitmap m_bmpButtonLeft;
 	wxBitmap m_bmpButtonNoClickSelected;
 	wxBitmap m_bmpButtonNoClick;
+	wxBitmap m_bmpButtonMiddleLocked;
+	wxBitmap m_bmpButtonMiddleSelectedLocked;
+	wxBitmap m_bmpButtonMiddleSelected;
+	wxBitmap m_bmpButtonMiddle;
 	wxBitmap m_bmpButtonRightLocked;
 	wxBitmap m_bmpButtonRightSelectedLocked;
 	wxBitmap m_bmpButtonRightSelected;
@@ -125,6 +131,7 @@ protected:
 ////@begin CClickWindowBitmapVertical member variables
     wxBitmapButton* m_btnNoClick;
     wxBitmapButton* m_btnLeft;
+    wxBitmapButton* m_btnMiddle;
     wxBitmapButton* m_btnRight;
     wxBitmapButton* m_btnDrag;
     wxBitmapButton* m_btnDblLeft;

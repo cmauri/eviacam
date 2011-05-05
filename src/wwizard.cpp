@@ -54,6 +54,7 @@
 #define SECONDARY 2
 #define DOUBLE 3
 #define DRAG 4
+#define THIRD 5
 
 /*!
  * WWizard type definition

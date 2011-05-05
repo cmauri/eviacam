@@ -117,6 +117,7 @@ void CClickWindowText::Init()
 ////@begin CClickWindowText member initialisation
     m_noClickButton = NULL;
     m_leftButton = NULL;
+    m_middleButton = NULL;
     m_rightButton = NULL;
     m_dragButton = NULL;
     m_dblClickButton = NULL;
@@ -147,6 +148,10 @@ void CClickWindowText::CreateControls()
     m_leftButton = new wxToggleButton( itemCClickWindow1, ID_BTN_LEFT, _("#Left#"), wxDefaultPosition, wxDefaultSize, 0 );
     m_leftButton->SetValue(false);
     itemBoxSizer2->Add(m_leftButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
+
+    m_middleButton = new wxToggleButton( itemCClickWindow1, ID_BTN_MIDDLE, _("#Middle#"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_middleButton->SetValue(false);
+    itemBoxSizer2->Add(m_middleButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
 
     m_rightButton = new wxToggleButton( itemCClickWindow1, ID_BTN_RIGHT, _("#Right#"), wxDefaultPosition, wxDefaultSize, 0 );
     m_rightButton->SetValue(false);
@@ -217,16 +222,19 @@ void CClickWindowText::UpdateButtons (bool noClickStatus, CClickWindowController
 	switch (selected)
 	{
 	case CClickWindowController::LEFT:
-		UpdateSelectedButtons (GetLeftButton(), GetRightButton(), GetDragButton(), GetDblClickButton());
+		UpdateSelectedButtons (GetLeftButton(), GetMiddleButton(), GetRightButton(), GetDragButton(), GetDblClickButton());
+		break;
+	case CClickWindowController::MIDDLE:
+		UpdateSelectedButtons (GetMiddleButton(), GetRightButton(), GetDragButton(), GetDblClickButton(), GetLeftButton());
 		break;
 	case CClickWindowController::RIGHT:
-		UpdateSelectedButtons (GetRightButton(), GetDragButton(), GetDblClickButton(), GetLeftButton());
+		UpdateSelectedButtons (GetMiddleButton(), GetRightButton(), GetDragButton(), GetDblClickButton(), GetLeftButton());
 		break;
 	case CClickWindowController::DRAG:
-		UpdateSelectedButtons (GetDragButton(), GetDblClickButton(), GetLeftButton(), GetRightButton());
+		UpdateSelectedButtons (GetDragButton(), GetDblClickButton(), GetLeftButton(), GetMiddleButton(), GetRightButton());
 		break;
 	case CClickWindowController::DBLCLICK:
-		UpdateSelectedButtons (GetDblClickButton(), GetLeftButton(), GetRightButton(), GetDragButton());
+		UpdateSelectedButtons (GetDblClickButton(), GetLeftButton(), GetMiddleButton(), GetRightButton(), GetDragButton());
 		break;
 	default:
 		assert (false);
@@ -236,16 +244,19 @@ void CClickWindowText::UpdateButtons (bool noClickStatus, CClickWindowController
 	switch (locked)
 	{
 	case CClickWindowController::LEFT:
-		UpdateLockedButtons (GetLeftButton(), GetRightButton(), GetDragButton(), GetDblClickButton());
+		UpdateLockedButtons (GetLeftButton(), GetMiddleButton(), GetRightButton(), GetDragButton(), GetDblClickButton());
+		break;
+	case CClickWindowController::MIDDLE:
+		UpdateLockedButtons (GetMiddleButton(), GetRightButton(), GetDragButton(), GetDblClickButton(), GetLeftButton());
 		break;
 	case CClickWindowController::RIGHT:
-		UpdateLockedButtons (GetRightButton(), GetDragButton(), GetDblClickButton(), GetLeftButton());
+		UpdateLockedButtons (GetMiddleButton(), GetRightButton(), GetDragButton(), GetDblClickButton(), GetLeftButton());
 		break;
 	case CClickWindowController::DRAG:
-		UpdateLockedButtons (GetDragButton(), GetDblClickButton(), GetLeftButton(), GetRightButton());
+		UpdateLockedButtons (GetDragButton(), GetDblClickButton(), GetLeftButton(), GetMiddleButton(), GetRightButton());
 		break;
 	case CClickWindowController::DBLCLICK:
-		UpdateLockedButtons (GetDblClickButton(), GetLeftButton(), GetRightButton(), GetDragButton());
+		UpdateLockedButtons (GetDblClickButton(), GetLeftButton(), GetMiddleButton(), GetRightButton(), GetDragButton());
 		break;
 	default:
 		assert (false);
@@ -253,18 +264,18 @@ void CClickWindowText::UpdateButtons (bool noClickStatus, CClickWindowController
 }
 
 void CClickWindowText::UpdateSelectedButtons (wxControl* btnSelected, wxControl* btnNoSelected1, 
-								 wxControl* btnNoSelected2,wxControl* btnNoSelected3)
+								 wxControl* btnNoSelected2,wxControl* btnNoSelected3,wxControl* btnNoSelected4)
 {
 	if (!((wxToggleButton*)btnSelected)->GetValue()) ((wxToggleButton*)btnSelected)->SetValue (true);
 	if (((wxToggleButton*)btnNoSelected1)->GetValue()) ((wxToggleButton*)btnNoSelected1)->SetValue (false);
 	if (((wxToggleButton*)btnNoSelected2)->GetValue()) ((wxToggleButton*)btnNoSelected2)->SetValue (false);
 	if (((wxToggleButton*)btnNoSelected3)->GetValue())((wxToggleButton*) btnNoSelected3)->SetValue (false);
-
+	if (((wxToggleButton*)btnNoSelected4)->GetValue())((wxToggleButton*) btnNoSelected4)->SetValue (false);
 	
 }
 
 void CClickWindowText::UpdateLockedButtons (wxControl* btnLocked, wxControl* btnNoLocked1, 
-											 wxControl* btnNoLocked2, wxControl* btnNoLocked3)
+											 wxControl* btnNoLocked2, wxControl* btnNoLocked3, wxControl* btnNoLocked4)
 {
 	wxString label= ((wxToggleButton*)btnLocked)->GetLabel();
 	label.SetChar (0, wxChar('['));
@@ -284,7 +295,12 @@ void CClickWindowText::UpdateLockedButtons (wxControl* btnLocked, wxControl* btn
 	label= ((wxToggleButton*)btnNoLocked3)->GetLabel();
 	label.SetChar (0, wxChar(' '));
 	label.SetChar (label.Length()-1, wxChar(' '));
-	((wxToggleButton*)btnNoLocked3)->SetLabel(label);		
+	((wxToggleButton*)btnNoLocked3)->SetLabel(label);
+
+	label= ((wxToggleButton*)btnNoLocked4)->GetLabel();
+	label.SetChar (0, wxChar(' '));
+	label.SetChar (label.Length()-1, wxChar(' '));
+	((wxToggleButton*)btnNoLocked4)->SetLabel(label);
 }
 
 wxControl* CClickWindowText::GetNoClickButton()
@@ -295,6 +311,11 @@ wxControl* CClickWindowText::GetNoClickButton()
 wxControl* CClickWindowText::GetLeftButton()
 {
 	return m_leftButton;
+}
+
+wxControl* CClickWindowText::GetMiddleButton()
+{
+	return m_middleButton;
 }
 
 wxControl* CClickWindowText::GetRightButton()

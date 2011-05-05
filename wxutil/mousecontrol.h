@@ -90,9 +90,12 @@ public:
 	// Click actions
 	bool LeftDown ();
 	void LeftUp ();
+	bool MiddleDown ();
+	void MiddleUp ();
 	bool RightDown ();
 	void RightUp ();
 	bool LeftClick ();
+	bool MiddleClick ();
 	bool RightClick ();
 	bool LeftDblClick ();
 

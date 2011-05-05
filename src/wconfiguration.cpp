@@ -666,6 +666,7 @@ void WConfiguration::CreateControls()
     wxArrayString m_choLeftStrings;
     m_choLeftStrings.Add(_("Disable"));
     m_choLeftStrings.Add(_("Left click"));
+    m_choLeftStrings.Add(_("Middle click"));
     m_choLeftStrings.Add(_("Right click"));
     m_choLeftStrings.Add(_("Double click"));
     m_choLeftStrings.Add(_("Drag click"));
@@ -678,6 +679,7 @@ void WConfiguration::CreateControls()
     wxArrayString m_choRightStrings;
     m_choRightStrings.Add(_("Disable"));
     m_choRightStrings.Add(_("Left click"));
+    m_choRightStrings.Add(_("Middle click"));
     m_choRightStrings.Add(_("Right click"));
     m_choRightStrings.Add(_("Double click"));
     m_choRightStrings.Add(_("Drag click"));
@@ -690,6 +692,7 @@ void WConfiguration::CreateControls()
     wxArrayString m_choUpStrings;
     m_choUpStrings.Add(_("Disable"));
     m_choUpStrings.Add(_("Left click"));
+    m_choUpStrings.Add(_("Middle click"));
     m_choUpStrings.Add(_("Right click"));
     m_choUpStrings.Add(_("Double click"));
     m_choUpStrings.Add(_("Drag click"));
@@ -702,6 +705,7 @@ void WConfiguration::CreateControls()
     wxArrayString m_choDownStrings;
     m_choDownStrings.Add(_("Disable"));
     m_choDownStrings.Add(_("Left click"));
+    m_choDownStrings.Add(_("Middle click"));
     m_choDownStrings.Add(_("Right click"));
     m_choDownStrings.Add(_("Double click"));
     m_choDownStrings.Add(_("Drag click"));

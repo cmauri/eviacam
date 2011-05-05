@@ -486,6 +486,21 @@ void CMouseControl::LeftUp ()
 	SendMouseCommand (0, 0,	MOUSE_LEFTUP);
 }
 
+bool CMouseControl::MiddleDown ()
+{
+	if (CheckClickArea ()) {
+		SendMouseCommand (0, 0,	MOUSE_MIDDLEDOWN);
+		return true;
+	}
+
+	return false;
+}
+
+void CMouseControl::MiddleUp ()
+{
+	SendMouseCommand (0, 0,	MOUSE_MIDDLEUP);
+}
+
 bool CMouseControl::RightDown ()
 {
 	if (CheckClickArea ()) {
@@ -506,6 +521,17 @@ bool CMouseControl::LeftClick ()
 	if (CheckClickArea ()) {
 		LeftDown ();
 		LeftUp ();
+		return true;
+	}
+
+	return false;
+}
+
+bool CMouseControl::MiddleClick ()
+{
+	if (CheckClickArea ()) {
+		MiddleDown ();
+		MiddleUp ();
 		return true;
 	}
 

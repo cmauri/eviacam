@@ -76,7 +76,7 @@ public:
 
 	// Possible actions that can be generated. Values equal or greater than
 	// EActionLast are keystrokes picked from  m_keyboardCodes
-	enum EAction { DISABLE= 0, SINGLE, SECONDARY, DOUBLE, DRAG, EActionLast };
+	enum EAction { DISABLE= 0, SINGLE, THIRD, SECONDARY, DOUBLE, DRAG, EActionLast };
 	enum { MOUSE_EVENTS_COUNT= EActionLast };
 
 	int GetPossibleActionsCount() const {
@@ -88,6 +88,13 @@ public:
 		assert (GetPossibleActionsCount()> action);
 		if (GetPossibleActionsCount()<= action) action= DISABLE;
 		m_actionLeft = action; 
+	}
+
+	EAction GetActionMiddle() const { return m_actionMiddle; }
+	void SetActionMiddle(EAction action) {
+		assert (GetPossibleActionsCount()> action);
+		if (GetPossibleActionsCount()<= action) action= DISABLE;
+		m_actionMiddle = action;
 	}
 
 	EAction GetActionRight() const { return m_actionRight; }
@@ -153,6 +160,7 @@ private:
 	//where is allowed to move without cancelling current countdown.
 	float m_dwellToleranceArea;	
 	EAction m_actionLeft;
+	EAction m_actionMiddle;
 	EAction m_actionRight;
 	EAction m_actionTop;
 	EAction m_actionBottom;

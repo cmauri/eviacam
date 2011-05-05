@@ -172,6 +172,9 @@ CClickWindowController::EAction CClickWindowController::GetAction(long x, long y
 			case CClickWindowController::LEFT:
 				retval= CClickWindowController::ACT_LEFT_CLICK;
 				break;
+			case CClickWindowController::MIDDLE:
+				retval= CClickWindowController::ACT_MIDDLE_CLICK;
+				break;
 			case CClickWindowController::RIGHT:
 				retval= CClickWindowController::ACT_RIGHT_CLICK;
 				break;

@@ -127,6 +127,9 @@ bool CDwellClick::ProcessMotion (int dxPix, int dyPix,
 				case CClickWindowController::ACT_LEFT_CLICK:
 					m_mouseControl->LeftClick();
 					break;
+				case CClickWindowController::ACT_MIDDLE_CLICK:
+					m_mouseControl->MiddleClick();
+					break;
 				case CClickWindowController::ACT_RIGHT_CLICK:
 					m_mouseControl->RightClick();
 					break;
