@@ -33,13 +33,16 @@ Source: %{name}-%{version}.tar.bz2
 Packager: Cesar Mauri <cesar@crea-si.com>
 Autoreq: 1
 
-Requires: wxGTK >= 2.6
 Requires: opencv >= 1.0
-BuildRequires: wxGTK-devel
 BuildRequires: opencv-devel
 %if %is_not_suse
 Requires: libXtst
 Requires: libXext
+Requires: wxGTK >= 2.6
+BuildRequires: wxGTK-devel
+%else
+Requires: wxWidgets >= 2.6
+BuildRequires: wxWidgets-devel
 %endif
 
 Provides:  eviacam
