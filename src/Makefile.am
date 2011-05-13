@@ -63,6 +63,11 @@ dist_noinst_DATA= version.h.in \
 	icons/buttonLeftSelectedLocked.xpm \
 	icons/buttonLeftSelected.xpm \
 	icons/buttonLeft.xpm \
+	icons/buttonMiddleDisabled.xpm \
+	icons/buttonMiddleLocked.xpm \
+	icons/buttonMiddleSelectedLocked.xpm \
+	icons/buttonMiddleSelected.xpm \
+	icons/buttonMiddle.xpm \
 	icons/buttonNoClickSelected.xpm \
 	icons/buttonNoClick.xpm \
 	icons/buttonRightDisabled.xpm \
