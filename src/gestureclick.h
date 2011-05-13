@@ -90,13 +90,6 @@ public:
 		m_actionLeft = action; 
 	}
 
-	EAction GetActionMiddle() const { return m_actionMiddle; }
-	void SetActionMiddle(EAction action) {
-		assert (GetPossibleActionsCount()> action);
-		if (GetPossibleActionsCount()<= action) action= DISABLE;
-		m_actionMiddle = action;
-	}
-
 	EAction GetActionRight() const { return m_actionRight; }
 	void SetActionRight(EAction action) {
 		assert (GetPossibleActionsCount()> action);
@@ -160,7 +153,6 @@ private:
 	//where is allowed to move without cancelling current countdown.
 	float m_dwellToleranceArea;	
 	EAction m_actionLeft;
-	EAction m_actionMiddle;
 	EAction m_actionRight;
 	EAction m_actionTop;
 	EAction m_actionBottom;
