@@ -28,7 +28,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <limits.h>
-#include <linux/videodev.h>
+//#include <linux/videodev.h>
+#include "incvideodev.h"
 #include <sys/ioctl.h>
 #include <sys/mman.h>
 #include <sys/time.h>
