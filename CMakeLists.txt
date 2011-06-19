@@ -60,6 +60,16 @@ message(STATUS "OpenCV_FOUND. ${OpenCV_FOUND}")
 message(STATUS "OpenCV_LIBS. ${OpenCV_LIBS}")
 message(STATUS "OpenCV_INCLUDE_DIR. ${OpenCV_INCLUDE_DIR}")
 
+if(WIN32)
+	install (FILES 
+		"${OpenCV_DIR}/bin/opencv_core220.dll"
+		"${OpenCV_DIR}/bin/opencv_highgui220.dll"
+		"${OpenCV_DIR}/bin/opencv_imgproc220.dll"
+		"${OpenCV_DIR}/bin/opencv_video220.dll"
+		DESTINATION ${LIBRUNTIMEDIR}
+	)
+endif(WIN32)
+
 add_library (creavision STATIC ${creavision_SRCS})
 TARGET_LINK_LIBRARIES(creavision ${OpenCV_LIBS} )
 
