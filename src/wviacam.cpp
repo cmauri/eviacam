@@ -572,6 +572,26 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/ca/help.hhp"));
 			break;
 		case (wxLANGUAGE_SPANISH):
+		case (wxLANGUAGE_SPANISH_ARGENTINA):
+		case (wxLANGUAGE_SPANISH_BOLIVIA):
+		case (wxLANGUAGE_SPANISH_CHILE):
+		case (wxLANGUAGE_SPANISH_COLOMBIA):
+		case (wxLANGUAGE_SPANISH_COSTA_RICA):
+		case (wxLANGUAGE_SPANISH_DOMINICAN_REPUBLIC):
+		case (wxLANGUAGE_SPANISH_ECUADOR):
+		case (wxLANGUAGE_SPANISH_EL_SALVADOR):
+		case (wxLANGUAGE_SPANISH_GUATEMALA):
+		case (wxLANGUAGE_SPANISH_HONDURAS):
+		case (wxLANGUAGE_SPANISH_MEXICAN):
+		case (wxLANGUAGE_SPANISH_MODERN):
+		case (wxLANGUAGE_SPANISH_NICARAGUA):
+		case (wxLANGUAGE_SPANISH_PANAMA):
+		case (wxLANGUAGE_SPANISH_PARAGUAY):
+		case (wxLANGUAGE_SPANISH_PERU):
+		case (wxLANGUAGE_SPANISH_PUERTO_RICO):
+		case (wxLANGUAGE_SPANISH_URUGUAY):
+		case (wxLANGUAGE_SPANISH_US):
+		case (wxLANGUAGE_SPANISH_VENEZUELA):
 			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/es/help.hhp"));
 			break;
 		case (wxLANGUAGE_GERMAN):
