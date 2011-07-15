@@ -27,7 +27,8 @@
 #ifndef C_COMPAT_H
 #define C_COMPAT_H
 
-#include <linux/videodev.h>
+//#include <linux/videodev.h>
+#include "incvideodev.h"
 #include <linux/videodev2.h>
 
 #ifdef USE_UVCVIDEO
