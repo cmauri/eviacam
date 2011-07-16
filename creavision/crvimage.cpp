@@ -28,28 +28,18 @@
 // Construction
 CIplImage::CIplImage ()
 {
-	m_pIplImage= NULL;
-	m_importedImage= false;
-	m_importedROI= NULL;
-	m_roiStackPtr= 0;
+	Init();
 }
 
 CIplImage::CIplImage (IplImage *pImg)
 {
-	m_pIplImage= NULL;
-	m_importedImage= false;
-	m_importedROI= NULL;
-	m_roiStackPtr= 0;
-
+	Init();
 	Import (pImg);
 }
 
 CIplImage::CIplImage (int width, int height, int depth, const char *pColorOrder)
 {
-	m_pIplImage= NULL;
-	m_importedImage= false;
-	m_importedROI= NULL;
-	m_roiStackPtr= 0;
+	Init();
 
 	bool retval= Create (width, height, depth, pColorOrder);
 #ifndef NDEBUG
@@ -60,6 +50,14 @@ CIplImage::CIplImage (int width, int height, int depth, const char *pColorOrder)
 CIplImage::~CIplImage ()
 {
 	Free ();
+}
+
+void CIplImage::Init()
+{
+	m_pIplImage= NULL;
+	m_importedImage= false;
+	m_importedROI= NULL;
+	m_roiStackPtr= 0;
 }
 
 void CIplImage::InitROIStack (int width, int height)
@@ -156,6 +154,7 @@ bool CIplImage::Import (IplImage *pImage, bool autodelete)
 
 void CIplImage::Free ()
 {
+	/*
 	if (!m_pIplImage) return;
 
 	if (m_importedImage) 
@@ -167,7 +166,27 @@ void CIplImage::Free ()
 	}
 	
 	CIplImage ();
-}	
+	*/
+
+	IplImage* retval= this->Detach();
+	if (retval && !m_importedImage) cvReleaseImage( &retval );
+}
+
+IplImage* CIplImage::Detach()
+{
+	if (!m_pIplImage) return NULL;
+
+	if (m_importedImage) 
+		m_pIplImage->roi= m_importedROI;
+	else 
+		m_pIplImage->roi= NULL;
+
+	IplImage* retval= m_pIplImage;
+	
+	Init ();
+
+	return retval;	
+}
 
 void CIplImage::Swap (CIplImage *pOtherImg)
 {

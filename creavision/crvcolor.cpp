@@ -65,7 +65,7 @@ void CRGBCubicColor::TrainColor (unsigned char r, unsigned char g, unsigned char
 }
 
 // Realitza entrenament per una imatge IPL tenint en compte ROI
-void CRGBCubicColor::TrainImage (IplImage *img, int radius, double dDivisor)
+void CRGBCubicColor::TrainImage (const IplImage *img, int radius, double dDivisor)
 {	
 	int x, y, xIni, yIni, xLim, yLim;
 	unsigned char *pImg;
@@ -91,7 +91,7 @@ void CRGBCubicColor::TrainImage (IplImage *img, int radius, double dDivisor)
 // Genera imatge resultant d'indexar la taula 
 // per tots els píxels
 // De moment només vàlid per imatges RGBA
-void CRGBCubicColor::LookupImage (IplImage *pSrc, IplImage *pDst)
+void CRGBCubicColor::LookupImage (const IplImage *pSrc, IplImage *pDst)
 {
 	int x, y, xIni, yIni, xLim, yLim;
 	unsigned char *pSrcB, *pDstB;
@@ -163,7 +163,7 @@ void crvExtractSkinColorModel (IplImage *pIpl, float &krg_min, float &krg_max,
 
 
 // Converteix una imatge a color a escala de grisos
-void crvColorToGray (IplImage *pImgSrc, IplImage *pImgDst)
+void crvColorToGray (const IplImage *pImgSrc, IplImage *pImgDst)
 {
 	int x, y, xIni, yIni, xLim, yLim;
 	int xDstIni, yDstIni, xDstLim, yDstLim;
