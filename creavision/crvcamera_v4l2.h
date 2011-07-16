@@ -57,6 +57,7 @@ protected:
 	virtual bool DoOpen();
 	virtual void DoClose();	
 	virtual IplImage *DoQueryFrame();
+	virtual bool DoQueryFrame(CIplImage& image);
 
 private:
 	// Private types

@@ -20,14 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "crvcamera.h"
-#include "cv.h"
+#include "crvimage.h"
+#include <cv.h>
 #include <sys/timeb.h>
 #include <sys/types.h>
 #include <stdio.h>
 #include <cassert>
 
 // Return timestamp in ms
-static int GetTime (void)
+static unsigned int GetTime (void)
 {
 	struct timeb now;	
 	ftime(&now);
@@ -63,11 +64,29 @@ void CCamera::Close()
 	DoClose();
 }
 
+bool CCamera::QueryFrame (CIplImage& image)
+{
+	if (!DoQueryFrame(image)) return false;
+
+	assert(image.Initialized());
+
+	PostQueryFrame(image.ptr());
+
+	return true;
+}
+
 IplImage* CCamera::QueryFrame()
 {
 	IplImage* pImage= DoQueryFrame();
 	if (!pImage) return NULL;
 
+	PostQueryFrame(pImage);
+
+	return pImage;
+}
+
+void CCamera::PostQueryFrame(IplImage* pImage)
+{
 	// Update real size
 	m_RealWidth= pImage->width;
 	m_RealHeight= pImage->height;
@@ -96,7 +115,5 @@ IplImage* CCamera::QueryFrame()
 	}
 	else 
 		if (m_horizontalFlip) 
-			cvFlip (pImage, NULL, 1);	
-
-	return pImage;
+			cvFlip (pImage, NULL, 1);
 }

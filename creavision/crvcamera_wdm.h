@@ -23,9 +23,8 @@
 #define CRVCAMERA_WDM_H_
 
 #include "crvcamera.h"
-
+#include "crvimage.h"
 class videoInput;
-class CIplImage;
 
 class CCameraWDM : public CCamera
 {
@@ -40,6 +39,7 @@ public:
 	virtual bool DoOpen();
 	virtual void DoClose();	
 	virtual IplImage *DoQueryFrame();
+	virtual bool DoQueryFrame(CIplImage& image);
 
 	virtual bool HasSettingsDialog() { return true; }
 	virtual void ShowSettingsDialog ();
@@ -53,7 +53,7 @@ private:
 	unsigned int m_Width, m_Height;
 	float m_FrameRate;
 	videoInput* m_VI;
-	CIplImage* m_pImage;
+	CIplImage m_Image;
 };
 
 #endif

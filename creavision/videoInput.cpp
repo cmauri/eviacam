@@ -14,6 +14,23 @@
 #include "videoInput.h"
 #include "tchar.h"
 
+/*
+	If you get errors when including Microsoft DirectShow or DirectDraw headers, the following message from Peter Whaite could help:
+
+	> This causes compilation errors within DirectShow:
+	>
+	> wxutil.h(125) : error C2065: 'EXECUTE_ASSERT' : undeclared identifier
+	> amfilter.h(1099) : error C2065: 'ASSERT' : undeclared identifier
+
+	The reason for this is that __WXDEBUG__ is also used by the DXSDK (9.0
+	in my case) to '#pragma once' the contents of
+	DXSDK/Samples/C++/DirectShow/BaseClasses/wxdebug.h.  So if __WXDEBUG__
+	is defined, then wxdebug.h doesn't get included, and the assert macros
+	don't get defined.  You have to #undef __WXDEBUG__ before including the
+	directshow baseclass's <streams.h>
+*/
+#undef __WXDEBUG__
+
 //Include Directshow stuff here so we don't worry about needing all the h files.
 #include "DShow.h"
 #include "streams.h"
