@@ -150,6 +150,14 @@ AC_PATH_X
 AC_CHECK_HEADERS([float.h])
 AC_CHECK_HEADERS([sys/timeb.h])
 
+AC_CHECK_HEADER([linux/videodev.h],
+	[AC_SUBST(VIDEODEV_INCLUDE_FILE, linux/videodev.h)],
+	[AC_CHECK_HEADER([libv4l1-videodev.h],
+		[AC_SUBST(VIDEODEV_INCLUDE_FILE, libv4l1-videodev.h)],
+		[AC_MSG_ERROR([Couldn't find linux/videodev.h nor libv4l1-videodev.h])])
+	]
+	)
+
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
 AC_C_CONST
@@ -207,4 +215,5 @@ AC_OUTPUT(
 	[rpm/eviacam.spec]
 	[debian/changelog]
 	[win32/installer.iss]
+	[libwebcam/incvideodev.h]
 )
