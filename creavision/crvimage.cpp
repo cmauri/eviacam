@@ -108,7 +108,7 @@ bool CIplImage::Create (int width, int height, unsigned int depth, const char *p
 	else assert (0);
 
 	m_pIplImage= cvCreateImageHeader( cvSize(width,height), depth, nChannels );
-    if (!m_pIplImage) {	assert (0);	return false; }
+	if (!m_pIplImage) {	assert (0);	return false; }
 	m_pIplImage->alphaChannel= (alphaChannel? 1 : 0);
 	strncpy (m_pIplImage->colorModel, pColorModel, 4);
 	strncpy (m_pIplImage->channelSeq, pColorOrder, 4);
@@ -137,6 +137,11 @@ bool CIplImage::Create (int width, int height, unsigned int depth, const char *p
 bool CIplImage::Import (IplImage *pImage, bool autodelete)
 {
 	assert (pImage);
+
+	// Cannot import the same image
+	assert (pImage!= this->m_pIplImage);
+	if (pImage== this->m_pIplImage) return false;
+
 	assert (!autodelete);	// Not supported
 
 	Free ();
@@ -154,22 +159,9 @@ bool CIplImage::Import (IplImage *pImage, bool autodelete)
 
 void CIplImage::Free ()
 {
-	/*
-	if (!m_pIplImage) return;
-
-	if (m_importedImage) 
-		m_pIplImage->roi= m_importedROI;
-	else 
-	{
-		m_pIplImage->roi= NULL;
-		cvReleaseImage( &m_pIplImage );
-	}
-	
-	CIplImage ();
-	*/
-
+	bool wasImported= m_importedImage;
 	IplImage* retval= this->Detach();
-	if (retval && !m_importedImage) cvReleaseImage( &retval );
+	if (retval && !wasImported) cvReleaseImage( &retval );
 }
 
 IplImage* CIplImage::Detach()
@@ -191,6 +183,8 @@ IplImage* CIplImage::Detach()
 void CIplImage::Swap (CIplImage *pOtherImg)
 {
 	int i;
+
+	if (this== pOtherImg) return;	// Nohing to do
 
 	// Copy other image to tmp
 	IplImage *tmp_pIplImage= pOtherImg->m_pIplImage;
