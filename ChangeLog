@@ -1,3 +1,15 @@
+2011-07-19 - Release 1.5.1
+* Added middle click (thanks to Christian Bieder)
+* Fixed spec.in for OpenSUSE
+* Open German help for all German regions and Spanish help for all Spanish regions.
+* Fixed bug [SF:3267761]. Missing linux/videodev.h
+* Fixed minor bugs and cleanup (patches from sitplus project)
+* Translations up to date
+	* English, Catalan and Spanish
+	* Français (thanks Sébastien Lecointre)
+	* Galego (thanks to Miguel Bouzada)
+	* German (thanks to Christian Bieder)
+
 2011-03-30 - Release 1.5
 * Added automated face localization based on haar-like cascade.
 	* Configuration options added to wizard and config dialogue.
