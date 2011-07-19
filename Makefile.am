@@ -69,7 +69,7 @@ deb: configure dist
 	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	cd $(PACKAGE)-$(VERSION) ; \
-	dpkg-buildpackage -B -rfakeroot -uc ; \
+	dpkg-buildpackage -B -rfakeroot ; \
 	cd .. ; \
 	$(RM) -r $(PACKAGE)-$(VERSION)
 
@@ -81,9 +81,34 @@ deb-src: configure dist
 	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	cd $(PACKAGE)-$(VERSION) ; \
+	dpkg-buildpackage -S -i -rfakeroot ; \
+	cd .. ; \
+	$(RM) -r $(PACKAGE)-$(VERSION)
+	
+## make a Debian binary package (non signed)
+deb-nosig: configure dist
+	-$(RM) -r debian-build
+	-mkdir debian-build
+	cd debian-build ; \
+	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
+	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
+	cd $(PACKAGE)-$(VERSION) ; \
+	dpkg-buildpackage -B -rfakeroot -uc ; \
+	cd .. ; \
+	$(RM) -r $(PACKAGE)-$(VERSION)
+
+## make a Debian source package  (non signed)
+deb-src-nosig: configure dist
+	-$(RM) -r debian-src
+	-mkdir debian-src
+	cd debian-src ; \
+	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
+	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
+	cd $(PACKAGE)-$(VERSION) ; \
 	dpkg-buildpackage -S -i -rfakeroot -uc -us ; \
 	cd .. ; \
 	$(RM) -r $(PACKAGE)-$(VERSION)
+
 
 ##
 ## RPM packages
