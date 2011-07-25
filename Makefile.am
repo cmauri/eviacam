@@ -23,13 +23,7 @@ EXTRA_DIST = \
 	win32/eViacam.exe.manifest \
 	win32/Info \
 	eviacam.kdevelop \
-	debian/changelog  \
-	debian/compat  \
-	debian/control \
-	debian/copyright \
-	debian/dirs \
-	debian/docs \
-	debian/rules \
+	debian \
 	m4 
 
 dist_pkgdata_DATA = THANKS

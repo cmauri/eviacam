@@ -212,7 +212,6 @@ AC_OUTPUT(
 	[src/eviacamloader.c]
 	[rpm/Makefile]
 	[rpm/eviacam.spec]
-	[debian/changelog]
 	[win32/installer.iss]
 	[libwebcam/incvideodev.h]
 )
