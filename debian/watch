@@ -1,0 +1,3 @@
+version=3
+
+http://sf.net/eviacam/eviacam_(.+)\.tar\.gz debian uupdate
