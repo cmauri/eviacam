@@ -1,0 +1,22 @@
+[Desktop Entry]
+Version=1.0
+Name=Enable Viacam
+
+GenericName=Head Pointer
+GenericName[es]=Ratón de Cabeza
+GenericName[ca]=Ratolí de Cap
+GenericName[tr]=Ağ kamerası temelli fare emülatörü
+GenericName[ast]=Emulador de mur baseau en cámara web
+
+Comment=Webcam based mouse that moves the pointer as you move your head.
+Comment[es]=Alternativa para mover el ratón con la cabeza.
+Comment[ca]=Alternativa per moure el ratolí amb el cap.
+Comment[gl]=Permite mover o punteiro a partir do movemento da cabeza.
+Comment[tr]=Fare veya klavye kullanmadan bilgisayarınızı kontrol edin.
+Comment[ast]=Xuegue ensin falta d'un mur o un teclau
+
+Type=Application
+Terminal=false
+Icon=eviacam
+Exec=eviacamloader
+Categories=GNOME;GTK;Utility;Accessibility;
