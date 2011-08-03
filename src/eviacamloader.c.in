@@ -63,8 +63,7 @@ int main (int argc, char **argv)
 
 	/* set desired priority */
 	if (nice(-11)== -1) {
-		printf ("%s: this program needs root privileges\n", argv[0]);
-		return -1;
+		fprintf (stderr, "%s: this program needs root privileges. renice request ignored.\n", argv[0]);
 	}
 
 	/* privileges revocation */	
