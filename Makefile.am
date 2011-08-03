@@ -23,7 +23,6 @@ EXTRA_DIST = \
 	win32/eViacam.exe.manifest \
 	win32/Info \
 	eviacam.kdevelop \
-	debian \
 	m4 
 
 dist_pkgdata_DATA = THANKS
@@ -77,6 +76,7 @@ deb: configure dist
 	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	cd $(PACKAGE)-$(VERSION) ; \
+	cp -a "$(abs_srcdir)/debian" . ; \
 	dpkg-buildpackage -B -rfakeroot ; \
 	cd .. ; \
 	$(RM) -r $(PACKAGE)-$(VERSION)
@@ -89,6 +89,7 @@ deb-src: configure dist
 	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	cd $(PACKAGE)-$(VERSION) ; \
+	cp -a "$(abs_srcdir)/debian" . ; \
 	dpkg-buildpackage -S -i -rfakeroot ; \
 	cd .. ; \
 	$(RM) -r $(PACKAGE)-$(VERSION)
@@ -101,6 +102,7 @@ deb-nosig: configure dist
 	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	cd $(PACKAGE)-$(VERSION) ; \
+	cp -a "$(abs_srcdir)/debian" . ; \
 	dpkg-buildpackage -B -rfakeroot -uc ; \
 	cd .. ; \
 	$(RM) -r $(PACKAGE)-$(VERSION)
@@ -113,6 +115,7 @@ deb-src-nosig: configure dist
 	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	cd $(PACKAGE)-$(VERSION) ; \
+	cp -a "$(abs_srcdir)/debian" . ; \
 	dpkg-buildpackage -S -i -rfakeroot -uc -us ; \
 	cd .. ; \
 	$(RM) -r $(PACKAGE)-$(VERSION)
