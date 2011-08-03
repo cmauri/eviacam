@@ -4,6 +4,3 @@ export DH_VERBOSE=1
 
 %:
 	dh $@ --with autotools-dev
-
-override_dh_fixperms:
-	dh_fixperms --exclude $(DESTDIR)$(bindir)/eviacamloader
