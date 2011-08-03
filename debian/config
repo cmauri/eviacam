@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+. /usr/share/debconf/confmodule
+
+#if [ "$1" = reconfigure ]; then
+    db_input medium eviacamloader/eviacamloader_setuid || true
+    db_go || true
+#fi
+

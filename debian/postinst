@@ -1,4 +1,23 @@
 #!/bin/sh
 set -e
-chmod +s /usr/bin/eviacamloader
+
+. /usr/share/debconf/confmodule
+
 #DEBHELPER#
+
+case "$1" in
+	configure)
+		db_get eviacamloader/eviacamloader_setuid
+		if [ "$RET" = true ]; then
+			chmod +s /usr/bin/eviacamloader
+		else
+			chmod -s /usr/bin/eviacamloader
+		fi
+		;;
+	abort-upgrade|abort-remove|abort-deconfigure)
+		;;
+	*)
+		echo "postinst called with unknown argument \`$1'" >&2
+		;;
+esac
+
