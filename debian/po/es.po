@@ -2,26 +2,26 @@
 # Copyright (C) 2011 Cesar Mauri
 # This file is distributed under the same license as the eviacam package.
 # Cesar Mauri <cesar@crea-si.com>, 2011.
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: eviacam 1.5.2\n"
 "Report-Msgid-Bugs-To: eviacam@packages.debian.org\n"
 "POT-Creation-Date: 2011-08-23 19:44+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2011-08-23 20:07+0200\n"
+"Last-Translator: Cesar Mauri <cesar@crea-si.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.0\n"
 
 #. Type: boolean
 #. Description
 #: ../templates:1001
 msgid "Should eviacamloader be installed 'setuid root'?"
-msgstr ""
+msgstr "¿Debo instalar eviacamloader como 'setuid root'?"
 
 #. Type: boolean
 #. Description
@@ -32,6 +32,10 @@ msgid ""
 "installed with the set-user-ID bit set, so that it  will run with the "
 "permissions of the superuser."
 msgstr ""
+"Para permitir a los usuarios del grupo 'eviacam' ejecutar eviacam en alta "
+"prioridad (lo que mejora el tiempo de respuesta), es necesario que el "
+"programa eviacamloader se instale con el bit set-user-ID activado, de esta "
+"manera se ejecutará con los permisos del superusuario."
 
 #. Type: boolean
 #. Description
@@ -41,3 +45,6 @@ msgid ""
 "'eviacam' group and may have security implications in the case of  "
 "vulnerabilities in eviacamloader's code."
 msgstr ""
+"Esta opción requiere que el administrador añada los usuarios autorizados al "
+"grupo 'eviacam' y puede tener implicaciones en la seguridad en el caso de "
+"existir vulnerabilidades en el código de eviacamloader."
