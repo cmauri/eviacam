@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        eviacamloader.cpp
+// Name:        eviacamloader.c
 // Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
@@ -61,14 +61,21 @@ int main (int argc, char **argv)
 	printf ("Use: %d, Group: %d. Eff. usr: %d, Eff. group: %d\n", getuid(), getgid(), geteuid(), getegid());
 #endif	
 
-	/* set desired priority */
-	if (nice(-11)== -1) {
-		fprintf (stderr, "%s: this program needs root privileges. renice request ignored.\n", argv[0]);
-	}
+	if (geteuid()== 0) {
+		/* running as root, change priority */
+		if (nice(-11)== -1) {
+			perror("nice");
+			return -1;
+		}
 
-	/* privileges revocation */	
-	setuid (getuid()); seteuid (getuid());
-	setgid (getgid()); setegid (getgid());
+		/* privileges revocation */
+		if (setgid (getgid())== -1 || setuid (getuid())== -1) {
+			perror("setgid/setuid");
+			return -1;
+		}
+	}
+	else
+		fprintf (stderr, "%s: this program needs root privileges. not renicing.\n", argv[0]);
 
 	/* run eviacam until normal exit */
 	for (;;) {
@@ -80,8 +87,10 @@ int main (int argc, char **argv)
 		}
 		else if (pid== 0) {
 			/* child process */
-			return execl ("@prefix@/bin/eviacam", "eviacam", NULL);
-			/* return execl ("./foo", "foo", NULL); */
+			if (execl ("@prefix@/bin/eviacam", "eviacam", NULL)== -1) {
+				perror("execl");
+				return -1;
+			}
 		}
 		else
 		{
