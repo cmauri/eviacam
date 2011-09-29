@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     30/05/2008
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -22,11 +22,8 @@
 #include "crvnormroi.h"
 
 // Area limits
-#define MAX_X_Y				(float) 1.0f 
-//0.99305555555555555555555555555556
 #define MIN_WIDTH_HEIGHT	(float) 0.041666666666666666666666666666667		// 6 píxels over 144
-#define MAX_WIDTH_HEIGHT	(float) 1.0f 
-//0.98611111111111111111111111111111		// 1 píxel border over 144
+#define MAX_WIDTH_HEIGHT	1.0f
 
 CNormROI::CNormROI(void)
 {
@@ -86,6 +83,35 @@ CNormROI::~CNormROI(void)
 // Working with native coordinates
 //
 
+void CNormROI::CheckInvariant() {
+	assert (m_x>= 0.0f && m_x< MAX_WIDTH_HEIGHT);
+	assert (m_y>= 0.0f && m_y< MAX_WIDTH_HEIGHT);
+	assert (m_width>= MIN_WIDTH_HEIGHT && m_width<= MAX_WIDTH_HEIGHT);
+	assert (m_height>= MIN_WIDTH_HEIGHT && m_height<= MAX_WIDTH_HEIGHT);
+	assert (m_x + m_width<= MAX_WIDTH_HEIGHT);
+	assert (m_y + m_height<= MAX_WIDTH_HEIGHT);
+}
+
+void CNormROI::FitInternalState() {
+	// Fix internal state to make sure class invariant is honoured.
+	// Invariant may have been violated by imprecisions on FP calculations
+	// TODO: replace FP arithmetic with integer arithmetic.
+
+	if (m_x + m_width> MAX_WIDTH_HEIGHT) {
+		if (m_width> MIN_WIDTH_HEIGHT)
+			(*((int *)(&m_width)))--;
+		else
+			(*((int *)(&m_x)))--;
+	}
+
+	if (m_y + m_height> MAX_WIDTH_HEIGHT) {
+		if (m_height> MIN_WIDTH_HEIGHT)
+			(*((int *)(&m_height)))--;
+		else
+			(*((int *)(&m_y)))--;
+	}
+}
+
 // Find minimum child's P1 coordinates
 void CNormROI::FindMinChildP1 (float& x, float& y)
 {
@@ -138,10 +164,10 @@ void CNormROI::SetP1Resize (const float x, const float y)
 {
 	float min_p1x, min_p1y, max_p1x, max_p1y;
 
-	CvPoint2D32f p2;
+	CvPoint2D32f p2_lim;
 
-	p2.x= m_x + m_width;
-	p2.y= m_y + m_height;
+	p2_lim.x= m_x + m_width;
+	p2_lim.y= m_y + m_height;
 
 	if (m_pParentROI)
 	{
@@ -152,8 +178,8 @@ void CNormROI::SetP1Resize (const float x, const float y)
 	{
 		 min_p1x= min_p1y= 0.0f;
 	}
-	max_p1x= p2.x - MIN_WIDTH_HEIGHT;
-	max_p1y= p2.y - MIN_WIDTH_HEIGHT;
+	max_p1x= p2_lim.x - MIN_WIDTH_HEIGHT;
+	max_p1y= p2_lim.y - MIN_WIDTH_HEIGHT;
 	FindMinChildP1 (max_p1x, max_p1y);
 	assert (max_p1x>= 0.0f);
 	assert (max_p1y>= 0.0f);
@@ -166,15 +192,18 @@ void CNormROI::SetP1Resize (const float x, const float y)
 	else if (y> max_p1y) m_y= max_p1y;
 	else m_y= y;
 
-	m_width= p2.x - m_x;
-	m_height= p2.y - m_y;
+	m_width= p2_lim.x - m_x;
+	m_height= p2_lim.y - m_y;
+
+	FitInternalState();
+
+	CheckInvariant();
 }	
 		
 void CNormROI::SetP1Move (const float x, const float y)
 {
 	float min_p1x, min_p1y, max_p1x, max_p1y;
-
-	float min_p2x, min_p2y;
+	float min_p2x_lim, min_p2y_lim;
 
 	// Compute minimum valid p1 coordinates
 	if (m_pParentROI)
@@ -186,11 +215,12 @@ void CNormROI::SetP1Move (const float x, const float y)
 	{
 		 min_p1x= min_p1y= 0.0f;
 	}
-	min_p2x= min_p1x + m_width;
-	min_p2y= min_p1y + m_height;
-	FindMaxChildP2 (min_p2x, min_p2y);
-	min_p1x= min_p2x - m_width;
-	min_p1y= min_p2y - m_height;
+	min_p2x_lim= min_p1x + m_width;
+	min_p2y_lim= min_p1y + m_height;
+	FindMaxChildP2 (min_p2x_lim, min_p2y_lim);
+		
+	min_p1x= min_p2x_lim - m_width;
+	min_p1y= min_p2y_lim - m_height;
 	if (min_p1x< 0.0f) min_p1x= 0.0f;
 	if (min_p1y< 0.0f) min_p1y= 0.0f;
 
@@ -216,7 +246,11 @@ void CNormROI::SetP1Move (const float x, const float y)
 
 	if (y< min_p1y) m_y= min_p1y;
 	else if (y> max_p1y) m_y= max_p1y;
-	else m_y= y;	
+	else m_y= y;
+
+	FitInternalState();
+
+	CheckInvariant();
 }
 
 void CNormROI::SetP2Resize (const float x, const float y)
@@ -246,7 +280,11 @@ void CNormROI::SetP2Resize (const float x, const float y)
 
 	if (y< min_p2y) m_height= min_p2y - m_y;
 	else if (y> max_p2y) m_height= max_p2y - m_y;
-	else m_height= y - m_y;	
+	else m_height= y - m_y;
+
+	FitInternalState();
+
+	CheckInvariant();
 }
 
 void CNormROI::SetCenter (const float x, const float y)
@@ -288,8 +326,10 @@ inline void CNormROI::Normalized2Integer (const CvSize& size, const float nx, co
 	assert (size.width> 0);
 	assert (size.height> 0);
 
-	ix= (int) (nx * (float) size.width + 0.5f);
-	iy= (int) (ny * (float) size.height + 0.5f);
+	// Round using the float value just below 0.5. We do this way to avoid
+	// overflows when both coordinate and size finish with 0.5
+	ix= (int) (nx * (float) size.width + 0.4999999701976776f);
+	iy= (int) (ny * (float) size.height + 0.4999999701976776f);
 }
 
 //inline 
@@ -354,8 +394,14 @@ void CNormROI::SetSizeInteger (const CvSize& size, const int width, const int he
 //inline 
 void CNormROI::GetBoxInteger (const CvSize& size, int& x, int& y, int& width, int& height)
 {
+	// DEBUG, 
+	CheckInvariant();
+
 	Normalized2Integer (size, m_x, m_y, x, y);
 	Normalized2Integer (size, m_width, m_height, width, height);
+
+	assert (x + width<= size.width);
+	assert (y + height<= size.height);
 }
 
 void CNormROI::GetBoxInteger (const CvSize& size, CvRect& box)
