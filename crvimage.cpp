@@ -236,8 +236,14 @@ bool CIplImage::SetROI (int x, int y, int width,
 	assert (x>= 0 && y>= 0 && width> 0 && height> 0);
 	
 	// Check limits for the ROI
-	if (x< 0 || (x + width > m_pIplImage->width)) return false;
-	if (y< 0 || (y + height > m_pIplImage->height)) return false;
+	if (x< 0 || (x + width > m_pIplImage->width)) {
+		assert (false);
+		return false;
+	}
+	if (y< 0 || (y + height > m_pIplImage->height)) {
+		assert (false);
+		return false;
+	}
 
 	// ROI Ok
 	m_roiStack[m_roiStackPtr].coi= coi;
