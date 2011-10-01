@@ -228,7 +228,7 @@ void CClickWindowText::UpdateButtons (bool noClickStatus, CClickWindowController
 		UpdateSelectedButtons (GetMiddleButton(), GetRightButton(), GetDragButton(), GetDblClickButton(), GetLeftButton());
 		break;
 	case CClickWindowController::RIGHT:
-		UpdateSelectedButtons (GetMiddleButton(), GetRightButton(), GetDragButton(), GetDblClickButton(), GetLeftButton());
+		UpdateSelectedButtons (GetRightButton(), GetDragButton(), GetDblClickButton(), GetLeftButton(), GetMiddleButton());
 		break;
 	case CClickWindowController::DRAG:
 		UpdateSelectedButtons (GetDragButton(), GetDblClickButton(), GetLeftButton(), GetMiddleButton(), GetRightButton());
@@ -250,7 +250,7 @@ void CClickWindowText::UpdateButtons (bool noClickStatus, CClickWindowController
 		UpdateLockedButtons (GetMiddleButton(), GetRightButton(), GetDragButton(), GetDblClickButton(), GetLeftButton());
 		break;
 	case CClickWindowController::RIGHT:
-		UpdateLockedButtons (GetMiddleButton(), GetRightButton(), GetDragButton(), GetDblClickButton(), GetLeftButton());
+		UpdateLockedButtons (GetRightButton(), GetDragButton(), GetDblClickButton(), GetLeftButton(), GetMiddleButton());
 		break;
 	case CClickWindowController::DRAG:
 		UpdateLockedButtons (GetDragButton(), GetDblClickButton(), GetLeftButton(), GetMiddleButton(), GetRightButton());
