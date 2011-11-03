@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -128,19 +128,17 @@ private:
 	float m_fDx, m_fDy;
 	float m_minDeltaThreshold;
 	float m_dxant, m_dyant;
-	bool m_enabledRestrictedWorkingArea;
-	bool m_enabledWrapPointer;
-
 	// Motion low pass filter (relative motion)
 	float m_actualMotionWeight;
-
-	enum { ACCEL_ARRAY_SIZE= 30 };
-	float m_accelArray[ACCEL_ARRAY_SIZE];
-
+	bool m_enabledRestrictedWorkingArea;
+	bool m_enabledWrapPointer;
+	
 #if !defined(WIN32)
+	bool m_closeDisplay;	// Destructor should close display connection?
 	Display* m_pDisplay;
 #endif
-
+	enum { ACCEL_ARRAY_SIZE= 30 };
+	float m_accelArray[ACCEL_ARRAY_SIZE];
 };
 
 inline float CMouseControl::GetLowPassFilterWeight () const

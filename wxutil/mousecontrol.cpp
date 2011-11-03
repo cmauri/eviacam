@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@ inline float roundf(float x) { return (x-floorf(x))>0.5 ? ceilf(x) : floorf(x); 
 // Linux
 //
 #include <X11/extensions/XTest.h>
+#include <stdexcept>
 
 #endif // WIN32
 
@@ -61,8 +62,12 @@ inline float roundf(float x) { return (x-floorf(x))>0.5 ? ceilf(x) : floorf(x); 
 #define MOUSE_MIDDLEDOWN  0x0020	// Middle button down
 #define MOUSE_MIDDLEUP    0x0040	// Middle button up 
 
-
 CMouseControl::CMouseControl (void* pDisplay)
+: m_enabledRestrictedWorkingArea(false)
+, m_enabledWrapPointer(false)
+#if !defined(WIN32)
+, m_closeDisplay(false)
+#endif
 {
 	m_leftPercent= m_rightPercent= m_topPercent= m_bottomPercent= 1.0f;
         
@@ -70,8 +75,13 @@ CMouseControl::CMouseControl (void* pDisplay)
 	#if defined(WIN32)
 	assert (pDisplay== NULL);
 	#else
-	assert (pDisplay);
-	m_pDisplay= (Display *) pDisplay;	
+	if (pDisplay) m_pDisplay= (Display *) pDisplay;
+	else {
+		m_pDisplay= XOpenDisplay(NULL);
+		m_closeDisplay= true;
+		assert (pDisplay);
+		if (!m_pDisplay) throw std::runtime_error("mousecontrol: cannot open display");
+	}	
 	#endif	
 
 	// Read screen size
@@ -93,6 +103,9 @@ CMouseControl::CMouseControl (void* pDisplay)
 
 CMouseControl::~CMouseControl()
 {
+#if !defined(WIN32)
+	if (m_closeDisplay) XCloseDisplay(m_pDisplay);
+#endif
 }
 
 void CMouseControl::GetScreenSize()
@@ -129,20 +142,12 @@ void CMouseControl::GetPointerLocation (long& x, long& y)
 	x= pci.ptScreenPos.x;
 	y= pci.ptScreenPos.y;
 
-	/*
-	POINT cursorPos;
-
-	GetCursorPos(&cursorPos);
-
-	x= cursorPos.x;
-	y= cursorPos.y;
-	*/
 #else // Linux
 	
 	Window root, child;
 	int rootX, rootY, winX, winY;
 	unsigned int xstate;
-	//BOOL res;
+
 //	BEGIN_GUI_CALL_MUTEX();
 	Window rootWin= RootWindow (m_pDisplay, DefaultScreen (m_pDisplay));
 	XQueryPointer( m_pDisplay, rootWin, &root, &child, &rootX, &rootY, &winX, &winY, &xstate );
@@ -170,23 +175,10 @@ void CMouseControl::SetAbsVirtualResolution (float xIni, float yIni, float width
 
 void CMouseControl::SetWorkingArea (float leftPercent, float rightPercent, float topPercent, float bottomPercent)
 {
-	/*
-	assert (0.009f < leftPercent && leftPercent <= 1.0f);
-	assert (0.009f < rightPercent && rightPercent <= 1.0f);
-	assert (0.009f < topPercent && topPercent <= 1.0f);
-	assert (0.009f < bottomPercent && bottomPercent <= 1.0f);
-	
-	m_leftPercent= leftPercent;
-	m_rightPercent= rightPercent;
-	m_topPercent= topPercent;
-	m_bottomPercent= bottomPercent;
-	*/
 	SetTopPercent (topPercent);		
 	SetLeftPercent (leftPercent);
 	SetRightPercent (rightPercent);
 	SetBottomPercent (bottomPercent);
-
-//	RecomputeWorkingArea();
 }
 
 void CMouseControl::RecomputeWorkingArea ()
@@ -353,7 +345,6 @@ float CMouseControl::MovePointerRel (float dx, float dy, int* dxRes, int* dyRes)
 		int maxWrapY= m_ScreenHeight;
 				
 		if (m_enabledRestrictedWorkingArea) {
-			printf("");
 			minWrapX= m_minScreenX;
 			maxWrapX= m_maxScreenX;
 			minWrapY= m_minScreenY;
