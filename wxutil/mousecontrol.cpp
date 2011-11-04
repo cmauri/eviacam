@@ -79,7 +79,7 @@ CMouseControl::CMouseControl (void* pDisplay)
 	else {
 		m_pDisplay= XOpenDisplay(NULL);
 		m_closeDisplay= true;
-		assert (pDisplay);
+		assert (m_pDisplay);
 		if (!m_pDisplay) throw std::runtime_error("mousecontrol: cannot open display");
 	}	
 	#endif	
