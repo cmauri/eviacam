@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     17/05/2010
-// Copyright:   (C) 2008-10 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 //              Portions of guvcview are (c) of Paulo Assis and others
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@
 #include <limits.h>
 //#include <linux/videodev.h>
 #include "incvideodev.h"
+#include <libv4l2.h>
 #include <sys/ioctl.h>
 #include <sys/mman.h>
 #include <sys/time.h>
@@ -209,18 +210,7 @@ bool CCameraV4L2::DoOpen ()
 		Close();
 		return false;
 	}
-	/*
-	// Result image	
-	// TODO: correct the V4L2_PIX_FMT_YUV420 conversion routine
-	const char* planeOrder;
-	if (m_currentFormat.pixelformat== V4L2_PIX_FMT_YUV420) planeOrder= "BGR";
-	else planeOrder= "RGB";
-	// TODO: make sure that image is not initialized with padded rows
-	if (!m_resultImage.Create (m_currentFormat.width, m_currentFormat.height, IPL_DEPTH_8U, planeOrder, IPL_ORIGIN_TL, IPL_ALIGN_DWORD )) {
-		fprintf (stderr, "Cannot create result image\n");		
-		Close();
-		return false;
-	}*/
+	
 	if (!EnableVideo(true)) {
 		fprintf (stderr, "Unable to enable video\n");
 		DeallocateBuffers();
@@ -230,7 +220,7 @@ bool CCameraV4L2::DoOpen ()
 	
 	// TODO: Awful. This is a provisional solution to avoid broken frames while capturing.
 	// It seems as if the driver/camera needs some time before start grabbing.
-	sleep (1);
+	usleep (2000000);
 	return true;
 }
 
@@ -297,7 +287,7 @@ int xioctl(int fd, int IOCTL_X, void *arg)
 	int ret = 0;
 	int tries= IOCTL_RETRY;
 	do {
-		ret = ioctl(fd, IOCTL_X, arg);
+		ret = v4l2_ioctl(fd, IOCTL_X, arg);
 	} 
 	while (ret && tries-- && ((errno == EINTR) || (errno == EAGAIN) || (errno == ETIMEDOUT)));
 
@@ -376,7 +366,6 @@ bool CCameraV4L2::RequestBuffers(enum v4l2_memory mem)
 	requestbuffers.count= STREAMING_CAPTURE_NBUFFERS;
 	requestbuffers.type= V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	requestbuffers.memory= mem; //V4L2_MEMORY_MMAP;
-	//if (ioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_REQBUFS, &requestbuffers)== 0) {
 	if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_REQBUFS, &requestbuffers)== 0) {
 		if (requestbuffers.count== STREAMING_CAPTURE_NBUFFERS) return true;
 		if (requestbuffers.count> 0) UnRequestBuffers(mem);		
@@ -394,8 +383,8 @@ bool CCameraV4L2::UnRequestBuffers(enum v4l2_memory mem)
 	requestbuffers.count= 0;
 	requestbuffers.type= V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	requestbuffers.memory= mem; //V4L2_MEMORY_MMAP;
-	//if (ioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_REQBUFS, &requestbuffers)== 0) return true;
 	if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_REQBUFS, &requestbuffers)== 0) return true;
+	fprintf (stderr, "ERROR: UnRequestBuffers: failed\n");
 	return false;
 }
 	
@@ -406,17 +395,12 @@ CCameraV4L2::ECaptureMethod CCameraV4L2::DetectCaptureMethod()
 
 	// Query basic capabilities. This never should fail
 	if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_QUERYCAP, &capability)!= 0) {
-	//if (ioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_QUERYCAP, &capability)!= 0) {
-#if !defined(NDEBUG)
-		fprintf (stderr, "ERROR: Cannot query camera capabilities: VIDIOC_QUERYCAP ioctl failed\n");
-#endif
+		fprintf (stderr, "WARNING: Cannot query camera capabilities: VIDIOC_QUERYCAP ioctl failed\n");
 		return CAP_NONE;
 	}
 
 	if (!(capability.capabilities & V4L2_CAP_VIDEO_CAPTURE)) {
-#if !defined(NDEBUG)
-	    fprintf (stderr, "ERROR: is no video capture device\n");
-#endif
+	    fprintf (stderr, "WARNING: is no video capture device\n");
 	    return CAP_NONE;
 	}
 
@@ -519,7 +503,7 @@ static void SelectBestFramePixelNumber (unsigned int npixels, std::list<TImageFo
 {
 	if (npixels> 0) {
 		unsigned int bestdiff= UINT_MAX;
-		//unsigned int npixels= imgformat.width * imgformat.height;
+
 		// Find closest frame ratio	
 		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
 			unsigned int diff= abs_distance_to_range<uint> (i->min_width * i->min_height, i->max_width * i->max_height, npixels);
@@ -553,6 +537,7 @@ bool CCameraV4L2::DetectBestImageFormat()
 	
 	unsigned int sformats, ssizes, sintervals;
 	unsigned int cformats, csizes, cintervals;
+	
 	// Request needed buffer to store formats
 	sformats= cformats= 0;	
 	if (c_enum_pixel_formats (m_libWebcamHandle, NULL, &sformats, &cformats)!= C_BUFFER_TOO_SMALL) return false;
@@ -717,6 +702,10 @@ bool CCameraV4L2::DetectBestImageFormat()
 				m_currentFormat.frame_rate= range_value_fit (i->min_frame_rate, i->max_frame_rate, i->step_frame_rate, m_currentFormat.frame_rate);
 				m_currentFormat.width= range_value_fit (i->min_width, i->max_width, i->step_width, m_currentFormat.width);
 				m_currentFormat.height= range_value_fit (i->min_height, i->max_height, i->step_height, m_currentFormat.height);
+			#if !defined(NDEBUG)
+				std::cout << "Choosen format:";
+				dump_TImageFormatEx (*i);
+			#endif
 				return true;
 			}
 		}
@@ -731,11 +720,13 @@ bool CCameraV4L2::SetImageFormat()
 {
 	struct v4l2_format format;
 	
-	//Set frame format
+	//
+	// Set frame format, including width, height and pixelformat. First query current
+	// settings, then modify relevant values and finally query actual values
+	//
 	memset (&format, 0, sizeof (format));
 	format.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_FMT, &format)== -1) {
-	//if (ioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_FMT, &format)== -1) {
 		fprintf(stderr, "ERROR: Unable to get format.\n");
 		return false;	
 	}
@@ -747,7 +738,6 @@ bool CCameraV4L2::SetImageFormat()
 	format.fmt.pix.field = V4L2_FIELD_ANY;
 
 	if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_FMT, &format)== -1) {
-	//if (ioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_FMT, &format)== -1) {
 		fprintf(stderr, "ERROR: Unable to set format.\n");
 		return false;	
 	}
@@ -760,15 +750,13 @@ bool CCameraV4L2::SetImageFormat()
 
 	// Set framerate	
 	if (strcasestr(g_deviceDriverNames[m_Id], "pwc")!= NULL)  {
-		// Using a PWC based camera
+		// Using a PWC based camera. Newer kernels have changed this API
 		bool properlySet= false;
 		struct video_window vwin;		
 		if ((xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOCGWIN, &vwin) == 0) && (vwin.flags & PWC_FPS_FRMASK)) {
-		//if ((ioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOCGWIN, &vwin) == 0) && (vwin.flags & PWC_FPS_FRMASK)) {
 			vwin.flags &= ~PWC_FPS_FRMASK;
 			vwin.flags |= (m_currentFormat.frame_rate << PWC_FPS_SHIFT);
 			if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOCSWIN, &vwin) == 0) properlySet= true;
-			//if (ioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOCSWIN, &vwin) == 0) properlySet= true;
 		}
 
 		if (!properlySet) fprintf (stderr, "Warning: cannot set FPS: %d for PWC camera\n", m_currentFormat.frame_rate);
@@ -782,18 +770,15 @@ bool CCameraV4L2::SetImageFormat()
 	
 		// Firstly try to get current v4l2_streamparm parameters
 		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_PARM, &parm)== 0) {
-		//if (ioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_PARM, &parm)== 0) {
 			parm.parm.capture.timeperframe.numerator = 1;
 			parm.parm.capture.timeperframe.denominator = m_currentFormat.frame_rate;
 			if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_PARM, &parm)!= 0) {
-			//if (ioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_PARM, &parm)!= 0) {
 				// Show warning and continue
 				fprintf (stderr, "Warning: cannot set FPS: %d for UVC camera\n", m_currentFormat.frame_rate);
 			}
 			
 			// Read values again and store actual values
 			if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_PARM, &parm)== 0) {
-			//if (ioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_PARM, &parm)== 0) {
 				// Set failed, store read values
 				m_currentFormat.frame_rate= 0;
 				if (parm.parm.capture.timeperframe.denominator)
@@ -807,6 +792,41 @@ bool CCameraV4L2::SetImageFormat()
 			return false;
 		}
 	
+		// Workaround: set V4L2_CID_EXPOSURE_AUTO control to V4L2_EXPOSURE_MANUAL first
+		// and then to V4L2_EXPOSURE_SHUTTER_PRIORITY (if the later is not support we
+		// hope the former it is)
+		struct v4l2_control control;
+		memset (&control, 0, sizeof (control));
+		control.id= V4L2_CID_EXPOSURE_AUTO;
+		control.value= V4L2_EXPOSURE_MANUAL;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+			fprintf (stderr, "Warning: cannot set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_MANUAL\n");
+		else
+			fprintf (stderr, "Info: set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_MANUAL\n");
+			
+		control.id= V4L2_CID_EXPOSURE_AUTO;
+		control.value= V4L2_EXPOSURE_SHUTTER_PRIORITY;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+			fprintf (stderr, "Warning: cannot set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_SHUTTER_PRIORITY\n");
+		else
+			fprintf (stderr, "Info: set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_SHUTTER_PRIORITY\n");
+		
+		// Set exposure time configure the requested FPS.		
+		control.id= V4L2_CID_EXPOSURE_ABSOLUTE;
+		control.value= 10000 / m_currentFormat.frame_rate;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+			fprintf (stderr, "Warning: cannot set V4L2_CID_EXPOSURE_ABSOLUTE to %d\n", control.value);
+		else
+			fprintf (stderr, "Info: set V4L2_CID_EXPOSURE_ABSOLUTE to %d\n", control.value);
+		
+		// Finally set auto gain (not supported by libwebcam yet)
+		control.id= V4L2_CID_AUTOGAIN;
+		control.value= 1;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+			fprintf (stderr, "Warning: cannot set V4L2_CID_AUTOGAIN\n");
+		else
+			fprintf (stderr, "Info: set V4L2_CID_AUTOGAIN\n");
+		
 		// Try to set exposure control to match desired frame ratio
 		for (unsigned int i= 0; i< m_cameraControls.size(); ++i) {
 			if (m_cameraControls[i].GetId()== CCameraControl::CAM_AUTO_EXPOSURE_PRIORITY) {
@@ -842,12 +862,16 @@ bool CCameraV4L2::EnableVideo(bool enable)
 	    {
 		int type= V4L2_BUF_TYPE_VIDEO_CAPTURE;
 		int action= (enable? VIDIOC_STREAMON : VIDIOC_STREAMOFF);
-		if (xioctl(c_get_file_descriptor (m_libWebcamHandle), action, &type)!= 0) return false;
+		if (xioctl(c_get_file_descriptor (m_libWebcamHandle), action, &type)!= 0) {
+			perror("VIDIOC_STREAMON - Unable to start capture");
+			return false;
+		}
 		break;
 	    }	
 	case CAP_STREAMING_USR:
 		// Not implemented
-		fprintf (stderr, "CAP_STREAMING_USR: feature not implemented\n");	
+		fprintf (stderr, "CAP_STREAMING_USR: feature not implemented\n");
+		assert (false);
 		return false;
 	default:
 		// Never should happen
@@ -1209,7 +1233,8 @@ bool CCameraV4L2::DoQueryFrame(CIplImage& image)
 	else if ((retval > 0) && (FD_ISSET(c_get_file_descriptor (m_libWebcamHandle), &rdset))) {
 		switch (m_captureMethod) {
 		case CAP_READ:
-			// TODO
+			fprintf (stderr, "CAP_READ Capture method not implemented yet\n");
+			assert (false);
 			return false;	
 		case CAP_STREAMING_MMAP: {
 			struct v4l2_buffer buffer;
@@ -1251,10 +1276,10 @@ bool CCameraV4L2::DoQueryFrame(CIplImage& image)
 				return false;
 			}
 			return (!allocFailed);
-			//break;
 		}
 		case CAP_STREAMING_USR:
-			fprintf (stderr, "Capture method not implemented yet\n");
+			fprintf (stderr, "CAP_STREAMING_USR Capture method not implemented yet\n");
+			assert (false);
 			return false;			
 		default:
 			assert (false);
@@ -1346,7 +1371,7 @@ bool CCameraControlV4L2::SetValue(int value)
 	cvalue.value= value;
 	
 	if (c_set_control (m_handle, m_id, &cvalue)!= C_SUCCESS) {
-		fprintf (stderr, "CCameraControlV4L2::GetValue() failed to query value\n");
+		fprintf (stderr, "CCameraControlV4L2::SetValue() failed to set value\n");
 		return false;
 	}
 	return true;
@@ -1614,8 +1639,6 @@ int CCameraV4L2::GetNumDevices()
 				printf("  Closed device '%s' (handle = %d)\n\n", device->shortName, handle);
 	#endif	// NDEBUG
 			}
-
-					
 		}
 		else {
 			// No devices found
