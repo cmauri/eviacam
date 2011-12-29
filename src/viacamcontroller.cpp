@@ -143,18 +143,24 @@ CCamera* CViacamController::SetUpCamera()
 
 	// Show selection dialog when needed
 	if (camId== -1) {
-		wxArrayString strArray;
+		if(numDevices > 1) {
+			wxArrayString strArray;
 
-		for (camId= 0; camId< numDevices; camId++)
-			strArray.Add (wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc));
+			for (camId= 0; camId< numDevices; camId++)
+				strArray.Add (wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc));
 
-		wxSingleChoiceDialog choiceDlg(NULL, _("Choose the camera to use"), _T("Enable Viacam"), strArray, 
-							NULL, wxDEFAULT_DIALOG_STYLE | wxOK | wxCANCEL | wxCENTRE);
+			wxSingleChoiceDialog choiceDlg(NULL, _("Choose the camera to use"), _T("Enable Viacam"), strArray, 
+								NULL, wxDEFAULT_DIALOG_STYLE | wxOK | wxCANCEL | wxCENTRE);
 
-		if (choiceDlg.ShowModal ()!= wxID_OK) return NULL;
+			if (choiceDlg.ShowModal ()!= wxID_OK) return NULL;
 
-		camId= choiceDlg.GetSelection();
-		m_cameraName= choiceDlg.GetStringSelection ();
+			camId= choiceDlg.GetSelection();
+			m_cameraName= choiceDlg.GetStringSelection ();
+		} 
+		else {
+			camId= 0;
+			m_cameraName= wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc);
+		}
 	}
 
 	cam= CCameraEnum::GetCamera(camId);
