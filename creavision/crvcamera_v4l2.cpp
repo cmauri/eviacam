@@ -886,15 +886,21 @@ bool CCameraV4L2::SetImageFormat()
 			fprintf (stderr, "Info: set V4L2_CID_AUTOGAIN\n");
 
 		// Set V4L2_CID_EXPOSURE_AUTO_PRIORITY to false
+		bool hasExposureAutoPriority= false;
 		for (unsigned int i= 0; i< m_cameraControls.size(); ++i) {
 			if (m_cameraControls[i].GetId()== CCameraControl::CAM_AUTO_EXPOSURE_PRIORITY) {
-				if (m_cameraControls[i].SetValue(0))
+				if (m_cameraControls[i].SetValue(0)) {
+					hasExposureAutoPriority= true;
 					fprintf (stderr, "Info: AUTO_EXPOSURE_PRIORITY disabled\n");
+				}
 				else
 					fprintf (stderr, "Warning: cannot disable AUTO_EXPOSURE_PRIORITY\n");
 				break;
 			}
-		}			
+		}
+
+		// If EXPOSURE_AUTO_PRIORITY cannot be disabled does not attempt remaing settings 
+		if (!hasExposureAutoPriority) return true;	
 	
 		//
 		// Secondly tries to set V4L2_EXPOSURE_SHUTTER_PRIORITY mode
