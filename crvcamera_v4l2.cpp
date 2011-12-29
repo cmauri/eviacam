@@ -388,7 +388,7 @@ bool CCameraV4L2::UnRequestBuffers(enum v4l2_memory mem)
 	return false;
 }
 	
-// This method must be AFTER desired format is set	
+// This method must be called AFTER desired format is set	
 CCameraV4L2::ECaptureMethod CCameraV4L2::DetectCaptureMethod()
 {
 	struct v4l2_capability capability;	
@@ -748,10 +748,16 @@ bool CCameraV4L2::SetImageFormat()
 	m_currentFormat.height= format.fmt.pix.height;
 	m_currentFormat.pixelformat= format.fmt.pix.pixelformat;	
 
-	// Set framerate	
+	//	
+	// Set framerate and other camera parameters.
+	// 
+	// We here try to cope with two common drivers: pwc and uvc. Unfortunately pwc driver versions above
+	// 10.0.12 removed support for many ioctls (including that to set the framerate VIDIOCSWIN).
+	// As of kernel version 3.0.0 (which ships pwc 10.0.14) this issue has not been fixed and the odds are
+	// it won't be as the hardware has been discontinued :-(
+	//
 	if (strcasestr(g_deviceDriverNames[m_Id], "pwc")!= NULL)  {
-		// Using a PWC based camera. Newer kernels have changed this API
-		// TODO: specific PWC ioctls are removed for newer kernels.
+		// Using a PWC based camera.
 		bool properlySet= false;
 		struct video_window vwin;		
 		if ((xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOCGWIN, &vwin) == 0) && (vwin.flags & PWC_FPS_FRMASK)) {
