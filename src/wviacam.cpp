@@ -381,10 +381,12 @@ void WViacam::OnMenuitemExitClick( wxCommandEvent& event )
 void WViacam::OnCloseWindow( wxCloseEvent& event )
 {
 	event.Skip(false);
-	if (event.CanVeto())
-	{
+	if (event.CanVeto()) {
 		wxMessageDialog dlg (NULL, _("This action will close the program.\nAre you sure?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
-		if (dlg.ShowModal()== wxID_NO) return;
+		if (dlg.ShowModal()== wxID_NO) {
+			event.Veto();
+			return;
+		}
 	}
 	
 	// Shutdown application

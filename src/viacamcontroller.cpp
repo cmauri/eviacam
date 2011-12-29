@@ -279,9 +279,12 @@ void CViacamController::Finalize ()
 	}	
 
 	if (m_pMainWindow) {
-		m_pMainWindow->GetCamWindow()->UnregisterControl (m_visionPipeline.GetTrackAreaControl());
-		// Main window is self-destroyed
+		WViacam* mainWin= m_pMainWindow;
 		m_pMainWindow= NULL;
+		mainWin->GetCamWindow()->UnregisterControl (m_visionPipeline.GetTrackAreaControl());
+		mainWin->Close (true);
+		// Main window is self-destroyed
+		//m_pMainWindow= NULL;
 	}
 }
 

@@ -30,6 +30,7 @@
 
 ////@begin includes
 #include "wx/image.h"
+#include "wviacam.h"
 ////@end includes
 #include <wx/app.h>
 #include <assert.h>
@@ -81,6 +82,8 @@ private:
 
 	/// Called on exit
 	virtual int OnExit();
+
+	void OnEndSession( wxCloseEvent& event );
 
 ////@begin EViacamApp event handler declarations
 

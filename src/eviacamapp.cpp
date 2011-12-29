@@ -91,6 +91,7 @@ BEGIN_EVENT_TABLE( EViacamApp, wxApp )
 ////@begin EViacamApp event table entries
 ////@end EViacamApp event table entries
 
+	EVT_QUERY_END_SESSION(EViacamApp::OnEndSession)
 END_EVENT_TABLE()
 
 /*!
@@ -169,3 +170,13 @@ int EViacamApp::OnExit()
 	return wxApp::OnExit();
 ////@end EViacamApp cleanup
 }
+
+// 
+// This handler terminates eViacam gracefully when the OS session is closed
+//
+void EViacamApp::OnEndSession( wxCloseEvent& event )
+{		
+	if (m_pController) m_pController->Finalize();
+	event.Skip(false);
+}
+
