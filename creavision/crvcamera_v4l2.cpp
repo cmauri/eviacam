@@ -348,7 +348,7 @@ bool CCameraV4L2::PopulateCameraControls ()
 
 unsigned int CCameraV4L2::GetCameraControlsCount()
 {
-	return m_cameraControls.size();
+	return static_cast<unsigned int>(m_cameraControls.size());
 }
 
 CCameraControl* CCameraV4L2::GetCameraControl(unsigned int numControl)
@@ -751,6 +751,7 @@ bool CCameraV4L2::SetImageFormat()
 	// Set framerate	
 	if (strcasestr(g_deviceDriverNames[m_Id], "pwc")!= NULL)  {
 		// Using a PWC based camera. Newer kernels have changed this API
+		// TODO: specific PWC ioctls are removed for newer kernels.
 		bool properlySet= false;
 		struct video_window vwin;		
 		if ((xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOCGWIN, &vwin) == 0) && (vwin.flags & PWC_FPS_FRMASK)) {
@@ -792,11 +793,62 @@ bool CCameraV4L2::SetImageFormat()
 			return false;
 		}
 	
-		// Workaround: set V4L2_CID_EXPOSURE_AUTO control to V4L2_EXPOSURE_MANUAL first
-		// and then to V4L2_EXPOSURE_SHUTTER_PRIORITY (if the later is not support we
-		// hope the former it is)
+		//
+		// Control V4L2_CID_EXPOSURE_AUTO is key to get a constant capture rate & good
+		// lightning conditions. In order of preference, the value of this control should be:
+		//
+		//   - V4L2_EXPOSURE_APERTURE_PRIORITY: Auto exposure time, manual iris. In practice, 
+		//     when (V4L2_CID_EXPOSURE_AUTO_PRIORITY== false) and the frame rate is previously 
+		//     set via VIDIOC_S_PARM, provides a constant frame rate at top speed and changes 
+		//     exposure time and gain automatically according to the lightning conditions.
+		//     Tested with the Logitech Webcam 9000 (046d:0990). It seems that uvcvideo drivers 
+		//     for newer kernels (3.0 and above) set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_MANUAL 
+		//     by default instead of V4L2_EXPOSURE_SHUTTER_PRIORITY (at least for this camera model)
+		//     which came as default option for older kernels.
+		//
+		//   - V4L2_EXPOSURE_SHUTTER_PRIORITY: ??? (not tested)
+		//
+		//   - V4L2_EXPOSURE_MANUAL: Manual exposure time, manual iris. Provides maximum flexibility
+		//     and allows for constant frame but i) does not cope well variable lightnint conditions
+		//     (forces user to manually adjust settings when needed) ii) it seems that default gain 
+		//     and exposure values are undefined and thus they need to be set to reasonable 
+		//     defaults and also suggest that camera controls should be permanently stored.
+		//
+		//   - V4L2_EXPOSURE_AUTO: Automatic exposure time, automatic iris aperture. Automatically 
+		//     reduces the frame rate depending on the lightning conditions and thus should be avoided.
+		//
+		// TODO: now uses the V4L2 api directly instead of libwebcam as some controls are not available
+		// any more.
+		// TODO: store control settings permanently
+		//
+		
+	
 		struct v4l2_control control;
 		memset (&control, 0, sizeof (control));
+
+		/*
+		control.id= V4L2_CID_EXPOSURE_AUTO;
+		control.value= -1;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_CTRL, &control))
+			fprintf (stderr, "Warning: cannot get V4L2_CID_EXPOSURE_AUTO\n");
+		else {
+			fprintf (stderr, "Info: V4L2_CID_EXPOSURE_AUTO= %d\n", control.value);
+		}
+		
+
+		for (int i= 0; i<= 16; ++i) {
+			control.id= V4L2_CID_EXPOSURE_AUTO;
+			control.value= i;
+			if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+				fprintf (stderr, "Warning: cannot set V4L2_CID_EXPOSURE_AUTO to %d\n", i);
+			else
+				fprintf (stderr, "Info: set V4L2_CID_EXPOSURE_AUTO to %d\n", i);
+		}
+		*/
+
+		//
+		// First set manual mode with reasonable exposure and gain values.
+		//
 		control.id= V4L2_CID_EXPOSURE_AUTO;
 		control.value= V4L2_EXPOSURE_MANUAL;
 		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
@@ -804,14 +856,7 @@ bool CCameraV4L2::SetImageFormat()
 		else
 			fprintf (stderr, "Info: set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_MANUAL\n");
 			
-		control.id= V4L2_CID_EXPOSURE_AUTO;
-		control.value= V4L2_EXPOSURE_SHUTTER_PRIORITY;
-		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
-			fprintf (stderr, "Warning: cannot set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_SHUTTER_PRIORITY\n");
-		else
-			fprintf (stderr, "Info: set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_SHUTTER_PRIORITY\n");
-		
-		// Set exposure time configure the requested FPS.		
+		// Exposure time to match requested FPS
 		control.id= V4L2_CID_EXPOSURE_ABSOLUTE;
 		control.value= 10000 / m_currentFormat.frame_rate;
 		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
@@ -819,21 +864,56 @@ bool CCameraV4L2::SetImageFormat()
 		else
 			fprintf (stderr, "Info: set V4L2_CID_EXPOSURE_ABSOLUTE to %d\n", control.value);
 		
-		// Finally set auto gain (not supported by libwebcam yet)
+		// Sets gain to the maximum value
+		for (unsigned int i= 0; i< m_cameraControls.size(); ++i) {
+			if (m_cameraControls[i].GetId()== CCameraControl::CAM_GAIN) {
+				if (m_cameraControls[i].SetValue(m_cameraControls[i].GetMaximumValue()))
+					fprintf (stderr, "Info: set CAM_GAIN to %d\n", 
+						m_cameraControls[i].GetMaximumValue());
+				else
+					fprintf (stderr, "Warning: cannot set CAM_GAIN to %d\n", 
+						m_cameraControls[i].GetMaximumValue());
+				break;
+			}
+		}
+			
+		// Tries to set automatic gain
 		control.id= V4L2_CID_AUTOGAIN;
 		control.value= 1;
 		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
 			fprintf (stderr, "Warning: cannot set V4L2_CID_AUTOGAIN\n");
 		else
 			fprintf (stderr, "Info: set V4L2_CID_AUTOGAIN\n");
-		
-		// Try to set exposure control to match desired frame ratio
+
+		// Set V4L2_CID_EXPOSURE_AUTO_PRIORITY to false
 		for (unsigned int i= 0; i< m_cameraControls.size(); ++i) {
 			if (m_cameraControls[i].GetId()== CCameraControl::CAM_AUTO_EXPOSURE_PRIORITY) {
-				m_cameraControls[i].SetValue(0);
+				if (m_cameraControls[i].SetValue(0))
+					fprintf (stderr, "Info: AUTO_EXPOSURE_PRIORITY disabled\n");
+				else
+					fprintf (stderr, "Warning: cannot disable AUTO_EXPOSURE_PRIORITY\n");
 				break;
 			}
 		}			
+	
+		//
+		// Secondly tries to set V4L2_EXPOSURE_SHUTTER_PRIORITY mode
+		//
+		control.id= V4L2_CID_EXPOSURE_AUTO;
+		control.value= V4L2_EXPOSURE_SHUTTER_PRIORITY;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+			fprintf (stderr, "Warning: cannot set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_SHUTTER_PRIORITY\n");
+		else
+			fprintf (stderr, "Info: set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_SHUTTER_PRIORITY\n");
+
+
+		// Finally tries to set V4L2_EXPOSURE_APERTURE_PRIORITY
+		control.id= V4L2_CID_EXPOSURE_AUTO;
+		control.value= V4L2_EXPOSURE_APERTURE_PRIORITY;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+			fprintf (stderr, "Warning: cannot set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_APERTURE_PRIORITY\n");
+		else
+			fprintf (stderr, "Info: set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_APERTURE_PRIORITY\n");
 	}
 	return true;
 }
@@ -1468,7 +1548,8 @@ static
 void print_device_info (CHandle handle, char *device_name)
 {
 	assert(handle || device_name);
-	unsigned int size = sizeof(CDevice) + (device_name ? strlen(device_name) : 32) + 84;
+	unsigned int size = static_cast<unsigned int>(sizeof(CDevice)) + 
+		(device_name? static_cast<unsigned int>(strlen(device_name)): 32) + 84;
 	CDevice *info = (CDevice *)malloc(size);
 	assert(info);
 
