@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: viacam 1.3.1\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2011-07-25 18:14+0200\n"
+"POT-Creation-Date: 2011-12-30 18:01+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Hatim Alahmadi <dr.hatim@hotmail.com>\n"
 "Language-Team: Hatim Alahmadi <dr.hatim@hotmail.com>\n"
@@ -574,17 +574,17 @@ msgstr ""
 "سيتم فقد التحكم بالحاسب.\n"
 "هل تريد الاستمرار؟"
 
-#: src/wconfiguration.cpp:1757 src/wconfiguration.cpp:1887
-#: src/wconfiguration.cpp:2009 src/viacamcontroller.cpp:337
+#: src/wconfiguration.cpp:1757 src/wconfiguration.cpp:1892
+#: src/wconfiguration.cpp:2018 src/viacamcontroller.cpp:348
 #: src/cmotioncalibration.cpp:183
 msgid "eViacam warning"
 msgstr "تحذير من فيا كام"
 
-#: src/wconfiguration.cpp:1887
+#: src/wconfiguration.cpp:1892
 msgid "Discard changes?"
 msgstr "تجهل التغييرات؟"
 
-#: src/wconfiguration.cpp:2009
+#: src/wconfiguration.cpp:2018
 msgid ""
 "This key is used by another command.\n"
 "Do you want to try another key?"
@@ -643,15 +643,15 @@ msgstr "نقرتين"
 msgid "About Enable Viacam"
 msgstr "حول تفعيل فيا كام"
 
-#: src/viacamcontroller.cpp:131
+#: src/viacamcontroller.cpp:134
 msgid "Not detected any camera. Aborting"
 msgstr "لم يتم العثور على أي كاميرا. احباط"
 
-#: src/viacamcontroller.cpp:151
+#: src/viacamcontroller.cpp:155
 msgid "Choose the camera to use"
 msgstr "اختيار الكاميرا المستخدمة"
 
-#: src/viacamcontroller.cpp:166
+#: src/viacamcontroller.cpp:175
 msgid ""
 "Can not initialize the camera.\n"
 "Perhaps is being used by other application."
@@ -659,7 +659,7 @@ msgstr ""
 "لم يتم تهيئة الكاميرا.\n"
 "ربما يتم استخدام من قبل برنامج آخر."
 
-#: src/viacamcontroller.cpp:337
+#: src/viacamcontroller.cpp:348
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -667,7 +667,7 @@ msgstr ""
 "سيتم تعطيل برنامج فيا كام.\n"
 "هل أنت متأكد؟"
 
-#: src/viacamcontroller.cpp:361
+#: src/viacamcontroller.cpp:373
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -675,12 +675,12 @@ msgstr ""
 "لم يتم تعيين أمر لوحة مفاتيح الشاشة.\n"
 "فضلا, قم بإعدادها من نافذة خيارات."
 
-#: src/viacamcontroller.cpp:361 src/viacamcontroller.cpp:375
+#: src/viacamcontroller.cpp:373 src/viacamcontroller.cpp:387
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "خطأ في فيا كام"
 
-#: src/viacamcontroller.cpp:371
+#: src/viacamcontroller.cpp:383
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -691,7 +691,7 @@ msgstr ""
 "فشل تطبيق الأمر %s .\n"
 "فضلا, قم بإعادة إعداده من نافذة خيارات."
 
-#: src/viacamcontroller.cpp:373
+#: src/viacamcontroller.cpp:385
 msgid ""
 "\n"
 "\n"
@@ -702,7 +702,7 @@ msgid ""
 "or try another osk, e.g. Click-N-Type."
 msgstr ""
 
-#: src/viacamcontroller.cpp:445
+#: src/viacamcontroller.cpp:459
 msgid ""
 "Note that adjusting the camera controls while eViacam\n"
 "is enabled may cause loss of pointer control.\n"
@@ -808,7 +808,7 @@ msgstr " %li فريم/ث (يمكن التحسين)"
 msgid " %li fps (too low)"
 msgstr " %li فريم/ث (بطئ جدا)"
 
-#: src/wviacam.cpp:386
+#: src/wviacam.cpp:385
 msgid ""
 "This action will close the program.\n"
 "Are you sure?"

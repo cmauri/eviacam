@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2011-07-25 18:14+0200\n"
+"POT-Creation-Date: 2011-12-30 18:01+0100\n"
 "PO-Revision-Date: 2010-07-11 20:35+0300\n"
 "Last-Translator: Anıl Özbek <anil@artistanbulpr.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -592,17 +592,17 @@ msgstr ""
 "Bu hareket bilgisayarınızın kontrolünü kaybetmenize neden olabilir.\n"
 "Devam etmek istiyor musunuz?"
 
-#: src/wconfiguration.cpp:1757 src/wconfiguration.cpp:1887
-#: src/wconfiguration.cpp:2009 src/viacamcontroller.cpp:337
+#: src/wconfiguration.cpp:1757 src/wconfiguration.cpp:1892
+#: src/wconfiguration.cpp:2018 src/viacamcontroller.cpp:348
 #: src/cmotioncalibration.cpp:183
 msgid "eViacam warning"
 msgstr "eViacam uyarısı"
 
-#: src/wconfiguration.cpp:1887
+#: src/wconfiguration.cpp:1892
 msgid "Discard changes?"
 msgstr "Değişiklikler yoksayılsın mı?"
 
-#: src/wconfiguration.cpp:2009
+#: src/wconfiguration.cpp:2018
 msgid ""
 "This key is used by another command.\n"
 "Do you want to try another key?"
@@ -661,15 +661,15 @@ msgstr "Çift tıklama"
 msgid "About Enable Viacam"
 msgstr "Enable Viacam Hakkında"
 
-#: src/viacamcontroller.cpp:131
+#: src/viacamcontroller.cpp:134
 msgid "Not detected any camera. Aborting"
 msgstr "Kamera tespit edilmedi. İptal ediliyor"
 
-#: src/viacamcontroller.cpp:151
+#: src/viacamcontroller.cpp:155
 msgid "Choose the camera to use"
 msgstr "Kullanılacak kamerayı seçin"
 
-#: src/viacamcontroller.cpp:166
+#: src/viacamcontroller.cpp:175
 msgid ""
 "Can not initialize the camera.\n"
 "Perhaps is being used by other application."
@@ -677,7 +677,7 @@ msgstr ""
 "Kamera başlatılamadı.\n"
 "Muhtemelen başka bir yazılımca kullanılıyor."
 
-#: src/viacamcontroller.cpp:337
+#: src/viacamcontroller.cpp:348
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -685,7 +685,7 @@ msgstr ""
 "Bu hareket eViacam'ı devre dışı bırakacak.\n"
 "Emin misiniz?"
 
-#: src/viacamcontroller.cpp:361
+#: src/viacamcontroller.cpp:373
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -693,12 +693,12 @@ msgstr ""
 "Ekran klavyesi komutu ayarlanmadı.\n"
 "Seçenekler iletişim penceresinden ayarlayabilirsiniz."
 
-#: src/viacamcontroller.cpp:361 src/viacamcontroller.cpp:375
+#: src/viacamcontroller.cpp:373 src/viacamcontroller.cpp:387
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "eViacam hatası"
 
-#: src/viacamcontroller.cpp:371
+#: src/viacamcontroller.cpp:383
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -709,7 +709,7 @@ msgstr ""
 "%s komutu başarısızlığa uğradı.\n"
 "Seçenekler iletişim penceresinden ayarları değiştirebilirsiniz."
 
-#: src/viacamcontroller.cpp:373
+#: src/viacamcontroller.cpp:385
 msgid ""
 "\n"
 "\n"
@@ -727,7 +727,7 @@ msgstr ""
 "Kullanıcı Hesap Yönetimi'ni devre dışı bırakmayı ya da Click-N-Type\n"
 "gibi farklı bir ekran klavyesi kullanmayı deneyebilirsiniz."
 
-#: src/viacamcontroller.cpp:445
+#: src/viacamcontroller.cpp:459
 msgid ""
 "Note that adjusting the camera controls while eViacam\n"
 "is enabled may cause loss of pointer control.\n"
@@ -837,7 +837,7 @@ msgstr " %li sbk (geliştirilebilir)"
 msgid " %li fps (too low)"
 msgstr " %li sbk (çok yavaş)"
 
-#: src/wviacam.cpp:386
+#: src/wviacam.cpp:385
 msgid ""
 "This action will close the program.\n"
 "Are you sure?"

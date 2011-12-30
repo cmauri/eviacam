@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.0\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2011-07-25 18:14+0200\n"
+"POT-Creation-Date: 2011-12-30 18:01+0100\n"
 "PO-Revision-Date: 2010-03-05 17:33+0100\n"
 "Last-Translator: AluminiuM <aluminium@softastur.org>\n"
 "Language-Team: Asturian <softastur@softastur.org>\n"
@@ -594,17 +594,17 @@ msgstr ""
 "Esta aición zarrará'l programa.\n"
 "¿Ta seguru?"
 
-#: src/wconfiguration.cpp:1757 src/wconfiguration.cpp:1887
-#: src/wconfiguration.cpp:2009 src/viacamcontroller.cpp:337
+#: src/wconfiguration.cpp:1757 src/wconfiguration.cpp:1892
+#: src/wconfiguration.cpp:2018 src/viacamcontroller.cpp:348
 #: src/cmotioncalibration.cpp:183
 msgid "eViacam warning"
 msgstr "Alvertencia"
 
-#: src/wconfiguration.cpp:1887
+#: src/wconfiguration.cpp:1892
 msgid "Discard changes?"
 msgstr "¿Descartar cambeos?"
 
-#: src/wconfiguration.cpp:2009
+#: src/wconfiguration.cpp:2018
 msgid ""
 "This key is used by another command.\n"
 "Do you want to try another key?"
@@ -663,15 +663,15 @@ msgstr "Doble clic"
 msgid "About Enable Viacam"
 msgstr "Tocante a Enable Viacam"
 
-#: src/viacamcontroller.cpp:131
+#: src/viacamcontroller.cpp:134
 msgid "Not detected any camera. Aborting"
 msgstr "Cámara non detectada. Encaboxando."
 
-#: src/viacamcontroller.cpp:151
+#: src/viacamcontroller.cpp:155
 msgid "Choose the camera to use"
 msgstr "Escueye la cámara a usar"
 
-#: src/viacamcontroller.cpp:166
+#: src/viacamcontroller.cpp:175
 msgid ""
 "Can not initialize the camera.\n"
 "Perhaps is being used by other application."
@@ -679,7 +679,7 @@ msgstr ""
 "Nun se pué anicializar la cámara.\n"
 "Quiciabes ta siendo usá per otra aplicación."
 
-#: src/viacamcontroller.cpp:337
+#: src/viacamcontroller.cpp:348
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -687,7 +687,7 @@ msgstr ""
 "Esta aición desactivará eViacam.\n"
 "¿Ta seguru?"
 
-#: src/viacamcontroller.cpp:361
+#: src/viacamcontroller.cpp:373
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -695,12 +695,12 @@ msgstr ""
 "Nun se configuró'l comandu del teclau en pantalla.\n"
 "Pue seleicionalu al traviés del dialogu d'opciones."
 
-#: src/viacamcontroller.cpp:361 src/viacamcontroller.cpp:375
+#: src/viacamcontroller.cpp:373 src/viacamcontroller.cpp:387
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "Error"
 
-#: src/viacamcontroller.cpp:371
+#: src/viacamcontroller.cpp:383
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -711,7 +711,7 @@ msgstr ""
 "Falló el comandu %s.\n"
 "Pue configuralu al traviés del diálogu d'opciones."
 
-#: src/viacamcontroller.cpp:373
+#: src/viacamcontroller.cpp:385
 msgid ""
 "\n"
 "\n"
@@ -730,7 +730,7 @@ msgstr ""
 "estos problemes\n"
 "o probar con otru teclau, por exemplo."
 
-#: src/viacamcontroller.cpp:445
+#: src/viacamcontroller.cpp:459
 msgid ""
 "Note that adjusting the camera controls while eViacam\n"
 "is enabled may cause loss of pointer control.\n"
@@ -839,7 +839,7 @@ msgstr " %li fps (meyorable)"
 msgid " %li fps (too low)"
 msgstr " %li fps (demasiau baxu)"
 
-#: src/wviacam.cpp:386
+#: src/wviacam.cpp:385
 msgid ""
 "This action will close the program.\n"
 "Are you sure?"
