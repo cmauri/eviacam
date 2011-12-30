@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ class CHotkeyManager;
 class CCamera;
 class CAutostart;
 class wxLocale;
+class WCameraDialog;
 
 class CViacamController : public CProcessImage, public CConfigBase
 {
@@ -75,7 +76,7 @@ public:
 
 	const wxString& GetCameraName () const;
 	const bool CameraHasSettingsDialog () const;
-	void ShowCameraSettingsDialog () const;
+	void ShowCameraSettingsDialog ();
 	void ChangeCamera ();
 	
 	void OpenConfiguration();
@@ -127,11 +128,25 @@ private:
 	void SetUpLanguage();		
 	CCamera* SetUpCamera();
 
+	/*
+		Listeners for non-modal dialogues.
+	*/
 	class WConfigurationListener : public wxEvtHandler {
 	public:
 		WConfigurationListener(CViacamController& c) : m_controller(&c) {}
 		void OnDestroy( wxWindowDestroyEvent& event ) {
 			m_controller->m_pConfiguration= NULL;
+			event.Skip(false);
+		}
+	private:
+		CViacamController* m_controller;
+	};
+
+	class WCameraDialogListener : public wxEvtHandler {
+	public:
+		WCameraDialogListener(CViacamController& c) : m_controller(&c) {}
+		void OnDestroy( wxWindowDestroyEvent& event ) {
+			m_controller->m_pCameraDialog= NULL;
 			event.Skip(false);
 		}
 	private:
@@ -151,7 +166,10 @@ private:
 	WConfiguration* m_pConfiguration;
 	CMotionCalibration* m_pMotionCalibration;
 	WWizardManager m_wizardManager;
+	WCameraDialog* m_pCameraDialog;
 	WConfigurationListener m_wConfigurationListener;
+	WCameraDialogListener m_wCameraDialogListener;
+
 
 	wxString m_cameraName;
 	volatile bool m_enabled;

@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -49,8 +49,10 @@ CViacamController::CViacamController(void)
 , m_pAutostart(NULL)
 , m_pConfiguration(NULL)
 , m_pMotionCalibration(NULL)
-, m_wConfigurationListener(*this)
 , m_wizardManager()
+, m_pCameraDialog(NULL)
+, m_wConfigurationListener(*this)
+, m_wCameraDialogListener(*this)
 , m_cameraName()
 , m_enabled(false)
 , m_enabledAtStartup(false)
@@ -449,15 +451,28 @@ void CViacamController::ChangeCamera ()
 	m_cameraName.Clear();
 }
 
-void CViacamController::ShowCameraSettingsDialog () const
+void CViacamController::ShowCameraSettingsDialog ()
 {
-	if (m_enabled) {
-		wxMessageDialog dlg (NULL, _("Note that adjusting the camera controls while eViacam\nis enabled may cause loss of pointer control.\nAre you sure you want to continue?"), _T("Enable Viacam"), wxICON_EXCLAMATION | wxYES_NO );
+	if (m_enabled && !m_pCameraDialog) {
+		wxMessageDialog dlg (
+			NULL, 
+			_("Note that adjusting the camera controls while eViacam\nis enabled may cause loss of pointer control.\nAre you sure you want to continue?"), 
+			_T("Enable Viacam"), 
+			wxICON_EXCLAMATION | wxYES_NO );
 		if (dlg.ShowModal()== wxID_NO) return;
 	}
+
 	if (m_pCamera->HasSettingsDialog()) m_pCamera->ShowSettingsDialog ();
 	if (m_pCamera->HasCameraControls()) {
-		WCameraDialog* m_pCameraDialog = new WCameraDialog(m_pMainWindow, m_pCamera);
-		m_pCameraDialog->ShowModal();
+		if (!m_pCameraDialog) {
+			m_pCameraDialog = new WCameraDialog(m_pMainWindow, m_pCamera);
+			m_pCameraDialog->Connect (
+				wxEVT_DESTROY, 
+				wxWindowDestroyEventHandler(CViacamController::WCameraDialogListener::OnDestroy), 
+				NULL, 
+				&m_wCameraDialogListener);
+			m_pCameraDialog->Show(true);
+		}
+		m_pCameraDialog->Raise();
 	}
 }

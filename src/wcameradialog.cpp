@@ -5,7 +5,7 @@
 // Modified by: 
 // Created:     Fri 22 Oct 2010 10:02:49 CEST
 // RCS-ID:      
-// Copyright:   (C) 2008 Cesar Mauri from CREA Sistemes Informatics
+// Copyright:   (C) 2010-11 Cesar Mauri from CREA Sistemes Informatics
 // Licence:     
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -302,7 +302,7 @@ void WCameraDialog::OnSliderUpdated( wxCommandEvent& event )
 
 void WCameraDialog::OnButtonCamdialogCloseClick( wxCommandEvent& event )
 {
-	this->EndModal(0);
+	Close();
 	event.Skip(false);
 }
 
