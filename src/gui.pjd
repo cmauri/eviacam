@@ -2478,7 +2478,7 @@ necessary."</string>
           <bool name="proxy-wxSYSTEM_MENU">1</bool>
           <bool name="proxy-wxSTAY_ON_TOP">0</bool>
           <bool name="proxy-wxDIALOG_NO_PARENT">0</bool>
-          <bool name="proxy-wxCLOSE_BOX">0</bool>
+          <bool name="proxy-wxCLOSE_BOX">1</bool>
           <bool name="proxy-wxMAXIMIZE_BOX">0</bool>
           <bool name="proxy-wxMINIMIZE_BOX">0</bool>
           <bool name="proxy-wxDIALOG_MODAL">1</bool>

@@ -1884,11 +1884,16 @@ void WConfiguration::OnOkClick( wxCommandEvent& event )
 
 void WConfiguration::OnCancelClick( wxCommandEvent& event )
 {
-	wxMessageDialog dlg (NULL, _("Discard changes?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
-	if (dlg.ShowModal()== wxID_YES)
-	{
-		EndModal(wxID_CANCEL);		
-	}		
+	if (m_dirty) {
+		wxMessageDialog dlg (NULL, _("Discard changes?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
+		if (dlg.ShowModal()== wxID_YES)
+		{
+			EndModal(wxID_CANCEL);
+		}
+	}
+	else
+		EndModal(wxID_CANCEL);
+
 	event.Skip(false);
 }
 
