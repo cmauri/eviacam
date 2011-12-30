@@ -71,7 +71,7 @@ Source: doc\*.png; DestDir: {app}\bin; Flags: ignoreversion
 Source: doc\*.wav; DestDir: {app}\bin; Flags: ignoreversion
 Source: THANKS; DestDir: {app}\bin; DestName: THANKS
 Source: COPYING; DestDir: {app}\doc; DestName: license.txt
-Source: Changelog; DestDir: {app}\doc; DestName: Changelog.txt
+Source: NEWS; DestDir: {app}\doc; DestName: NEWS.txt
 Source: doc\*.txt; DestDir: {app}\doc; Flags: recursesubdirs ignoreversion
 Source: doc\*.png; DestDir: {app}\doc; Flags: recursesubdirs ignoreversion
 Source: README; DestDir: {app}\doc; Flags: ignoreversion; DestName: README.txt
@@ -84,7 +84,7 @@ Name: desktopicon; Description: {cm:CreateDesktopIcon}
 Name: {group}\{#APPNAME}; Filename: {app}\bin\{#APPBIN}; WorkingDir: {app}\bin
 Name: {group}\{cm:UninstallProgram,{#APPNAME}}; Filename: {uninstallexe}
 Name: {group}\{#APPNAME} help; Filename: {app}\bin\help\en\contents.htm
-Name: {group}\Changes; Filename: {app}\doc\Changelog.txt
+Name: {group}\Release notes; Filename: {app}\doc\NEWS.txt
 Name: {group}\{#APPNAME} ayuda; Filename: {app}\bin\help\es\contents.htm; Languages: Castellano
 Name: {group}\{#APPNAME} ajuda; Filename: {app}\bin\help\ca\contents.htm; Languages: Catala
 Name: {group}\{#APPNAME} axuda; Filename: {app}\bin\help\gl\contents.htm; Languages: Galego
