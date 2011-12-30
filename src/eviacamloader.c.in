@@ -24,6 +24,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <signal.h>
+#include <sys/stat.h>
 
 /* check wait status to see if child process finished abnormaly */
 int wait_status_correct (int status)
@@ -87,9 +88,30 @@ int main (int argc, char **argv)
 		}
 		else if (pid== 0) {
 			/* child process */
-			if (execl ("@prefix@/bin/eviacam", "eviacam", NULL)== -1) {
-				perror("execl");
-				return -1;
+			
+			/* 
+				workaround to enable sound on systems with pulseaudio
+				see [1] for more details
+				[1] https://sourceforge.net/tracker/?func=detail&aid=3095561&group_id=248049&atid=1199422
+				TODO: remove when this gets fixed
+			*/
+				
+			/* check is padsp command can be run */
+			int padsp_command_available= 0;	
+			struct stat stat_buf;
+			if (!stat("/usr/bin/padsp", &stat_buf))	padsp_command_available++;
+			
+			if (padsp_command_available) {
+				if (execl ("/usr/bin/padsp", "eviacam", "@prefix@/bin/eviacam", NULL)== -1) {
+					perror("execl");
+					return -1;
+				}
+			}
+			else {
+				if (execl ("@prefix@/bin/eviacam", "eviacam", NULL)== -1) {
+					perror("execl");
+					return -1;
+				}
 			}
 		}
 		else
