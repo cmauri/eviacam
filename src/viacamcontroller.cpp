@@ -49,6 +49,7 @@ CViacamController::CViacamController(void)
 , m_pAutostart(NULL)
 , m_pConfiguration(NULL)
 , m_pMotionCalibration(NULL)
+, m_wConfigurationListener(*this)
 , m_wizardManager()
 , m_cameraName()
 , m_enabled(false)
@@ -290,7 +291,6 @@ void CViacamController::Finalize ()
 		mainWin->GetCamWindow()->UnregisterControl (m_visionPipeline.GetTrackAreaControl());
 		mainWin->Close (true);
 		// Main window is self-destroyed
-		//m_pMainWindow= NULL;
 	}
 }
 
@@ -352,15 +352,16 @@ void CViacamController::SetEnabled (bool value, bool silent, wxWindow* parent)
 
 void CViacamController::OpenConfiguration()
 {
-	m_pConfiguration = new WConfiguration(m_pMainWindow); //, this);
-	int returnValue = m_pConfiguration->ShowModal();
-	m_pConfiguration->Destroy();
-	if (returnValue== wxID_OK)
-		// Save changes
-		m_configManager->WriteAll();
-	else
-		// Discard changes
-		m_configManager->ReadAll();		
+	if (!m_pConfiguration) {
+		m_pConfiguration = new WConfiguration(m_pMainWindow); //, this);
+		m_pConfiguration->Connect (
+			wxEVT_DESTROY, 
+			wxWindowDestroyEventHandler(CViacamController::WConfigurationListener::OnDestroy), 
+			NULL, 
+			&m_wConfigurationListener);
+	}
+	
+	m_pConfiguration->Show(true);
 }
 
 void CViacamController::OpenOnScreenKeyboard()

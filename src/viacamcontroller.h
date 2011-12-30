@@ -85,10 +85,6 @@ public:
 	// Getters of objects that compose the controller
 	CAutostart& GetAutostart() { assert (m_pAutostart);	return *m_pAutostart; }
 
-	WConfiguration& GetConfiguration() { 
-		assert(m_pConfiguration); return *m_pConfiguration; 
-	}
-
 	CPointerAction& GetPointerAction() {
 		assert (m_pointerAction); return *m_pointerAction;
 	}
@@ -131,6 +127,17 @@ private:
 	void SetUpLanguage();		
 	CCamera* SetUpCamera();
 
+	class WConfigurationListener : public wxEvtHandler {
+	public:
+		WConfigurationListener(CViacamController& c) : m_controller(&c) {}
+		void OnDestroy( wxWindowDestroyEvent& event ) {
+			m_controller->m_pConfiguration= NULL;
+			event.Skip(false);
+		}
+	private:
+		CViacamController* m_controller;
+	};
+
 	// objects that compose the controller
 	WViacam* m_pMainWindow;
 	CCamera* m_pCamera;
@@ -144,6 +151,7 @@ private:
 	WConfiguration* m_pConfiguration;
 	CMotionCalibration* m_pMotionCalibration;
 	WWizardManager m_wizardManager;
+	WConfigurationListener m_wConfigurationListener;
 
 	wxString m_cameraName;
 	volatile bool m_enabled;

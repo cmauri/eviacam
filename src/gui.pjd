@@ -2481,7 +2481,7 @@ necessary."</string>
           <bool name="proxy-wxCLOSE_BOX">1</bool>
           <bool name="proxy-wxMAXIMIZE_BOX">0</bool>
           <bool name="proxy-wxMINIMIZE_BOX">0</bool>
-          <bool name="proxy-wxDIALOG_MODAL">1</bool>
+          <bool name="proxy-wxDIALOG_MODAL">0</bool>
           <bool name="proxy-wxNO_BORDER">0</bool>
           <bool name="proxy-wxSIMPLE_BORDER">0</bool>
           <bool name="proxy-wxDOUBLE_BORDER">0</bool>

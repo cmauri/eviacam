@@ -1873,7 +1873,9 @@ void WConfiguration::OnCheckboxAllowVisualAlertsClick( wxCommandEvent& event )
 
 void WConfiguration::OnOkClick( wxCommandEvent& event )
 {
-	EndModal(wxID_OK);	
+	// Save changes and destroy window
+	wxGetApp().GetController().GetConfigManager().WriteAll();
+	Destroy();
 	event.Skip(false);
 }
 
@@ -1884,15 +1886,17 @@ void WConfiguration::OnOkClick( wxCommandEvent& event )
 
 void WConfiguration::OnCancelClick( wxCommandEvent& event )
 {
+	bool shouldClose= true;
+
 	if (m_dirty) {
 		wxMessageDialog dlg (NULL, _("Discard changes?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
-		if (dlg.ShowModal()== wxID_YES)
-		{
-			EndModal(wxID_CANCEL);
-		}
+		if (dlg.ShowModal()!= wxID_YES) shouldClose= false;
+		else 
+			// Discard changes
+			wxGetApp().GetController().GetConfigManager().ReadAll();	
 	}
-	else
-		EndModal(wxID_CANCEL);
+	
+	if (shouldClose) Destroy();
 
 	event.Skip(false);
 }
