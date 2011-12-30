@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -146,7 +146,7 @@ void WAbout::CreateControls()
 
 	wxString page (_T("<font face=\"Arial, Helvetica, sans-serif\">\n<h1><img src=\"#DATA_PATH#/viacam_cam4_html.png\" width=\"120\" height=\"96\">Enable Viacam</h1>\n<p>"));
 	page.Append (_("A cross platform webcam based mouse emulator"));
-	page.Append (_T("</p>\n<h4>v#APPVERSION#</p></h4>\n<p>(c) 2008-10 C&eacute;sar Mauri Loba - CREA Software Systems<br>\nhttp://viacam.org<br>\nE-Mail: Cesar Mauri &lt;cesar@crea-si.com&gt;</p>\n<p> "));
+	page.Append (_T("</p>\n<h4>v#APPVERSION#</p></h4>\n<p>(c) 2008-11 C&eacute;sar Mauri Loba - CREA Software Systems<br>\nhttp://viacam.org<br>\nE-Mail: Cesar Mauri &lt;cesar@crea-si.com&gt;</p>\n<p> "));
 	page.Append (_("Released under GNU/GPL license. See license for details.<br>\n  With the support of: "));
 	page.Append (_T("</p>\n<p><img src=\"#DATA_PATH#/guadalinfo_logo.png\" border=\"0\"><br>\n<img src=\"#DATA_PATH#/stsi_logo.png\" width=\"200\" height=\"57\" border=\"0\"><br>\n<img src=\"#DATA_PATH#/appc_logo.png\" width=\"200\" height=\"57\" border=\"0\"> </p>\n</font><br><h3>"));
 	
