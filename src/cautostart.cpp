@@ -59,12 +59,14 @@ void CAutostart::Enable(bool value)
 	pathIn = wxStandardPaths::Get().GetDataDir()  + wxT("/") + m_fileName;
 	if (!wxGetEnv(wxT("XDG_CONFIG_HOME"), &pathOut)) {
 		pathOut = wxStandardPaths::Get().GetUserConfigDir() + wxT("/.config");
-		wxMkdir(pathOut, 0777);
+		if (!wxDirExists(pathOut))
+			wxMkdir(pathOut, 0777);
 		pathOut += wxT("/autostart/");
 	}
 	
 	if (value) {
-		wxMkdir(pathOut, 0777);
+		if (!wxDirExists(pathOut))
+			wxMkdir(pathOut, 0777);
 		wxCopyFile(pathIn, pathOut + m_fileName, false);
 	} else {
 		wxRemoveFile(pathOut + m_fileName);
