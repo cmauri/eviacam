@@ -1,3 +1,23 @@
+2011-12-30 - Release 1.5.3
+* Fixed important bug [ID:3414928]. OpenCV Gui error. This defect crashed 
+the program (showing an error dialogue which said "Sizes of input arguments
+do not match()...") some times when the tracking area reached the right or 
+bottom edge.
+* Fix Right Togglebutton (thanks to Christian Bieder)
+* Fixed bug [ID:3434108]. camera image.
+* Fixed bug [ID:3414924]. closure of program at shutdown Win 7 64bit.
+* Automatically use the camera if only one is connected (thanks to Christian
+  Bieder)
+* Added workaround for bug [ID:3095561]. No beep on click under Ubuntu.
+* Configuration and camera controls dialogues made non-modal which, hopefully,
+  closes bug [ID:3418601]. camera options not over Main window.
+* Old Changelog file renamed as NEWS.
+* Fixed minor build issues and improved debian build.
+* Translations updated (.pot is the same as 1.5.1).
+	* Italiano (thanks to Giuseppe Masciopinto)
+	
+And yes, there is no official 1.5.2 release.
+
 2011-07-19 - Release 1.5.1
 * Added middle click (thanks to Christian Bieder)
 * Fixed spec.in for OpenSUSE
