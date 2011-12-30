@@ -2,7 +2,7 @@ AC_INIT(src/eviacamapp.cpp)
 AC_PREREQ(2.61)
 AM_CONFIG_HEADER(config.h)
 
-AM_INIT_AUTOMAKE([eviacam], 1.5.2)
+AM_INIT_AUTOMAKE([eviacam], 1.5.3)
 
 # Use libtool for building static libraries only
 #
