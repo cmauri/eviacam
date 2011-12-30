@@ -97,6 +97,7 @@ void CNormROI::FitInternalState() {
 	// Invariant may have been violated by imprecisions on FP calculations
 	// TODO: replace FP arithmetic with integer arithmetic.
 
+	if (m_width< MIN_WIDTH_HEIGHT) m_width= MIN_WIDTH_HEIGHT;
 	if (m_x + m_width> MAX_WIDTH_HEIGHT) {
 		if (m_width> MIN_WIDTH_HEIGHT)
 			(*((int *)(&m_width)))--;
@@ -104,6 +105,7 @@ void CNormROI::FitInternalState() {
 			(*((int *)(&m_x)))--;
 	}
 
+	if (m_height< MIN_WIDTH_HEIGHT) m_height= MIN_WIDTH_HEIGHT;
 	if (m_y + m_height> MAX_WIDTH_HEIGHT) {
 		if (m_height> MIN_WIDTH_HEIGHT)
 			(*((int *)(&m_height)))--;
