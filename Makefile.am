@@ -93,7 +93,17 @@ deb-src: configure dist
 	dpkg-buildpackage -S -i -rfakeroot ; \
 	cd .. ; \
 	$(RM) -r $(PACKAGE)-$(VERSION)
-	
+
+## make a Debian .changes files without sources
+deb-src-changes: configure
+	cd debian-src ; \
+	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
+	cd $(PACKAGE)-$(VERSION) ; \
+	cp -a "$(abs_srcdir)/debian" . ; \
+	dpkg-buildpackage -S -i -rfakeroot --changes-option=-sd ; \
+	cd .. ; \
+	$(RM) -r $(PACKAGE)-$(VERSION)
+
 ## make a Debian binary package (non signed)
 deb-nosig: configure dist
 	-$(RM) -r debian-build
