@@ -27,7 +27,7 @@
 #define PUBLISHER		"Cesar Mauri - CREA Software Systems"
 #define VERTEXT			"v@VERSION@"
 #define APPBIN			"eViacam.exe"
-#define COPYRIGHTY		"© 2008-11"
+#define COPYRIGHTY		"© 2008-12"
 
 [Setup]
 AppName={#APPNAME}
@@ -88,7 +88,7 @@ Name: {group}\Release notes; Filename: {app}\doc\NEWS.txt
 Name: {group}\{#APPNAME} ayuda; Filename: {app}\bin\help\es\contents.htm; Languages: Castellano
 Name: {group}\{#APPNAME} ajuda; Filename: {app}\bin\help\ca\contents.htm; Languages: Catala
 Name: {group}\{#APPNAME} axuda; Filename: {app}\bin\help\gl\contents.htm; Languages: Galego
-Name: {group}\{#APPNAME} helfen; Filename: {app}\bin\help\de\contents.htm; Languages: Deutsch
+Name: {group}\{#APPNAME} Hilfe; Filename: {app}\bin\help\de\contents.htm; Languages: Deutsch
 
 
 ;Name: {group}\README; Filename: {app}\doc\README.txt
