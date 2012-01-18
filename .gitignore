@@ -1,0 +1,9 @@
+*Makefile.in
+win32/Debug/
+win32/Release/
+win32/eviacam.suo
+autom4te.cache/
+configure
+src/gui.pjd.bak
+aclocal.m4
+ltmain.sh
