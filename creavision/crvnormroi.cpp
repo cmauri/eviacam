@@ -22,7 +22,7 @@
 #include "crvnormroi.h"
 
 // Area limits
-#define MIN_WIDTH_HEIGHT	(float) 0.041666666666666666666666666666667		// 6 píxels over 144
+#define MIN_WIDTH_HEIGHT	(float) 0.041666666666666666666666666666667		// 6 pÃ­xels over 144
 #define MAX_WIDTH_HEIGHT	1.0f
 
 CNormROI::CNormROI(void)
@@ -55,6 +55,7 @@ void CNormROI::Destroy()
 	// Detach itself from parent
 	if (m_pParentROI) {
 		bool check= m_pParentROI->UnregisterChildROI (this);
+		((void)check);	// Remove warning
 		assert (check);
 		assert (m_pParentROI== NULL);
 	}
@@ -92,25 +93,50 @@ void CNormROI::CheckInvariant() {
 	assert (m_y + m_height<= MAX_WIDTH_HEIGHT);
 }
 
+// Trick to see a float as int. Only for little-endian machines.
+// TODO: seriously, change the internal implementation of this class!
+typedef union {
+	float f;
+	int i32;
+} FloatInt32;
+
+#define COMPILE_TIME_ASSERT(pred) switch(0){case 0:case pred:;}
+
 void CNormROI::FitInternalState() {
 	// Fix internal state to make sure class invariant is honoured.
 	// Invariant may have been violated by imprecisions on FP calculations
 	// TODO: replace FP arithmetic with integer arithmetic.
+	COMPILE_TIME_ASSERT(sizeof(FloatInt32)== sizeof(float));
+	COMPILE_TIME_ASSERT(sizeof(FloatInt32)== sizeof(int));
 
 	if (m_width< MIN_WIDTH_HEIGHT) m_width= MIN_WIDTH_HEIGHT;
 	if (m_x + m_width> MAX_WIDTH_HEIGHT) {
-		if (m_width> MIN_WIDTH_HEIGHT)
-			(*((int *)(&m_width)))--;
-		else
-			(*((int *)(&m_x)))--;
+		FloatInt32 f2i;
+		if (m_width> MIN_WIDTH_HEIGHT) {
+			f2i.f= m_width;
+			f2i.i32--;
+			m_width= f2i.f;
+		}
+		else {
+			f2i.f= m_x;
+			f2i.i32--;
+			m_x= f2i.f;
+		}
 	}
 
 	if (m_height< MIN_WIDTH_HEIGHT) m_height= MIN_WIDTH_HEIGHT;
 	if (m_y + m_height> MAX_WIDTH_HEIGHT) {
-		if (m_height> MIN_WIDTH_HEIGHT)
-			(*((int *)(&m_height)))--;
-		else
-			(*((int *)(&m_y)))--;
+		FloatInt32 f2i;
+		if (m_height> MIN_WIDTH_HEIGHT) {
+			f2i.f= m_height;
+			f2i.i32--;
+			m_height= f2i.f;
+		}
+		else {
+			f2i.f= m_y;
+			f2i.i32--;
+			m_y= f2i.f;
+		}
 	}
 }
 
