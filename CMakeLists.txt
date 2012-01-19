@@ -74,7 +74,7 @@ add_library (creavision STATIC ${creavision_SRCS})
 TARGET_LINK_LIBRARIES(creavision ${OpenCV_LIBS} )
 
 IF(CMAKE_SYSTEM_NAME MATCHES "Linux")
-	TARGET_LINK_LIBRARIES(creavision libwebcam)
+	TARGET_LINK_LIBRARIES(creavision libwebcam v4l2)
 ELSEIF(WIN32)
 	TARGET_LINK_LIBRARIES(creavision ole32.lib strmiids.lib uuid.lib dxguid.lib)
 ENDIF(CMAKE_SYSTEM_NAME MATCHES "Linux")
