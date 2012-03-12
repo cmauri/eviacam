@@ -114,6 +114,7 @@ Name: Occitan; MessagesFile: compiler:Languages\Occitan.isl
 Name: French; MessagesFile: compiler:Languages\French.isl; InfoAfterFile: win32\Info\InfoAfter-fr.rtf
 Name: Arabic; MessagesFile: compiler:Languages\Arabic.isl
 Name: Hebrew; MessagesFile: compiler:Languages\Hebrew.isl
+Name: Russian; MessagesFile: compiler:Languages\Russian.isl
 
 [Registry]
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: english; Languages: English
@@ -127,6 +128,7 @@ Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: lan
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: fr; Languages: French
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: ar; Languages: Arabic
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: he; Languages: Hebrew
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: ru; Languages: Russian
 
 ; Enables face tracking by default for default profile, for upgrades only
 Root: HKCU; Subkey: Software\eviacam\settings\default; ValueType: dword; ValueName: motionTracker; ValueData: 1

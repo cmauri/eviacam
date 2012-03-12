@@ -23,7 +23,7 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
 
-ALL_LINGUAS="ca es gl it tr ast de oc fr ar he"
+ALL_LINGUAS="ca es gl it tr ast de oc fr ar he ru"
 
 AM_GNU_GETTEXT([external])
 

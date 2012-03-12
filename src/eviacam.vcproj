@@ -59,7 +59,8 @@ copy &quot;$(CVPATH)\bin\CV100.DLL&quot; $(TargetDir)
 copy &quot;$(CVPATH)\bin\CXCORE100.DLL&quot; $(TargetDir)
 copy &quot;$(CVPATH)\bin\LIBGUIDE40.DLL&quot; $(TargetDir)
 copy &quot;$(CVPATH)\bin\HIGHGUI100.DLL&quot; $(TargetDir)
-copy &quot;$(CVPATH)\data\haarcascades\haarcascade_frontalface_default.xml&quot; $(TargetDir)"/>
+copy &quot;$(CVPATH)\data\haarcascades\haarcascade_frontalface_default.xml&quot; $(TargetDir)
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -74,6 +75,7 @@ mkdir $(TargetDir)oc
 mkdir $(TargetDir)fr
 mkdir $(TargetDir)ar
 mkdir $(TargetDir)he
+mkdir $(TargetDir)ru
 
 copy &quot;$(SolutionDir)..\po\ca.gmo&quot; $(TargetDir)ca\eviacam.mo
 copy &quot;$(SolutionDir)..\po\es.gmo&quot; $(TargetDir)es\eviacam.mo
@@ -85,6 +87,7 @@ copy &quot;$(SolutionDir)..\po\oc.gmo&quot; $(TargetDir)oc\eviacam.mo
 copy &quot;$(SolutionDir)..\po\fr.gmo&quot; $(TargetDir)fr\eviacam.mo
 copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 copy &quot;$(SolutionDir)..\po\he.gmo&quot; $(TargetDir)he\eviacam.mo
+copy &quot;$(SolutionDir)..\po\ru.gmo&quot; $(TargetDir)ru\eviacam.mo
 
 copy &quot;%WXWIN%\locale\ca.mo&quot; $(TargetDir)ca\wxstd.mo
 copy &quot;%WXWIN%\locale\es.mo&quot; $(TargetDir)es\wxstd.mo
@@ -96,7 +99,7 @@ rem copy &quot;%WXWIN%\locale\oc.mo&quot; $(TargetDir)oc\wxstd.mo
 copy &quot;%WXWIN%\locale\fr.mo&quot; $(TargetDir)fr\wxstd.mo
 rem copy &quot;%WXWIN%\locale\ar.mo&quot; $(TargetDir)ar\wxstd.mo
 rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
-"/>
+rem copy &quot;%WXWIN%\locale\ru.mo&quot; $(TargetDir)ru\wxstd.mo"/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				AdditionalIncludeDirectories="$(WXWIN)\include"/>
@@ -168,6 +171,7 @@ mkdir $(TargetDir)oc
 mkdir $(TargetDir)fr
 mkdir $(TargetDir)ar
 mkdir $(TargetDir)he
+mkdir $(TargetDir)ru
 
 copy &quot;$(SolutionDir)..\po\ca.gmo&quot; $(TargetDir)ca\eviacam.mo
 copy &quot;$(SolutionDir)..\po\es.gmo&quot; $(TargetDir)es\eviacam.mo
@@ -179,6 +183,7 @@ copy &quot;$(SolutionDir)..\po\oc.gmo&quot; $(TargetDir)oc\eviacam.mo
 copy &quot;$(SolutionDir)..\po\fr.gmo&quot; $(TargetDir)fr\eviacam.mo
 copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
 copy &quot;$(SolutionDir)..\po\he.gmo&quot; $(TargetDir)he\eviacam.mo
+copy &quot;$(SolutionDir)..\po\ru.gmo&quot; $(TargetDir)ru\eviacam.mo
 
 copy &quot;%WXWIN%\locale\ca.mo&quot; $(TargetDir)ca\wxstd.mo
 copy &quot;%WXWIN%\locale\es.mo&quot; $(TargetDir)es\wxstd.mo
@@ -190,7 +195,7 @@ rem copy &quot;%WXWIN%\locale\oc.mo&quot; $(TargetDir)oc\wxstd.mo
 copy &quot;%WXWIN%\locale\fr.mo&quot; $(TargetDir)fr\wxstd.mo
 rem copy &quot;%WXWIN%\locale\ar.mo&quot; $(TargetDir)ar\wxstd.mo
 rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
-"/>
+rem copy &quot;%WXWIN%\locale\ru.mo&quot; $(TargetDir)ru\wxstd.mo"/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				AdditionalIncludeDirectories="$(WXWIN)\include"/>
