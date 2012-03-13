@@ -91,7 +91,7 @@ copy &quot;$(SolutionDir)..\po\ru.gmo&quot; $(TargetDir)ru\eviacam.mo
 
 copy &quot;%WXWIN%\locale\ca.mo&quot; $(TargetDir)ca\wxstd.mo
 copy &quot;%WXWIN%\locale\es.mo&quot; $(TargetDir)es\wxstd.mo
-rem copy &quot;%WXWIN%\locale\gl.mo&quot; $(TargetDir)gl\wxstd.mo
+copy &quot;%WXWIN%\locale\gl.mo&quot; $(TargetDir)gl\wxstd.mo
 copy &quot;%WXWIN%\locale\it.mo&quot; $(TargetDir)it\wxstd.mo
 copy &quot;%WXWIN%\locale\tr.mo&quot; $(TargetDir)tr\wxstd.mo
 copy &quot;%WXWIN%\locale\de.mo&quot; $(TargetDir)de\wxstd.mo
@@ -99,7 +99,8 @@ rem copy &quot;%WXWIN%\locale\oc.mo&quot; $(TargetDir)oc\wxstd.mo
 copy &quot;%WXWIN%\locale\fr.mo&quot; $(TargetDir)fr\wxstd.mo
 rem copy &quot;%WXWIN%\locale\ar.mo&quot; $(TargetDir)ar\wxstd.mo
 rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
-rem copy &quot;%WXWIN%\locale\ru.mo&quot; $(TargetDir)ru\wxstd.mo"/>
+copy &quot;%WXWIN%\locale\ru.mo&quot; $(TargetDir)ru\wxstd.mo
+"/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				AdditionalIncludeDirectories="$(WXWIN)\include"/>
@@ -187,7 +188,7 @@ copy &quot;$(SolutionDir)..\po\ru.gmo&quot; $(TargetDir)ru\eviacam.mo
 
 copy &quot;%WXWIN%\locale\ca.mo&quot; $(TargetDir)ca\wxstd.mo
 copy &quot;%WXWIN%\locale\es.mo&quot; $(TargetDir)es\wxstd.mo
-rem copy &quot;%WXWIN%\locale\gl.mo&quot; $(TargetDir)gl\wxstd.mo
+copy &quot;%WXWIN%\locale\gl.mo&quot; $(TargetDir)gl\wxstd.mo
 copy &quot;%WXWIN%\locale\it.mo&quot; $(TargetDir)it\wxstd.mo
 copy &quot;%WXWIN%\locale\tr.mo&quot; $(TargetDir)tr\wxstd.mo
 copy &quot;%WXWIN%\locale\de.mo&quot; $(TargetDir)de\wxstd.mo
@@ -195,7 +196,8 @@ rem copy &quot;%WXWIN%\locale\oc.mo&quot; $(TargetDir)oc\wxstd.mo
 copy &quot;%WXWIN%\locale\fr.mo&quot; $(TargetDir)fr\wxstd.mo
 rem copy &quot;%WXWIN%\locale\ar.mo&quot; $(TargetDir)ar\wxstd.mo
 rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
-rem copy &quot;%WXWIN%\locale\ru.mo&quot; $(TargetDir)ru\wxstd.mo"/>
+copy &quot;%WXWIN%\locale\ru.mo&quot; $(TargetDir)ru\wxstd.mo
+"/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				AdditionalIncludeDirectories="$(WXWIN)\include"/>
