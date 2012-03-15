@@ -19,4 +19,4 @@ Type=Application
 Terminal=false
 Icon=eviacam
 Exec=eviacamloader
-Categories=GNOME;GTK;Utility;Accessibility;
+Categories=GTK;Utility;Accessibility;
