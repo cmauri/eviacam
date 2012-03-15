@@ -114,7 +114,7 @@ Name: Occitan; MessagesFile: compiler:Languages\Occitan.isl
 Name: French; MessagesFile: compiler:Languages\French.isl; InfoAfterFile: win32\Info\InfoAfter-fr.rtf
 Name: Arabic; MessagesFile: compiler:Languages\Arabic.isl
 Name: Hebrew; MessagesFile: compiler:Languages\Hebrew.isl
-Name: Russian; MessagesFile: compiler:Languages\Russian.isl
+Name: Russian; MessagesFile: compiler:Languages\Russian.isl; InfoAfterFile: win32\Info\InfoAfter-ru.rtf
 
 [Registry]
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: english; Languages: English
