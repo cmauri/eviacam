@@ -1,4 +1,4 @@
-;  Copyright (C) 2008 - 2011 Cesar Mauri Loba
+﻿;  Copyright (C) 2008 - 2012 Cesar Mauri Loba
 ;
 ;   Permission is hereby granted, free of charge, to any person obtaining a
 ;   copy of this software and associated documentation files (the "Software"),
@@ -27,7 +27,7 @@
 #define PUBLISHER		"Cesar Mauri - CREA Software Systems"
 #define VERTEXT			"v@VERSION@"
 #define APPBIN			"eViacam.exe"
-#define COPYRIGHTY		"� 2008-12"
+#define COPYRIGHTY		"© 2008-12"
 
 [Setup]
 AppName={#APPNAME}
@@ -58,7 +58,8 @@ MinVersion=0,5.0.2195sp3
 UsePreviousSetupType=true
 UsePreviousGroup=false
 DirExistsWarning=yes
-Compression=zip/9
+Compression=lzma2/max
+InternalCompressLevel=max
 ShowLanguageDialog=yes
 
 AppID={{BF2FC5F6-EC88-4CA5-BD83-DC6613FD077D}
@@ -89,10 +90,10 @@ Name: {group}\{#APPNAME} ayuda; Filename: {app}\bin\help\es\contents.htm; Langua
 Name: {group}\{#APPNAME} ajuda; Filename: {app}\bin\help\ca\contents.htm; Languages: Catala
 Name: {group}\{#APPNAME} axuda; Filename: {app}\bin\help\gl\contents.htm; Languages: Galego
 Name: {group}\{#APPNAME} Hilfe; Filename: {app}\bin\help\de\contents.htm; Languages: Deutsch
-
+Name: {group}\{#APPNAME} Помощь; Filename: {app}\bin\help\ru\contents.htm; Languages: Russian
 
 ;Name: {group}\README; Filename: {app}\doc\README.txt
-;Name: {group}\README.Catal�; Filename: {app}\doc\README.ca.txt
+;Name: {group}\README.Català; Filename: {app}\doc\README.ca.txt
 Name: {userdesktop}\eViacam; Filename: {app}\bin\eViacam.exe; WorkingDir: {app}\bin; Tasks: desktopicon
 
 [Run]
