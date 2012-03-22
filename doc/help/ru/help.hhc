@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="GENERATOR" content="HelpBlocks">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<OBJECT type="text/site properties">
+<param name="Font" value="MS Sans Serif,8,0">
+</OBJECT>
+<UL>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Содержание">
+      <param name="Local" value="contents.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Введение">
+      <param name="Local" value="intro.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Рабочая среда">
+      <param name="Local" value="environment.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="О веб-камерах">
+      <param name="Local" value="webcam.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Мастер настройки">
+      <param name="Local" value="wizard.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Автоматическая калибровка">
+      <param name="Local" value="calibration.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Режимы">
+      <param name="Local" value="click.htm">
+      </OBJECT>
+  <LI><OBJECT type="text/sitemap">
+      <param name="Name" value="Настройки">
+      <param name="Local" value="options.htm">
+      </OBJECT>
+</UL>
+</BODY></HTML>

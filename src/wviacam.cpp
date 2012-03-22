@@ -607,6 +607,9 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 		case (wxLANGUAGE_GALICIAN):
 			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/gl/help.hhp"));
 			break;
+		case (wxLANGUAGE_RUSSIAN):
+			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/ru/help.hhp"));
+			break;
 		default:
 			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/en/help.hhp"));
 			break;
