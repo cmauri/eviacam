@@ -36,10 +36,11 @@ const wxString s_langNames[]	= {
 	_T("Español"), 
 	_T("Galego"), 
 	_T("Italiano"),
+	_T("Português"),
 	_T("Русский"),
 	_T("Türkçe"),
 	_T("Occitan"),
 	_T("Français"),
 	_T("العربية"),
-	_T("עִבְרִית")	
+	_T("עִבְרִית")
 };
