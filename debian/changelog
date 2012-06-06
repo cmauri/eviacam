@@ -1,5 +1,5 @@
-eviacam (1.5.3-1) unstable; urgency=low
+eviacam (1.5.4-1) unstable; urgency=low
 
   * Initial release (closes: #634840 )
 
- -- Cesar Mauri <cesar@crea-si.com>  Fri, 30 Dec 2011 20:28:37 +0100
+ -- Cesar Mauri <cesar@crea-si.com>  Wed, 06 Jun 2012 13:34:03 +0200
