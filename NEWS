@@ -1,3 +1,9 @@
+2012-06-06 - Release 1.5.4
+* Fixed minor issues (see Changelog for details)
+* Added new translations
+	* Russian (application and manual, thanks to Sergey Shkurat)
+	* Portuguese (application, thanks to Wellyngton de Oliveira)
+
 2011-12-30 - Release 1.5.3
 * Fixed important bug [ID:3414928]. OpenCV Gui error. This defect crashed 
 the program (showing an error dialogue which said "Sizes of input arguments
