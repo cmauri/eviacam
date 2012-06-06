@@ -22,42 +22,48 @@ Linux
   
 - Generic compilation and installation
   ------------------------------------
-
   ./configure
   make 
   make install
 
 - Generic compilation and installation (debug mode)
   -------------------------------------------------
-  
   ./configure --enable-debug
   make 
   make install  
 
 - Source package generation
   -------------------------
-
   ./configure 
   make dist
 
-- DEB binary package generation
-  -----------------------------
-
-  ./configure
-  make deb
-
-- DEB source package generation
-  -----------------------------
+- DEB Packages
+  -------------
   
-  ./configure
-  make deb-src
+  Before generating any .deb package make sure file debian/changelog is up
+  to date. Run the following command and check that contents are correct:
+    dhc -i
 
-  Old way:
-
-    1.- Ensure that config.status doesn't exists (i.e. make distclean)
-    2.- Run: fakeroot debian/rules binary
-    3.- Clean tree:fakeroot debian/rules clean
-	
+  * DEB source package generation
+      ./configure
+      make deb-src
+	  
+  * changes file generation
+      Useful when generating packages for several distros. Assumes previous 
+	  step has been done. For each distro edit debian/changes with 
+		dch -i
+      add the right information then run
+	    make deb-src-changes
+	  
+  * DEB binary package generation
+      ./configure
+      make deb
+	  
+    Old way:
+      1.- Ensure that config.status doesn't exists (i.e. make distclean)
+      2.- Run: fakeroot debian/rules binary
+      3.- Clean tree:fakeroot debian/rules clean
+  	  
 - RPM package generation
   ----------------------
 
@@ -69,7 +75,7 @@ Windows
 
 - Pre-requisites
   --------------
-  
+  VS2003
   wxWidgets = 2.8.x
   opencv >= 1.0
   Platform SDK (tested with PSDK-x86_WindowsServer2003_SP1(2005))
