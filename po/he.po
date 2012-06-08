@@ -2,21 +2,23 @@
 # Copyright (C) YEAR Cesar Mauri Loba - CREA Software Systems
 # This file is distributed under the same license as the PACKAGE package.
 # Yaron Shahrabani <sh.yaron@gmail.com>, 2010.
-#: src/wcameradialog.cpp:193
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: eViacam\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2012-03-27 21:10+0200\n"
-"PO-Revision-Date: 2010-12-24 12:52+0300\n"
+"PO-Revision-Date: 2012-06-08 11:28+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Gezer (Hebrew)\n"
+"Language-Team: Gezer (Hebrew) <sh.yaron@gmail.com>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Virtaal 0.6.1\n"
+"X-Poedit-Language: Hebrew\n"
+"X-Poedit-Country: ISRAEL\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: src/wconfiguration.h:127
 msgid "Configuration"
@@ -26,7 +28,8 @@ msgstr "תצורה"
 msgid "Motion calibration"
 msgstr "כיול תנועה"
 
-#: src/wconfiguration.cpp:417 src/wwizard.cpp:1623
+#: src/wconfiguration.cpp:417
+#: src/wwizard.cpp:1623
 msgid "X axis speed"
 msgstr "מהירות בציר X"
 
@@ -34,7 +37,8 @@ msgstr "מהירות בציר X"
 msgid "Sets response sensitivity for the X axis."
 msgstr "הגדרת רגישות התגובה עבור ציר X."
 
-#: src/wconfiguration.cpp:425 src/wwizard.cpp:1632
+#: src/wconfiguration.cpp:425
+#: src/wwizard.cpp:1632
 msgid "Y axis speed"
 msgstr "מהירות בציר Y"
 
@@ -94,7 +98,8 @@ msgstr "תנועה"
 msgid "Workspace limit"
 msgstr "מגבלת סביבת העבודה"
 
-#: src/wconfiguration.cpp:473 src/hotkeymanager.cpp:49
+#: src/wconfiguration.cpp:473
+#: src/hotkeymanager.cpp:49
 msgid "Enable workspace limit"
 msgstr "הפעלת מגבלת סביבת העבודה"
 
@@ -114,12 +119,15 @@ msgstr "עליון"
 msgid "Top limit workspace."
 msgstr "הגבול העליון של סביבת העבודה."
 
-#: src/wconfiguration.cpp:494 src/wconfiguration.cpp:508
-#: src/wconfiguration.cpp:520 src/wconfiguration.cpp:534
+#: src/wconfiguration.cpp:494
+#: src/wconfiguration.cpp:508
+#: src/wconfiguration.cpp:520
+#: src/wconfiguration.cpp:534
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:499 src/clickwindowbitmap.cpp:236
+#: src/wconfiguration.cpp:499
+#: src/clickwindowbitmap.cpp:236
 msgid "Left"
 msgstr "שמאל"
 
@@ -127,7 +135,8 @@ msgstr "שמאל"
 msgid "Left limit workspace."
 msgstr "הגבול השמאלי של סביבת העבודה."
 
-#: src/wconfiguration.cpp:511 src/clickwindowbitmap.cpp:250
+#: src/wconfiguration.cpp:511
+#: src/clickwindowbitmap.cpp:250
 msgid "Right"
 msgstr "ימין"
 
@@ -144,13 +153,12 @@ msgid "Bottom limit workspace."
 msgstr "הגבול התחתון של סביבת העבודה."
 
 #: src/wconfiguration.cpp:537
-#, fuzzy
 msgid "Pointer wrapping"
-msgstr "כיול הסמן"
+msgstr "עטיפת הסמן"
 
 #: src/wconfiguration.cpp:540
 msgid "Allow wrapping the pointer around the working area"
-msgstr ""
+msgstr "מתן האפשרות לעטוף את סמן העכבר מסביב לאזור העבודה"
 
 #: src/wconfiguration.cpp:544
 msgid "Workspace"
@@ -234,7 +242,8 @@ msgstr "הצגת חלונית הלחיצה"
 msgid "Design:"
 msgstr "סגנון:"
 
-#: src/wconfiguration.cpp:614 src/wconfiguration.cpp:799
+#: src/wconfiguration.cpp:614
+#: src/wconfiguration.cpp:799
 msgid "Normal"
 msgstr "רגיל"
 
@@ -266,42 +275,39 @@ msgstr ""
 "חלונית הלחיצה."
 
 #: src/wconfiguration.cpp:631
-#, fuzzy
 msgid "Location:"
-msgstr "תנועה"
+msgstr "מיקום:"
 
 #: src/wconfiguration.cpp:637
 msgid "Floating horizontal"
-msgstr ""
+msgstr "צף אופקית"
 
 #: src/wconfiguration.cpp:638
 msgid "Floating vertical"
-msgstr ""
+msgstr "צף אנכית"
 
 #: src/wconfiguration.cpp:639
 msgid "Top docked"
-msgstr ""
+msgstr "מעוגן למעלה"
 
 #: src/wconfiguration.cpp:640
-#, fuzzy
 msgid "Bottom docked"
-msgstr "תחתון"
+msgstr "מעוגן למטה"
 
 #: src/wconfiguration.cpp:641
-#, fuzzy
 msgid "Left docked"
-msgstr "לחיצה שמאלית"
+msgstr "מעוגן שמאלה"
 
 #: src/wconfiguration.cpp:642
-#, fuzzy
 msgid "Right docked"
-msgstr "לחיצה ימנית"
+msgstr "מעוגן ימינה"
 
 #: src/wconfiguration.cpp:648
 msgid "Auto-hide"
-msgstr ""
+msgstr "הסתרה אוטומטית"
 
-#: src/wconfiguration.cpp:654 src/wwizard.cpp:907
+#: src/wconfiguration.cpp:654
+#: src/wwizard.cpp:907
 msgid "Gesture click"
 msgstr "תנועת לחיצה"
 
@@ -313,34 +319,49 @@ msgstr "הפעלת תנועת לחיצה"
 msgid "Move left:"
 msgstr "תזוזה שמאלה:"
 
-#: src/wconfiguration.cpp:669 src/wconfiguration.cpp:682
-#: src/wconfiguration.cpp:695 src/wconfiguration.cpp:708 src/wviacam.cpp:216
+#: src/wconfiguration.cpp:669
+#: src/wconfiguration.cpp:682
+#: src/wconfiguration.cpp:695
+#: src/wconfiguration.cpp:708
+#: src/wviacam.cpp:216
 msgid "Disable"
 msgstr "נטרול"
 
-#: src/wconfiguration.cpp:670 src/wconfiguration.cpp:683
-#: src/wconfiguration.cpp:696 src/wconfiguration.cpp:709 src/wwizard.cpp:1071
+#: src/wconfiguration.cpp:670
+#: src/wconfiguration.cpp:683
+#: src/wconfiguration.cpp:696
+#: src/wconfiguration.cpp:709
+#: src/wwizard.cpp:1071
 msgid "Left click"
 msgstr "לחיצה שמאלית"
 
-#: src/wconfiguration.cpp:671 src/wconfiguration.cpp:684
-#: src/wconfiguration.cpp:697 src/wconfiguration.cpp:710
-#, fuzzy
+#: src/wconfiguration.cpp:671
+#: src/wconfiguration.cpp:684
+#: src/wconfiguration.cpp:697
+#: src/wconfiguration.cpp:710
 msgid "Middle click"
-msgstr "לחיצה כפולה"
+msgstr "מעוגן למרכז"
 
-#: src/wconfiguration.cpp:672 src/wconfiguration.cpp:685
-#: src/wconfiguration.cpp:698 src/wconfiguration.cpp:711 src/wwizard.cpp:1083
+#: src/wconfiguration.cpp:672
+#: src/wconfiguration.cpp:685
+#: src/wconfiguration.cpp:698
+#: src/wconfiguration.cpp:711
+#: src/wwizard.cpp:1083
 msgid "Right click"
 msgstr "לחיצה ימנית"
 
-#: src/wconfiguration.cpp:673 src/wconfiguration.cpp:686
-#: src/wconfiguration.cpp:699 src/wconfiguration.cpp:712 src/wwizard.cpp:1093
+#: src/wconfiguration.cpp:673
+#: src/wconfiguration.cpp:686
+#: src/wconfiguration.cpp:699
+#: src/wconfiguration.cpp:712
+#: src/wwizard.cpp:1093
 msgid "Double click"
 msgstr "לחיצה כפולה"
 
-#: src/wconfiguration.cpp:674 src/wconfiguration.cpp:687
-#: src/wconfiguration.cpp:700 src/wconfiguration.cpp:713
+#: src/wconfiguration.cpp:674
+#: src/wconfiguration.cpp:687
+#: src/wconfiguration.cpp:700
+#: src/wconfiguration.cpp:713
 msgid "Drag click"
 msgstr "לחיצה וגרירה"
 
@@ -360,23 +381,27 @@ msgstr "הזזה למטה:"
 msgid "Click"
 msgstr "לחיצה"
 
-#: src/wconfiguration.cpp:726 src/wconfiguration.cpp:742
+#: src/wconfiguration.cpp:726
+#: src/wconfiguration.cpp:742
 msgid "Hotkeys"
-msgstr ""
+msgstr "מקשי קיצור"
 
 #: src/wconfiguration.cpp:749
 msgid "Startup"
 msgstr "הפעלה"
 
-#: src/wconfiguration.cpp:753 src/wwizard.cpp:1229
+#: src/wconfiguration.cpp:753
+#: src/wwizard.cpp:1229
 msgid "Start eViacam at user logon"
 msgstr "הפעלת eViacam עם כניסת המשתמש"
 
-#: src/wconfiguration.cpp:758 src/wwizard.cpp:1235
+#: src/wconfiguration.cpp:758
+#: src/wwizard.cpp:1235
 msgid "Enable eViacam at startup"
 msgstr "הפעלת eViacam עם הפעלת המחשב"
 
-#: src/wconfiguration.cpp:761 src/wwizard.cpp:1238
+#: src/wconfiguration.cpp:761
+#: src/wwizard.cpp:1238
 msgid ""
 "If checked the program automatically \n"
 "enables cursor control at startup."
@@ -416,42 +441,40 @@ msgstr ""
 
 #: src/wconfiguration.cpp:793
 msgid "CPU usage"
-msgstr ""
+msgstr "ניצול המעבד"
 
 #: src/wconfiguration.cpp:797
-#, fuzzy
 msgid "Lowest"
-msgstr "שמאל"
+msgstr "הנמוך ביותר"
 
 #: src/wconfiguration.cpp:798
 msgid "Low"
-msgstr ""
+msgstr "נמוך"
 
 #: src/wconfiguration.cpp:800
-#, fuzzy
 msgid "High"
-msgstr "ימין"
+msgstr "גבוה"
 
 #: src/wconfiguration.cpp:801
-#, fuzzy
 msgid "Highest"
-msgstr "ימין"
+msgstr "הגבוה ביותר"
 
 #: src/wconfiguration.cpp:807
 msgid "Stop the pointer when no face is detected"
-msgstr ""
+msgstr "יש לעצור את הסמן כאשר לא זוהו פנים"
 
 #: src/wconfiguration.cpp:810
 msgid "eViacam is only enabled when face is detected."
-msgstr ""
+msgstr "התכנית eViacam מופעלת רק כאשר מתבצע זיהוי של פנים."
 
 #: src/wconfiguration.cpp:816
 msgid "After"
-msgstr ""
+msgstr "לאחר"
 
-#: src/wconfiguration.cpp:822 src/wwizard.cpp:2142
+#: src/wconfiguration.cpp:822
+#: src/wwizard.cpp:2142
 msgid "seconds"
-msgstr ""
+msgstr "שניות"
 
 #: src/wconfiguration.cpp:825
 msgid "Advanced"
@@ -469,11 +492,13 @@ msgstr "ניהול הפרופילים"
 msgid "Select profile:"
 msgstr "בחירת פרופיל:"
 
-#: src/wconfiguration.cpp:841 src/wconfiguration.cpp:847
+#: src/wconfiguration.cpp:841
+#: src/wconfiguration.cpp:847
 msgid "Chooses desired active profile"
 msgstr "בחירת הפרופילים הפעילים הרצויים"
 
-#: src/wconfiguration.cpp:850 src/wconfiguration.cpp:1580
+#: src/wconfiguration.cpp:850
+#: src/wconfiguration.cpp:1580
 msgid "Add profile"
 msgstr "הוספת פרופיל"
 
@@ -513,17 +538,19 @@ msgstr "&אישור"
 msgid "&Cancel"
 msgstr "&ביטול"
 
-#: src/wconfiguration.cpp:903 src/wconfiguration.cpp:904
-#: src/wconfiguration.cpp:905 src/wconfiguration.cpp:906
+#: src/wconfiguration.cpp:903
+#: src/wconfiguration.cpp:904
+#: src/wconfiguration.cpp:905
+#: src/wconfiguration.cpp:906
 msgid "Key:"
 msgstr "מפתח:"
 
 #: src/wconfiguration.cpp:935
-#, fuzzy
 msgid "Set key"
-msgstr "בחירת לחצן"
+msgstr "הגדרת לחצן"
 
-#: src/wconfiguration.cpp:1504 src/wconfiguration.cpp:1691
+#: src/wconfiguration.cpp:1504
+#: src/wconfiguration.cpp:1691
 msgid "You should restart the application to apply this change"
 msgstr "עליך להפעיל מחדש את היישום כדי להחיל את השינוי הזה"
 
@@ -565,7 +592,8 @@ msgstr "הפרופיל כבר קיים."
 msgid "Invalid profile name."
 msgstr "שם הפרופיל שגוי."
 
-#: src/wconfiguration.cpp:1643 src/wconfiguration.cpp:1646
+#: src/wconfiguration.cpp:1643
+#: src/wconfiguration.cpp:1646
 msgid "Choose on-screen keyboard command"
 msgstr "בחירת פקודה להפעלת מקלדת על גבי המסך"
 
@@ -581,8 +609,10 @@ msgstr ""
 "פעולה זו עלולה לגרום לך לאבד את השליטה על המחשב.\n"
 "האם ברצונך להמשיך?"
 
-#: src/wconfiguration.cpp:1759 src/wconfiguration.cpp:1894
-#: src/wconfiguration.cpp:2020 src/viacamcontroller.cpp:348
+#: src/wconfiguration.cpp:1759
+#: src/wconfiguration.cpp:1894
+#: src/wconfiguration.cpp:2020
+#: src/viacamcontroller.cpp:348
 #: src/cmotioncalibration.cpp:183
 msgid "eViacam warning"
 msgstr "אזהרה של eViacam"
@@ -596,12 +626,15 @@ msgid ""
 "This key is used by another command.\n"
 "Do you want to try another key?"
 msgstr ""
+"מקש זה משמש לפקודה אחרת.\n"
+"האם ברצונך לנסות מקש אחר?"
 
 #: src/wviacam.h:71
 msgid "Enable Viacam"
 msgstr "הפעלת Viacam"
 
-#: src/clickwindowtext.cpp:141 src/clickwindowbitmap.cpp:227
+#: src/clickwindowtext.cpp:141
+#: src/clickwindowbitmap.cpp:227
 msgid "No click"
 msgstr "ללא לחיצה"
 
@@ -611,7 +644,7 @@ msgstr "#שמאל#"
 
 #: src/clickwindowtext.cpp:152
 msgid "#Middle#"
-msgstr ""
+msgstr "#אמצעי#"
 
 #: src/clickwindowtext.cpp:156
 msgid "#Right#"
@@ -625,20 +658,24 @@ msgstr "#גרירה#"
 msgid "#Double Click#"
 msgstr "#לחיצה כפולה#"
 
-#: src/clickwindowtext.cpp:168 src/clickwindowtext.cpp:344
-#: src/clickwindowbitmap.cpp:271 src/clickwindowbitmap.cpp:502
+#: src/clickwindowtext.cpp:168
+#: src/clickwindowtext.cpp:344
+#: src/clickwindowbitmap.cpp:271
+#: src/clickwindowbitmap.cpp:502
 msgid "Hide main window"
 msgstr "הסתרת החלון הראשי"
 
-#: src/clickwindowtext.cpp:346 src/clickwindowbitmap.cpp:507
+#: src/clickwindowtext.cpp:346
+#: src/clickwindowbitmap.cpp:507
 msgid "Show main window"
 msgstr "הצגת החלון הראשי"
 
 #: src/clickwindowbitmap.cpp:243
 msgid "Middle"
-msgstr ""
+msgstr "אמצעי"
 
-#: src/clickwindowbitmap.cpp:257 src/wwizard.cpp:1051
+#: src/clickwindowbitmap.cpp:257
+#: src/wwizard.cpp:1051
 msgid "Drag"
 msgstr "רירה"
 
@@ -682,7 +719,8 @@ msgstr ""
 "הפקודה להפעלת המקלדת על גבי המסך אינה מוגדרת.\n"
 "נא להגדיר אותה באמצעות דו־שיח ההגדרות."
 
-#: src/viacamcontroller.cpp:373 src/viacamcontroller.cpp:387
+#: src/viacamcontroller.cpp:373
+#: src/viacamcontroller.cpp:387
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "שגיאת eViacam"
@@ -726,7 +764,8 @@ msgstr ""
 "פועלת עלול לגרום לאבדן השליטה בסמן העכבר.\n"
 "האם אכן ברצונך להמשיך?"
 
-#: src/wabout.cpp:142 src/wcameradialog.cpp:164
+#: src/wabout.cpp:142
+#: src/wcameradialog.cpp:164
 msgid "Close"
 msgstr "סגירה"
 
@@ -786,7 +825,8 @@ msgstr "ע&זרה"
 msgid "Enable"
 msgstr "הפעלה"
 
-#: src/wviacam.cpp:220 src/clickwindow.h:31
+#: src/wviacam.cpp:220
+#: src/clickwindow.h:31
 msgid "Click Window"
 msgstr "חלון לחיצה"
 
@@ -869,9 +909,10 @@ msgstr "בחירת לחצן"
 msgid "Move your head left and right."
 msgstr "עליך להזיז את ראשך שמאלה וימינה."
 
-#: src/wmotioncalibrationx.cpp:151 src/wmotioncalibrationy.cpp:146
+#: src/wmotioncalibrationx.cpp:151
+#: src/wmotioncalibrationy.cpp:146
 msgid "Your face is not detected. This may produce wrong calibration results."
-msgstr ""
+msgstr "הפנים שלך לא זוהו. מצב זה עלול להוכיל לתוצאות כיול שגויות."
 
 #: src/cmotioncalibration.cpp:182
 msgid ""
@@ -897,32 +938,29 @@ msgstr "אשף זה ידריך אותך במהלך הגדרות התצורה ה�
 msgid "Click Next to continue."
 msgstr "יש ללחוץ על הבא כדי להמשיך."
 
-#: src/wwizard.cpp:516 src/wwizard.cpp:1599
+#: src/wwizard.cpp:516
+#: src/wwizard.cpp:1599
 msgid "Pointer calibration"
 msgstr "כיול הסמן"
 
-#: src/wwizard.cpp:525 src/wwizard.cpp:698
+#: src/wwizard.cpp:525
+#: src/wwizard.cpp:698
 msgid "Setting motion parameters"
 msgstr "הגדרת הפרמטרים של התנועה"
 
 #: src/wwizard.cpp:534
 msgid ""
-"The assisted calibration procedure will ask you to move your head in order "
-"to automatically configure the appropiate motion parameters.\n"
+"The assisted calibration procedure will ask you to move your head in order to automatically configure the appropiate motion parameters.\n"
 "\n"
-"After this calibration stage, you can manually adjust the motion "
-"parameters.\n"
+"After this calibration stage, you can manually adjust the motion parameters.\n"
 "\n"
-"NOTE: the calibration assistant will enable the pointer control so that you "
-"can test your configuration."
+"NOTE: the calibration assistant will enable the pointer control so that you can test your configuration."
 msgstr ""
-"תהליך הכיול עם סיוע יבקש ממך להזיז את ראשך כדי להגדיר אוטומטית את הפרמטרים "
-"המתאימים של התנועה.\n"
+"תהליך הכיול עם סיוע יבקש ממך להזיז את ראשך כדי להגדיר אוטומטית את הפרמטרים המתאימים של התנועה.\n"
 "\n"
 "לאחר שלב כיול זה, ניתן להתאים ידנית את הפרמטרים של התנועה.\n"
 "\n"
-"לתשומת לבך: המסייע בכיול יפעיל את השליטה בסמן כדי שתהיה באפשרות לבחון את "
-"התצורה שלך."
+"לתשומת לבך: המסייע בכיול יפעיל את השליטה בסמן כדי שתהיה באפשרות לבחון את התצורה שלך."
 
 #: src/wwizard.cpp:542
 msgid "Perform assisted calibration"
@@ -940,7 +978,8 @@ msgstr ""
 msgid "Pointer calibration "
 msgstr "כיול הסמן"
 
-#: src/wwizard.cpp:874 src/wwizard.cpp:1848
+#: src/wwizard.cpp:874
+#: src/wwizard.cpp:1848
 msgid "Click mode"
 msgstr "מצב לחיצה"
 
@@ -957,20 +996,12 @@ msgid "Dwell Click (default)"
 msgstr "לחיצת השהיה (בררת מחדל)"
 
 #: src/wwizard.cpp:902
-msgid ""
-"The click is generated automatically when you hover the mouse pointer "
-"momentarily. The Click the Window lets you choose between different actions."
-msgstr ""
-"לחיצה תיווצר אוטומטית בעת ריחוף עם סמן העכבר לזמן קצר. הלחיצה מעלה חלונית "
-"המאפשרת לך לבחור בין הפעולות השונות."
+msgid "The click is generated automatically when you hover the mouse pointer momentarily. The Click the Window lets you choose between different actions."
+msgstr "לחיצה תיווצר אוטומטית בעת ריחוף עם סמן העכבר לזמן קצר. הלחיצה מעלה חלונית המאפשרת לך לבחור בין הפעולות השונות."
 
 #: src/wwizard.cpp:914
-msgid ""
-"The click is automatically generated by stopping the pointer for a moment "
-"and then moving the pointer to one of the 4 directions to choose the action."
-msgstr ""
-"הלחיצה תופעל אוטומטית בעת עצירה עם הסמן לרגע ואז העברת הסמן לאחד מ־4 "
-"הכיוונים כדי לבחור בפעולה."
+msgid "The click is automatically generated by stopping the pointer for a moment and then moving the pointer to one of the 4 directions to choose the action."
+msgstr "הלחיצה תופעל אוטומטית בעת עצירה עם הסמן לרגע ואז העברת הסמן לאחד מ־4 הכיוונים כדי לבחור בפעולה."
 
 #: src/wwizard.cpp:920
 msgid "No click. Click function disabled."
@@ -1031,15 +1062,8 @@ msgid "framerate"
 msgstr "קצב שקופיות"
 
 #: src/wwizard.cpp:1447
-msgid ""
-"For best performance possible, the frame rate should be equal to or greater "
-"than 25 fps. eViacam tries to automatically configure your camera, but If "
-"this value is below this threshold you may need to manually adjust the "
-"camera settings."
-msgstr ""
-"כדי לקבל את הביצועים הטובים ביותר כלל הניתן, קצב השקופיות צריך להיות שווה או "
-"גדול מ־25 שקופיות לשנייה. התכנית eViacam תנסה להגדיר את המצלמה שלך אוטומטית "
-"אך אם ערך זה הוא מתחת לסף יהיה עליך להגדיר ידנית את תצורת המצלמה."
+msgid "For best performance possible, the frame rate should be equal to or greater than 25 fps. eViacam tries to automatically configure your camera, but If this value is below this threshold you may need to manually adjust the camera settings."
+msgstr "כדי לקבל את הביצועים הטובים ביותר כלל הניתן, קצב השקופיות צריך להיות שווה או גדול מ־25 שקופיות לשנייה. התכנית eViacam תנסה להגדיר את המצלמה שלך אוטומטית אך אם ערך זה הוא מתחת לסף יהיה עליך להגדיר ידנית את תצורת המצלמה."
 
 #: src/wwizard.cpp:1453
 msgid "Camera settings..."
@@ -1057,11 +1081,14 @@ msgstr ""
 "ניתן להפעיל/לנטרל את תנועת העכבר כדי לבדוק את מהירות הסמן\n"
 "ולהתרים את הפרמטרים ידנית."
 
-#: src/wwizard.cpp:1642 src/wwizard.cpp:1723 src/wwizard.cpp:1741
+#: src/wwizard.cpp:1642
+#: src/wwizard.cpp:1723
+#: src/wwizard.cpp:1741
 msgid "Enable motion"
 msgstr "הפעלת תנועה"
 
-#: src/wwizard.cpp:1719 src/wwizard.cpp:1737
+#: src/wwizard.cpp:1719
+#: src/wwizard.cpp:1737
 msgid "Disable motion"
 msgstr "נטרול תנועה"
 
@@ -1074,34 +1101,20 @@ msgid "eViacam provides several methods to generate mouse click actions:"
 msgstr "התכנית eViacam מציעה מספר שיטות לייצר פעולות לחיצת עכבר:"
 
 #: src/wwizard.cpp:1872
-msgid ""
-"- Dwell Click (default). The click is generated automatically when you hover "
-"the mouse pointer momentarily. The Click the Window lets you choose between "
-"different actions."
-msgstr ""
-"– לחיצת השהיה (בררת מחדל). לחיצה תיווצר אוטומטית בעת ריחוף עם סמן העכבר לזמן "
-"קצר. הלחיצה מעלה חלונית המאפשרת לך לבחור בין הפעולות השונות."
+msgid "- Dwell Click (default). The click is generated automatically when you hover the mouse pointer momentarily. The Click the Window lets you choose between different actions."
+msgstr "– לחיצת השהיה (בררת מחדל). לחיצה תיווצר אוטומטית בעת ריחוף עם סמן העכבר לזמן קצר. הלחיצה מעלה חלונית המאפשרת לך לבחור בין הפעולות השונות."
 
 #: src/wwizard.cpp:1877
-msgid ""
-"- Gesture Click. The click is automatically generated by stopping the "
-"pointer for a moment and then moving the pointer to one of the 4 directions "
-"to choose the action."
-msgstr ""
-"– לחיצת תנועה. הלחיצה תופעל אוטומטית בעת עצירה עם הסמן לרגע ואז העברת הסמן "
-"לאחד מ־4 הכיוונים כדי לבחור בפעולה."
+msgid "- Gesture Click. The click is automatically generated by stopping the pointer for a moment and then moving the pointer to one of the 4 directions to choose the action."
+msgstr "– לחיצת תנועה. הלחיצה תופעל אוטומטית בעת עצירה עם הסמן לרגע ואז העברת הסמן לאחד מ־4 הכיוונים כדי לבחור בפעולה."
 
 #: src/wwizard.cpp:1883
 msgid "- No click. Click function disabled."
 msgstr "– ללא לחיצה. אפשרות הלחיצה מנוטרלת."
 
 #: src/wwizard.cpp:1889
-msgid ""
-"In the next window you can choose the method to click. eViacam will be "
-"enabled to allow you to test the different ways of clicking."
-msgstr ""
-"בחלון הבא באפשרותך לבחור בשיטת הלחיצה. התכנית eViacam תופעל כדי לאפשר לך "
-"לבחון את הדרכים השונות ללחיצה."
+msgid "In the next window you can choose the method to click. eViacam will be enabled to allow you to test the different ways of clicking."
+msgstr "בחלון הבא באפשרותך לבחור בשיטת הלחיצה. התכנית eViacam תופעל כדי לאפשר לך לבחון את הדרכים השונות ללחיצה."
 
 #: src/wwizard.cpp:2099
 msgid "Tracker setup"
@@ -1112,33 +1125,26 @@ msgid "Configure motion tracking area"
 msgstr "הגדרת אזור מעקב התנועה"
 
 #: src/wwizard.cpp:2117
-#, fuzzy
 msgid ""
-"The user's face must appear inside the blue rectangle (tracking area) to "
-"move the pointer.\n"
+"The user's face must appear inside the blue rectangle (tracking area) to move the pointer.\n"
 "\n"
-"The system is able to detect the user's face automatically. But, if "
-"necessary, you may disable this option and move and resize the tracking area "
-"to set it around your face."
+"The system is able to detect the user's face automatically. But, if necessary, you may disable this option and move and resize the tracking area to set it around your face."
 msgstr ""
 "על הפנים של המשתמש להופיע במלבן הכחול (אזור המעקב) כדי להזיז את סמן העכבר.\n"
 "\n"
-"יש להזיז ולשנות את גודל האזור במידת הצורך כדי להגדיר אותו סביב הפנים שלך."
+"המערכת יכולה לזהות את הפנים של המשתמש אוטומטית, אך, אם יש צורך בכך, ניתן לבטל את אפשרות זו ולהזיז ולשנות את גודל האזור כדי להגדיר אותו סביב הפנים שלך."
 
 #: src/wwizard.cpp:2123
-#, fuzzy
 msgid "Locate face automatically (recommended)"
-msgstr "איתור הפנים באופן מיידי"
+msgstr "איתור הפנים אוטומטית (מומלץ)"
 
 #: src/wwizard.cpp:2129
-#, fuzzy
 msgid "Disable eViacam if no face is found"
-msgstr "הפעלת eViacam עם הפעלת המחשב"
+msgstr "נטרול eViacam אם לא נמצאו פנים"
 
 #: src/wwizard.cpp:2136
-#, fuzzy
 msgid "Disable after"
-msgstr "נטרול"
+msgstr "נטרול לאחר"
 
 #: src/wconfirmcalibration.cpp:158
 msgid "Move your head to see how it works"
@@ -1158,20 +1164,26 @@ msgstr ""
 "- \"ביטול\" משמר את התצורה הישנה.\n"
 "- \"מחדש\" מתחיל את תהליך הכיול מחדש."
 
-#: src/wconfirmcalibration.cpp:172 src/wconfirmcalibration.cpp:290
-#: src/wconfirmcalibration.cpp:297 src/wconfirmcalibration.cpp:304
+#: src/wconfirmcalibration.cpp:172
+#: src/wconfirmcalibration.cpp:290
+#: src/wconfirmcalibration.cpp:297
+#: src/wconfirmcalibration.cpp:304
 #: wxutil/warnbaroverlap.cpp:136
 msgid "Ok"
 msgstr "אישור"
 
-#: src/wconfirmcalibration.cpp:175 src/wconfirmcalibration.cpp:191
-#: src/wconfirmcalibration.cpp:291 src/wconfirmcalibration.cpp:298
+#: src/wconfirmcalibration.cpp:175
+#: src/wconfirmcalibration.cpp:191
+#: src/wconfirmcalibration.cpp:291
+#: src/wconfirmcalibration.cpp:298
 #: src/wconfirmcalibration.cpp:305
 msgid "Cancel"
 msgstr "ביטול"
 
-#: src/wconfirmcalibration.cpp:178 src/wconfirmcalibration.cpp:292
-#: src/wconfirmcalibration.cpp:299 src/wconfirmcalibration.cpp:306
+#: src/wconfirmcalibration.cpp:178
+#: src/wconfirmcalibration.cpp:292
+#: src/wconfirmcalibration.cpp:299
+#: src/wconfirmcalibration.cpp:306
 msgid "Repeat"
 msgstr "מחדש"
 
@@ -1196,34 +1208,28 @@ msgid "Camera settings"
 msgstr "הגדרות המצלמה"
 
 #: src/hotkeymanager.cpp:33
-#, fuzzy
 msgid "Enable eViacam"
-msgstr "הפעלת Viacam"
+msgstr "הפעלת eViacam"
 
 #: src/hotkeymanager.cpp:65
-#, fuzzy
 msgid "Center the pointer"
-msgstr "נא להזין את שם הפרופיל החדש"
+msgstr "מרכוז הסמן"
 
 #: src/hotkeymanager.cpp:81
-#, fuzzy
 msgid "Increase the X axis speed"
-msgstr "מהירות בציר X"
+msgstr "הגברת המהירות בציר X"
 
 #: src/hotkeymanager.cpp:97
-#, fuzzy
 msgid "Increase the Y axis speed"
-msgstr "מהירות בציר Y"
+msgstr "הגברת המהירות בציר Y"
 
 #: src/hotkeymanager.cpp:113
-#, fuzzy
 msgid "Decrease the X axis speed"
-msgstr "מהירות בציר X"
+msgstr "הנמכת המהירות בציר X"
 
 #: src/hotkeymanager.cpp:129
-#, fuzzy
 msgid "Decrease the Y axis speed"
-msgstr "מהירות בציר Y"
+msgstr "הנמכת המהירות בציר Y"
 
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
@@ -1231,7 +1237,7 @@ msgstr "לא זוהתה מצלמה. התהליך מבוטל"
 
 #: wxutil/warnbaroverlap.h:41
 msgid "Overlapping warning"
-msgstr ""
+msgstr "אזהרת חפיפה"
 
 #: wxutil/warnbaroverlap.cpp:127
 msgid ""
@@ -1239,10 +1245,13 @@ msgid ""
 "This can prevent it from working properly when auto-hide mode is enabled.\n"
 "It is recommended to move the Click window to a free position."
 msgstr ""
+"מיקום חלון הלחיצה הנבחר תפוס על ידי סרגל אחר.\n"
+"מצב זה עלול למנוע מהעבודה התקינה של התכנית כאשר מופעל מצב הסתרה אוטומטית.\n"
+"מומלץ להזיז את חלון הלחיצה למיקום פנוי."
 
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
-msgstr ""
+msgstr "אין להציג הודעה זו שוב"
 
 #, fuzzy
 #~ msgid "hotKeyEnable"
