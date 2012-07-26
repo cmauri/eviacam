@@ -74,11 +74,10 @@ public:
 	void SetAcceleration(unsigned int acceleration);
 
 	unsigned int GetSmoothness() const {
-		return (unsigned int) (powf (10.0f, m_pMouseControl->GetLowPassFilterWeight ())) - 1;
+		return (unsigned int) (powf (10.0f, m_pMouseControl->GetLowPassFilterWeight ()) + 0.5f) - 1;
 	}
 	void SetSmoothness (unsigned int smoothness) {
 		if (smoothness> 8) smoothness= 8;
-		//SetLowPassFilterWeight (((float) smoothness) / 10.0f);
 		m_pMouseControl->SetLowPassFilterWeight (log10f((float) smoothness + 1));
 	}
 
