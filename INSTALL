@@ -42,7 +42,7 @@ Linux
   
   Before generating any .deb package make sure file debian/changelog is up
   to date. Run the following command and check that contents are correct:
-    dhc -i
+    dch -i
 
   * DEB source package generation
       ./configure
