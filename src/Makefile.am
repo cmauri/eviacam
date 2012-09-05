@@ -28,7 +28,8 @@ noinst_HEADERS = wgetkey.h \
 	hotkeymanager.h \
 	dwellclick.h \
 	gestureclick.h \
-	pointeraction.h
+	pointeraction.h \
+	mousecommand.h
 
 dist_noinst_DATA= version.h.in \
 	eviacamloader.c.in \

@@ -149,9 +149,9 @@ bool CClickWindowController::IsCursorOverWindow(long x, long y)
 }
 
 // Get the next action that should be sent
-CClickWindowController::EAction CClickWindowController::GetAction(long x, long y)
+mousecmd::mousecmd CClickWindowController::GetAction(long x, long y)
 {
-	CClickWindowController::EAction retval= CClickWindowController::ACT_NO_CLICK;
+	mousecmd::mousecmd retval= mousecmd::CMD_NO_CLICK;
 
 	//wxMutexGuiEnter();
 
@@ -160,9 +160,9 @@ CClickWindowController::EAction CClickWindowController::GetAction(long x, long y
 		if (IsCursorOverWindow(x,y))
 		{
 #if defined(__WXMSW__)
-			retval= CClickWindowController::ACT_LEFT_UP;
+			retval= mousecmd::CMD_LEFT_UP;
 #else
-			retval= CClickWindowController::ACT_LEFT_CLICK;
+			retval= mousecmd::CMD_LEFT_CLICK;
 #endif
 		}
 		else
@@ -170,20 +170,20 @@ CClickWindowController::EAction CClickWindowController::GetAction(long x, long y
 			switch (m_currentButton)
 			{
 			case CClickWindowController::LEFT:
-				retval= CClickWindowController::ACT_LEFT_CLICK;
+				retval= mousecmd::CMD_LEFT_CLICK;
 				break;
 			case CClickWindowController::MIDDLE:
-				retval= CClickWindowController::ACT_MIDDLE_CLICK;
+				retval= mousecmd::CMD_MIDDLE_CLICK;
 				break;
 			case CClickWindowController::RIGHT:
-				retval= CClickWindowController::ACT_RIGHT_CLICK;
+				retval= mousecmd::CMD_RIGHT_CLICK;
 				break;
 			case CClickWindowController::DRAG:
-				if (!m_halfDragClick) retval= CClickWindowController::ACT_LEFT_DOWN;
-				else retval= CClickWindowController::ACT_LEFT_UP;
+				if (!m_halfDragClick) retval= mousecmd::CMD_LEFT_DOWN;
+				else retval= mousecmd::CMD_LEFT_UP;
 				break;
 			case CClickWindowController::DBLCLICK:
-				retval= CClickWindowController::ACT_DOUBLE_CLICK;
+				retval= mousecmd::CMD_DOUBLE_CLICK;
 				break;
 			default:
 				assert (false);
@@ -194,9 +194,9 @@ CClickWindowController::EAction CClickWindowController::GetAction(long x, long y
 	{
 		if (IsCursorOverNoClickButton(x, y))
 #if defined(__WXMSW__)
-			retval= CClickWindowController::ACT_LEFT_UP;
+			retval= mousecmd::CMD_LEFT_UP;
 #else
-			retval= CClickWindowController::ACT_LEFT_CLICK;
+			retval= mousecmd::CMD_LEFT_CLICK;
 #endif
 	}	
 

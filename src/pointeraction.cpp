@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by:
 // Created:
-// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-12 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -238,11 +238,9 @@ void CPointerAction::SetEnabled(bool value)
 			break;
 		case CPointerAction::DWELL:
 			m_pDwellClick->SetEnabled(value);
-			//m_pDwellClick->Reset();
 			break;
 		case CPointerAction::GESTURE:
 			m_pGestureClick->SetEnabled(value);
-			//m_pGestureClick->Reset();
 			break;
 		default:
 			assert (false);

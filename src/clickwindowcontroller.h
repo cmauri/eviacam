@@ -23,6 +23,7 @@
 #define CLICKWINDOWCONTROLLER_H
 
 #include "configbase.h"
+#include "mousecommand.h"
 
 class CViacamController;
 class CClickWindow;
@@ -32,10 +33,8 @@ class CClickWindowController  : public CConfigBase
 {
 public:
 	enum EButton { NO_CLICK= 0, LEFT, MIDDLE, RIGHT, DRAG, DBLCLICK };
-	enum EAction { ACT_NO_CLICK = 0, ACT_LEFT_CLICK, ACT_MIDDLE_CLICK, ACT_RIGHT_CLICK, ACT_LEFT_DOWN, ACT_LEFT_UP, ACT_DOUBLE_CLICK };
 	enum EDesign { NORMAL= 0, THIN };
 	enum ELocation { FLOATING_HORIZONTAL= 0, FLOATING_VERTICAL, TOP_DOCKED, BOTTOM_DOCKED, LEFT_DOCKED, RIGHT_DOCKED };
-	//enum EClickWindowStatus { VISIBLE= 0, HIDDEN, DOCKED };
 
 	CClickWindowController(CViacamController & pViacamController);
 	~CClickWindowController();
@@ -49,7 +48,7 @@ public:
 	void Reset();
 
 	// Get the next action that should be sent. Called by the mouse controller.
-	EAction GetAction(long x, long y);
+	mousecmd::mousecmd GetAction(long x, long y);
 	
 	// Notifies click bar that the click action has to be sent
 	// and where. Updates internal state. Called by the mouse controller.
@@ -114,7 +113,6 @@ private:
 	EDesign m_design;
 	ELocation m_location;
 	bool m_autohide;
-	//EClickWindowStatus m_status;
 };
 
 inline const CClickWindowController::EDesign CClickWindowController::GetDesign()

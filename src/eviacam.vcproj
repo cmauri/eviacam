@@ -361,6 +361,9 @@ copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo
 				RelativePath=".\langnames-utf16.h">
 			</File>
 			<File
+				RelativePath=".\mousecommand.h">
+			</File>
+			<File
 				RelativePath=".\pointeraction.h">
 			</File>
 			<File

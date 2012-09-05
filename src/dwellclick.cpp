@@ -111,9 +111,9 @@ bool CDwellClick::ProcessMotion (int dxPix, int dyPix,
 			if (m_visualAlertsEnabled)
 				m_progressVisualAlert.Update(xCurr, yCurr, m_dwellCountdown.PercentagePassed());
 
-		CClickWindowController::EAction action= m_pClickWindowController->GetAction (xCurr, yCurr);
+		mousecmd::mousecmd action= m_pClickWindowController->GetAction (xCurr, yCurr);
 
-		if (action== CClickWindowController::ACT_NO_CLICK) {
+		if (action== mousecmd::CMD_NO_CLICK) {
 			if (m_visualAlertsEnabled)
 				m_progressVisualAlert.End();
 			
@@ -124,22 +124,22 @@ bool CDwellClick::ProcessMotion (int dxPix, int dyPix,
 				// Send action
 				switch (action)
 				{
-				case CClickWindowController::ACT_LEFT_CLICK:
+				case mousecmd::CMD_LEFT_CLICK:
 					m_mouseControl->LeftClick();
 					break;
-				case CClickWindowController::ACT_MIDDLE_CLICK:
+				case mousecmd::CMD_MIDDLE_CLICK:
 					m_mouseControl->MiddleClick();
 					break;
-				case CClickWindowController::ACT_RIGHT_CLICK:
+				case mousecmd::CMD_RIGHT_CLICK:
 					m_mouseControl->RightClick();
 					break;
-				case CClickWindowController::ACT_LEFT_DOWN:
+				case mousecmd::CMD_LEFT_DOWN:
 					m_mouseControl->LeftDown();
 					break;
-				case CClickWindowController::ACT_LEFT_UP:
+				case mousecmd::CMD_LEFT_UP:
 					m_mouseControl->LeftUp();
 					break;
-				case CClickWindowController::ACT_DOUBLE_CLICK:
+				case mousecmd::CMD_DOUBLE_CLICK:
 					m_mouseControl->LeftDblClick();
 					break;
 				default:
