@@ -31,6 +31,18 @@ win32/eviacam.suo
 win32/eviacam.ncb
 win32/installer.iss
 
+# linux build
+creavision/.libs/
+libwebcam/.libs/
+wxcamwindow/.libs/
+wxutil/.libs/
+po/remove-potcdate.sed
+src/eviacam
+src/eviacamloader
+*.o
+*.lo
+*.la
+
 # Editor backup & autosave
 src/gui.pjd.bak
 src/gui-autosave.pjd
