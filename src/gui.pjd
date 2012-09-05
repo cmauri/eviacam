@@ -152,6 +152,7 @@
         <string name="Use wxPropertyGrid">"Yes"</string>
         <string name="Use wxAUI">"Yes"</string>
         <string name="Use wxSTC">"Yes"</string>
+        <string name="Use wxRegEx">"builtin"</string>
         <string name="Use wxRibbonControl">"Yes"</string>
         <string name="Executable name">"%EXECUTABLE%"</string>
         <string name="Program arguments">""</string>
@@ -187,6 +188,7 @@
         <string name="Include path">"%AUTO%"</string>
         <string name="Resource flags">"%AUTO%"</string>
         <string name="Resource path">"%AUTO%"</string>
+        <string name="Extra dependencies">"%AUTO%"</string>
         <bool name="Suppress source rules">0</bool>
         <bool name="Enable makefile generation">1</bool>
         <document>
@@ -220,6 +222,7 @@
           <string name="Use wxPropertyGrid">"Yes"</string>
           <string name="Use wxAUI">"Yes"</string>
           <string name="Use wxSTC">"Yes"</string>
+          <string name="Use wxRegEx">"builtin"</string>
           <string name="Use wxRibbonControl">"Yes"</string>
           <string name="Executable name">"%EXECUTABLE%"</string>
           <string name="Program arguments">""</string>
@@ -255,6 +258,7 @@
           <string name="Include path">"%AUTO%"</string>
           <string name="Resource flags">"%AUTO%"</string>
           <string name="Resource path">"%AUTO%"</string>
+          <string name="Extra dependencies">"%AUTO%"</string>
           <bool name="Suppress source rules">0</bool>
           <bool name="Enable makefile generation">1</bool>
           <string name="Ignore libraries">"%AUTO%"</string>
@@ -290,6 +294,7 @@
           <string name="Use wxPropertyGrid">"Yes"</string>
           <string name="Use wxAUI">"Yes"</string>
           <string name="Use wxSTC">"Yes"</string>
+          <string name="Use wxRegEx">"builtin"</string>
           <string name="Use wxRibbonControl">"Yes"</string>
           <string name="Executable name">"%EXECUTABLE%"</string>
           <string name="Program arguments">""</string>
@@ -325,6 +330,7 @@
           <string name="Include path">"%AUTO%"</string>
           <string name="Resource flags">"%AUTO%"</string>
           <string name="Resource path">"%AUTO%"</string>
+          <string name="Extra dependencies">"%AUTO%"</string>
           <bool name="Suppress source rules">0</bool>
           <bool name="Enable makefile generation">1</bool>
           <string name="Ignore libraries">"%AUTO%"</string>
@@ -360,6 +366,7 @@
           <string name="Use wxPropertyGrid">"Yes"</string>
           <string name="Use wxAUI">"Yes"</string>
           <string name="Use wxSTC">"Yes"</string>
+          <string name="Use wxRegEx">"builtin"</string>
           <string name="Use wxRibbonControl">"Yes"</string>
           <string name="Use wx-config">"Yes"</string>
           <string name="Use installed wxWidgets">"Yes"</string>
@@ -397,6 +404,7 @@
           <string name="Include path">"%AUTO%"</string>
           <string name="Resource flags">"%AUTO%"</string>
           <string name="Resource path">"%AUTO%"</string>
+          <string name="Extra dependencies">"%AUTO%"</string>
           <bool name="Suppress source rules">0</bool>
           <bool name="Enable makefile generation">1</bool>
           <string name="Command for wx-config">"%AUTO%"</string>
@@ -437,6 +445,7 @@
           <string name="Use wxPropertyGrid">"Yes"</string>
           <string name="Use wxAUI">"Yes"</string>
           <string name="Use wxSTC">"Yes"</string>
+          <string name="Use wxRegEx">"builtin"</string>
           <string name="Use wxRibbonControl">"Yes"</string>
           <string name="Use wx-config">"Yes"</string>
           <string name="Use installed wxWidgets">"No"</string>
@@ -474,6 +483,7 @@
           <string name="Include path">"%AUTO%"</string>
           <string name="Resource flags">"%AUTO%"</string>
           <string name="Resource path">"%AUTO%"</string>
+          <string name="Extra dependencies">"%AUTO%"</string>
           <bool name="Suppress source rules">0</bool>
           <bool name="Enable makefile generation">1</bool>
           <string name="Command for wx-config">"%AUTO%"</string>
@@ -2519,6 +2529,14 @@ necessary."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
+            <string name="proxy-AlignH">"Centre"</string>
+            <string name="proxy-AlignV">"Centre"</string>
+            <long name="proxy-Stretch factor">0</long>
+            <long name="proxy-Border">5</long>
+            <bool name="proxy-wxLEFT">1</bool>
+            <bool name="proxy-wxRIGHT">1</bool>
+            <bool name="proxy-wxTOP">1</bool>
+            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -2792,6 +2810,7 @@ necessary."</string>
                       <string name="proxy-Font">""</string>
                       <bool name="proxy-Hidden">0</bool>
                       <bool name="proxy-Enabled">1</bool>
+                      <string name="proxy-Parenting">"Use wxWidgets version"</string>
                       <string name="proxy-Static box class">"wxStaticBox"</string>
                       <string name="proxy-Orientation">"Vertical"</string>
                       <string name="proxy-AlignH">"Expand"</string>
@@ -3822,6 +3841,7 @@ to start moving pointer."</string>
                       <string name="proxy-Font">""</string>
                       <bool name="proxy-Hidden">0</bool>
                       <bool name="proxy-Enabled">1</bool>
+                      <string name="proxy-Parenting">"Use wxWidgets version"</string>
                       <string name="proxy-Static box class">"wxStaticBox"</string>
                       <string name="proxy-Orientation">"Vertical"</string>
                       <string name="proxy-AlignH">"Expand"</string>
@@ -4895,6 +4915,7 @@ to the selected area."</string>
                       <string name="proxy-Font">""</string>
                       <bool name="proxy-Hidden">0</bool>
                       <bool name="proxy-Enabled">1</bool>
+                      <string name="proxy-Parenting">"Use wxWidgets version"</string>
                       <string name="proxy-Static box class">"wxStaticBox"</string>
                       <string name="proxy-Orientation">"Vertical"</string>
                       <string name="proxy-AlignH">"Expand"</string>
@@ -5095,6 +5116,7 @@ to the selected area."</string>
                       <string name="proxy-Font">""</string>
                       <bool name="proxy-Hidden">0</bool>
                       <bool name="proxy-Enabled">1</bool>
+                      <string name="proxy-Parenting">"Use wxWidgets version"</string>
                       <string name="proxy-Static box class">"wxStaticBox"</string>
                       <string name="proxy-Orientation">"Vertical"</string>
                       <string name="proxy-AlignH">"Expand"</string>
@@ -5752,6 +5774,7 @@ when the pointer is stopped."</string>
                         <string name="proxy-Font">""</string>
                         <bool name="proxy-Hidden">0</bool>
                         <bool name="proxy-Enabled">1</bool>
+                        <string name="proxy-Parenting">"Use wxWidgets version"</string>
                         <string name="proxy-Static box class">"wxStaticBox"</string>
                         <string name="proxy-Orientation">"Vertical"</string>
                         <string name="proxy-AlignH">"Expand"</string>
@@ -6365,6 +6388,7 @@ buttons."</string>
                         <string name="proxy-Font">""</string>
                         <bool name="proxy-Hidden">0</bool>
                         <bool name="proxy-Enabled">1</bool>
+                        <string name="proxy-Parenting">"Use wxWidgets version"</string>
                         <string name="proxy-Static box class">"wxStaticBox"</string>
                         <string name="proxy-Orientation">"Vertical"</string>
                         <string name="proxy-AlignH">"Expand"</string>
@@ -7115,6 +7139,7 @@ buttons."</string>
                       <string name="proxy-Font">""</string>
                       <bool name="proxy-Hidden">0</bool>
                       <bool name="proxy-Enabled">1</bool>
+                      <string name="proxy-Parenting">"Use wxWidgets version"</string>
                       <string name="proxy-Static box class">"wxStaticBox"</string>
                       <string name="proxy-Orientation">"Vertical"</string>
                       <string name="proxy-AlignH">"Expand"</string>
@@ -7352,6 +7377,7 @@ buttons."</string>
                       <string name="proxy-Font">""</string>
                       <bool name="proxy-Hidden">0</bool>
                       <bool name="proxy-Enabled">1</bool>
+                      <string name="proxy-Parenting">"Use wxWidgets version"</string>
                       <string name="proxy-Static box class">"wxStaticBox"</string>
                       <string name="proxy-Orientation">"Vertical"</string>
                       <string name="proxy-AlignH">"Expand"</string>
@@ -7516,6 +7542,7 @@ enables cursor control at startup."</string>
                       <string name="proxy-Font">""</string>
                       <bool name="proxy-Hidden">0</bool>
                       <bool name="proxy-Enabled">1</bool>
+                      <string name="proxy-Parenting">"Use wxWidgets version"</string>
                       <string name="proxy-Static box class">"wxStaticBox"</string>
                       <string name="proxy-Orientation">"Vertical"</string>
                       <string name="proxy-AlignH">"Expand"</string>
@@ -7729,6 +7756,7 @@ enables cursor control at startup."</string>
                       <string name="proxy-Font">""</string>
                       <bool name="proxy-Hidden">0</bool>
                       <bool name="proxy-Enabled">1</bool>
+                      <string name="proxy-Parenting">"Use wxWidgets version"</string>
                       <string name="proxy-Static box class">"wxStaticBox"</string>
                       <string name="proxy-Orientation">"Vertical"</string>
                       <string name="proxy-AlignH">"Expand"</string>
@@ -8447,6 +8475,7 @@ tracking area."</string>
                     <string name="proxy-Font">""</string>
                     <bool name="proxy-Hidden">0</bool>
                     <bool name="proxy-Enabled">1</bool>
+                    <string name="proxy-Parenting">"Use wxWidgets version"</string>
                     <string name="proxy-Static box class">"wxStaticBox"</string>
                     <string name="proxy-Orientation">"Vertical"</string>
                     <string name="proxy-AlignH">"Expand"</string>
@@ -8774,6 +8803,7 @@ tracking area."</string>
                     <string name="proxy-Font">""</string>
                     <bool name="proxy-Hidden">0</bool>
                     <bool name="proxy-Enabled">1</bool>
+                    <string name="proxy-Parenting">"Use wxWidgets version"</string>
                     <string name="proxy-Static box class">"wxStaticBox"</string>
                     <string name="proxy-Orientation">"Vertical"</string>
                     <string name="proxy-AlignH">"Expand"</string>
@@ -9052,6 +9082,7 @@ tracking area."</string>
                     <string name="proxy-Font">""</string>
                     <bool name="proxy-Hidden">0</bool>
                     <bool name="proxy-Enabled">1</bool>
+                    <string name="proxy-Parenting">"Use wxWidgets version"</string>
                     <string name="proxy-Static box class">"wxStaticBox"</string>
                     <string name="proxy-Orientation">"Vertical"</string>
                     <string name="proxy-AlignH">"Expand"</string>
@@ -9444,7 +9475,7 @@ tracking area."</string>
           <string name="proxy-Texture style">"Tiled"</string>
           <bool name="proxy-wxDEFAULT_DIALOG_STYLE">0</bool>
           <bool name="proxy-wxCAPTION">1</bool>
-          <bool name="proxy-wxRESIZE_BORDER">1</bool>
+          <bool name="proxy-wxRESIZE_BORDER">0</bool>
           <bool name="proxy-wxSYSTEM_MENU">1</bool>
           <bool name="proxy-wxSTAY_ON_TOP">0</bool>
           <bool name="proxy-wxDIALOG_NO_PARENT">0</bool>
@@ -9488,14 +9519,6 @@ tracking area."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -9511,6 +9534,7 @@ tracking area."</string>
               <long name="locked">0</long>
               <string name="created">"30/12/2008"</string>
               <string name="proxy-type">"wbHtmlWindowProxy"</string>
+              <string name="event-handler-0">"wxEVT_COMMAND_HTML_LINK_CLICKED|OnHtmlwindowLinkClicked|NONE||WAbout"</string>
               <string name="proxy-Id name">"ID_HTMLWINDOW"</string>
               <long name="proxy-Id value">10030</long>
               <string name="proxy-Name">""</string>
@@ -18622,6 +18646,14 @@ Click finish to exit the wizard."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
+            <string name="proxy-AlignH">"Centre"</string>
+            <string name="proxy-AlignV">"Centre"</string>
+            <long name="proxy-Stretch factor">0</long>
+            <long name="proxy-Border">5</long>
+            <bool name="proxy-wxLEFT">1</bool>
+            <bool name="proxy-wxRIGHT">1</bool>
+            <bool name="proxy-wxTOP">1</bool>
+            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>

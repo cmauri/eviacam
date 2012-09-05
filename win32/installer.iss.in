@@ -24,22 +24,22 @@
 #define APPNAME			"Enable Viacam"
 #define APPNAME_SHORT	"eViacam"
 #define VERSION         "@VERSION@"
-#define PUBLISHER		"Cesar Mauri - CREA Software Systems"
+#define PUBLISHER		"@PUBLISHER@"
 #define VERTEXT			"v@VERSION@"
 #define APPBIN			"eViacam.exe"
-#define COPYRIGHTY		"© 2008-12"
+#define COPYRIGHT		"@COPYRIGHT@"
 
 [Setup]
 AppName={#APPNAME}
 AppVerName={#APPNAME} {#VERSION}
 AppPublisher={#PUBLISHER}
-AppCopyright={#COPYRIGHTY} {#PUBLISHER}
+AppCopyright={#COPYRIGHT} {#PUBLISHER}
 AppVersion={#VERSION}
 AppUpdatesURL=http://viacam.org
 AppPublisherURL=http://www.crea-si.com
 
 VersionInfoTextVersion={#VERTEXT}
-VersionInfoCopyright={#COPYRIGHTY} {#PUBLISHER}
+VersionInfoCopyright={#COPYRIGHT} {#PUBLISHER}
 VersionInfoVersion={#VERSION}
 VersionInfoCompany={#PUBLISHER}
 VersionInfoDescription=Installer for {#APPNAME}

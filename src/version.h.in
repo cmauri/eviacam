@@ -1,10 +1,8 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-wxString GetAppVersion()
-{
-    wxString version(_T("@VERSION@"));
-    return version;
-}
+#define VERSION "@VERSION@"
+#define COPYRIGHT "@COPYRIGHT@"
+#define PUBLISHER "@PUBLISHER@"
 
 #endif

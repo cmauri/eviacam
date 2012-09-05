@@ -37,8 +37,9 @@
 #include <wx/stdpaths.h>
 #include <wx/textfile.h>
 #include "wabout.h"
+#include "eviacamapp.h"
+#include "viacamcontroller.h"
 #include "version.h"
-
 
 ////@begin XPM images
 ////@end XPM images
@@ -58,6 +59,8 @@ IMPLEMENT_DYNAMIC_CLASS( WAbout, wxDialog )
 BEGIN_EVENT_TABLE( WAbout, wxDialog )
 
 ////@begin WAbout event table entries
+    EVT_HTML_LINK_CLICKED( ID_HTMLWINDOW, WAbout::OnHtmlwindowLinkClicked )
+
     EVT_BUTTON( ID_BUTTON_CLOSE, WAbout::OnButtonCloseClick )
 
 ////@end WAbout event table entries
@@ -144,15 +147,39 @@ void WAbout::CreateControls()
 
 ////@end WAbout content construction
 
-	wxString page (_T("<font face=\"Arial, Helvetica, sans-serif\">\n<h1><img src=\"#DATA_PATH#/viacam_cam4_html.png\" width=\"120\" height=\"96\">Enable Viacam</h1>\n<p>"));
-	page.Append (_("A cross platform webcam based mouse emulator"));
-	page.Append (_T("</p>\n<h4>v#APPVERSION#</p></h4>\n<p>(c) 2008-11 C&eacute;sar Mauri Loba - CREA Software Systems<br>\nhttp://viacam.org<br>\nE-Mail: Cesar Mauri &lt;cesar@crea-si.com&gt;</p>\n<p> "));
-	page.Append (_("Released under GNU/GPL license. See license for details.<br>\n  With the support of: "));
-	page.Append (_T("</p>\n<p><img src=\"#DATA_PATH#/guadalinfo_logo.png\" border=\"0\"><br>\n<img src=\"#DATA_PATH#/stsi_logo.png\" width=\"200\" height=\"57\" border=\"0\"><br>\n<img src=\"#DATA_PATH#/appc_logo.png\" width=\"200\" height=\"57\" border=\"0\"> </p>\n</font><br><h3>"));
-	
-	page.Append (_("Contributions:"));
-	page.Append (_T("</h3>"));
-	
+	wxString page(_T("\
+		<body bgcolor='#F8F8F8'> \
+		<font face='Arial, Helvetica, sans-serif' size='+1'> \
+		<center><img src='#DATA_PATH#/eviacam.png' width='150' height='120'/></center> \
+		<hr align='center' size='1'/> \
+		<strong>Enable Viacam &mdash; v#APPVERSION#</strong><br> \
+	"));
+	page.Append(_("A webcam based mouse emulator"));
+	page.Append(_T("<p>"));
+	page.Append(wxString(COPYRIGHT, wxConvUTF8));
+	page.Append(_T(" "));
+	page.Append(wxString(PUBLISHER, wxConvUTF8));
+	page.Append(_T("<p>"));
+	page.Append(_("If you find this software useful then please consider \
+		<a href='donation'>making a small donation</a> to show your appreciation \
+		and help support the continued development. Thanks!\
+	"));
+	page.Append(_T("</p><p><a href='website'>"));
+	page.Append(_("Visit website"));
+	page.Append(_T("</a></p> \
+		<hr align='center' size='1'/> \
+		<strong> \
+	"));
+	page.Append(_("Thanks"));
+	page.Append(_T("</strong> \
+		<center><p><img src='#DATA_PATH#/fve.png' border='1' align='middle'> &nbsp;&nbsp; \
+		<img src='#DATA_PATH#/guadalinfo_logo.png' border='1' align='middle'></p></center> \
+		<center><p><img src='#DATA_PATH#/stsi_logo.png' width='200' height='57' border='1' align='middle'>&nbsp;&nbsp; \
+		<img src='#DATA_PATH#/appc_logo.png' width='200' height='57' border='1' align='middle'> </p></center> \
+		</font> \
+		<font size='+0'><p> \
+	"));
+
 	wxTextFile thanksFile(wxStandardPaths::Get().GetDataDir().Append(_T("/THANKS")));
 
 	if (thanksFile.Open())
@@ -165,9 +192,26 @@ void WAbout::CreateControls()
 		}
 	}
 	
+	page.Append(_T("</p></font> \
+		<hr align='center' size='1'/> \
+		<font face='Arial, Helvetica, sans-serif' size='+1'> \
+		<strong> \
+	"));
+	page.Append(_("License"));
+	page.Append(_T("</strong> \
+		<p>\
+	"));
+	page.Append(_("Released under the GNU/GPL v3 license. See COPYING file for details."));
+	page.Append(_T("</p> \
+		</font> \
+		</body> \
+	"));
+	
 	page.Replace (_T("#DATA_PATH#"), wxStandardPaths::Get().GetDataDir(), true);
-	page.Replace (_T("#APPVERSION#"), GetAppVersion(), true);
+	page.Replace (_T("#APPVERSION#"), _T(VERSION), true);
+
 	itemHtmlWindow3->SetPage(page);
+	//itemHtmlWindow3->LoadFile(wxFileName(_T("G:/Projectes/viacam/eviacam/doc/kk.html")));
 }
 
 
@@ -220,4 +264,75 @@ void WAbout::OnButtonCloseClick( wxCommandEvent& WXUNUSED(event) )
 }
 
 
+
+
+/*!
+ * wxEVT_COMMAND_HTML_LINK_CLICKED event handler for ID_HTMLWINDOW
+ */
+
+void WAbout::OnHtmlwindowLinkClicked( wxHtmlLinkEvent& event )
+{
+	wxString url(_T("http://eviacam.sourceforge.net/"));
+
+	switch(wxGetApp().GetController().GetLocale()->GetLanguage()) {		
+	case (wxLANGUAGE_CATALAN):
+	case (wxLANGUAGE_VALENCIAN):
+		url.Append(_T("index_ca.php"));
+		break;
+	case (wxLANGUAGE_SPANISH):
+	case (wxLANGUAGE_SPANISH_ARGENTINA):
+	case (wxLANGUAGE_SPANISH_BOLIVIA):
+	case (wxLANGUAGE_SPANISH_CHILE):
+	case (wxLANGUAGE_SPANISH_COLOMBIA):
+	case (wxLANGUAGE_SPANISH_COSTA_RICA):
+	case (wxLANGUAGE_SPANISH_DOMINICAN_REPUBLIC):
+	case (wxLANGUAGE_SPANISH_ECUADOR):
+	case (wxLANGUAGE_SPANISH_EL_SALVADOR):
+	case (wxLANGUAGE_SPANISH_GUATEMALA):
+	case (wxLANGUAGE_SPANISH_HONDURAS):
+	case (wxLANGUAGE_SPANISH_MEXICAN):
+	case (wxLANGUAGE_SPANISH_MODERN):
+	case (wxLANGUAGE_SPANISH_NICARAGUA):
+	case (wxLANGUAGE_SPANISH_PANAMA):
+	case (wxLANGUAGE_SPANISH_PARAGUAY):
+	case (wxLANGUAGE_SPANISH_PERU):
+	case (wxLANGUAGE_SPANISH_PUERTO_RICO):
+	case (wxLANGUAGE_SPANISH_URUGUAY):
+	case (wxLANGUAGE_SPANISH_US):
+	case (wxLANGUAGE_SPANISH_VENEZUELA):
+		url.Append(_T("index_es.php"));
+		break;
+	case (wxLANGUAGE_GERMAN):
+	case (wxLANGUAGE_GERMAN_AUSTRIAN):
+	case (wxLANGUAGE_GERMAN_BELGIUM):
+	case (wxLANGUAGE_GERMAN_LIECHTENSTEIN):
+	case (wxLANGUAGE_GERMAN_LUXEMBOURG):
+	case (wxLANGUAGE_GERMAN_SWISS):
+		url.Append(_T("index_de.php"));
+		break;
+	case (wxLANGUAGE_GALICIAN):
+		url.Append(_T("index_gl.php"));
+		break;
+	case (wxLANGUAGE_FRENCH):
+	case (wxLANGUAGE_FRENCH_BELGIAN):
+	case (wxLANGUAGE_FRENCH_CANADIAN):
+	case (wxLANGUAGE_FRENCH_LUXEMBOURG):	
+	case (wxLANGUAGE_FRENCH_MONACO):
+	case (wxLANGUAGE_FRENCH_SWISS):
+		url.Append(_T("index_fr.php"));
+		break;
+	case (wxLANGUAGE_ITALIAN):
+	case (wxLANGUAGE_ITALIAN_SWISS):
+		url.Append(_T("index_it.php"));
+		break;
+	default:
+		break;
+	}
+
+	if (!event.GetLinkInfo().GetHref().CmpNoCase(_T("donation")))
+		url.Append(_T("#contribute"));
+	wxLaunchDefaultBrowser(url);
+
+	event.Skip(false);
+}
 

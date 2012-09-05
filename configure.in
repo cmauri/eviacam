@@ -2,7 +2,15 @@ AC_INIT(src/eviacamapp.cpp)
 AC_PREREQ(2.61)
 AM_CONFIG_HEADER(config.h)
 
+##############################################################
+# Editable parameters
 AM_INIT_AUTOMAKE([eviacam], 1.5.5)
+COPYRIGHT="© 2008-12"
+PUBLISHER="César Mauri Loba"
+##############################################################
+
+AC_SUBST(COPYRIGHT, [`echo $COPYRIGHT`])
+AC_SUBST(PUBLISHER, [`echo $PUBLISHER`])
 
 # Use libtool for building static libraries only
 #
@@ -107,7 +115,7 @@ AC_DEFUN([WXTEST],
 # Call WXTEST func
 WXTEST
 
-# Verify minimus requires
+# Verify minimum requires
 vers=`echo $wxversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
 if test -n "$vers" && test "$vers" -ge 2006003; then
 	if ! "$debug"; then
