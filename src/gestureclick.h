@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by:
 // Created:
-// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-12 Cesar Mauri Loba - CREA Software Systems
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include "configbase.h"
 #include "cvisualalert.h"
 #include "ckeyboardcode.h"
+#include "mousecommand.h"
 #include <math.h>
 #include <vector>
 
@@ -40,8 +41,8 @@ public:
 	// Main entry point to signal that the pointer has been moved.
 	// Expect motion performed by the pointer in pixels and current
 	// pointer location in absolute coordinates
-	// Return true is an action (i.e. click) was generated
-	bool ProcessMotion (int dxPix, int dyPix, unsigned int xCurr, unsigned int yCurr);
+	// Return the mouse command generated
+	mousecmd::mousecmd ProcessMotion (int dxPix, int dyPix, unsigned int xCurr, unsigned int yCurr);
 	
 	//bool GetEnabled() const { return m_enabled; }
 	void SetEnabled(bool value);
@@ -51,9 +52,6 @@ public:
 	
 	bool AreVisualAlertsEnabled() const { return m_visualAlertsEnabled; }
 	void EnableVisualAlerts(bool value);
-
-	//inline const bool GetConsecutiveClicksAllowed() const;
-	//inline void SetConsecutiveClicksAllowed(bool value);
 
 	unsigned int GetDwellTime() const {
 		return m_dwellCountdown.GetWaitTimeMs() / 100;
@@ -118,9 +116,6 @@ public:
 	unsigned int GetKeyEventsCount() const {
 		return m_keyboardCodes.size();
 	}
-	//inline const unsigned int GetMouseEventsCount() const;
-
-	
 
 	// Configuration methods
 	virtual void InitDefaults();
@@ -129,10 +124,10 @@ public:
 
 private:
 	
-	enum EState { DWELL_TIME, COMPUTE_DIRECTION, WAIT_DWELL }; //, WAITING_RETURN };	
+	enum EState { DWELL_TIME, COMPUTE_DIRECTION, WAIT_DWELL };
 
 	void InitKeyboardCodes();
-	void DoAction (EAction action);
+	mousecmd::mousecmd DoAction (EAction action);
 
 	// Working attributes
 	volatile bool m_enabled;

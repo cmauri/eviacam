@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by:
 // Created:
-// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-12 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #include "mousecontrol.h"
 #include <math.h>
 
-//#define ENABLE_EXPERIMENTAL_KEY_ACTIONS 1
+#undef ENABLE_EXPERIMENTAL_KEY_ACTIONS
 
 CGestureClick::CGestureClick(CMouseControl& mc)
 : m_enabled(false)
@@ -40,7 +40,6 @@ CGestureClick::CGestureClick(CMouseControl& mc)
 , m_actionBottom(DISABLE)
 , m_fastGestureAction(false)
 {
-	
 	InitKeyboardCodes();
 	
 	InitDefaults ();
@@ -141,11 +140,12 @@ void CGestureClick::InitKeyboardCodes()
 #endif
 }
 
-bool CGestureClick::ProcessMotion (int dxPix, int dyPix, unsigned int xCurr, unsigned int yCurr)
+mousecmd::mousecmd CGestureClick::ProcessMotion (int dxPix, int dyPix, unsigned int xCurr, unsigned int yCurr)
 {
-	bool actionDone= false;
-	if (!m_enabled) return actionDone;
+	if (!m_enabled) return mousecmd::CMD_NO_CLICK;
 
+	mousecmd::mousecmd retval= mousecmd::CMD_NO_CLICK;
+	
 	// Do move.
 	float despl= sqrtf ((float) (dxPix*dxPix + dyPix*dyPix));
 	
@@ -201,14 +201,13 @@ bool CGestureClick::ProcessMotion (int dxPix, int dyPix, unsigned int xCurr, uns
 				if (sqrtf((float)(dxPixels*dxPixels + dyPixels*dyPixels))> m_dwellToleranceArea) {
 					// Is far enough from iniGeture, do action
 					if (abs(dxPixels)> abs(dyPixels)) {
-						if (dxPixels < 0) DoAction(m_actionLeft);
-						else DoAction(m_actionRight);
+						if (dxPixels < 0) retval= DoAction(m_actionLeft);
+						else retval= DoAction(m_actionRight);
 					} 
 					else {
-						if (dyPixels < 0) DoAction(m_actionTop);
-						else DoAction(m_actionBottom);
+						if (dyPixels < 0) retval= DoAction(m_actionTop);
+						else retval= DoAction(m_actionBottom);
 					}
-					actionDone= true;
 				}
 				
 				// Next state. Ignores consecutive clicks allowed because for
@@ -238,12 +237,13 @@ bool CGestureClick::ProcessMotion (int dxPix, int dyPix, unsigned int xCurr, uns
 		break;
 	}
 
-	return actionDone;
+	return retval;
 }
 
-//void CGestureClick::DoAction(EDirection direction)
-void CGestureClick::DoAction (EAction action)
+mousecmd::mousecmd CGestureClick::DoAction (EAction action)
 {
+	mousecmd::mousecmd retval= mousecmd::CMD_NO_CLICK;
+
 	// Return pointer to the position where gesture started
 	m_mouseControl->DoMovePointerAbs(m_xIniGesture, m_yIniGesture);
 
@@ -252,53 +252,42 @@ void CGestureClick::DoAction (EAction action)
 		// the new action finishes it 
 		m_isLeftPressed = false;
 		m_mouseControl->LeftUp();
-		
-		if (action== DRAG) return;
+		retval= mousecmd::CMD_LEFT_UP;
+
+		if (action== DRAG) return retval;
 	}
-
-
-/*
-	if (action != DRAG && m_isLeftPressed)
-	{
-		m_isLeftPressed = false;
-		LeftUp();
-	}*/
 
 	switch (action)	{
 		case DISABLE:
 			break;
 		case SINGLE:
 			m_mouseControl->LeftClick();
+			retval= mousecmd::CMD_LEFT_CLICK;
 			break;
 		case DOUBLE:
 			m_mouseControl->LeftDblClick();
+			retval= mousecmd::CMD_DOUBLE_CLICK;
 			break;
 		case SECONDARY:
 			m_mouseControl->RightClick();
+			retval= mousecmd::CMD_RIGHT_CLICK;
 			break;
 		case THIRD:
 			m_mouseControl->MiddleClick();
+			retval= mousecmd::CMD_MIDDLE_CLICK;
 			break;
 		case DRAG:
 			m_mouseControl->LeftDown();
+			retval= mousecmd::CMD_LEFT_DOWN;
 			m_isLeftPressed = true;
 			break;
-			/*
-			if (m_isLeftPressed) {
-				LeftUp();
-				m_isLeftPressed = false;
-			}
-			else
-			{
-				LeftDown();
-				m_isLeftPressed = true;
-			}*/
-			break;
 		default:
+			// Keyboard event
 			m_keyboardCodes[action - MOUSE_EVENTS_COUNT].SendKey();
 			break;
-		
 	}
+
+	return retval;
 }
 
 void CGestureClick::Reset()

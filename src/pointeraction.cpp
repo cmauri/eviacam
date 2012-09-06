@@ -32,6 +32,8 @@ CPointerAction::CPointerAction()
 : m_enabled(false)
 {
 	m_pClickSound= new wxSound (wxStandardPaths::Get().GetDataDir() + _T("/click.wav"));
+	m_pLeftUpClickSound= new wxSound (wxStandardPaths::Get().GetDataDir() + _T("/click2.wav"));
+
 #if defined(__WXGTK__)
 	m_pMouseControl= new CMouseControl ((void *) wxGetDisplay());
 #else
@@ -53,6 +55,8 @@ CPointerAction::~CPointerAction ()
 	m_pMouseControl= NULL;
 	delete m_pClickSound;
 	m_pClickSound= NULL;
+	delete m_pLeftUpClickSound;
+	m_pLeftUpClickSound= NULL;
 }
 
 // Configuration methods
@@ -199,24 +203,23 @@ void CPointerAction::ProcessMotion (float dxSensor, float dySensor)
 	
 	// Do move.
 	int dxPix, dyPix;
-	//float despl= 
 	m_pMouseControl->MovePointerRel (dxSensor, dySensor, &dxPix, &dyPix);
 
 	// Get current pointer location
 	long xCurr, yCurr;
 	m_pMouseControl->GetPointerLocation (xCurr, yCurr);
 
-	bool actionDone= false;
+	mousecmd::mousecmd cmd= mousecmd::CMD_NO_CLICK;
 
 	switch (m_clickMode) {
 	case CPointerAction::DWELL:
 		// DWell click
-		actionDone= m_pDwellClick->ProcessMotion
+		cmd= m_pDwellClick->ProcessMotion
 			(dxPix, dyPix, (unsigned int) xCurr, (unsigned int) yCurr);
 		break;
 	case CPointerAction::GESTURE:
 		// Gesture click
-		actionDone= m_pGestureClick->ProcessMotion
+		cmd= m_pGestureClick->ProcessMotion
 			(dxPix, dyPix, (unsigned int) xCurr, (unsigned int) yCurr);
 		break;
 	case CPointerAction::NONE:
@@ -226,7 +229,12 @@ void CPointerAction::ProcessMotion (float dxSensor, float dySensor)
 		assert (false);
 	}
 
-	if (actionDone && m_beepOnClick) m_pClickSound->Play (wxSOUND_ASYNC);
+	if (cmd!= mousecmd::CMD_NO_CLICK && m_beepOnClick) {
+		if (cmd== mousecmd::CMD_LEFT_DOWN)
+			m_pLeftUpClickSound->Play (wxSOUND_ASYNC);
+		else
+			m_pClickSound->Play (wxSOUND_ASYNC);
+	}
 }
 
 void CPointerAction::SetEnabled(bool value)

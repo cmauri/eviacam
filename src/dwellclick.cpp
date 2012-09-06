@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by:
 // Created:
-// Copyright:   (C) 2010 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2010-12 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -87,11 +87,9 @@ void CDwellClick::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->SetPath (_T(".."));
 }
 
-bool CDwellClick::ProcessMotion (int dxPix, int dyPix,
-		unsigned int xCurr, unsigned int yCurr)
+mousecmd::mousecmd CDwellClick::ProcessMotion (int dxPix, int dyPix, unsigned int xCurr, unsigned int yCurr)
 {
-	//assert (m_enabled);
-	if (!m_enabled) return false;
+	if (!m_enabled) return mousecmd::CMD_NO_CLICK;;
 
 	//Check autohide window
 	//m_pClickWindowController->AutohideClickWindow(xCurr, yCurr);
@@ -101,12 +99,12 @@ bool CDwellClick::ProcessMotion (int dxPix, int dyPix,
 	
 	// TODO: check relative from dwell start position
 	if (despl> m_dwellToleranceArea) {
-		// Pointer moving
+		// Pointer is moving
 		if (m_visualAlertsEnabled) m_progressVisualAlert.End();
 		m_dwellCountdown.Reset();
 	}
 	else {
-		// Pointer static
+		// Pointer is static
 		if (!m_dwellCountdown.HasExpired())
 			if (m_visualAlertsEnabled)
 				m_progressVisualAlert.Update(xCurr, yCurr, m_dwellCountdown.PercentagePassed());
@@ -154,12 +152,12 @@ bool CDwellClick::ProcessMotion (int dxPix, int dyPix,
 				if (m_consecutiveClicksAllowed)
 					m_dwellCountdown.Reset();	
 
-				return true;
+				return action;
 			}
 		}
 	}
 	
-	return false;
+	return mousecmd::CMD_NO_CLICK;
 }
 
 void CDwellClick::SetEnabled(bool value)

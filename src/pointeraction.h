@@ -169,6 +169,7 @@ private:
 	EClickMode m_clickMode;
 	bool m_beepOnClick;
 	wxSound* m_pClickSound;
+	wxSound* m_pLeftUpClickSound;
 	CMouseControl* m_pMouseControl;
 	CDwellClick* m_pDwellClick;
 	CGestureClick* m_pGestureClick;

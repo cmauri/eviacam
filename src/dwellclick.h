@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by:
 // Created:
-// Copyright:   (C) 2010 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2010-12 Cesar Mauri Loba - CREA Software Systems
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include "waittime.h"
 #include "configbase.h"
 #include "cvisualalert.h"
+#include "mousecommand.h"
 
 class CMouseControl;
 class CClickWindowController;
@@ -38,8 +39,8 @@ public:
 	// Main entry point to signal that the pointer has been moved.
 	// Expect motion performed by the pointer in pixels and current
 	// pointer location in absolute coordinates
-	// Return true is an action (i.e. click) was generated
-	bool ProcessMotion (int dxPix, int dyPix, unsigned int xCurr, unsigned int yCurr);
+	// Return the mouse command generated
+	mousecmd::mousecmd ProcessMotion (int dxPix, int dyPix, unsigned int xCurr, unsigned int yCurr);
 	
 	bool GetEnabled() const { return m_enabled; }
 	void SetEnabled(bool value);
