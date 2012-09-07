@@ -44,6 +44,7 @@
 #include "eviacamapp.h"
 #include "pointeraction.h"
 #include "dwellclick.h"
+#include "paths.h"
 
 ////@begin XPM images
 #include "icons/eviacam_mini.xpm"
@@ -567,11 +568,11 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 {
 	if (m_helpController== NULL) {
 		m_helpController= new wxHtmlHelpController(wxHF_DEFAULT_STYLE, this);
-		wxString path;
+		wxString path(eviacam::GetDataDir());
 			
 		switch(wxGetApp().GetController().GetLocale()->GetLanguage()) {		
 		case (wxLANGUAGE_CATALAN):
-			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/ca/help.hhp"));
+			path+= _T("/help/ca/help.hhp");
 			break;
 		case (wxLANGUAGE_SPANISH):
 		case (wxLANGUAGE_SPANISH_ARGENTINA):
@@ -594,7 +595,7 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 		case (wxLANGUAGE_SPANISH_URUGUAY):
 		case (wxLANGUAGE_SPANISH_US):
 		case (wxLANGUAGE_SPANISH_VENEZUELA):
-			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/es/help.hhp"));
+			path+= _T("/help/es/help.hhp");
 			break;
 		case (wxLANGUAGE_GERMAN):
 		case (wxLANGUAGE_GERMAN_AUSTRIAN):
@@ -602,16 +603,16 @@ void WViacam::OnToolHelpClick( wxCommandEvent& event )
 		case (wxLANGUAGE_GERMAN_LIECHTENSTEIN):
 		case (wxLANGUAGE_GERMAN_LUXEMBOURG):
 		case (wxLANGUAGE_GERMAN_SWISS):
-			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/de/help.hhp"));
+			path+= _T("/help/de/help.hhp");
 			break;
 		case (wxLANGUAGE_GALICIAN):
-			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/gl/help.hhp"));
+			path+= _T("/help/gl/help.hhp");
 			break;
 		case (wxLANGUAGE_RUSSIAN):
-			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/ru/help.hhp"));
+			path+= _T("/help/ru/help.hhp");
 			break;
 		default:
-			path= wxStandardPaths::Get().GetDataDir().Append(_T("/help/en/help.hhp"));
+			path+= _T("/help/en/help.hhp");
 			break;
 		}		
 	

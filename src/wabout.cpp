@@ -40,6 +40,7 @@
 #include "eviacamapp.h"
 #include "viacamcontroller.h"
 #include "version.h"
+#include "paths.h"
 
 ////@begin XPM images
 ////@end XPM images
@@ -180,7 +181,7 @@ void WAbout::CreateControls()
 		<font size='+0'><p> \
 	"));
 
-	wxTextFile thanksFile(wxStandardPaths::Get().GetDataDir().Append(_T("/THANKS")));
+	wxTextFile thanksFile(eviacam::GetDataDir() + wxString(_T("/THANKS")));
 
 	if (thanksFile.Open())
 	{
@@ -207,11 +208,10 @@ void WAbout::CreateControls()
 		</body> \
 	"));
 	
-	page.Replace (_T("#DATA_PATH#"), wxStandardPaths::Get().GetDataDir(), true);
+	page.Replace (_T("#DATA_PATH#"), eviacam::GetDataDir(), true);
 	page.Replace (_T("#APPVERSION#"), _T(VERSION), true);
 
 	itemHtmlWindow3->SetPage(page);
-	//itemHtmlWindow3->LoadFile(wxFileName(_T("G:/Projectes/viacam/eviacam/doc/kk.html")));
 }
 
 

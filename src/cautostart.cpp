@@ -24,6 +24,8 @@
 #include <wx/stdpaths.h>
 #include <wx/utils.h>
 
+#include "paths.h"
+
 CAutostart::CAutostart(wxString fileName)
 {
 	m_fileName = fileName;
@@ -56,7 +58,7 @@ void CAutostart::Enable(bool value)
 	wxString pathIn;
 	wxString pathOut;
 
-	pathIn = wxStandardPaths::Get().GetDataDir()  + wxT("/") + m_fileName;
+	pathIn = eviacam::GetDataDir()  + wxT("/") + m_fileName;
 	if (!wxGetEnv(wxT("XDG_CONFIG_HOME"), &pathOut)) {
 		pathOut = wxStandardPaths::Get().GetUserConfigDir() + wxT("/.config");
 		if (!wxDirExists(pathOut))
@@ -73,6 +75,7 @@ void CAutostart::Enable(bool value)
 	}
 #else
 	assert (false);		// Not yet implemented
+	wxUnusedVar(value);
 #endif
 }
 

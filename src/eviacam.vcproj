@@ -269,6 +269,9 @@ copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo
 				RelativePath=".\hotkeymanager.cpp">
 			</File>
 			<File
+				RelativePath=".\paths.cpp">
+			</File>
+			<File
 				RelativePath=".\pointeraction.cpp">
 			</File>
 			<File
@@ -362,6 +365,9 @@ copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo
 			</File>
 			<File
 				RelativePath=".\mousecommand.h">
+			</File>
+			<File
+				RelativePath=".\paths.h">
 			</File>
 			<File
 				RelativePath=".\pointeraction.h">

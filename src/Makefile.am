@@ -29,7 +29,8 @@ noinst_HEADERS = wgetkey.h \
 	dwellclick.h \
 	gestureclick.h \
 	pointeraction.h \
-	mousecommand.h
+	mousecommand.h \
+	paths.h 
 
 dist_noinst_DATA= version.h.in \
 	eviacamloader.c.in \
@@ -127,7 +128,8 @@ eviacam_SOURCES = wgetkey.cpp \
 	hotkeymanager.cpp \
 	dwellclick.cpp \
 	gestureclick.cpp \
-	pointeraction.cpp
+	pointeraction.cpp \
+	paths.cpp
 	
 eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11

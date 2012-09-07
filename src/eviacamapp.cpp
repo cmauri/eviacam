@@ -139,11 +139,12 @@ bool EViacamApp::OnInit()
 #endif		
 /* ////@end EViacamApp initialisation */
 
-	// Uncomment this to enable a console in Windows for debug purposes
-	//AllocConsole();
-	//freopen("CONOUT$", "wb", stdout); 
+#if defined(WIN32) && !defined(NDEBUG)
+	AllocConsole();
+	freopen("CONOUT$", "wb", stdout); 
 	//printf ("Hola!\n");
 	//fflush (stdout);
+#endif
 
 	m_pController= new CViacamController();
 	assert (m_pController);

@@ -22,6 +22,7 @@
 #include "pointeraction.h"
 #include "dwellclick.h"
 #include "gestureclick.h"
+#include "paths.h"
 
 #include <wx/stdpaths.h>
 #include <wx/sound.h>
@@ -31,8 +32,8 @@
 CPointerAction::CPointerAction() 
 : m_enabled(false)
 {
-	m_pClickSound= new wxSound (wxStandardPaths::Get().GetDataDir() + _T("/click.wav"));
-	m_pLeftUpClickSound= new wxSound (wxStandardPaths::Get().GetDataDir() + _T("/click2.wav"));
+	m_pClickSound= new wxSound (eviacam::GetDataDir() + _T("/click.wav"));
+	m_pLeftUpClickSound= new wxSound (eviacam::GetDataDir() + _T("/click2.wav"));
 
 #if defined(__WXGTK__)
 	m_pMouseControl= new CMouseControl ((void *) wxGetDisplay());
