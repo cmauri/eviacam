@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.0\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2012-03-27 21:10+0200\n"
+"POT-Creation-Date: 2012-09-16 11:19+0200\n"
 "PO-Revision-Date: 2009-11-18 16:29+0100\n"
 "Last-Translator: carles <untiburon350@gmail.com>\n"
 "Language-Team: Carles Garrigues(Lo Socarrat)\n"
@@ -323,7 +323,7 @@ msgid "Move left:"
 msgstr ""
 
 #: src/wconfiguration.cpp:669 src/wconfiguration.cpp:682
-#: src/wconfiguration.cpp:695 src/wconfiguration.cpp:708 src/wviacam.cpp:216
+#: src/wconfiguration.cpp:695 src/wconfiguration.cpp:708 src/wviacam.cpp:224
 msgid "Disable"
 msgstr "Desactivar"
 
@@ -599,7 +599,7 @@ msgstr ""
 "Sètz segur?"
 
 #: src/wconfiguration.cpp:1759 src/wconfiguration.cpp:1894
-#: src/wconfiguration.cpp:2020 src/viacamcontroller.cpp:348
+#: src/wconfiguration.cpp:2020 src/viacamcontroller.cpp:359
 #: src/cmotioncalibration.cpp:183
 msgid "eViacam warning"
 msgstr "Avertiment"
@@ -614,7 +614,7 @@ msgid ""
 "Do you want to try another key?"
 msgstr ""
 
-#: src/wviacam.h:71
+#: src/wviacam.h:72
 msgid "Enable Viacam"
 msgstr "Permetre Viacam"
 
@@ -669,15 +669,15 @@ msgstr "#Clic doble#"
 msgid "About Enable Viacam"
 msgstr "A prepaus de Permetre Viacam"
 
-#: src/viacamcontroller.cpp:134
+#: src/viacamcontroller.cpp:137
 msgid "Not detected any camera. Aborting"
 msgstr "S´es pas detectada cap de camèra. Anullacion."
 
-#: src/viacamcontroller.cpp:155
+#: src/viacamcontroller.cpp:158
 msgid "Choose the camera to use"
 msgstr "Causissètz la camèra qu´anatz emplegar"
 
-#: src/viacamcontroller.cpp:175
+#: src/viacamcontroller.cpp:178
 msgid ""
 "Can not initialize the camera.\n"
 "Perhaps is being used by other application."
@@ -685,7 +685,7 @@ msgstr ""
 "Se poguèt pas inicializar la camèra.\n"
 "Benlèu qualque aplicacion l´emplega ara."
 
-#: src/viacamcontroller.cpp:348
+#: src/viacamcontroller.cpp:359
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -693,7 +693,7 @@ msgstr ""
 "Aquesta accion desactivarà eViacam.\n"
 "Sètz segur?"
 
-#: src/viacamcontroller.cpp:373
+#: src/viacamcontroller.cpp:384
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -701,12 +701,12 @@ msgstr ""
 "La comanda dobrir lo clavièr sus l´ecran es pas definida.La podètz "
 "configurar mejançant lo dialòg de configuracion."
 
-#: src/viacamcontroller.cpp:373 src/viacamcontroller.cpp:387
+#: src/viacamcontroller.cpp:384 src/viacamcontroller.cpp:398
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "Error"
 
-#: src/viacamcontroller.cpp:383
+#: src/viacamcontroller.cpp:394
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -717,7 +717,7 @@ msgstr ""
 "La comanda %s a mancat.\n"
 "La podètz configurar mejançant lo dialòg de configuracion."
 
-#: src/viacamcontroller.cpp:385
+#: src/viacamcontroller.cpp:396
 msgid ""
 "\n"
 "\n"
@@ -728,91 +728,110 @@ msgid ""
 "or try another osk, e.g. Click-N-Type."
 msgstr ""
 
-#: src/viacamcontroller.cpp:459
+#: src/viacamcontroller.cpp:470
 msgid ""
 "Note that adjusting the camera controls while eViacam\n"
 "is enabled may cause loss of pointer control.\n"
 "Are you sure you want to continue?"
 msgstr ""
 
-#: src/wabout.cpp:142 src/wcameradialog.cpp:164
+#: src/wabout.cpp:146 src/wcameradialog.cpp:164
 msgid "Close"
 msgstr "Barrar"
 
-#: src/wabout.cpp:148
-msgid "A cross platform webcam based mouse emulator"
+#: src/wabout.cpp:158
+#, fuzzy
+msgid "A webcam based mouse emulator"
 msgstr "Emulador de la murga mejançant la webcam"
 
-#: src/wabout.cpp:150
+#: src/wabout.cpp:164
 msgid ""
-"Released under GNU/GPL license. See license for details.<br>\n"
-"  With the support of: "
+"If you find this software useful then please consider \t\t<a "
+"href='donation'>making a small donation</a> to show your appreciation \t"
+"\tand help support the continued development. Thanks!\t"
+msgstr ""
+
+#: src/wabout.cpp:169
+msgid "Visit website"
+msgstr ""
+
+#: src/wabout.cpp:174
+msgid "Thanks"
+msgstr ""
+
+#: src/wabout.cpp:201
+msgid "License"
+msgstr ""
+
+#: src/wabout.cpp:205
+#, fuzzy
+msgid "Released under the GNU/GPL v3 license. See COPYING file for details."
 msgstr ""
 "Liberat jos licéncia GNU/GPL. Per mai d´entresenhas agachatz lo fichièr de "
 "licéncia.<br>\n"
 "  Amb lo supòrt de:"
 
-#: src/wabout.cpp:153
-msgid "Contributions:"
-msgstr "Contribucions:"
-
-#: src/wviacam.cpp:193
+#: src/wviacam.cpp:198
 msgid "E&nable / Disable"
 msgstr "A&ctivar / Desactivar"
 
-#: src/wviacam.cpp:195
+#: src/wviacam.cpp:200
 msgid "&Exit"
 msgstr "&Sortir"
 
-#: src/wviacam.cpp:196
+#: src/wviacam.cpp:201
 msgid "&File"
 msgstr "&Fichièr"
 
-#: src/wviacam.cpp:198
+#: src/wviacam.cpp:203
 msgid "&Wizard..."
 msgstr ""
 
-#: src/wviacam.cpp:200
+#: src/wviacam.cpp:205
 msgid "&Options..."
 msgstr "&Opcions..."
 
-#: src/wviacam.cpp:201
+#: src/wviacam.cpp:206
 msgid "&Configuration"
 msgstr "&Configuracion"
 
-#: src/wviacam.cpp:203
+#: src/wviacam.cpp:208
 msgid "&Help contents"
 msgstr ""
 
-#: src/wviacam.cpp:205
+#: src/wviacam.cpp:210
+msgid "Check for &updates"
+msgstr ""
+
+#: src/wviacam.cpp:213
 msgid "&About..."
 msgstr "&A prepaus de..."
 
-#: src/wviacam.cpp:206
+#: src/wviacam.cpp:214
 msgid "&Help"
 msgstr "A&juda"
 
-#: src/wviacam.cpp:213
+#: src/wviacam.cpp:221
 msgid "Enable"
 msgstr "Activar"
 
-#: src/wviacam.cpp:220 src/clickwindow.h:31
+#: src/wviacam.cpp:228 src/clickwindow.h:31
 msgid "Click Window"
 msgstr "Fenèstra del clic"
 
-#: src/wviacam.cpp:223
+#: src/wviacam.cpp:231
 msgid "On-screen keyboard"
 msgstr "Clavièr sus l´ecran"
 
-#: src/wviacam.cpp:227
+#: src/wviacam.cpp:235
 msgid "Options"
 msgstr "Opcions"
 
-#: src/wviacam.cpp:231
+#: src/wviacam.cpp:239
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/wviacam.cpp:237
+#: src/wviacam.cpp:245
 msgid ""
 "Frame rate meter. For proper function\n"
 "should be greater than 25 fps. Reduce\n"
@@ -823,22 +842,22 @@ msgstr ""
 "fonccionament corrècte, deu èsser màger que 25. Podètz redusir\n"
 "lo temps d'exposicion de la camèra s´es de besohn."
 
-#: src/wviacam.cpp:334
+#: src/wviacam.cpp:342
 #, c-format
 msgid " %li fps (good)"
 msgstr " %li fps (corrècte)"
 
-#: src/wviacam.cpp:337
+#: src/wviacam.cpp:345
 #, c-format
 msgid " %li fps (could be improved)"
 msgstr " %li fps (se pòt melhorar)"
 
-#: src/wviacam.cpp:340
+#: src/wviacam.cpp:348
 #, c-format
 msgid " %li fps (too low)"
 msgstr " %li fps (tròp bas)"
 
-#: src/wviacam.cpp:385
+#: src/wviacam.cpp:393
 msgid ""
 "This action will close the program.\n"
 "Are you sure?"
@@ -846,11 +865,26 @@ msgstr ""
 "Aquesta accion barrarà lo programa.\n"
 "Sètz segur?"
 
+#: src/wviacam.cpp:667
+msgid "Checking for updates..."
+msgstr ""
+
+#: src/wviacam.cpp:668
+#, fuzzy
+msgid "Enable Viacam is up to date"
+msgstr "Activar pendent l´aviada del programa"
+
+#: src/wviacam.cpp:669
+msgid ""
+"New version available.\n"
+"Visit Enable Viacam web site?"
+msgstr ""
+
 #: src/langnames-utf8.h:29
 msgid "System default"
 msgstr "Lenga del sistèma"
 
-#: src/pointeraction.cpp:261
+#: src/pointeraction.cpp:268
 msgid ""
 "This action will disable eViacam click generation.\n"
 "Are you sure?"
@@ -858,7 +892,7 @@ msgstr ""
 "Aquesta accion desactivarà la generacion automatica de clics.\n"
 "Sètz segur?"
 
-#: src/pointeraction.cpp:265
+#: src/pointeraction.cpp:272
 #, fuzzy
 msgid ""
 "This action will change the click generation method.\n"
@@ -1231,6 +1265,9 @@ msgstr ""
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
 msgstr ""
+
+#~ msgid "Contributions:"
+#~ msgstr "Contribucions:"
 
 #, fuzzy
 #~ msgid "hotKeyEnable"

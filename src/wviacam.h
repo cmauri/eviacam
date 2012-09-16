@@ -58,6 +58,7 @@ class wxHtmlHelpController;
 #define ID_MENU_WIZARD 10094
 #define ID_MENU_OPTIONS 10003
 #define ID_MENU_HELP_CONTENTS 10040
+#define ID_MENU_CHECKUPDATES 10127
 #define ID_MENU_ABOUT 10028
 #define ID_TOOLBAR 10042
 #define ID_TOOL_ENABLE 10043
@@ -143,6 +144,11 @@ private:
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_HELP_CONTENTS
     void OnToolHelpClick( wxCommandEvent& event );
 
+#if defined(__WXOS2__)
+    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CHECKUPDATES
+    void OnMenuCheckupdatesClick( wxCommandEvent& event );
+
+#endif
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_ABOUT
     void OnMenuAboutClick( wxCommandEvent& event );
 

@@ -96,6 +96,10 @@ BEGIN_EVENT_TABLE( WViacam, wxFrame )
 
     EVT_MENU( ID_MENU_HELP_CONTENTS, WViacam::OnToolHelpClick )
 
+#if defined(__WXOS2__)
+    EVT_MENU( ID_MENU_CHECKUPDATES, WViacam::OnMenuCheckupdatesClick )
+#endif
+
     EVT_MENU( ID_MENU_ABOUT, WViacam::OnMenuAboutClick )
 
     EVT_MENU( ID_TOOL_ENABLE, WViacam::OnToolEnableClick )
@@ -202,36 +206,39 @@ void WViacam::CreateControls()
     menuBar->Append(itemMenu7, _("&Configuration"));
     wxMenu* itemMenu11 = new wxMenu;
     itemMenu11->Append(ID_MENU_HELP_CONTENTS, _("&Help contents"), wxEmptyString, wxITEM_NORMAL);
+#if defined(__WXOS2__)
+    itemMenu11->Append(ID_MENU_CHECKUPDATES, _("Check for &updates"), wxEmptyString, wxITEM_NORMAL);
+#endif
     itemMenu11->AppendSeparator();
     itemMenu11->Append(ID_MENU_ABOUT, _("&About..."), wxEmptyString, wxITEM_NORMAL);
     menuBar->Append(itemMenu11, _("&Help"));
     itemFrame1->SetMenuBar(menuBar);
 
-    wxToolBar* itemToolBar15 = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR );
-    itemToolBar15->SetToolBitmapSize(wxSize(32, 32));
-    wxBitmap itemtool16Bitmap(itemFrame1->GetBitmapResource(wxT("icons/on.xpm")));
-    wxBitmap itemtool16BitmapDisabled;
-    itemToolBar15->AddTool(ID_TOOL_ENABLE, _("Enable"), itemtool16Bitmap, itemtool16BitmapDisabled, wxITEM_NORMAL, _("Enable"), wxEmptyString);
-    wxBitmap itemtool17Bitmap(itemFrame1->GetBitmapResource(wxT("icons/off.xpm")));
+    wxToolBar* itemToolBar16 = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR );
+    itemToolBar16->SetToolBitmapSize(wxSize(32, 32));
+    wxBitmap itemtool17Bitmap(itemFrame1->GetBitmapResource(wxT("icons/on.xpm")));
     wxBitmap itemtool17BitmapDisabled;
-    itemToolBar15->AddTool(ID_TOOL_DISABLE, _("Disable"), itemtool17Bitmap, itemtool17BitmapDisabled, wxITEM_NORMAL, _("Disable"), wxEmptyString);
-    itemToolBar15->EnableTool(ID_TOOL_DISABLE, false);
-    wxBitmap itemtool18Bitmap(itemFrame1->GetBitmapResource(wxT("icons/clickwindow.xpm")));
+    itemToolBar16->AddTool(ID_TOOL_ENABLE, _("Enable"), itemtool17Bitmap, itemtool17BitmapDisabled, wxITEM_NORMAL, _("Enable"), wxEmptyString);
+    wxBitmap itemtool18Bitmap(itemFrame1->GetBitmapResource(wxT("icons/off.xpm")));
     wxBitmap itemtool18BitmapDisabled;
-    itemToolBar15->AddTool(ID_TOOL_CLICKWIN, _("Click Window"), itemtool18Bitmap, itemtool18BitmapDisabled, wxITEM_CHECK, _("Click Window"), wxEmptyString);
-    wxBitmap itemtool19Bitmap(itemFrame1->GetBitmapResource(wxT("icons/keyboard.xpm")));
+    itemToolBar16->AddTool(ID_TOOL_DISABLE, _("Disable"), itemtool18Bitmap, itemtool18BitmapDisabled, wxITEM_NORMAL, _("Disable"), wxEmptyString);
+    itemToolBar16->EnableTool(ID_TOOL_DISABLE, false);
+    wxBitmap itemtool19Bitmap(itemFrame1->GetBitmapResource(wxT("icons/clickwindow.xpm")));
     wxBitmap itemtool19BitmapDisabled;
-    itemToolBar15->AddTool(ID_TOOL_KEYBOARD, _("On-screen keyboard"), itemtool19Bitmap, itemtool19BitmapDisabled, wxITEM_NORMAL, _("On-screen keyboard"), wxEmptyString);
-    itemToolBar15->AddSeparator();
-    wxBitmap itemtool21Bitmap(itemFrame1->GetBitmapResource(wxT("icons/preferences.xpm")));
-    wxBitmap itemtool21BitmapDisabled;
-    itemToolBar15->AddTool(ID_TOOL_OPTIONS, _("Options"), itemtool21Bitmap, itemtool21BitmapDisabled, wxITEM_NORMAL, _("Options"), wxEmptyString);
-    itemToolBar15->AddSeparator();
-    wxBitmap itemtool23Bitmap(itemFrame1->GetBitmapResource(wxT("icons/help.xpm")));
-    wxBitmap itemtool23BitmapDisabled;
-    itemToolBar15->AddTool(ID_TOOL_HELP, _("Help"), itemtool23Bitmap, itemtool23BitmapDisabled, wxITEM_NORMAL, _("Help"), wxEmptyString);
-    itemToolBar15->Realize();
-    itemFrame1->SetToolBar(itemToolBar15);
+    itemToolBar16->AddTool(ID_TOOL_CLICKWIN, _("Click Window"), itemtool19Bitmap, itemtool19BitmapDisabled, wxITEM_CHECK, _("Click Window"), wxEmptyString);
+    wxBitmap itemtool20Bitmap(itemFrame1->GetBitmapResource(wxT("icons/keyboard.xpm")));
+    wxBitmap itemtool20BitmapDisabled;
+    itemToolBar16->AddTool(ID_TOOL_KEYBOARD, _("On-screen keyboard"), itemtool20Bitmap, itemtool20BitmapDisabled, wxITEM_NORMAL, _("On-screen keyboard"), wxEmptyString);
+    itemToolBar16->AddSeparator();
+    wxBitmap itemtool22Bitmap(itemFrame1->GetBitmapResource(wxT("icons/preferences.xpm")));
+    wxBitmap itemtool22BitmapDisabled;
+    itemToolBar16->AddTool(ID_TOOL_OPTIONS, _("Options"), itemtool22Bitmap, itemtool22BitmapDisabled, wxITEM_NORMAL, _("Options"), wxEmptyString);
+    itemToolBar16->AddSeparator();
+    wxBitmap itemtool24Bitmap(itemFrame1->GetBitmapResource(wxT("icons/help.xpm")));
+    wxBitmap itemtool24BitmapDisabled;
+    itemToolBar16->AddTool(ID_TOOL_HELP, _("Help"), itemtool24Bitmap, itemtool24BitmapDisabled, wxITEM_NORMAL, _("Help"), wxEmptyString);
+    itemToolBar16->Realize();
+    itemFrame1->SetToolBar(itemToolBar16);
 
     m_statusBar = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
     if (WViacam::ShowToolTips())
@@ -647,4 +654,24 @@ void WViacam::OnMenuWizardClick( wxCommandEvent& event )
 }
 
 
+// Disabled (added for translators)
+#if defined(__WXOS2__)
 
+/*!
+ * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CHECKUPDATES
+ */
+
+void WViacam::OnMenuCheckupdatesClick( wxCommandEvent& event )
+{
+	// TODO. Strings only  for translators
+	wxString(_("Checking for updates..."));
+	wxString(_("Enable Viacam is up to date"));
+	wxString(_("New version available.\nVisit Enable Viacam web site?"));
+
+////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CHECKUPDATES in WViacam.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CHECKUPDATES in WViacam. 
+}
+
+#endif
