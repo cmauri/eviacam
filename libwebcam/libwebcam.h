@@ -144,6 +144,8 @@ typedef struct _Control {
 typedef struct _ControlList {
 	/// The first control in the list
 	Control			* first;
+	/// The last control in the list
+	Control         * last;
 	/// The mutex used to serialize access to the control list
 	pthread_mutex_t mutex;
 	/// The number of controls contained in the list
@@ -166,8 +168,6 @@ typedef struct _Device {
 	/// Boolean whether the device is still valid, i.e. exists in the system.
 	/// Devices marked as invalid will be cleared out by cleanup_device_list().
 	int				valid;
-	/// File descriptor returned by open
-	int				fd;
 	/// Next device in the global device list
 	struct _Device	* next;
 
