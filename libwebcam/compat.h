@@ -27,11 +27,12 @@
 #ifndef C_COMPAT_H
 #define C_COMPAT_H
 
+#include "incvideodev.h"
 #include <linux/videodev2.h>
 
 #ifdef USE_UVCVIDEO
 #define __user
-#include <linux/uvcvideo.h>
+#include "uvcvideo.h"
 #endif
 
 #ifndef UVC_CONTROL_SET_CUR

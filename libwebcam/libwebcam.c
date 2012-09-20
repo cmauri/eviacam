@@ -134,9 +134,24 @@ CHandle c_open_device (const char *device_name)
 		return 0;
 	}
 
+	// Open device when needed
+	if (device->fd== 0) {
+		device->fd= open_v4l2_device(device->v4l2_name);
+		if (device->fd<= 0) {
+			print_libwebcam_error("open sys call failed for %s'.", device_name);
+			// Open error
+			device->fd= 0;
+			return 0;
+		}
+	}
+
 	// Create a handle for the given device
 	// TODO Race condition if delete_device is called here (via c_cleanup)
 	handle = create_handle(device);
+	if (handle== 0) {
+		close(device->fd);
+		device->fd= 0;
+	}
 	return handle;
 }
 
@@ -153,6 +168,32 @@ void c_close_device (CHandle hDevice)
 	close_handle(hDevice);
 }
 
+/**
+ * Given a handle returns the corresponding file descriptor.
+ *
+ * The function returns a file descriptor that can be used for low level operations outside
+ * this library.
+ *
+ * @param	hDevice		a handle obtained from c_open_device()
+ *
+ * @return
+ * 		- a file descriptor greater than zero on success
+ * 		- 0 if an error has occurred
+ */
+int c_get_file_descriptor (CHandle hDevice)
+{
+	// Check the given handle and arguments
+	if(!initialized)
+		return 0;
+	if(!HANDLE_OPEN(hDevice))
+		return 0;
+	if(!HANDLE_VALID(hDevice))
+		return 0;
+	Device *device = GET_HANDLE(hDevice).device;
+	if (!device) return 0;
+
+	return device->fd;
+}
 
 /**
  * Enumerates all devices available in the system.
@@ -367,7 +408,7 @@ CResult c_enum_pixel_formats (CHandle hDevice, CPixelFormat *formats, unsigned i
 		return C_INVALID_ARG;
 
 	// Open the corresponding V4L2 device
-	v4l2_dev = open_v4l2_device(device->v4l2_name);
+	v4l2_dev = device->fd; //open_v4l2_device(device->v4l2_name);
 	if(!v4l2_dev)
 		return C_INVALID_DEVICE;
 
@@ -451,7 +492,7 @@ CResult c_enum_pixel_formats (CHandle hDevice, CPixelFormat *formats, unsigned i
 
 done:
 	// Free the list of pixel formats and close the V4L2 device
-	close(v4l2_dev);
+	//close(v4l2_dev);
 	elem = head;
 	while(elem) {
 		PixelFormat *next = elem->next;
@@ -511,7 +552,7 @@ CResult c_enum_frame_sizes (CHandle hDevice, const CPixelFormat *pixelformat, CF
 		return C_INVALID_ARG;
 
 	// Open the corresponding V4L2 device
-	v4l2_dev = open_v4l2_device(device->v4l2_name);
+	v4l2_dev =  device->fd; //open_v4l2_device(device->v4l2_name);
 	if(!v4l2_dev)
 		return C_INVALID_DEVICE;
 
@@ -603,7 +644,7 @@ CResult c_enum_frame_sizes (CHandle hDevice, const CPixelFormat *pixelformat, CF
 
 done:
 	// Free the list of frame sizes and close the V4L2 device
-	close(v4l2_dev);
+	//close(v4l2_dev);
 	elem = head;
 	while(elem) {
 		FrameSize *next = elem->next;
@@ -672,7 +713,7 @@ CResult c_enum_frame_intervals (CHandle hDevice, const CPixelFormat *pixelformat
 		return C_INVALID_ARG;
 
 	// Open the corresponding V4L2 device
-	v4l2_dev = open_v4l2_device(device->v4l2_name);
+	v4l2_dev = device->fd; //open_v4l2_device(device->v4l2_name);
 	if(!v4l2_dev)
 		return C_INVALID_DEVICE;
 
@@ -766,7 +807,7 @@ CResult c_enum_frame_intervals (CHandle hDevice, const CPixelFormat *pixelformat
 
 done:
 	// Free the list of frame sizes and close the V4L2 device
-	close(v4l2_dev);
+	//close(v4l2_dev);
 	elem = head;
 	while(elem) {
 		FrameInterval *next = elem->next;
@@ -1824,7 +1865,8 @@ static CResult refresh_control_list (Device *dev)
 	clear_control_list(dev);
 
 	// Open the corresponding V4L2 device
-	v4l2_dev = open_v4l2_device(dev->v4l2_name);
+	if (dev->fd) v4l2_dev = dev->fd;
+	else v4l2_dev = open_v4l2_device(dev->v4l2_name);
 	if(!v4l2_dev)
 		return C_INVALID_DEVICE;
 
@@ -1984,7 +2026,7 @@ next_control:
 
 done:
 	unlock_mutex(&dev->controls.mutex);
-	close(v4l2_dev);
+	if (!dev->fd) close(v4l2_dev);
 
 	return ret;
 }
@@ -2000,7 +2042,8 @@ static CResult refresh_device_details (Device *dev)
 	struct v4l2_capability v4l2_cap;
 
 	// Open the corresponding V4L2 device
-	v4l2_dev = open_v4l2_device(dev->v4l2_name);
+	if (dev->fd) v4l2_dev = dev->fd;
+	else v4l2_dev = open_v4l2_device(dev->v4l2_name);
 	if(!v4l2_dev)
 		return C_INVALID_DEVICE;
 
@@ -2023,7 +2066,7 @@ static CResult refresh_device_details (Device *dev)
 		dev->device.location = strdup(dev->v4l2_name);
 	}
 
-	close(v4l2_dev);
+	if (!dev->fd) close(v4l2_dev);
 
 	return ret;
 }
@@ -2533,7 +2576,7 @@ int open_v4l2_device(char *device_name)
 	if(!dev_node)
 		return 0;
 	sprintf(dev_node, "/dev/%s", device_name);
-	v4l2_dev = open(dev_node, 0);
+	v4l2_dev = open(dev_node, O_RDWR);
 	free(dev_node);
 	return v4l2_dev;
 }
@@ -2549,7 +2592,7 @@ static CResult read_v4l2_control(Device *device, Control *control, CControlValue
 	if(device == NULL || control == NULL || value == NULL)
 		return C_INVALID_ARG;
 
-	int v4l2_dev = open_v4l2_device(device->v4l2_name);
+	int v4l2_dev = device->fd; //open_v4l2_device(device->v4l2_name);
 	if(!v4l2_dev)
 		return C_INVALID_DEVICE;
 
@@ -2596,7 +2639,7 @@ static CResult read_v4l2_control(Device *device, Control *control, CControlValue
 	value->type		= control->control.type;
 
 done:
-	close(v4l2_dev);
+	//close(v4l2_dev);
 	return ret;
 }
 
@@ -2611,7 +2654,7 @@ static CResult write_v4l2_control(Device *device, Control *control, const CContr
 	if(device == NULL || control == NULL || value == NULL)
 		return C_INVALID_ARG;
 
-	int v4l2_dev = open_v4l2_device(device->v4l2_name);
+	int v4l2_dev = device->fd; //open_v4l2_device(device->v4l2_name);
 	if(!v4l2_dev)
 		return C_INVALID_DEVICE;
 
@@ -2656,7 +2699,7 @@ static CResult write_v4l2_control(Device *device, Control *control, const CContr
 #ifdef ENABLE_RAW_CONTROLS
 done:
 #endif
-	close(v4l2_dev);
+	//close(v4l2_dev);
 	return ret;
 }
 
@@ -2797,6 +2840,11 @@ static void close_handle(CHandle hDevice)
 	if(HANDLE_VALID(hDevice)) {
 		lock_mutex(&handle_list.mutex);
 		GET_HANDLE(hDevice).device->handles--;
+		// Closes device when reference count reaches 0
+		if (GET_HANDLE(hDevice).device->handles== 0) {
+			close (GET_HANDLE(hDevice).device->fd);
+			GET_HANDLE(hDevice).device->fd= 0;
+		}
 		GET_HANDLE(hDevice).device = NULL;
 		GET_HANDLE(hDevice).open = 0;
 		unlock_mutex(&handle_list.mutex);
