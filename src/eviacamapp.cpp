@@ -34,6 +34,7 @@
 ////@begin includes
 ////@end includes
 #include <wx/tooltip.h>
+#include <wx/socket.h>
 #include "eviacamapp.h"
 #include "viacamcontroller.h"
 
@@ -145,6 +146,14 @@ bool EViacamApp::OnInit()
 	//printf ("Hola!\n");
 	//fflush (stdout);
 #endif
+	// Initialize sockets support
+	// Note: (Workaround for implementation limitation for wxWidgets up to 2.5.x) 
+	// If you want to use sockets or derived classes such as wxFTP in a secondary 
+	// thread, call wxSocketBase::Initialize() (undocumented) from the main thread 
+	// before creating any sockets - in wxApp::OnInit for example. 
+	// See http://wiki.wxwidgets.org/wiki.pl?WxSocket or 
+	// http://www.litwindow.com/knowhow/knowhow.html for more details.
+	wxSocketBase::Initialize();
 
 	m_pController= new CViacamController();
 	assert (m_pController);
@@ -166,6 +175,8 @@ int EViacamApp::OnExit()
 	m_pController->Finalize();
 	delete m_pController;
 	m_pController= NULL;
+
+	wxSocketBase::Shutdown();
 
 ////@begin EViacamApp cleanup
 	return wxApp::OnExit();

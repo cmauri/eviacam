@@ -45,6 +45,8 @@
 #include "pointeraction.h"
 #include "dwellclick.h"
 #include "paths.h"
+#include "checkupdates.h"
+#include "checkupdates_ui.h"
 
 ////@begin XPM images
 #include "icons/eviacam_mini.xpm"
@@ -96,9 +98,7 @@ BEGIN_EVENT_TABLE( WViacam, wxFrame )
 
     EVT_MENU( ID_MENU_HELP_CONTENTS, WViacam::OnToolHelpClick )
 
-#if defined(__WXOS2__)
     EVT_MENU( ID_MENU_CHECKUPDATES, WViacam::OnMenuCheckupdatesClick )
-#endif
 
     EVT_MENU( ID_MENU_ABOUT, WViacam::OnMenuAboutClick )
 
@@ -206,9 +206,7 @@ void WViacam::CreateControls()
     menuBar->Append(itemMenu7, _("&Configuration"));
     wxMenu* itemMenu11 = new wxMenu;
     itemMenu11->Append(ID_MENU_HELP_CONTENTS, _("&Help contents"), wxEmptyString, wxITEM_NORMAL);
-#if defined(__WXOS2__)
     itemMenu11->Append(ID_MENU_CHECKUPDATES, _("Check for &updates"), wxEmptyString, wxITEM_NORMAL);
-#endif
     itemMenu11->AppendSeparator();
     itemMenu11->Append(ID_MENU_ABOUT, _("&About..."), wxEmptyString, wxITEM_NORMAL);
     menuBar->Append(itemMenu11, _("&Help"));
@@ -654,24 +652,15 @@ void WViacam::OnMenuWizardClick( wxCommandEvent& event )
 }
 
 
-// Disabled (added for translators)
-#if defined(__WXOS2__)
-
 /*!
  * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CHECKUPDATES
  */
 
 void WViacam::OnMenuCheckupdatesClick( wxCommandEvent& event )
-{
-	// TODO. Strings only  for translators
-	wxString(_("Checking for updates..."));
-	wxString(_("Enable Viacam is up to date"));
-	wxString(_("New version available.\nVisit Enable Viacam web site?"));
+{	
+	CheckUpdatesUI dlg(this);
+	dlg.ShowModal();
 
-////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CHECKUPDATES in WViacam.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CHECKUPDATES in WViacam. 
+	event.Skip(false);
 }
 
-#endif

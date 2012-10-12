@@ -38,7 +38,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28ud_richtext.lib wxmsw28ud_aui.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib cv.lib cvaux.lib cxcore.lib cxts.lib highgui.lib comctl32.lib rpcrt4.lib winmm.lib wxcamwindow.lib wxutil.lib dxguid.lib strmiids.lib uuid.lib STRMBASd.lib quartz.lib"
+				AdditionalDependencies="wxmsw28ud_richtext.lib wxmsw28ud_aui.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib cv.lib cvaux.lib cxcore.lib cxts.lib highgui.lib comctl32.lib rpcrt4.lib winmm.lib wxcamwindow.lib wxutil.lib dxguid.lib strmiids.lib uuid.lib STRMBASd.lib quartz.lib wsock32.lib"
 				OutputFile="$(OutDir)/eviacam.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -139,7 +139,7 @@ copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28u_richtext.lib wxmsw28u_aui.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib cv.lib cvaux.lib cxcore.lib cxts.lib highgui.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib wxcamwindow.lib wxutil.lib STRMBASE.lib"
+				AdditionalDependencies="wxmsw28u_richtext.lib wxmsw28u_aui.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib cv.lib cvaux.lib cxcore.lib cxts.lib highgui.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib wxcamwindow.lib wxutil.lib STRMBASE.lib wsock32.lib"
 				OutputFile="$(OutDir)/eviacam.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(CVPATH)\lib&quot;;&quot;$(WXWIN)\lib\vc_lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;;&quot;$(PSDK_DIR)\Samples\Multimedia\DirectShow\BaseClasses\WIN2000_RETAIL&quot;"
@@ -230,6 +230,12 @@ copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo
 				RelativePath=".\cautostart.cpp">
 			</File>
 			<File
+				RelativePath=".\checkupdates.cpp">
+			</File>
+			<File
+				RelativePath=".\checkupdates_ui.cpp">
+			</File>
+			<File
 				RelativePath=".\ckeyboardcode.cpp">
 			</File>
 			<File
@@ -317,6 +323,12 @@ copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
 				RelativePath=".\cautostart.h">
+			</File>
+			<File
+				RelativePath=".\checkupdates.h">
+			</File>
+			<File
+				RelativePath=".\checkupdates_ui.h">
 			</File>
 			<File
 				RelativePath=".\ckeyboardcode.h">
