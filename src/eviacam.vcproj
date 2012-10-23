@@ -299,6 +299,9 @@ copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo
 				RelativePath=".\wconfirmcalibration.cpp">
 			</File>
 			<File
+				RelativePath=".\website.cpp">
+			</File>
+			<File
 				RelativePath=".\wgetkey.cpp">
 			</File>
 			<File
@@ -404,6 +407,9 @@ copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo
 			</File>
 			<File
 				RelativePath=".\wconfirmcalibration.h">
+			</File>
+			<File
+				RelativePath=".\website.h">
 			</File>
 			<File
 				RelativePath=".\wgetkey.h">

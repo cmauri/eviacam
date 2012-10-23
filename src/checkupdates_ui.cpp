@@ -36,6 +36,7 @@
 #include "checkupdates_ui.h"
 #include "checkupdates.h"
 #include "version.h"
+#include "website.h"
 
 ////@begin XPM images
 ////@end XPM images
@@ -229,10 +230,8 @@ void CheckUpdatesUI::OnButtonCheckupdateCloseClick( wxCommandEvent& event )
 
 void CheckUpdatesUI::OnHyperlinkctrlWebsiteHyperlinkClicked( wxHyperlinkEvent& event )
 {
-////@begin wxEVT_COMMAND_HYPERLINK event handler for ID_HYPERLINKCTRL_WEBSITE in CheckUpdatesUI.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_COMMAND_HYPERLINK event handler for ID_HYPERLINKCTRL_WEBSITE in CheckUpdatesUI. 
+	eviacam::OpenEViacamWebsiteOnBrowser();
+    event.Skip(false);
 }
 
 

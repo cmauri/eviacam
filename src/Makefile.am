@@ -32,7 +32,8 @@ noinst_HEADERS = wgetkey.h \
 	mousecommand.h \
 	paths.h \
 	checkupdates.h \
-	checkupdates_ui.h
+	checkupdates_ui.h \
+	website.h
 
 dist_noinst_DATA= version.h.in \
 	eviacamloader.c.in \
@@ -133,7 +134,8 @@ eviacam_SOURCES = wgetkey.cpp \
 	pointeraction.cpp \
 	paths.cpp \
 	checkupdates.cpp \
-	checkupdates_ui.cpp
+	checkupdates_ui.cpp \
+	website.cpp
 	
 eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11
