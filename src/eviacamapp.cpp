@@ -35,7 +35,10 @@
 ////@end includes
 #include <wx/tooltip.h>
 #include <wx/socket.h>
+#include <wx/stdpaths.h>
+
 #include "eviacamapp.h"
+#include "paths.h"
 #include "viacamcontroller.h"
 
 ////@begin XPM images
@@ -139,6 +142,15 @@ bool EViacamApp::OnInit()
 	wxImage::AddHandler(new wxGIFHandler);
 #endif		
 /* ////@end EViacamApp initialisation */
+
+
+// Set up globals
+#ifndef NDEBUG
+	// Assume project runs from src/ 
+	eviacam::SetDataDir(wxGetCwd() + _T("/../doc/"));
+#else
+	eviacam::SetDataDir(wxStandardPaths::Get().GetDataDir());
+#endif
 
 #if defined(WIN32) && !defined(NDEBUG)
 	AllocConsole();

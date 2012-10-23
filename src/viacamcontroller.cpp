@@ -33,11 +33,9 @@
 #include "configmanager.h"
 #include "cautostart.h"
 #include "hotkeymanager.h"
-#include "paths.h"
 
 #include <wx/msgdlg.h>
 #include <wx/choicdlg.h>
-#include <wx/stdpaths.h>
 #include <wx/filename.h>
 
 CViacamController::CViacamController(void)
@@ -195,14 +193,6 @@ bool CViacamController::Initialize ()
 {	
 	bool retval= true;
 	assert (!m_pMainWindow && !m_pCamera && !m_pCaptureThread);
-
-	// Set up globals
-#ifndef NDEBUG
-	// Assume project runs from src/ 
-	eviacam::SetDataDir(wxGetCwd() + _T("/../doc/"));
-#else
-	eviacam::SetDataDir(wxStandardPaths::Get().GetDataDir().mb_str(wxConvUTF8));
-#endif
 
 	SetUpLanguage ();
 
