@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Eviacam 1.5.3\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2012-09-16 11:19+0200\n"
+"POT-Creation-Date: 2012-10-23 17:14+0200\n"
 "PO-Revision-Date: 2012-03-28 17:53+0400\n"
 "Last-Translator: Sergey Shkurat <neftekum@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -309,7 +309,7 @@ msgid "Move left:"
 msgstr "Влево:"
 
 #: src/wconfiguration.cpp:669 src/wconfiguration.cpp:682
-#: src/wconfiguration.cpp:695 src/wconfiguration.cpp:708 src/wviacam.cpp:224
+#: src/wconfiguration.cpp:695 src/wconfiguration.cpp:708 src/wviacam.cpp:222
 msgid "Disable"
 msgstr "Отключить"
 
@@ -575,7 +575,7 @@ msgstr ""
 "Продолжить?"
 
 #: src/wconfiguration.cpp:1759 src/wconfiguration.cpp:1894
-#: src/wconfiguration.cpp:2020 src/viacamcontroller.cpp:359
+#: src/wconfiguration.cpp:2020 src/viacamcontroller.cpp:349
 #: src/cmotioncalibration.cpp:183
 msgid "eViacam warning"
 msgstr "eViacam предупреждение"
@@ -645,15 +645,15 @@ msgstr "Двойной клик"
 msgid "About Enable Viacam"
 msgstr "О eViacam"
 
-#: src/viacamcontroller.cpp:137
+#: src/viacamcontroller.cpp:135
 msgid "Not detected any camera. Aborting"
 msgstr "Не удается подключиться к вэб-камере."
 
-#: src/viacamcontroller.cpp:158
+#: src/viacamcontroller.cpp:156
 msgid "Choose the camera to use"
 msgstr "Выберите камеру для использования"
 
-#: src/viacamcontroller.cpp:178
+#: src/viacamcontroller.cpp:176
 msgid ""
 "Can not initialize the camera.\n"
 "Perhaps is being used by other application."
@@ -662,7 +662,7 @@ msgstr ""
 "Возможно она используется другим \n"
 "приложением."
 
-#: src/viacamcontroller.cpp:359
+#: src/viacamcontroller.cpp:349
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -670,7 +670,7 @@ msgstr ""
 "Это действие отключит eViacam.\n"
 "Продолжить?"
 
-#: src/viacamcontroller.cpp:384
+#: src/viacamcontroller.cpp:374
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -679,12 +679,12 @@ msgstr ""
 "Пожалуйста, измените настройки \n"
 "(вкладка дополнительно)."
 
-#: src/viacamcontroller.cpp:384 src/viacamcontroller.cpp:398
+#: src/viacamcontroller.cpp:374 src/viacamcontroller.cpp:388
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "Ошибка eViacam "
 
-#: src/viacamcontroller.cpp:394
+#: src/viacamcontroller.cpp:384
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -695,7 +695,7 @@ msgstr ""
 "%s.\n"
 "Пожалуйста, проверьте настройки."
 
-#: src/viacamcontroller.cpp:396
+#: src/viacamcontroller.cpp:386
 msgid ""
 "\n"
 "\n"
@@ -715,7 +715,7 @@ msgstr ""
 "учетных записей(UAC) или попробовать другую\n"
 "клавиатуру, например Click-N-Type."
 
-#: src/viacamcontroller.cpp:470
+#: src/viacamcontroller.cpp:460
 msgid ""
 "Note that adjusting the camera controls while eViacam\n"
 "is enabled may cause loss of pointer control.\n"
@@ -725,35 +725,35 @@ msgstr ""
 "привести к потере управления курсором.\n"
 "Продолжить?"
 
-#: src/wabout.cpp:146 src/wcameradialog.cpp:164
+#: src/wabout.cpp:147 src/wcameradialog.cpp:164
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/wabout.cpp:158
+#: src/wabout.cpp:159
 #, fuzzy
 msgid "A webcam based mouse emulator"
 msgstr "Кроссплатформенный эмулятор мыши, использующий веб-камеру"
 
-#: src/wabout.cpp:164
+#: src/wabout.cpp:165
 msgid ""
 "If you find this software useful then please consider \t\t<a "
 "href='donation'>making a small donation</a> to show your appreciation \t"
 "\tand help support the continued development. Thanks!\t"
 msgstr ""
 
-#: src/wabout.cpp:169
+#: src/wabout.cpp:170
 msgid "Visit website"
 msgstr ""
 
-#: src/wabout.cpp:174
+#: src/wabout.cpp:175
 msgid "Thanks"
 msgstr ""
 
-#: src/wabout.cpp:201
+#: src/wabout.cpp:202
 msgid "License"
 msgstr ""
 
-#: src/wabout.cpp:205
+#: src/wabout.cpp:206
 #, fuzzy
 msgid "Released under the GNU/GPL v3 license. See COPYING file for details."
 msgstr ""
@@ -789,39 +789,39 @@ msgstr "&Инструменты"
 msgid "&Help contents"
 msgstr "&Инструкция..."
 
-#: src/wviacam.cpp:210
+#: src/wviacam.cpp:209
 msgid "Check for &updates"
 msgstr ""
 
-#: src/wviacam.cpp:213
+#: src/wviacam.cpp:211
 msgid "&About..."
 msgstr "&О программе..."
 
-#: src/wviacam.cpp:214
+#: src/wviacam.cpp:212
 msgid "&Help"
 msgstr "&Справка"
 
-#: src/wviacam.cpp:221
+#: src/wviacam.cpp:219
 msgid "Enable"
 msgstr "Включить"
 
-#: src/wviacam.cpp:228 src/clickwindow.h:31
+#: src/wviacam.cpp:226 src/clickwindow.h:31
 msgid "Click Window"
 msgstr "Панель"
 
-#: src/wviacam.cpp:231
+#: src/wviacam.cpp:229
 msgid "On-screen keyboard"
 msgstr "Экранная клавиатура"
 
-#: src/wviacam.cpp:235
+#: src/wviacam.cpp:233
 msgid "Options"
 msgstr "Настройки"
 
-#: src/wviacam.cpp:239
+#: src/wviacam.cpp:237
 msgid "Help"
 msgstr "Инструкция"
 
-#: src/wviacam.cpp:245
+#: src/wviacam.cpp:243
 msgid ""
 "Frame rate meter. For proper function\n"
 "should be greater than 25 fps. Reduce\n"
@@ -833,43 +833,28 @@ msgstr ""
 "время экспозиции вашей камеры,\n"
 "если необходимо."
 
-#: src/wviacam.cpp:342
+#: src/wviacam.cpp:340
 #, c-format
 msgid " %li fps (good)"
 msgstr " %li fps (отлично)"
 
-#: src/wviacam.cpp:345
+#: src/wviacam.cpp:343
 #, c-format
 msgid " %li fps (could be improved)"
 msgstr " %li fps (хорошо)"
 
-#: src/wviacam.cpp:348
+#: src/wviacam.cpp:346
 #, c-format
 msgid " %li fps (too low)"
 msgstr " %li fps (плохо)"
 
-#: src/wviacam.cpp:393
+#: src/wviacam.cpp:391
 msgid ""
 "This action will close the program.\n"
 "Are you sure?"
 msgstr ""
 "Это действие закроет программу.\n"
 "Продолжить?"
-
-#: src/wviacam.cpp:667
-msgid "Checking for updates..."
-msgstr ""
-
-#: src/wviacam.cpp:668
-#, fuzzy
-msgid "Enable Viacam is up to date"
-msgstr "Включать слежение при запуске eViacam"
-
-#: src/wviacam.cpp:669
-msgid ""
-"New version available.\n"
-"Visit Enable Viacam web site?"
-msgstr ""
 
 #: src/langnames-utf8.h:29
 msgid "System default"
@@ -1254,6 +1239,60 @@ msgstr "Уменьшить скорость по горизонтали"
 msgid "Decrease the Y axis speed"
 msgstr "Уменьшить скорость по вертикали"
 
+#: src/checkupdates.cpp:170
+msgid "Error checking for updates. Try again later."
+msgstr ""
+
+#: src/checkupdates.cpp:195
+msgid "Cannot resolve host name: "
+msgstr ""
+
+#: src/checkupdates.cpp:200
+msgid "Conection failed: "
+msgstr ""
+
+#: src/checkupdates.cpp:205
+msgid "Sorry. Version file not found. Please report us."
+msgstr ""
+
+#: src/checkupdates.cpp:209
+msgid "Sorry. Something bad happened."
+msgstr ""
+
+#: src/checkupdates_ui.h:57
+msgid "Check for updates"
+msgstr ""
+
+#: src/checkupdates_ui.cpp:158
+msgid "Checking for updates. Please wait."
+msgstr ""
+
+#: src/checkupdates_ui.cpp:166
+#, fuzzy
+msgid "Visit Enable Viacam website"
+msgstr "О eViacam"
+
+#: src/checkupdates_ui.cpp:173
+#, fuzzy
+msgid "&Close"
+msgstr "Закрыть"
+
+#: src/checkupdates_ui.cpp:247
+msgid "New version available: "
+msgstr ""
+
+#: src/checkupdates_ui.cpp:249
+msgid "Installed version: "
+msgstr ""
+
+#: src/checkupdates_ui.cpp:254
+msgid "No updates available"
+msgstr ""
+
+#: src/checkupdates_ui.cpp:257
+msgid "Error checking for updates"
+msgstr ""
+
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
 msgstr "Камера не обнаружена. "
@@ -1272,6 +1311,10 @@ msgstr "Выбранная позиция занята. Рекомендуетс
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
 msgstr "Не показывать это сообщение"
+
+#, fuzzy
+#~ msgid "Enable Viacam is up to date"
+#~ msgstr "Включать слежение при запуске eViacam"
 
 #~ msgid "Contributions:"
 #~ msgstr "Сотрудничество:"
