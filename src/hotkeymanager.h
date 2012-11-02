@@ -57,7 +57,7 @@ public:
 	~CHotkeyManager();
 	
 	const int GetNumKeyCommands () const {
-		return m_keyCommands.size();
+		return (int) m_keyCommands.size();
 	}
 	
 	CKeyCommand* GetKeyCommand (unsigned int index) {

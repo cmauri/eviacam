@@ -146,7 +146,7 @@ CKeyboardCode CKeyboardCode::FromASCII (char ascii)
 void CKeyboardCode::Dump() const
 {
 #if !defined(WIN32)
-	printf ("KeySym: %u	KeyCode: %u Name: %s\n", m_virtualKeyCode, XKeysymToKeycode((Display *) wxGetDisplay(), m_virtualKeyCode), GetName());
+	printf ("KeySym: %lu	KeyCode: %u Name: %s\n", m_virtualKeyCode, XKeysymToKeycode((Display *) wxGetDisplay(), m_virtualKeyCode), GetName());
 #endif
 }
 #endif

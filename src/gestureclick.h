@@ -78,7 +78,7 @@ public:
 	enum { MOUSE_EVENTS_COUNT= EActionLast };
 
 	int GetPossibleActionsCount() const {
-		return MOUSE_EVENTS_COUNT + m_keyboardCodes.size();
+		return MOUSE_EVENTS_COUNT + (int) m_keyboardCodes.size();
 	}
 
 	EAction GetActionLeft() const {	return m_actionLeft; }
@@ -114,7 +114,7 @@ public:
 		return m_keyboardCodes[position];
 	}
 	unsigned int GetKeyEventsCount() const {
-		return m_keyboardCodes.size();
+		return (unsigned int) m_keyboardCodes.size();
 	}
 
 	// Configuration methods

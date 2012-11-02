@@ -1996,7 +1996,7 @@ void WConfiguration::OnChoCpuUsageSelected( wxCommandEvent& event )
 
 void WConfiguration::OnHotkeyCheckboxClick( wxCommandEvent& event )
 {
-	wxGetApp().GetController().getHotkeyManager().GetKeyCommands()[(event.GetId()-FIRST_CONTROL_ID-2)/4]->SetEnabled(event.GetInt());
+	wxGetApp().GetController().getHotkeyManager().GetKeyCommands()[(event.GetId()-FIRST_CONTROL_ID-2)/4]->SetEnabled((event.GetInt()? true : false));
 	event.Skip(false);
 }
 
