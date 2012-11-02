@@ -1,22 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Cesar Mauri Loba - CREA Software Systems
 # This file is distributed under the same license as the PACKAGE package.
-# Yaron Shahrabani <sh.yaron@gmail.com>, 2010.
+# Yaron Shahrabani <sh.yaron@gmail.com>, 2010, 2012.
 #: src/wcameradialog.cpp:193
 msgid ""
 msgstr ""
 "Project-Id-Version: eViacam\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2012-10-23 17:14+0200\n"
-"PO-Revision-Date: 2012-06-08 11:28+0200\n"
+"PO-Revision-Date: 2012-10-27 19:12+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Gezer (Hebrew) <sh.yaron@gmail.com>\n"
+"Language-Team: Gezer\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.6.1\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Poedit-Language: Hebrew\n"
 "X-Poedit-Country: ISRAEL\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -726,9 +726,8 @@ msgid "Close"
 msgstr "סגירה"
 
 #: src/wabout.cpp:159
-#, fuzzy
 msgid "A webcam based mouse emulator"
-msgstr "מדמה עכבר מבוסס מצלמה הנתמך במספר פלטפורמות"
+msgstr "מדמה עכבר מבוסס מצלמה"
 
 #: src/wabout.cpp:165
 msgid ""
@@ -736,25 +735,24 @@ msgid ""
 "href='donation'>making a small donation</a> to show your appreciation \t"
 "\tand help support the continued development. Thanks!\t"
 msgstr ""
+"אם מצאת תכנית זו כמועילה נא לשקול \t\t<a href='donation'>לתת תרומה קטנה</a> "
+"כדי להביע את הערכתך ותמיכתך בהמשך הפיתוח. רב תודות!\t"
 
 #: src/wabout.cpp:170
 msgid "Visit website"
-msgstr ""
+msgstr "ביקור באתר"
 
 #: src/wabout.cpp:175
 msgid "Thanks"
-msgstr ""
+msgstr "רב תודות"
 
 #: src/wabout.cpp:202
 msgid "License"
-msgstr ""
+msgstr "רישיון"
 
 #: src/wabout.cpp:206
-#, fuzzy
 msgid "Released under the GNU/GPL v3 license. See COPYING file for details."
-msgstr ""
-"מופץ ברישיון GNU/GPL. יש לעיין ברישיון לפרטים נוספים.<br>\n"
-"  בתמיכתם של:"
+msgstr "מופץ ברישיון GNU/GPL. יש לעיין בקובץ COPYING לקבלת פרטים נוספים."
 
 #: src/wviacam.cpp:198
 msgid "E&nable / Disable"
@@ -786,7 +784,7 @@ msgstr "&תוכן העזרה"
 
 #: src/wviacam.cpp:209
 msgid "Check for &updates"
-msgstr ""
+msgstr "בדיקת &עדכונים"
 
 #: src/wviacam.cpp:211
 msgid "&About..."
@@ -1232,57 +1230,55 @@ msgstr "הנמכת המהירות בציר Y"
 
 #: src/checkupdates.cpp:170
 msgid "Error checking for updates. Try again later."
-msgstr ""
+msgstr "הבדיקה להמצאות עדכונים נכשלה. נא לנסות שוב."
 
 #: src/checkupdates.cpp:195
 msgid "Cannot resolve host name: "
-msgstr ""
+msgstr "לא ניתן לזהות את שם המחשב המערכת:"
 
 #: src/checkupdates.cpp:200
 msgid "Conection failed: "
-msgstr ""
+msgstr "החיבור נכשל:"
 
 #: src/checkupdates.cpp:205
 msgid "Sorry. Version file not found. Please report us."
-msgstr ""
+msgstr "לא נמצא קובץ Version. נא לדווח לנו. עמך הסליחה."
 
 #: src/checkupdates.cpp:209
 msgid "Sorry. Something bad happened."
-msgstr ""
+msgstr "משהו השתבש. עמך הסליחה."
 
 #: src/checkupdates_ui.h:57
 msgid "Check for updates"
-msgstr ""
+msgstr "בדיקת עדכונים"
 
 #: src/checkupdates_ui.cpp:158
 msgid "Checking for updates. Please wait."
-msgstr ""
+msgstr "מתבצעת בדיקה להמצאות עדכונים. נא להמתין."
 
 #: src/checkupdates_ui.cpp:166
-#, fuzzy
 msgid "Visit Enable Viacam website"
-msgstr "על אודות הפעלת Viacam"
+msgstr "ביקור באתר הפעלת Viacam"
 
 #: src/checkupdates_ui.cpp:173
-#, fuzzy
 msgid "&Close"
-msgstr "סגירה"
+msgstr "&סגירה"
 
 #: src/checkupdates_ui.cpp:247
 msgid "New version available: "
-msgstr ""
+msgstr "גרסה חדשה זמינה: "
 
 #: src/checkupdates_ui.cpp:249
 msgid "Installed version: "
-msgstr ""
+msgstr "הגרסה המותקנת: "
 
 #: src/checkupdates_ui.cpp:254
 msgid "No updates available"
-msgstr ""
+msgstr "אין עדכונים זמינים"
 
 #: src/checkupdates_ui.cpp:257
 msgid "Error checking for updates"
-msgstr ""
+msgstr "הבדיקה להמצאות עדכונים נכשלה"
 
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"

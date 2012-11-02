@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: v1.5.3\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2012-10-23 17:14+0200\n"
-"PO-Revision-Date: 2012-03-26 22:30-0200\n"
-"Last-Translator: Wellyngton de Oliveira <wellyngtonrs@gmail.com>\n"
+"PO-Revision-Date: 2012-10-24 21:52-0200\n"
+"Last-Translator: Wellyngton <wellyngtonrs@gmail.com>\n"
 "Language-Team: Wellyngton de Oliveira - Star Line Systems\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -735,18 +735,21 @@ msgid ""
 "href='donation'>making a small donation</a> to show your appreciation \t"
 "\tand help support the continued development. Thanks!\t"
 msgstr ""
+"Se você achou este software útil, por favor, considere \t\t<a "
+"href='doação'>fazer uma pequena doação</a> para mostrar o seu apreço \t\te "
+"ajudar a apoiar o desenvolvimento contínuo. Obrigado!"
 
 #: src/wabout.cpp:170
 msgid "Visit website"
-msgstr ""
+msgstr "Visitar a página do projeto na web"
 
 #: src/wabout.cpp:175
 msgid "Thanks"
-msgstr ""
+msgstr "Obrigado"
 
 #: src/wabout.cpp:202
 msgid "License"
-msgstr ""
+msgstr "Licença"
 
 #: src/wabout.cpp:206
 #, fuzzy
@@ -785,7 +788,7 @@ msgstr "&Conteúdo da ajuda"
 
 #: src/wviacam.cpp:209
 msgid "Check for &updates"
-msgstr ""
+msgstr "Procurar por atualizações"
 
 #: src/wviacam.cpp:211
 msgid "&About..."
@@ -1242,31 +1245,31 @@ msgstr "Diminuir a velocidade do eixo Y"
 
 #: src/checkupdates.cpp:170
 msgid "Error checking for updates. Try again later."
-msgstr ""
+msgstr "Erro ao verificar se existe atualizações. Tente novamente mais tarde"
 
 #: src/checkupdates.cpp:195
 msgid "Cannot resolve host name: "
-msgstr ""
+msgstr "Não foi possível resolver o nome da máquina."
 
 #: src/checkupdates.cpp:200
 msgid "Conection failed: "
-msgstr ""
+msgstr "Falha de conexão"
 
 #: src/checkupdates.cpp:205
 msgid "Sorry. Version file not found. Please report us."
-msgstr ""
+msgstr "Desculpe. Versão do arquivo não foi encontrado. Por favor informe-nos."
 
 #: src/checkupdates.cpp:209
 msgid "Sorry. Something bad happened."
-msgstr ""
+msgstr "Desculpe. aconteceu algum problema."
 
 #: src/checkupdates_ui.h:57
 msgid "Check for updates"
-msgstr ""
+msgstr "Procurar por atualizações"
 
 #: src/checkupdates_ui.cpp:158
 msgid "Checking for updates. Please wait."
-msgstr ""
+msgstr "Procurando por dispositivos. Aguarde."
 
 #: src/checkupdates_ui.cpp:166
 #, fuzzy
@@ -1276,23 +1279,23 @@ msgstr "Sobre habilitar eViacam"
 #: src/checkupdates_ui.cpp:173
 #, fuzzy
 msgid "&Close"
-msgstr "Fechar"
+msgstr "&Fechar"
 
 #: src/checkupdates_ui.cpp:247
 msgid "New version available: "
-msgstr ""
+msgstr "Nova versão disponível"
 
 #: src/checkupdates_ui.cpp:249
 msgid "Installed version: "
-msgstr ""
+msgstr "Versão Instalada:"
 
 #: src/checkupdates_ui.cpp:254
 msgid "No updates available"
-msgstr ""
+msgstr "Não há atualizações disponíveis"
 
 #: src/checkupdates_ui.cpp:257
 msgid "Error checking for updates"
-msgstr ""
+msgstr "Erro na verificação de atualizações"
 
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
