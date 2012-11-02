@@ -1,0 +1,7 @@
+[main]
+host = https://www.transifex.com
+
+[eviacam.eviacam-git]
+file_filter = po/<lang>.po
+source_lang = en
+
