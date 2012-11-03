@@ -31,7 +31,8 @@ INCLUDES = \
 	-I$(top_srcdir)/wxutil \
 	-I$(top_srcdir)/creavision \
 	-I$(top_srcdir)/libwebcam \
-	-I$(top_srcdir)/wxcamwindow
+	-I$(top_srcdir)/wxcamwindow \
+	-I$(top_srcdir)
 
 maintainer-clean-local:
 	-rm -rf win32/Release

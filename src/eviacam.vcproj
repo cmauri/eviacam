@@ -23,7 +23,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;..\wxutil;..\wxcamwindow;..\creavision"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;..\wxutil;..\wxcamwindow;..\creavision;..\;$(NOINHERIT)"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;NOPCH;__WXMSW__;__WXDEBUG__"
 				MinimalRebuild="FALSE"
 				BasicRuntimeChecks="3"
@@ -127,7 +127,7 @@ copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo
 			DeleteExtensionsOnClean="*.dll;*.obj;*.ilk;*.pdb;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.bat;$(TargetPath)">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;..\creavision;..\wxcamwindow;..\wxutil"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;..\creavision;..\wxcamwindow;..\wxutil;..\;$(NOINHERIT)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;NOPCH;__WXMSW__"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
