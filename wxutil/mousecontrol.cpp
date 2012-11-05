@@ -28,6 +28,7 @@
 //}
 #include <math.h>
 #include <stdio.h>
+#include "simplelog.h"
 
 #if defined(WIN32)
 //
@@ -124,7 +125,7 @@ void CMouseControl::GetScreenSize()
 	m_ScreenWidth= DisplayWidth (m_pDisplay, DefaultScreen (m_pDisplay));
 //	END_GUI_CALL_MUTEX();	
 #endif
-
+	slog_write (SLOG_PRIO_DEBUG, "current screen size: %d, %d\n", m_ScreenWidth, m_ScreenHeight);
 }
 
 void CMouseControl::GetPointerLocation (long& x, long& y)

@@ -69,9 +69,8 @@ public:
 	// for storage purposes not to work with
 	unsigned long GetRawValue() const;
 
-#if !defined(NDEBUG)
 	void Dump() const;
-#endif	
+
 private:
 	// Stores the virtual key code. This corresponds to a unique key
 	// after taking into account the keyboard layout (the keyboard
