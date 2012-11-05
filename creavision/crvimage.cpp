@@ -22,7 +22,6 @@
 #include "crvimage.h"
 #include <highgui.h>
 #include <string.h>
-#include <stdio.h>
 #include <assert.h>
 
 // Construction

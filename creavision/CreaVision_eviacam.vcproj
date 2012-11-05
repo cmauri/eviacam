@@ -23,7 +23,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;&quot;$(PSDK_DIR)\Samples\Multimedia\DirectShow\BaseClasses&quot;"
+				AdditionalIncludeDirectories="&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;&quot;$(PSDK_DIR)\Samples\Multimedia\DirectShow\BaseClasses&quot;;../"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;NOPCH;__WXMSW__"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -73,7 +73,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;&quot;$(PSDK_DIR)\Samples\Multimedia\DirectShow\BaseClasses&quot;"
+				AdditionalIncludeDirectories="&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;&quot;$(PSDK_DIR)\Samples\Multimedia\DirectShow\BaseClasses&quot;;../"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"

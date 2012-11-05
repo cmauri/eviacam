@@ -49,9 +49,7 @@ public:
 	
 	static int GetNumDevices();
 	static const char* GetDeviceName (unsigned int id);
-#if !defined(NDEBUG)
 	void Dump();
-#endif
 
 protected:
 	virtual bool DoOpen();
@@ -139,9 +137,9 @@ public:
 	
 	// Check whether a certain control id is supported
 	static bool CheckSupportedLibwebcamId (CControlId id);
-#if !defined(NDEBUG)
+
 	void Dump();
-#endif
+
 private:
 	static ECameraControlId LibwebcamId2ECameraControlId (CControlId id);
 	static ECameraControlType CControlType2ECameraControlType (CControlType type);
