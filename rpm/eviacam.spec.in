@@ -100,7 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-, root, root)
 
-%doc AUTHORS ChangeLog COPYING INSTALL README README.ca THANKS TODO
+%doc AUTHORS ChangeLog COPYING INSTALL README THANKS TODO
 %{prefix}/bin/*
 %{prefix}/share/*
 

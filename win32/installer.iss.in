@@ -76,7 +76,6 @@ Source: NEWS; DestDir: {app}\doc; DestName: NEWS.txt
 Source: doc\*.txt; DestDir: {app}\doc; Flags: recursesubdirs ignoreversion
 Source: doc\*.png; DestDir: {app}\doc; Flags: recursesubdirs ignoreversion
 Source: README; DestDir: {app}\doc; Flags: ignoreversion; DestName: README.txt
-Source: README.ca; DestDir: {app}\doc; Flags: ignoreversion; DestName: README.ca.txt
 Source: doc\help\*; DestDir: {app}\bin\help; Flags: recursesubdirs ignoreversion
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}
@@ -92,14 +91,11 @@ Name: {group}\{#APPNAME} axuda; Filename: {app}\bin\help\gl\contents.htm; Langua
 Name: {group}\{#APPNAME} Hilfe; Filename: {app}\bin\help\de\contents.htm; Languages: Deutsch
 Name: {group}\{#APPNAME} Помощь; Filename: {app}\bin\help\ru\contents.htm; Languages: Russian
 
-;Name: {group}\README; Filename: {app}\doc\README.txt
-;Name: {group}\README.Català; Filename: {app}\doc\README.ca.txt
 Name: {userdesktop}\eViacam; Filename: {app}\bin\eViacam.exe; WorkingDir: {app}\bin; Tasks: desktopicon
 
 [Run]
 ;Filename: {app}\doc\README.txt; Flags: postinstall shellexec
-;Filename: {app}\doc\README.ca.txt; Flags: postinstall shellexec; Tasks: ; Languages: Catala; Verb: open
-;Filename: {app}\bin\{#APPBIN}; WorkingDir: {app}\bin; Flags: postinstall nowait; Tasks: ; Languages:
+Filename: {app}\doc\NEWS.txt; Flags: postinstall shellexec
 
 [Components]
 
@@ -132,10 +128,6 @@ Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: lan
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: he; Languages: Hebrew
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: ru; Languages: Russian
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: Portuguese (Brazilian); Languages: Portuguese
-
-; Enables face tracking by default for default profile, for upgrades only
-Root: HKCU; Subkey: Software\eviacam\settings\default; ValueType: dword; ValueName: motionTracker; ValueData: 1
-
 
 [_ISTool]
 Use7zip=false
