@@ -185,11 +185,8 @@ wxThread::ExitCode CheckUpdates::CheckUpdatesWorker::Entry()
 			m_parent->m_resultStatus= CheckUpdates::NEW_VERSION_AVAILABLE;
 			break;
 		case 0: // no newer version available
-			m_parent->m_resultStatus= CheckUpdates::NO_NEW_VERSION_AVAILABLE;
-			break;
 		case -1: // local version newer than remote!
-			m_parent->m_statusMessage= _T("Your version is newer than the one on the server!");
-			m_parent->m_resultStatus= CheckUpdates::ERROR_CHECKING_NEW_VERSION;
+			m_parent->m_resultStatus= CheckUpdates::NO_NEW_VERSION_AVAILABLE;
 			break;
 		case -2: // cannot resolve host name
 			m_parent->m_statusMessage= _("Cannot resolve host name: ");
