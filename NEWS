@@ -1,3 +1,6 @@
+2012-11-19 - Release 1.6.1
+* Fix -d command line not available on Win32 release mode
+
 2012-11-15 - Release 1.6.0
 * Enable Viacam has been awarded a second prize in 
   VI Premio Vodafone a la Innovación en Telecomunicaciones.
@@ -8,12 +11,13 @@
 * Improved "About" dialog aesthetics
 * Fixed bug [ID:3548107]: allow higher smoothing values
 * Fixed: Russian help not available on linux
-* Translations updated: ca, es, de, fr, gl, he, pt_BR & ru
+* Translations updated: ca, es, de, fr, gl, he, it, pt_BR & ru
 	Thanks to:
     	Christian Bieder (de)
     	Sébastien Lecointre (fr)
     	Miguel Bouzada (gl)
     	Yaron Shahrabani (he)
+		Giuseppe Masciopinto (it)
     	Wellyngton de Oliveira (pt_BR)
     	Sergey Shkurat (ru)
 
