@@ -200,7 +200,7 @@ bool EViacamApp::OnCmdLineParsed(wxCmdLineParser& parser)
 		// Set log priority level
 		slog_set_priority (SLOG_PRIO_DEBUG);
 
-#if defined(WIN32) && !defined(NDEBUG)
+#if defined(WIN32)
 		AllocConsole();
 		freopen("CONOUT$", "wb", stdout); 
 		slog_write (SLOG_PRIO_INFO, "debug mode enabled");
