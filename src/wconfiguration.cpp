@@ -75,7 +75,8 @@ const wxLanguage s_langIds[] = {
 	wxLANGUAGE_OCCITAN,
 	wxLANGUAGE_FRENCH,
 	wxLANGUAGE_ARABIC,
-	wxLANGUAGE_HEBREW
+	wxLANGUAGE_HEBREW,
+	wxLANGUAGE_JAPANESE
 };
 
 wxCOMPILE_TIME_ASSERT( WXSIZEOF(s_langNames) == WXSIZEOF(s_langIds), LangArraysMismatch );

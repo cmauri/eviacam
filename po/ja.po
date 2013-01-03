@@ -1,0 +1,1308 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Cesar Mauri Loba - CREA Software Systems
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2012.
+#: src/wcameradialog.cpp:193
+msgid ""
+msgstr ""
+"Project-Id-Version: Enable Viacam (eviacam)\n"
+"Report-Msgid-Bugs-To: cesar@crea-si.com\n"
+"POT-Creation-Date: 2013-01-03 20:55+0100\n"
+"PO-Revision-Date: 2013-01-02 13:19+0000\n"
+"Last-Translator: Jiro Matsuzawa <jmatsuzawa@gnome.org>\n"
+"Language-Team: Japanese (http://www.transifex.com/projects/p/eviacam/"
+"language/ja/)\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/wconfiguration.h:127
+msgid "Configuration"
+msgstr "設定"
+
+#: src/wconfiguration.cpp:409
+msgid "Motion calibration"
+msgstr "モーションキャリブレーション"
+
+#: src/wconfiguration.cpp:418 src/wwizard.cpp:1623
+msgid "X axis speed"
+msgstr "X 軸速度"
+
+#: src/wconfiguration.cpp:423
+msgid "Sets response sensitivity for the X axis."
+msgstr "X 軸の反応感度を設定します。"
+
+#: src/wconfiguration.cpp:426 src/wwizard.cpp:1632
+msgid "Y axis speed"
+msgstr "Y 軸速度"
+
+#: src/wconfiguration.cpp:431
+msgid "Sets response sensitivity for the Y axis."
+msgstr "Y 軸の反応感度を設定します。"
+
+#: src/wconfiguration.cpp:434
+msgid "Acceleration"
+msgstr "加速"
+
+#: src/wconfiguration.cpp:439
+msgid ""
+"Sets pointer's acceleration.\n"
+"0 means no acceleration and\n"
+"5 maximum acceleration."
+msgstr ""
+"ポインターの加速度を設定します。\n"
+"0 は加速を無効にします。\n"
+"5 は加速の最大値です。"
+
+#: src/wconfiguration.cpp:442
+msgid "Smoothness"
+msgstr "滑らかさ"
+
+#: src/wconfiguration.cpp:447
+msgid ""
+"Tremor reduction filter.\n"
+"0 means no filter and \n"
+"8 maximum filtering."
+msgstr ""
+"カクつき低減フィルターです。\n"
+"0 はフィルタリングしません。\n"
+"8 はフィルタリングの最大値です。"
+
+#: src/wconfiguration.cpp:450
+msgid "Motion threshold"
+msgstr "モーションしきい値"
+
+#: src/wconfiguration.cpp:455
+msgid ""
+"Minimum displacement (in pixels)\n"
+"to start moving pointer."
+msgstr ""
+"ポインターが動き始めるまでの\n"
+"移動最小値(ピクセル単位)"
+
+#: src/wconfiguration.cpp:462
+msgid "Assisted calibration"
+msgstr "キャリブレーションアシスタント"
+
+#: src/wconfiguration.cpp:465
+msgid "Motion"
+msgstr "モーション"
+
+#: src/wconfiguration.cpp:471
+msgid "Workspace limit"
+msgstr "ワークスペースの制限"
+
+#: src/wconfiguration.cpp:474 src/hotkeymanager.cpp:49
+msgid "Enable workspace limit"
+msgstr "ワークスペースを制限する"
+
+#: src/wconfiguration.cpp:477
+msgid ""
+"Confines the mouse pointer\n"
+"to the selected area."
+msgstr ""
+"マウスポインターの操作を\n"
+"指定領域に制限します。"
+
+#: src/wconfiguration.cpp:486
+msgid "Top"
+msgstr "上"
+
+#: src/wconfiguration.cpp:491
+msgid "Top limit workspace."
+msgstr "ワークスペースの上部制限"
+
+#: src/wconfiguration.cpp:495 src/wconfiguration.cpp:509
+#: src/wconfiguration.cpp:521 src/wconfiguration.cpp:535
+msgid "%"
+msgstr "%"
+
+#: src/wconfiguration.cpp:500 src/clickwindowbitmap.cpp:236
+msgid "Left"
+msgstr "左"
+
+#: src/wconfiguration.cpp:505
+msgid "Left limit workspace."
+msgstr "ワークスペースの左部制限"
+
+#: src/wconfiguration.cpp:512 src/clickwindowbitmap.cpp:250
+msgid "Right"
+msgstr "右"
+
+#: src/wconfiguration.cpp:517
+msgid "Right limit workspace."
+msgstr "ワークスペースの右部制限"
+
+#: src/wconfiguration.cpp:526
+msgid "Bottom"
+msgstr "下"
+
+#: src/wconfiguration.cpp:531
+msgid "Bottom limit workspace."
+msgstr "ワークスペースの下部制限"
+
+#: src/wconfiguration.cpp:538
+msgid "Pointer wrapping"
+msgstr "ポインターの周回"
+
+#: src/wconfiguration.cpp:541
+msgid "Allow wrapping the pointer around the working area"
+msgstr "ワークスペースの端を越えて移動する場合反対側の端に移ります。"
+
+#: src/wconfiguration.cpp:545
+msgid "Workspace"
+msgstr "ワークスペース"
+
+#: src/wconfiguration.cpp:551
+msgid "Dwell click"
+msgstr "ホバークリック"
+
+#: src/wconfiguration.cpp:554
+msgid "Enable dwell click"
+msgstr "ホバークリックを有効にする"
+
+#: src/wconfiguration.cpp:557
+msgid ""
+"Enable/Disable automatic (dwell)\n"
+"click generation mechanism."
+msgstr ""
+"ホバー (自動) クリックの有効/無効を\n"
+"切り替えます。"
+
+#: src/wconfiguration.cpp:564
+msgid "Dwell time (ds)"
+msgstr "ホバー時間 (ds)"
+
+#: src/wconfiguration.cpp:569
+msgid ""
+"Time to wait (deciseconds) \n"
+"before sending a click."
+msgstr ""
+"クリックするまでに待機する\n"
+"時間 (0.1秒単位)"
+
+#: src/wconfiguration.cpp:572
+msgid "Dwell area"
+msgstr "ホバー領域"
+
+#: src/wconfiguration.cpp:577
+msgid ""
+"Maximum allowed displacement\n"
+"before restarting the dwell time\n"
+"countdown."
+msgstr ""
+"ホバー時間がリセットされる\n"
+"までにポインターが移動できる\n"
+"最大値です。"
+
+#: src/wconfiguration.cpp:582
+msgid "Allow consecutive clicks"
+msgstr "連続クリックを有効にする"
+
+#: src/wconfiguration.cpp:585
+msgid ""
+"Allows to send multiple clicks\n"
+"when the pointer is stopped."
+msgstr ""
+"ポインターが停止している間\n"
+"クリック動作を複数回行うことができます。"
+
+#: src/wconfiguration.cpp:588
+msgid "Beep on click"
+msgstr "クリック時にビープ音を鳴らす"
+
+#: src/wconfiguration.cpp:591
+msgid "Play sound when click generated."
+msgstr "クリック動作を行ったときに音を鳴らします。"
+
+#: src/wconfiguration.cpp:595
+msgid "Allow visual alerts"
+msgstr "視覚警告を有効にする"
+
+#: src/wconfiguration.cpp:600
+msgid "Click window"
+msgstr "クリックウィンドウ"
+
+#: src/wconfiguration.cpp:603
+msgid "Show Click Window"
+msgstr "クリックウィンドウを表示する"
+
+#: src/wconfiguration.cpp:611
+msgid "Design:"
+msgstr "デザイン:"
+
+#: src/wconfiguration.cpp:615 src/wconfiguration.cpp:800
+msgid "Normal"
+msgstr "普通"
+
+#: src/wconfiguration.cpp:616
+msgid "Thin"
+msgstr "細い"
+
+#: src/wconfiguration.cpp:620
+msgid "Behaviour:"
+msgstr "モード:"
+
+#: src/wconfiguration.cpp:624
+msgid "Normal mode"
+msgstr "通常モード"
+
+#: src/wconfiguration.cpp:625
+msgid "Fast mode"
+msgstr "高速モード"
+
+#: src/wconfiguration.cpp:628
+msgid ""
+"Fast mode enables click type\n"
+"selection by hovering the mouse\n"
+"pointer over the click window\n"
+"buttons."
+msgstr ""
+"高速モードを選択すると、マウス\n"
+"ポインターをクリックウィンドウの\n"
+"ボタンにホバーリングしてクリック種別\n"
+"を選択できます。"
+
+#: src/wconfiguration.cpp:632
+msgid "Location:"
+msgstr "位置:"
+
+#: src/wconfiguration.cpp:638
+msgid "Floating horizontal"
+msgstr "水平フロート"
+
+#: src/wconfiguration.cpp:639
+msgid "Floating vertical"
+msgstr "垂直フロート"
+
+#: src/wconfiguration.cpp:640
+msgid "Top docked"
+msgstr "画面上部"
+
+#: src/wconfiguration.cpp:641
+msgid "Bottom docked"
+msgstr "画面下部"
+
+#: src/wconfiguration.cpp:642
+msgid "Left docked"
+msgstr "画面左部"
+
+#: src/wconfiguration.cpp:643
+msgid "Right docked"
+msgstr "画面右部"
+
+#: src/wconfiguration.cpp:649
+msgid "Auto-hide"
+msgstr "自動非表示"
+
+#: src/wconfiguration.cpp:655 src/wwizard.cpp:907
+msgid "Gesture click"
+msgstr "ジェスチャークリック"
+
+#: src/wconfiguration.cpp:658
+msgid "Enable gesture click"
+msgstr "ジェスチャークリックを有効にする"
+
+#: src/wconfiguration.cpp:666
+msgid "Move left:"
+msgstr "左移動:"
+
+#: src/wconfiguration.cpp:670 src/wconfiguration.cpp:683
+#: src/wconfiguration.cpp:696 src/wconfiguration.cpp:709 src/wviacam.cpp:222
+msgid "Disable"
+msgstr "無効化"
+
+#: src/wconfiguration.cpp:671 src/wconfiguration.cpp:684
+#: src/wconfiguration.cpp:697 src/wconfiguration.cpp:710 src/wwizard.cpp:1071
+msgid "Left click"
+msgstr "左クリック"
+
+#: src/wconfiguration.cpp:672 src/wconfiguration.cpp:685
+#: src/wconfiguration.cpp:698 src/wconfiguration.cpp:711
+msgid "Middle click"
+msgstr "中クリック"
+
+#: src/wconfiguration.cpp:673 src/wconfiguration.cpp:686
+#: src/wconfiguration.cpp:699 src/wconfiguration.cpp:712 src/wwizard.cpp:1083
+msgid "Right click"
+msgstr "右クリック"
+
+#: src/wconfiguration.cpp:674 src/wconfiguration.cpp:687
+#: src/wconfiguration.cpp:700 src/wconfiguration.cpp:713 src/wwizard.cpp:1093
+msgid "Double click"
+msgstr "ダブルクリック"
+
+#: src/wconfiguration.cpp:675 src/wconfiguration.cpp:688
+#: src/wconfiguration.cpp:701 src/wconfiguration.cpp:714
+msgid "Drag click"
+msgstr "ドラッグクリック"
+
+#: src/wconfiguration.cpp:679
+msgid "Move right:"
+msgstr "右移動:"
+
+#: src/wconfiguration.cpp:692
+msgid "Move up:"
+msgstr "上移動:"
+
+#: src/wconfiguration.cpp:705
+msgid "Move down:"
+msgstr "下移動:"
+
+#: src/wconfiguration.cpp:720
+msgid "Click"
+msgstr "クリック"
+
+#: src/wconfiguration.cpp:727 src/wconfiguration.cpp:743
+msgid "Hotkeys"
+msgstr "ホットキー"
+
+#: src/wconfiguration.cpp:750
+msgid "Startup"
+msgstr "起動"
+
+#: src/wconfiguration.cpp:754 src/wwizard.cpp:1229
+msgid "Start eViacam at user logon"
+msgstr "ログイン時に eViacam を起動する"
+
+#: src/wconfiguration.cpp:759 src/wwizard.cpp:1235
+msgid "Enable eViacam at startup"
+msgstr "起動時に eViacam を有効にする"
+
+#: src/wconfiguration.cpp:762 src/wwizard.cpp:1238
+msgid ""
+"If checked the program automatically \n"
+"enables cursor control at startup."
+msgstr ""
+"チェックした場合、起動時にポインター制御が\n"
+"自動で有効になります。"
+
+#: src/wconfiguration.cpp:765
+msgid "On-screen keyboard command"
+msgstr "オンスクリーンキーボードのコマンド"
+
+#: src/wconfiguration.cpp:773
+msgid "Command to run an external on-screen keyboard application."
+msgstr ""
+"外部のオンスクリーンキーボードのアプリケーションを起動するためのコマンドで"
+"す。"
+
+#: src/wconfiguration.cpp:776
+msgid "Browse..."
+msgstr "参照..."
+
+#: src/wconfiguration.cpp:779
+msgid "Face localization"
+msgstr "顔検出"
+
+#: src/wconfiguration.cpp:786
+msgid "Locate face automatically"
+msgstr "自動的に顔の位置を検出する"
+
+#: src/wconfiguration.cpp:789
+msgid ""
+"When enabled tries to automatically\n"
+"detect your face and center the\n"
+"tracking area."
+msgstr ""
+"有効にした場合、自動的に\n"
+"顔を検出し、トラッキング\n"
+"エリアを設定します。"
+
+#: src/wconfiguration.cpp:794
+msgid "CPU usage"
+msgstr "CPU 使用"
+
+#: src/wconfiguration.cpp:798
+msgid "Lowest"
+msgstr "最低"
+
+#: src/wconfiguration.cpp:799
+msgid "Low"
+msgstr "低"
+
+#: src/wconfiguration.cpp:801
+msgid "High"
+msgstr "高"
+
+#: src/wconfiguration.cpp:802
+msgid "Highest"
+msgstr "最高"
+
+#: src/wconfiguration.cpp:808
+msgid "Stop the pointer when no face is detected"
+msgstr "顔を検出できない場合にポインター操作を無効にする"
+
+#: src/wconfiguration.cpp:811
+msgid "eViacam is only enabled when face is detected."
+msgstr "eViacam は顔が検出された場合だけ有効になります。"
+
+#: src/wconfiguration.cpp:817
+msgid "After"
+msgstr "無効にするまでの時間"
+
+#: src/wconfiguration.cpp:823 src/wwizard.cpp:2142
+msgid "seconds"
+msgstr "秒"
+
+#: src/wconfiguration.cpp:826
+msgid "Advanced"
+msgstr "高度"
+
+#: src/wconfiguration.cpp:828
+msgid "Profile options"
+msgstr "プロファイル"
+
+#: src/wconfiguration.cpp:834
+msgid "Profile management"
+msgstr "プロファイル管理"
+
+#: src/wconfiguration.cpp:840
+msgid "Select profile:"
+msgstr "プロファイルの選択:"
+
+#: src/wconfiguration.cpp:842 src/wconfiguration.cpp:848
+msgid "Chooses desired active profile"
+msgstr "お好みのアクティブなプロファイルを選択します。"
+
+#: src/wconfiguration.cpp:851 src/wconfiguration.cpp:1581
+msgid "Add profile"
+msgstr "プロファイルの追加"
+
+#: src/wconfiguration.cpp:854
+msgid "Delete profile"
+msgstr "プロファイルの削除"
+
+#: src/wconfiguration.cpp:857
+msgid "Camera"
+msgstr "カメラ"
+
+#: src/wconfiguration.cpp:867
+msgid "Settings..."
+msgstr "設定..."
+
+#: src/wconfiguration.cpp:870
+msgid "Change"
+msgstr "変更"
+
+#: src/wconfiguration.cpp:873
+msgid "Language"
+msgstr "言語"
+
+#: src/wconfiguration.cpp:878
+msgid "Language:"
+msgstr "言語:"
+
+#: src/wconfiguration.cpp:885
+msgid "General options"
+msgstr "一般"
+
+#: src/wconfiguration.cpp:892
+msgid "&OK"
+msgstr "&OK"
+
+#: src/wconfiguration.cpp:895
+msgid "&Cancel"
+msgstr "キャンセル(&C)"
+
+#: src/wconfiguration.cpp:904 src/wconfiguration.cpp:905
+#: src/wconfiguration.cpp:906 src/wconfiguration.cpp:907
+msgid "Key:"
+msgstr "キー:"
+
+#: src/wconfiguration.cpp:936
+msgid "Set key"
+msgstr "キーの設定"
+
+#: src/wconfiguration.cpp:1505 src/wconfiguration.cpp:1692
+msgid "You should restart the application to apply this change"
+msgstr "変更を適用するにはアプリケーションを再起動してください"
+
+#: src/wconfiguration.cpp:1526
+msgid ""
+"Current profile has unsaved changes.\n"
+"Continue anyway?"
+msgstr ""
+"現在のプロファイルには未保存の変更があります。\n"
+"続行しますか?"
+
+#: src/wconfiguration.cpp:1532
+#, c-format
+msgid ""
+"This action will load %s profile settings.\n"
+"Are you sure you want to continue?"
+msgstr ""
+"%s プロファイルの設定をロードします。\n"
+"よろしいですか?"
+
+#: src/wconfiguration.cpp:1563
+#, c-format
+msgid ""
+"This action will delete %s profile.\n"
+"Are you sure you want to continue?"
+msgstr ""
+"%s プロファイルを削除します。\n"
+"よろしいですか?"
+
+#: src/wconfiguration.cpp:1581
+msgid "Enter new profile name"
+msgstr "新しいプロファイル名を入力してください"
+
+#: src/wconfiguration.cpp:1592
+msgid "Profile already exists."
+msgstr "プロファイルはすでに存在します。"
+
+#: src/wconfiguration.cpp:1598
+msgid "Invalid profile name."
+msgstr "無効なプロファイル名。"
+
+#: src/wconfiguration.cpp:1644 src/wconfiguration.cpp:1647
+msgid "Choose on-screen keyboard command"
+msgstr "オンスクリーンキーボードのコマンドを選択"
+
+#: src/wconfiguration.cpp:1645
+msgid "Executable files|*.exe"
+msgstr "実行ファイル|*.exe"
+
+#: src/wconfiguration.cpp:1760
+msgid ""
+"This action could make you lose the control of the computer.\n"
+"Do you want to continue?"
+msgstr ""
+"この操作を行うとコンピューター操作に支障が出る可能性があります。\n"
+"続行しますか?"
+
+#: src/wconfiguration.cpp:1760 src/wconfiguration.cpp:1895
+#: src/wconfiguration.cpp:2021 src/viacamcontroller.cpp:350
+#: src/cmotioncalibration.cpp:183
+msgid "eViacam warning"
+msgstr "eViacam の警告"
+
+#: src/wconfiguration.cpp:1895
+msgid "Discard changes?"
+msgstr "変更を破棄しますか?"
+
+#: src/wconfiguration.cpp:2021
+msgid ""
+"This key is used by another command.\n"
+"Do you want to try another key?"
+msgstr ""
+"このキーは別のコマンドに割り当てられています。\n"
+"他のキーを試しますか?"
+
+#: src/wviacam.h:72
+msgid "Enable Viacam"
+msgstr "Enable Viacam"
+
+#: src/clickwindowtext.cpp:141 src/clickwindowbitmap.cpp:227
+msgid "No click"
+msgstr "クリックしない"
+
+#: src/clickwindowtext.cpp:148
+msgid "#Left#"
+msgstr "#左#"
+
+#: src/clickwindowtext.cpp:152
+msgid "#Middle#"
+msgstr "#中#"
+
+#: src/clickwindowtext.cpp:156
+msgid "#Right#"
+msgstr "#右#"
+
+#: src/clickwindowtext.cpp:160
+msgid "#Drag#"
+msgstr "#ドラッグ#"
+
+#: src/clickwindowtext.cpp:164
+msgid "#Double Click#"
+msgstr "#ダブルクリック#"
+
+#: src/clickwindowtext.cpp:168 src/clickwindowtext.cpp:344
+#: src/clickwindowbitmap.cpp:271 src/clickwindowbitmap.cpp:502
+msgid "Hide main window"
+msgstr "メインウィンドウを表示しない"
+
+#: src/clickwindowtext.cpp:346 src/clickwindowbitmap.cpp:507
+msgid "Show main window"
+msgstr "メインウィンドウを表示する"
+
+#: src/clickwindowbitmap.cpp:243
+msgid "Middle"
+msgstr "中"
+
+#: src/clickwindowbitmap.cpp:257 src/wwizard.cpp:1051
+msgid "Drag"
+msgstr "ドラッグ"
+
+#: src/clickwindowbitmap.cpp:264
+msgid "Double Click"
+msgstr "ダブルクリック"
+
+#: src/wabout.h:51
+msgid "About Enable Viacam"
+msgstr "Enable Viacam について"
+
+#: src/viacamcontroller.cpp:136
+msgid "Not detected any camera. Aborting"
+msgstr "カメラが見つかりません。終了します。"
+
+#: src/viacamcontroller.cpp:157
+msgid "Choose the camera to use"
+msgstr "使用するカメラを選択してください。"
+
+#: src/viacamcontroller.cpp:177
+msgid ""
+"Can not initialize the camera.\n"
+"Perhaps is being used by other application."
+msgstr ""
+"カメラを初期化できません。\n"
+"おそらく他のアプリケーションが使用しています。"
+
+#: src/viacamcontroller.cpp:350
+msgid ""
+"This action will disable eViacam.\n"
+"Are you sure?"
+msgstr ""
+"eViacam を無効にします。\n"
+"よろしいですか?"
+
+#: src/viacamcontroller.cpp:375
+msgid ""
+"On-screen keyboard command not set.\n"
+"Please, configure it through options dialog."
+msgstr ""
+"オンスクリーンキーボードのコマンドが設定されていません。\n"
+"オプションダイアログから設定を行ってください。"
+
+#: src/viacamcontroller.cpp:375 src/viacamcontroller.cpp:389
+#: wxcamwindow/capturethread.cpp:69
+msgid "eViacam error"
+msgstr "eViacam エラー"
+
+#: src/viacamcontroller.cpp:385
+#, c-format
+msgid ""
+"Can't execute on-screen keyboard program.\n"
+"Command %s failed.\n"
+"Please, configure it through options dialog."
+msgstr ""
+"オンスクリーンキーボードのプログラムを実行できません。\n"
+"コマンド %s が失敗しました。\n"
+"オプションダイアログから設定を行ってください。"
+
+#: src/viacamcontroller.cpp:387
+msgid ""
+"\n"
+"\n"
+"On Windows Vista/7 several problems have been reported\n"
+"with the system's default on-screen keyboard (osk). These\n"
+"issues are under investigation. Meanwhile you might want\n"
+"to disable User Account Control (UAC) to avoid such problems\n"
+"or try another osk, e.g. Click-N-Type."
+msgstr ""
+"\n"
+"\n"
+"Windows Vista/7 では、システムデフォルトのオンスクリーンキーボード (osk) につ"
+"いていくつかの問題が報告されています。問題については現在調査中です。解決する"
+"までは、ユーザーアカウント制御 (UAC) を無効にして問題を避けるか、他の osk (た"
+"とえば Click-N-Type) を試すとよいでしょう。"
+
+#: src/viacamcontroller.cpp:461
+msgid ""
+"Note that adjusting the camera controls while eViacam\n"
+"is enabled may cause loss of pointer control.\n"
+"Are you sure you want to continue?"
+msgstr ""
+"eViacam を有効にしてカメラコントールを調整する場合、\n"
+"マウスポインターを正しく制御できなくなる可能性があります。\n"
+"続行しますか?"
+
+#: src/wabout.cpp:147 src/wcameradialog.cpp:164
+msgid "Close"
+msgstr "閉じる"
+
+#: src/wabout.cpp:159
+msgid "A webcam based mouse emulator"
+msgstr "ウェブカムを使用したマウスエミュレーター"
+
+#: src/wabout.cpp:165
+msgid ""
+"If you find this software useful then please consider \t\t<a "
+"href='donation'>making a small donation</a> to show your appreciation \t"
+"\tand help support the continued development. Thanks!\t"
+msgstr ""
+"このソフトウェアが有用であれば、感謝の表明や、継続的な開発を支援するために、"
+"<a href='donation'>ちょっとした寄付</a>をご検討ください。"
+
+#: src/wabout.cpp:170
+msgid "Visit website"
+msgstr "ウェブサイトにアクセスする"
+
+#: src/wabout.cpp:175
+msgid "Thanks"
+msgstr "協力"
+
+#: src/wabout.cpp:202
+msgid "License"
+msgstr "License"
+
+#: src/wabout.cpp:206
+msgid "Released under the GNU/GPL v3 license. See COPYING file for details."
+msgstr "Released under the GNU/GPL v3 license. See COPYING file for details."
+
+#: src/wviacam.cpp:198
+msgid "E&nable / Disable"
+msgstr "有効/無効の切り替え(&N)"
+
+#: src/wviacam.cpp:200
+msgid "&Exit"
+msgstr "終了(&E)"
+
+#: src/wviacam.cpp:201
+msgid "&File"
+msgstr "ファイル(&F)"
+
+#: src/wviacam.cpp:203
+msgid "&Wizard..."
+msgstr "ウィザード(&W)..."
+
+#: src/wviacam.cpp:205
+msgid "&Options..."
+msgstr "オプション(&O)..."
+
+#: src/wviacam.cpp:206
+msgid "&Configuration"
+msgstr "設定(&C)"
+
+#: src/wviacam.cpp:208
+msgid "&Help contents"
+msgstr "ヘルプの内容(&H)"
+
+#: src/wviacam.cpp:209
+msgid "Check for &updates"
+msgstr "更新の確認(&U)"
+
+#: src/wviacam.cpp:211
+msgid "&About..."
+msgstr "このアプリケーションについて(&A)..."
+
+#: src/wviacam.cpp:212
+msgid "&Help"
+msgstr "ヘルプ(&H)"
+
+#: src/wviacam.cpp:219
+msgid "Enable"
+msgstr "有効化"
+
+#: src/wviacam.cpp:226 src/clickwindow.h:31
+msgid "Click Window"
+msgstr "クリックウィンドウ"
+
+#: src/wviacam.cpp:229
+msgid "On-screen keyboard"
+msgstr "オンスクリーンキーボード"
+
+#: src/wviacam.cpp:233
+msgid "Options"
+msgstr "オプション"
+
+#: src/wviacam.cpp:237
+msgid "Help"
+msgstr "ヘルプ"
+
+#: src/wviacam.cpp:243
+msgid ""
+"Frame rate meter. For proper function\n"
+"should be greater than 25 fps. Reduce\n"
+"the exposure time of your camera when\n"
+"necessary."
+msgstr ""
+"フレームレートの値。十分な性能を引き出\n"
+"すための望ましい値は 25 fps 以上です。\n"
+"必要に応じてカメラの露出時間を減らして\n"
+"ください。"
+
+#: src/wviacam.cpp:340
+#, c-format
+msgid " %li fps (good)"
+msgstr " %li fps (良好)"
+
+#: src/wviacam.cpp:343
+#, c-format
+msgid " %li fps (could be improved)"
+msgstr " %li fps (改善の余地あり)"
+
+#: src/wviacam.cpp:346
+#, c-format
+msgid " %li fps (too low)"
+msgstr " %li fps (低すぎる)"
+
+#: src/wviacam.cpp:391
+msgid ""
+"This action will close the program.\n"
+"Are you sure?"
+msgstr ""
+"プログラムを終了します。\n"
+"よろしいですか?"
+
+#: src/langnames-utf8.h:27
+msgid "System default"
+msgstr "システムのデフォルト"
+
+#: src/pointeraction.cpp:268
+msgid ""
+"This action will disable eViacam click generation.\n"
+"Are you sure?"
+msgstr ""
+"eViacam のクリック動作が無効になります。\n"
+"よろしいですか?"
+
+#: src/pointeraction.cpp:272
+msgid ""
+"This action will change the click generation method.\n"
+"Are you sure?"
+msgstr ""
+"クリック方法を変更します。\n"
+"よろしいですか?"
+
+#: src/wgetkey.cpp:139
+msgid "Press the desired key or 'Esc' to cancel this action."
+msgstr "設定したいキーを押すか、'Esc' を押してキャンセルします。"
+
+#: src/wgetkey.h:52
+msgid "Get key"
+msgstr "キーの取得"
+
+#: src/wmotioncalibrationx.cpp:148
+msgid "Move your head left and right."
+msgstr "左右に顔を動かしてください。"
+
+#: src/wmotioncalibrationx.cpp:151 src/wmotioncalibrationy.cpp:146
+msgid "Your face is not detected. This may produce wrong calibration results."
+msgstr ""
+"顔を検出できません。キャリブレーション結果が不正となる可能性があります。"
+
+#: src/cmotioncalibration.cpp:182
+msgid ""
+"No movement was detected.\n"
+"Do you want to repeat the calibration?"
+msgstr ""
+"顔の動きが検出されませんでした。\n"
+"キャリブレーションをもう一度行いますか。"
+
+#: src/wwizard.cpp:104
+msgid "Enable Viacam configuration wizard"
+msgstr "Enable Viacam 設定ウィザード"
+
+#: src/wwizard.cpp:355
+msgid "Welcome to the eViacam configuration wizard"
+msgstr "eViacam 設定ウィザードへようこそ"
+
+#: src/wwizard.cpp:367
+msgid "This wizard will guide you through the basic configuration of eViacam."
+msgstr "このウィザードに従って、eViacam の基本的な設定ができます。"
+
+#: src/wwizard.cpp:373
+msgid "Click Next to continue."
+msgstr "続行するには[次へ]を選択します。"
+
+#: src/wwizard.cpp:516 src/wwizard.cpp:1599
+msgid "Pointer calibration"
+msgstr "ポインターキャリブレーション"
+
+#: src/wwizard.cpp:525 src/wwizard.cpp:698
+msgid "Setting motion parameters"
+msgstr "モーションパラメーターの設定"
+
+#: src/wwizard.cpp:534
+msgid ""
+"The assisted calibration procedure will ask you to move your head in order "
+"to automatically configure the appropiate motion parameters.\n"
+"\n"
+"After this calibration stage, you can manually adjust the motion "
+"parameters.\n"
+"\n"
+"NOTE: the calibration assistant will enable the pointer control so that you "
+"can test your configuration."
+msgstr ""
+"キャリブレーションアシスタントを使用する際は、モーションパラメーターの適正値"
+"を自動的に設定するために、顔を動かす必要があります。\n"
+"\n"
+"このキャリブレーションの後に、手動でモーションパラメーターを調整できます。\n"
+"\n"
+"注意: キャリブレーションアシスタントは、ユーザーが設定を確認できるようにポイ"
+"ンター制御を有効にします。"
+
+#: src/wwizard.cpp:542
+msgid "Perform assisted calibration"
+msgstr "キャリブレーションアシスタントを使用する"
+
+#: src/wwizard.cpp:545
+msgid ""
+"If checked the next window will allow\n"
+"you to calibrate the speed of the pointer."
+msgstr ""
+"チェックした場合、次のウィンドウで\n"
+"ポインター速度のキャリブーションを行います。"
+
+#: src/wwizard.cpp:689
+msgid "Pointer calibration "
+msgstr "ポインターキャリブレーション"
+
+#: src/wwizard.cpp:874 src/wwizard.cpp:1848
+msgid "Click mode"
+msgstr "クリックモード"
+
+#: src/wwizard.cpp:883
+msgid "Test and select the click mode"
+msgstr "クリックモードの確認と選択"
+
+#: src/wwizard.cpp:892
+msgid "Click here to test"
+msgstr "動作を確認する"
+
+#: src/wwizard.cpp:898
+msgid "Dwell Click (default)"
+msgstr "ホバークリック (デフォルト)"
+
+#: src/wwizard.cpp:902
+msgid ""
+"The click is generated automatically when you hover the mouse pointer "
+"momentarily. The Click the Window lets you choose between different actions."
+msgstr ""
+"マウスポインターを少しの時間ホバーリングすることでクリックを行います。クリッ"
+"クウィンドウで様々なクリック動作を選択できます。"
+
+#: src/wwizard.cpp:914
+msgid ""
+"The click is automatically generated by stopping the pointer for a moment "
+"and then moving the pointer to one of the 4 directions to choose the action."
+msgstr ""
+"マウスポインターを少しの時間停止させ、次に四方のいずれかにポインターを移動さ"
+"せることでクリックを行います。移動する方向がクリック動作の種類に対応します。"
+
+#: src/wwizard.cpp:920
+msgid "No click. Click function disabled."
+msgstr "クリックしない。クリック機能を無効にします。"
+
+#: src/wwizard.cpp:1069
+msgid "Drop"
+msgstr "ドロップ"
+
+#: src/wwizard.cpp:1204
+msgid "Wizard completed"
+msgstr "設定完了"
+
+#: src/wwizard.cpp:1216
+msgid "Congratulations! You have completed the configuration wizard."
+msgstr "おめでとうございます! 設定ウィザードはこれで完了です。"
+
+#: src/wwizard.cpp:1222
+msgid "Run this wizard at startup"
+msgstr "起動時にウィザードを実行する"
+
+#: src/wwizard.cpp:1225
+msgid "If checked the wizard automatically appears at startup."
+msgstr "チェックした場合、起動時に設定ウィザードを自動で実行します。"
+
+#: src/wwizard.cpp:1243
+msgid ""
+"You may change the settings through Configuration -> Options.\n"
+"\n"
+"Click finish to exit the wizard."
+msgstr ""
+"[設定]->[オプション]と選択して、設定を変更できます。\n"
+"\n"
+"ウィザードを終了するには[完了]を選択します。"
+
+#: src/wwizard.cpp:1413
+msgid "Camera setup"
+msgstr "カメラのセットアップ"
+
+#: src/wwizard.cpp:1422
+msgid "Checking your camera settings"
+msgstr "カメラの設定の確認"
+
+#: src/wwizard.cpp:1431
+msgid "Detected camera:"
+msgstr "検出したカメラ:"
+
+#: src/wwizard.cpp:1434
+msgid "camera_name"
+msgstr "カメラ名"
+
+#: src/wwizard.cpp:1438
+msgid "Framerate:"
+msgstr "フレームレート:"
+
+#: src/wwizard.cpp:1441
+msgid "framerate"
+msgstr "フレームレート"
+
+#: src/wwizard.cpp:1447
+msgid ""
+"For best performance possible, the frame rate should be equal to or greater "
+"than 25 fps. eViacam tries to automatically configure your camera, but If "
+"this value is below this threshold you may need to manually adjust the "
+"camera settings."
+msgstr ""
+"性能を最大限引き出すには、フレームレートが 25 fps 以上になるようにしてくださ"
+"い。カメラの設定は自動的に行われますが、フレームレートが 25 fps を下回る場合"
+"は、必要に応じてカメラの設定を手動で調整してください。"
+
+#: src/wwizard.cpp:1453
+msgid "Camera settings..."
+msgstr "カメラの設定..."
+
+#: src/wwizard.cpp:1608
+msgid "Fine tuning motion parameters"
+msgstr "モーションパラメーターの微調整"
+
+#: src/wwizard.cpp:1617
+msgid ""
+"You can enable/disable the mouse motion to test the pointer speed\n"
+"and adjust the parameters manually."
+msgstr ""
+"マウスモーションの有効/無効を切り替えて、ポインターの速度を確認し、\n"
+"パラメーターを手動で調整できます。"
+
+#: src/wwizard.cpp:1642 src/wwizard.cpp:1723 src/wwizard.cpp:1741
+msgid "Enable motion"
+msgstr "モーションを有効にする"
+
+#: src/wwizard.cpp:1719 src/wwizard.cpp:1737
+msgid "Disable motion"
+msgstr "モーションを無効にする"
+
+#: src/wwizard.cpp:1857
+msgid "How to make the click"
+msgstr "クリック方法"
+
+#: src/wwizard.cpp:1866
+msgid "eViacam provides several methods to generate mouse click actions:"
+msgstr "クリック動作を行う方法は複数あります。"
+
+#: src/wwizard.cpp:1872
+msgid ""
+"- Dwell Click (default). The click is generated automatically when you hover "
+"the mouse pointer momentarily. The Click the Window lets you choose between "
+"different actions."
+msgstr ""
+"- ホバークリック (デフォルト)。マウスポインターを少しの時間ホバーリングするこ"
+"とでクリックを行います。クリックウィンドウで異なるクリック動作を選択できま"
+"す。"
+
+#: src/wwizard.cpp:1877
+msgid ""
+"- Gesture Click. The click is automatically generated by stopping the "
+"pointer for a moment and then moving the pointer to one of the 4 directions "
+"to choose the action."
+msgstr ""
+"- ジェスチャークリック。マウスポインターを少しの時間停止させ、次に四方のいず"
+"れかにポインターを移動させることでクリックを行います。移動する方向がクリック"
+"動作の種類に対応します。"
+
+#: src/wwizard.cpp:1883
+msgid "- No click. Click function disabled."
+msgstr "- クリックしない。クリック機能を無効にします。"
+
+#: src/wwizard.cpp:1889
+msgid ""
+"In the next window you can choose the method to click. eViacam will be "
+"enabled to allow you to test the different ways of clicking."
+msgstr ""
+"次のウィンドウでクリック方法を選択します。異なるクリック方法を確認するため"
+"に、eViacam が有効になります。"
+
+#: src/wwizard.cpp:2099
+msgid "Tracker setup"
+msgstr "トラッカーのセットアップ"
+
+#: src/wwizard.cpp:2108
+msgid "Configure motion tracking area"
+msgstr "モーショントラッキングエリアの設定"
+
+#: src/wwizard.cpp:2117
+msgid ""
+"The user's face must appear inside the blue rectangle (tracking area) to "
+"move the pointer.\n"
+"\n"
+"The system is able to detect the user's face automatically. But, if "
+"necessary, you may disable this option and move and resize the tracking area "
+"to set it around your face."
+msgstr ""
+"ポインターを操作するには、ユーザーの顔を青い枠線 (トラッキングエリア) の内側"
+"に収める必要があります。\n"
+"\n"
+"ユーザーの顔は自動的に検出できます。必要に応じて、自動検出機能を無効にして、"
+"顔が内側に収まるようにトラッキングエリアの位置や大きさを調整できます。"
+
+#: src/wwizard.cpp:2123
+msgid "Locate face automatically (recommended)"
+msgstr "自動的に顔の位置を検出する (推奨)"
+
+#: src/wwizard.cpp:2129
+msgid "Disable eViacam if no face is found"
+msgstr "顔を検出できない場合に eViacam を無効にする"
+
+#: src/wwizard.cpp:2136
+msgid "Disable after"
+msgstr "無効にするまでの時間"
+
+#: src/wconfirmcalibration.cpp:158
+msgid "Move your head to see how it works"
+msgstr "顔を動かして動作を確認してください"
+
+#: src/wconfirmcalibration.cpp:161
+msgid "Hover one of the buttons to select your choice"
+msgstr "ボタンの上にポインターをホバーリングして決定します"
+
+#: src/wconfirmcalibration.cpp:166
+msgid ""
+"- \"Ok\" saves this configuration.\n"
+"- \"Cancel\" retains the old configuration.\n"
+"- \"Repeat\" starts again the calibration process."
+msgstr ""
+"- \"OK\" この設定を保存します。\n"
+"- \"キャンセル\" 以前の設定を使用します。\n"
+"- \"繰り返す\" キャリブレーションをもう一度行います。"
+
+#: src/wconfirmcalibration.cpp:172 src/wconfirmcalibration.cpp:290
+#: src/wconfirmcalibration.cpp:297 src/wconfirmcalibration.cpp:304
+#: wxutil/warnbaroverlap.cpp:136
+msgid "Ok"
+msgstr "OK"
+
+#: src/wconfirmcalibration.cpp:175 src/wconfirmcalibration.cpp:191
+#: src/wconfirmcalibration.cpp:291 src/wconfirmcalibration.cpp:298
+#: src/wconfirmcalibration.cpp:305
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: src/wconfirmcalibration.cpp:178 src/wconfirmcalibration.cpp:292
+#: src/wconfirmcalibration.cpp:299 src/wconfirmcalibration.cpp:306
+msgid "Repeat"
+msgstr "繰り返す"
+
+#: src/wmotioncalibrationy.cpp:143
+msgid "Move your head up and down."
+msgstr "上下に顔を動かしてください。"
+
+#: src/wconfirmcalibration.h:51
+msgid "Confirm Calibration"
+msgstr "キャリブレーションの確認"
+
+#: src/wmotioncalibrationx.h:50
+msgid "Motion Calibration X"
+msgstr "モーションキャリブレーション X"
+
+#: src/wmotioncalibrationy.h:50
+msgid "Motion Calibration Y"
+msgstr "モーションキャリブレーション Y"
+
+#: src/wcameradialog.h:59
+msgid "Camera settings"
+msgstr "カメラの設定"
+
+#: src/hotkeymanager.cpp:33
+msgid "Enable eViacam"
+msgstr "eViacam を有効にする"
+
+#: src/hotkeymanager.cpp:65
+msgid "Center the pointer"
+msgstr "ポインターを中央に配置する"
+
+#: src/hotkeymanager.cpp:81
+msgid "Increase the X axis speed"
+msgstr "X 軸速度を大きくする"
+
+#: src/hotkeymanager.cpp:97
+msgid "Increase the Y axis speed"
+msgstr "Y 軸速度を大きくする"
+
+#: src/hotkeymanager.cpp:113
+msgid "Decrease the X axis speed"
+msgstr "X 軸速度を小さくする"
+
+#: src/hotkeymanager.cpp:129
+msgid "Decrease the Y axis speed"
+msgstr "Y 軸速度を小さくする"
+
+#: src/checkupdates.cpp:170
+msgid "Error checking for updates. Try again later."
+msgstr "更新の確認時にエラーが発生しました。あとで再度試してください。"
+
+#: src/checkupdates.cpp:192
+msgid "Cannot resolve host name: "
+msgstr "ホスト名を解決できません: "
+
+#: src/checkupdates.cpp:197
+msgid "Conection failed: "
+msgstr "接続失敗: "
+
+#: src/checkupdates.cpp:202
+msgid "Sorry. Version file not found. Please report us."
+msgstr "バージョンファイルが見つかりません。問題を報告してください。"
+
+#: src/checkupdates.cpp:206
+msgid "Sorry. Something bad happened."
+msgstr "問題が発生しました。"
+
+#: src/checkupdates_ui.h:57
+msgid "Check for updates"
+msgstr "更新の確認"
+
+#: src/checkupdates_ui.cpp:158
+msgid "Checking for updates. Please wait."
+msgstr "更新を確認しています。しばらくお待ちください。"
+
+#: src/checkupdates_ui.cpp:166
+msgid "Visit Enable Viacam website"
+msgstr "Enable Viacam のウェブサイトにアクセスする"
+
+#: src/checkupdates_ui.cpp:173
+msgid "&Close"
+msgstr "閉じる(&C)"
+
+#: src/checkupdates_ui.cpp:247
+msgid "New version available: "
+msgstr "新しいバージョンが利用可能です:"
+
+#: src/checkupdates_ui.cpp:249
+msgid "Installed version: "
+msgstr "インストールされているバージョン:"
+
+#: src/checkupdates_ui.cpp:254
+msgid "No updates available"
+msgstr "更新の必要はありません"
+
+#: src/checkupdates_ui.cpp:257
+msgid "Error checking for updates"
+msgstr "更新確認時にエラーが発生しました"
+
+#: wxcamwindow/capturethread.cpp:69
+msgid "Camera not detected. Aborting"
+msgstr "カメラが未検出。終了します"
+
+#: wxutil/warnbaroverlap.h:41
+msgid "Overlapping warning"
+msgstr "オーバーラップ警告"
+
+#: wxutil/warnbaroverlap.cpp:127
+msgid ""
+"The chosen Click window position is taken up by another bar.\n"
+"This can prevent it from working properly when auto-hide mode is enabled.\n"
+"It is recommended to move the Click window to a free position."
+msgstr ""
+"選択したクリックウィンドウの位置は、別のものが使用しています。\n"
+"自動非表示モードが有効の場合、適切に動作できなくなる可能性があります。\n"
+"クリックウィンドウを自由に移動できるようにすることお勧めします。"
+
+#: wxutil/warnbaroverlap.cpp:132
+msgid "Do not show this message again"
+msgstr "このメッセージを再び表示しない"

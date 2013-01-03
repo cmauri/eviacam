@@ -3,10 +3,8 @@
 // Purpose:     This file is encoded using UTF-8 in order to compile
 //				native language names under Linux platforms
 // Author:      César Mauri Loba
-// Modified by: 
 // Created:     05/03/2009
-// RCS-ID:      
-// Copyright:   (C) 2009 Cesar Mauri from CREA Sistemes Informatics
+// Copyright:   (C) 2009-13 Cesar Mauri from CREA Sistemes Informatics
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -42,5 +40,6 @@ const wxString s_langNames[]	= {
 	_T("Occitan"),
 	_T("Français"),
 	_T("العربية"),
-	_T("עִבְרִית")
+	_T("עִבְרִית"),
+	_T("日本語")
 };

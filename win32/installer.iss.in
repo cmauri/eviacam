@@ -113,6 +113,7 @@ Name: Arabic; MessagesFile: compiler:Languages\Arabic.isl
 Name: Hebrew; MessagesFile: compiler:Languages\Hebrew.isl
 Name: Russian; MessagesFile: compiler:Languages\Russian.isl; InfoAfterFile: win32\Info\InfoAfter-ru.rtf
 Name: Portuguese; MessagesFile: compiler:Languages\BrazilianPortuguese.isl
+Name: Japanese; MessagesFile: compiler:Languages\Japanese.isl
 
 [Registry]
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: english; Languages: English
@@ -128,6 +129,8 @@ Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: lan
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: he; Languages: Hebrew
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: ru; Languages: Russian
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: Portuguese (Brazilian); Languages: Portuguese
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: Japanese; Languages: Japanese
+
 
 [_ISTool]
 Use7zip=false
