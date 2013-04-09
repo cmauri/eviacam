@@ -43,7 +43,6 @@ dist_noinst_DATA= version.h.in \
 	eviacam.vcproj \
 	icons/on.xpm \
 	icons/eviacam.ico \
-	icons/eviacam_mini.ico \
 	icons/clickwindowoff.xpm \
 	icons/help.xpm \
 	icons/preferences.xpm \
