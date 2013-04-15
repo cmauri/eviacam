@@ -29,6 +29,9 @@
 
 #include "wxappbar.h"
 #include "warnbaroverlap.h"
+#ifndef WX_PRECOMP
+#include "wx/wx.h"
+#endif
 
 #ifdef __WXMSW__
 //#include <shellapi.h>

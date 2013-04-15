@@ -29,13 +29,14 @@
  * Includes
  */
 #include "clickwindow.h"
+#include <wx/bitmap.h>
 ////@begin includes
 ////@end includes
 
 /*!
  * Forward declarations
  */
-
+class wxBitmapButton;
 ////@begin forward declarations
 ////@end forward declarations
 

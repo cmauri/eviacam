@@ -21,6 +21,8 @@
 ////@end includes
 #include <wx/intl.h>
 
+class wxCheckBox;
+class wxButton;
 
 /*!
  * Forward declarations

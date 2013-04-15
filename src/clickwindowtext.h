@@ -32,6 +32,7 @@
 ////@begin includes
 #include "wx/tglbtn.h"
 ////@end includes
+#include <wx/button.h>
 #include "clickwindowcontroller.h"
 
 /*!

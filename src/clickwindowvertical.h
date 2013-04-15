@@ -41,6 +41,7 @@
 ////@begin forward declarations
 class wxToggleButton;
 ////@end forward declarations
+class wxButton;
 
 /*!
  * Control identifiers
