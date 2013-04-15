@@ -65,6 +65,7 @@ ShowLanguageDialog=yes
 AppID={{BF2FC5F6-EC88-4CA5-BD83-DC6613FD077D}
 OutputDir=win32
 InfoAfterFile=win32\Info\InfoAfter.rtf
+SetupIconFile=src\icons\eviacam.ico
 
 [Files]
 Source: win32\Release\bin\*; DestDir: {app}\bin; Flags: recursesubdirs ignoreversion
