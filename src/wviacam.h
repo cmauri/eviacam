@@ -193,6 +193,7 @@ private:
 	void OnTaskBarIconLeftUp ( wxTaskBarIconEvent& event );
 
 ////@begin WViacam member variables
+    wxToolBar* m_toolBar;
     wxStatusBar* m_statusBar;
 ////@end WViacam member variables	
 
@@ -201,6 +202,7 @@ private:
 	wxHtmlHelpController* m_helpController;
 
 	long m_prevFPS;
+	bool m_updateToolbar;
 };
 
 #endif
