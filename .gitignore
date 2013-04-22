@@ -48,4 +48,6 @@ src/gui.pjd.bak
 src/gui-autosave.pjd
 *~
 
+*.vcproj.*.user
+
 crvnormroi.cpp.orig
