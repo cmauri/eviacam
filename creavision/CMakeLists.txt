@@ -51,16 +51,26 @@ ENDIF(CMAKE_SYSTEM_NAME MATCHES "Linux")
 if(UNIX)
 	# For UNIX platforms we assume OpenCV is under /usr which 
 	# would not be always true
-	set (OpenCV_DIR "/usr")
+#	set (OpenCV_DIR "/usr")
 endif(UNIX)
 
-FIND_PACKAGE( OpenCV REQUIRED )
-
-message(STATUS "OpenCV_FOUND. ${OpenCV_FOUND}")
-message(STATUS "OpenCV_LIBS. ${OpenCV_LIBS}")
-message(STATUS "OpenCV_INCLUDE_DIR. ${OpenCV_INCLUDE_DIR}")
+FIND_PACKAGE( OpenCV REQUIRED core video highgui imgproc)
 
 if(WIN32)
+	if (MSVC)
+		configure_file("${OpenCV_DIR}/bin/Debug/opencv_core220d.dll" ${RUNTIME_OUTPUT_DIRECTORY}/Debug COPYONLY)
+		configure_file("${OpenCV_DIR}/bin/opencv_core220.dll" ${RUNTIME_OUTPUT_DIRECTORY}/Release COPYONLY)
+		
+		configure_file("${OpenCV_DIR}/bin/Debug/opencv_highgui220d.dll" ${RUNTIME_OUTPUT_DIRECTORY}/Debug COPYONLY)
+		configure_file("${OpenCV_DIR}/bin/opencv_highgui220.dll" ${RUNTIME_OUTPUT_DIRECTORY}/Release COPYONLY)
+		
+		configure_file("${OpenCV_DIR}/bin/Debug/opencv_imgproc220d.dll" ${RUNTIME_OUTPUT_DIRECTORY}/Debug COPYONLY)
+		configure_file("${OpenCV_DIR}/bin/opencv_imgproc220.dll" ${RUNTIME_OUTPUT_DIRECTORY}/Release COPYONLY)
+		
+		configure_file("${OpenCV_DIR}/bin/Debug/opencv_video220d.dll" ${RUNTIME_OUTPUT_DIRECTORY}/Debug COPYONLY)
+		configure_file("${OpenCV_DIR}/bin/opencv_video220.dll" ${RUNTIME_OUTPUT_DIRECTORY}/Release COPYONLY)
+	endif(MSVC)
+
 	install (FILES 
 		"${OpenCV_DIR}/bin/opencv_core220.dll"
 		"${OpenCV_DIR}/bin/opencv_highgui220.dll"
