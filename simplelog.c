@@ -59,6 +59,8 @@ void slog_write (slog_priority_t prio, const char* fmt, ...)
 		switch(prio) {
 			case SLOG_PRIO_EMERG: 
 				fprintf (g_slog_stream, "EMERGENCY: "); break;
+			case SLOG_PRIO_ALERT:
+				fprintf (g_slog_stream, "ALERT: "); break;
 			case SLOG_PRIO_CRIT: 
 				fprintf (g_slog_stream, "CRITICAL: "); break;
 			case SLOG_PRIO_ERR: 
