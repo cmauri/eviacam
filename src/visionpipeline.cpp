@@ -30,6 +30,10 @@
 #include "timeutil.h"
 #include "paths.h"
 
+#if OPENCVVERSION >= 2004000
+# include <opencv2/legacy/legacy.hpp>
+#endif
+
 #include <math.h>
 #include <wx/msgdlg.h>
 #include <wx/stdpaths.h>
