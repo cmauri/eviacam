@@ -50,6 +50,7 @@ dist_noinst_DATA= version.h.in \
 	icons/keyboard.xpm \
 	icons/user.xpm \
 	icons/eviacam_mini.xpm \
+	icons/eviacam_small.xpm \
 	icons/off.xpm \
 	icons/buttonDblLeftDisabled.xpm \
 	icons/buttonDblLeftLocked.xpm \
