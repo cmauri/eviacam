@@ -151,6 +151,9 @@ AC_DEFUN([OPENCVTEST],
 
 # Call OPENCVTEST func
 OPENCVTEST
+
+OPENCVVERSION=`echo $opencvversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
+AC_SUBST(OPENCVVERSION)
 # -----------------       opencv  --------------------
 
 # Checks for header files.

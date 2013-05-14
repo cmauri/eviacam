@@ -137,7 +137,7 @@ eviacam_SOURCES = wgetkey.cpp \
 	checkupdates_ui.cpp \
 	website.cpp
 	
-eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
+eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" -DOPENCVVERSION=$(OPENCVVERSION)
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11
 
 INCLUDES = -I$(top_srcdir)/creavision \
