@@ -63,6 +63,19 @@ inline float roundf(float x) { return (x-floorf(x))>0.5 ? ceilf(x) : floorf(x); 
 #define MOUSE_MIDDLEDOWN  0x0020	// Middle button down
 #define MOUSE_MIDDLEUP    0x0040	// Middle button up 
 
+// Wait time for clicking actions
+#define MOUSE_BUTTON_WAIT_TIME 2
+
+static
+void sleep_milliseconds(unsigned ms)
+{
+#ifdef WIN32
+        Sleep (ms);
+#else
+        usleep (ms * 1000);
+#endif
+}
+
 CMouseControl::CMouseControl (void* pDisplay)
 : m_enabledRestrictedWorkingArea(false)
 , m_enabledWrapPointer(false)
@@ -512,6 +525,7 @@ bool CMouseControl::LeftClick ()
 {
 	if (CheckClickArea ()) {
 		LeftDown ();
+		sleep_milliseconds(MOUSE_BUTTON_WAIT_TIME);
 		LeftUp ();
 		return true;
 	}
@@ -523,6 +537,7 @@ bool CMouseControl::MiddleClick ()
 {
 	if (CheckClickArea ()) {
 		MiddleDown ();
+		sleep_milliseconds(MOUSE_BUTTON_WAIT_TIME);
 		MiddleUp ();
 		return true;
 	}
@@ -534,6 +549,7 @@ bool CMouseControl::RightClick ()
 {	
 	if (CheckClickArea ()) {
 		RightDown ();
+		sleep_milliseconds(MOUSE_BUTTON_WAIT_TIME);
 		RightUp ();
 		return true;
 	}
@@ -545,6 +561,7 @@ bool CMouseControl::LeftDblClick ()
 {
 	if (CheckClickArea ()) {
 		LeftClick ();
+		sleep_milliseconds(MOUSE_BUTTON_WAIT_TIME);
 		LeftClick ();
 		return true;
 	}
