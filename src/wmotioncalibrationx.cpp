@@ -175,7 +175,7 @@ wxBitmap WMotionCalibrationX::GetBitmapResource( const wxString& name )
     wxUnusedVar(name);
     if (name == _T("icons/usermoveh64.xpm"))
     {
-        wxBitmap bitmap(usermoveh__);
+        wxBitmap bitmap(usermoveh64);
         return bitmap;
     }
     return wxNullBitmap;

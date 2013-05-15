@@ -152,7 +152,7 @@ void WAbout::CreateControls()
 	wxString page(_T("\
 		<body bgcolor='#F8F8F8'> \
 		<font face='Arial, Helvetica, sans-serif' size='+1'> \
-		<center><img src='#DATA_PATH#/eviacam.png' width='150' height='120'/></center> \
+		<img src='#DATA_PATH#/eviacam_logo.png' width='303' height='100'/> \
 		<hr align='center' size='1'/> \
 		<strong>Enable Viacam &mdash; v#APPVERSION#</strong><br> \
 	"));

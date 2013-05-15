@@ -43,7 +43,6 @@ dist_noinst_DATA= version.h.in \
 	eviacam.vcproj \
 	icons/on.xpm \
 	icons/eviacam.ico \
-	icons/eviacam_mini.ico \
 	icons/clickwindowoff.xpm \
 	icons/help.xpm \
 	icons/preferences.xpm \
@@ -51,6 +50,7 @@ dist_noinst_DATA= version.h.in \
 	icons/keyboard.xpm \
 	icons/user.xpm \
 	icons/eviacam_mini.xpm \
+	icons/eviacam_small.xpm \
 	icons/off.xpm \
 	icons/buttonDblLeftDisabled.xpm \
 	icons/buttonDblLeftLocked.xpm \

@@ -218,7 +218,7 @@ void CClickWindowBitmapVertical::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemCClickWindow1->SetSizer(itemBoxSizer2);
 
-    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemCClickWindow1, wxID_STATIC, itemCClickWindow1->GetBitmapResource(wxT("icons/eviacam.xpm")), wxDefaultPosition, wxSize(32, 32), 0 );
+    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemCClickWindow1, wxID_STATIC, itemCClickWindow1->GetBitmapResource(wxT("icons/eviacam.xpm")), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     itemBoxSizer2->Add(4, 0, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
