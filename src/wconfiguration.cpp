@@ -52,36 +52,7 @@
 ////@end XPM images
 #define FIRST_CONTROL_ID 12000
 
-// Trick to properly compile & display native language names
-#if defined(__WXMSW__)
-#include "langnames-utf16.h"
-#else
 #include "langnames-utf8.h"
-#endif
-
-const wxLanguage s_langIds[] = {
-	wxLANGUAGE_DEFAULT,
-#ifdef ENABLE_ASTURIAN
-	wxLANGUAGE_ASTURIAN,
-#endif
-	wxLANGUAGE_CATALAN,
-	wxLANGUAGE_GERMAN,
-	wxLANGUAGE_ENGLISH,
-	wxLANGUAGE_SPANISH,
-	wxLANGUAGE_GALICIAN,
-	wxLANGUAGE_ITALIAN,
-	wxLANGUAGE_PORTUGUESE_BRAZILIAN,
-	wxLANGUAGE_RUSSIAN,
-	wxLANGUAGE_TURKISH,
-	wxLANGUAGE_OCCITAN,
-	wxLANGUAGE_FRENCH,
-	wxLANGUAGE_ARABIC,
-	wxLANGUAGE_HEBREW,
-	wxLANGUAGE_JAPANESE
-};
-
-wxCOMPILE_TIME_ASSERT( WXSIZEOF(s_langNames) == WXSIZEOF(s_langIds), LangArraysMismatch );
-
 
 /*!
  * WConfiguration type definition
@@ -1129,13 +1100,13 @@ void WConfiguration::InitializeData ()
 
 	// Fill and set language combo
 	m_choLanguage->Clear();
-	m_choLanguage->Append (wxGetTranslation(s_langNames[0]));
-	for (unsigned int i= 1; i< WXSIZEOF(s_langNames); i++) {
-		m_choLanguage->Append (s_langNames[i]);
+	m_choLanguage->Append (wxGetTranslation(g_languages[0].name));
+	for (unsigned int i= 1; i< WXSIZEOF(g_languages); i++) {
+		m_choLanguage->Append (g_languages[i].name);
 	}		
 	// Select current language
-	for (unsigned int i= 0; i< WXSIZEOF(s_langNames); i++)
-		if (s_langIds[i]== wxGetApp().GetController().GetLanguage())
+	for (unsigned int i= 0; i< WXSIZEOF(g_languages); i++)
+		if (g_languages[i].lang== wxGetApp().GetController().GetLanguage())
 			m_choLanguage->SetSelection(i);
 	
 	// Camera
@@ -1514,7 +1485,7 @@ void WConfiguration::OnChoiceLanguageSelected( wxCommandEvent& event )
 	int index= m_choLanguage->GetCurrentSelection();
 	if (index!= wxNOT_FOUND)
 	{
-        wxGetApp().GetController().SetLanguage (s_langIds[index]);
+		wxGetApp().GetController().SetLanguage (g_languages[index].lang);
 		wxMessageDialog dlg (NULL, _("You should restart the application to apply this change"), 
 			_T("Enable Viacam"), wxICON_INFORMATION );
 		dlg.ShowModal ();

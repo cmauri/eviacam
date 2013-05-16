@@ -37,7 +37,6 @@ noinst_HEADERS = wgetkey.h \
 
 dist_noinst_DATA= version.h.in \
 	eviacamloader.c.in \
-	langnames-utf16.h \
 	gui.pjd \
 	gui.rc \
 	eviacam.vcproj \

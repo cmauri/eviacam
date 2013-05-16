@@ -402,7 +402,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\langnames-utf16.h"
+				RelativePath=".\langnames-utf8.h"
 				>
 			</File>
 			<File
