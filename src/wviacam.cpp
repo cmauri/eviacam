@@ -87,37 +87,23 @@ BEGIN_EVENT_TABLE( WViacam, wxFrame )
 ////@begin WViacam event table entries
     EVT_CLOSE( WViacam::OnCloseWindow )
     EVT_ICONIZE( WViacam::OnIconize )
-
     EVT_MENU( ID_MENUITEM_ENABLE, WViacam::OnMenuitemEnableClick )
     EVT_UPDATE_UI( ID_MENUITEM_ENABLE, WViacam::OnMenuitemEnableUpdate )
-
     EVT_MENU( ID_MENUITEM_EXIT, WViacam::OnMenuitemExitClick )
-
     EVT_MENU( ID_MENU_WIZARD, WViacam::OnMenuWizardClick )
-
     EVT_MENU( ID_MENU_OPTIONS, WViacam::OnMenuOptionsClick )
-
     EVT_MENU( ID_MENU_HELP_CONTENTS, WViacam::OnToolHelpClick )
-
     EVT_MENU( ID_MENU_CHECKUPDATES, WViacam::OnMenuCheckupdatesClick )
-
     EVT_MENU( ID_MENU_ABOUT, WViacam::OnMenuAboutClick )
-
     EVT_MENU( ID_TOOL_ENABLE, WViacam::OnToolEnableClick )
     EVT_UPDATE_UI( ID_TOOL_ENABLE, WViacam::OnToolEnableUpdate )
-
     EVT_MENU( ID_TOOL_DISABLE, WViacam::OnToolDisableClick )
     EVT_UPDATE_UI( ID_TOOL_DISABLE, WViacam::OnToolDisableUpdate )
-
     EVT_MENU( ID_TOOL_CLICKWIN, WViacam::OnToolClickwinClick )
     EVT_UPDATE_UI( ID_TOOL_CLICKWIN, WViacam::OnToolClickwinUpdate )
-
     EVT_MENU( ID_TOOL_KEYBOARD, WViacam::OnToolKeyboardClick )
-
     EVT_MENU( ID_TOOL_OPTIONS, WViacam::OnToolOptionsClick )
-
     EVT_MENU( ID_TOOL_HELP, WViacam::OnToolHelpClick )
-
 ////@end WViacam event table entries
 
 	EVT_COMMAND  (wxID_ANY, wxEVT_SET_FPS, WViacam::OnSetFPS)
