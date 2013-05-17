@@ -36,6 +36,7 @@ static const struct lang_t g_languages[] = {
 #endif
 	{ _T("Català"),	wxLANGUAGE_CATALAN },
 	{ _T("Deutsch"), wxLANGUAGE_GERMAN },
+	{ _T("Ελληνικά"), wxLANGUAGE_GREEK },
 	{ _T("English"), wxLANGUAGE_ENGLISH },
 	{ _T("Español"), wxLANGUAGE_SPANISH },
 	{ _T("Français"), wxLANGUAGE_FRENCH },
