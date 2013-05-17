@@ -1,5 +1,5 @@
 /* XPM */
-static char *clickwindow[] = {
+static const char *clickwindow[] = {
 /* columns rows colors chars-per-pixel */
 "32 32 126 2 ",
 "   c gray24",

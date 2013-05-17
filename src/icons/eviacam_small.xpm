@@ -1,5 +1,5 @@
 /* XPM */
-static char *eviacam_small[] = {
+static const char *eviacam_small[] = {
 /* columns rows colors chars-per-pixel */
 "32 32 175 2 ",
 "   c #010000",

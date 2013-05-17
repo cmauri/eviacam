@@ -1,5 +1,5 @@
 /* XPM */
-static char *preferences[] = {
+static const char *preferences[] = {
 /* columns rows colors chars-per-pixel */
 "32 32 68 1 ",
 "  c #505050",

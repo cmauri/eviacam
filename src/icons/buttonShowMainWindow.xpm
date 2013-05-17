@@ -1,5 +1,5 @@
 /* XPM */
-static char *buttonShowMainWindow[] = {
+static const char *buttonShowMainWindow[] = {
 /* columns rows colors chars-per-pixel */
 "48 48 91 1 ",
 "  c #353535",

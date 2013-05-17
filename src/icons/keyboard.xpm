@@ -1,5 +1,5 @@
 /* XPM */
-static char *keyboard[] = {
+static const char *keyboard[] = {
 /* columns rows colors chars-per-pixel */
 "32 32 60 1 ",
 "  c #1B1B1B",

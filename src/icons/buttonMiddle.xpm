@@ -1,5 +1,5 @@
 /* XPM */
-static char *buttonMiddle[] = {
+static const char *buttonMiddle[] = {
 /* columns rows colors chars-per-pixel */
 "48 48 86 1 ",
 "  c black",

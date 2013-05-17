@@ -1,5 +1,5 @@
 /* XPM */
-static char *usermovev64[] = {
+static const char *usermovev64[] = {
 /* columns rows colors chars-per-pixel */
 "64 64 227 2 ",
 "   c #EB2B13",

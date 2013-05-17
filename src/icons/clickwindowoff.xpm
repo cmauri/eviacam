@@ -1,5 +1,5 @@
 /* XPM */
-static char *clickwindowoff[] = {
+static const char *clickwindowoff[] = {
 /* columns rows colors chars-per-pixel */
 "32 32 107 2 ",
 "   c gray24",
