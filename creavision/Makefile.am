@@ -12,7 +12,7 @@ libcreavision_la_LIBADD = $(OPENCV_LIBS) -lv4l2
 
 noinst_LTLIBRARIES = libcreavision.la
 
-INCLUDES = -I$(top_builddir)/creavision/libwebcam -Ilibwebcam
+INCLUDES = -I$(top_builddir)/creavision/libwebcam -Ilibwebcam -I$(top_srcdir)/simplelog
 
 libcreavision_la_SOURCES = crvcamera.cpp crvcamera_cv.cpp crvcamera_v4l2.cpp \
 	crvcolor.cpp crvgeomtry.cpp crvhistogram.cpp \
