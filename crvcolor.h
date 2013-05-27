@@ -34,9 +34,9 @@ public:
 	void TrainColor (unsigned char r, unsigned char g, unsigned char b, 
 					int radius= DEFAULT_RADIUS,
 					double dDivisor= 1.0);
-	void TrainImage (IplImage *img, int radius= DEFAULT_RADIUS,
+	void TrainImage (const IplImage *img, int radius= DEFAULT_RADIUS,
 				double dDivisor= 1.0);
-	void LookupImage (IplImage *pSrc, IplImage *pDst);
+	void LookupImage (const IplImage *pSrc, IplImage *pDst);
 	unsigned char LookupColor (unsigned char r, unsigned char g, unsigned char b) {
 		return m_ColorLookup[r][g][b];
 	}
@@ -52,6 +52,6 @@ void crvBinarizeSkinColorModel (IplImage *pIpl, float &krg_min, float &krg_max,
 							   float &krb_min, float &krb_max);
 
 // Converteix una imatge a color a escala de grisos
-void crvColorToGray (IplImage *pImgSrc, IplImage *pIplDst);
+void crvColorToGray (const IplImage *pImgSrc, IplImage *pIplDst);
 
 #endif

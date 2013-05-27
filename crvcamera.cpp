@@ -20,14 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "crvcamera.h"
-#include "cv.h"
+#include "crvimage.h"
+#include <cv.h>
 #include <sys/timeb.h>
 #include <sys/types.h>
-#include <stdio.h>
 #include <cassert>
 
 // Return timestamp in ms
-static int GetTime (void)
+static long long GetTime (void)
 {
 	struct timeb now;	
 	ftime(&now);
@@ -63,25 +63,43 @@ void CCamera::Close()
 	DoClose();
 }
 
+bool CCamera::QueryFrame (CIplImage& image)
+{
+	if (!DoQueryFrame(image)) return false;
+
+	assert(image.Initialized());
+
+	PostQueryFrame(image.ptr());
+
+	return true;
+}
+
 IplImage* CCamera::QueryFrame()
 {
 	IplImage* pImage= DoQueryFrame();
 	if (!pImage) return NULL;
 
+	PostQueryFrame(pImage);
+
+	return pImage;
+}
+
+void CCamera::PostQueryFrame(IplImage* pImage)
+{
 	// Update real size
 	m_RealWidth= pImage->width;
 	m_RealHeight= pImage->height;
 
 	// Update real FPS
-	int now= GetTime();
-	m_elapsedTime= now - m_lastTimeStamp;
+	long long now= GetTime();
+	long long elapsedTime= now - m_lastTimeStamp;
 	m_lastTimeStamp= now;
 	m_LastRealFrameRate= m_RealFrameRate;
 
-	float weight= ((float) m_elapsedTime / 1000.0f) * 1.5f;
+	float weight= ((float) elapsedTime / 1000.0f) * 1.5f;
 	if (weight> 1.0f) weight= 1.0f;
-	if (m_elapsedTime> 0)
-		m_RealFrameRate= (1000.0f / (float) m_elapsedTime) * weight + m_LastRealFrameRate * (1.0f - weight);
+	if (elapsedTime> 0)
+		m_RealFrameRate= (1000.0f / (float) elapsedTime) * weight + m_LastRealFrameRate * (1.0f - weight);
 	else
 		m_RealFrameRate= 0;
 
@@ -96,7 +114,5 @@ IplImage* CCamera::QueryFrame()
 	}
 	else 
 		if (m_horizontalFlip) 
-			cvFlip (pImage, NULL, 1);	
-
-	return pImage;
+			cvFlip (pImage, NULL, 1);
 }

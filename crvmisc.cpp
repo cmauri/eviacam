@@ -23,7 +23,6 @@
 #include "crvmisc.h"
 #include <float.h>
 #include <assert.h>
-#include <stdio.h>
 #include <math.h>
 
 // uintptr_t type
@@ -35,7 +34,7 @@
 
 
 // Dona l'adre�a de mem�ria del p�xel a la posici� X, Y (DEPRECAT)
-char *crvImgByteOffset (IplImage *img, int x, int y)
+char *crvImgByteOffset (const IplImage *img, int x, int y)
 {
 	assert (img->nChannels== 1);
 
@@ -51,7 +50,7 @@ char *crvImgByteOffset (IplImage *img, int x, int y)
 }
 
 // Dona l'adre�a de mem�ria del p�xel a la posici� X, Y
-void *crvImgOffset (IplImage *img, int x, int y)
+void *crvImgOffset (const IplImage *img, int x, int y)
 {
 	switch (img->depth) {
 	case IPL_DEPTH_8U:
@@ -70,7 +69,7 @@ void *crvImgOffset (IplImage *img, int x, int y)
 }
 
 // Calcula limits en X, Y segons el ROI d'una imatge
-void crvGetROILimits (IplImage *img, int &xIni, int &yIni, int &xLim, int &yLim)
+void crvGetROILimits (const IplImage *img, int &xIni, int &yIni, int &xLim, int &yLim)
 {
 	if (img->roi== NULL) {
 		// No s'ha indicat regi� d'inter�s -> tota la imatge

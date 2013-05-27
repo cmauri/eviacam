@@ -20,9 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
-#include <stdio.h>
 #ifdef WIN32
-	#include "videoInput.h"
 	#include "crvcamera_wdm.h"
 
 	#define CAMCLASS CCameraWDM
@@ -35,6 +33,7 @@
 	#define CAMCLASS CCameraV4L2
 #endif
 #include "crvcamera_enum.h"
+#include "simplelog.h"
 
 // 
 // Static member functions
@@ -60,13 +59,7 @@ CCamera* CCameraEnum::GetCamera (unsigned int id, unsigned int width,
 		return new CAMCLASS(id, width, height, frameRate);		
 	} 
 	catch (camera_exception &e)	{
-		#ifndef NDEBUG
-			fprintf (stderr, "error initializing camera:");
-			fprintf (stderr, e.what());
-			fprintf (stderr, "\n");
-		#else
-			_unused(e); // make production build happy
-		#endif		
+		slog_write (SLOG_PRIO_ERR, "error initializing camera: %s\n", e.what());
 	}
 	
 	return NULL;

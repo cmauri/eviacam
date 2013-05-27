@@ -14,6 +14,23 @@
 #include "videoInput.h"
 #include "tchar.h"
 
+/*
+	If you get errors when including Microsoft DirectShow or DirectDraw headers, the following message from Peter Whaite could help:
+
+	> This causes compilation errors within DirectShow:
+	>
+	> wxutil.h(125) : error C2065: 'EXECUTE_ASSERT' : undeclared identifier
+	> amfilter.h(1099) : error C2065: 'ASSERT' : undeclared identifier
+
+	The reason for this is that __WXDEBUG__ is also used by the DXSDK (9.0
+	in my case) to '#pragma once' the contents of
+	DXSDK/Samples/C++/DirectShow/BaseClasses/wxdebug.h.  So if __WXDEBUG__
+	is defined, then wxdebug.h doesn't get included, and the assert macros
+	don't get defined.  You have to #undef __WXDEBUG__ before including the
+	directshow baseclass's <streams.h>
+*/
+#undef __WXDEBUG__
+
 //Include Directshow stuff here so we don't worry about needing all the h files.
 #include "DShow.h"
 #include "streams.h"
@@ -304,19 +321,19 @@ void videoDevice::destroyGraph(){
 			FilterInfo.pGraph->Release();
 
 			int count = 0;
-			char buffer[255];
-			memset(buffer, 0, 255 * sizeof(char));
+			WCHAR buffer[255];
+			memset(buffer, 0, 255 * sizeof(WCHAR));
 						
-			while( FilterInfo.achName[count] != 0x00 ) 
+			while( count< 255 && FilterInfo.achName[count] != 0x00 ) 
 			{
 				buffer[count] = FilterInfo.achName[count];
 				count++;
 			}
 			
-			if(verbose)printf("SETUP: removing filter %s...\n", buffer);
+			if (verbose) printf("SETUP: removing filter %ls...\n", buffer);
 			hr = pGraph->RemoveFilter(pFilter);
 			if (FAILED(hr)) { if(verbose)printf("SETUP: pGraph->RemoveFilter() failed. \n"); return; }
-			if(verbose)printf("SETUP: filter removed %s  \n",buffer);
+			if (verbose) printf("SETUP: filter removed %ls\n",buffer);
 			
 			pFilter->Release();
 			pFilter = NULL;
@@ -779,7 +796,7 @@ int videoInput::listDevices(bool silent){
 					int count = 0;
 					int maxLen = sizeof(deviceNames[0])/sizeof(deviceNames[0][0]) - 2;
 					while( varName.bstrVal[count] != 0x00 && count < maxLen) {
-						deviceNames[deviceCounter][count] = varName.bstrVal[count];
+						deviceNames[deviceCounter][count] = static_cast<char>(varName.bstrVal[count]);
 						count++;
 					}
 					deviceNames[deviceCounter][count] = 0;
@@ -1537,28 +1554,27 @@ void videoInput::processPixels(unsigned char * src, unsigned char * dst, int wid
 //------------------------------------------------------------------------------------------
 void videoInput::getMediaSubtypeAsString(GUID type, char * typeAsString){
 
-	char tmpStr[8];
-	if( type == MEDIASUBTYPE_RGB24) sprintf(tmpStr, "RGB24");
-	else if(type == MEDIASUBTYPE_RGB32) sprintf(tmpStr, "RGB32");
-	else if(type == MEDIASUBTYPE_RGB555)sprintf(tmpStr, "RGB555");
-	else if(type == MEDIASUBTYPE_RGB565)sprintf(tmpStr, "RGB565");					
-	else if(type == MEDIASUBTYPE_YUY2) 	sprintf(tmpStr, "YUY2");
-	else if(type == MEDIASUBTYPE_YVYU) 	sprintf(tmpStr, "YVYU");
-	else if(type == MEDIASUBTYPE_YUYV) 	sprintf(tmpStr, "YUYV");
-	else if(type == MEDIASUBTYPE_IYUV) 	sprintf(tmpStr, "IYUV");
-	else if(type == MEDIASUBTYPE_UYVY)  sprintf(tmpStr, "UYVY");
-	else if(type == MEDIASUBTYPE_YV12)  sprintf(tmpStr, "YV12");
-	else if(type == MEDIASUBTYPE_YVU9)  sprintf(tmpStr, "YVU9");
-	else if(type == MEDIASUBTYPE_Y411) 	sprintf(tmpStr, "Y411");
-	else if(type == MEDIASUBTYPE_Y41P) 	sprintf(tmpStr, "Y41P");
-	else if(type == MEDIASUBTYPE_Y211)  sprintf(tmpStr, "Y211");
-	else if(type == MEDIASUBTYPE_AYUV) 	sprintf(tmpStr, "AYUV");
-	else if(type == MEDIASUBTYPE_Y800) 	sprintf(tmpStr, "Y800");  
-	else if(type == MEDIASUBTYPE_Y8)   	sprintf(tmpStr, "Y8");  
-	else if(type == MEDIASUBTYPE_GREY) 	sprintf(tmpStr, "GREY");  
-	else sprintf(tmpStr, "OTHER");
+	memset (typeAsString,0, 8);
+	if( type == MEDIASUBTYPE_RGB24) strncpy(typeAsString, "RGB24", 8);
+	else if(type == MEDIASUBTYPE_RGB32) strncpy(typeAsString, "RGB32", 8);
+	else if(type == MEDIASUBTYPE_RGB555)strncpy(typeAsString, "RGB555", 8);
+	else if(type == MEDIASUBTYPE_RGB565)strncpy(typeAsString, "RGB565", 8);				
+	else if(type == MEDIASUBTYPE_YUY2) 	strncpy(typeAsString, "YUY2", 8);
+	else if(type == MEDIASUBTYPE_YVYU) 	strncpy(typeAsString, "YVYU", 8);
+	else if(type == MEDIASUBTYPE_YUYV) 	strncpy(typeAsString, "YUYV", 8);
+	else if(type == MEDIASUBTYPE_IYUV) 	strncpy(typeAsString, "IYUV", 8);
+	else if(type == MEDIASUBTYPE_UYVY)  strncpy(typeAsString, "UYVY", 8);
+	else if(type == MEDIASUBTYPE_YV12)  strncpy(typeAsString, "YV12", 8);
+	else if(type == MEDIASUBTYPE_YVU9)  strncpy(typeAsString, "YVU9", 8);
+	else if(type == MEDIASUBTYPE_Y411) 	strncpy(typeAsString, "Y411", 8);
+	else if(type == MEDIASUBTYPE_Y41P) 	strncpy(typeAsString, "Y41P", 8);
+	else if(type == MEDIASUBTYPE_Y211)  strncpy(typeAsString, "Y211", 8);
+	else if(type == MEDIASUBTYPE_AYUV) 	strncpy(typeAsString, "AYUV", 8);
+	else if(type == MEDIASUBTYPE_Y800) 	strncpy(typeAsString, "Y800", 8);
+	else if(type == MEDIASUBTYPE_Y8)   	strncpy(typeAsString, "Y8", 8);
+	else if(type == MEDIASUBTYPE_GREY) 	strncpy(typeAsString, "GREY", 8);
+	else strncpy(typeAsString, "OTHER", 8);
 
-	memcpy(typeAsString, tmpStr, sizeof(char)*8);
 }
 
 //-------------------------------------------------------------------------------------------

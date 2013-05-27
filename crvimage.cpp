@@ -20,45 +20,45 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "crvimage.h"
+#include <highgui.h>
 #include <string.h>
-#include <stdio.h>
 #include <assert.h>
 
 // Construction
 CIplImage::CIplImage ()
 {
-	m_pIplImage= NULL;
-	m_importedImage= false;
-	m_importedROI= NULL;
-	m_roiStackPtr= 0;
+	Init();
 }
 
 CIplImage::CIplImage (IplImage *pImg)
 {
-	m_pIplImage= NULL;
-	m_importedImage= false;
-	m_importedROI= NULL;
-	m_roiStackPtr= 0;
-
+	Init();
 	Import (pImg);
 }
 
 CIplImage::CIplImage (int width, int height, int depth, const char *pColorOrder)
 {
-	m_pIplImage= NULL;
-	m_importedImage= false;
-	m_importedROI= NULL;
-	m_roiStackPtr= 0;
+	Init();
 
 	bool retval= Create (width, height, depth, pColorOrder);
 #ifndef NDEBUG
 	assert (retval);
+#else
+	(void) (retval);
 #endif
 }
 
 CIplImage::~CIplImage ()
 {
 	Free ();
+}
+
+void CIplImage::Init()
+{
+	m_pIplImage= NULL;
+	m_importedImage= false;
+	m_importedROI= NULL;
+	m_roiStackPtr= 0;
 }
 
 void CIplImage::InitROIStack (int width, int height)
@@ -109,7 +109,7 @@ bool CIplImage::Create (int width, int height, unsigned int depth, const char *p
 	else assert (0);
 
 	m_pIplImage= cvCreateImageHeader( cvSize(width,height), depth, nChannels );
-    if (!m_pIplImage) {	assert (0);	return false; }
+	if (!m_pIplImage) {	assert (0);	return false; }
 	m_pIplImage->alphaChannel= (alphaChannel? 1 : 0);
 	strncpy (m_pIplImage->colorModel, pColorModel, 4);
 	strncpy (m_pIplImage->channelSeq, pColorOrder, 4);
@@ -135,10 +135,13 @@ bool CIplImage::Create (int width, int height, unsigned int depth, const char *p
 	return true;
 }
 
-bool CIplImage::Import (IplImage *pImage, bool autodelete)
+bool CIplImage::Import (IplImage *pImage)
 {
 	assert (pImage);
-	assert (!autodelete);	// Not supported
+
+	// Cannot import the same image
+	assert (pImage!= this->m_pIplImage);
+	if (pImage== this->m_pIplImage) return false;
 
 	Free ();
 	
@@ -148,29 +151,38 @@ bool CIplImage::Import (IplImage *pImage, bool autodelete)
 	m_importedROI= pImage->roi;
 	if (pImage->roi) m_roiStack[m_roiStackPtr]= *pImage->roi;
 	pImage->roi= &m_roiStack[m_roiStackPtr];
-	//m_roiStackPtr= 0;
 
 	return true;
 }
 
 void CIplImage::Free ()
 {
-	if (!m_pIplImage) return;
+	bool wasImported= m_importedImage;
+	IplImage* retval= this->Detach();
+	if (retval && !wasImported) cvReleaseImage( &retval );
+}
+
+IplImage* CIplImage::Detach()
+{
+	if (!m_pIplImage) return NULL;
 
 	if (m_importedImage) 
 		m_pIplImage->roi= m_importedROI;
 	else 
-	{
 		m_pIplImage->roi= NULL;
-		cvReleaseImage( &m_pIplImage );
-	}
+
+	IplImage* retval= m_pIplImage;
 	
-	CIplImage ();
-}	
+	Init ();
+
+	return retval;	
+}
 
 void CIplImage::Swap (CIplImage *pOtherImg)
 {
 	int i;
+
+	if (this== pOtherImg) return;	// Nohing to do
 
 	// Copy other image to tmp
 	IplImage *tmp_pIplImage= pOtherImg->m_pIplImage;
@@ -222,8 +234,14 @@ bool CIplImage::SetROI (int x, int y, int width,
 	assert (x>= 0 && y>= 0 && width> 0 && height> 0);
 	
 	// Check limits for the ROI
-	if (x< 0 || (x + width > m_pIplImage->width)) return false;
-	if (y< 0 || (y + height > m_pIplImage->height)) return false;
+	if (x< 0 || (x + width > m_pIplImage->width)) {
+		assert (false);
+		return false;
+	}
+	if (y< 0 || (y + height > m_pIplImage->height)) {
+		assert (false);
+		return false;
+	}
 
 	// ROI Ok
 	m_roiStack[m_roiStackPtr].coi= coi;

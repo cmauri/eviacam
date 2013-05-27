@@ -1,79 +1,122 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.10"
+	Version="9,00"
 	Name="creavision"
 	ProjectGUID="{FF220E89-E196-48A7-8FD6-6382A32502E7}"
-	SccProjectName=""
-	SccLocalPath="">
+	TargetFrameworkVersion="131072"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\creavision"
 			ConfigurationType="4"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;&quot;$(PSDK_DIR)\Samples\Multimedia\DirectShow\BaseClasses&quot;"
+				AdditionalIncludeDirectories="&quot;$(CVPATH)\build&quot;;&quot;$(CVPATH)\include&quot;;&quot;$(CVPATH)\include\opencv&quot;;&quot;$(CVPATH)\modules\core\include&quot;;&quot;$(CVPATH)\modules\imgproc\include&quot;;&quot;$(CVPATH)\modules\features2d\include&quot;;&quot;$(CVPATH)\modules\objdetect\include&quot;;&quot;$(CVPATH)\modules\video\include&quot;;&quot;$(CVPATH)\modules\highgui\include&quot;;&quot;$(CVPATH)\modules\ml\include&quot;;&quot;$(CVPATH)\modules\legacy\include&quot;;&quot;$(CVPATH)\modules\contrib\include&quot;;&quot;$(CVPATH)\modules\flann\include&quot;;&quot;$(CVPATH)\modules\gpu\include&quot;;&quot;$(CVPATH)\modules\calib3d\include&quot;;../"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;NOPCH;__WXMSW__"
-				StringPooling="TRUE"
+				StringPooling="true"
 				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="TRUE"
-				UsePrecompiledHeader="2"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
 				AssemblerListingLocation="$(SolutionDir)$(ConfigurationName)\creavision\"
 				ObjectFile="$(SolutionDir)$(ConfigurationName)\creavision\"
 				ProgramDataBaseFileName="$(SolutionDir)$(ConfigurationName)\creavision.pdb"
 				WarningLevel="4"
-				SuppressStartupBanner="TRUE"
-				CompileAs="0"/>
+				SuppressStartupBanner="true"
+				CompileAs="2"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(SolutionDir)$(ConfigurationName)\$(ProjectName).lib"
-				SuppressStartupBanner="TRUE"/>
-			<Tool
-				Name="VCMIDLTool"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="3082"/>
+				Culture="3082"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
+				Name="VCLibrarianTool"
+				OutputFile="$(SolutionDir)$(ConfigurationName)\$(ProjectName).lib"
+				SuppressStartupBanner="true"
+			/>
 			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\creavision"
 			ConfigurationType="4"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;&quot;$(PSDK_DIR)\Samples\Multimedia\DirectShow\BaseClasses&quot;"
+				AdditionalIncludeDirectories="&quot;$(CVPATH)\build&quot;;&quot;$(CVPATH)\include&quot;;&quot;$(CVPATH)\include\opencv&quot;;&quot;$(CVPATH)\modules\core\include&quot;;&quot;$(CVPATH)\modules\imgproc\include&quot;;&quot;$(CVPATH)\modules\features2d\include&quot;;&quot;$(CVPATH)\modules\objdetect\include&quot;;&quot;$(CVPATH)\modules\video\include&quot;;&quot;$(CVPATH)\modules\highgui\include&quot;;&quot;$(CVPATH)\modules\ml\include&quot;;&quot;$(CVPATH)\modules\legacy\include&quot;;&quot;$(CVPATH)\modules\contrib\include&quot;;&quot;$(CVPATH)\modules\flann\include&quot;;&quot;$(CVPATH)\modules\gpu\include&quot;;&quot;$(CVPATH)\modules\calib3d\include&quot;;../"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -82,35 +125,41 @@
 				ObjectFile="$(SolutionDir)$(ConfigurationName)\creavision\"
 				ProgramDataBaseFileName="$(SolutionDir)$(ConfigurationName)\creavision.pdb"
 				WarningLevel="4"
-				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="4"
-				CompileAs="0"/>
+				SuppressStartupBanner="true"
+				DebugInformationFormat="3"
+				CompileAs="2"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(SolutionDir)$(ConfigurationName)\$(ProjectName).lib"
-				SuppressStartupBanner="TRUE"/>
-			<Tool
-				Name="VCMIDLTool"/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="3082"/>
+				Culture="3082"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
+				Name="VCLibrarianTool"
+				OutputFile="$(SolutionDir)$(ConfigurationName)\$(ProjectName).lib"
+				SuppressStartupBanner="true"
+			/>
 			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -118,82 +167,108 @@
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+			>
 			<File
-				RelativePath=".\crvcamera.cpp">
+				RelativePath=".\crvcamera.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\crvcamera_cv.cpp">
+				RelativePath=".\crvcamera_cv.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\crvcamera_enum.cpp">
+				RelativePath=".\crvcamera_enum.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\crvcamera_wdm.cpp">
+				RelativePath=".\crvcamera_wdm.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\crvcolor.cpp">
+				RelativePath=".\crvcolor.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\crvgeomtry.cpp">
+				RelativePath=".\crvgeomtry.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\crvhistogram.cpp">
+				RelativePath=".\crvhistogram.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\crvimage.cpp">
+				RelativePath=".\crvimage.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\crvmisc.cpp">
+				RelativePath=".\crvmisc.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\crvnormroi.cpp">
+				RelativePath=".\crvnormroi.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\crvskindetection.cpp">
+				RelativePath=".\crvskindetection.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\videoInput.cpp">
+				RelativePath=".\videoInput.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl">
+			Filter="h;hpp;hxx;hm;inl"
+			>
 			<File
-				RelativePath=".\crvcamera.h">
+				RelativePath=".\crvcamera.h"
+				>
 			</File>
 			<File
-				RelativePath=".\crvcamera_cv.h">
+				RelativePath=".\crvcamera_cv.h"
+				>
 			</File>
 			<File
-				RelativePath=".\crvcamera_enum.h">
+				RelativePath=".\crvcamera_enum.h"
+				>
 			</File>
 			<File
-				RelativePath=".\crvcamera_wdm.h">
+				RelativePath=".\crvcamera_wdm.h"
+				>
 			</File>
 			<File
-				RelativePath=".\crvcolor.h">
+				RelativePath=".\crvcolor.h"
+				>
 			</File>
 			<File
-				RelativePath=".\crvgeomtry.h">
+				RelativePath=".\crvgeomtry.h"
+				>
 			</File>
 			<File
-				RelativePath=".\crvhistogram.h">
+				RelativePath=".\crvhistogram.h"
+				>
 			</File>
 			<File
-				RelativePath=".\crvimage.h">
+				RelativePath=".\crvimage.h"
+				>
 			</File>
 			<File
-				RelativePath=".\crvmisc.h">
+				RelativePath=".\crvmisc.h"
+				>
 			</File>
 			<File
-				RelativePath=".\crvnormroi.h">
+				RelativePath=".\crvnormroi.h"
+				>
 			</File>
 			<File
-				RelativePath=".\crvskindetection.h">
+				RelativePath=".\crvskindetection.h"
+				>
 			</File>
 			<File
-				RelativePath=".\videoInput.h">
+				RelativePath=".\videoInput.h"
+				>
 			</File>
 		</Filter>
 	</Files>

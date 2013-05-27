@@ -27,6 +27,7 @@
 // Forward declarations
 class CCameraControl;
 typedef struct _IplImage IplImage;
+class CIplImage;
 
 // Class to signal errors during camera object construction
 class camera_exception : public std::runtime_error
@@ -51,6 +52,8 @@ public:
 	bool Open();
 	void Close();
 	IplImage* QueryFrame();	// TODO: return const ptr
+	bool QueryFrame (CIplImage& image);
+
 
 	//
 	// Capture information. Intended only for informational
@@ -85,16 +88,18 @@ protected:
 	virtual bool DoOpen()= 0;
 	virtual void DoClose()= 0;
 	virtual IplImage* DoQueryFrame()= 0;
+	virtual bool DoQueryFrame(CIplImage& image)= 0;
 
 private:
 	// Make CCamera non-copyable
 	CCamera( const CCamera& );	// not implemented
 	CCamera& operator=( const CCamera& );     // not implemented
 
+	void PostQueryFrame(IplImage* pImage);
+
 	int m_RealWidth, m_RealHeight;
 	float m_RealFrameRate, m_LastRealFrameRate;
-	int m_lastTimeStamp;
-	int m_elapsedTime;
+	long long m_lastTimeStamp;
 	bool m_horizontalFlip;
 };
 

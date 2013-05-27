@@ -23,11 +23,11 @@
 
 #include <sys/timeb.h>
 #include <sys/types.h>
-#include <stdio.h>
 #include <cassert>
 #include <cv.h>
 #include "crvimage.h"
 #include "videoInput.h"
+#include "simplelog.h"
 
 CCameraWDM::CCameraWDM(int cameraId, unsigned int width, unsigned int height,
 		float fr) throw(camera_exception)
@@ -40,11 +40,10 @@ CCameraWDM::CCameraWDM(int cameraId, unsigned int width, unsigned int height,
 
 	m_VI= NULL;	
 
-#if defined (NDEBUG)
-	videoInput::setVerbose(false);
-#else
-	videoInput::setVerbose(true);
-#endif
+	if (slog_get_priority()> SLOG_PRIO_CRIT)
+		videoInput::setVerbose(true);
+	else
+		videoInput::setVerbose(false);
 }
 
 CCameraWDM::~CCameraWDM(void)
@@ -54,15 +53,16 @@ CCameraWDM::~CCameraWDM(void)
 
 bool CCameraWDM::DoOpen ()
 {
-	// Create a videoInput object
-	if (m_VI) return false;
+	// Already open? Do nothing
+	if (m_VI) return true;
 
+	// Create a videoInput object
 	m_VI= new videoInput;
 	assert (m_VI);
 
 	// BGR channel sequence assumed
-	m_pImage= new CIplImage (m_Width, m_Height, IPL_DEPTH_8U, "BGR");
-	assert (m_pImage);	
+	//m_pImage= new CIplImage (m_Width, m_Height, IPL_DEPTH_8U, "BGR");
+	//assert (m_pImage);	
 
 	m_VI->setIdealFramerate(m_Id, (int) m_FrameRate);
 	if (!m_VI->setupDevice (m_Id, m_Width, m_Height)) {
@@ -79,21 +79,36 @@ void CCameraWDM::DoClose ()
 		m_VI->stopDevice(m_Id);
 		delete m_VI;
 		m_VI= NULL;
-		delete m_pImage;
+		//delete m_pImage;
 	}
 }
 
 IplImage *CCameraWDM::DoQueryFrame()
 {
-	if (!m_VI) return NULL;
+	if (!CCameraWDM::DoQueryFrame(m_Image)) return NULL;
 
-	assert (m_pImage->ptr()->imageSize== m_VI->getSize(m_Id));
+	return m_Image.ptr();
+}
+
+bool CCameraWDM::DoQueryFrame(CIplImage& image)
+{
+	if (!m_VI) return false;
+
+	if (!image.Initialized() || m_VI->getWidth(m_Id)!= image.Width() || m_VI->getHeight(m_Id)!= image.Height()) {
+		// Allocate image in case is not properly set up
+		if (!image.Create (m_Width, m_Height, IPL_DEPTH_8U, "BGR", 1)) {
+			assert (!"CCameraWDM::DoQueryFrame: cannot create image");
+			return false;
+		}
+	}		
+	assert (image.Initialized());
+	assert (image.ptr()->imageSize== m_VI->getSize(m_Id));
 	
-	m_VI->getPixels(m_Id, (unsigned char *) m_pImage->ptr()->imageData, false, false);
+	m_VI->getPixels(m_Id, reinterpret_cast<unsigned char *>(image.ptr()->imageData), false, false);
 	// Set appropiate origin
-	m_pImage->ptr()->origin= 1;
-	
-	return m_pImage->ptr();
+	image.ptr()->origin= 1;
+
+	return true;
 }
 
 void CCameraWDM::ShowSettingsDialog ()

@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     30/05/2008
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -93,7 +93,16 @@ protected:
 	TNormROIList m_childROIs;
 
 private:
+	void CheckInvariant();
+	void FitInternalState();
+
 	// Normalized coordinates
+	//
+	// TODO: implement these using integer arithmethic only,
+	// for instance, using 32bit integers and a certain range 
+	// (say 0..32768) thus avoiding FP arithmethic ans its 
+	// inherent "unexpected" behaviour.
+	// 
 	float m_x, m_y, m_width, m_height;
 	float m_rotation;
 };

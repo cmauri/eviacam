@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     17/05/2010
-// Copyright:   (C) 2008-10 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
 //              Portions of guvcview are (c) of Paulo Assis and others
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -28,16 +28,15 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <limits.h>
-#include <linux/videodev.h>
+#include "incvideodev.h"
+#include <libv4l2.h>
 #include <sys/ioctl.h>
 #include <sys/mman.h>
 #include <sys/time.h>
 #include <list>
 #include "pwc-ioctl.h"
 #include "colorspaces.h"
-#if !defined(NDEBUG)
-#include <iostream>
-#endif
+#include "simplelog.h"
 
 // TODO: thread safety
 
@@ -168,13 +167,21 @@ CCameraV4L2::~CCameraV4L2(void)
 
 bool CCameraV4L2::DoOpen ()
 {
-	if (m_libWebcamHandle!= 0) return true;	// Already open	
-	if (!InternalOpen()) return false;
+	slog_write (SLOG_PRIO_DEBUG, "CCameraV4L2::DoOpen: begin\n");
+	if (m_libWebcamHandle!= 0) {
+		slog_write (SLOG_PRIO_NOTICE, "CCameraV4L2::DoOpen: already open\n");
+		return true;	// Already open	
+	}
+	if (!InternalOpen()) {
+		slog_write (SLOG_PRIO_ERR, "CCameraV4L2::DoOpen: open failed\n");
+		return false;
+	}
 	
+	assert (m_desiredFormat.width && m_desiredFormat.height && m_desiredFormat.frame_rate);
 	m_currentFormat= m_desiredFormat;
 		
 	if (!DetectBestImageFormat()) {
-		fprintf (stderr, "Unable to find any suitable image format\n");
+		slog_write (SLOG_PRIO_ERR, "Unable to find any suitable image format\n");
 		Close();
 		return false;
 	}
@@ -184,29 +191,19 @@ bool CCameraV4L2::DoOpen ()
 	}
 	m_captureMethod= DetectCaptureMethod();
 	if (m_captureMethod== CAP_NONE) {
-		fprintf (stderr, "Unable to find a suitable capure mode\n");
+		slog_write (SLOG_PRIO_ERR, "Unable to find a suitable capure mode\n");
 		Close();
 		return false;
 	}
 	
 	if (!AllocateBuffers()) {
-		fprintf (stderr, "Unable to allocate buffers\n");
+		slog_write (SLOG_PRIO_ERR, "Unable to allocate buffers\n");
 		Close();
 		return false;
 	}
-	// Result image	
-	// TODO: correct the V4L2_PIX_FMT_YUV420 conversion routine
-	const char* planeOrder;
-	if (m_currentFormat.pixelformat== V4L2_PIX_FMT_YUV420) planeOrder= "BGR";
-	else planeOrder= "RGB";
-	// TODO: make sure that image is not initialized with padded rows
-	if (!m_resultImage.Create (m_currentFormat.width, m_currentFormat.height, IPL_DEPTH_8U, planeOrder, IPL_ORIGIN_TL, IPL_ALIGN_DWORD )) {
-		fprintf (stderr, "Cannot create result image\n");		
-		Close();
-		return false;
-	}
+	
 	if (!EnableVideo(true)) {
-		fprintf (stderr, "Unable to enable video\n");
+		slog_write (SLOG_PRIO_ERR, "Unable to enable video\n");
 		DeallocateBuffers();
 		Close();
 		return false;
@@ -214,7 +211,7 @@ bool CCameraV4L2::DoOpen ()
 	
 	// TODO: Awful. This is a provisional solution to avoid broken frames while capturing.
 	// It seems as if the driver/camera needs some time before start grabbing.
-	sleep (1);
+	usleep (2000000);
 	return true;
 }
 
@@ -236,22 +233,22 @@ bool CCameraV4L2::InternalOpen()
 	struct stat st;	
 
 	// Create device name
-	snprintf (devName, CAM_DEVICE_SHORT_NAME_LENGHT+5, "/dev/%s", g_deviceShortNames[m_Id]); //m_deviceShortName);
+	snprintf (devName, CAM_DEVICE_SHORT_NAME_LENGHT+5, "/dev/%s", g_deviceShortNames[m_Id]);
 
 	// Check if exists and if it is a device
 	if (stat (devName, &st)== -1) {
-		fprintf (stderr, "ERROR: Cannot identify ’%s’: %d, %s\n", devName, errno, strerror (errno));
+		slog_write (SLOG_PRIO_ERR, "Cannot identify ’%s’: %d, %s\n", devName, errno, strerror (errno));
 		return false;
 	}
 	if (!S_ISCHR (st.st_mode)) {
-		fprintf (stderr, "ERROR: %s is no device\n", devName);
+		slog_write (SLOG_PRIO_ERR, "%s is no device\n", devName);
 		return false;
 	}
 	
 	// "Open" device via libwebcam 
 	m_libWebcamHandle= c_open_device (g_deviceShortNames[m_Id]); //m_deviceShortName);
 	if (m_libWebcamHandle== 0 || c_get_file_descriptor (m_libWebcamHandle)<= 0) {
-		fprintf (stderr, "ERROR: Cannot open ’%s’ via libwebcam\n", devName);
+		slog_write (SLOG_PRIO_ERR, "Cannot open ’%s’ via libwebcam\n", devName);
 		Close();
 		return false;
 	}
@@ -281,11 +278,12 @@ int xioctl(int fd, int IOCTL_X, void *arg)
 	int ret = 0;
 	int tries= IOCTL_RETRY;
 	do {
-		ret = ioctl(fd, IOCTL_X, arg);
+		ret = v4l2_ioctl(fd, IOCTL_X, arg);
 	} 
 	while (ret && tries-- && ((errno == EINTR) || (errno == EAGAIN) || (errno == ETIMEDOUT)));
 
-	if (ret && (tries <= 0)) fprintf(stderr, "ioctl (%i) retried %i times - giving up: %s)\n", IOCTL_X, IOCTL_RETRY, strerror(errno));
+	if (ret && (tries <= 0)) 
+		slog_write (SLOG_PRIO_ERR, "ioctl (%i) retried %i times - giving up: %s)\n", IOCTL_X, IOCTL_RETRY, strerror(errno));
 	
 	return (ret);
 } 
@@ -342,7 +340,7 @@ bool CCameraV4L2::PopulateCameraControls ()
 
 unsigned int CCameraV4L2::GetCameraControlsCount()
 {
-	return m_cameraControls.size();
+	return static_cast<unsigned int>(m_cameraControls.size());
 }
 
 CCameraControl* CCameraV4L2::GetCameraControl(unsigned int numControl)
@@ -360,12 +358,11 @@ bool CCameraV4L2::RequestBuffers(enum v4l2_memory mem)
 	requestbuffers.count= STREAMING_CAPTURE_NBUFFERS;
 	requestbuffers.type= V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	requestbuffers.memory= mem; //V4L2_MEMORY_MMAP;
-	//if (ioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_REQBUFS, &requestbuffers)== 0) {
 	if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_REQBUFS, &requestbuffers)== 0) {
 		if (requestbuffers.count== STREAMING_CAPTURE_NBUFFERS) return true;
 		if (requestbuffers.count> 0) UnRequestBuffers(mem);		
 	}
-	fprintf (stderr, "ERROR: RequestBuffers: failed\n");
+	slog_write (SLOG_PRIO_ERR, "ERROR: RequestBuffers: failed\n");
 	return false;
 }
 
@@ -378,29 +375,24 @@ bool CCameraV4L2::UnRequestBuffers(enum v4l2_memory mem)
 	requestbuffers.count= 0;
 	requestbuffers.type= V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	requestbuffers.memory= mem; //V4L2_MEMORY_MMAP;
-	//if (ioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_REQBUFS, &requestbuffers)== 0) return true;
 	if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_REQBUFS, &requestbuffers)== 0) return true;
+	slog_write (SLOG_PRIO_ERR, "ERROR: UnRequestBuffers: failed\n");
 	return false;
 }
 	
-// This method must be AFTER desired format is set	
+// This method must be called AFTER desired format is set	
 CCameraV4L2::ECaptureMethod CCameraV4L2::DetectCaptureMethod()
 {
 	struct v4l2_capability capability;	
 
 	// Query basic capabilities. This never should fail
 	if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_QUERYCAP, &capability)!= 0) {
-	//if (ioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_QUERYCAP, &capability)!= 0) {
-#if !defined(NDEBUG)
-		fprintf (stderr, "ERROR: Cannot query camera capabilities: VIDIOC_QUERYCAP ioctl failed\n");
-#endif
+		slog_write (SLOG_PRIO_WARNING, "Cannot query camera capabilities: VIDIOC_QUERYCAP ioctl failed\n");
 		return CAP_NONE;
 	}
 
 	if (!(capability.capabilities & V4L2_CAP_VIDEO_CAPTURE)) {
-#if !defined(NDEBUG)
-	    fprintf (stderr, "ERROR: is no video capture device\n");
-#endif
+	    slog_write (SLOG_PRIO_WARNING, "This is no video capture device\n");
 	    return CAP_NONE;
 	}
 
@@ -439,16 +431,16 @@ typedef struct  {
 	unsigned int step_height;		
 	uint32_t pixelformat;	// Four character code	
 } TImageFormatEx;
-#if !defined(NDEBUG)
+
 static 
 void dump_TImageFormatEx (TImageFormatEx& ife)
 {
-	std::cout << "dump_TImageFormatEx. fr: " << ife.min_frame_rate << ", " << ife.max_frame_rate << ", " << ife.step_frame_rate 
-		<< "w:" << ife.min_width << ", " << ife.max_width << ", " << ife.step_width 
-		<< "h:" << ife.min_height << ", " << ife.max_height << ", " << ife.step_height 
-		<< "px;" << ife.pixelformat << std::endl;
+	slog_write (SLOG_PRIO_DEBUG, "dump_TImageFormatEx. fr: %u, %u, %u w: %u, %u, %u h: %u, %u, %u px: %x\n",
+		ife.min_frame_rate, ife.max_frame_rate, ife.step_frame_rate,
+		ife.min_width, ife.max_width, ife.step_width,
+		ife.min_height, ife.max_height, ife.step_height,
+		ife.pixelformat);
 }
-#endif
 
 // Given a range returns the absolute distance to a value
 template <class T>
@@ -503,7 +495,7 @@ static void SelectBestFramePixelNumber (unsigned int npixels, std::list<TImageFo
 {
 	if (npixels> 0) {
 		unsigned int bestdiff= UINT_MAX;
-		//unsigned int npixels= imgformat.width * imgformat.height;
+
 		// Find closest frame ratio	
 		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
 			unsigned int diff= abs_distance_to_range<uint> (i->min_width * i->min_height, i->max_width * i->max_height, npixels);
@@ -537,6 +529,7 @@ bool CCameraV4L2::DetectBestImageFormat()
 	
 	unsigned int sformats, ssizes, sintervals;
 	unsigned int cformats, csizes, cintervals;
+	
 	// Request needed buffer to store formats
 	sformats= cformats= 0;	
 	if (c_enum_pixel_formats (m_libWebcamHandle, NULL, &sformats, &cformats)!= C_BUFFER_TOO_SMALL) return false;
@@ -623,11 +616,13 @@ bool CCameraV4L2::DetectBestImageFormat()
 			}			
 		}
 	}
-#if !defined(NDEBUG)
-	for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
-		dump_TImageFormatEx (*i);
+
+	if (slog_get_priority ()>= SLOG_PRIO_DEBUG) {
+		for (std::list<TImageFormatEx>::iterator i= availableFormats.begin(); i!= availableFormats.end(); ++i) {
+			dump_TImageFormatEx (*i);
+		}
 	}
-#endif
+
 	//
 	// Selection process
 	//
@@ -639,10 +634,10 @@ bool CCameraV4L2::DetectBestImageFormat()
 			if (m_supportedPixelFormats[ienc]== i->pixelformat) found= true;
 		
 		if (!found) {
-#if !defined(NDEBUG)
 			char* tmp= (char *) &i->pixelformat;
-			std::cerr << "crvcamera_v4l2: discarding unsuported format: " << tmp[0] << tmp[1] << tmp[2] << tmp[3] << std::endl;
-#endif
+			slog_write (SLOG_PRIO_NOTICE, 
+				"crvcamera_v4l2: discarding unsuported format: %c%c%c%c\n",
+				tmp[0], tmp[1], tmp[2], tmp[3]);
 			i= availableFormats.erase (i);
 		}
 		else ++i;
@@ -701,6 +696,8 @@ bool CCameraV4L2::DetectBestImageFormat()
 				m_currentFormat.frame_rate= range_value_fit (i->min_frame_rate, i->max_frame_rate, i->step_frame_rate, m_currentFormat.frame_rate);
 				m_currentFormat.width= range_value_fit (i->min_width, i->max_width, i->step_width, m_currentFormat.width);
 				m_currentFormat.height= range_value_fit (i->min_height, i->max_height, i->step_height, m_currentFormat.height);
+				slog_write (SLOG_PRIO_DEBUG, "Chosen format\n");
+				dump_TImageFormatEx (*i);
 				return true;
 			}
 		}
@@ -715,12 +712,14 @@ bool CCameraV4L2::SetImageFormat()
 {
 	struct v4l2_format format;
 	
-	//Set frame format
+	//
+	// Set frame format, including width, height and pixelformat. First query current
+	// settings, then modify relevant values and finally query actual values
+	//
 	memset (&format, 0, sizeof (format));
 	format.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_FMT, &format)== -1) {
-	//if (ioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_FMT, &format)== -1) {
-		fprintf(stderr, "ERROR: Unable to get format.\n");
+		slog_write (SLOG_PRIO_ERR, "Unable to get format.\n");
 		return false;	
 	}
 	
@@ -731,8 +730,7 @@ bool CCameraV4L2::SetImageFormat()
 	format.fmt.pix.field = V4L2_FIELD_ANY;
 
 	if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_FMT, &format)== -1) {
-	//if (ioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_FMT, &format)== -1) {
-		fprintf(stderr, "ERROR: Unable to set format.\n");
+		slog_write (SLOG_PRIO_ERR, "Unable to set format.\n");
 		return false;	
 	}
 	
@@ -742,20 +740,27 @@ bool CCameraV4L2::SetImageFormat()
 	m_currentFormat.height= format.fmt.pix.height;
 	m_currentFormat.pixelformat= format.fmt.pix.pixelformat;	
 
-	// Set framerate	
+	//	
+	// Set framerate and other camera parameters.
+	// 
+	// We here try to cope with two common drivers: pwc and uvc. Unfortunately pwc driver versions above
+	// 10.0.12 removed support for many ioctls (including that to set the framerate VIDIOCSWIN).
+	// As of kernel version 3.0.0 (which ships pwc 10.0.14) this issue has not been fixed and the odds are
+	// it won't be as the hardware has been discontinued :-(
+	//
 	if (strcasestr(g_deviceDriverNames[m_Id], "pwc")!= NULL)  {
-		// Using a PWC based camera
+		// Using a PWC based camera.
 		bool properlySet= false;
 		struct video_window vwin;		
 		if ((xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOCGWIN, &vwin) == 0) && (vwin.flags & PWC_FPS_FRMASK)) {
-		//if ((ioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOCGWIN, &vwin) == 0) && (vwin.flags & PWC_FPS_FRMASK)) {
 			vwin.flags &= ~PWC_FPS_FRMASK;
 			vwin.flags |= (m_currentFormat.frame_rate << PWC_FPS_SHIFT);
 			if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOCSWIN, &vwin) == 0) properlySet= true;
-			//if (ioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOCSWIN, &vwin) == 0) properlySet= true;
 		}
 
-		if (!properlySet) fprintf (stderr, "Warning: cannot set FPS: %d for PWC camera\n", m_currentFormat.frame_rate);
+		if (!properlySet) 
+			slog_write (SLOG_PRIO_WARNING, 
+				"Cannot set FPS: %d for PWC camera\n", m_currentFormat.frame_rate);
 	}
 	else {
 		struct v4l2_streamparm parm;
@@ -766,38 +771,159 @@ bool CCameraV4L2::SetImageFormat()
 	
 		// Firstly try to get current v4l2_streamparm parameters
 		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_PARM, &parm)== 0) {
-		//if (ioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_PARM, &parm)== 0) {
 			parm.parm.capture.timeperframe.numerator = 1;
 			parm.parm.capture.timeperframe.denominator = m_currentFormat.frame_rate;
 			if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_PARM, &parm)!= 0) {
-			//if (ioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_PARM, &parm)!= 0) {
 				// Show warning and continue
-				fprintf (stderr, "Warning: cannot set FPS: %d for UVC camera\n", m_currentFormat.frame_rate);
+				slog_write (SLOG_PRIO_WARNING, 
+					"Cannot set FPS: %d for UVC camera\n", 
+					m_currentFormat.frame_rate);
 			}
 			
 			// Read values again and store actual values
 			if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_PARM, &parm)== 0) {
-			//if (ioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_PARM, &parm)== 0) {
 				// Set failed, store read values
 				m_currentFormat.frame_rate= 0;
 				if (parm.parm.capture.timeperframe.denominator)
 					m_currentFormat.frame_rate= parm.parm.capture.timeperframe.denominator / parm.parm.capture.timeperframe.numerator;
 			}
 			else
-				fprintf (stderr, "Warning: cannot read again VIDIOC_G_PARM\n");
+				slog_write (SLOG_PRIO_WARNING, "Warning: cannot read again VIDIOC_G_PARM\n");
 		}
 		else {
-			fprintf (stderr, "Error: VIDIOC_G_PARM for UVC camera\n");
+			slog_write (SLOG_PRIO_ERR, "VIDIOC_G_PARM for UVC camera\n");
 			return false;
 		}
 	
-		// Try to set exposure control to match desired frame ratio
+		//
+		// Control V4L2_CID_EXPOSURE_AUTO is key to get a constant capture rate & good
+		// lightning conditions. In order of preference, the value of this control should be:
+		//
+		//   - V4L2_EXPOSURE_APERTURE_PRIORITY: Auto exposure time, manual iris. In practice, 
+		//     when (V4L2_CID_EXPOSURE_AUTO_PRIORITY== false) and the frame rate is previously 
+		//     set via VIDIOC_S_PARM, provides a constant frame rate at top speed and changes 
+		//     exposure time and gain automatically according to the lightning conditions.
+		//     Tested with the Logitech Webcam 9000 (046d:0990). It seems that uvcvideo drivers 
+		//     for newer kernels (3.0 and above) set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_MANUAL 
+		//     by default instead of V4L2_EXPOSURE_SHUTTER_PRIORITY (at least for this camera model)
+		//     which came as default option for older kernels.
+		//
+		//   - V4L2_EXPOSURE_SHUTTER_PRIORITY: ??? (not tested)
+		//
+		//   - V4L2_EXPOSURE_MANUAL: Manual exposure time, manual iris. Provides maximum flexibility
+		//     and allows for constant frame but i) does not cope well variable lightnint conditions
+		//     (forces user to manually adjust settings when needed) ii) it seems that default gain 
+		//     and exposure values are undefined and thus they need to be set to reasonable 
+		//     defaults and also suggest that camera controls should be permanently stored.
+		//
+		//   - V4L2_EXPOSURE_AUTO: Automatic exposure time, automatic iris aperture. Automatically 
+		//     reduces the frame rate depending on the lightning conditions and thus should be avoided.
+		//
+		// TODO: now uses the V4L2 api directly instead of libwebcam as some controls are not available
+		// any more.
+		// TODO: store control settings permanently
+		//
+		
+	
+		struct v4l2_control control;
+		memset (&control, 0, sizeof (control));
+
+		/*
+		control.id= V4L2_CID_EXPOSURE_AUTO;
+		control.value= -1;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_G_CTRL, &control))
+			fprintf (stderr, "Warning: cannot get V4L2_CID_EXPOSURE_AUTO\n");
+		else {
+			fprintf (stderr, "Info: V4L2_CID_EXPOSURE_AUTO= %d\n", control.value);
+		}
+		
+
+		for (int i= 0; i<= 16; ++i) {
+			control.id= V4L2_CID_EXPOSURE_AUTO;
+			control.value= i;
+			if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+				fprintf (stderr, "Warning: cannot set V4L2_CID_EXPOSURE_AUTO to %d\n", i);
+			else
+				fprintf (stderr, "Info: set V4L2_CID_EXPOSURE_AUTO to %d\n", i);
+		}
+		*/
+
+		//
+		// First set manual mode with reasonable exposure and gain values.
+		//
+		control.id= V4L2_CID_EXPOSURE_AUTO;
+		control.value= V4L2_EXPOSURE_MANUAL;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+			slog_write (SLOG_PRIO_WARNING, 
+				"cannot set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_MANUAL\n");
+		else
+			slog_write (SLOG_PRIO_INFO, 
+				"set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_MANUAL\n");
+
+		// Exposure time to match requested FPS
+		control.id= V4L2_CID_EXPOSURE_ABSOLUTE;
+		control.value= 10000 / m_currentFormat.frame_rate;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+			slog_write (SLOG_PRIO_WARNING, "cannot set V4L2_CID_EXPOSURE_ABSOLUTE to %d\n", control.value);
+		else
+			slog_write (SLOG_PRIO_INFO, "set V4L2_CID_EXPOSURE_ABSOLUTE to %d\n", control.value);
+		
+		// Sets gain to the maximum value
 		for (unsigned int i= 0; i< m_cameraControls.size(); ++i) {
-			if (m_cameraControls[i].GetId()== CCameraControl::CAM_AUTO_EXPOSURE_PRIORITY) {
-				m_cameraControls[i].SetValue(0);
+			if (m_cameraControls[i].GetId()== CCameraControl::CAM_GAIN) {
+				if (m_cameraControls[i].SetValue(m_cameraControls[i].GetMaximumValue()))
+					slog_write (SLOG_PRIO_INFO, "set CAM_GAIN to %d\n", 
+						m_cameraControls[i].GetMaximumValue());
+				else
+					slog_write (SLOG_PRIO_WARNING, "cannot set CAM_GAIN to %d\n", 
+						m_cameraControls[i].GetMaximumValue());
 				break;
 			}
-		}			
+		}
+			
+		// Tries to set automatic gain
+		control.id= V4L2_CID_AUTOGAIN;
+		control.value= 1;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+			slog_write (SLOG_PRIO_WARNING, "cannot set V4L2_CID_AUTOGAIN\n");
+		else
+			slog_write (SLOG_PRIO_INFO, "set V4L2_CID_AUTOGAIN\n");
+
+		// Set V4L2_CID_EXPOSURE_AUTO_PRIORITY to false
+		bool hasExposureAutoPriority= false;
+		for (unsigned int i= 0; i< m_cameraControls.size(); ++i) {
+			if (m_cameraControls[i].GetId()== CCameraControl::CAM_AUTO_EXPOSURE_PRIORITY) {
+				if (m_cameraControls[i].SetValue(0)) {
+					hasExposureAutoPriority= true;
+					slog_write (SLOG_PRIO_INFO, "Info: AUTO_EXPOSURE_PRIORITY disabled\n");
+				}
+				else
+					slog_write (SLOG_PRIO_WARNING, "cannot disable AUTO_EXPOSURE_PRIORITY\n");
+				break;
+			}
+		}
+
+		// If EXPOSURE_AUTO_PRIORITY cannot be disabled does not attempt remaing settings 
+		if (!hasExposureAutoPriority) return true;	
+	
+		//
+		// Secondly tries to set V4L2_EXPOSURE_SHUTTER_PRIORITY mode
+		//
+		control.id= V4L2_CID_EXPOSURE_AUTO;
+		control.value= V4L2_EXPOSURE_SHUTTER_PRIORITY;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+			slog_write (SLOG_PRIO_WARNING, "cannot set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_SHUTTER_PRIORITY\n");
+		else
+			slog_write (SLOG_PRIO_INFO, "set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_SHUTTER_PRIORITY\n");
+
+
+		// Finally tries to set V4L2_EXPOSURE_APERTURE_PRIORITY
+		control.id= V4L2_CID_EXPOSURE_AUTO;
+		control.value= V4L2_EXPOSURE_APERTURE_PRIORITY;
+		if (xioctl (c_get_file_descriptor (m_libWebcamHandle), VIDIOC_S_CTRL, &control))
+			slog_write (SLOG_PRIO_WARNING, "cannot set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_APERTURE_PRIORITY\n");
+		else
+			slog_write (SLOG_PRIO_INFO, "set V4L2_CID_EXPOSURE_AUTO to V4L2_EXPOSURE_APERTURE_PRIORITY\n");
 	}
 	return true;
 }
@@ -806,7 +932,8 @@ void CCameraV4L2::UnmapBuffers()
 {
 	for (int i= STREAMING_CAPTURE_NBUFFERS-1; i>= 0; --i) {
 		if (m_captureBuffersPtr[i]!= NULL) {
-			if (munmap(m_captureBuffersPtr[i], m_captureBuffersInfo[i].length)!= 0) perror("couldn't unmap buff");
+			if (munmap(m_captureBuffersPtr[i], m_captureBuffersInfo[i].length)!= 0) 
+				slog_write (SLOG_PRIO_ERR, "couldn't unmap buff: %s\n", strerror (errno));
 			m_captureBuffersPtr[i]= NULL;
 		}
 	}
@@ -826,12 +953,16 @@ bool CCameraV4L2::EnableVideo(bool enable)
 	    {
 		int type= V4L2_BUF_TYPE_VIDEO_CAPTURE;
 		int action= (enable? VIDIOC_STREAMON : VIDIOC_STREAMOFF);
-		if (xioctl(c_get_file_descriptor (m_libWebcamHandle), action, &type)!= 0) return false;
+		if (xioctl(c_get_file_descriptor (m_libWebcamHandle), action, &type)!= 0) {
+			slog_write (SLOG_PRIO_ERR, "VIDIOC_STREAMON - Unable to start capture: %s\n", strerror (errno));
+			return false;
+		}
 		break;
 	    }	
 	case CAP_STREAMING_USR:
 		// Not implemented
-		fprintf (stderr, "CAP_STREAMING_USR: feature not implemented\n");	
+		slog_write (SLOG_PRIO_CRIT, "CAP_STREAMING_USR: feature not implemented\n");
+		assert (false);
 		return false;
 	default:
 		// Never should happen
@@ -847,11 +978,11 @@ bool CCameraV4L2::EnableVideo(bool enable)
 bool CCameraV4L2::AllocateBuffers()
 {
 	if (m_isStreaming) {
-		fprintf (stderr, "ERROR: AllocateBuffers: trying to allocate buffers while streaming\n");
+		slog_write (SLOG_PRIO_ERR, "AllocateBuffers: trying to allocate buffers while streaming\n");
 		return false;
 	}
 	if (m_libWebcamHandle== 0) {
-		fprintf (stderr, "ERROR: AllocateBuffers: device not open\n");
+		slog_write (SLOG_PRIO_ERR, "AllocateBuffers: device not open\n");
 		return false;
 	}
 	if (m_buffersReady) return true; // Already allocated
@@ -862,7 +993,7 @@ bool CCameraV4L2::AllocateBuffers()
 	else if (m_captureMethod== CAP_STREAMING_MMAP) {
 		// Request buffers
 		if (!RequestBuffers(V4L2_MEMORY_MMAP)) {
-			perror("VIDIOC_REQBUFS - Unable to allocate buffers");
+			slog_write (SLOG_PRIO_ERR, "VIDIOC_REQBUFS - Unable to allocate buffers: %s\n", strerror (errno));
 			return false;
 		}
 		
@@ -873,12 +1004,12 @@ bool CCameraV4L2::AllocateBuffers()
 			m_captureBuffersInfo[i].type= V4L2_BUF_TYPE_VIDEO_CAPTURE;
 			m_captureBuffersInfo[i].memory= V4L2_MEMORY_MMAP;				
 			if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_QUERYBUF, &m_captureBuffersInfo[i])!= 0) {
-				perror("VIDIOC_QUERYBUF - Unable to query buffer");
+				slog_write (SLOG_PRIO_ERR, "VIDIOC_QUERYBUF - Unable to query buffer: %s\n", strerror (errno));
 				UnRequestBuffers(V4L2_MEMORY_MMAP);
 				return false;
 			}
 			if (m_captureBuffersInfo[i].length <= 0) 
-				fprintf (stderr, "WARNING VIDIOC_QUERYBUF - buffer length is %d\n", m_captureBuffersInfo[i].length);
+				slog_write (SLOG_PRIO_WARNING, "WARNING VIDIOC_QUERYBUF - buffer length is %d\n", m_captureBuffersInfo[i].length);
 		}
 		
 		// MMap buffers
@@ -887,7 +1018,7 @@ bool CCameraV4L2::AllocateBuffers()
 			m_captureBuffersPtr[i]= mmap(NULL, m_captureBuffersInfo[i].length, PROT_READ | PROT_WRITE, MAP_SHARED, c_get_file_descriptor (m_libWebcamHandle), m_captureBuffersInfo[i].m.offset);
 			if (m_captureBuffersPtr[i]== MAP_FAILED) {
 				m_captureBuffersPtr[i]= NULL;
-				perror("Unable to map buffer");
+				slog_write (SLOG_PRIO_ERR, "Unable to map buffer: %s\n", strerror (errno));
 				UnmapBuffers();
 				UnRequestBuffers(V4L2_MEMORY_MMAP);
 				return false;
@@ -897,7 +1028,7 @@ bool CCameraV4L2::AllocateBuffers()
 		// Queue buffers
 		for (int i= 0; i< STREAMING_CAPTURE_NBUFFERS; ++i) {
 			if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_QBUF, &m_captureBuffersInfo[i])!= 0) {
-				perror("VIDIOC_QBUF - Unable to queue buffer");
+				slog_write (SLOG_PRIO_ERR, "VIDIOC_QBUF - Unable to queue buffer: %s\n", strerror (errno));
 				UnmapBuffers();
 				UnRequestBuffers(V4L2_MEMORY_MMAP);
 				return false;
@@ -905,12 +1036,12 @@ bool CCameraV4L2::AllocateBuffers()
 		}		
 	}
 	else if (m_captureMethod== CAP_STREAMING_USR) {
-		fprintf (stderr, "ERROR: AllocateBuffers: CAP_STREAMING_USR not implemented\n");
+		slog_write (SLOG_PRIO_CRIT, "AllocateBuffers: CAP_STREAMING_USR not implemented\n");
 		assert (false);
 		return false;
 	}
 	else {
-		fprintf (stderr, "ERROR: AllocateBuffers: capture method not set\n");
+		slog_write (SLOG_PRIO_CRIT, "AllocateBuffers: capture method not set\n");
 		return false;
 	}
 	m_buffersReady= true;
@@ -921,7 +1052,7 @@ bool CCameraV4L2::AllocateBuffers()
 bool CCameraV4L2::DeallocateBuffers()
 {
 	if (m_isStreaming) {
-		fprintf (stderr, "ERROR: trying to deallocate buffers while streaming\n");
+		slog_write (SLOG_PRIO_ERR, "trying to deallocate buffers while streaming\n");
 		return false;
 	}
 	if (!m_buffersReady) return true; // Already deallocated
@@ -934,12 +1065,12 @@ bool CCameraV4L2::DeallocateBuffers()
 		UnRequestBuffers(V4L2_MEMORY_MMAP);
 	}
 	else if (m_captureMethod== CAP_STREAMING_USR) {
-		fprintf (stderr, "ERROR: DeallocateBuffers: CAP_STREAMING_USR not implemented\n");
+		slog_write (SLOG_PRIO_CRIT, "DeallocateBuffers: CAP_STREAMING_USR not implemented\n");
 		assert (false);
 		return false;
 	}
 	else {
-		fprintf (stderr, "ERROR: DeallocateBuffers: capture method not set\n");
+		slog_write (SLOG_PRIO_CRIT, "DeallocateBuffers: capture method not set\n");
 		return false;
 	}
 	m_buffersReady= false;
@@ -1107,7 +1238,7 @@ bool CCameraV4L2::DecodeToRGB (void* src, void* dst, int width, int height, uint
 			*/
 
 			if (jpeg_decode(&dst, src, width, height) < 0) {
-				fprintf (stderr, "jpeg decode errors\n");
+				slog_write (SLOG_PRIO_ERROR, "jpeg decode errors\n");
 				return false;
 			}
 			break;
@@ -1155,7 +1286,7 @@ bool CCameraV4L2::DecodeToRGB (void* src, void* dst, int width, int height, uint
 			bgr2yuyv((BYTE*) src, tmp_buffer, width, height);
 			break;
 		default:
-			fprintf (stderr, "error grabbing (crvcamera_v4l2.cpp) unknown format: %i\n", pixelformat);
+			slog_write (SLOG_PRIO_ERR, "error grabbing (crvcamera_v4l2.cpp) unknown format: %i\n", pixelformat);
 			return false;
 	}
 	yuyv2rgb ((BYTE*) tmp_buffer, (BYTE*) dst, width, height);
@@ -1165,7 +1296,14 @@ bool CCameraV4L2::DecodeToRGB (void* src, void* dst, int width, int height, uint
 
 IplImage *CCameraV4L2::DoQueryFrame()
 {
-	if (!m_isStreaming) return NULL;
+	if (!DoQueryFrame(m_resultImage)) return NULL;
+	
+	return m_resultImage.ptr();
+}
+
+bool CCameraV4L2::DoQueryFrame(CIplImage& image)
+{
+	if (!m_isStreaming) return false;
 	fd_set rdset;
 	struct timeval timeout;
 		
@@ -1177,17 +1315,18 @@ IplImage *CCameraV4L2::DoQueryFrame()
 	// select - wait for data or timeout
 	int retval = select(c_get_file_descriptor (m_libWebcamHandle) + 1, &rdset, NULL, NULL, &timeout);
 	if (retval < 0) {
-		perror(" Could not grab image (select error)");
-		return NULL;
+		slog_write (SLOG_PRIO_ERR, "Could not grab image (select error): %s\n", strerror (errno));
+		return false;
 	} else if (retval == 0) {
-		perror(" Could not grab image (select timeout)");
-		return NULL;
+		slog_write (SLOG_PRIO_ERR, "Could not grab image (select timeout): %s\n", strerror (errno));
+		return false;
 	}
 	else if ((retval > 0) && (FD_ISSET(c_get_file_descriptor (m_libWebcamHandle), &rdset))) {
 		switch (m_captureMethod) {
 		case CAP_READ:
-			// TODO
-			return NULL;	
+			slog_write (SLOG_PRIO_CRIT, "CAP_READ Capture method not implemented yet\n");
+			assert (false);
+			return false;	
 		case CAP_STREAMING_MMAP: {
 			struct v4l2_buffer buffer;
 			
@@ -1196,32 +1335,50 @@ IplImage *CCameraV4L2::DoQueryFrame()
 			buffer.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 			buffer.memory = V4L2_MEMORY_MMAP;
 			if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_DQBUF, &buffer)!= 0) {
-				perror("VIDIOC_DQBUF - Unable to dequeue buffer ");
-				return NULL;
+				slog_write (SLOG_PRIO_ERR, "VIDIOC_DQBUF - Unable to dequeue buffer: %s\n", strerror (errno));
+				return false;
 			}
 			
+			// Allocate result image when necessary
+			bool allocFailed= false;
+			if (!image.Initialized() || 
+				m_currentFormat.width!= static_cast<unsigned int>(image.Width()) || 
+				m_currentFormat.height!= static_cast<unsigned int>(image.Height())) {
+				
+				// TODO: correct the V4L2_PIX_FMT_YUV420 conversion routine
+				const char* planeOrder;
+				if (m_currentFormat.pixelformat== V4L2_PIX_FMT_YUV420) planeOrder= "BGR";
+				else planeOrder= "RGB";
+				// TODO: make sure that image is not initialized with padded rows
+				if (!image.Create (m_currentFormat.width, m_currentFormat.height, IPL_DEPTH_8U, planeOrder, IPL_ORIGIN_TL, IPL_ALIGN_DWORD )) {
+					slog_write (SLOG_PRIO_ERR, "Cannot create result image\n");
+					allocFailed= true;					
+				}
+			}
 			// Convert to destination format (always RGB 24bit)
 			// TODO: check return value
-			DecodeToRGB (m_captureBuffersPtr[buffer.index], (BYTE*) m_resultImage.ptr()->imageData, 
-				     m_resultImage.Width(), m_resultImage.Height(), m_currentFormat.pixelformat);
+			if (!allocFailed) 
+				DecodeToRGB (m_captureBuffersPtr[buffer.index], (BYTE*) image.ptr()->imageData, 
+				     image.Width(), image.Height(), m_currentFormat.pixelformat);
 			
 			// Queue buffer again
 			if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_QBUF, &buffer)!= 0) {
-				perror("VIDIOC_QBUF - Unable to queue buffer");			
-				return NULL;
+				slog_write (SLOG_PRIO_ERR, "VIDIOC_QBUF - Unable to queue buffer: %s\n", strerror (errno));
+				return false;
 			}
-			break;
+			return (!allocFailed);
 		}
 		case CAP_STREAMING_USR:
-			fprintf (stderr, "Capture method not implemented yet\n");
-			return NULL;			
+			slog_write (SLOG_PRIO_CRIT, "CAP_STREAMING_USR Capture method not implemented yet\n");
+			assert (false);
+			return false;			
 		default:
 			assert (false);
-			return NULL;
+			return false;
 		}		
 	}
 		
-	return m_resultImage.ptr();
+	return true;
 
 #if 0
 	if (-1 == read (c_get_file_descriptor (m_libWebcamHandle), m_buffer.start, m_buffer.length)) {
@@ -1229,23 +1386,22 @@ IplImage *CCameraV4L2::DoQueryFrame()
 	case EAGAIN:
 	return 0;
 #endif
-
 }
 
-#if !defined(NDEBUG)
 void CCameraV4L2::Dump()
 {
-	std::cout << "CCameraV4L2::Dump(). Begin\n";
+	if (slog_get_priority ()< SLOG_PRIO_DEBUG) return;
+	slog_write (SLOG_PRIO_DEBUG, "CCameraV4L2::Dump(). Begin\n");
 	
-	std::cout << "m_libWebcamHandle:" << m_libWebcamHandle << std::endl;
-	std::cout << "m_captureMethod:" << m_captureMethod << std::endl;
-	std::cout << "m_isStreaming:" << m_isStreaming << std::endl;
-	std::cout << "m_buffersReady:" << m_buffersReady << std::endl;
+	slog_write (SLOG_PRIO_DEBUG, "m_libWebcamHandle: %u\n", m_libWebcamHandle);
+	slog_write (SLOG_PRIO_DEBUG, "m_captureMethod: %d\n", m_captureMethod);
+	slog_write (SLOG_PRIO_DEBUG, "m_isStreaming: %s\n", (m_isStreaming? "true" : "false"));
+	slog_write (SLOG_PRIO_DEBUG, "m_buffersReady: %s\n", (m_buffersReady? "true" : "false"));
 	
-	std::cout << "m_currentFormat.frame_rate:" <<  m_currentFormat.frame_rate << std::endl;
-	std::cout << "m_currentFormat.width" << m_currentFormat.width << std::endl;
-	std::cout << "m_currentFormat.height:" << m_currentFormat.height << std::endl;
-	std::cout << "m_currentFormat.pielformat:" <<  m_currentFormat.pixelformat << std::endl;	
+	slog_write (SLOG_PRIO_DEBUG, "m_currentFormat.frame_rate: %u\n", m_currentFormat.frame_rate);
+	slog_write (SLOG_PRIO_DEBUG, "m_currentFormat.width .height: %u - %u\n", 
+		m_currentFormat.width, m_currentFormat.height);
+	slog_write (SLOG_PRIO_DEBUG, "m_currentFormat.pixelformat: %x\n", m_currentFormat.pixelformat);
 /*	
 	for (unsigned int i= 0; i< m_supportedPixelFormats.size(); ++i)
 		std::cout << "m_supportedPixelFormats[" << i << "]:" << m_supportedPixelFormats[i] << std::endl;
@@ -1254,9 +1410,9 @@ void CCameraV4L2::Dump()
 		 m_cameraControls[i].Dump();
 	}
 	*/
-	std::cout << "CCameraV4L2::Dump(). End\n";
+	slog_write (SLOG_PRIO_DEBUG, "CCameraV4L2::Dump(). End\n");
 }
-#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Implementacion of CCameraControlV4L2 class
@@ -1292,7 +1448,7 @@ int CCameraControlV4L2::GetValue() const
 	value.value= 0;
 	
 	if (c_get_control (m_handle, m_id, &value)!= C_SUCCESS) {
-		fprintf (stderr, "CCameraControlV4L2::GetValue() failed to query value\n");
+		slog_write (SLOG_PRIO_WARNING, "CCameraControlV4L2::GetValue() failed to query value\n");
 		return 0;
 	}
 	
@@ -1306,7 +1462,7 @@ bool CCameraControlV4L2::SetValue(int value)
 	cvalue.value= value;
 	
 	if (c_set_control (m_handle, m_id, &cvalue)!= C_SUCCESS) {
-		fprintf (stderr, "CCameraControlV4L2::GetValue() failed to query value\n");
+		slog_write (SLOG_PRIO_WARNING, "CCameraControlV4L2::SetValue() failed to set value\n");
 		return false;
 	}
 	return true;
@@ -1397,28 +1553,37 @@ CCameraControl::ECameraControlType CCameraControlV4L2::CControlType2ECameraContr
 //
 // Debugging code
 //
-#if !defined(NDEBUG)
 
 static
 void print_device_info (CHandle handle, char *device_name)
 {
 	assert(handle || device_name);
-	unsigned int size = sizeof(CDevice) + (device_name ? strlen(device_name) : 32) + 84;
+	unsigned int size = static_cast<unsigned int>(sizeof(CDevice)) + 
+		(device_name? static_cast<unsigned int>(strlen(device_name)): 32) + 84;
 	CDevice *info = (CDevice *)malloc(size);
 	assert(info);
 
 	if(handle)
-		printf("  Getting device information for handle %d ...\n", handle);
+		slog_write (
+			SLOG_PRIO_DEBUG, 
+			"  Getting device information for handle %d ...\n", 
+			handle);
 	else if(device_name)
-		printf("  Getting device information for device name '%s' ...\n", device_name);
+		slog_write (
+			SLOG_PRIO_DEBUG, 
+			"  Getting device information for device name '%s' ...\n", 
+			device_name);
 	
 	int ret = c_get_device_info(handle, device_name, info, &size);
 	if(ret) {
-		fprintf(stderr, "  Failed to c_get_device_info (%d).\n", ret);
+		slog_write (SLOG_PRIO_DEBUG, "  Failed to c_get_device_info (%d).\n", ret);
 	}
 	else {
-		printf("    { shortName = '%s', name = '%s', driver = '%s', location = '%s', vid = %04x, pid = %04x, bcd = %d }\n",
-				info->shortName, info->name, info->driver, info->location, info->usb.vendor, info->usb.product, info->usb.release);
+		slog_write (
+			SLOG_PRIO_DEBUG, 
+			"    { shortName = '%s', name = '%s', driver = '%s', location = '%s', vid = %04x, pid = %04x, bcd = %d }\n",
+			info->shortName, info->name, info->driver, info->location, 
+			info->usb.vendor, info->usb.product, info->usb.release);
 	}
 
 	free(info);
@@ -1427,20 +1592,20 @@ void print_device_info (CHandle handle, char *device_name)
 static
 void print_control_info(CControl *control)
 {
-	printf("      { id = %d, name = '%s', type = %d, flags = %d",
+	slog_write (SLOG_PRIO_DEBUG, "      { id = %d, name = '%s', type = %d, flags = %d",
 			control->id, control->name, control->type, control->flags);
 	if(control->type == CC_TYPE_CHOICE) {
-		printf(", choice = {");
+		slog_write (SLOG_PRIO_DEBUG, ", choice = {");
 		for(unsigned int index = 0; index < control->choices.count; index++) {
-			printf(" '%s'[%d]", control->choices.list[index].name, control->choices.list[index].index);
+			slog_write (SLOG_PRIO_DEBUG, " '%s'[%d]", control->choices.list[index].name, control->choices.list[index].index);
 		}
-		printf(" }");
+		slog_write (SLOG_PRIO_DEBUG, " }");
 	}
 	else {
-		printf(", min = %d, max = %d, def = %d, step = %d",
+		slog_write (SLOG_PRIO_DEBUG, ", min = %d, max = %d, def = %d, step = %d",
 				control->min.value, control->max.value, control->def.value, control->step.value);
 	}
-	printf(" }\n");
+	slog_write (SLOG_PRIO_DEBUG, " }\n");
 }
 
 static
@@ -1448,45 +1613,46 @@ void print_device_controls(CHandle handle)
 {
 	unsigned int size = 0, count = 0;
 
-	printf("  Getting control information for handle %d ...\n", handle);
+	slog_write (SLOG_PRIO_DEBUG, "  Getting control information for handle %d ...\n", handle);
 	CResult ret = c_enum_controls(handle, NULL, &size, &count);
 	if(ret == C_BUFFER_TOO_SMALL) {
 		CControl *controls = (CControl *)malloc(size);
 		ret = c_enum_controls(handle, controls, &size, &count);
-		if(ret) fprintf(stderr, "Unable to c_enum_controls (%d).\n", ret);
-/*		printf("    Buffer size = %d (%d controls of %d bytes)\n", size, count, sizeof(CControl));*/
+		if(ret) slog_write (SLOG_PRIO_DEBUG, "Unable to c_enum_controls (%d).\n", ret);
 
 		for(unsigned int i = 0; i < count; i++) {
 			CControl *control = &controls[i];
-			printf("    Control found: %s\n", control->name);
+			slog_write (SLOG_PRIO_DEBUG, "    Control found: %s\n", control->name);
 			print_control_info(control);
 		}
 
 		free(controls);
 	}
 	else {
-		printf("  No controls found (ret = %d).\n", ret);
+		slog_write (SLOG_PRIO_DEBUG, "  No controls found (ret = %d).\n", ret);
 	}
 }
 
 void CCameraControlV4L2::Dump()
 {
-	std::cout << " CCameraControlV4L2::Dump(). Begin\n";
-	std::cout << "m_handle:" << m_handle << std::endl;
-	std::cout << "m_id:" << m_id << std::endl;
-	std::cout << "m_id (converted):" << LibwebcamId2ECameraControlId (m_id) << std::endl;
-	std::cout << "m_name:" << m_name << std::endl;
-	std::cout << "m_type:" << m_type << std::endl;
-	std::cout << "m_type (converted):" << CControlType2ECameraControlType(m_type) << std::endl;
-	std::cout << "m_default:" << m_default << std::endl;
-	std::cout << "m_min:" << m_min << std::endl;
-	std::cout << "m_max:" << m_max << std::endl;
+	if (slog_get_priority ()< SLOG_PRIO_DEBUG) return;
+	
+	slog_write (SLOG_PRIO_DEBUG, " CCameraControlV4L2::Dump(). Begin\n");
+	slog_write (SLOG_PRIO_DEBUG, "m_handle: %u\n", m_handle);
+	slog_write (SLOG_PRIO_DEBUG, "m_id: %d\n", m_id);
+	slog_write (SLOG_PRIO_DEBUG, "m_id (converted): %d\n", LibwebcamId2ECameraControlId (m_id));
+	slog_write (SLOG_PRIO_DEBUG, "m_name: %s\n", m_name.c_str());
+	slog_write (SLOG_PRIO_DEBUG, "m_type: %d\n", m_type);
+	slog_write (SLOG_PRIO_DEBUG, "m_type (converted): %d\n", CControlType2ECameraControlType(m_type));
+	slog_write (SLOG_PRIO_DEBUG, "m_default: %d\n", m_default);
+	slog_write (SLOG_PRIO_DEBUG, "m_min: %d\n", m_min);
+	slog_write (SLOG_PRIO_DEBUG, "m_max: %d\n", m_max);
 	for (unsigned int i= 0; i< m_choices.size(); ++i)
-		std::cout << "m_choices[" << i << "]:" << m_choices[i] << std::endl;
-	std::cout << "Value:" << GetValue() << std::endl;	
-	std::cout << " CCameraControlV4L2::Dump(). End\n";
+		slog_write (SLOG_PRIO_DEBUG, "m_choices[%u]:%s\n", i, m_choices[i].c_str());
+	slog_write (SLOG_PRIO_DEBUG, "Value: %d\n", GetValue());
+	slog_write (SLOG_PRIO_DEBUG, " CCameraControlV4L2::Dump(). End\n");
 }
-#endif
+
 //
 // End Debugging code
 //
@@ -1519,7 +1685,7 @@ void CCameraV4L2::InstanceDestroyed()
 
 	if (--g_numInstances== 0) {
 		c_cleanup();
-		g_numDevices= 0;
+		g_numDevices= -1;
 	}
 }
 
@@ -1529,7 +1695,7 @@ int CCameraV4L2::GetNumDevices()
 	if (g_numDevices== -1) {
 		CResult retval= c_init();
 		if(retval) { 
-			fprintf(stderr, "Unable to c_init (%d).\n", retval);
+			slog_write (SLOG_PRIO_ERR, "Unable to c_init (%d).\n", retval);
 			return 0;
 		}
 		
@@ -1542,7 +1708,7 @@ int CCameraV4L2::GetNumDevices()
 
 			retval = c_enum_devices(devices, &size, &count);
 			if(retval) { 
-				fprintf(stderr, "Unable to c_enum_devices (%d).\n", retval);
+				slog_write (SLOG_PRIO_ERR, "Unable to c_enum_devices (%d).\n", retval);
 				return 0;
 			}
 			// Adjust & store number of maximum devices
@@ -1559,23 +1725,26 @@ int CCameraV4L2::GetNumDevices()
 				snprintf (g_deviceShortNames[j], CAM_DEVICE_SHORT_NAME_LENGHT, "%s", device->shortName);
 				snprintf (g_deviceDriverNames[j], CAM_DEVICE_DRIVER_NAME_LENGHT, "%s", device->driver);
 
-	#ifndef NDEBUG
-				//printf("  Device found: %s\n", device->name);
-				CHandle handle = c_open_device(device->shortName);
-				if(handle == 0) {
-					fprintf(stderr, "  Failed to open device '%s'.\n", device->shortName);
-					continue;
+				if (slog_get_priority ()>= SLOG_PRIO_DEBUG) {
+					CHandle handle = c_open_device(device->shortName);
+					if(handle == 0) {
+						slog_write (SLOG_PRIO_ERR, "  Failed to open device '%s'.\n", device->shortName);
+						continue;
+					}
+					slog_write (
+						SLOG_PRIO_DEBUG, 
+						"  Opened device '%s' successfully (handle = %d)\n", 
+						device->shortName, handle);
+					print_device_info(handle, NULL);
+					print_device_controls(handle);
+					c_close_device(handle);
+					handle = 0;
+					slog_write (
+						SLOG_PRIO_DEBUG, 
+						"  Closed device '%s' (handle = %d)\n\n", 
+						device->shortName, handle);
 				}
-				printf("  Opened device '%s' successfully (handle = %d)\n", device->shortName, handle);
-				print_device_info(handle, NULL);
-				print_device_controls(handle);
-				c_close_device(handle);
-				handle = 0;
-				printf("  Closed device '%s' (handle = %d)\n\n", device->shortName, handle);
-	#endif	// NDEBUG
 			}
-
-					
 		}
 		else {
 			// No devices found

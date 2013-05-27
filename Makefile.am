@@ -6,11 +6,11 @@ noinst_HEADERS = crvimage.h crvskindetection.h crvcamera.h \
 dist_noinst_DATA = crvcamera_wdm.cpp videoInput.cpp \
 	CreaVision_eviacam.vcproj crvcamera_wdm.h videoInput.h
 
-libcreavision_la_LIBADD = $(OPENCV_LIBS) 
+libcreavision_la_LIBADD = $(OPENCV_LIBS) -lv4l2
 
 noinst_LTLIBRARIES = libcreavision.la
 
-INCLUDES = -I$(top_srcdir)/libwebcam
+INCLUDES = -I$(top_builddir)/libwebcam -I$(top_srcdir)/libwebcam
 
 libcreavision_la_SOURCES = crvcamera.cpp crvcamera_cv.cpp crvcamera_v4l2.cpp \
 	crvcolor.cpp crvgeomtry.cpp crvhistogram.cpp \
