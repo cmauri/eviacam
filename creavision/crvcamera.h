@@ -158,7 +158,12 @@ public:
 	};
 	
 	// Types of controls
-	enum ECameraControlType { CCTYPE_BOOLEAN, CCTYPE_CHOICE, CCTYPE_NUMBER };
+	enum ECameraControlType { 
+		CCTYPE_BOOLEAN, 
+		CCTYPE_CHOICE, 
+		CCTYPE_NUMBER,
+		CCTYPE_BUTTON
+	};
 
 	virtual ~CCameraControl() {};
 	
