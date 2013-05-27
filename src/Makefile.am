@@ -140,10 +140,15 @@ eviacam_SOURCES = wgetkey.cpp \
 eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" -DOPENCVVERSION=$(OPENCVVERSION)
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11
 
-INCLUDES = -I$(top_srcdir)/creavision \
-	-I$(top_srcdir)/wxcamwindow -I$(top_srcdir)/wxutil
+INCLUDES = \
+	-I$(top_srcdir)/creavision \
+	-I$(top_srcdir)/simplelog \
+	-I$(top_srcdir)/wxcamwindow \
+	-I$(top_srcdir)/wxutil
 
-eviacam_LDADD = $(top_builddir)/wxutil/libwxutil.la \
-		$(top_builddir)/creavision/libcreavision.la \
-		$(top_builddir)/creavision/libwebcam/libwebcam.la \
-		$(top_builddir)/wxcamwindow/libwxcamwindow.la
+eviacam_LDADD = \
+	$(top_builddir)/wxutil/libwxutil.la \
+	$(top_builddir)/simplelog/libsimplelog.la \
+	$(top_builddir)/creavision/libcreavision.la \	
+	$(top_builddir)/creavision/libwebcam/libwebcam.la \
+	$(top_builddir)/wxcamwindow/libwxcamwindow.la

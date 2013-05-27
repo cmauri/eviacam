@@ -5,10 +5,9 @@ noinst_HEADERS = \
 	configbase.h \
 	configmanager.h \
 	timeutil.h \
-	warnbaroverlap.h \
-	../simplelog.h
+	warnbaroverlap.h
 
-INCLUDES = 
+INCLUDES = -I$(top_srcdir)/simplelog
 METASOURCES = AUTO
 
 dist_noinst_DATA = wxutil.vcproj
@@ -26,5 +25,4 @@ libwxutil_la_SOURCES = \
 	configbase.cpp \
 	configmanager.cpp \
 	timeutil.cpp \
-	warnbaroverlap.cpp \
-	../simplelog.c
+	warnbaroverlap.cpp

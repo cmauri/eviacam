@@ -51,7 +51,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/EHsc"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(WXWIN)\include&quot;;..\"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(WXWIN)\include&quot;;..\simplelog"
 				PreprocessorDefinitions="NOPCH;WIN32;__WXMSW__;_WINDOWS;__WXDEBUG__;_DEBUG"
 				ExceptionHandling="1"
 				RuntimeLibrary="3"
@@ -132,7 +132,7 @@
 				AdditionalOptions="/EHsc "
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(WXWIN)\include&quot;;..\"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(WXWIN)\include&quot;;..\simplelog"
 				PreprocessorDefinitions="NOPCH;WIN32;__WXMSW__;_WINDOWS"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -197,10 +197,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\simplelog.c"
-				>
-			</File>
-			<File
 				RelativePath=".\timeutil.cpp"
 				>
 			</File>
@@ -230,10 +226,6 @@
 			</File>
 			<File
 				RelativePath=".\mousecontrol.h"
-				>
-			</File>
-			<File
-				RelativePath="..\simplelog.h"
 				>
 			</File>
 			<File
