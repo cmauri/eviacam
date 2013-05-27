@@ -144,5 +144,5 @@ INCLUDES = -I$(top_srcdir)/creavision \
 
 eviacam_LDADD = $(top_builddir)/wxutil/libwxutil.la \
 		$(top_builddir)/creavision/libcreavision.la \
-		$(top_builddir)/libwebcam/libwebcam.la \
+		$(top_builddir)/creavision/libwebcam/libwebcam.la \
 		$(top_builddir)/wxcamwindow/libwxcamwindow.la

@@ -12,12 +12,12 @@ Makefile
 stamp-h1
 
 creavision/.deps/
-libwebcam/.deps/
+creavision/libwebcam/.deps/
 src/.deps/
 wxcamwindow/.deps/
 wxutil/.deps/
 
-libwebcam/incvideodev.h
+creavision/libwebcam/incvideodev.h
 po/POTFILES
 po/templates.pot
 rpm/eviacam.spec
@@ -33,7 +33,7 @@ win32/installer.iss
 
 # linux build
 creavision/.libs/
-libwebcam/.libs/
+creavision/libwebcam/.libs/
 wxcamwindow/.libs/
 wxutil/.libs/
 po/remove-potcdate.sed
