@@ -23,7 +23,6 @@
 #include "crvmisc.h"
 #include <float.h>
 #include <assert.h>
-#include <stdio.h>
 #include <math.h>
 
 // uintptr_t type

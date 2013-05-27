@@ -4,7 +4,7 @@ AM_CONFIG_HEADER(config.h)
 
 ##############################################################
 # Editable parameters
-AM_INIT_AUTOMAKE([eviacam], 1.5.5)
+AM_INIT_AUTOMAKE([eviacam], 1.6.1)
 COPYRIGHT="© 2008-12"
 PUBLISHER="César Mauri Loba"
 ##############################################################
@@ -31,7 +31,7 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
 
-ALL_LINGUAS="ca es gl it tr ast de oc fr ar he ru pt_BR"
+ALL_LINGUAS="ca es gl it tr ast de oc fr ar he ru pt_BR ja el"
 
 AM_GNU_GETTEXT([external])
 
@@ -151,6 +151,9 @@ AC_DEFUN([OPENCVTEST],
 
 # Call OPENCVTEST func
 OPENCVTEST
+
+OPENCVVERSION=`echo $opencvversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
+AC_SUBST(OPENCVVERSION)
 # -----------------       opencv  --------------------
 
 # Checks for header files.

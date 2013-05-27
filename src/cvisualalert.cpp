@@ -67,6 +67,11 @@ void CVisualAlertProgress::Update(int x, int y, int percent)
 	m_oldSize = size;
 	m_oldX = x;
 	m_oldY = y;
+#else
+	// Remove warnings
+	(void)(percent);
+	(void)(x);
+	(void)(y);
 #endif
 }
 
@@ -128,6 +133,10 @@ void CVisualAlertDirection::Update(int x, int y)
 	
 	m_xOldDest= x;
 	m_yOldDest= y;
+#else
+	// Remove warnings
+	(void)(x);
+	(void)(y);
 #endif
 }
 

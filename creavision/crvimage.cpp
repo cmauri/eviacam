@@ -22,7 +22,6 @@
 #include "crvimage.h"
 #include <highgui.h>
 #include <string.h>
-#include <stdio.h>
 #include <assert.h>
 
 // Construction
@@ -44,6 +43,8 @@ CIplImage::CIplImage (int width, int height, int depth, const char *pColorOrder)
 	bool retval= Create (width, height, depth, pColorOrder);
 #ifndef NDEBUG
 	assert (retval);
+#else
+	(void) (retval);
 #endif
 }
 

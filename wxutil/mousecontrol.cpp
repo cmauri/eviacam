@@ -28,6 +28,7 @@
 //}
 #include <math.h>
 #include <stdio.h>
+#include "simplelog.h"
 
 #if defined(WIN32)
 //
@@ -43,6 +44,7 @@ inline float roundf(float x) { return (x-floorf(x))>0.5 ? ceilf(x) : floorf(x); 
 //
 // Linux
 //
+#include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
 #include <stdexcept>
 
@@ -75,7 +77,7 @@ CMouseControl::CMouseControl (void* pDisplay)
 	#if defined(WIN32)
 	assert (pDisplay== NULL);
 	#else
-	if (pDisplay) m_pDisplay= (Display *) pDisplay;
+	if (pDisplay) m_pDisplay= pDisplay;
 	else {
 		m_pDisplay= XOpenDisplay(NULL);
 		m_closeDisplay= true;
@@ -104,7 +106,7 @@ CMouseControl::CMouseControl (void* pDisplay)
 CMouseControl::~CMouseControl()
 {
 #if !defined(WIN32)
-	if (m_closeDisplay) XCloseDisplay(m_pDisplay);
+	if (m_closeDisplay) XCloseDisplay(static_cast<Display*>(m_pDisplay));
 #endif
 }
 
@@ -119,12 +121,12 @@ void CMouseControl::GetScreenSize()
 	m_ScreenHeight= devMode.dmPelsHeight;
 	m_ScreenWidth= devMode.dmPelsWidth;
 #else // Linux
-//	BEGIN_GUI_CALL_MUTEX();
-	m_ScreenHeight= DisplayHeight (m_pDisplay, DefaultScreen (m_pDisplay));
-	m_ScreenWidth= DisplayWidth (m_pDisplay, DefaultScreen (m_pDisplay));
-//	END_GUI_CALL_MUTEX();	
+	m_ScreenHeight= 
+		DisplayHeight (static_cast<Display*>(m_pDisplay), DefaultScreen (static_cast<Display*>(m_pDisplay)));
+	m_ScreenWidth= 
+		DisplayWidth (static_cast<Display*>(m_pDisplay), DefaultScreen (static_cast<Display*>(m_pDisplay)));
 #endif
-
+	slog_write (SLOG_PRIO_DEBUG, "current screen size: %d, %d\n", m_ScreenWidth, m_ScreenHeight);
 }
 
 void CMouseControl::GetPointerLocation (long& x, long& y)
@@ -148,10 +150,11 @@ void CMouseControl::GetPointerLocation (long& x, long& y)
 	int rootX, rootY, winX, winY;
 	unsigned int xstate;
 
-//	BEGIN_GUI_CALL_MUTEX();
-	Window rootWin= RootWindow (m_pDisplay, DefaultScreen (m_pDisplay));
-	XQueryPointer( m_pDisplay, rootWin, &root, &child, &rootX, &rootY, &winX, &winY, &xstate );
-//	END_GUI_CALL_MUTEX();
+	Window rootWin= 
+		RootWindow (static_cast<Display*>(m_pDisplay), DefaultScreen (static_cast<Display*>(m_pDisplay)));
+	XQueryPointer(
+		static_cast<Display*>(m_pDisplay), rootWin, &root, &child, &rootX, &rootY, &winX, &winY, &xstate );
+
 	x= winX;
 	y= winY;
 #endif
@@ -413,13 +416,17 @@ void CMouseControl::SendMouseCommand (long x, long y, int flags)
 
 	SendInput(1, &ip, sizeof(ip));
 #else
-//	BEGIN_GUI_CALL_MUTEX();
 	if (flags== MOUSE_MOVE_ABS) 
 		// Absolute motion
-		XTestFakeMotionEvent(m_pDisplay, DefaultScreen(m_pDisplay), x, y, CurrentTime);
+		XTestFakeMotionEvent(
+			static_cast<Display*>(m_pDisplay), 
+			DefaultScreen(static_cast<Display*>(m_pDisplay)), 
+			x, y, 
+			CurrentTime
+		);
 	else if (flags== MOUSE_MOVE_REL) 
 		// Relative motion
-		XTestFakeRelativeMotionEvent(m_pDisplay, x, y, CurrentTime);		
+		XTestFakeRelativeMotionEvent(static_cast<Display*>(m_pDisplay), x, y, CurrentTime);
 	else
 	{
 		// Button press
@@ -450,10 +457,9 @@ void CMouseControl::SendMouseCommand (long x, long y, int flags)
 			assert (false);
 		}
 
-		XTestFakeButtonEvent(m_pDisplay, button, is_press, CurrentTime);
+		XTestFakeButtonEvent(static_cast<Display*>(m_pDisplay), button, is_press, CurrentTime);
 	}
-	XFlush (m_pDisplay);
-//	END_GUI_CALL_MUTEX();
+	XFlush (static_cast<Display*>(m_pDisplay));
 #endif
 }
 

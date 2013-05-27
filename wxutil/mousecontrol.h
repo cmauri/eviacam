@@ -22,9 +22,6 @@
 #if !defined(MOUSECONTROL_H)
 #define MOUSECONTROL_H
 
-#if !defined(WIN32)
-#include <X11/Xlib.h>		// Display struct
-#endif
 #include <stdlib.h>		// NULL
 #include <assert.h>		
 
@@ -135,7 +132,7 @@ private:
 	
 #if !defined(WIN32)
 	bool m_closeDisplay;	// Destructor should close display connection?
-	Display* m_pDisplay;
+	void* m_pDisplay;
 #endif
 	enum { ACCEL_ARRAY_SIZE= 30 };
 	float m_accelArray[ACCEL_ARRAY_SIZE];

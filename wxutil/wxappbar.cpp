@@ -29,6 +29,9 @@
 
 #include "wxappbar.h"
 #include "warnbaroverlap.h"
+#ifndef WX_PRECOMP
+#include "wx/wx.h"
+#endif
 
 #ifdef __WXMSW__
 //#include <shellapi.h>
@@ -277,6 +280,7 @@ void WXAppBar::SetBorderDecorations (bool enable, bool apply)
 
 #if defined(__WXMSW__)
 	// TODO
+	(void)(apply); // Remove warning
 	assert (false);
 #elif defined(__WXGTK__)
 	//
@@ -307,6 +311,7 @@ void WXAppBar::SetSticky (bool stick)
 {
 #if defined(__WXMSW__)
 	// TODO
+	(void)(stick); // Remove warning
 	//assert (false);
 #elif defined(__WXGTK__)	
 	// Get X11 handle for our window
@@ -327,6 +332,7 @@ void WXAppBar::SetEntryInTaskBar (bool v)
 {
 #if defined(__WXMSW__)
 	// TODO
+	(void)(v); // Remove warning
 	//assert (false);
 #elif defined(__WXGTK__)	
 	// Get X11 handle for our window
@@ -344,6 +350,7 @@ void WXAppBar::SetEntryInPager (bool v)
 {
 #if defined(__WXMSW__)
 	// TODO
+	(void)(v);	// Remove warning
 	//assert (false);
 #elif defined(__WXGTK__)	
 	// Get X11 handle for our window
@@ -361,6 +368,7 @@ void WXAppBar::SetAcceptFocus (bool accept)
 {
 #if defined(__WXMSW__)
 	// TODO
+	(void)(accept);	// Remove warning
 	//assert (false);
 #elif defined(__WXGTK__)	
 	// Get X11 handle for our window

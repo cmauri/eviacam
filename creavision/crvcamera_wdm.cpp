@@ -23,11 +23,11 @@
 
 #include <sys/timeb.h>
 #include <sys/types.h>
-#include <stdio.h>
 #include <cassert>
 #include <cv.h>
 #include "crvimage.h"
 #include "videoInput.h"
+#include "simplelog.h"
 
 CCameraWDM::CCameraWDM(int cameraId, unsigned int width, unsigned int height,
 		float fr) throw(camera_exception)
@@ -40,11 +40,10 @@ CCameraWDM::CCameraWDM(int cameraId, unsigned int width, unsigned int height,
 
 	m_VI= NULL;	
 
-#if defined (NDEBUG)
-	videoInput::setVerbose(false);
-#else
-	videoInput::setVerbose(true);
-#endif
+	if (slog_get_priority()> SLOG_PRIO_CRIT)
+		videoInput::setVerbose(true);
+	else
+		videoInput::setVerbose(false);
 }
 
 CCameraWDM::~CCameraWDM(void)

@@ -33,11 +33,10 @@
 #include "configmanager.h"
 #include "cautostart.h"
 #include "hotkeymanager.h"
-#include "paths.h"
+#include "simplelog.h"
 
 #include <wx/msgdlg.h>
 #include <wx/choicdlg.h>
-#include <wx/stdpaths.h>
 #include <wx/filename.h>
 
 CViacamController::CViacamController(void)
@@ -103,7 +102,7 @@ void CViacamController::SetUpLanguage ()
 
 	m_locale->AddCatalogLookupPathPrefix(wxT("."));
 	if (!m_locale->Init(m_languageId, wxLOCALE_CONV_ENCODING))
-		printf ("Cannot load locale. Switching to default locale.\n");
+		slog_write (SLOG_PRIO_WARNING, "Cannot load locale. Switching to default locale.\n");
 	m_locale->AddCatalog(wxT("wxstd"));
 	m_locale->AddCatalog(wxT("eviacam"));
 }
@@ -195,14 +194,6 @@ bool CViacamController::Initialize ()
 {	
 	bool retval= true;
 	assert (!m_pMainWindow && !m_pCamera && !m_pCaptureThread);
-
-	// Set up globals
-#ifndef NDEBUG
-	// Assume project runs from src/ 
-	eviacam::SetDataDir(wxGetCwd() + _T("/../doc/"));
-#else
-	eviacam::SetDataDir(wxStandardPaths::Get().GetDataDir().mb_str(wxConvUTF8));
-#endif
 
 	SetUpLanguage ();
 

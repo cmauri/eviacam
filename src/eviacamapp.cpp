@@ -34,8 +34,14 @@
 ////@begin includes
 ////@end includes
 #include <wx/tooltip.h>
+#include <wx/socket.h>
+#include <wx/stdpaths.h>
+#include <wx/cmdline.h>
+
 #include "eviacamapp.h"
+#include "paths.h"
 #include "viacamcontroller.h"
+#include "simplelog.h"
 
 ////@begin XPM images
 ////@end XPM images
@@ -121,6 +127,9 @@ void EViacamApp::Init()
 
 bool EViacamApp::OnInit()
 {     	
+	// Call default behaviour
+	if (!wxApp::OnInit()) return false;
+
 /* ////@begin EViacamApp initialisation */
 	// Remove the comment markers above and below this block
 	// to make permanent changes to the code.
@@ -139,12 +148,22 @@ bool EViacamApp::OnInit()
 #endif		
 /* ////@end EViacamApp initialisation */
 
-#if defined(WIN32) && !defined(NDEBUG)
-	AllocConsole();
-	freopen("CONOUT$", "wb", stdout); 
-	//printf ("Hola!\n");
-	//fflush (stdout);
+// Set up globals
+#ifndef NDEBUG
+	// Assume project runs from src/ 
+	eviacam::SetDataDir(wxGetCwd() + _T("/../doc/"));
+#else
+	eviacam::SetDataDir(wxStandardPaths::Get().GetDataDir());
 #endif
+	
+	// Initialize sockets support
+	// Note: (Workaround for implementation limitation for wxWidgets up to 2.5.x) 
+	// If you want to use sockets or derived classes such as wxFTP in a secondary 
+	// thread, call wxSocketBase::Initialize() (undocumented) from the main thread 
+	// before creating any sockets - in wxApp::OnInit for example. 
+	// See http://wiki.wxwidgets.org/wiki.pl?WxSocket or 
+	// http://www.litwindow.com/knowhow/knowhow.html for more details.
+	wxSocketBase::Initialize();
 
 	m_pController= new CViacamController();
 	assert (m_pController);
@@ -154,6 +173,41 @@ bool EViacamApp::OnInit()
 		return false;
 	}
 	else return true;
+}
+
+static const wxCmdLineEntryDesc g_cmdLineDesc [] =
+{
+     { wxCMD_LINE_SWITCH, wxT("h"), wxT("help"), wxT("displays help on the command line parameters."),
+          wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
+     { wxCMD_LINE_SWITCH, wxT("d"), wxT("debug"), wxT("debug mode. Print debug messages to the console."),
+          wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
+      
+     { wxCMD_LINE_NONE }
+};
+
+void EViacamApp::OnInitCmdLine(wxCmdLineParser& parser)
+{
+    parser.SetDesc (g_cmdLineDesc);
+    // must refuse '/' as parameter starter or cannot use "/path" style paths
+    parser.SetSwitchChars (wxT("-"));
+}
+ 
+bool EViacamApp::OnCmdLineParsed(wxCmdLineParser& parser)
+{
+	bool debug_mode= parser.Found(wxT("d"));
+
+	if (debug_mode) {
+		// Set log priority level
+		slog_set_priority (SLOG_PRIO_DEBUG);
+
+#if defined(WIN32)
+		AllocConsole();
+		freopen("CONOUT$", "wb", stdout); 
+		slog_write (SLOG_PRIO_INFO, "debug mode enabled");
+#endif
+	}	
+
+	return true;
 }
 
 
@@ -166,6 +220,8 @@ int EViacamApp::OnExit()
 	m_pController->Finalize();
 	delete m_pController;
 	m_pController= NULL;
+
+	wxSocketBase::Shutdown();
 
 ////@begin EViacamApp cleanup
 	return wxApp::OnExit();

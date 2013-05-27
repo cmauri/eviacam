@@ -31,6 +31,8 @@
 #include <X11/keysymdef.h>
 #endif
 
+#include "simplelog.h"
+
 // Make sure that m_virtualKeyCode is wide enough to store a KeySym
 // On windows it seems that virtual-key codes are 16bit wide, so no problem.
 #if defined(__WXGTK__)
@@ -142,14 +144,14 @@ CKeyboardCode CKeyboardCode::FromASCII (char ascii)
 #endif	
 }
 
-#if !defined(NDEBUG)
 void CKeyboardCode::Dump() const
 {
 #if !defined(WIN32)
-	printf ("KeySym: %u	KeyCode: %u Name: %s\n", m_virtualKeyCode, XKeysymToKeycode((Display *) wxGetDisplay(), m_virtualKeyCode), GetName());
+	slog_write (SLOG_PRIO_DEBUG,
+		"KeySym: %lu	KeyCode: %u Name: %s\n", 
+		m_virtualKeyCode, XKeysymToKeycode((Display *) wxGetDisplay(), m_virtualKeyCode), GetName());
 #endif
 }
-#endif
 
 // Given an wxKeyCode code returns the corresponding CKeyboardCode object
 CKeyboardCode CKeyboardCode::FromWXKeyCode (wxKeyCode kc)

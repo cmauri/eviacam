@@ -24,7 +24,6 @@
 #include <cv.h>
 #include <sys/timeb.h>
 #include <sys/types.h>
-#include <stdio.h>
 #include <cassert>
 
 // Return timestamp in ms

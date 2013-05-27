@@ -30,17 +30,18 @@ noinst_HEADERS = wgetkey.h \
 	gestureclick.h \
 	pointeraction.h \
 	mousecommand.h \
-	paths.h 
+	paths.h \
+	checkupdates.h \
+	checkupdates_ui.h \
+	website.h
 
 dist_noinst_DATA= version.h.in \
 	eviacamloader.c.in \
-	langnames-utf16.h \
 	gui.pjd \
 	gui.rc \
 	eviacam.vcproj \
 	icons/on.xpm \
 	icons/eviacam.ico \
-	icons/eviacam_mini.ico \
 	icons/clickwindowoff.xpm \
 	icons/help.xpm \
 	icons/preferences.xpm \
@@ -48,6 +49,7 @@ dist_noinst_DATA= version.h.in \
 	icons/keyboard.xpm \
 	icons/user.xpm \
 	icons/eviacam_mini.xpm \
+	icons/eviacam_small.xpm \
 	icons/off.xpm \
 	icons/buttonDblLeftDisabled.xpm \
 	icons/buttonDblLeftLocked.xpm \
@@ -129,9 +131,12 @@ eviacam_SOURCES = wgetkey.cpp \
 	dwellclick.cpp \
 	gestureclick.cpp \
 	pointeraction.cpp \
-	paths.cpp
+	paths.cpp \
+	checkupdates.cpp \
+	checkupdates_ui.cpp \
+	website.cpp
 	
-eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
+eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" -DOPENCVVERSION=$(OPENCVVERSION)
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11
 
 INCLUDES = -I$(top_srcdir)/creavision \

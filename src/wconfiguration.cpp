@@ -48,38 +48,11 @@
 ////@begin XPM images
 #include "icons/eviacam.xpm"
 #include "icons/user.xpm"
+#include "icons/eviacam_small.xpm"
 ////@end XPM images
 #define FIRST_CONTROL_ID 12000
 
-// Trick to properly compile & display native language names
-#if defined(__WXMSW__)
-#include "langnames-utf16.h"
-#else
 #include "langnames-utf8.h"
-#endif
-
-const wxLanguage s_langIds[] = {
-	wxLANGUAGE_DEFAULT,
-#ifdef ENABLE_ASTURIAN
-	wxLANGUAGE_ASTURIAN,
-#endif
-	wxLANGUAGE_CATALAN,
-	wxLANGUAGE_GERMAN,
-	wxLANGUAGE_ENGLISH,
-	wxLANGUAGE_SPANISH,
-	wxLANGUAGE_GALICIAN,
-	wxLANGUAGE_ITALIAN,
-	wxLANGUAGE_PORTUGUESE_BRAZILIAN,
-	wxLANGUAGE_RUSSIAN,
-	wxLANGUAGE_TURKISH,
-	wxLANGUAGE_OCCITAN,
-	wxLANGUAGE_FRENCH,
-	wxLANGUAGE_ARABIC,
-	wxLANGUAGE_HEBREW
-};
-
-wxCOMPILE_TIME_ASSERT( WXSIZEOF(s_langNames) == WXSIZEOF(s_langIds), LangArraysMismatch );
-
 
 /*!
  * WConfiguration type definition
@@ -394,7 +367,7 @@ void WConfiguration::CreateControls()
     {
         wxIcon itemListbook3Icon0(itemDialog1->GetIconResource(wxT("icons/user.xpm")));
         itemListbook3ImageList->Add(itemListbook3Icon0);
-        wxIcon itemListbook3Icon1(itemDialog1->GetIconResource(wxT("icons/eviacam.xpm")));
+        wxIcon itemListbook3Icon1(itemDialog1->GetIconResource(wxT("icons/eviacam_small.xpm")));
         itemListbook3ImageList->Add(itemListbook3Icon1);
     }
     itemListbook3->AssignImageList(itemListbook3ImageList);
@@ -409,10 +382,6 @@ void WConfiguration::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer7 = new wxStaticBoxSizer(itemStaticBoxSizer7Static, wxVERTICAL);
     itemBoxSizer6->Add(itemStaticBoxSizer7, 0, wxGROW|wxALL, 5);
     wxFlexGridSizer* itemFlexGridSizer8 = new wxFlexGridSizer(0, 4, 0, 0);
-    itemFlexGridSizer8->AddGrowableCol(0);
-    itemFlexGridSizer8->AddGrowableCol(1);
-    itemFlexGridSizer8->AddGrowableCol(2);
-    itemFlexGridSizer8->AddGrowableCol(3);
     itemStaticBoxSizer7->Add(itemFlexGridSizer8, 0, wxGROW, 5);
     wxStaticText* itemStaticText9 = new wxStaticText( itemPanel5, wxID_STATIC, _("X axis speed"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer8->Add(itemStaticText9, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -457,6 +426,11 @@ void WConfiguration::CreateControls()
     itemFlexGridSizer8->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     itemFlexGridSizer8->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    itemFlexGridSizer8->AddGrowableCol(0);
+    itemFlexGridSizer8->AddGrowableCol(1);
+    itemFlexGridSizer8->AddGrowableCol(2);
+    itemFlexGridSizer8->AddGrowableCol(3);
 
     m_buttonCalibrateMotion = new wxButton( itemPanel5, ID_BUTTON, _("Assisted calibration"), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizer7->Add(m_buttonCalibrateMotion, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
@@ -604,8 +578,6 @@ void WConfiguration::CreateControls()
     itemStaticBoxSizer59->Add(m_chkShowClickWin, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxFlexGridSizer* itemFlexGridSizer61 = new wxFlexGridSizer(0, 4, 0, 0);
-    itemFlexGridSizer61->AddGrowableCol(1);
-    itemFlexGridSizer61->AddGrowableCol(3);
     itemStaticBoxSizer59->Add(itemFlexGridSizer61, 0, wxGROW, 5);
     m_stDesign = new wxStaticText( m_panelClick, ID_STATIC_DESIGN, _("Design:"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer61->Add(m_stDesign, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxTOP, 5);
@@ -650,6 +622,9 @@ void WConfiguration::CreateControls()
     itemFlexGridSizer61->Add(m_chkAutohide, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 #endif
 
+    itemFlexGridSizer61->AddGrowableCol(1);
+    itemFlexGridSizer61->AddGrowableCol(3);
+
 #if defined(__WXGTK__)
     m_sboxGestureClick = new wxStaticBox(m_panelClick, ID_STATICBOX_GESTURE_CLICK, _("Gesture click"));
     wxStaticBoxSizer* itemStaticBoxSizer69 = new wxStaticBoxSizer(m_sboxGestureClick, wxVERTICAL);
@@ -659,8 +634,6 @@ void WConfiguration::CreateControls()
     itemStaticBoxSizer69->Add(m_chkEnableGestureClick, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxFlexGridSizer* itemFlexGridSizer71 = new wxFlexGridSizer(0, 4, 0, 0);
-    itemFlexGridSizer71->AddGrowableCol(1);
-    itemFlexGridSizer71->AddGrowableCol(3);
     itemStaticBoxSizer69->Add(itemFlexGridSizer71, 0, wxGROW, 5);
     m_stMoveLeft = new wxStaticText( m_panelClick, ID_STATIC_MOVE_LEFT, _("Move left:"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer71->Add(m_stMoveLeft, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -714,6 +687,9 @@ void WConfiguration::CreateControls()
     m_choDown = new wxChoice( m_panelClick, ID_CHOICE3, wxDefaultPosition, wxDefaultSize, m_choDownStrings, 0 );
     itemFlexGridSizer71->Add(m_choDown, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
+    itemFlexGridSizer71->AddGrowableCol(1);
+    itemFlexGridSizer71->AddGrowableCol(3);
+
 #endif
 
     itemNotebook4->AddPage(m_panelClick, _("Click"));
@@ -730,11 +706,11 @@ void WConfiguration::CreateControls()
     itemStaticBoxSizer82->Add(itemStaticText83, 0, wxALIGN_LEFT|wxALL, 5);
 
     m_hotkeysSizer = new wxFlexGridSizer(0, 4, 0, 0);
+    itemStaticBoxSizer82->Add(m_hotkeysSizer, 0, wxGROW|wxALL, 5);
     m_hotkeysSizer->AddGrowableCol(0);
     m_hotkeysSizer->AddGrowableCol(1);
     m_hotkeysSizer->AddGrowableCol(2);
     m_hotkeysSizer->AddGrowableCol(3);
-    itemStaticBoxSizer82->Add(m_hotkeysSizer, 0, wxGROW|wxALL, 5);
 
 #endif
 
@@ -765,7 +741,6 @@ void WConfiguration::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer90 = new wxStaticBoxSizer(itemStaticBoxSizer90Static, wxVERTICAL);
     itemBoxSizer86->Add(itemStaticBoxSizer90, 0, wxGROW|wxALL, 5);
     wxFlexGridSizer* itemFlexGridSizer91 = new wxFlexGridSizer(0, 2, 0, 0);
-    itemFlexGridSizer91->AddGrowableCol(0);
     itemStaticBoxSizer90->Add(itemFlexGridSizer91, 0, wxGROW, 5);
     m_txtOnScreenKeyboardCommand = new wxTextCtrl( itemPanel85, ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
     if (WConfiguration::ShowToolTips())
@@ -775,12 +750,12 @@ void WConfiguration::CreateControls()
     m_btntOnScreenKeyboardCommand = new wxButton( itemPanel85, ID_BUTTON_ONSCREENKEYBOARDCOMMAND, _("Browse..."), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer91->Add(m_btntOnScreenKeyboardCommand, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
+    itemFlexGridSizer91->AddGrowableCol(0);
+
     m_sizerFaceLocalization = new wxStaticBox(itemPanel85, wxID_ANY, _("Face localization"));
     wxStaticBoxSizer* itemStaticBoxSizer94 = new wxStaticBoxSizer(m_sizerFaceLocalization, wxVERTICAL);
     itemBoxSizer86->Add(itemStaticBoxSizer94, 0, wxGROW|wxALL, 5);
     wxFlexGridSizer* itemFlexGridSizer95 = new wxFlexGridSizer(0, 2, 0, 0);
-    itemFlexGridSizer95->AddGrowableCol(0);
-    itemFlexGridSizer95->AddGrowableCol(1);
     itemStaticBoxSizer94->Add(itemFlexGridSizer95, 0, wxGROW|wxALL, 5);
     m_chkAutoLocateFace = new wxCheckBox( itemPanel85, ID_CHECKBOX_AUTO_LOCATE_FACE, _("Locate face automatically"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkAutoLocateFace->SetValue(false);
@@ -801,6 +776,9 @@ void WConfiguration::CreateControls()
     m_choCpuUsageStrings.Add(_("Highest"));
     m_choCpuUsage = new wxChoice( itemPanel85, ID_CHOICE4, wxDefaultPosition, wxDefaultSize, m_choCpuUsageStrings, 0 );
     itemFlexGridSizer97->Add(m_choCpuUsage, 0, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    itemFlexGridSizer95->AddGrowableCol(0);
+    itemFlexGridSizer95->AddGrowableCol(1);
 
     wxBoxSizer* itemBoxSizer100 = new wxBoxSizer(wxHORIZONTAL);
     itemStaticBoxSizer94->Add(itemBoxSizer100, 0, wxGROW|wxALL, 5);
@@ -834,7 +812,6 @@ void WConfiguration::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer108 = new wxStaticBoxSizer(itemStaticBoxSizer108Static, wxVERTICAL);
     itemBoxSizer107->Add(itemStaticBoxSizer108, 0, wxGROW|wxALL, 5);
     wxFlexGridSizer* itemFlexGridSizer109 = new wxFlexGridSizer(0, 4, 0, 0);
-    itemFlexGridSizer109->AddGrowableCol(1);
     itemStaticBoxSizer108->Add(itemFlexGridSizer109, 0, wxGROW, 5);
     wxStaticText* itemStaticText110 = new wxStaticText( itemPanel106, wxID_STATIC, _("Select profile:"), wxDefaultPosition, wxDefaultSize, 0 );
     if (WConfiguration::ShowToolTips())
@@ -853,11 +830,12 @@ void WConfiguration::CreateControls()
     m_btnDeleteProfile = new wxButton( itemPanel106, ID_BUTTON_DEL_PROFILE, _("Delete profile"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer109->Add(m_btnDeleteProfile, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
+    itemFlexGridSizer109->AddGrowableCol(1);
+
     wxStaticBox* itemStaticBoxSizer114Static = new wxStaticBox(itemPanel106, wxID_ANY, _("Camera"));
     wxStaticBoxSizer* itemStaticBoxSizer114 = new wxStaticBoxSizer(itemStaticBoxSizer114Static, wxVERTICAL);
     itemBoxSizer107->Add(itemStaticBoxSizer114, 0, wxGROW|wxALL, 5);
     wxFlexGridSizer* itemFlexGridSizer115 = new wxFlexGridSizer(0, 3, 0, 0);
-    itemFlexGridSizer115->AddGrowableCol(0);
     itemStaticBoxSizer114->Add(itemFlexGridSizer115, 0, wxGROW, 5);
     m_txtSelectedCamera = new wxTextCtrl( itemPanel106, ID_TEXTCTRL_SELECTED_CAMERA, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
     m_txtSelectedCamera->Enable(false);
@@ -868,6 +846,8 @@ void WConfiguration::CreateControls()
 
     wxButton* itemButton118 = new wxButton( itemPanel106, ID_BUTTON_CHANGE_CAMERA, _("Change"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer115->Add(itemButton118, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+    itemFlexGridSizer115->AddGrowableCol(0);
 
     wxStaticBox* itemStaticBoxSizer119Static = new wxStaticBox(itemPanel106, wxID_ANY, _("Language"));
     wxStaticBoxSizer* itemStaticBoxSizer119 = new wxStaticBoxSizer(itemStaticBoxSizer119Static, wxVERTICAL);
@@ -982,6 +962,11 @@ wxIcon WConfiguration::GetIconResource( const wxString& name )
     else if (name == _T("icons/user.xpm"))
     {
         wxIcon icon(user);
+        return icon;
+    }
+    else if (name == _T("icons/eviacam_small.xpm"))
+    {
+        wxIcon icon(eviacam_small);
         return icon;
     }
     return wxNullIcon;
@@ -1115,13 +1100,13 @@ void WConfiguration::InitializeData ()
 
 	// Fill and set language combo
 	m_choLanguage->Clear();
-	m_choLanguage->Append (wxGetTranslation(s_langNames[0]));
-	for (unsigned int i= 1; i< WXSIZEOF(s_langNames); i++) {
-		m_choLanguage->Append (s_langNames[i]);
+	m_choLanguage->Append (wxGetTranslation(g_languages[0].name));
+	for (unsigned int i= 1; i< WXSIZEOF(g_languages); i++) {
+		m_choLanguage->Append (g_languages[i].name);
 	}		
 	// Select current language
-	for (unsigned int i= 0; i< WXSIZEOF(s_langNames); i++)
-		if (s_langIds[i]== wxGetApp().GetController().GetLanguage())
+	for (unsigned int i= 0; i< WXSIZEOF(g_languages); i++)
+		if (g_languages[i].lang== wxGetApp().GetController().GetLanguage())
 			m_choLanguage->SetSelection(i);
 	
 	// Camera
@@ -1500,7 +1485,7 @@ void WConfiguration::OnChoiceLanguageSelected( wxCommandEvent& event )
 	int index= m_choLanguage->GetCurrentSelection();
 	if (index!= wxNOT_FOUND)
 	{
-        wxGetApp().GetController().SetLanguage (s_langIds[index]);
+		wxGetApp().GetController().SetLanguage (g_languages[index].lang);
 		wxMessageDialog dlg (NULL, _("You should restart the application to apply this change"), 
 			_T("Enable Viacam"), wxICON_INFORMATION );
 		dlg.ShowModal ();
@@ -1996,7 +1981,7 @@ void WConfiguration::OnChoCpuUsageSelected( wxCommandEvent& event )
 
 void WConfiguration::OnHotkeyCheckboxClick( wxCommandEvent& event )
 {
-	wxGetApp().GetController().getHotkeyManager().GetKeyCommands()[(event.GetId()-FIRST_CONTROL_ID-2)/4]->SetEnabled(event.GetInt());
+	wxGetApp().GetController().getHotkeyManager().GetKeyCommands()[(event.GetId()-FIRST_CONTROL_ID-2)/4]->SetEnabled((event.GetInt()? true : false));
 	event.Skip(false);
 }
 

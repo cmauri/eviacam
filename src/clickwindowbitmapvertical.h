@@ -17,6 +17,7 @@
  * Includes
  */
 #include "clickwindow.h"
+#include <wx/bitmap.h>
 ////@begin includes
 ////@end includes
 

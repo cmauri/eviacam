@@ -30,6 +30,10 @@
 #include "timeutil.h"
 #include "paths.h"
 
+#if OPENCVVERSION >= 2004000
+# include <opencv2/legacy/legacy.hpp>
+#endif
+
 #include <math.h>
 #include <wx/msgdlg.h>
 #include <wx/stdpaths.h>
@@ -64,7 +68,7 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 #ifndef NDEBUG
 	if (!m_faceCascade)		
 		m_faceCascade = (CvHaarClassifierCascade*)
-			cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml", 0, 0, 0);
+			cvLoad("/usr/share/eviacam/haarcascade_frontalface_default.xml", 0, 0, 0);
 #endif
 	if (!m_faceCascade) {
 		wxMessageDialog dlg (NULL, _("The face localization option is not enabled."), _T("Enable Viacam"), wxICON_ERROR | wxOK );

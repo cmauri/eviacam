@@ -83,6 +83,10 @@ private:
 	/// Called on exit
 	virtual int OnExit();
 
+	virtual void OnInitCmdLine(wxCmdLineParser& parser);
+
+    virtual bool OnCmdLineParsed(wxCmdLineParser& parser);
+
 	void OnEndSession( wxCloseEvent& event );
 
 ////@begin EViacamApp event handler declarations

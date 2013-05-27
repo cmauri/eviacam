@@ -1,222 +1,198 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.10"
+	Version="9,00"
 	Name="eviacam"
 	ProjectGUID="{4C7EE63E-9BCD-4DBA-A0D3-075D3DBB2597}"
 	RootNamespace="src"
-	Keyword="Win32Proj">
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\bin"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\evicam"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
 			UseOfATL="0"
 			CharacterSet="1"
-			DeleteExtensionsOnClean="*.dll;*.obj;*.ilk;*.pdb;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.bat;$(TargetPath)">
+			DeleteExtensionsOnClean="*.dll;*.obj;*.ilk;*.pdb;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.bat;$(TargetPath)"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;..\wxutil;..\wxcamwindow;..\creavision"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\build&quot;;&quot;$(CVPATH)\include&quot;;&quot;$(CVPATH)\include\opencv&quot;;&quot;$(CVPATH)\modules\core\include&quot;;&quot;$(CVPATH)\modules\imgproc\include&quot;;&quot;$(CVPATH)\modules\features2d\include&quot;;&quot;$(CVPATH)\modules\objdetect\include&quot;;&quot;$(CVPATH)\modules\video\include&quot;;&quot;$(CVPATH)\modules\highgui\include&quot;;&quot;$(CVPATH)\modules\ml\include&quot;;&quot;$(CVPATH)\modules\legacy\include&quot;;&quot;$(CVPATH)\modules\contrib\include&quot;;&quot;$(CVPATH)\modules\flann\include&quot;;&quot;$(CVPATH)\modules\gpu\include&quot;;&quot;$(CVPATH)\modules\calib3d\include&quot;;..\wxutil;..\wxcamwindow;..\creavision;..\;$(NOINHERIT)"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;NOPCH;__WXMSW__;__WXDEBUG__"
-				MinimalRebuild="FALSE"
+				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				RuntimeTypeInfo="TRUE"
+				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="FALSE"
 				DebugInformationFormat="3"
-				CallingConvention="0"/>
+				CallingConvention="0"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28ud_richtext.lib wxmsw28ud_aui.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib cv.lib cvaux.lib cxcore.lib cxts.lib highgui.lib comctl32.lib rpcrt4.lib winmm.lib wxcamwindow.lib wxutil.lib dxguid.lib strmiids.lib uuid.lib STRMBASd.lib quartz.lib"
-				OutputFile="$(OutDir)/eviacam.exe"
-				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="&quot;$(CVPATH)\lib&quot;;&quot;$(WXWIN)\lib\vc_lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;;&quot;$(PSDK_DIR)\Samples\Multimedia\DirectShow\BaseClasses\WIN2000_DEBUG&quot;"
-				IgnoreAllDefaultLibraries="FALSE"
-				IgnoreDefaultLibraryNames="LIBCMTD;MSVCRT"
-				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="$(SolutionDir)$(ConfigurationName)/evicam.pdb"
-				SubSystem="2"
-				TargetMachine="1"/>
-			<Tool
-				Name="VCMIDLTool"/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(FrameworkSDKDir)Bin\msvcp71.dll&quot; $(TargetDir)
-copy &quot;$(FrameworkSDKDir)Bin\msvcr71.dll&quot; $(TargetDir)
-copy &quot;$(CVPATH)\bin\CV100.DLL&quot; $(TargetDir)
-copy &quot;$(CVPATH)\bin\CXCORE100.DLL&quot; $(TargetDir)
-copy &quot;$(CVPATH)\bin\LIBGUIDE40.DLL&quot; $(TargetDir)
-copy &quot;$(CVPATH)\bin\HIGHGUI100.DLL&quot; $(TargetDir)
-copy &quot;$(CVPATH)\data\haarcascades\haarcascade_frontalface_default.xml&quot; $(TargetDir)
-"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"
-				CommandLine="mkdir $(TargetDir)ca
-mkdir $(TargetDir)es
-mkdir $(TargetDir)gl
-mkdir $(TargetDir)it
-mkdir $(TargetDir)tr
-mkdir $(TargetDir)de
-mkdir $(TargetDir)oc
-mkdir $(TargetDir)fr
-mkdir $(TargetDir)ar
-mkdir $(TargetDir)he
-mkdir $(TargetDir)ru
-mkdir $(TargetDir)pt_BR
-
-copy &quot;$(SolutionDir)..\po\ca.gmo&quot; $(TargetDir)ca\eviacam.mo
-copy &quot;$(SolutionDir)..\po\es.gmo&quot; $(TargetDir)es\eviacam.mo
-copy &quot;$(SolutionDir)..\po\gl.gmo&quot; $(TargetDir)gl\eviacam.mo
-copy &quot;$(SolutionDir)..\po\it.gmo&quot; $(TargetDir)it\eviacam.mo
-copy &quot;$(SolutionDir)..\po\tr.gmo&quot; $(TargetDir)tr\eviacam.mo
-copy &quot;$(SolutionDir)..\po\de.gmo&quot; $(TargetDir)de\eviacam.mo
-copy &quot;$(SolutionDir)..\po\oc.gmo&quot; $(TargetDir)oc\eviacam.mo
-copy &quot;$(SolutionDir)..\po\fr.gmo&quot; $(TargetDir)fr\eviacam.mo
-copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
-copy &quot;$(SolutionDir)..\po\he.gmo&quot; $(TargetDir)he\eviacam.mo
-copy &quot;$(SolutionDir)..\po\ru.gmo&quot; $(TargetDir)ru\eviacam.mo
-copy &quot;$(SolutionDir)..\po\pt_BR.gmo&quot; $(TargetDir)pt_BR\eviacam.mo
-
-copy &quot;%WXWIN%\locale\ca.mo&quot; $(TargetDir)ca\wxstd.mo
-copy &quot;%WXWIN%\locale\es.mo&quot; $(TargetDir)es\wxstd.mo
-copy &quot;%WXWIN%\locale\gl.mo&quot; $(TargetDir)gl\wxstd.mo
-copy &quot;%WXWIN%\locale\it.mo&quot; $(TargetDir)it\wxstd.mo
-copy &quot;%WXWIN%\locale\tr.mo&quot; $(TargetDir)tr\wxstd.mo
-copy &quot;%WXWIN%\locale\de.mo&quot; $(TargetDir)de\wxstd.mo
-rem copy &quot;%WXWIN%\locale\oc.mo&quot; $(TargetDir)oc\wxstd.mo
-copy &quot;%WXWIN%\locale\fr.mo&quot; $(TargetDir)fr\wxstd.mo
-rem copy &quot;%WXWIN%\locale\ar.mo&quot; $(TargetDir)ar\wxstd.mo
-rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
-copy &quot;%WXWIN%\locale\ru.mo&quot; $(TargetDir)ru\wxstd.mo
-copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo
-"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="$(WXWIN)\include"/>
+				AdditionalIncludeDirectories="$(WXWIN)\include"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCPreLinkEventTool"
+				CommandLine="mkdir $(TargetDir)ca&#x0D;&#x0A;mkdir $(TargetDir)es&#x0D;&#x0A;mkdir $(TargetDir)gl&#x0D;&#x0A;mkdir $(TargetDir)it&#x0D;&#x0A;mkdir $(TargetDir)tr&#x0D;&#x0A;mkdir $(TargetDir)de&#x0D;&#x0A;mkdir $(TargetDir)oc&#x0D;&#x0A;mkdir $(TargetDir)fr&#x0D;&#x0A;mkdir $(TargetDir)ar&#x0D;&#x0A;mkdir $(TargetDir)he&#x0D;&#x0A;mkdir $(TargetDir)ru&#x0D;&#x0A;mkdir $(TargetDir)pt_BR&#x0D;&#x0A;mkdir $(TargetDir)ja&#x0D;&#x0A;mkdir $(TargetDir)el&#x0D;&#x0A;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\ca.gmo&quot; $(TargetDir)ca\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\es.gmo&quot; $(TargetDir)es\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\gl.gmo&quot; $(TargetDir)gl\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\it.gmo&quot; $(TargetDir)it\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\tr.gmo&quot; $(TargetDir)tr\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\de.gmo&quot; $(TargetDir)de\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\oc.gmo&quot; $(TargetDir)oc\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\fr.gmo&quot; $(TargetDir)fr\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\he.gmo&quot; $(TargetDir)he\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\ru.gmo&quot; $(TargetDir)ru\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\pt_BR.gmo&quot; $(TargetDir)pt_BR\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\ja.gmo&quot; $(TargetDir)ja\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\el.gmo&quot; $(TargetDir)el\eviacam.mo&#x0D;&#x0A;&#x0D;&#x0A;copy &quot;%WXWIN%\locale\ca.mo&quot; $(TargetDir)ca\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\es.mo&quot; $(TargetDir)es\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\gl_ES.mo&quot; $(TargetDir)gl\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\it.mo&quot; $(TargetDir)it\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\tr.mo&quot; $(TargetDir)tr\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\de.mo&quot; $(TargetDir)de\wxstd.mo&#x0D;&#x0A;rem copy &quot;%WXWIN%\locale\oc.mo&quot; $(TargetDir)oc\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\fr.mo&quot; $(TargetDir)fr\wxstd.mo&#x0D;&#x0A;rem copy &quot;%WXWIN%\locale\ar.mo&quot; $(TargetDir)ar\wxstd.mo&#x0D;&#x0A;rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\ru.mo&quot; $(TargetDir)ru\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\ja.mo&quot; $(TargetDir)ja\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\el.mo&quot; $(TargetDir)el\wxstd.mo&#x0D;&#x0A;"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
+				Name="VCLinkerTool"
+				AdditionalDependencies="wxmsw28ud_richtext.lib wxmsw28ud_aui.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib opencv_core220.lib opencv_imgproc220.lib opencv_objdetect220.lib opencv_video220.lib opencv_highgui220.lib comctl32.lib rpcrt4.lib winmm.lib wxcamwindow.lib wxutil.lib strmiids.lib uuid.lib quartz.lib wsock32.lib"
+				OutputFile="$(OutDir)/eviacam.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="&quot;$(CVPATH)\build\lib&quot;;&quot;$(WXWIN)\lib\vc_lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
+				UACExecutionLevel="0"
+				UACUIAccess="false"
+				IgnoreAllDefaultLibraries="false"
+				IgnoreDefaultLibraryNames="LIBCMTD;MSVCRT"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="$(SolutionDir)$(ConfigurationName)/evicam.pdb"
+				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
+			/>
 			<Tool
-				Name="VCWebDeploymentTool"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;$(VCInstallDir)redist\Debug_NonRedist\x86\Microsoft.VC90.DebugCRT\msvcp90d.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(VCInstallDir)redist\Debug_NonRedist\x86\Microsoft.VC90.DebugCRT\msvcr90d.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(CVPATH)\build\bin\opencv_core220.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(CVPATH)\build\bin\opencv_imgproc220.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(CVPATH)\build\bin\opencv_objdetect220.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(CVPATH)\build\bin\opencv_highgui220.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(CVPATH)\build\bin\opencv_video220.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(CVPATH)\data\haarcascades\haarcascade_frontalface_default.xml&quot; $(TargetDir)&#x0D;&#x0A;"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\bin"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\evicam"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="1"
-			DeleteExtensionsOnClean="*.dll;*.obj;*.ilk;*.pdb;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.bat;$(TargetPath)">
+			DeleteExtensionsOnClean="*.dll;*.obj;*.ilk;*.pdb;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.bat;$(TargetPath)"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\cv\include&quot;;&quot;$(CVPATH)\cxcore\include&quot;;&quot;$(CVPATH)\otherlibs\highgui&quot;;&quot;$(CVPATH)\cvaux\include&quot;;..\creavision;..\wxcamwindow;..\wxutil"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\build&quot;;&quot;$(CVPATH)\include&quot;;&quot;$(CVPATH)\include\opencv&quot;;&quot;$(CVPATH)\modules\core\include&quot;;&quot;$(CVPATH)\modules\imgproc\include&quot;;&quot;$(CVPATH)\modules\features2d\include&quot;;&quot;$(CVPATH)\modules\objdetect\include&quot;;&quot;$(CVPATH)\modules\video\include&quot;;&quot;$(CVPATH)\modules\highgui\include&quot;;&quot;$(CVPATH)\modules\ml\include&quot;;&quot;$(CVPATH)\modules\legacy\include&quot;;&quot;$(CVPATH)\modules\contrib\include&quot;;&quot;$(CVPATH)\modules\flann\include&quot;;&quot;$(CVPATH)\modules\gpu\include&quot;;&quot;$(CVPATH)\modules\calib3d\include&quot;;..\creavision;..\wxcamwindow;..\wxutil;..\;$(NOINHERIT)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;NOPCH;__WXMSW__"
+				StringPooling="true"
 				RuntimeLibrary="2"
-				RuntimeTypeInfo="TRUE"
+				TreatWChar_tAsBuiltInType="true"
+				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="3"/>
+				DebugInformationFormat="3"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="$(WXWIN)\include"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+				CommandLine="mkdir $(TargetDir)ca&#x0D;&#x0A;mkdir $(TargetDir)es&#x0D;&#x0A;mkdir $(TargetDir)gl&#x0D;&#x0A;mkdir $(TargetDir)it&#x0D;&#x0A;mkdir $(TargetDir)tr&#x0D;&#x0A;mkdir $(TargetDir)de&#x0D;&#x0A;mkdir $(TargetDir)oc&#x0D;&#x0A;mkdir $(TargetDir)fr&#x0D;&#x0A;mkdir $(TargetDir)ar&#x0D;&#x0A;mkdir $(TargetDir)he&#x0D;&#x0A;mkdir $(TargetDir)ru&#x0D;&#x0A;mkdir $(TargetDir)pt_BR&#x0D;&#x0A;mkdir $(TargetDir)ja&#x0D;&#x0A;mkdir $(TargetDir)el&#x0D;&#x0A;&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\ca.gmo&quot; $(TargetDir)ca\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\es.gmo&quot; $(TargetDir)es\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\gl.gmo&quot; $(TargetDir)gl\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\it.gmo&quot; $(TargetDir)it\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\tr.gmo&quot; $(TargetDir)tr\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\de.gmo&quot; $(TargetDir)de\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\oc.gmo&quot; $(TargetDir)oc\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\fr.gmo&quot; $(TargetDir)fr\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\he.gmo&quot; $(TargetDir)he\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\ru.gmo&quot; $(TargetDir)ru\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\pt_BR.gmo&quot; $(TargetDir)pt_BR\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\ja.gmo&quot; $(TargetDir)ja\eviacam.mo&#x0D;&#x0A;copy &quot;$(SolutionDir)..\po\el.gmo&quot; $(TargetDir)el\eviacam.mo&#x0D;&#x0A;&#x0D;&#x0A;copy &quot;%WXWIN%\locale\ca.mo&quot; $(TargetDir)ca\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\es.mo&quot; $(TargetDir)es\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\gl_ES.mo&quot; $(TargetDir)gl\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\it.mo&quot; $(TargetDir)it\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\tr.mo&quot; $(TargetDir)tr\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\de.mo&quot; $(TargetDir)de\wxstd.mo&#x0D;&#x0A;rem copy &quot;%WXWIN%\locale\oc.mo&quot; $(TargetDir)oc\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\fr.mo&quot; $(TargetDir)fr\wxstd.mo&#x0D;&#x0A;rem copy &quot;%WXWIN%\locale\ar.mo&quot; $(TargetDir)ar\wxstd.mo&#x0D;&#x0A;rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\ru.mo&quot; $(TargetDir)ru\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\ja.mo&quot; $(TargetDir)ja\wxstd.mo&#x0D;&#x0A;copy &quot;%WXWIN%\locale\el.mo&quot; $(TargetDir)el\wxstd.mo&#x0D;&#x0A;"
+			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28u_richtext.lib wxmsw28u_aui.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib cv.lib cvaux.lib cxcore.lib cxts.lib highgui.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib wxcamwindow.lib wxutil.lib STRMBASE.lib"
+				AdditionalDependencies="wxmsw28u_richtext.lib wxmsw28u_aui.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib opencv_core220.lib opencv_imgproc220.lib opencv_objdetect220.lib opencv_video220.lib opencv_highgui220.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib strmiids.lib wxcamwindow.lib wxutil.lib"
 				OutputFile="$(OutDir)/eviacam.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(CVPATH)\lib&quot;;&quot;$(WXWIN)\lib\vc_lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;;&quot;$(PSDK_DIR)\Samples\Multimedia\DirectShow\BaseClasses\WIN2000_RETAIL&quot;"
-				GenerateDebugInformation="FALSE"
+				AdditionalLibraryDirectories="&quot;$(CVPATH)\build\lib&quot;;&quot;$(WXWIN)\lib\vc_lib&quot;;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
+				UACExecutionLevel="2"
+				UACUIAccess="false"
+				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				TargetMachine="1"/>
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
+			/>
 			<Tool
-				Name="VCMIDLTool"/>
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(FrameworkSDKDir)Bin\msvcp71.dll&quot; $(TargetDir)
-copy &quot;$(FrameworkSDKDir)Bin\msvcr71.dll&quot; $(TargetDir)
-copy &quot;$(CVPATH)\bin\CV100.DLL&quot; $(TargetDir)
-copy &quot;$(CVPATH)\bin\CXCORE100.DLL&quot; $(TargetDir)
-copy &quot;$(CVPATH)\bin\LIBGUIDE40.DLL&quot; $(TargetDir)
-copy &quot;$(CVPATH)\bin\HIGHGUI100.DLL&quot; $(TargetDir)
-copy &quot;$(CVPATH)\data\haarcascades\haarcascade_frontalface_default.xml&quot; $(TargetDir)
-&quot;$(PSDK_DIR)\Bin\mt.exe&quot; -manifest &quot;$(SolutionDir)\eViacam.exe.manifest&quot; -outputresource:&quot;$(TargetDir)\eViacam.exe&quot;;#1
-"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"
-				CommandLine="mkdir $(TargetDir)ca
-mkdir $(TargetDir)es
-mkdir $(TargetDir)gl
-mkdir $(TargetDir)it
-mkdir $(TargetDir)tr
-mkdir $(TargetDir)de
-mkdir $(TargetDir)oc
-mkdir $(TargetDir)fr
-mkdir $(TargetDir)ar
-mkdir $(TargetDir)he
-mkdir $(TargetDir)ru
-mkdir $(TargetDir)pt_BR
-
-copy &quot;$(SolutionDir)..\po\ca.gmo&quot; $(TargetDir)ca\eviacam.mo
-copy &quot;$(SolutionDir)..\po\es.gmo&quot; $(TargetDir)es\eviacam.mo
-copy &quot;$(SolutionDir)..\po\gl.gmo&quot; $(TargetDir)gl\eviacam.mo
-copy &quot;$(SolutionDir)..\po\it.gmo&quot; $(TargetDir)it\eviacam.mo
-copy &quot;$(SolutionDir)..\po\tr.gmo&quot; $(TargetDir)tr\eviacam.mo
-copy &quot;$(SolutionDir)..\po\de.gmo&quot; $(TargetDir)de\eviacam.mo
-copy &quot;$(SolutionDir)..\po\oc.gmo&quot; $(TargetDir)oc\eviacam.mo
-copy &quot;$(SolutionDir)..\po\fr.gmo&quot; $(TargetDir)fr\eviacam.mo
-copy &quot;$(SolutionDir)..\po\ar.gmo&quot; $(TargetDir)ar\eviacam.mo
-copy &quot;$(SolutionDir)..\po\he.gmo&quot; $(TargetDir)he\eviacam.mo
-copy &quot;$(SolutionDir)..\po\ru.gmo&quot; $(TargetDir)ru\eviacam.mo
-copy &quot;$(SolutionDir)..\po\pt_BR.gmo&quot; $(TargetDir)pt_BR\eviacam.mo
-
-copy &quot;%WXWIN%\locale\ca.mo&quot; $(TargetDir)ca\wxstd.mo
-copy &quot;%WXWIN%\locale\es.mo&quot; $(TargetDir)es\wxstd.mo
-copy &quot;%WXWIN%\locale\gl.mo&quot; $(TargetDir)gl\wxstd.mo
-copy &quot;%WXWIN%\locale\it.mo&quot; $(TargetDir)it\wxstd.mo
-copy &quot;%WXWIN%\locale\tr.mo&quot; $(TargetDir)tr\wxstd.mo
-copy &quot;%WXWIN%\locale\de.mo&quot; $(TargetDir)de\wxstd.mo
-rem copy &quot;%WXWIN%\locale\oc.mo&quot; $(TargetDir)oc\wxstd.mo
-copy &quot;%WXWIN%\locale\fr.mo&quot; $(TargetDir)fr\wxstd.mo
-rem copy &quot;%WXWIN%\locale\ar.mo&quot; $(TargetDir)ar\wxstd.mo
-rem copy &quot;%WXWIN%\locale\he.mo&quot; $(TargetDir)he\wxstd.mo
-copy &quot;%WXWIN%\locale\ru.mo&quot; $(TargetDir)ru\wxstd.mo
-copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo
-"/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="$(WXWIN)\include"/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				CommandLine="copy &quot;$(VCInstallDir)redist\x86\Microsoft.VC90.CRT\msvcp90.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(VCInstallDir)redist\x86\Microsoft.VC90.CRT\msvcr90.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(CVPATH)\build\bin\opencv_core220.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(CVPATH)\build\bin\opencv_imgproc220.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(CVPATH)\build\bin\opencv_objdetect220.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(CVPATH)\build\bin\opencv_highgui220.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(CVPATH)\build\bin\opencv_video220.dll&quot; $(TargetDir)&#x0D;&#x0A;copy &quot;$(CVPATH)\data\haarcascades\haarcascade_frontalface_default.xml&quot; $(TargetDir)&#x0D;&#x0A;"
+			/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -225,199 +201,287 @@ copy &quot;%WXWIN%\locale\pt_BR.mo&quot; $(TargetDir)pt_BR\wxstd.mo
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
 			<File
-				RelativePath=".\cautostart.cpp">
+				RelativePath=".\cautostart.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\ckeyboardcode.cpp">
+				RelativePath=".\checkupdates.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\clickwindow.cpp">
+				RelativePath=".\checkupdates_ui.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\clickwindowbitmap.cpp">
+				RelativePath=".\ckeyboardcode.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\clickwindowbitmapvertical.cpp">
+				RelativePath=".\clickwindow.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\clickwindowcontroller.cpp">
+				RelativePath=".\clickwindowbitmap.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\clickwindowtext.cpp">
+				RelativePath=".\clickwindowbitmapvertical.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\clickwindowvertical.cpp">
+				RelativePath=".\clickwindowcontroller.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\cmotioncalibration.cpp">
+				RelativePath=".\clickwindowtext.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\cvisualalert.cpp">
+				RelativePath=".\clickwindowvertical.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\dwellclick.cpp">
+				RelativePath=".\cmotioncalibration.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\eviacamapp.cpp">
+				RelativePath=".\cvisualalert.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\gestureclick.cpp">
+				RelativePath=".\dwellclick.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\hotkeymanager.cpp">
+				RelativePath=".\eviacamapp.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\paths.cpp">
+				RelativePath=".\gestureclick.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\pointeraction.cpp">
+				RelativePath=".\hotkeymanager.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\viacamcontroller.cpp">
+				RelativePath=".\paths.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\visionpipeline.cpp">
+				RelativePath=".\pointeraction.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\wabout.cpp">
+				RelativePath=".\viacamcontroller.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\wcameradialog.cpp">
+				RelativePath=".\visionpipeline.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\wconfiguration.cpp">
+				RelativePath=".\wabout.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\wconfirmcalibration.cpp">
+				RelativePath=".\wcameradialog.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\wgetkey.cpp">
+				RelativePath=".\wconfiguration.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\wmotioncalibrationx.cpp">
+				RelativePath=".\wconfirmcalibration.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\wmotioncalibrationy.cpp">
+				RelativePath=".\website.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\wviacam.cpp">
+				RelativePath=".\wgetkey.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\wwizard.cpp">
+				RelativePath=".\wmotioncalibrationx.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\wwizardmanager.cpp">
+				RelativePath=".\wmotioncalibrationy.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\wviacam.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\wwizard.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\wwizardmanager.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
 			<File
-				RelativePath=".\cautostart.h">
+				RelativePath=".\cautostart.h"
+				>
 			</File>
 			<File
-				RelativePath=".\ckeyboardcode.h">
+				RelativePath=".\checkupdates.h"
+				>
 			</File>
 			<File
-				RelativePath=".\clickwindow.h">
+				RelativePath=".\checkupdates_ui.h"
+				>
 			</File>
 			<File
-				RelativePath=".\clickwindowbitmap.h">
+				RelativePath=".\ckeyboardcode.h"
+				>
 			</File>
 			<File
-				RelativePath=".\clickwindowbitmapvertical.h">
+				RelativePath=".\clickwindow.h"
+				>
 			</File>
 			<File
-				RelativePath=".\clickwindowcontroller.h">
+				RelativePath=".\clickwindowbitmap.h"
+				>
 			</File>
 			<File
-				RelativePath=".\clickwindowtext.h">
+				RelativePath=".\clickwindowbitmapvertical.h"
+				>
 			</File>
 			<File
-				RelativePath=".\clickwindowvertical.h">
+				RelativePath=".\clickwindowcontroller.h"
+				>
 			</File>
 			<File
-				RelativePath=".\cmotioncalibration.h">
+				RelativePath=".\clickwindowtext.h"
+				>
 			</File>
 			<File
-				RelativePath=".\cvisualalert.h">
+				RelativePath=".\clickwindowvertical.h"
+				>
 			</File>
 			<File
-				RelativePath=".\dwellclick.h">
+				RelativePath=".\cmotioncalibration.h"
+				>
 			</File>
 			<File
-				RelativePath=".\eviacamapp.h">
+				RelativePath=".\cvisualalert.h"
+				>
 			</File>
 			<File
-				RelativePath=".\eviacamdefs.h">
+				RelativePath=".\dwellclick.h"
+				>
 			</File>
 			<File
-				RelativePath=".\gestureclick.h">
+				RelativePath=".\eviacamapp.h"
+				>
 			</File>
 			<File
-				RelativePath=".\hotkeymanager.h">
+				RelativePath=".\eviacamdefs.h"
+				>
 			</File>
 			<File
-				RelativePath=".\langnames-utf16.h">
+				RelativePath=".\gestureclick.h"
+				>
 			</File>
 			<File
-				RelativePath=".\mousecommand.h">
+				RelativePath=".\hotkeymanager.h"
+				>
 			</File>
 			<File
-				RelativePath=".\paths.h">
+				RelativePath=".\langnames-utf8.h"
+				>
 			</File>
 			<File
-				RelativePath=".\pointeraction.h">
+				RelativePath=".\mousecommand.h"
+				>
 			</File>
 			<File
-				RelativePath=".\version.h">
+				RelativePath=".\paths.h"
+				>
 			</File>
 			<File
-				RelativePath=".\viacamcontroller.h">
+				RelativePath=".\pointeraction.h"
+				>
 			</File>
 			<File
-				RelativePath=".\visionpipeline.h">
+				RelativePath=".\version.h"
+				>
 			</File>
 			<File
-				RelativePath=".\wabout.h">
+				RelativePath=".\viacamcontroller.h"
+				>
 			</File>
 			<File
-				RelativePath=".\wcameradialog.h">
+				RelativePath=".\visionpipeline.h"
+				>
 			</File>
 			<File
-				RelativePath=".\wconfiguration.h">
+				RelativePath=".\wabout.h"
+				>
 			</File>
 			<File
-				RelativePath=".\wconfirmcalibration.h">
+				RelativePath=".\wcameradialog.h"
+				>
 			</File>
 			<File
-				RelativePath=".\wgetkey.h">
+				RelativePath=".\wconfiguration.h"
+				>
 			</File>
 			<File
-				RelativePath=".\wmotioncalibrationx.h">
+				RelativePath=".\wconfirmcalibration.h"
+				>
 			</File>
 			<File
-				RelativePath=".\wmotioncalibrationy.h">
+				RelativePath=".\website.h"
+				>
 			</File>
 			<File
-				RelativePath=".\wviacam.h">
+				RelativePath=".\wgetkey.h"
+				>
 			</File>
 			<File
-				RelativePath=".\wwizard.h">
+				RelativePath=".\wmotioncalibrationx.h"
+				>
 			</File>
 			<File
-				RelativePath=".\wwizardmanager.h">
+				RelativePath=".\wmotioncalibrationy.h"
+				>
+			</File>
+			<File
+				RelativePath=".\wviacam.h"
+				>
+			</File>
+			<File
+				RelativePath=".\wwizard.h"
+				>
+			</File>
+			<File
+				RelativePath=".\wwizardmanager.h"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
 			<File
-				RelativePath=".\gui.rc">
+				RelativePath=".\gui.rc"
+				>
 			</File>
 		</Filter>
 	</Files>

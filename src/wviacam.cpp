@@ -45,6 +45,8 @@
 #include "pointeraction.h"
 #include "dwellclick.h"
 #include "paths.h"
+#include "checkupdates.h"
+#include "checkupdates_ui.h"
 
 ////@begin XPM images
 #include "icons/eviacam_mini.xpm"
@@ -55,6 +57,7 @@
 #include "icons/preferences.xpm"
 #include "icons/help.xpm"
 ////@end XPM images
+#include "icons/clickwindowoff.xpm"
 
 #include <wx/html/helpctrl.h>
 #include <wx/stdpaths.h>
@@ -84,39 +87,23 @@ BEGIN_EVENT_TABLE( WViacam, wxFrame )
 ////@begin WViacam event table entries
     EVT_CLOSE( WViacam::OnCloseWindow )
     EVT_ICONIZE( WViacam::OnIconize )
-
     EVT_MENU( ID_MENUITEM_ENABLE, WViacam::OnMenuitemEnableClick )
     EVT_UPDATE_UI( ID_MENUITEM_ENABLE, WViacam::OnMenuitemEnableUpdate )
-
     EVT_MENU( ID_MENUITEM_EXIT, WViacam::OnMenuitemExitClick )
-
     EVT_MENU( ID_MENU_WIZARD, WViacam::OnMenuWizardClick )
-
     EVT_MENU( ID_MENU_OPTIONS, WViacam::OnMenuOptionsClick )
-
     EVT_MENU( ID_MENU_HELP_CONTENTS, WViacam::OnToolHelpClick )
-
-#if defined(__WXOS2__)
     EVT_MENU( ID_MENU_CHECKUPDATES, WViacam::OnMenuCheckupdatesClick )
-#endif
-
     EVT_MENU( ID_MENU_ABOUT, WViacam::OnMenuAboutClick )
-
     EVT_MENU( ID_TOOL_ENABLE, WViacam::OnToolEnableClick )
     EVT_UPDATE_UI( ID_TOOL_ENABLE, WViacam::OnToolEnableUpdate )
-
     EVT_MENU( ID_TOOL_DISABLE, WViacam::OnToolDisableClick )
     EVT_UPDATE_UI( ID_TOOL_DISABLE, WViacam::OnToolDisableUpdate )
-
     EVT_MENU( ID_TOOL_CLICKWIN, WViacam::OnToolClickwinClick )
     EVT_UPDATE_UI( ID_TOOL_CLICKWIN, WViacam::OnToolClickwinUpdate )
-
     EVT_MENU( ID_TOOL_KEYBOARD, WViacam::OnToolKeyboardClick )
-
     EVT_MENU( ID_TOOL_OPTIONS, WViacam::OnToolOptionsClick )
-
     EVT_MENU( ID_TOOL_HELP, WViacam::OnToolHelpClick )
-
 ////@end WViacam event table entries
 
 	EVT_COMMAND  (wxID_ANY, wxEVT_SET_FPS, WViacam::OnSetFPS)
@@ -176,11 +163,13 @@ WViacam::~WViacam()
 void WViacam::Init()
 {
 ////@begin WViacam member initialisation
+    m_toolBar = NULL;
     m_statusBar = NULL;
 ////@end WViacam member initialisation
 	m_pCamWindow= NULL;
 	m_prevFPS= 0;
 	m_helpController= NULL;
+	m_updateToolbar= true;
 }
 
 
@@ -206,39 +195,37 @@ void WViacam::CreateControls()
     menuBar->Append(itemMenu7, _("&Configuration"));
     wxMenu* itemMenu11 = new wxMenu;
     itemMenu11->Append(ID_MENU_HELP_CONTENTS, _("&Help contents"), wxEmptyString, wxITEM_NORMAL);
-#if defined(__WXOS2__)
     itemMenu11->Append(ID_MENU_CHECKUPDATES, _("Check for &updates"), wxEmptyString, wxITEM_NORMAL);
-#endif
     itemMenu11->AppendSeparator();
     itemMenu11->Append(ID_MENU_ABOUT, _("&About..."), wxEmptyString, wxITEM_NORMAL);
     menuBar->Append(itemMenu11, _("&Help"));
     itemFrame1->SetMenuBar(menuBar);
 
-    wxToolBar* itemToolBar16 = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR );
-    itemToolBar16->SetToolBitmapSize(wxSize(32, 32));
+    m_toolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR );
+    m_toolBar->SetToolBitmapSize(wxSize(32, 32));
     wxBitmap itemtool17Bitmap(itemFrame1->GetBitmapResource(wxT("icons/on.xpm")));
     wxBitmap itemtool17BitmapDisabled;
-    itemToolBar16->AddTool(ID_TOOL_ENABLE, _("Enable"), itemtool17Bitmap, itemtool17BitmapDisabled, wxITEM_NORMAL, _("Enable"), wxEmptyString);
+    m_toolBar->AddTool(ID_TOOL_ENABLE, _("Enable"), itemtool17Bitmap, itemtool17BitmapDisabled, wxITEM_NORMAL, _("Enable"), wxEmptyString);
     wxBitmap itemtool18Bitmap(itemFrame1->GetBitmapResource(wxT("icons/off.xpm")));
     wxBitmap itemtool18BitmapDisabled;
-    itemToolBar16->AddTool(ID_TOOL_DISABLE, _("Disable"), itemtool18Bitmap, itemtool18BitmapDisabled, wxITEM_NORMAL, _("Disable"), wxEmptyString);
-    itemToolBar16->EnableTool(ID_TOOL_DISABLE, false);
+    m_toolBar->AddTool(ID_TOOL_DISABLE, _("Disable"), itemtool18Bitmap, itemtool18BitmapDisabled, wxITEM_NORMAL, _("Disable"), wxEmptyString);
+    m_toolBar->EnableTool(ID_TOOL_DISABLE, false);
     wxBitmap itemtool19Bitmap(itemFrame1->GetBitmapResource(wxT("icons/clickwindow.xpm")));
     wxBitmap itemtool19BitmapDisabled;
-    itemToolBar16->AddTool(ID_TOOL_CLICKWIN, _("Click Window"), itemtool19Bitmap, itemtool19BitmapDisabled, wxITEM_CHECK, _("Click Window"), wxEmptyString);
+    m_toolBar->AddTool(ID_TOOL_CLICKWIN, _("Click Window"), itemtool19Bitmap, itemtool19BitmapDisabled, wxITEM_CHECK, _("Click Window"), wxEmptyString);
     wxBitmap itemtool20Bitmap(itemFrame1->GetBitmapResource(wxT("icons/keyboard.xpm")));
     wxBitmap itemtool20BitmapDisabled;
-    itemToolBar16->AddTool(ID_TOOL_KEYBOARD, _("On-screen keyboard"), itemtool20Bitmap, itemtool20BitmapDisabled, wxITEM_NORMAL, _("On-screen keyboard"), wxEmptyString);
-    itemToolBar16->AddSeparator();
+    m_toolBar->AddTool(ID_TOOL_KEYBOARD, _("On-screen keyboard"), itemtool20Bitmap, itemtool20BitmapDisabled, wxITEM_NORMAL, _("On-screen keyboard"), wxEmptyString);
+    m_toolBar->AddSeparator();
     wxBitmap itemtool22Bitmap(itemFrame1->GetBitmapResource(wxT("icons/preferences.xpm")));
     wxBitmap itemtool22BitmapDisabled;
-    itemToolBar16->AddTool(ID_TOOL_OPTIONS, _("Options"), itemtool22Bitmap, itemtool22BitmapDisabled, wxITEM_NORMAL, _("Options"), wxEmptyString);
-    itemToolBar16->AddSeparator();
+    m_toolBar->AddTool(ID_TOOL_OPTIONS, _("Options"), itemtool22Bitmap, itemtool22BitmapDisabled, wxITEM_NORMAL, _("Options"), wxEmptyString);
+    m_toolBar->AddSeparator();
     wxBitmap itemtool24Bitmap(itemFrame1->GetBitmapResource(wxT("icons/help.xpm")));
     wxBitmap itemtool24BitmapDisabled;
-    itemToolBar16->AddTool(ID_TOOL_HELP, _("Help"), itemtool24Bitmap, itemtool24BitmapDisabled, wxITEM_NORMAL, _("Help"), wxEmptyString);
-    itemToolBar16->Realize();
-    itemFrame1->SetToolBar(itemToolBar16);
+    m_toolBar->AddTool(ID_TOOL_HELP, _("Help"), itemtool24Bitmap, itemtool24BitmapDisabled, wxITEM_NORMAL, _("Help"), wxEmptyString);
+    m_toolBar->Realize();
+    itemFrame1->SetToolBar(m_toolBar);
 
     m_statusBar = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
     if (WViacam::ShowToolTips())
@@ -539,7 +526,8 @@ void WViacam::OnToolClickwinClick( wxCommandEvent& event )
 {
 	wxGetApp().GetController().GetPointerAction().GetDwellClick().SetUseClickWindow(
 		!wxGetApp().GetController().GetPointerAction().GetDwellClick().GetUseClickWindow()
-	);		
+	);
+	m_updateToolbar= true;
 	event.Skip(false);
 }
 
@@ -550,8 +538,20 @@ void WViacam::OnToolClickwinClick( wxCommandEvent& event )
 
 void WViacam::OnToolClickwinUpdate( wxUpdateUIEvent& event )
 {	
+	bool buttonWasChecked= m_toolBar->GetToolState(ID_TOOL_CLICKWIN);
+	bool needToBeChecked= wxGetApp().GetController().GetPointerAction().GetDwellClick().GetUseClickWindow();
+
 	event.Enable (wxGetApp().GetController().GetPointerAction().GetDwellClick().GetEnabled());
-	event.Check (wxGetApp().GetController().GetPointerAction().GetDwellClick().GetUseClickWindow());
+	event.Check (needToBeChecked);
+
+	if (m_updateToolbar || buttonWasChecked!= needToBeChecked) {
+		if (!needToBeChecked)
+			m_toolBar->SetToolNormalBitmap(ID_TOOL_CLICKWIN, wxBitmap(clickwindow));
+		else
+			m_toolBar->SetToolNormalBitmap(ID_TOOL_CLICKWIN, wxBitmap(clickwindowoff));
+	}
+	m_updateToolbar= false;
+
 	event.Skip(false);
 }
 
@@ -654,24 +654,15 @@ void WViacam::OnMenuWizardClick( wxCommandEvent& event )
 }
 
 
-// Disabled (added for translators)
-#if defined(__WXOS2__)
-
 /*!
  * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CHECKUPDATES
  */
 
 void WViacam::OnMenuCheckupdatesClick( wxCommandEvent& event )
-{
-	// TODO. Strings only  for translators
-	wxString(_("Checking for updates..."));
-	wxString(_("Enable Viacam is up to date"));
-	wxString(_("New version available.\nVisit Enable Viacam web site?"));
+{	
+	CheckUpdatesUI dlg(this);
+	dlg.ShowModal();
 
-////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CHECKUPDATES in WViacam.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CHECKUPDATES in WViacam. 
+	event.Skip(false);
 }
 
-#endif

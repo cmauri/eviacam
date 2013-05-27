@@ -14,13 +14,10 @@ SUBDIRS = \
 
 EXTRA_DIST = \
 	autogen.sh \
-	README.ca \
-	README.es \
 	INSTALL.es \
 	AGRAIMENTS.txt \
 	win32/eviacam.sln \
 	win32/installer.iss \
-	win32/eViacam.exe.manifest \
 	win32/Info \
 	eviacam.kdevelop \
 	m4 
@@ -31,7 +28,8 @@ INCLUDES = \
 	-I$(top_srcdir)/wxutil \
 	-I$(top_srcdir)/creavision \
 	-I$(top_srcdir)/libwebcam \
-	-I$(top_srcdir)/wxcamwindow
+	-I$(top_srcdir)/wxcamwindow \
+	-I$(top_srcdir)
 
 maintainer-clean-local:
 	-rm -rf win32/Release

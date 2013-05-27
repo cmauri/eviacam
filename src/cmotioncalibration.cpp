@@ -153,8 +153,8 @@ bool CMotionCalibration::InitMotionCalibration()
 			else if (newSpeedY< 10.0f) newSpeedY= 10.0f;
 			
 			// Set new parameters
-			wxGetApp().GetController().GetPointerAction().SetXSpeed(newSpeedX);
-			wxGetApp().GetController().GetPointerAction().SetYSpeed(newSpeedY);
+			wxGetApp().GetController().GetPointerAction().SetXSpeed((unsigned int) newSpeedX);
+			wxGetApp().GetController().GetPointerAction().SetYSpeed((unsigned int) newSpeedY);
 			
 			// Disable click generation & enable motion to test
 			wxGetApp().GetController().GetPointerAction().SetClickMode(CPointerAction::NONE);
