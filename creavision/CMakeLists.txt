@@ -83,6 +83,7 @@ endif(WIN32)
 
 add_library (creavision STATIC ${creavision_SRCS})
 TARGET_LINK_LIBRARIES(creavision ${OpenCV_LIBS} )
+TARGET_LINK_LIBRARIES(creavision simplelog)
 
 IF(CMAKE_SYSTEM_NAME MATCHES "Linux")
 	TARGET_LINK_LIBRARIES(creavision libwebcam v4l2)

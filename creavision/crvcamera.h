@@ -99,8 +99,7 @@ private:
 
 	int m_RealWidth, m_RealHeight;
 	float m_RealFrameRate, m_LastRealFrameRate;
-	unsigned int m_lastTimeStamp;
-	int m_elapsedTime;
+	long long m_lastTimeStamp;
 	bool m_horizontalFlip;
 };
 

@@ -27,7 +27,7 @@
 #include <cassert>
 
 // Return timestamp in ms
-static unsigned int GetTime (void)
+static long long GetTime (void)
 {
 	struct timeb now;	
 	ftime(&now);
@@ -91,15 +91,15 @@ void CCamera::PostQueryFrame(IplImage* pImage)
 	m_RealHeight= pImage->height;
 
 	// Update real FPS
-	int now= GetTime();
-	m_elapsedTime= now - m_lastTimeStamp;
+	long long now= GetTime();
+	long long elapsedTime= now - m_lastTimeStamp;
 	m_lastTimeStamp= now;
 	m_LastRealFrameRate= m_RealFrameRate;
 
-	float weight= ((float) m_elapsedTime / 1000.0f) * 1.5f;
+	float weight= ((float) elapsedTime / 1000.0f) * 1.5f;
 	if (weight> 1.0f) weight= 1.0f;
-	if (m_elapsedTime> 0)
-		m_RealFrameRate= (1000.0f / (float) m_elapsedTime) * weight + m_LastRealFrameRate * (1.0f - weight);
+	if (elapsedTime> 0)
+		m_RealFrameRate= (1000.0f / (float) elapsedTime) * weight + m_LastRealFrameRate * (1.0f - weight);
 	else
 		m_RealFrameRate= 0;
 
