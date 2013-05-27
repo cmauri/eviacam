@@ -46,7 +46,7 @@
 #include "gestureclick.h"
 
 ////@begin XPM images
-#include "icons/eviacam.xpm"
+#include "icons/eviacam_mini.xpm"
 #include "icons/user.xpm"
 #include "icons/eviacam_small.xpm"
 ////@end XPM images
@@ -69,49 +69,29 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
 
 ////@begin WConfiguration event table entries
     EVT_SPINCTRL( ID_SPINCTRL_XSPEED, WConfiguration::OnSpinctrlXspeedUpdated )
-
     EVT_SPINCTRL( ID_SPINCTRL_YSPEED, WConfiguration::OnSpinctrlYspeedUpdated )
-
     EVT_SPINCTRL( ID_SPINCTRL_ACCELERATION, WConfiguration::OnSpinctrlAccelerationUpdated )
-
     EVT_SPINCTRL( ID_SPINCTRL_SMOOTHNESS, WConfiguration::OnSpinctrlSmoothnessUpdated )
-
     EVT_SPINCTRL( ID_SPINCTRL_EASYSTOP, WConfiguration::OnSpinctrlEasystopUpdated )
-
     EVT_BUTTON( ID_BUTTON, WConfiguration::OnButtonClick )
-
     EVT_CHECKBOX( ID_CHECKBOX_WORKSPACE_LIMIT, WConfiguration::OnCheckboxWorkspaceLimitClick )
-
     EVT_SPINCTRL( ID_SPINCTRL_TOP_WORKSPACE, WConfiguration::OnSpinctrlTopWorkspaceUpdated )
-
     EVT_SPINCTRL( ID_SPINCTRL_LEFT_WORKSPACE, WConfiguration::OnSpinctrlLeftWorkspaceUpdated )
-
     EVT_SPINCTRL( ID_SPINCTRL_RIGHT_WORKSPACE, WConfiguration::OnSpinctrlRightWorkspaceUpdated )
-
     EVT_SPINCTRL( ID_SPINCTRL_BOTTOM_WORKSPACE, WConfiguration::OnSpinctrlBottomWorkspaceUpdated )
-
     EVT_CHECKBOX( ID_CHECKBOX2, WConfiguration::OnCheckboxWrapPointer )
-
     EVT_CHECKBOX( ID_CHECKBOX_ENABLE_DWELL, WConfiguration::OnCheckboxEnableDwellClick )
-
     EVT_SPINCTRL( ID_SPINCTRL_DWELL_TIME, WConfiguration::OnSpinctrlDwellTimeUpdated )
-
     EVT_SPINCTRL( ID_SPINCTRL_DWELL_AREA, WConfiguration::OnSpinctrlDwellAreaUpdated )
-
     EVT_CHECKBOX( ID_CHECKBOX_ALLOW_CONSECUTIVE, WConfiguration::OnCheckboxAllowConsecutiveClick )
-
     EVT_CHECKBOX( ID_CHECKBOX_BEEP_ON_CLICK, WConfiguration::OnCheckboxBeepOnClickClick )
-
 #if defined(__WXGTK__)
     EVT_CHECKBOX( ID_CHECKBOX_ALLOW_VISUAL_ALERTS, WConfiguration::OnCheckboxAllowVisualAlertsClick )
 #endif
 
     EVT_CHECKBOX( ID_CHECKBOX_SHOW_CLICKWIN, WConfiguration::OnCheckboxShowClickwinClick )
-
     EVT_CHOICE( ID_CHOICE_DESIGN, WConfiguration::OnChoiceDesignSelected )
-
     EVT_CHOICE( ID_CHOICE_BEHAVIOUR, WConfiguration::OnChoiceBehaviourSelected )
-
 #if defined(__WXGTK__)
     EVT_CHOICE( ID_CHOICE5, WConfiguration::OnChoiceClickWindowModeSelected )
 #endif
@@ -145,35 +125,20 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
 #endif
 
     EVT_CHECKBOX( ID_CHECKBOX_ENABLE_AT_STARTUP, WConfiguration::OnCheckboxEnableAtStartupClick )
-
     EVT_TEXT( ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND, WConfiguration::OnTextctrlOnscreenkeyboardcommandTextUpdated )
-
     EVT_BUTTON( ID_BUTTON_ONSCREENKEYBOARDCOMMAND, WConfiguration::OnButtonOnscreenkeyboardcommandClick )
-
     EVT_CHECKBOX( ID_CHECKBOX_AUTO_LOCATE_FACE, WConfiguration::OnCheckboxAutoLocateFaceClick )
-
     EVT_CHOICE( ID_CHOICE4, WConfiguration::OnChoCpuUsageSelected )
-
     EVT_CHECKBOX( ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED, WConfiguration::OnCheckboxEnableWhenFaceDetectedClick )
-
     EVT_SPINCTRL( ID_SPINCTRL2, WConfiguration::OnSpinLocateFaceTimeoutUpdated )
-
     EVT_CHOICE( ID_CHOICE_PROFILE, WConfiguration::OnChoiceProfileSelected )
-
     EVT_BUTTON( ID_BUTTON_ADD_PROFILE, WConfiguration::OnButtonAddProfileClick )
-
     EVT_BUTTON( ID_BUTTON_DEL_PROFILE, WConfiguration::OnButtonDelProfileClick )
-
     EVT_BUTTON( ID_BUTTON_CAMERA_SETTINGS, WConfiguration::OnButtonCameraSettingsClick )
-
     EVT_BUTTON( ID_BUTTON_CHANGE_CAMERA, WConfiguration::OnButtonChangeCameraClick )
-
     EVT_CHOICE( ID_CHOICE_LANGUAGE, WConfiguration::OnChoiceLanguageSelected )
-
     EVT_BUTTON( wxID_OK, WConfiguration::OnOkClick )
-
     EVT_BUTTON( wxID_CANCEL, WConfiguration::OnCancelClick )
-
 ////@end WConfiguration event table entries
     EVT_COMBOBOX( ID_COMBOBOX_LEFT, WConfiguration::OnComboboxLeftSelected )
 
@@ -213,7 +178,7 @@ bool WConfiguration::Create( wxWindow* parent, wxWindowID id, const wxString& ca
     wxDialog::Create( parent, id, caption, pos, size, style );
 
     CreateControls();
-    SetIcon(GetIconResource(wxT("icons/eviacam.xpm")));
+    SetIcon(GetIconResource(wxT("icons/eviacam_mini.xpm")));
     if (GetSizer())
     {
         GetSizer()->SetSizeHints(this);
@@ -954,9 +919,9 @@ wxIcon WConfiguration::GetIconResource( const wxString& name )
     // Icon retrieval
 ////@begin WConfiguration icon retrieval
     wxUnusedVar(name);
-    if (name == _T("icons/eviacam.xpm"))
+    if (name == _T("icons/eviacam_mini.xpm"))
     {
-        wxIcon icon(eviacam);
+        wxIcon icon(eviacam_mini);
         return icon;
     }
     else if (name == _T("icons/user.xpm"))

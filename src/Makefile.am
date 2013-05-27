@@ -48,6 +48,7 @@ dist_noinst_DATA= version.h.in \
 	icons/clickwindow.xpm \
 	icons/keyboard.xpm \
 	icons/user.xpm \
+	icons/eviacam_gray_bg.xpm \
 	icons/eviacam_mini.xpm \
 	icons/eviacam_small.xpm \
 	icons/off.xpm \
@@ -83,14 +84,14 @@ dist_noinst_DATA= version.h.in \
 	icons/usermoveh64.xpm \
 	icons/usermovev64.xpm
 
-EXTRA_DIST = eviacam.desktop icons/eviacam.xpm
+EXTRA_DIST = eviacam.desktop icons/eviacam.png
 dist_pkgdata_DATA= eviacam.desktop data/haarcascade_frontalface_default.xml
 	
 desktopdir		=	$(datadir)/applications/
 desktop_DATA	=	eviacam.desktop
 
 pixmapdir		=	$(datadir)/pixmaps/
-pixmap_DATA	=	icons/eviacam.xpm
+pixmap_DATA	=	icons/eviacam.png
 
 #########################################################################
 # APPLICATION SECTION
