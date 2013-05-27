@@ -1543,6 +1543,9 @@ CCameraControl::ECameraControlType CCameraControlV4L2::CControlType2ECameraContr
 		case CC_TYPE_CHOICE:
 			ownType= CCTYPE_CHOICE;
 			break;
+		case CC_TYPE_BUTTON:
+			ownType= CCTYPE_BUTTON;
+			break;
 		default:
 			// Unsupported control. Execution should never reach this point
 			assert (false);

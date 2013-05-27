@@ -6,7 +6,7 @@
  */
 
 /*
- * Copyright (c) 2006-2008 Logitech.
+ * Copyright (c) 2006-2010 Logitech.
  *
  * This file is part of libwebcam.
  *
@@ -46,7 +46,7 @@
 #include "compat.h"
 
 #ifdef USE_LOGITECH_DYNCTRL
-#include "dynctrl-logitech.h"
+#include <dynctrl-logitech.h>
 #endif
 
 
@@ -122,6 +122,8 @@ CHandle c_open_device (const char *device_name)
 		v4l2_name = &device_name[5];
 	else if(strstr(device_name, "video") == device_name)
 		v4l2_name = device_name;
+	else if(strstr(device_name, "subdev") == device_name)
+		v4l2_name = device_name;
 	else {
 		print_libwebcam_error("Unable to open device '%s'. Unrecognized device name.", device_name);
 		return 0;
@@ -189,7 +191,7 @@ int c_get_file_descriptor (CHandle hDevice)
 		return 0;
 	Device *device = GET_HANDLE(hDevice).device;
 	if (!device) return 0;
-	
+
 	return device->fd;
 }
 
@@ -900,13 +902,12 @@ CResult c_enum_controls (CHandle hDevice, CControl *controls, unsigned int *size
 			current->choices.count = elem->control.choices.count;
 			current->choices.list = (CControlChoice *)((char *)controls + choices_offset);
 			choices_offset += elem->control.choices.count * sizeof(CControlChoice);
-			current->choices.names = (char *)controls + choices_offset;
+			//current->choices.names = (char *)controls + choices_offset;
 
 			int index;
 			for(index = 0; index < elem->control.choices.count; index++) {
 				int name_length = strlen(elem->control.choices.list[index].name);
 				current->choices.list[index].index = elem->control.choices.list[index].index;
-				current->choices.list[index].name = (char *)controls + choices_offset;
 				memcpy(current->choices.list[index].name, elem->control.choices.list[index].name, name_length + 1);
 				assert(choices_offset + name_length < req_size);
 				choices_offset += name_length + 1;
@@ -1029,7 +1030,383 @@ CResult c_get_control (CHandle hDevice, CControlId control_id, CControlValue *va
 	return ret;
 }
 
+/**
+ * refreshes the values of all device controls.
+ *
+ * @param hDevice		a device handle obtained from c_open_device()
+ * @return
+ * 		- #C_SUCCESS on success
+ * 		- #C_INIT_ERROR if the library has not been initialized
+ * 		- #C_INVALID_HANDLE if the given device handle is invalid
+ */
+static CResult refresh_control_values(CHandle hDevice)
+{
+        // Check the given handle and arguments
+	if(!initialized)
+		return C_INIT_ERROR;
+	if(!HANDLE_OPEN(hDevice))
+		return C_INVALID_HANDLE;
+	if(!HANDLE_VALID(hDevice))
+		return C_NOT_EXIST;
+	Device *device = GET_HANDLE(hDevice).device;
+    int ret = C_SUCCESS;
+    //update control values
+    Control *current = device->controls.first;
+    
+    while(current) 
+    {
+        ret = read_v4l2_control(device, current, &current->control.value, hDevice);
+        if(ret != C_SUCCESS)
+            print_libwebcam_error("Could not read control: 0x%08x.\n", current->v4l2_control);
+        
+        current = current->next;
+    }
+ 
+    return C_SUCCESS;
+}
 
+/**
+ * set special auto controls (higher id) before setting manual counterparts.
+ *
+ * @param hDevice		a device handle obtained from c_open_device()
+ * @return
+ * 		- #C_SUCCESS on success
+ * 		- #C_INIT_ERROR if the library has not been initialized
+ * 		- #C_INVALID_HANDLE if the given device handle is invalid
+ */
+static CResult set_special_auto_controls(CHandle hDevice)
+{
+    // Check the given handle and arguments
+    if(!initialized)
+        return C_INIT_ERROR;
+    if(!HANDLE_OPEN(hDevice))
+        return C_INVALID_HANDLE;
+    if(!HANDLE_VALID(hDevice))
+        return C_NOT_EXIST;
+    Device *device = GET_HANDLE(hDevice).device;
+    int ret = C_SUCCESS;
+    //update control values
+    Control *current = device->controls.first;
+    
+    while(current) 
+    {
+        if( (current->v4l2_control == V4L2_CID_FOCUS_AUTO) || 
+            (current->v4l2_control == V4L2_CID_HUE_AUTO) )
+        {
+            if(current->control.flags & CC_NEED_SET)
+            {
+                ret = write_v4l2_control(device, current, &current->control.value, hDevice);
+                if(ret != C_SUCCESS)
+                {
+                    print_libwebcam_error("Could not set control: 0x%08x.\n", current->v4l2_control);
+                    // update with the real value
+                    read_v4l2_control(device, current, &current->control.value, hDevice);
+                }
+                current->control.flags &= ~(CC_NEED_SET); //reset flag
+            }
+        }
+        current = current->next;
+    }
+    return C_SUCCESS;
+}
+
+/**
+ * set the values of all device controls.
+ *
+ * @param hDevice		a device handle obtained from c_open_device()
+ * @return
+ * 		- #C_SUCCESS on success
+ * 		- #C_INIT_ERROR if the library has not been initialized
+ * 		- #C_INVALID_HANDLE if the given device handle is invalid
+ */
+static CResult set_control_values(CHandle hDevice)
+{
+    // Check the given handle and arguments
+    if(!initialized)
+        return C_INIT_ERROR;
+    if(!HANDLE_OPEN(hDevice))
+        return C_INVALID_HANDLE;
+    if(!HANDLE_VALID(hDevice))
+        return C_NOT_EXIST;
+    Device *device = GET_HANDLE(hDevice).device;
+    
+    //make sure special auto controls have already been set
+    int ret = set_special_auto_controls(hDevice);
+    
+    //update all other control values
+    Control *current = device->controls.first;
+    
+    while(current) 
+    {
+        if(current->control.flags & CC_NEED_SET)
+        {
+            ret = write_v4l2_control(device, current, &current->control.value, hDevice);
+            if(ret != C_SUCCESS)
+            {
+                print_libwebcam_error("Could not set control: 0x%08x.\n", current->v4l2_control);
+                // update with the real value
+                read_v4l2_control(device, current, &current->control.value, hDevice);
+            }
+            current->control.flags &= ~(CC_NEED_SET); //reset flag
+        }
+        current = current->next;
+    }
+
+    return C_SUCCESS;
+}
+
+/**
+ * Looks up the control with the given V4L2 ID for the given device.
+ *
+ * @return
+ * 		- NULL if no corresponding control was found for the given device.
+ * 		- Pointer to the control if it was found.
+ */
+static Control *find_control_by_v4l2_id (Device *dev, int id)
+{
+    Control *elem = dev->controls.first;
+    while(elem) {
+        if(elem->v4l2_control == id)
+            break;
+        elem = elem->next;
+    }
+    return elem;
+}
+
+/**
+ * Stores the values of all device controls into a file.
+ *
+ * @param hDevice		a device handle obtained from c_open_device()
+ * @param filename	    file name for storing the controls data
+ * @return
+ * 		- #C_SUCCESS on success
+ * 		- #C_INIT_ERROR if the library has not been initialized
+ * 		- #C_INVALID_HANDLE if the given device handle is invalid
+ */
+CResult c_save_controls (CHandle hDevice, const char *filename)
+{
+    // Check the given handle and arguments
+    if(!initialized)
+        return C_INIT_ERROR;
+    if(!HANDLE_OPEN(hDevice))
+        return C_INVALID_HANDLE;
+    if(!HANDLE_VALID(hDevice))
+        return C_NOT_EXIST;
+    Device *device = GET_HANDLE(hDevice).device;
+
+    if(lock_mutex(&device->controls.mutex))
+        return C_SYNC_ERROR;
+    
+    //printf("%i device controls\n",device->controls.count);    
+    FILE *fp = fopen(filename, "w");
+    
+    if( fp == NULL )
+    {
+        print_libwebcam_error("Could not open control data file for write: %s.\n", filename);
+        return (-1);
+    } 
+    else 
+    {
+        refresh_control_values(hDevice);
+        
+        //write header
+        fprintf(fp, "#V4L2/CTRL/0.0.2\n");
+        fprintf(fp, "APP{\"libwebcam\"}\n");
+        //write control data
+        fprintf(fp, "# control data\n");
+        
+        Control *current = device->controls.first;
+        while(current) 
+        {
+            //printf("printing control id: 0x%08x\n", current->v4l2_control);
+            if(!(current->control.flags & (CC_CAN_READ | CC_CAN_WRITE)))
+            {
+                current = current->next;
+                printf("jumping\n");
+                continue;
+            }
+            
+            fprintf(fp, "#%s\n", current->control.name);
+            switch(current->control.type)
+            {
+#ifdef ENABLE_RAW_CONTROLS
+                case CC_TYPE_RAW :
+                    fprintf(fp, "ID{0x%08x};CHK{%i:%i:1:0}=STR{\"%s\"}\n",
+	                    current->v4l2_control, 
+	                    current->control.min.raw.size, 
+	                    current->control.min.raw.size,
+	                    (char *) current->control.value.raw.data);
+                    break;
+#endif
+                case CC_TYPE_CHOICE : 
+                    //since we don't have real v4l2 maximum, minimum, step 
+                    //use 1 for step, 0 for minimum and calculate maximum from choices.count
+                    //NOTE: although this should be valid for most cases, it's not necessarly true.  
+                    fprintf(fp, "ID{0x%08x};CHK{0:%i:1:%i}=VAL{%i}\n",
+	                    current->v4l2_control,
+	                    current->control.choices.count - 1,
+	                    current->control.def.value,
+	                    current->control.value.value);
+                    break;
+                
+                default :
+                    fprintf(fp, "ID{0x%08x};CHK{%i:%i:%i:%i}=VAL{%i}\n",
+	                    current->v4l2_control, 
+	                    current->control.min.value, 
+	                    current->control.max.value,
+	                    current->control.step.value,
+	                    current->control.def.value,
+	                    current->control.value.value);
+                    break;
+            }
+            current = current->next;
+        }
+    }
+    
+    fclose(fp);
+    unlock_mutex(&device->controls.mutex);
+    return C_SUCCESS;
+}
+
+ /**
+ * Loads the values of all device controls from a file.
+ *
+ * @param hDevice		a device handle obtained from c_open_device()
+ * @param filename	    file name for reading the controls data
+ * @return
+ * 		- #C_SUCCESS on success
+ * 		- #C_INIT_ERROR if the library has not been initialized
+ * 		- #C_INVALID_HANDLE if the given device handle is invalid
+ * 		- #C_INVALID_ARG if no value is given
+ * 		- #C_NOT_FOUND if the device does not support the given control
+ * 		- #C_CANNOT_READ if the given control is not readable
+ * 		- #C_INVALID_DEVICE if the device could not be opened
+ * 		- #C_V4L2_ERROR if a V4L2 error occurred during control access
+ */
+
+CResult c_load_controls (CHandle hDevice, const char *filename)
+{
+    // Check the given handle and arguments
+    if(!initialized)
+        return C_INIT_ERROR;
+    if(!HANDLE_OPEN(hDevice))
+        return C_INVALID_HANDLE;
+    if(!HANDLE_VALID(hDevice))
+        return C_NOT_EXIST;
+    Device *device = GET_HANDLE(hDevice).device;
+
+    if(lock_mutex(&device->controls.mutex))
+        return C_SYNC_ERROR;
+        
+    FILE *fp = fopen(filename, "r");
+    if( fp == NULL )
+    {
+        print_libwebcam_error("Could not open control data file for read: %s.\n", filename);
+        return (-1);
+    } 
+    else 
+    {
+        char line[200];
+        if(fgets(line, sizeof(line), fp) != NULL)
+        {
+			int major,minor,rev;
+
+            if(sscanf(line,"#V4L2/CTRL/%i.%i.%i", &major, &minor, &rev) == 3) 
+            {
+                //check standard version if needed
+            }
+            else
+            {
+                print_libwebcam_error("no valid control file header found\n");
+                goto finish;
+            }
+        }
+        else
+        {
+            print_libwebcam_error("no valid control file header found\n");
+            goto finish;
+        }
+            
+        while (fgets(line, sizeof(line), fp) != NULL) 
+        {
+            int id = 0; 
+            int min = 0, max = 0, step = 0, def = 0;
+            int32_t val = 0;
+            //int64_t val64 = 0;
+            
+            if ((line[0]!='#') && (line[0]!='\n')) 
+            {
+                if(sscanf(line,"ID{0x%08x};CHK{%i:%i:%i:%i}=VAL{%i}",
+                    &id, &min, &max, &step, &def, &val) == 6)
+                {
+                   
+                    Control *current = find_control_by_v4l2_id(device, id);
+                    if(current)
+                    {
+                        //check values
+                        if((current->control.type != CC_TYPE_CHOICE && 
+						    (current->control.min.value == min && 
+							 current->control.max.value == max &&
+                             current->control.step.value == step &&
+							 current->control.def.value == def)) ||
+						   (current->control.type == CC_TYPE_CHOICE &&                           
+							current->control.def.value == def))
+                        {
+                            current->control.value.value = val;
+                            current->control.flags |= CC_NEED_SET; //set flag
+							//printf("setting 0x%08x to %i\n", id, val);
+                        }
+						else
+						{
+							print_libwebcam_error("control (0x%08x) - doesn't match hardware\n", id);
+						}
+                    }
+                }
+                else if(sscanf(line,"ID{0x%08x};CHK{0:0:0:0}=VAL64{",
+                    &id) == 1)
+                {
+                    print_libwebcam_error("control (0x%08x) - 64 bit controls not supported\n", id);
+                }
+                else if(sscanf(line,"ID{0x%08x};CHK{%i:%i:%i:0}=STR{\"%*s\"}",
+                    &id, &min, &max, &step) == 5)
+                {
+#ifdef ENABLE_RAW_CONTROLS
+                    Control *current = find_control_by_v4l2_id(device, id);
+                    if(current)
+                    {
+                         //check values
+                        if(current->control.min.raw.size == min &&
+                           current->control.max.raw.size == max &&
+                           1 == step)
+                        {
+                            char str[max+1];
+                            sscanf(line, "ID{0x%*x};CHK{%*i:%*i:%*i:0}==STR{\"%s\"}", str);
+                            if(strlen(str) > max) //FIXME: should also check (minimum +N*step)
+                            {
+                                print_libwebcam_error("string bigger than maximum buffer size");
+                            }
+                            else
+                            {
+                                strcpy(current->control.value.raw.data, str);
+                                current->control.flags |= CC_NEED_SET; //set flag
+                            }
+                        }
+                    }
+#endif
+                }
+				//else printf("skip line\n");
+					       
+            }
+        }
+        
+        set_control_values(hDevice);
+    }
+finish:   
+    fclose(fp);
+    unlock_mutex(&device->controls.mutex);
+    return C_SUCCESS;
+}
+ 
 /*
  * Events
  */
@@ -1224,66 +1601,49 @@ static CResult create_control_choices (Control *ctrl, struct v4l2_queryctrl *v4l
 {
 	CResult ret = C_SUCCESS;
 
-	int choices_count = v4l2_ctrl->maximum - v4l2_ctrl->minimum + 1;
-	ctrl->control.choices.count = choices_count;
-
+	//int choices_count = v4l2_ctrl->maximum - v4l2_ctrl->minimum + 1;
+	ctrl->control.choices.count = 0;
+	ctrl->control.choices.list = NULL;
 	// Allocate memory for the choices.names and choices.list members
-	ctrl->control.choices.names = (char *)malloc(choices_count * V4L2_MENU_CTRL_MAX_NAME_SIZE);
-	if(ctrl->control.choices.names == NULL) {
-		ret = C_NO_MEMORY;
-		goto done;
-	}
-	ctrl->control.choices.list = (CControlChoice *)malloc(choices_count * sizeof(CControlChoice));
-	if(ctrl->control.choices.list == NULL) {
-		ret = C_NO_MEMORY;
-		goto done;
-	}
+	//ctrl->control.choices.names = (char *)malloc(choices_count * V4L2_MENU_CTRL_MAX_NAME_SIZE);
+	
+	//if(ctrl->control.choices.names == NULL) {
+	//	ret = C_NO_MEMORY;
+	//	goto done;
+	//}
+	//ctrl->control.choices.list = (CControlChoice *)malloc(choices_count * sizeof(CControlChoice));
+	//if(ctrl->control.choices.list == NULL) {
+	//	ret = C_NO_MEMORY;
+	//	goto done;
+	//}
 
 	// Query the menu items of the given control and transform them
 	// into CControlChoice.
-	struct v4l2_querymenu v4l2_menu = { .id = v4l2_ctrl->id };
-	for(v4l2_menu.index = v4l2_ctrl->minimum; v4l2_menu.index <= v4l2_ctrl->maximum; v4l2_menu.index++) {
-		int choice_index = v4l2_menu.index - v4l2_ctrl->minimum;
-		if(ioctl(v4l2_dev, VIDIOC_QUERYMENU, &v4l2_menu)) {
-			if(errno == EINVAL) {
-#ifdef V4L2_CID_EXPOSURE_AUTO
-				// Some newer versions of the UVC driver implement an 'Exposure, Auto'
-				// menu control whose menu choices don't have contiguous IDs
-				// but { 1, 2, 4, 8 } instead.
-				if(v4l2_ctrl->id == V4L2_CID_EXPOSURE_AUTO && errno == EINVAL &&
-						v4l2_menu.index == 0) {
-					print_libwebcam_error(
-						"Unsupported V4L2_CID_EXPOSURE_AUTO control with a non-contiguous \n"
-						"  range of choice IDs found");
-				}
-				else
-#endif
-				{
-					print_libwebcam_error(
-						"Invalid menu control choice range encountered.\n"
-						"  Indicated range is [ %d .. %d ] but querying choice %d failed.",
-						v4l2_ctrl->minimum, v4l2_ctrl->maximum, v4l2_menu.index
-					);
-				}
-				ret = C_NOT_IMPLEMENTED;
-				goto done;
-			}
-			ret = C_V4L2_ERROR;
-			goto done;
-		}
-		ctrl->control.choices.list[choice_index].index = v4l2_menu.index;
-		ctrl->control.choices.list[choice_index].name = ctrl->control.choices.names + choice_index * V4L2_MENU_CTRL_MAX_NAME_SIZE;
-		if(strlen((char *)v4l2_menu.name))
-			memcpy(ctrl->control.choices.list[choice_index].name, v4l2_menu.name, V4L2_MENU_CTRL_MAX_NAME_SIZE);
-		else
-			snprintf(ctrl->control.choices.list[choice_index].name, V4L2_MENU_CTRL_MAX_NAME_SIZE, "%d", v4l2_menu.index);
+	struct v4l2_querymenu v4l2_menu = {0};
+	
+	v4l2_menu.id = v4l2_ctrl->id;
 
+	for(v4l2_menu.index = v4l2_ctrl->minimum; v4l2_menu.index <= v4l2_ctrl->maximum; v4l2_menu.index++) {
+		if(ioctl(v4l2_dev, VIDIOC_QUERYMENU, &v4l2_menu) < 0)
+        	continue;
+		
+		ctrl->control.choices.count++;
+			
+		if(!ctrl->control.choices.list)
+			ctrl->control.choices.list = (CControlChoice *)malloc(sizeof(CControlChoice));
+		else
+			ctrl->control.choices.list = (CControlChoice *)realloc(ctrl->control.choices.list, ctrl->control.choices.count * sizeof(CControlChoice));
+
+		
+		ctrl->control.choices.list[ctrl->control.choices.count-1].index = v4l2_menu.index;
+		ctrl->control.choices.list[ctrl->control.choices.count-1].id = v4l2_menu.id;
+		if(strlen((char *)v4l2_menu.name))
+			memcpy(ctrl->control.choices.list[ctrl->control.choices.count-1].name, v4l2_menu.name, V4L2_MENU_CTRL_MAX_NAME_SIZE);
+		else
+			snprintf(ctrl->control.choices.list[ctrl->control.choices.count-1].name, V4L2_MENU_CTRL_MAX_NAME_SIZE, "%d", v4l2_menu.index);
 	}
 
-done:
 	if(ret != C_SUCCESS) {
-		if(ctrl->control.choices.names)
-			free(ctrl->control.choices.names);
 		if(ctrl->control.choices.list)
 			free(ctrl->control.choices.list);
 	}
@@ -1322,7 +1682,7 @@ static Control *create_v4l2_control (Device *device, struct v4l2_queryctrl *v4l2
 #ifdef ENABLE_RAW_CONTROLS
 		case V4L2_CTRL_TYPE_STRING:		type = CC_TYPE_RAW;			break;
 #endif
-		case V4L2_CTRL_TYPE_BUTTON:		// TODO implement
+		case V4L2_CTRL_TYPE_BUTTON:		type = CC_TYPE_BUTTON;		break;
 		case V4L2_CTRL_TYPE_INTEGER64:	// TODO implement
 			ret = C_NOT_IMPLEMENTED;
 			print_libwebcam_error("Warning: Unsupported V4L2 control type encountered: ctrl_id = 0x%08X, "
@@ -1368,6 +1728,7 @@ static Control *create_v4l2_control (Device *device, struct v4l2_queryctrl *v4l2
 			ret = create_control_choices(ctrl, v4l2_ctrl, v4l2_dev);
 			if(ret) goto done;
 		}
+#ifdef ENABLE_RAW_CONTROLS
 		else if(type == CC_TYPE_RAW) {
 			if(v4l2_ctrl->minimum != v4l2_ctrl->maximum || v4l2_ctrl->step != 1) {
 				print_libwebcam_error("Unsupported V4L2 string control encountered: ctrl_id = 0x%08X, "
@@ -1379,18 +1740,30 @@ static Control *create_v4l2_control (Device *device, struct v4l2_queryctrl *v4l2
 			}
 			ctrl->control.value.raw.size =
 			ctrl->control.min.raw.size =
-			ctrl->control.max.raw.size =
 			ctrl->control.def.raw.size = v4l2_ctrl->maximum;
+			//allocate data buffer
+            ctrl->control.value.raw.data = calloc(ctrl->control.def.raw.size, sizeof(char));
 		}
+#endif
 		else {
 			ctrl->control.min.value		= v4l2_ctrl->minimum;
 			ctrl->control.max.value		= v4l2_ctrl->maximum;
 			ctrl->control.step.value	= v4l2_ctrl->step;
 		}
-
-		// Add the new control to the control list of the given device
-		ctrl->next = device->controls.first;
-		device->controls.first = ctrl;
+       
+        ctrl->next = NULL;
+        // Add the new control to the end of the control list of the given device
+        if(device->controls.last)
+        {
+            device->controls.last->next = ctrl;
+            device->controls.last = device->controls.last->next;
+        }
+        else
+        {
+            // is the first control to be added
+            device->controls.first = ctrl;
+            device->controls.last = device->controls.first;     
+        }
 		device->controls.count++;
 	}
 	else {
@@ -1422,9 +1795,16 @@ static void delete_control (Control *ctrl)
 	if(ctrl->control.type == CC_TYPE_CHOICE) {
 		if(ctrl->control.choices.list)
 			free(ctrl->control.choices.list);
-		if(ctrl->control.choices.names)
-			free(ctrl->control.choices.names);
+		//if(ctrl->control.choices.names)
+		//	free(ctrl->control.choices.names);
 	}
+#ifdef ENABLE_RAW_CONTROLS
+    if(ctrl->control.type == CC_TYPE_RAW)
+    {
+        if(ctrl->control.value.raw.data)
+            free(ctrl->control.value.raw.data);
+    } 
+#endif
 	if(ctrl->control.name)
 		free(ctrl->control.name);
 	free(ctrl);
@@ -1484,7 +1864,7 @@ static CResult refresh_control_list (Device *dev)
 	// Clear control list first
 	clear_control_list(dev);
 
-	// Open the corresponding V4L2 device	
+	// Open the corresponding V4L2 device
 	if (dev->fd) v4l2_dev = dev->fd;
 	else v4l2_dev = open_v4l2_device(dev->v4l2_name);
 	if(!v4l2_dev)
@@ -1672,15 +2052,18 @@ static CResult refresh_device_details (Device *dev)
 		if(v4l2_cap.card[0])
 			dev->device.name = strdup((char *)v4l2_cap.card);
 		else
-			dev->device.name = dev->v4l2_name;
+			dev->device.name = dev->v4l2_name;	// strdup?!
 		dev->device.driver = strdup((char *)v4l2_cap.driver);
 		if(v4l2_cap.bus_info[0])
 			dev->device.location = strdup((char *)v4l2_cap.bus_info);
 		else
-			dev->device.location = dev->v4l2_name;
+			dev->device.location = dev->v4l2_name;	// strdup?!
 	}
 	else {
-		ret = C_V4L2_ERROR;
+		//ret = C_V4L2_ERROR;
+		dev->device.name = strdup(dev->v4l2_name);
+		dev->device.driver = strdup("uvcvideo");
+		dev->device.location = strdup(dev->v4l2_name);
 	}
 
 	if (!dev->fd) close(v4l2_dev);
@@ -2116,7 +2499,8 @@ static CResult refresh_device_list (void)
 	if(v4l_dir) {
 		while((dir_entry = readdir(v4l_dir))) {
 			// Ignore non-video devices
-			if(strstr(dir_entry->d_name, "video") != dir_entry->d_name)
+			if(strstr(dir_entry->d_name, "video") != dir_entry->d_name &&
+					strstr(dir_entry->d_name, "subdev") != dir_entry->d_name)
 				continue;
 
 			Device *dev = find_device_by_name(dir_entry->d_name);
@@ -2345,7 +2729,7 @@ static CResult get_device_usb_info (Device *device, CUSBInfo *usbinfo)
 	int i;
 	for(i = 0; i < 3; i++) {
 		char *filename = NULL;
-		if(asprintf(&filename, "/sys/class/video4linux/%s/device/%s",
+		if(asprintf(&filename, "/sys/class/video4linux/%s/device/../%s",
 					device->v4l2_name, files[i]) < 0)
 			return C_NO_MEMORY;
 
