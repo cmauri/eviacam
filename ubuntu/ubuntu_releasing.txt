@@ -1,34 +1,31 @@
- Before generating any .deb package make sure file debian/changelog is up
-  to date. Run the following command and check that contents are correct:
+Before generating any .deb package make sure file debian/changelog is up
+to date. Run the following command and check that contents are correct:
+
     dch -i
 
+To automatically generate several Ubuntu packages just run (make sure 
+debian-src/ directory is void or missing):
+
+	make_ubuntu_release.sh
+
+To upload a package:
+
+	dput eviacam-ppa eviacam_1.5.4-0ubuntu1~lucid_source.changes
+
+Other useful commands:	
+	
   * DEB source package generation
-      ./configure
       make deb-src
 	  
-  * changes file generation
-      Useful when generating packages for several distros. Assumes previous 
+  * .changes file generation
+	  Useful when generating packages for several distros. Assumes previous 
 	  step has been done. For each distro edit debian/changes with 
-		dch -i
-      add the right information then run
-	    make deb-src-changes
+	  
+        dch -i
+      
+	  add the right information then run
+	  
+        make deb-src-changes
 		
 	  Note that for several distro version the first one needs to be made 
 	  using make deb-src so that src is included.
-	
-Example of debian/changelog:		
-		
-eviacam (1.5.4-0ubuntu1~lucid) lucid; urgency=low
-
-  * Initial release
- -- Cesar Mauri <email address hidden>   Sat, 31 Dec 2011 02:54:15 +0100
- 
-How to upload package:
-
-dput eviacam-ppa eviacam_1.5.4-0ubuntu1~lucid_source.changes
- 
- 
-lucid
-maverick
-
-	debian/rules (sin 
