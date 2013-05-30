@@ -20,15 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
-#include <wx/gdicmn.h>
-#include "clickwindowcontroller.h"
-#include "viacamcontroller.h"
+
 #include "clickwindowtext.h"
 #include "clickwindowbitmap.h"
 #include "clickwindowbitmapvertical.h"
 #include "clickwindowvertical.h"
 #include "wviacam.h"
-#include "wx/window.h"
+#include "clickwindowcontroller.h"
+#include "viacamcontroller.h"
+#include <wx/gdicmn.h>
+#include <wx/window.h>
 
 CClickWindowController::CClickWindowController(CViacamController & pViacamController)
 {
@@ -57,9 +58,9 @@ CClickWindowController::CClickWindowController(CViacamController & pViacamContro
 	m_pViacamController->GetMainWindow()->Connect 
 			(ID_WVIACAM, wxEVT_SHOW, wxShowEventHandler(CClickWindow::OnMainWindowShow), NULL, m_pWindow);
 	
-	InitDefaults();
+	Reset();
 
-	Reset();	
+	InitDefaults();
 }
 
 CClickWindowController::~CClickWindowController()

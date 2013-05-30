@@ -4,7 +4,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = \
 	creavision \
-	libwebcam \
+	simplelog \
 	wxutil \
 	wxcamwindow \
 	po \
@@ -14,11 +14,10 @@ SUBDIRS = \
 
 EXTRA_DIST = \
 	autogen.sh \
-	INSTALL.es \
 	AGRAIMENTS.txt \
 	win32/eviacam.sln \
 	win32/installer.iss \
-	win32/eViacam.exe.manifest \
+	win32/installer.ico \
 	win32/Info \
 	eviacam.kdevelop \
 	m4 
@@ -28,7 +27,6 @@ dist_pkgdata_DATA = THANKS
 INCLUDES = \
 	-I$(top_srcdir)/wxutil \
 	-I$(top_srcdir)/creavision \
-	-I$(top_srcdir)/libwebcam \
 	-I$(top_srcdir)/wxcamwindow \
 	-I$(top_srcdir)
 
@@ -44,7 +42,7 @@ maintainer-clean-local:
 	-rm -f eviacam.kdevses
 	-rm *~
 	-rm creavision/*~
-	-rm libwebcam/*~
+	-rm creavision/libwebcam/*~
 	-rm wxutil/*~
 	-rm wxcamwindow/*~
 	-rm src/*~	

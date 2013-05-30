@@ -144,6 +144,8 @@ typedef struct _Control {
 typedef struct _ControlList {
 	/// The first control in the list
 	Control			* first;
+	/// The last control in the list
+	Control         * last;
 	/// The mutex used to serialize access to the control list
 	pthread_mutex_t mutex;
 	/// The number of controls contained in the list

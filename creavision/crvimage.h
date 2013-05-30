@@ -42,7 +42,7 @@ public:
 				unsigned int depth= IPL_DEPTH_8U, const char *pColorOrder= "GRAY", 
 				int origin= IPL_ORIGIN_TL, int align= IPL_ALIGN_QWORD );
 
-	bool Import (IplImage *pImage, bool autodelete= false);
+	bool Import (IplImage *pImage);	// Imported images are not automatically released
 	
 	// Returns the internal pointer, which is set to NULL, and forgets 
 	// about its deallocation

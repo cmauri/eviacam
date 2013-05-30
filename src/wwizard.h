@@ -203,6 +203,7 @@ public:
     static bool ShowToolTips();
 
 ////@begin WizardPage member variables
+    wxStaticBitmap* m_eviacamLogo;
 ////@end WizardPage member variables
 	WWizard* m_wizardParent;
 };

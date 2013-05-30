@@ -1,4 +1,4 @@
-﻿;  Copyright (C) 2008 - 2012 Cesar Mauri Loba
+﻿;  Copyright (C) 2008 - 2013 Cesar Mauri Loba
 ;
 ;   Permission is hereby granted, free of charge, to any person obtaining a
 ;   copy of this software and associated documentation files (the "Software"),
@@ -65,6 +65,7 @@ ShowLanguageDialog=yes
 AppID={{BF2FC5F6-EC88-4CA5-BD83-DC6613FD077D}
 OutputDir=win32
 InfoAfterFile=win32\Info\InfoAfter.rtf
+SetupIconFile=win32\installer.ico
 
 [Files]
 Source: win32\Release\bin\*; DestDir: {app}\bin; Flags: recursesubdirs ignoreversion
@@ -114,6 +115,7 @@ Name: Hebrew; MessagesFile: compiler:Languages\Hebrew.isl
 Name: Russian; MessagesFile: compiler:Languages\Russian.isl; InfoAfterFile: win32\Info\InfoAfter-ru.rtf
 Name: Portuguese; MessagesFile: compiler:Languages\BrazilianPortuguese.isl
 Name: Japanese; MessagesFile: compiler:Languages\Japanese.isl
+Name: Greek; MessagesFile: compiler:Languages\Greek.isl
 
 [Registry]
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: english; Languages: English
@@ -130,6 +132,7 @@ Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: lan
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: ru; Languages: Russian
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: Portuguese (Brazilian); Languages: Portuguese
 Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: Japanese; Languages: Japanese
+Root: HKCU; Subkey: Software\eviacam\settings; ValueType: string; ValueName: language; ValueData: Greek; Languages: Greek
 
 
 [_ISTool]

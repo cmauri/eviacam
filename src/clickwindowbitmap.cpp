@@ -38,7 +38,7 @@
 #include "clickwindowbitmap.h"
 
 ////@begin XPM images
-#include "icons/eviacam.xpm"
+#include "icons/eviacam_gray_bg.xpm"
 #include "icons/buttonNoClick.xpm"
 #include "icons/buttonLeft.xpm"
 #include "icons/buttonLeftDisabled.xpm"
@@ -217,7 +217,7 @@ void CClickWindowBitmap::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
     itemCClickWindow1->SetSizer(itemBoxSizer2);
 
-    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemCClickWindow1, wxID_STATIC, itemCClickWindow1->GetBitmapResource(wxT("icons/eviacam.xpm")), wxDefaultPosition, wxSize(32, 32), 0 );
+    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemCClickWindow1, wxID_STATIC, itemCClickWindow1->GetBitmapResource(wxT("icons/eviacam_gray_bg.xpm")), wxDefaultPosition, wxSize(48, 48), 0 );
     itemBoxSizer2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     itemBoxSizer2->Add(5, 5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -297,7 +297,7 @@ wxBitmap CClickWindowBitmap::GetBitmapResource( const wxString& name )
     // Bitmap retrieval
 ////@begin CClickWindowBitmap bitmap retrieval
     wxUnusedVar(name);
-    if (name == _T("icons/eviacam.xpm"))
+    if (name == _T("icons/eviacam_gray_bg.xpm"))
     {
         wxBitmap bitmap(eviacam);
         return bitmap;

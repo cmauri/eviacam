@@ -29,6 +29,11 @@
 #include "crvimage.h"
 #include "timeutil.h"
 #include "paths.h"
+#include "simplelog.h"
+
+#if OPENCVVERSION >= 2004000
+# include <opencv2/legacy/legacy.hpp>
+#endif
 
 #include <math.h>
 #include <wx/msgdlg.h>
@@ -187,11 +192,14 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		m_faceCascade,
 		m_storage,
 		1.1, 2, CV_HAAR_DO_CANNY_PRUNING,
-		cvSize(85, 64)
+		cvSize(65, 65)
 	);
 	
 	if (face->total>0) {
 		CvRect* faceRect = (CvRect*) cvGetSeqElem(face, 0);
+
+		SLOG_DEBUG("face detected: location (%d, %d) size (%d, %d)",
+			faceRect->x, faceRect->y, faceRect->width, faceRect->height);
 
 		m_trackArea.GetBoxImg(&image, curBox);
 		

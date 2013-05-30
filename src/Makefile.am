@@ -37,20 +37,20 @@ noinst_HEADERS = wgetkey.h \
 
 dist_noinst_DATA= version.h.in \
 	eviacamloader.c.in \
-	langnames-utf16.h \
 	gui.pjd \
 	gui.rc \
 	eviacam.vcproj \
 	icons/on.xpm \
 	icons/eviacam.ico \
-	icons/eviacam_mini.ico \
 	icons/clickwindowoff.xpm \
 	icons/help.xpm \
 	icons/preferences.xpm \
 	icons/clickwindow.xpm \
 	icons/keyboard.xpm \
 	icons/user.xpm \
+	icons/eviacam_gray_bg.xpm \
 	icons/eviacam_mini.xpm \
+	icons/eviacam_small.xpm \
 	icons/off.xpm \
 	icons/buttonDblLeftDisabled.xpm \
 	icons/buttonDblLeftLocked.xpm \
@@ -84,14 +84,14 @@ dist_noinst_DATA= version.h.in \
 	icons/usermoveh64.xpm \
 	icons/usermovev64.xpm
 
-EXTRA_DIST = eviacam.desktop icons/eviacam.xpm
+EXTRA_DIST = eviacam.desktop icons/eviacam.png
 dist_pkgdata_DATA= eviacam.desktop data/haarcascade_frontalface_default.xml
 	
 desktopdir		=	$(datadir)/applications/
 desktop_DATA	=	eviacam.desktop
 
 pixmapdir		=	$(datadir)/pixmaps/
-pixmap_DATA	=	icons/eviacam.xpm
+pixmap_DATA	=	icons/eviacam.png
 
 #########################################################################
 # APPLICATION SECTION
@@ -137,13 +137,18 @@ eviacam_SOURCES = wgetkey.cpp \
 	checkupdates_ui.cpp \
 	website.cpp
 	
-eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
+eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" -DOPENCVVERSION=$(OPENCVVERSION)
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11
 
-INCLUDES = -I$(top_srcdir)/creavision \
-	-I$(top_srcdir)/wxcamwindow -I$(top_srcdir)/wxutil
+INCLUDES = \
+	-I$(top_srcdir)/creavision \
+	-I$(top_srcdir)/simplelog \
+	-I$(top_srcdir)/wxcamwindow \
+	-I$(top_srcdir)/wxutil
 
-eviacam_LDADD = $(top_builddir)/wxutil/libwxutil.la \
-		$(top_builddir)/creavision/libcreavision.la \
-		$(top_builddir)/libwebcam/libwebcam.la \
-		$(top_builddir)/wxcamwindow/libwxcamwindow.la
+eviacam_LDADD = \
+	$(top_builddir)/wxutil/libwxutil.la \
+	$(top_builddir)/simplelog/libsimplelog.la \
+	$(top_builddir)/creavision/libcreavision.la \
+	$(top_builddir)/creavision/libwebcam/libwebcam.la \
+	$(top_builddir)/wxcamwindow/libwxcamwindow.la

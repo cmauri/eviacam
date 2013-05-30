@@ -69,12 +69,13 @@ class wxHtmlHelpController;
 #define ID_TOOL_HELP 10047
 #define ID_STATUSBAR 10002
 #define SYMBOL_WVIACAM_STYLE wxDEFAULT_FRAME_STYLE|wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMINIMIZE|wxMINIMIZE_BOX|wxCLOSE_BOX
-#define SYMBOL_WVIACAM_TITLE _("Enable Viacam")
+#define SYMBOL_WVIACAM_TITLE wxEmptyString
 #define SYMBOL_WVIACAM_IDNAME ID_WVIACAM
 #define SYMBOL_WVIACAM_SIZE wxSize(300, 300)
 #define SYMBOL_WVIACAM_POSITION wxPoint(100, 200)
 ////@end control identifiers
-
+#undef SYMBOL_WVIACAM_TITLE
+#define SYMBOL_WVIACAM_TITLE _T("Enable Viacam")
 
 /*!
  * WViacam class declaration
@@ -193,6 +194,7 @@ private:
 	void OnTaskBarIconLeftUp ( wxTaskBarIconEvent& event );
 
 ////@begin WViacam member variables
+    wxToolBar* m_toolBar;
     wxStatusBar* m_statusBar;
 ////@end WViacam member variables	
 
@@ -201,6 +203,7 @@ private:
 	wxHtmlHelpController* m_helpController;
 
 	long m_prevFPS;
+	bool m_updateToolbar;
 };
 
 #endif

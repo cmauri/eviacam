@@ -28,9 +28,7 @@
  */
 #include "mousecontrol.h"
 #include <wx/timer.h>
-#ifndef WX_PRECOMP
-#include "wx/wx.h"
-#endif
+#include <wx/dialog.h>
 
 
 /*!

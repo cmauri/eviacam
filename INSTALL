@@ -16,14 +16,24 @@ Linux
   libxtst
   libxext 
 
-  Ubuntu notes: in order to compile on Ubuntu (karmic) and GGv6 you 
-  need the following packages: libxext-dev, libxtst-dev, libgtk2.0-dev, 
-  libwxbase2.8-dev, libwxgtk2.8-dev, libhighgui-dev, libswscale-dev
-  
+  For Debian/Ubuntu see file debian/control for exact dependencies.
+ 
 - Generic compilation and installation
   ------------------------------------
+  If you downloaded a release tarball:
   ./configure
   make 
+  make install
+
+  If you got sources from repositories, first you need to install 
+  libtool
+  automake
+  autoconf
+
+  then run:
+  ./autogen.sh
+  ./configure
+  make
   make install
 
 - Generic compilation and installation (debug mode)
@@ -75,18 +85,18 @@ Windows
 
 - Pre-requisites
   --------------
-  VS2003
+  VS2008
   wxWidgets = 2.8.x
   opencv >= 1.0
   Platform SDK (tested with PSDK-x86_WindowsServer2003_SP1(2005))
   DirectX SDK 9.0 Update (February 2005) or later
   
-- Building using Visual Studio 2003
+- Building using Visual Studio 2008
   ---------------------------------
 
   Build project under
   \Microsoft Platform SDK\Samples\Multimedia\DirectShow\BaseClasses\
-  Works with VS2003, but is also supposed to work for newer VS versions. 
+  Works with VS2008, but is also supposed to work for newer VS versions. 
   Visual Studio solution (.sln) is in win32/ directory. 
   You should set the following environment variables:
 

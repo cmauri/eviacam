@@ -55,15 +55,14 @@ See INSTALL file.
 =======
 - Asturian (Bable) support
 
-The current stable version of wxWidgets (2.8.x, June 2012) doesn't support 
+The current stable version of wxWidgets (2.8.12, May 2013) doesn't support 
 Asturian language yet, but it seems that support has been added to development
 version. So, if you want enable Asturian language support, you need the latest
 wxWidgets development snapshot and should uncomment the line before compiling
     // #define ENABLE_ASTURIAN
-in both 
+in
     src/langnames-utf8.h
-    src/langnames-utf16.h	
-Note that these files use special enconding.
+Note that this file use special enconding.
 
  License
 =========
@@ -72,7 +71,7 @@ See the COPYING file for details on program's licensing.
 
  Author
 ========
- (c) 2008-12 Cesar Mauri Loba (cesar at crea-si dot com)
+ (c) 2008-13 Cesar Mauri Loba (cesar at crea-si dot com)
 
 Please see the AUTHORS and THANKS files for information about other 
 contributors.

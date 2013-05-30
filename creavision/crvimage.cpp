@@ -135,15 +135,13 @@ bool CIplImage::Create (int width, int height, unsigned int depth, const char *p
 	return true;
 }
 
-bool CIplImage::Import (IplImage *pImage, bool autodelete)
+bool CIplImage::Import (IplImage *pImage)
 {
 	assert (pImage);
 
 	// Cannot import the same image
 	assert (pImage!= this->m_pIplImage);
 	if (pImage== this->m_pIplImage) return false;
-
-	assert (!autodelete);	// Not supported
 
 	Free ();
 	
@@ -153,7 +151,6 @@ bool CIplImage::Import (IplImage *pImage, bool autodelete)
 	m_importedROI= pImage->roi;
 	if (pImage->roi) m_roiStack[m_roiStackPtr]= *pImage->roi;
 	pImage->roi= &m_roiStack[m_roiStackPtr];
-	//m_roiStackPtr= 0;
 
 	return true;
 }

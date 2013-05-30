@@ -27,7 +27,6 @@
 #ifndef C_COMPAT_H
 #define C_COMPAT_H
 
-//#include <linux/videodev.h>
 #include "incvideodev.h"
 #include <linux/videodev2.h>
 
@@ -36,7 +35,33 @@
 #include "uvcvideo.h"
 #endif
 
+#ifndef UVC_CONTROL_SET_CUR
+/* Control flags */
+#define UVC_CONTROL_SET_CUR	(1 << 0)
+#define UVC_CONTROL_GET_CUR	(1 << 1)
+#define UVC_CONTROL_GET_MIN	(1 << 2)
+#define UVC_CONTROL_GET_MAX	(1 << 3)
+#define UVC_CONTROL_GET_RES	(1 << 4)
+#define UVC_CONTROL_GET_DEF	(1 << 5)
+/* Control should be saved at suspend and restored at resume. */
+#define UVC_CONTROL_RESTORE	(1 << 6)
+/* Control can be updated by the camera. */
+#define UVC_CONTROL_AUTO_UPDATE	(1 << 7)
 
+#define UVC_CONTROL_GET_RANGE	(UVC_CONTROL_GET_CUR | UVC_CONTROL_GET_MIN | \
+				 UVC_CONTROL_GET_MAX | UVC_CONTROL_GET_RES | \
+				 UVC_CONTROL_GET_DEF)
+#endif
+
+#ifndef UVCIOC_CTRL_ADD
+struct uvc_xu_control_info {
+	__u8 entity[16];
+	__u8 index;
+	__u8 selector;
+	__u16 size;
+	__u32 flags;
+};
+#endif
 // uvcvideo.h
 
 // Old uvcvideo pre-r178 control IDs

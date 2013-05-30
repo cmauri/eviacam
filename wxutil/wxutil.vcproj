@@ -1,132 +1,181 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.10"
+	Version="9,00"
 	Name="wxutil"
 	ProjectGUID="{EF4CBA03-871C-48CE-998D-66F326B8A99A}"
 	RootNamespace="wxutil"
-	SccProjectName=""
-	SccLocalPath=""
-	Keyword="wxutil">
+	Keyword="wxutil"
+	TargetFrameworkVersion="131072"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\wxutil"
 			ConfigurationType="4"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="1">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NOPCH,WIN32,__WXMSW__,_WINDOWS,__WXDEBUG__,_DEBUG,_UNICODE"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName="$(SolutionDir)$(ConfigurationName)\wxutil.tlb"
+				HeaderFileName=""
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/EHsc /GX"
+				AdditionalOptions="/EHsc"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(WXWIN)\include&quot;;..\"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(WXWIN)\include&quot;;..\simplelog"
 				PreprocessorDefinitions="NOPCH;WIN32;__WXMSW__;_WINDOWS;__WXDEBUG__;_DEBUG"
-				ExceptionHandling="TRUE"
+				ExceptionHandling="1"
 				RuntimeLibrary="3"
-				RuntimeTypeInfo="TRUE"
+				RuntimeTypeInfo="true"
 				AssemblerListingLocation="$(SolutionDir)$(ConfigurationName)\wxutil\"
 				ObjectFile="$(SolutionDir)$(ConfigurationName)\wxutil\"
 				ProgramDataBaseFileName="$(SolutionDir)$(ConfigurationName)\wxutil.pdb"
 				WarningLevel="4"
-				SuppressStartupBanner="TRUE"
+				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
-				CompileAs="0"/>
+				CompileAs="2"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(SolutionDir)$(ConfigurationName)\$(ProjectName).lib"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NOPCH,WIN32,__WXMSW__,_WINDOWS,__WXDEBUG__,_DEBUG,_UNICODE"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName="$(SolutionDir)$(ConfigurationName)\wxutil.tlb"
-				HeaderFileName=""/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NOPCH,WIN32,__WXMSW__,_WINDOWS,__WXDEBUG__,_DEBUG,_UNICODE"
 				Culture="1029"
-				AdditionalIncludeDirectories=""/>
+				AdditionalIncludeDirectories=""
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
+				Name="VCLibrarianTool"
+				OutputFile="$(SolutionDir)$(ConfigurationName)\$(ProjectName).lib"
+			/>
 			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\wxutil"
 			ConfigurationType="4"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="1">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NOPCH,WIN32,__WXMSW__,_WINDOWS,_UNICODE"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName="$(SolutionDir)$(ConfigurationName)\wxutil.tlb"
+				HeaderFileName=""
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/EHsc "
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(WXWIN)\include&quot;;..\"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(WXWIN)\include&quot;;..\simplelog"
 				PreprocessorDefinitions="NOPCH;WIN32;__WXMSW__;_WINDOWS"
-				StringPooling="TRUE"
+				StringPooling="true"
 				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="TRUE"
-				RuntimeTypeInfo="TRUE"
+				EnableFunctionLevelLinking="true"
+				RuntimeTypeInfo="true"
 				AssemblerListingLocation="$(SolutionDir)$(ConfigurationName)\wxutil\"
 				ObjectFile="$(SolutionDir)$(ConfigurationName)\wxutil\"
 				ProgramDataBaseFileName="$(SolutionDir)$(ConfigurationName)\wxutil.pdb"
 				WarningLevel="4"
-				SuppressStartupBanner="TRUE"
-				CompileAs="0"/>
+				SuppressStartupBanner="true"
+				CompileAs="2"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
-			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(SolutionDir)$(ConfigurationName)\$(ProjectName).lib"/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NOPCH,WIN32,__WXMSW__,_WINDOWS,_UNICODE"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName="$(SolutionDir)$(ConfigurationName)\wxutil.tlb"
-				HeaderFileName=""/>
-			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NOPCH,WIN32,__WXMSW__,_WINDOWS,_UNICODE"
 				Culture="1029"
-				AdditionalIncludeDirectories=""/>
+				AdditionalIncludeDirectories=""
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
+				Name="VCLibrarianTool"
+				OutputFile="$(SolutionDir)$(ConfigurationName)\$(ProjectName).lib"
+			/>
 			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -134,64 +183,66 @@
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="">
+			>
 			<File
-				RelativePath=".\configbase.cpp">
+				RelativePath=".\configbase.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\configmanager.cpp">
+				RelativePath=".\configmanager.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\mousecontrol.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						ImproveFloatingPointConsistency="TRUE"/>
-				</FileConfiguration>
+				RelativePath=".\mousecontrol.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\simplelog.c">
+				RelativePath=".\timeutil.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\timeutil.cpp">
+				RelativePath=".\waittime.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\waittime.cpp">
+				RelativePath=".\warnbaroverlap.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\warnbaroverlap.cpp">
-			</File>
-			<File
-				RelativePath=".\wxappbar.cpp">
+				RelativePath=".\wxappbar.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="">
+			>
 			<File
-				RelativePath=".\configbase.h">
+				RelativePath=".\configbase.h"
+				>
 			</File>
 			<File
-				RelativePath=".\configmanager.h">
+				RelativePath=".\configmanager.h"
+				>
 			</File>
 			<File
-				RelativePath=".\mousecontrol.h">
+				RelativePath=".\mousecontrol.h"
+				>
 			</File>
 			<File
-				RelativePath="..\simplelog.h">
+				RelativePath=".\timeutil.h"
+				>
 			</File>
 			<File
-				RelativePath=".\timeutil.h">
+				RelativePath=".\waittime.h"
+				>
 			</File>
 			<File
-				RelativePath=".\waittime.h">
+				RelativePath=".\warnbaroverlap.h"
+				>
 			</File>
 			<File
-				RelativePath=".\warnbaroverlap.h">
-			</File>
-			<File
-				RelativePath=".\wxappbar.h">
+				RelativePath=".\wxappbar.h"
+				>
 			</File>
 		</Filter>
 	</Files>
