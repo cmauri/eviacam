@@ -17,6 +17,7 @@ EXTRA_DIST = \
 	AGRAIMENTS.txt \
 	win32/eviacam.sln \
 	win32/installer.iss \
+	win32/installer.ico \
 	win32/Info \
 	eviacam.kdevelop \
 	m4 
