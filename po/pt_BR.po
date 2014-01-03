@@ -3,16 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Wellyngton de Oliveira <wellyngtonrs@gmail.com>, 2012.
-#   <wellyngtonrs@gmail.com>, 2012.
-# Wellyngton <wellyngtonrs@gmail.com>, 2012.
+# Wellyngton de Oliveira <wellyngtonrs@gmail.com>, 2012
+# wellyngton <wellyngtonrs@gmail.com>, 2012
+# Wellyngton <wellyngtonrs@gmail.com>, 2012
 #: src/wcameradialog.cpp:193
 msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2013-05-30 12:46+0200\n"
-"PO-Revision-Date: 2012-11-07 18:32+0000\n"
+"PO-Revision-Date: 2013-11-20 11:13+0000\n"
 "Last-Translator: wellyngton <wellyngtonrs@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
 "eviacam/language/pt_BR/)\n"
