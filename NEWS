@@ -1,3 +1,8 @@
+2014-01-04 - Release 1.7.1
+* Fix Ubuntu Saucy build
+* New translations:
+	- Lithuanian (thanks to Agnius Svigaris)
+
 2013-05-30 - Release 1.7.0
 * New logo and icon set (thanks to Uzair Lion)
 * Increase face detector range

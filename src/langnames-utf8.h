@@ -43,6 +43,7 @@ static const struct lang_t g_languages[] = {
 	{ _T("Galego"), wxLANGUAGE_GALICIAN },
 	{ _T("עִבְרִית"), wxLANGUAGE_HEBREW },
 	{ _T("Italiano"), wxLANGUAGE_ITALIAN },
+    { _T("Lietuvių"), wxLANGUAGE_LITHUANIAN },
 	{ _T("日本語"), wxLANGUAGE_JAPANESE },
 	{ _T("Occitan"), wxLANGUAGE_OCCITAN },
 	{ _T("Português"), wxLANGUAGE_PORTUGUESE_BRAZILIAN },
