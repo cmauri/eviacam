@@ -1,4 +1,4 @@
-﻿;  Copyright (C) 2008 - 2013 Cesar Mauri Loba
+﻿;  Copyright (C) 2008 - 2014 Cesar Mauri Loba
 ;
 ;   Permission is hereby granted, free of charge, to any person obtaining a
 ;   copy of this software and associated documentation files (the "Software"),
@@ -78,6 +78,7 @@ Source: doc\*.txt; DestDir: {app}\doc; Flags: recursesubdirs ignoreversion
 Source: doc\*.png; DestDir: {app}\doc; Flags: recursesubdirs ignoreversion
 Source: README; DestDir: {app}\doc; Flags: ignoreversion; DestName: README.txt
 Source: doc\help\*; DestDir: {app}\bin\help; Flags: recursesubdirs ignoreversion
+
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}
 
@@ -92,11 +93,11 @@ Name: {group}\{#APPNAME} axuda; Filename: {app}\bin\help\gl\contents.htm; Langua
 Name: {group}\{#APPNAME} Hilfe; Filename: {app}\bin\help\de\contents.htm; Languages: Deutsch
 Name: {group}\{#APPNAME} Помощь; Filename: {app}\bin\help\ru\contents.htm; Languages: Russian
 
-Name: {userdesktop}\eViacam; Filename: {app}\bin\eViacam.exe; WorkingDir: {app}\bin; Tasks: desktopicon
+Name: {commondesktop}\eViacam; Filename: {app}\bin\eViacam.exe; WorkingDir: {app}\bin; Tasks: desktopicon
 
 [Run]
 ;Filename: {app}\doc\README.txt; Flags: postinstall shellexec
-Filename: {app}\doc\NEWS.txt; Flags: postinstall shellexec
+Filename: {app}\doc\NEWS.txt; Flags: postinstall shellexec skipifsilent
 
 [Components]
 
