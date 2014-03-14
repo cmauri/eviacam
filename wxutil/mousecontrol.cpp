@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-14 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -92,8 +92,6 @@ CMouseControl::CMouseControl (void* pDisplay)
 	m_VirtualXIni= m_VirtualYIni= 0;
 	m_VirtualHeight= (float) m_ScreenHeight; 
 	m_VirtualWidth= (float) m_ScreenWidth;
-
-	ResetClickArea ();
 
 	m_fDx= m_fDy= 1.0f;
 	m_minDeltaThreshold= 0.0f;
@@ -194,34 +192,6 @@ void CMouseControl::RecomputeWorkingArea ()
 					 (int) ((float) m_ScreenWidth * m_rightPercent)) / 2;
 	m_maxScreenY=	(m_ScreenHeight - 1) - (m_ScreenHeight - 
 					 (int) ((float) m_ScreenHeight * m_bottomPercent)) / 2;
-}
-
-void CMouseControl::SetClickArea (long minX, long minY, long maxX, long maxY)
-{
-	assert (minX>= 0 && minY>= 0);
-	assert (maxX< m_ScreenWidth && maxY< m_ScreenHeight);
-
-	m_minClicAreaX= minX;
-	m_minClicAreaY= minY;
-	m_maxClicAreaX= maxX;
-	m_maxClicAreaY= maxY;
-}
-
-void CMouseControl::ResetClickArea ()
-{
-	m_minClicAreaX= m_minClicAreaY= 0;
-	m_maxClicAreaX= m_maxScreenX;
-	m_maxClicAreaY= m_maxScreenY;
-}
-
-bool CMouseControl::CheckClickArea ()
-{
-	long x, y;
-
-	GetPointerLocation (x, y);
-	
-	return (x>= m_minClicAreaX && x<= m_maxClicAreaX &&
-			y>= m_minClicAreaY && y<= m_maxClicAreaY );		
 }
 
 void CMouseControl::SetRelAcceleration2 (long delta0, float factor0,
@@ -468,14 +438,9 @@ void CMouseControl::CenterPointer ()
 	DoMovePointerAbs(m_ScreenWidth/2, m_ScreenHeight/2);
 }
 
-bool CMouseControl::LeftDown ()
+void CMouseControl::LeftDown ()
 {
-	if (CheckClickArea ()) {
-		SendMouseCommand (0, 0,	MOUSE_LEFTDOWN);
-		return true;
-	}
-
-	return false;
+	SendMouseCommand (0, 0,	MOUSE_LEFTDOWN);
 }
 
 void CMouseControl::LeftUp ()
@@ -483,14 +448,9 @@ void CMouseControl::LeftUp ()
 	SendMouseCommand (0, 0,	MOUSE_LEFTUP);
 }
 
-bool CMouseControl::MiddleDown ()
+void CMouseControl::MiddleDown ()
 {
-	if (CheckClickArea ()) {
-		SendMouseCommand (0, 0,	MOUSE_MIDDLEDOWN);
-		return true;
-	}
-
-	return false;
+	SendMouseCommand (0, 0,	MOUSE_MIDDLEDOWN);
 }
 
 void CMouseControl::MiddleUp ()
@@ -498,14 +458,9 @@ void CMouseControl::MiddleUp ()
 	SendMouseCommand (0, 0,	MOUSE_MIDDLEUP);
 }
 
-bool CMouseControl::RightDown ()
+void CMouseControl::RightDown ()
 {
-	if (CheckClickArea ()) {
-		SendMouseCommand (0, 0,	MOUSE_RIGHTDOWN);
-		return true;
-	}
-	
-	return false;
+	SendMouseCommand (0, 0,	MOUSE_RIGHTDOWN);
 }
 
 void CMouseControl::RightUp ()
@@ -513,46 +468,26 @@ void CMouseControl::RightUp ()
 	SendMouseCommand (0, 0,	MOUSE_RIGHTUP);
 }
 
-bool CMouseControl::LeftClick ()
+void CMouseControl::LeftClick ()
 {
-	if (CheckClickArea ()) {
-		LeftDown ();
-		LeftUp ();
-		return true;
-	}
-
-	return false;
+	LeftDown ();
+	LeftUp ();
 }
 
-bool CMouseControl::MiddleClick ()
+void CMouseControl::MiddleClick ()
 {
-	if (CheckClickArea ()) {
-		MiddleDown ();
-		MiddleUp ();
-		return true;
-	}
-
-	return false;
+	MiddleDown ();
+	MiddleUp ();
 }
 
-bool CMouseControl::RightClick ()
+void CMouseControl::RightClick ()
 {	
-	if (CheckClickArea ()) {
-		RightDown ();
-		RightUp ();
-		return true;
-	}
-
-	return false;
+	RightDown ();
+	RightUp ();
 }
 
-bool CMouseControl::LeftDblClick ()
+void CMouseControl::LeftDblClick ()
 {
-	if (CheckClickArea ()) {
-		LeftClick ();
-		LeftClick ();
-		return true;
-	}
-
-	return false;
+	LeftClick ();
+	LeftClick ();
 }
