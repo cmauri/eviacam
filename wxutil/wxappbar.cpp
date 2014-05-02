@@ -454,7 +454,7 @@ void WXAppBar::OnSize( wxSizeEvent& event )
 //	SetSize(m_X, m_Y, m_Width, m_Height, 0);
 //	Raise ();	
 #else
-	wxSize s= event.GetSize();
+	//wxSize s= event.GetSize();
 	//printf ("onSize: %d, %d, orig: %d, %d\n", s.GetWidth(), s.GetHeight(), m_Width, m_Height);
 	/*
 	if (s.GetWidth()!= m_Width || s.GetHeight()!= m_Height) {
@@ -474,7 +474,7 @@ void WXAppBar::OnMove( wxMoveEvent& event )
 	SetSize(m_X, m_Y, m_Width, m_Height, 0);
 	Raise ();
 #endif
-	wxPoint p= event.GetPosition();
+	//wxPoint p= event.GetPosition();
 	
 //	printf ("onMove: %d, %d, orig: %d, %d\n", p.x, p.y, m_X, m_Y);
 //	wxDialog::OnMove (event);
@@ -1020,7 +1020,7 @@ void WXAppBar::OnEnterWindow( wxMouseEvent& event )
 void WXAppBar::OnLeaveWindow( wxMouseEvent& event )
 {
 #if defined(__WXGTK__)
-	long x, y;
+	int x, y;
 	
 	m_pMouseControl->GetPointerLocation (x, y);
 	wxRect barRect = GetRect();
@@ -1036,7 +1036,7 @@ void WXAppBar::OnLeaveWindow( wxMouseEvent& event )
 void WXAppBar::OnTimer(wxTimerEvent& event)
 {
 #if defined(__WXGTK__)
-	long x, y;
+	int x, y;
 	
 	m_pMouseControl->GetPointerLocation (x, y);
 	wxRect barRect = GetRect();

@@ -62,7 +62,7 @@ void CDwellClick::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("visualAlertsEnabled"), (bool) AreVisualAlertsEnabled());
 	pConfObj->Write(_T("useClickWindow"), (bool) GetUseClickWindow());
 	pConfObj->Write(_T("dwellToleranceArea"), (double) GetDwellToleranceArea());	
-	pConfObj->Write(_T("dwellTime"), (long) GetDwellTime());
+	pConfObj->Write(_T("dwellTime"), (int) GetDwellTime());
 
 	m_pClickWindowController->WriteProfileData (pConfObj);
 	pConfObj->SetPath (_T(".."));
@@ -70,7 +70,7 @@ void CDwellClick::WriteProfileData(wxConfigBase* pConfObj)
 
 void CDwellClick::ReadProfileData(wxConfigBase* pConfObj)
 {
-	long val;
+	int val;
 	bool valb;
 	double vald;
 

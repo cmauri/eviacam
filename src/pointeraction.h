@@ -150,6 +150,12 @@ public:
 		return m_pMouseControl->GetWrapPointer();
 	}
 
+	void SetSendActionWait(unsigned int ms) {
+		if (ms> 10) ms= 10;
+		m_pMouseControl->SetSendActionWait(ms);
+	}
+	unsigned int GetSendActionWait() const { return m_pMouseControl->GetSendActionWait(); }
+
 	//
 	void CenterPointer () { m_pMouseControl->CenterPointer(); };
 	CDwellClick& GetDwellClick() { assert (m_pDwellClick); return *m_pDwellClick; }
