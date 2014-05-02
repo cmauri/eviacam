@@ -85,18 +85,18 @@ void CPointerAction::WriteProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->SetPath (_T("pointerAction"));
 
-	pConfObj->Write(_T("xSpeed"), (long) GetXSpeed());
-	pConfObj->Write(_T("ySpeed"), (long) GetYSpeed());
-	pConfObj->Write(_T("acceleration"), (long) GetAcceleration());
-	pConfObj->Write(_T("smoothness"), (long) GetSmoothness());
-	pConfObj->Write(_T("easyStop"), (long) GetEasyStopValue());
+	pConfObj->Write(_T("xSpeed"), (int) GetXSpeed());
+	pConfObj->Write(_T("ySpeed"), (int) GetYSpeed());
+	pConfObj->Write(_T("acceleration"), (int) GetAcceleration());
+	pConfObj->Write(_T("smoothness"), (int) GetSmoothness());
+	pConfObj->Write(_T("easyStop"), (int) GetEasyStopValue());
 	pConfObj->Write(_T("enabledWorkspace"), (bool) GetRestrictedWorkingArea());
-	pConfObj->Write(_T("topWorkspace"), (long) GetTopWorkspace());
-	pConfObj->Write(_T("leftWorkspace"), (long) GetLeftWorkspace());
-	pConfObj->Write(_T("rightWorkspace"), (long) GetRightWorkspace());
-	pConfObj->Write(_T("bottomWorkspace"), (long) GetBottomWorkspace());	
+	pConfObj->Write(_T("topWorkspace"), (int) GetTopWorkspace());
+	pConfObj->Write(_T("leftWorkspace"), (int) GetLeftWorkspace());
+	pConfObj->Write(_T("rightWorkspace"), (int) GetRightWorkspace());
+	pConfObj->Write(_T("bottomWorkspace"), (int) GetBottomWorkspace());	
 	pConfObj->Write(_T("enabledWrapPointer"), (bool) GetWrapPointer());
-	pConfObj->Write(_T("clickMode"), (long) GetClickMode());
+	pConfObj->Write(_T("clickMode"), (int) GetClickMode());
 	pConfObj->Write(_T("beepOnClick"), (bool) GetBeepOnClick());
 
 	m_pDwellClick->WriteProfileData(pConfObj);
@@ -107,7 +107,7 @@ void CPointerAction::WriteProfileData(wxConfigBase* pConfObj)
 
 void CPointerAction::ReadProfileData(wxConfigBase* pConfObj)
 {
-	long val;
+	int val;
 	bool valb;
 
 	pConfObj->SetPath (_T("pointerAction"));
@@ -207,7 +207,7 @@ void CPointerAction::ProcessMotion (float dxSensor, float dySensor)
 	m_pMouseControl->MovePointerRel (dxSensor, dySensor, &dxPix, &dyPix);
 
 	// Get current pointer location
-	long xCurr, yCurr;
+	int xCurr, yCurr;
 	m_pMouseControl->GetPointerLocation (xCurr, yCurr);
 
 	mousecmd::mousecmd cmd= mousecmd::CMD_NO_CLICK;
@@ -216,12 +216,12 @@ void CPointerAction::ProcessMotion (float dxSensor, float dySensor)
 	case CPointerAction::DWELL:
 		// DWell click
 		cmd= m_pDwellClick->ProcessMotion
-			(dxPix, dyPix, (unsigned int) xCurr, (unsigned int) yCurr);
+			(dxPix, dyPix, xCurr, yCurr);
 		break;
 	case CPointerAction::GESTURE:
 		// Gesture click
 		cmd= m_pGestureClick->ProcessMotion
-			(dxPix, dyPix, (unsigned int) xCurr, (unsigned int) yCurr);
+			(dxPix, dyPix, xCurr, yCurr);
 		break;
 	case CPointerAction::NONE:
 		// Do nothing

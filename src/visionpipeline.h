@@ -55,8 +55,8 @@ public:
 	
 	bool IsFaceDetected () const;
 
-	int GetTimeout () const { return m_waitTime.GetWaitTimeMs()/1000; }
-	void SetTimeout (int timeout) { m_waitTime.SetWaitTimeMs(timeout*1000); }
+	unsigned int GetTimeout () const { return (unsigned int) (m_waitTime.GetWaitTimeMs()/1000); }
+	void SetTimeout (unsigned int timeout) { m_waitTime.SetWaitTimeMs(timeout*1000); }
 	
 	void SetDegradation (int value) { m_trackArea.SetDegradation(value); }
 
