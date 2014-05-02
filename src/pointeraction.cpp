@@ -305,3 +305,8 @@ bool CPointerAction::SetClickMode(CPointerAction::EClickMode mode, bool silent, 
 	return true;
 }
 
+void CPointerAction::ResetCounters()
+{
+	if (m_pDwellClick) m_pDwellClick->Reset();
+	if (m_pGestureClick) m_pGestureClick->Reset();
+}

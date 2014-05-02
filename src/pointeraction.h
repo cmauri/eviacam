@@ -156,6 +156,8 @@ public:
 	}
 	unsigned int GetSendActionWait() const { return m_pMouseControl->GetSendActionWait(); }
 
+	void ResetCounters();
+
 	//
 	void CenterPointer () { m_pMouseControl->CenterPointer(); };
 	CDwellClick& GetDwellClick() { assert (m_pDwellClick); return *m_pDwellClick; }
