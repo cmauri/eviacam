@@ -93,15 +93,18 @@ public:
 	void RightClick ();
 	void LeftDblClick ();
 
-	void GetPointerLocation (long& x, long& y);
+	void GetPointerLocation (int& x, int& y);
 
 	// Display properties change (resolution)
 	void OnDisplayChanged ();
 
+	void SetSendActionWait(unsigned int ms) { m_sendActionWait= ms; }
+	unsigned int GetSendActionWait() const { return m_sendActionWait; }
+
 protected:
 
 	void Virt2Fis (float virtX, float virtY, float &fisX, float &fisY);
-	bool EnforceWorkingAreaLimits (long &x, long &y);
+	bool EnforceWorkingAreaLimits (int &x, int &y);
 	void SendMouseCommand (long x, long y, int flags);
 	
 	void DoMovePointerRel (long dx, long dy);
@@ -129,6 +132,8 @@ private:
 #endif
 	enum { ACCEL_ARRAY_SIZE= 30 };
 	float m_accelArray[ACCEL_ARRAY_SIZE];
+
+	unsigned int m_sendActionWait;
 };
 
 inline float CMouseControl::GetLowPassFilterWeight () const

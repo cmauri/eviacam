@@ -47,6 +47,7 @@ inline float roundf(float x) { return (x-floorf(x))>0.5 ? ceilf(x) : floorf(x); 
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
 #include <stdexcept>
+#include <unistd.h>
 
 #endif // WIN32
 
@@ -64,16 +65,14 @@ inline float roundf(float x) { return (x-floorf(x))>0.5 ? ceilf(x) : floorf(x); 
 #define MOUSE_MIDDLEDOWN  0x0020	// Middle button down
 #define MOUSE_MIDDLEUP    0x0040	// Middle button up 
 
-// Wait time for clicking actions
-#define MOUSE_BUTTON_WAIT_TIME 2
-
 static
 void sleep_milliseconds(unsigned ms)
 {
+	if (!ms) return;
 #ifdef WIN32
-        Sleep (ms);
+	Sleep (ms);
 #else
-        usleep (ms * 1000);
+	usleep (ms * 1000);
 #endif
 }
 
@@ -112,6 +111,8 @@ CMouseControl::CMouseControl (void* pDisplay)
 	m_dxant= 0.0f; m_dyant= 0.0f;
 
 	for (int i= 0; i< ACCEL_ARRAY_SIZE; i++) m_accelArray[i]= (float) 1;
+
+	m_sendActionWait= 0;
 }
 
 CMouseControl::~CMouseControl()
@@ -140,7 +141,7 @@ void CMouseControl::GetScreenSize()
 	slog_write (SLOG_PRIO_DEBUG, "current screen size: %d, %d\n", m_ScreenWidth, m_ScreenHeight);
 }
 
-void CMouseControl::GetPointerLocation (long& x, long& y)
+void CMouseControl::GetPointerLocation (int& x, int& y)
 {
 #if defined(WIN32)
 
@@ -152,22 +153,19 @@ void CMouseControl::GetPointerLocation (long& x, long& y)
 
 	GetCursorInfo(&pci);
 
-	x= pci.ptScreenPos.x;
-	y= pci.ptScreenPos.y;
+	x= (int) pci.ptScreenPos.x;
+	y= (int) pci.ptScreenPos.y;
 
 #else // Linux
 	
 	Window root, child;
-	int rootX, rootY, winX, winY;
+	int rootX, rootY;
 	unsigned int xstate;
 
 	Window rootWin= 
 		RootWindow (static_cast<Display*>(m_pDisplay), DefaultScreen (static_cast<Display*>(m_pDisplay)));
 	XQueryPointer(
-		static_cast<Display*>(m_pDisplay), rootWin, &root, &child, &rootX, &rootY, &winX, &winY, &xstate );
-
-	x= winX;
-	y= winY;
+		static_cast<Display*>(m_pDisplay), rootWin, &root, &child, &rootX, &rootY, &x, &y, &xstate );
 #endif
 }
 
@@ -227,7 +225,7 @@ void CMouseControl::SetRelAcceleration2 (long delta0, float factor0,
 	}
 }
 
-bool CMouseControl::EnforceWorkingAreaLimits (long &x, long &y)
+bool CMouseControl::EnforceWorkingAreaLimits (int &x, int &y)
 {
 	bool retval= false;
 
@@ -266,7 +264,7 @@ void CMouseControl::MovePointerAbs (float x, float y)
 {
 //	OnDisplayChanged ();
 
-	long iX, iY;
+	int iX, iY;
 	float fisX, fisY, dx, dy;	
 
 	Virt2Fis (x, y, fisX, fisY);
@@ -281,8 +279,8 @@ void CMouseControl::MovePointerAbs (float x, float y)
 	m_dxant= dx; m_dyant= dy;
 
 	// Map to screen coordinates
-	iX= iX + (long) dx;
-	iY= iY + (long) dy;
+	iX= iX + (int) dx;
+	iY= iY + (int) dy;
 	
 	EnforceWorkingAreaLimits (iX, iY);
 	DoMovePointerAbs (iX, iY);
@@ -315,7 +313,7 @@ float CMouseControl::MovePointerRel (float dx, float dy, int* dxRes, int* dyRes)
 	
 	int idx= (int) roundf(dx);
 	int idy= (int) roundf(dy);
-	long mouseX, mouseY;
+	int mouseX, mouseY;
 	if (m_enabledRestrictedWorkingArea && !m_enabledWrapPointer) {
 		GetPointerLocation (mouseX, mouseY);
 		if (mouseX + idx< m_minScreenX) idx= m_minScreenX - mouseX;
@@ -483,68 +481,28 @@ void CMouseControl::RightUp ()
 
 void CMouseControl::LeftClick ()
 {
-<<<<<<< HEAD
-	if (CheckClickArea ()) {
-		LeftDown ();
-		sleep_milliseconds(MOUSE_BUTTON_WAIT_TIME);
-		LeftUp ();
-		return true;
-	}
-
-	return false;
-=======
 	LeftDown ();
+	sleep_milliseconds(m_sendActionWait);
 	LeftUp ();
->>>>>>> devel
 }
 
 void CMouseControl::MiddleClick ()
 {
-<<<<<<< HEAD
-	if (CheckClickArea ()) {
-		MiddleDown ();
-		sleep_milliseconds(MOUSE_BUTTON_WAIT_TIME);
-		MiddleUp ();
-		return true;
-	}
-
-	return false;
-=======
 	MiddleDown ();
+	sleep_milliseconds(m_sendActionWait);
 	MiddleUp ();
->>>>>>> devel
 }
 
 void CMouseControl::RightClick ()
 {	
-<<<<<<< HEAD
-	if (CheckClickArea ()) {
-		RightDown ();
-		sleep_milliseconds(MOUSE_BUTTON_WAIT_TIME);
-		RightUp ();
-		return true;
-	}
-
-	return false;
-=======
 	RightDown ();
+	sleep_milliseconds(m_sendActionWait);
 	RightUp ();
->>>>>>> devel
 }
 
 void CMouseControl::LeftDblClick ()
 {
-<<<<<<< HEAD
-	if (CheckClickArea ()) {
-		LeftClick ();
-		sleep_milliseconds(MOUSE_BUTTON_WAIT_TIME);
-		LeftClick ();
-		return true;
-	}
-
-	return false;
-=======
 	LeftClick ();
+	sleep_milliseconds(m_sendActionWait);
 	LeftClick ();
->>>>>>> devel
 }
