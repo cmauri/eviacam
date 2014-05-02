@@ -72,6 +72,7 @@ void CPointerAction::InitDefaults()
 	SetSmoothness (4);
 	SetEasyStopValue (1); 
 	SetWrapPointer(false);
+	SetSendActionWait(0);
 	
 	// Workspace limits
 	SetRestrictedWorkingArea (false);
@@ -98,6 +99,7 @@ void CPointerAction::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("enabledWrapPointer"), (bool) GetWrapPointer());
 	pConfObj->Write(_T("clickMode"), (int) GetClickMode());
 	pConfObj->Write(_T("beepOnClick"), (bool) GetBeepOnClick());
+	pConfObj->Write(_T("sendActionWait"), (int) GetSendActionWait());
 
 	m_pDwellClick->WriteProfileData(pConfObj);
 	m_pGestureClick->WriteProfileData(pConfObj);
@@ -125,6 +127,7 @@ void CPointerAction::ReadProfileData(wxConfigBase* pConfObj)
 	if (pConfObj->Read(_T("bottomWorkspace"), &val)) SetBottomWorkspace(val);
 	if (pConfObj->Read(_T("clickMode"), &val)) SetClickMode((CPointerAction::EClickMode) val);
 	pConfObj->Read(_T("beepOnClick"), &m_beepOnClick);	
+	if (pConfObj->Read(_T("sendActionWait"), &val)) SetSendActionWait(val);
 
 	m_pDwellClick->ReadProfileData(pConfObj);
 	m_pGestureClick->ReadProfileData(pConfObj);

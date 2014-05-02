@@ -115,6 +115,7 @@ class wxPanel;
 #define ID_CHOICE4 10109
 #define ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED 10039
 #define ID_SPINCTRL2 10107
+#define ID_SPIN_SEND_ACTION_WAIT 10131
 #define ID_PANEL 10050
 #define ID_CHOICE_PROFILE 10015
 #define ID_BUTTON_ADD_PROFILE 10017
@@ -291,6 +292,9 @@ private:
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL2
     void OnSpinLocateFaceTimeoutUpdated( wxSpinEvent& event );
 
+    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPIN_SEND_ACTION_WAIT
+    void OnSpinSendActionWaitUpdated( wxSpinEvent& event );
+
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_PROFILE
     void OnChoiceProfileSelected( wxCommandEvent& event );
 
@@ -446,6 +450,7 @@ private:
     wxStaticText* m_staticLocateFaceTimeout2;
     wxSpinCtrl* m_spinLocateFaceTimeout;
     wxStaticText* m_staticLocateFaceTimeout;
+    wxSpinCtrl* m_spinSendActionWait;
     wxChoice* m_choProfile;
     wxButton* m_btnAddProfile;
     wxButton* m_btnDeleteProfile;
