@@ -67,6 +67,7 @@ union ControlType
 	wxSlider* slider;
 	wxCheckBox* checkbox;
 	wxChoice*	choice;
+	wxButton* button;
 };
 
 struct ControlInfo
@@ -114,6 +115,7 @@ public:
 	void OnCheckboxClick( wxCommandEvent& event );
 	void OnChoiceSelected( wxCommandEvent& event );
 	void OnSliderUpdated( wxCommandEvent& event );
+	void OnButtonClick( wxCommandEvent& event );
 
 ////@begin WCameraDialog member function declarations
 

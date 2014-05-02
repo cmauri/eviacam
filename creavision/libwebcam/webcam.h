@@ -201,6 +201,8 @@ typedef enum _CControlFlags {
 	CC_IS_RELATIVE			= 1 << 9,
 	// The control triggers an action.
 	CC_IS_ACTION			= 1 << 10,
+    //The control needs to be set (used for save/restore)
+    CC_NEED_SET             = 1 << 11,
 
 } CControlFlags;
 
@@ -228,6 +230,8 @@ typedef enum _CControlType {
 	CC_TYPE_WORD,
 	/// The control accepts 32-bit integer values.
 	CC_TYPE_DWORD,
+	/// The control accepts 32-bit unsigned values.
+	CC_TYPE_BUTTON,
 
 } CControlType;
 
@@ -377,7 +381,7 @@ typedef struct _CControlValue {
 		/// The value of the control for number based controls.
 		/// This member is valid for the following control types:
 		/// #CC_TYPE_BOOLEAN, #CC_TYPE_CHOICE, #CC_TYPE_BYTE,
-		/// #CC_TYPE_WORD, #CC_TYPE_DWORD
+		/// #CC_TYPE_WORD, #CC_TYPE_DWORD #CC_TYPE_BUTTON
 		int				value;
 
 		/// The value of the control for raw cntrols.
@@ -397,10 +401,11 @@ typedef struct _CControlChoice {
 	/// Note that this index is not necessarily zero-based and can therefore @a not
 	/// be used as an index into CControl#choices#list[].
 	int				index;
+	int 			id;
 
 	/// The name of the choice.
 	/// This member is never NULL.
-	char			* name;
+	char			name[32];
 
 } CControlChoice;
 
@@ -448,7 +453,7 @@ typedef struct _CControl {
 			/// The @a name fields of the items point to strings within this buffer,
 			/// so there is no need to work with this member directly except
 			/// freeing the buffer if the control is disposed of.
-			char			* names;
+			//char			* names;
 
 		} choices;
 	};
@@ -702,12 +707,16 @@ extern CResult		c_enum_controls (CHandle hDevice, CControl *controls, unsigned i
 extern CResult		c_set_control (CHandle hDevice, CControlId control_id, const CControlValue *value);
 extern CResult		c_get_control (CHandle hDevice, CControlId control_id, CControlValue *value);
 
+extern CResult		c_save_controls (CHandle hDevice, const char *filename);
+extern CResult		c_load_controls (CHandle hDevice, const char *filename);
+
 extern CResult		c_enum_events (CHandle hDevice, CEvent *events, unsigned int *size, unsigned int *count);
 extern CResult		c_subscribe_event (CHandle hDevice, CEventId event_id, CEventHandler handler, void *context);
 extern CResult		c_unsubscribe_event (CHandle hDevice, CEventId event_id);
 
 #ifndef DISABLE_UVCVIDEO_DYNCTRL
 extern CResult		c_add_control_mappings_from_file (const char *file_name, CDynctrlInfo *info);
+extern CResult		c_add_control_mappings (CHandle handle, const char *file_name, CDynctrlInfo *info);
 #endif
 
 extern char			*c_get_error_text (CResult error);

@@ -1,7 +1,7 @@
-/////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////
 // Name:		langnames-utf8.h
-// Purpose:     This file is encoded using UTF-8 in order to compile
-//				native language names under Linux platforms
+// Purpose:     This file is encoded using UTF-8 with BOM in order to compile
+//				native language names
 // Author:      César Mauri Loba
 // Created:     05/03/2009
 // Copyright:   (C) 2009-13 Cesar Mauri from CREA Sistemes Informatics
@@ -23,23 +23,31 @@
 // Uncomment to enable Asturian language support (see README first)
 // #define ENABLE_ASTURIAN
 
-const wxString s_langNames[]	= {
-	_("System default"),
-#ifdef ENABLE_ASTURIAN	
-	_T("Asturian"),
-#endif
-	_T("Català"), 
-	_T("Deutsch"),
-	_T("English"), 
-	_T("Español"), 
-	_T("Galego"), 
-	_T("Italiano"),
-	_T("Português"),
-	_T("Русский"),
-	_T("Türkçe"),
-	_T("Occitan"),
-	_T("Français"),
-	_T("العربية"),
-	_T("עִבְרִית"),
-	_T("日本語")
+struct lang_t {
+	wxString name;
+	wxLanguage lang;
 };
+
+static const struct lang_t g_languages[] = {
+	{ _("System default"),	wxLANGUAGE_DEFAULT },
+	{ _T("العربية"), wxLANGUAGE_ARABIC },
+#ifdef ENABLE_ASTURIAN	
+	{ _T("Asturianu"),	wxLANGUAGE_ASTURIAN },
+#endif
+	{ _T("Català"),	wxLANGUAGE_CATALAN },
+	{ _T("Deutsch"), wxLANGUAGE_GERMAN },
+	{ _T("Ελληνικά"), wxLANGUAGE_GREEK },
+	{ _T("English"), wxLANGUAGE_ENGLISH },
+	{ _T("Español"), wxLANGUAGE_SPANISH },
+	{ _T("Français"), wxLANGUAGE_FRENCH },
+	{ _T("Galego"), wxLANGUAGE_GALICIAN },
+	{ _T("עִבְרִית"), wxLANGUAGE_HEBREW },
+	{ _T("Italiano"), wxLANGUAGE_ITALIAN },
+    { _T("Lietuvių"), wxLANGUAGE_LITHUANIAN },
+	{ _T("日本語"), wxLANGUAGE_JAPANESE },
+	{ _T("Occitan"), wxLANGUAGE_OCCITAN },
+	{ _T("Português"), wxLANGUAGE_PORTUGUESE_BRAZILIAN },
+	{ _T("Русский"), wxLANGUAGE_RUSSIAN },
+	{ _T("Türkçe"),	wxLANGUAGE_TURKISH }
+};
+

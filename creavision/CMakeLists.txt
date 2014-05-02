@@ -25,7 +25,8 @@ set(creavision_SRCS
 IF(CMAKE_SYSTEM_NAME MATCHES "Linux")
 FIND_PACKAGE( GLIB2 REQUIRED )
 INCLUDE_DIRECTORIES (${GLIB2_INCLUDE_DIRS})
-INCLUDE_DIRECTORIES (../libwebcam)
+INCLUDE_DIRECTORIES (libwebcam)
+add_subdirectory(libwebcam)
 set(creavision_SRCS ${creavision_SRCS}
 	crvcamera_v4l2.cpp
 	crvcamera_v4l2.h
@@ -82,6 +83,7 @@ endif(WIN32)
 
 add_library (creavision STATIC ${creavision_SRCS})
 TARGET_LINK_LIBRARIES(creavision ${OpenCV_LIBS} )
+TARGET_LINK_LIBRARIES(creavision simplelog)
 
 IF(CMAKE_SYSTEM_NAME MATCHES "Linux")
 	TARGET_LINK_LIBRARIES(creavision libwebcam v4l2)

@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "creavision", "..\creavision
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wxutil", "..\wxutil\wxutil.vcproj", "{EF4CBA03-871C-48CE-998D-66F326B8A99A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simplelog", "..\simplelog\simplelog.vcproj", "{5FF96C8F-40F9-46CD-980C-0AFBB932AC2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -38,6 +40,10 @@ Global
 		{EF4CBA03-871C-48CE-998D-66F326B8A99A}.Debug|Win32.Build.0 = Debug|Win32
 		{EF4CBA03-871C-48CE-998D-66F326B8A99A}.Release|Win32.ActiveCfg = Release|Win32
 		{EF4CBA03-871C-48CE-998D-66F326B8A99A}.Release|Win32.Build.0 = Release|Win32
+		{5FF96C8F-40F9-46CD-980C-0AFBB932AC2E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5FF96C8F-40F9-46CD-980C-0AFBB932AC2E}.Debug|Win32.Build.0 = Debug|Win32
+		{5FF96C8F-40F9-46CD-980C-0AFBB932AC2E}.Release|Win32.ActiveCfg = Release|Win32
+		{5FF96C8F-40F9-46CD-980C-0AFBB932AC2E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

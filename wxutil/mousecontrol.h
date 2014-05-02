@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-14 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -22,9 +22,6 @@
 #if !defined(MOUSECONTROL_H)
 #define MOUSECONTROL_H
 
-#if !defined(WIN32)
-#include <X11/Xlib.h>		// Display struct
-#endif
 #include <stdlib.h>		// NULL
 #include <assert.h>		
 
@@ -63,9 +60,6 @@ public:
 		m_bottomPercent = bottomPercent;
 	}
 	
-	void SetClickArea (long minX, long minY, long maxX, long maxY);
-	void ResetClickArea ();
-	
 	void SetAbsVirtualResolution (float xIni, float yIni, 
 								  float width, float height);
 	void SetRelFactorX (float fDx) { m_fDx= fDx; }
@@ -88,16 +82,16 @@ public:
 	void CenterPointer ();
 
 	// Click actions
-	bool LeftDown ();
+	void LeftDown ();
 	void LeftUp ();
-	bool MiddleDown ();
+	void MiddleDown ();
 	void MiddleUp ();
-	bool RightDown ();
+	void RightDown ();
 	void RightUp ();
-	bool LeftClick ();
-	bool MiddleClick ();
-	bool RightClick ();
-	bool LeftDblClick ();
+	void LeftClick ();
+	void MiddleClick ();
+	void RightClick ();
+	void LeftDblClick ();
 
 	void GetPointerLocation (long& x, long& y);
 
@@ -107,22 +101,18 @@ public:
 protected:
 
 	void Virt2Fis (float virtX, float virtY, float &fisX, float &fisY);
-	bool CheckClickArea ();
 	bool EnforceWorkingAreaLimits (long &x, long &y);
 	void SendMouseCommand (long x, long y, int flags);
 	
 	void DoMovePointerRel (long dx, long dy);
 	void RecomputeWorkingArea ();
 
-	// TODO: derive a X11 file stuff for these
 	void GetScreenSize();
-	
-	
+
 private:	
 	int m_ScreenWidth, m_ScreenHeight;
 	int m_minScreenX, m_minScreenY, m_maxScreenX, m_maxScreenY;
 	float m_leftPercent, m_rightPercent, m_topPercent, m_bottomPercent;
-	int m_minClicAreaX, m_minClicAreaY, m_maxClicAreaX, m_maxClicAreaY;
 	float m_VirtualXIni, m_VirtualYIni;
 	float m_VirtualWidth, m_VirtualHeight;
 	float m_fDx, m_fDy;
@@ -135,7 +125,7 @@ private:
 	
 #if !defined(WIN32)
 	bool m_closeDisplay;	// Destructor should close display connection?
-	Display* m_pDisplay;
+	void* m_pDisplay;
 #endif
 	enum { ACCEL_ARRAY_SIZE= 30 };
 	float m_accelArray[ACCEL_ARRAY_SIZE];

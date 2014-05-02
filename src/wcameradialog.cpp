@@ -231,6 +231,22 @@ void WCameraDialog::CreateCameraControlWidget (const CCameraControl& cc, wxWindo
 			itemSlider->Connect(m_lastId+2, wxEVT_COMMAND_SLIDER_UPDATED, wxCommandEventHandler(WCameraDialog::OnSliderUpdated), NULL, this);
 		}
 		break;
+		
+		case CCameraControl::CCTYPE_BUTTON:
+		{
+			wxButton* itemButton = new wxButton( parent, m_lastId+2);
+			sizer->Add(itemButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+			sizer->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
+			
+			ci.type.button = itemButton;
+			ci.textCtrl = NULL;
+			
+			itemButton->Connect(m_lastId+2, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(WCameraDialog::OnButtonClick), NULL, this);
+		}
+		break;
+		
+		default: assert (false);
 	
 	}
 	m_lastId += 4;
@@ -293,6 +309,13 @@ void WCameraDialog::OnSliderUpdated( wxCommandEvent& event )
 	CCameraControl* cc = (CCameraControl*) m_controlList[(event.GetId()-FIRST_CONTROL_ID)/4].cc;	
 	cc->SetValue(event.GetInt());
 	m_controlList[(event.GetId()-FIRST_CONTROL_ID)/4].textCtrl->SetValue(wxString::Format(wxT("%i"), cc->GetValue()));
+	event.Skip(false);
+}
+
+void WCameraDialog::OnButtonClick( wxCommandEvent& event )
+{
+	CCameraControl* cc = (CCameraControl*) m_controlList[(event.GetId()-FIRST_CONTROL_ID)/4].cc;	
+	cc->SetValue(1);
 	event.Skip(false);
 }
 

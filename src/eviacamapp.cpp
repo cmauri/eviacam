@@ -202,7 +202,8 @@ bool EViacamApp::OnCmdLineParsed(wxCmdLineParser& parser)
 
 #if defined(WIN32)
 		AllocConsole();
-		freopen("CONOUT$", "wb", stdout); 
+		freopen("CONOUT$", "wb", stdout);
+		freopen("CONOUT$", "wb", stderr);
 		slog_write (SLOG_PRIO_INFO, "debug mode enabled");
 #endif
 	}	

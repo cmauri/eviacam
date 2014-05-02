@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="&quot;$(CVPATH)\build&quot;;&quot;$(CVPATH)\include&quot;;&quot;$(CVPATH)\include\opencv&quot;;&quot;$(CVPATH)\modules\core\include&quot;;&quot;$(CVPATH)\modules\imgproc\include&quot;;&quot;$(CVPATH)\modules\features2d\include&quot;;&quot;$(CVPATH)\modules\objdetect\include&quot;;&quot;$(CVPATH)\modules\video\include&quot;;&quot;$(CVPATH)\modules\highgui\include&quot;;&quot;$(CVPATH)\modules\ml\include&quot;;&quot;$(CVPATH)\modules\legacy\include&quot;;&quot;$(CVPATH)\modules\contrib\include&quot;;&quot;$(CVPATH)\modules\flann\include&quot;;&quot;$(CVPATH)\modules\gpu\include&quot;;&quot;$(CVPATH)\modules\calib3d\include&quot;;../"
+				AdditionalIncludeDirectories="&quot;$(CVPATH)\build&quot;;&quot;$(CVPATH)\include&quot;;&quot;$(CVPATH)\include\opencv&quot;;&quot;$(CVPATH)\modules\core\include&quot;;&quot;$(CVPATH)\modules\imgproc\include&quot;;&quot;$(CVPATH)\modules\features2d\include&quot;;&quot;$(CVPATH)\modules\objdetect\include&quot;;&quot;$(CVPATH)\modules\video\include&quot;;&quot;$(CVPATH)\modules\highgui\include&quot;;&quot;$(CVPATH)\modules\ml\include&quot;;&quot;$(CVPATH)\modules\legacy\include&quot;;&quot;$(CVPATH)\modules\contrib\include&quot;;&quot;$(CVPATH)\modules\flann\include&quot;;&quot;$(CVPATH)\modules\gpu\include&quot;;&quot;$(CVPATH)\modules\calib3d\include&quot;;../simplelog"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;NOPCH;__WXMSW__"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -116,7 +116,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(CVPATH)\build&quot;;&quot;$(CVPATH)\include&quot;;&quot;$(CVPATH)\include\opencv&quot;;&quot;$(CVPATH)\modules\core\include&quot;;&quot;$(CVPATH)\modules\imgproc\include&quot;;&quot;$(CVPATH)\modules\features2d\include&quot;;&quot;$(CVPATH)\modules\objdetect\include&quot;;&quot;$(CVPATH)\modules\video\include&quot;;&quot;$(CVPATH)\modules\highgui\include&quot;;&quot;$(CVPATH)\modules\ml\include&quot;;&quot;$(CVPATH)\modules\legacy\include&quot;;&quot;$(CVPATH)\modules\contrib\include&quot;;&quot;$(CVPATH)\modules\flann\include&quot;;&quot;$(CVPATH)\modules\gpu\include&quot;;&quot;$(CVPATH)\modules\calib3d\include&quot;;../"
+				AdditionalIncludeDirectories="&quot;$(CVPATH)\build&quot;;&quot;$(CVPATH)\include&quot;;&quot;$(CVPATH)\include\opencv&quot;;&quot;$(CVPATH)\modules\core\include&quot;;&quot;$(CVPATH)\modules\imgproc\include&quot;;&quot;$(CVPATH)\modules\features2d\include&quot;;&quot;$(CVPATH)\modules\objdetect\include&quot;;&quot;$(CVPATH)\modules\video\include&quot;;&quot;$(CVPATH)\modules\highgui\include&quot;;&quot;$(CVPATH)\modules\ml\include&quot;;&quot;$(CVPATH)\modules\legacy\include&quot;;&quot;$(CVPATH)\modules\contrib\include&quot;;&quot;$(CVPATH)\modules\flann\include&quot;;&quot;$(CVPATH)\modules\gpu\include&quot;;&quot;$(CVPATH)\modules\calib3d\include&quot;;../simplelog"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"

@@ -4,8 +4,8 @@ AM_CONFIG_HEADER(config.h)
 
 ##############################################################
 # Editable parameters
-AM_INIT_AUTOMAKE([eviacam], 1.6.1)
-COPYRIGHT="© 2008-12"
+AM_INIT_AUTOMAKE([eviacam], 1.7.1)
+COPYRIGHT="© 2008-14"
 PUBLISHER="César Mauri Loba"
 ##############################################################
 
@@ -31,7 +31,7 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
 
-ALL_LINGUAS="ca es gl it tr ast de oc fr ar he ru pt_BR ja"
+ALL_LINGUAS="ca es gl it tr ast de oc fr ar he ru pt_BR ja el lt"
 
 AM_GNU_GETTEXT([external])
 
@@ -151,6 +151,9 @@ AC_DEFUN([OPENCVTEST],
 
 # Call OPENCVTEST func
 OPENCVTEST
+
+OPENCVVERSION=`echo $opencvversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
+AC_SUBST(OPENCVVERSION)
 # -----------------       opencv  --------------------
 
 # Checks for header files.
@@ -158,10 +161,10 @@ AC_PATH_X
 AC_CHECK_HEADERS([float.h])
 AC_CHECK_HEADERS([sys/timeb.h])
 
-AC_CHECK_HEADER([linux/videodev.h],
-	[AC_SUBST(VIDEODEV_INCLUDE_FILE, linux/videodev.h)],
-	[AC_CHECK_HEADER([libv4l1-videodev.h],
-		[AC_SUBST(VIDEODEV_INCLUDE_FILE, libv4l1-videodev.h)],
+AC_CHECK_HEADER([libv4l1-videodev.h],
+	[AC_SUBST(VIDEODEV_INCLUDE_FILE, libv4l1-videodev.h)],
+	[AC_CHECK_HEADER([linux/videodev.h],
+		[AC_SUBST(VIDEODEV_INCLUDE_FILE, linux/videodev.h)],
 		[AC_MSG_ERROR([Couldn't find linux/videodev.h nor libv4l1-videodev.h])])
 	]
 	)
@@ -213,7 +216,8 @@ AC_OUTPUT(
 	[doc/Makefile] 
 	[wxutil/Makefile] 
 	[creavision/Makefile] 
-	[libwebcam/Makefile] 
+	[creavision/libwebcam/Makefile] 
+	[simplelog/Makefile] 
 	[wxcamwindow/Makefile] 
 	[src/Makefile] 
 	[src/version.h]
@@ -221,5 +225,5 @@ AC_OUTPUT(
 	[rpm/Makefile]
 	[rpm/eviacam.spec]
 	[win32/installer.iss]
-	[libwebcam/incvideodev.h]
+	[creavision/libwebcam/incvideodev.h]
 )

@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-14 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@ inline float roundf(float x) { return (x-floorf(x))>0.5 ? ceilf(x) : floorf(x); 
 //
 // Linux
 //
+#include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
 #include <stdexcept>
 
@@ -89,7 +90,7 @@ CMouseControl::CMouseControl (void* pDisplay)
 	#if defined(WIN32)
 	assert (pDisplay== NULL);
 	#else
-	if (pDisplay) m_pDisplay= (Display *) pDisplay;
+	if (pDisplay) m_pDisplay= pDisplay;
 	else {
 		m_pDisplay= XOpenDisplay(NULL);
 		m_closeDisplay= true;
@@ -105,8 +106,6 @@ CMouseControl::CMouseControl (void* pDisplay)
 	m_VirtualHeight= (float) m_ScreenHeight; 
 	m_VirtualWidth= (float) m_ScreenWidth;
 
-	ResetClickArea ();
-
 	m_fDx= m_fDy= 1.0f;
 	m_minDeltaThreshold= 0.0f;
 	m_actualMotionWeight= 1.0f;
@@ -118,7 +117,7 @@ CMouseControl::CMouseControl (void* pDisplay)
 CMouseControl::~CMouseControl()
 {
 #if !defined(WIN32)
-	if (m_closeDisplay) XCloseDisplay(m_pDisplay);
+	if (m_closeDisplay) XCloseDisplay(static_cast<Display*>(m_pDisplay));
 #endif
 }
 
@@ -133,10 +132,10 @@ void CMouseControl::GetScreenSize()
 	m_ScreenHeight= devMode.dmPelsHeight;
 	m_ScreenWidth= devMode.dmPelsWidth;
 #else // Linux
-//	BEGIN_GUI_CALL_MUTEX();
-	m_ScreenHeight= DisplayHeight (m_pDisplay, DefaultScreen (m_pDisplay));
-	m_ScreenWidth= DisplayWidth (m_pDisplay, DefaultScreen (m_pDisplay));
-//	END_GUI_CALL_MUTEX();	
+	m_ScreenHeight= 
+		DisplayHeight (static_cast<Display*>(m_pDisplay), DefaultScreen (static_cast<Display*>(m_pDisplay)));
+	m_ScreenWidth= 
+		DisplayWidth (static_cast<Display*>(m_pDisplay), DefaultScreen (static_cast<Display*>(m_pDisplay)));
 #endif
 	slog_write (SLOG_PRIO_DEBUG, "current screen size: %d, %d\n", m_ScreenWidth, m_ScreenHeight);
 }
@@ -162,10 +161,11 @@ void CMouseControl::GetPointerLocation (long& x, long& y)
 	int rootX, rootY, winX, winY;
 	unsigned int xstate;
 
-//	BEGIN_GUI_CALL_MUTEX();
-	Window rootWin= RootWindow (m_pDisplay, DefaultScreen (m_pDisplay));
-	XQueryPointer( m_pDisplay, rootWin, &root, &child, &rootX, &rootY, &winX, &winY, &xstate );
-//	END_GUI_CALL_MUTEX();
+	Window rootWin= 
+		RootWindow (static_cast<Display*>(m_pDisplay), DefaultScreen (static_cast<Display*>(m_pDisplay)));
+	XQueryPointer(
+		static_cast<Display*>(m_pDisplay), rootWin, &root, &child, &rootX, &rootY, &winX, &winY, &xstate );
+
 	x= winX;
 	y= winY;
 #endif
@@ -205,34 +205,6 @@ void CMouseControl::RecomputeWorkingArea ()
 					 (int) ((float) m_ScreenWidth * m_rightPercent)) / 2;
 	m_maxScreenY=	(m_ScreenHeight - 1) - (m_ScreenHeight - 
 					 (int) ((float) m_ScreenHeight * m_bottomPercent)) / 2;
-}
-
-void CMouseControl::SetClickArea (long minX, long minY, long maxX, long maxY)
-{
-	assert (minX>= 0 && minY>= 0);
-	assert (maxX< m_ScreenWidth && maxY< m_ScreenHeight);
-
-	m_minClicAreaX= minX;
-	m_minClicAreaY= minY;
-	m_maxClicAreaX= maxX;
-	m_maxClicAreaY= maxY;
-}
-
-void CMouseControl::ResetClickArea ()
-{
-	m_minClicAreaX= m_minClicAreaY= 0;
-	m_maxClicAreaX= m_maxScreenX;
-	m_maxClicAreaY= m_maxScreenY;
-}
-
-bool CMouseControl::CheckClickArea ()
-{
-	long x, y;
-
-	GetPointerLocation (x, y);
-	
-	return (x>= m_minClicAreaX && x<= m_maxClicAreaX &&
-			y>= m_minClicAreaY && y<= m_maxClicAreaY );		
 }
 
 void CMouseControl::SetRelAcceleration2 (long delta0, float factor0,
@@ -427,13 +399,17 @@ void CMouseControl::SendMouseCommand (long x, long y, int flags)
 
 	SendInput(1, &ip, sizeof(ip));
 #else
-//	BEGIN_GUI_CALL_MUTEX();
 	if (flags== MOUSE_MOVE_ABS) 
 		// Absolute motion
-		XTestFakeMotionEvent(m_pDisplay, DefaultScreen(m_pDisplay), x, y, CurrentTime);
+		XTestFakeMotionEvent(
+			static_cast<Display*>(m_pDisplay), 
+			DefaultScreen(static_cast<Display*>(m_pDisplay)), 
+			x, y, 
+			CurrentTime
+		);
 	else if (flags== MOUSE_MOVE_REL) 
 		// Relative motion
-		XTestFakeRelativeMotionEvent(m_pDisplay, x, y, CurrentTime);		
+		XTestFakeRelativeMotionEvent(static_cast<Display*>(m_pDisplay), x, y, CurrentTime);
 	else
 	{
 		// Button press
@@ -464,10 +440,9 @@ void CMouseControl::SendMouseCommand (long x, long y, int flags)
 			assert (false);
 		}
 
-		XTestFakeButtonEvent(m_pDisplay, button, is_press, CurrentTime);
+		XTestFakeButtonEvent(static_cast<Display*>(m_pDisplay), button, is_press, CurrentTime);
 	}
-	XFlush (m_pDisplay);
-//	END_GUI_CALL_MUTEX();
+	XFlush (static_cast<Display*>(m_pDisplay));
 #endif
 }
 
@@ -476,14 +451,9 @@ void CMouseControl::CenterPointer ()
 	DoMovePointerAbs(m_ScreenWidth/2, m_ScreenHeight/2);
 }
 
-bool CMouseControl::LeftDown ()
+void CMouseControl::LeftDown ()
 {
-	if (CheckClickArea ()) {
-		SendMouseCommand (0, 0,	MOUSE_LEFTDOWN);
-		return true;
-	}
-
-	return false;
+	SendMouseCommand (0, 0,	MOUSE_LEFTDOWN);
 }
 
 void CMouseControl::LeftUp ()
@@ -491,14 +461,9 @@ void CMouseControl::LeftUp ()
 	SendMouseCommand (0, 0,	MOUSE_LEFTUP);
 }
 
-bool CMouseControl::MiddleDown ()
+void CMouseControl::MiddleDown ()
 {
-	if (CheckClickArea ()) {
-		SendMouseCommand (0, 0,	MOUSE_MIDDLEDOWN);
-		return true;
-	}
-
-	return false;
+	SendMouseCommand (0, 0,	MOUSE_MIDDLEDOWN);
 }
 
 void CMouseControl::MiddleUp ()
@@ -506,14 +471,9 @@ void CMouseControl::MiddleUp ()
 	SendMouseCommand (0, 0,	MOUSE_MIDDLEUP);
 }
 
-bool CMouseControl::RightDown ()
+void CMouseControl::RightDown ()
 {
-	if (CheckClickArea ()) {
-		SendMouseCommand (0, 0,	MOUSE_RIGHTDOWN);
-		return true;
-	}
-	
-	return false;
+	SendMouseCommand (0, 0,	MOUSE_RIGHTDOWN);
 }
 
 void CMouseControl::RightUp ()
@@ -521,8 +481,9 @@ void CMouseControl::RightUp ()
 	SendMouseCommand (0, 0,	MOUSE_RIGHTUP);
 }
 
-bool CMouseControl::LeftClick ()
+void CMouseControl::LeftClick ()
 {
+<<<<<<< HEAD
 	if (CheckClickArea ()) {
 		LeftDown ();
 		sleep_milliseconds(MOUSE_BUTTON_WAIT_TIME);
@@ -531,10 +492,15 @@ bool CMouseControl::LeftClick ()
 	}
 
 	return false;
+=======
+	LeftDown ();
+	LeftUp ();
+>>>>>>> devel
 }
 
-bool CMouseControl::MiddleClick ()
+void CMouseControl::MiddleClick ()
 {
+<<<<<<< HEAD
 	if (CheckClickArea ()) {
 		MiddleDown ();
 		sleep_milliseconds(MOUSE_BUTTON_WAIT_TIME);
@@ -543,10 +509,15 @@ bool CMouseControl::MiddleClick ()
 	}
 
 	return false;
+=======
+	MiddleDown ();
+	MiddleUp ();
+>>>>>>> devel
 }
 
-bool CMouseControl::RightClick ()
+void CMouseControl::RightClick ()
 {	
+<<<<<<< HEAD
 	if (CheckClickArea ()) {
 		RightDown ();
 		sleep_milliseconds(MOUSE_BUTTON_WAIT_TIME);
@@ -555,10 +526,15 @@ bool CMouseControl::RightClick ()
 	}
 
 	return false;
+=======
+	RightDown ();
+	RightUp ();
+>>>>>>> devel
 }
 
-bool CMouseControl::LeftDblClick ()
+void CMouseControl::LeftDblClick ()
 {
+<<<<<<< HEAD
 	if (CheckClickArea ()) {
 		LeftClick ();
 		sleep_milliseconds(MOUSE_BUTTON_WAIT_TIME);
@@ -567,4 +543,8 @@ bool CMouseControl::LeftDblClick ()
 	}
 
 	return false;
+=======
+	LeftClick ();
+	LeftClick ();
+>>>>>>> devel
 }

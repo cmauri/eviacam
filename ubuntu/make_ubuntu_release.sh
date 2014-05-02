@@ -15,7 +15,12 @@ fi
 
 cd ..
 
-echo "This script overwrites debian/rules and debian/changelog"
+if [ -f debian-src/eviacam*orig.tar.gz ]; then
+	echo "Source file detected. Clean debian-src/ directory first"
+	exit -1
+fi
+
+echo "This script overwrites debian/rules, debian/control and debian/changelog"
 echo "Press ENTER to continue..."
 read
 
@@ -29,6 +34,10 @@ for release in `cat $basedir/ubuntu-releases`; do
 	# Create symlinks to rules files
 	ln -s rules $basedir/rules-$release 2> /dev/null
 	cat $basedir/rules-$release > debian/rules
+	
+	# Create symlinks to control files
+	ln -s control $basedir/control-$release 2> /dev/null
+	cat $basedir/control-$release > debian/control
 	
 	# Create changelog
 	echo "eviacam ($version~$release) $release; urgency=low" > $changelogf

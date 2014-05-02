@@ -1,3 +1,18 @@
+2014-01-04 - Release 1.7.1
+* Fix Ubuntu Saucy build
+* New translations:
+	- Lithuanian (thanks to Agnius Svigaris)
+
+2013-05-30 - Release 1.7.0
+* New logo and icon set (thanks to Uzair Lion)
+* Increase face detector range
+* Fix build issues for Ubuntu Raring and OpenCV 2.4.x
+* Update libwebcam to version v0.2.2
+* Fixed other minor issues (see Changelog for details)
+* New translations:
+	- Japanese (thanks to Jiro Matsuzawa)
+	- Greek (thanks to Wasilis Mandratzis)
+
 2012-11-19 - Release 1.6.1
 * Fix -d command line not available on Win32 release mode
 

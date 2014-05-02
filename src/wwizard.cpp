@@ -45,9 +45,9 @@
 #include "cautostart.h"
 #include "pointeraction.h"
 #include "dwellclick.h"
+#include "paths.h"
 
 ////@begin XPM images
-#include "icons/eviacam.xpm"
 ////@end XPM images
 
 #define SINGLE 1
@@ -334,6 +334,7 @@ WizardPage::~WizardPage()
 void WizardPage::Init()
 {
 ////@begin WizardPage member initialisation
+    m_eviacamLogo = NULL;
 ////@end WizardPage member initialisation
 }
 
@@ -348,8 +349,6 @@ void WizardPage::CreateControls()
     WizardPage* itemWizardPageSimple2 = this;
 
     wxFlexGridSizer* itemFlexGridSizer3 = new wxFlexGridSizer(0, 1, 0, 0);
-    itemFlexGridSizer3->AddGrowableRow(2);
-    itemFlexGridSizer3->AddGrowableCol(0);
     itemWizardPageSimple2->SetSizer(itemFlexGridSizer3);
 
     wxStaticText* itemStaticText4 = new wxStaticText( itemWizardPageSimple2, wxID_STATIC, _("Welcome to the eViacam configuration wizard"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -360,20 +359,29 @@ void WizardPage::CreateControls()
     itemFlexGridSizer3->Add(itemStaticLine5, 0, wxGROW|wxGROW|wxALL, 5);
 
     wxFlexGridSizer* itemFlexGridSizer6 = new wxFlexGridSizer(0, 1, 0, 0);
-    itemFlexGridSizer6->AddGrowableRow(1);
-    itemFlexGridSizer6->AddGrowableCol(0);
     itemFlexGridSizer3->Add(itemFlexGridSizer6, 0, wxALIGN_CENTER_HORIZONTAL|wxGROW|wxLEFT|wxRIGHT, 5);
 
     wxStaticText* itemStaticText7 = new wxStaticText( itemWizardPageSimple2, wxID_STATIC, _("This wizard will guide you through the basic configuration of eViacam."), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText7, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxStaticBitmap* itemStaticBitmap8 = new wxStaticBitmap( itemWizardPageSimple2, wxID_STATIC, itemWizardPageSimple2->GetBitmapResource(wxT("icons/eviacam.xpm")), wxDefaultPosition, wxSize(32, 32), 0 );
-    itemFlexGridSizer6->Add(itemStaticBitmap8, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_eviacamLogo = new wxStaticBitmap( itemWizardPageSimple2, wxID_STATIC, wxNullBitmap, wxDefaultPosition, wxSize(303, 100), 0 );
+    itemFlexGridSizer6->Add(m_eviacamLogo, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText9 = new wxStaticText( itemWizardPageSimple2, wxID_STATIC, _("Click Next to continue."), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6->Add(itemStaticText9, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
+    itemFlexGridSizer6->AddGrowableRow(1);
+    itemFlexGridSizer6->AddGrowableCol(0);
+
+    itemFlexGridSizer3->AddGrowableRow(2);
+    itemFlexGridSizer3->AddGrowableCol(0);
+
 ////@end WizardPage content construction
+
+	wxString logoPath= eviacam::GetDataDir();
+	logoPath+= _T("/eviacam_logo.png");
+	m_eviacamLogo->SetBitmap(wxBitmap(logoPath, wxBITMAP_TYPE_PNG));    
+	//m_eviacamLogo = new wxStaticBitmap( itemWizardPageSimple2, wxID_STATIC, itemWizardPageSimple2->GetBitmapResource(wxT("../doc/eviacam_logo.png")), wxDefaultPosition, wxSize(303, 100), 0 );
 }
 
 
@@ -397,11 +405,6 @@ wxBitmap WizardPage::GetBitmapResource( const wxString& name )
     // Bitmap retrieval
 ////@begin WizardPage bitmap retrieval
     wxUnusedVar(name);
-    if (name == _T("icons/eviacam.xpm"))
-    {
-        wxBitmap bitmap(eviacam);
-        return bitmap;
-    }
     return wxNullBitmap;
 ////@end WizardPage bitmap retrieval
 }
@@ -1197,8 +1200,6 @@ void WizardPage4::CreateControls()
     WizardPage4* itemWizardPageSimple110 = this;
 
     wxFlexGridSizer* itemFlexGridSizer111 = new wxFlexGridSizer(0, 1, 0, 0);
-    itemFlexGridSizer111->AddGrowableRow(2);
-    itemFlexGridSizer111->AddGrowableCol(0);
     itemWizardPageSimple110->SetSizer(itemFlexGridSizer111);
 
     wxStaticText* itemStaticText112 = new wxStaticText( itemWizardPageSimple110, wxID_STATIC, _("Wizard completed"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -1209,8 +1210,6 @@ void WizardPage4::CreateControls()
     itemFlexGridSizer111->Add(itemStaticLine113, 0, wxGROW|wxGROW|wxALL, 5);
 
     wxFlexGridSizer* itemFlexGridSizer114 = new wxFlexGridSizer(0, 1, 0, 0);
-    itemFlexGridSizer114->AddGrowableRow(5);
-    itemFlexGridSizer114->AddGrowableCol(0);
     itemFlexGridSizer111->Add(itemFlexGridSizer114, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText115 = new wxStaticText( itemWizardPageSimple110, wxID_STATIC, _("Congratulations! You have completed the configuration wizard."), wxDefaultPosition, wxDefaultSize, 0 );
@@ -1243,6 +1242,12 @@ void WizardPage4::CreateControls()
     wxStaticText* itemStaticText121 = new wxStaticText( itemWizardPageSimple110, wxID_STATIC, _("You may change the settings through Configuration -> Options.\n\nClick finish to exit the wizard."), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText121->Wrap(450);
     itemFlexGridSizer114->Add(itemStaticText121, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxLEFT|wxRIGHT|wxTOP, 5);
+
+    itemFlexGridSizer114->AddGrowableRow(5);
+    itemFlexGridSizer114->AddGrowableCol(0);
+
+    itemFlexGridSizer111->AddGrowableRow(2);
+    itemFlexGridSizer111->AddGrowableCol(0);
 
 ////@end WizardPage4 content construction
 	m_chkEnabledAtStartup->SetValue(wxGetApp().GetController().GetEnabledAtStartup());
