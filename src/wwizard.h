@@ -46,12 +46,11 @@
 class WizardPage;
 class WizardPage5;
 class WizardPage8;
-class wxSpinCtrl;
 class WizardPage1;
 class WizardPage2;
 class WizardPage6;
+class wxSpinCtrl;
 class wxToggleButton;
-class WizardPage7;
 class WizardPage3;
 class WizardPage4;
 ////@end forward declarations
@@ -71,20 +70,19 @@ class wxStaticText;
 #define ID_WIZARDPAGE_TRACKER 10016
 #define ID_CHECKBOX_LOCATE_FACE 10022
 #define ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED 10106
-#define ID_SPINCTRL_LOCATE_FACE_TIMEOUT 10108
 #define ID_WIZARDPAGE_CALIB1 10093
 #define ID_CHECKBOX_PERFORM_CALIBRATION 10095
 #define ID_WIZARDPAGE_CALIB2 10096
 #define ID_WIZARDPAGE_CALIB3 10116
 #define ID_SPINCTRL 10118
 #define ID_SPINCTRL1 10119
-#define ID_TOGGLEBUTTON 10117
-#define ID_WIZARDPAGE_CLICK1 10120
+#define ID_TOGGLE_HEAD_TRACKING_PAGE6 10117
 #define ID_WIZARDPAGE_CLICK2 10097
 #define ID_TOGGLE_TEST 10121
 #define ID_RADIOBUTTON_DWELL_CLICK 10099
 #define ID_RADIOBUTTON_GESTURE_CLICK 10100
 #define ID_RADIOBUTTON_NONE_CLICK 10098
+#define ID_TOGGLE_HEAD_TRACKING_PAGE3 10120
 #define ID_WIZARDPAGE_FINAL 10103
 #define ID_CHECKBOX1 10092
 #define ID_CHECKBOX3 10101
@@ -114,14 +112,8 @@ public:
     /// Destructor
     ~WWizard();
 
-	inline const bool GetRunAtStartup() const;
-	inline void SetRunAtStartup(bool value);
-
 	const bool GetPerformCalibration() const { return m_performCalibration;	}
 	void SetPerformCalibration(bool value) { m_performCalibration= value; }
-	
-	inline const bool GetIsMotionEnabled() const;
-	inline void SetIsMotionEnabled(bool value);
 	
 private:
     /// Initialises member variables
@@ -148,6 +140,11 @@ public:
     /// Retrieves icon resources
     wxIcon GetIconResource( const wxString& name );
 ////@end WWizard member function declarations
+
+	void UpdateToggleButtonStatus (wxToggleButton& toggle);
+	void OnToggleHeadTrackingClick (wxCommandEvent& event, wxToggleButton& toggle);
+	void OnToggleHeadTrackingUpdate(wxUpdateUIEvent& event, wxToggleButton& toggle);
+
 private:
     /// Should we show tooltips?
     static bool ShowToolTips();
@@ -355,6 +352,9 @@ private:
     /// wxEVT_LEFT_DCLICK event handler for ID_TOGGLE_TEST
     void OnLeftDClickTest( wxMouseEvent& event );
 
+    /// wxEVT_MIDDLE_UP event handler for ID_TOGGLE_TEST
+    void OnMiddleUpTest( wxMouseEvent& event );
+
     /// wxEVT_RIGHT_UP event handler for ID_TOGGLE_TEST
     void OnRightUpTest( wxMouseEvent& event );
 
@@ -368,6 +368,12 @@ private:
 #endif
     /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON_NONE_CLICK
     void OnRadiobuttonNoneClickSelected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_TOGGLE_HEAD_TRACKING_PAGE3
+    void OnToggleHeadTrackingPage3Click( wxCommandEvent& event );
+
+    /// wxEVT_UPDATE_UI event handler for ID_TOGGLE_HEAD_TRACKING_PAGE3
+    void OnToggleHeadTrackingPage3Update( wxUpdateUIEvent& event );
 
 ////@end WizardPage3 event handler declarations
 
@@ -393,6 +399,7 @@ private:
     wxRadioButton* m_rbGestureClick;
 #endif
     wxRadioButton* m_rbNoneClick;
+    wxToggleButton* m_toggleHeadTrackingPage3;
 ////@end WizardPage3 member variables
 	WWizard* m_wizardParent;
 	bool m_isLeftDown;
@@ -519,6 +526,7 @@ public:
 ////@begin WizardPage5 member variables
     wxStaticText* m_staticCameraName;
     wxStaticText* m_staticFramerate;
+    wxStaticText* m_staticCameraInstructions;
     wxButton* m_btnCameraSettings;
 ////@end WizardPage5 member variables
 	WWizard* m_wizardParent;
@@ -562,11 +570,11 @@ public:
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL1
     void OnSpinctrlYSpeedUpdated( wxSpinEvent& event );
 
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_TOGGLEBUTTON
-    void OnTogglebuttonClick( wxCommandEvent& event );
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_TOGGLE_HEAD_TRACKING_PAGE6
+    void OnToggleHeadTrackingPage6Click( wxCommandEvent& event );
 
-    /// wxEVT_UPDATE_UI event handler for ID_TOGGLEBUTTON
-    void OnTogglebuttonUpdate( wxUpdateUIEvent& event );
+    /// wxEVT_UPDATE_UI event handler for ID_TOGGLE_HEAD_TRACKING_PAGE6
+    void OnToggleHeadTrackingPage6Update( wxUpdateUIEvent& event );
 
 ////@end WizardPage6 event handler declarations
 
@@ -585,56 +593,8 @@ public:
 ////@begin WizardPage6 member variables
     wxSpinCtrl* m_spinXSpeed;
     wxSpinCtrl* m_spinYSpeed;
-    wxToggleButton* m_toggleEnableMotion;
+    wxToggleButton* m_toggleHeadTrackingPage6;
 ////@end WizardPage6 member variables
-	WWizard* m_wizardParent;
-};
-
-/*!
- * WizardPage7 class declaration
- */
-
-class WizardPage7: public wxWizardPageSimple
-{    
-    DECLARE_DYNAMIC_CLASS( WizardPage7 )
-    DECLARE_EVENT_TABLE()
-
-public:
-    /// Constructors
-    WizardPage7();
-
-    WizardPage7( wxWizard* parent );
-
-    /// Creation
-    bool Create( wxWizard* parent );
-
-    /// Destructor
-    ~WizardPage7();
-
-    /// Initialises member variables
-    void Init();
-
-    /// Creates the controls and sizers
-    void CreateControls();
-
-////@begin WizardPage7 event handler declarations
-
-////@end WizardPage7 event handler declarations
-
-////@begin WizardPage7 member function declarations
-
-    /// Retrieves bitmap resources
-    wxBitmap GetBitmapResource( const wxString& name );
-
-    /// Retrieves icon resources
-    wxIcon GetIconResource( const wxString& name );
-////@end WizardPage7 member function declarations
-
-    /// Should we show tooltips?
-    static bool ShowToolTips();
-
-////@begin WizardPage7 member variables
-////@end WizardPage7 member variables
 	WWizard* m_wizardParent;
 };
 
@@ -673,9 +633,6 @@ public:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED
     void OnCheckboxEnableWhenFaceDetectedClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_LOCATE_FACE_TIMEOUT
-    void OnSpinctrlLocateFaceTimeoutUpdated( wxSpinEvent& event );
-
 ////@end WizardPage8 event handler declarations
 
 ////@begin WizardPage8 member function declarations
@@ -693,7 +650,6 @@ public:
 ////@begin WizardPage8 member variables
     wxCheckBox* m_chkLocateFace;
     wxCheckBox* m_chkEnableWhenFaceDetected;
-    wxSpinCtrl* m_spinLocateFaceTimeout;
 ////@end WizardPage8 member variables
 };
 

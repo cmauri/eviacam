@@ -350,7 +350,11 @@ void CViacamController::SetEnabled (bool value, bool silent, wxWindow* parent)
 			wxMessageDialog dlg (parent, _("This action will disable eViacam.\nAre you sure?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
 			if (dlg.ShowModal()== wxID_NO) return;
 		}
-		m_enabled= value;				
+		if (value) {
+			// Enable, reset counters
+			m_pointerAction->ResetCounters();
+		}
+		m_enabled= value;
 	}
 }
 

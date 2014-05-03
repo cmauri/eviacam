@@ -6,6 +6,8 @@ Planned
 
 Whises
 ======
+- Modo joystick. A partir de la inclinación de la cabeza (linea ojos)
+- Manuel Borras: Reducir la velocidad y el tiempo de mantener quieto el puntero para ejecutar la acción (clic derecho, doble clic, ...) cuando el puntero pase por encima de un icono del escritorio. Esto facilitaría la precisión sin perder agilidad en la navegación por el escritorio
 - Add zooming feature 
 - Try to generate more portable binaries (apgcc)
 - Absolute face tracking.

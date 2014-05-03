@@ -73,13 +73,12 @@ void CGestureClick::WriteProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->SetPath (_T("gestureClick"));	
 
-	//pConfObj->Write(_T("consecutiveClicksAllowed"), (bool) GetConsecutiveClicksAllowed());
-	pConfObj->Write(_T("dwellTime"), (long) GetDwellTime());
-	pConfObj->Write(_T("dwellToleranceArea"), (long) GetDwellToleranceArea());
-	pConfObj->Write(_T("actionTop"), (long) GetActionTop());
-	pConfObj->Write(_T("actionLeft"), (long) GetActionLeft());
-	pConfObj->Write(_T("actionRight"), (long) GetActionRight());
-	pConfObj->Write(_T("actionBottom"), (long) GetActionBottom());
+	pConfObj->Write(_T("dwellTime"), (int) GetDwellTime());
+	pConfObj->Write(_T("dwellToleranceArea"), (int) GetDwellToleranceArea());
+	pConfObj->Write(_T("actionTop"), (int) GetActionTop());
+	pConfObj->Write(_T("actionLeft"), (int) GetActionLeft());
+	pConfObj->Write(_T("actionRight"), (int) GetActionRight());
+	pConfObj->Write(_T("actionBottom"), (int) GetActionBottom());
 	pConfObj->Write(_T("visualAlertsEnabled"), (bool) AreVisualAlertsEnabled());
 	pConfObj->Write(_T("fastAction"), (bool) GetFastGestureAction());
 
@@ -88,12 +87,11 @@ void CGestureClick::WriteProfileData(wxConfigBase* pConfObj)
 
 void CGestureClick::ReadProfileData(wxConfigBase* pConfObj)
 {
-	long vall;
+	int vall;
 	bool valb;
 	
 	pConfObj->SetPath (_T("gestureClick"));
 
-	//pConfObj->Read(_T("consecutiveClicksAllowed"), &m_consecutiveClicksAllowed);
 	if (pConfObj->Read(_T("dwellTime"), &vall)) SetDwellTime(vall);	
 	if (pConfObj->Read(_T("dwellToleranceArea"), &vall)) 
 		SetDwellToleranceArea((unsigned int) vall);		

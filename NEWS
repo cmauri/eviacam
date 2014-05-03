@@ -1,3 +1,13 @@
+2014-05-03 - Release 1.7.2
+* Fix multiscreen click issue 
+  (BUG #44 click feature does not run on multi screens)
+* Workaround for applications that does not recognise click actions
+  (BUG #42 Mouseclick to short for some programs)
+* Add several improvements to the configuration wizard
+* Fix silent installation on win32
+  (BUG #46 silent installation trouble)
+* Update Lithuanian translation (thanks to Agnius Svigaris)
+
 2014-01-04 - Release 1.7.1
 * Fix Ubuntu Saucy build
 * New translations:

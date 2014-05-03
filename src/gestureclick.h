@@ -54,7 +54,7 @@ public:
 	void EnableVisualAlerts(bool value);
 
 	unsigned int GetDwellTime() const {
-		return m_dwellCountdown.GetWaitTimeMs() / 100;
+		return (unsigned int) (m_dwellCountdown.GetWaitTimeMs() / 100);
 	}
 	void SetDwellTime (unsigned int ds) {
 		if (ds> 50) ds= 50;
@@ -135,7 +135,7 @@ private:
 	CVisualAlertProgress m_progressVisualAlert;
 	CVisualAlertDirection m_gestureVisualAlert;
 	bool m_isLeftPressed;
-	long m_xIniGesture, m_yIniGesture;
+	int m_xIniGesture, m_yIniGesture;
 	EState m_state;
 
 	// Associations

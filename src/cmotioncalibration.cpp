@@ -87,8 +87,8 @@ bool CMotionCalibration::InitMotionCalibration()
 	//
 	// Store previous values
 	//
-	unsigned long xSpeedBackup= wxGetApp().GetController().GetPointerAction().GetXSpeed();
-	unsigned long ySpeedBackup= wxGetApp().GetController().GetPointerAction().GetYSpeed();
+	unsigned int xSpeedBackup= wxGetApp().GetController().GetPointerAction().GetXSpeed();
+	unsigned int ySpeedBackup= wxGetApp().GetController().GetPointerAction().GetYSpeed();
 	bool isEnabled= wxGetApp().GetController().GetEnabled();
 	CPointerAction::EClickMode clickMode= wxGetApp().GetController().GetPointerAction().GetClickMode();
 

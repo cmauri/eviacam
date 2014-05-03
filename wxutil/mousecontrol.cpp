@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-14 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ inline float roundf(float x) { return (x-floorf(x))>0.5 ? ceilf(x) : floorf(x); 
 #include <X11/Xlib.h>
 #include <X11/extensions/XTest.h>
 #include <stdexcept>
+#include <unistd.h>
 
 #endif // WIN32
 
@@ -63,6 +64,17 @@ inline float roundf(float x) { return (x-floorf(x))>0.5 ? ceilf(x) : floorf(x); 
 #define MOUSE_RIGHTUP     0x0010	// Right button up 
 #define MOUSE_MIDDLEDOWN  0x0020	// Middle button down
 #define MOUSE_MIDDLEUP    0x0040	// Middle button up 
+
+static
+void sleep_milliseconds(unsigned ms)
+{
+	if (!ms) return;
+#ifdef WIN32
+	Sleep (ms);
+#else
+	usleep (ms * 1000);
+#endif
+}
 
 CMouseControl::CMouseControl (void* pDisplay)
 : m_enabledRestrictedWorkingArea(false)
@@ -93,14 +105,14 @@ CMouseControl::CMouseControl (void* pDisplay)
 	m_VirtualHeight= (float) m_ScreenHeight; 
 	m_VirtualWidth= (float) m_ScreenWidth;
 
-	ResetClickArea ();
-
 	m_fDx= m_fDy= 1.0f;
 	m_minDeltaThreshold= 0.0f;
 	m_actualMotionWeight= 1.0f;
 	m_dxant= 0.0f; m_dyant= 0.0f;
 
 	for (int i= 0; i< ACCEL_ARRAY_SIZE; i++) m_accelArray[i]= (float) 1;
+
+	m_sendActionWait= 0;
 }
 
 CMouseControl::~CMouseControl()
@@ -129,7 +141,7 @@ void CMouseControl::GetScreenSize()
 	slog_write (SLOG_PRIO_DEBUG, "current screen size: %d, %d\n", m_ScreenWidth, m_ScreenHeight);
 }
 
-void CMouseControl::GetPointerLocation (long& x, long& y)
+void CMouseControl::GetPointerLocation (int& x, int& y)
 {
 #if defined(WIN32)
 
@@ -141,22 +153,19 @@ void CMouseControl::GetPointerLocation (long& x, long& y)
 
 	GetCursorInfo(&pci);
 
-	x= pci.ptScreenPos.x;
-	y= pci.ptScreenPos.y;
+	x= (int) pci.ptScreenPos.x;
+	y= (int) pci.ptScreenPos.y;
 
 #else // Linux
 	
 	Window root, child;
-	int rootX, rootY, winX, winY;
+	int rootX, rootY;
 	unsigned int xstate;
 
 	Window rootWin= 
 		RootWindow (static_cast<Display*>(m_pDisplay), DefaultScreen (static_cast<Display*>(m_pDisplay)));
 	XQueryPointer(
-		static_cast<Display*>(m_pDisplay), rootWin, &root, &child, &rootX, &rootY, &winX, &winY, &xstate );
-
-	x= winX;
-	y= winY;
+		static_cast<Display*>(m_pDisplay), rootWin, &root, &child, &rootX, &rootY, &x, &y, &xstate );
 #endif
 }
 
@@ -196,34 +205,6 @@ void CMouseControl::RecomputeWorkingArea ()
 					 (int) ((float) m_ScreenHeight * m_bottomPercent)) / 2;
 }
 
-void CMouseControl::SetClickArea (long minX, long minY, long maxX, long maxY)
-{
-	assert (minX>= 0 && minY>= 0);
-	assert (maxX< m_ScreenWidth && maxY< m_ScreenHeight);
-
-	m_minClicAreaX= minX;
-	m_minClicAreaY= minY;
-	m_maxClicAreaX= maxX;
-	m_maxClicAreaY= maxY;
-}
-
-void CMouseControl::ResetClickArea ()
-{
-	m_minClicAreaX= m_minClicAreaY= 0;
-	m_maxClicAreaX= m_maxScreenX;
-	m_maxClicAreaY= m_maxScreenY;
-}
-
-bool CMouseControl::CheckClickArea ()
-{
-	long x, y;
-
-	GetPointerLocation (x, y);
-	
-	return (x>= m_minClicAreaX && x<= m_maxClicAreaX &&
-			y>= m_minClicAreaY && y<= m_maxClicAreaY );		
-}
-
 void CMouseControl::SetRelAcceleration2 (long delta0, float factor0,
 						long delta1, float factor1)
 {
@@ -244,7 +225,7 @@ void CMouseControl::SetRelAcceleration2 (long delta0, float factor0,
 	}
 }
 
-bool CMouseControl::EnforceWorkingAreaLimits (long &x, long &y)
+bool CMouseControl::EnforceWorkingAreaLimits (int &x, int &y)
 {
 	bool retval= false;
 
@@ -283,7 +264,7 @@ void CMouseControl::MovePointerAbs (float x, float y)
 {
 //	OnDisplayChanged ();
 
-	long iX, iY;
+	int iX, iY;
 	float fisX, fisY, dx, dy;	
 
 	Virt2Fis (x, y, fisX, fisY);
@@ -298,8 +279,8 @@ void CMouseControl::MovePointerAbs (float x, float y)
 	m_dxant= dx; m_dyant= dy;
 
 	// Map to screen coordinates
-	iX= iX + (long) dx;
-	iY= iY + (long) dy;
+	iX= iX + (int) dx;
+	iY= iY + (int) dy;
 	
 	EnforceWorkingAreaLimits (iX, iY);
 	DoMovePointerAbs (iX, iY);
@@ -332,7 +313,7 @@ float CMouseControl::MovePointerRel (float dx, float dy, int* dxRes, int* dyRes)
 	
 	int idx= (int) roundf(dx);
 	int idy= (int) roundf(dy);
-	long mouseX, mouseY;
+	int mouseX, mouseY;
 	if (m_enabledRestrictedWorkingArea && !m_enabledWrapPointer) {
 		GetPointerLocation (mouseX, mouseY);
 		if (mouseX + idx< m_minScreenX) idx= m_minScreenX - mouseX;
@@ -468,14 +449,9 @@ void CMouseControl::CenterPointer ()
 	DoMovePointerAbs(m_ScreenWidth/2, m_ScreenHeight/2);
 }
 
-bool CMouseControl::LeftDown ()
+void CMouseControl::LeftDown ()
 {
-	if (CheckClickArea ()) {
-		SendMouseCommand (0, 0,	MOUSE_LEFTDOWN);
-		return true;
-	}
-
-	return false;
+	SendMouseCommand (0, 0,	MOUSE_LEFTDOWN);
 }
 
 void CMouseControl::LeftUp ()
@@ -483,14 +459,9 @@ void CMouseControl::LeftUp ()
 	SendMouseCommand (0, 0,	MOUSE_LEFTUP);
 }
 
-bool CMouseControl::MiddleDown ()
+void CMouseControl::MiddleDown ()
 {
-	if (CheckClickArea ()) {
-		SendMouseCommand (0, 0,	MOUSE_MIDDLEDOWN);
-		return true;
-	}
-
-	return false;
+	SendMouseCommand (0, 0,	MOUSE_MIDDLEDOWN);
 }
 
 void CMouseControl::MiddleUp ()
@@ -498,14 +469,9 @@ void CMouseControl::MiddleUp ()
 	SendMouseCommand (0, 0,	MOUSE_MIDDLEUP);
 }
 
-bool CMouseControl::RightDown ()
+void CMouseControl::RightDown ()
 {
-	if (CheckClickArea ()) {
-		SendMouseCommand (0, 0,	MOUSE_RIGHTDOWN);
-		return true;
-	}
-	
-	return false;
+	SendMouseCommand (0, 0,	MOUSE_RIGHTDOWN);
 }
 
 void CMouseControl::RightUp ()
@@ -513,46 +479,30 @@ void CMouseControl::RightUp ()
 	SendMouseCommand (0, 0,	MOUSE_RIGHTUP);
 }
 
-bool CMouseControl::LeftClick ()
+void CMouseControl::LeftClick ()
 {
-	if (CheckClickArea ()) {
-		LeftDown ();
-		LeftUp ();
-		return true;
-	}
-
-	return false;
+	LeftDown ();
+	sleep_milliseconds(m_sendActionWait);
+	LeftUp ();
 }
 
-bool CMouseControl::MiddleClick ()
+void CMouseControl::MiddleClick ()
 {
-	if (CheckClickArea ()) {
-		MiddleDown ();
-		MiddleUp ();
-		return true;
-	}
-
-	return false;
+	MiddleDown ();
+	sleep_milliseconds(m_sendActionWait);
+	MiddleUp ();
 }
 
-bool CMouseControl::RightClick ()
+void CMouseControl::RightClick ()
 {	
-	if (CheckClickArea ()) {
-		RightDown ();
-		RightUp ();
-		return true;
-	}
-
-	return false;
+	RightDown ();
+	sleep_milliseconds(m_sendActionWait);
+	RightUp ();
 }
 
-bool CMouseControl::LeftDblClick ()
+void CMouseControl::LeftDblClick ()
 {
-	if (CheckClickArea ()) {
-		LeftClick ();
-		LeftClick ();
-		return true;
-	}
-
-	return false;
+	LeftClick ();
+	sleep_milliseconds(m_sendActionWait);
+	LeftClick ();
 }
