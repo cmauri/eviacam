@@ -376,7 +376,7 @@ void WizardPage::CreateControls()
     itemFlexGridSizer3->Add(itemStaticText4, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticLine* itemStaticLine5 = new wxStaticLine( itemWizardPageSimple2, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-    itemFlexGridSizer3->Add(itemStaticLine5, 0, wxGROW|wxGROW|wxALL, 5);
+    itemFlexGridSizer3->Add(itemStaticLine5, 0, wxGROW|wxALIGN_TOP|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxVERTICAL);
     itemFlexGridSizer3->Add(itemBoxSizer6, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);

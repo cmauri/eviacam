@@ -131,7 +131,7 @@ int crvNormalize (IplImage *src, IplImage *dst)
 	TCrvLookupTable lut;
 	int range;
 	 	
-	assert (src->depth== IPL_DEPTH_8U && src->depth== IPL_DEPTH_8U);
+	assert (src->depth== IPL_DEPTH_8U && dst->depth== IPL_DEPTH_8U);
 
 	crvHistogram (src, his);
 
