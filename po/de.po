@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: eViacam 1.6\n"
+"Project-Id-Version: eViacam 1.7.2\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2014-05-02 19:36+0200\n"
-"PO-Revision-Date: 2012-10-25 20:09+0100\n"
-"Last-Translator: Christian Bieder <chb09@aon.at>\n"
-"Language-Team: Christian Bieder <chb099@gmail.com>\n"
-"Language: \n"
+"PO-Revision-Date: 2014-05-26 17:05+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: German\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: src/wconfiguration.h:128
 msgid "Configuration"
@@ -436,17 +436,16 @@ msgid "seconds"
 msgstr "Sekunden"
 
 #: src/wconfiguration.cpp:770
-#, fuzzy
 msgid "Mouse actions"
-msgstr "Bewegung"
+msgstr "Mausaktionen"
 
 #: src/wconfiguration.cpp:777
 msgid "Increase this value if some application ignores click events."
-msgstr ""
+msgstr "Erhöhe diesen Wert falls manche Anwendungen die Mausklicks ignorieren."
 
 #: src/wconfiguration.cpp:780
 msgid "ms delay between up and down events"
-msgstr ""
+msgstr "Verzögerung in Millisekunden zwischen Maustaste drücken und loslassen"
 
 #: src/wconfiguration.cpp:783
 msgid "Advanced"
@@ -889,14 +888,12 @@ msgid "Enable Viacam configuration wizard"
 msgstr "Enable Viacam Konfigurationsassistent"
 
 #: src/wwizard.cpp:261
-#, fuzzy
 msgid "Disable head tracking"
-msgstr "Ausschalten"
+msgstr "Deaktiviere Kopfverfolgung"
 
 #: src/wwizard.cpp:265 src/wwizard.cpp:916 src/wwizard.cpp:1644
-#, fuzzy
 msgid "Enable head tracking"
-msgstr "Mauszeigersteuerung einschalten"
+msgstr "Aktiviere Kopfverfolgung"
 
 #: src/wwizard.cpp:374
 msgid "Welcome to the eViacam configuration wizard"
@@ -998,12 +995,9 @@ msgstr ""
 "Wenn ausgewählt erscheint der Assistent automatisch beim Programmstart."
 
 #: src/wwizard.cpp:1257
-#, fuzzy
 msgid "You may change the settings through Configuration -> Options"
 msgstr ""
-"Die Einstellungen können unter Konfiguration-> Optionen geändert werden.\n"
-"\n"
-"Auf Fertig klicken um den Assistenten zu beenden."
+"Die Einstellungen können unter Konfiguration-> Optionen geändert werden."
 
 #: src/wwizard.cpp:1429
 msgid "Camera setup"
@@ -1046,28 +1040,26 @@ msgid ""
 "You can adjust motion speed manually and enable head tracking to test how it "
 "works."
 msgstr ""
+"Du kannst die Bewegungsgeschwindigkeit manuell einstellen und die "
+"Kopfverfolgung aktivieren um zu testen wie es funktioniert."
 
 #: src/wwizard.cpp:1808
 msgid "The frame rate is appropriate."
-msgstr ""
+msgstr "Die Bildgeschwindigkeit ist ausreichend."
 
 #: src/wwizard.cpp:1906
 msgid "Face detection setup"
-msgstr ""
+msgstr "Gesichtserkennung"
 
 #: src/wwizard.cpp:1919
-#, fuzzy
 msgid ""
 "eViacam will try to detect your face automatically. But, if necessary, you "
 "can disable this feature and manually adjust the tracking area (blue "
 "rectangle) around your face.\n"
 msgstr ""
-"Das Gesicht muss innerhalb des Rechtecks (Aufnahmebereich) sein um den "
-"Mauszeiger zu steuern.\n"
-"\n"
 "eViacam versucht das Gesicht automatisch zu erkennen. Falls es nicht optimal "
 "erkannt wird,  kann diese Option deaktiviert werden und der Aufnahmebereich "
-"kann manuell rund um das Gesicht angepasst werden."
+"(Rechteck) kann manuell rund um das Gesicht angepasst werden.\n"
 
 #: src/wwizard.cpp:1925
 msgid "Locate face automatically (recommended)"
