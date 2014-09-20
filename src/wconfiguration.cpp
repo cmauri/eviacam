@@ -878,7 +878,7 @@ void WConfiguration::CreateControls()
 
 void WConfiguration::CreateHotkey (const CKeyCommand* kc, wxWindow* parent, wxSizer* sizer)
 {
-	wxStaticText* itemStaticText = new wxStaticText( parent, m_lastId, wxString(kc->GetDescription(),wxConvUTF8), wxDefaultPosition, wxDefaultSize, 0 );
+	wxStaticText* itemStaticText = new wxStaticText( parent, m_lastId, wxString((const wxChar*)kc->GetDescription(),wxConvUTF8), wxDefaultPosition, wxDefaultSize, 0 );
 	sizer->Add(itemStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	m_controlList.push_back((wxControl*) itemStaticText);
 
@@ -1610,7 +1610,7 @@ void WConfiguration::OnButtonOnscreenkeyboardcommandClick( wxCommandEvent& event
 		_("Executable files|*.exe"), wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_CHANGE_DIR);
 #else
 	wxFileDialog dlg (this, _("Choose on-screen keyboard command"), 
-		_T(""), _T(""), _T("*"), wxOPEN | wxFILE_MUST_EXIST | wxCHANGE_DIR);
+		_T(""), _T(""), _T("*"), wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_CHANGE_DIR);
 #endif
 
 	if (dlg.ShowModal()== wxID_OK) m_txtOnScreenKeyboardCommand->SetValue(dlg.GetPath());

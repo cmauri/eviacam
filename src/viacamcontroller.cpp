@@ -101,7 +101,12 @@ void CViacamController::SetUpLanguage ()
 	m_languageId= m_configManager->ReadLanguage ();
 
 	m_locale->AddCatalogLookupPathPrefix(wxT("."));
-	if (!m_locale->Init(m_languageId, wxLOCALE_CONV_ENCODING))
+	
+#if defined(__WXGTK__)	
+	m_locale->AddCatalogLookupPathPrefix(wxT("/usr/local/share/locale/"));
+#endif
+
+	if (!m_locale->Init(m_languageId))
 		slog_write (SLOG_PRIO_WARNING, "Cannot load locale. Switching to default locale.\n");
 	m_locale->AddCatalog(wxT("wxstd"));
 	m_locale->AddCatalog(wxT("eviacam"));
@@ -155,7 +160,7 @@ CCamera* CViacamController::SetUpCamera()
 				strArray.Add (wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc));
 
 			wxSingleChoiceDialog choiceDlg(NULL, _("Choose the camera to use"), _T("Enable Viacam"), strArray, 
-								NULL, wxDEFAULT_DIALOG_STYLE | wxOK | wxCANCEL | wxCENTRE);
+								(char**)NULL, wxDEFAULT_DIALOG_STYLE | wxOK | wxCANCEL | wxCENTRE);
 
 			if (choiceDlg.ShowModal ()!= wxID_OK) return NULL;
 

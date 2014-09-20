@@ -264,7 +264,7 @@ CKeyboardCode CKeyboardCode::FromWXKeyCode (wxKeyCode kc)
 		case WXK_RBUTTON:
 		case WXK_CANCEL:
 		case WXK_MBUTTON:
-		case WXK_COMMAND:
+
 		// Hardware-specific buttons
 		case WXK_SPECIAL1:
 		case WXK_SPECIAL2:

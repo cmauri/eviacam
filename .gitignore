@@ -51,5 +51,7 @@ src/gui-autosave.pjd
 *~
 
 *.vcproj.*.user
-
+*.opensdf
+*.sdf
+*.suo
 crvnormroi.cpp.orig

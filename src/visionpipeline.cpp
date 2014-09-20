@@ -31,7 +31,7 @@
 #include "paths.h"
 #include "simplelog.h"
 
-#if OPENCVVERSION >= 2004000
+#if WIN32 || OPENCVVERSION >= 2004000
 # include <opencv2/legacy/legacy.hpp>
 #endif
 
@@ -54,6 +54,7 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 // we use it because we need a timeout based wait call. The associated mutex
 // is not used at all.
 , m_condition(m_mutex)
+, m_faceCascade(NULL)
 {
 	InitDefaults();
 
@@ -64,12 +65,23 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 	// Open face haarcascade
 	// 
 	wxString cascadePath (eviacam::GetDataDir() + _T("/haarcascade_frontalface_default.xml"));
-	m_faceCascade = (CvHaarClassifierCascade*)cvLoad(cascadePath.mb_str(wxConvUTF8), 0, 0, 0);
-	// In debug mode if previous load attemp try to open it from the standard location.
+	try {
+		m_faceCascade = (CvHaarClassifierCascade*)cvLoad(cascadePath.mb_str(wxConvUTF8), 0, 0, 0);
+	}
+	catch (cv::Exception& e) {
+		slog_write(SLOG_PRIO_WARNING, "%s:%d %s\n", __FILE__, __LINE__, e.what());
+	}
+	// In debug mode if previous load attemp try to open it from the standard unix location.
 #ifndef NDEBUG
-	if (!m_faceCascade)		
-		m_faceCascade = (CvHaarClassifierCascade*)
-			cvLoad("/usr/share/eviacam/haarcascade_frontalface_default.xml", 0, 0, 0);
+	if (!m_faceCascade)	{
+		try {
+			m_faceCascade = (CvHaarClassifierCascade*)
+				cvLoad("/usr/share/eviacam/haarcascade_frontalface_default.xml", 0, 0, 0);
+		}
+		catch (cv::Exception& e) {
+			slog_write(SLOG_PRIO_WARNING, "%s:%d %s\n", __FILE__, __LINE__, e.what());
+		}
+	}
 #endif
 	if (!m_faceCascade) {
 		wxMessageDialog dlg (NULL, _("The face localization option is not enabled."), _T("Enable Viacam"), wxICON_ERROR | wxOK );

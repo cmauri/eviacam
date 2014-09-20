@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{a88176cc-18ba-420f-a327-6a7359971c31}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{fc34a6be-3798-441a-b4fe-1cd637178765}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="crvcamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crvcamera_cv.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crvcamera_enum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crvcamera_wdm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crvcolor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crvgeomtry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crvhistogram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crvimage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crvmisc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crvnormroi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crvskindetection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="videoInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="crvcamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crvcamera_cv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crvcamera_enum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crvcamera_wdm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crvcolor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crvgeomtry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crvhistogram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crvimage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crvmisc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crvnormroi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crvskindetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="videoInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

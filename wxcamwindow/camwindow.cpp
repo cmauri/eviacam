@@ -222,7 +222,7 @@ void CCamWindow::OnPaint (wxPaintEvent& event)
 	// even if you do not use it. Otherwise, under MS Windows, refreshing for this and other 
 	// windows will go wrong.
 	wxPaintDC dc(this);
-	if(!dc.Ok()) return;
+	if(!dc.IsOk()) return;
 
 	// TODO: does nothing under Linux KDE	
 	if (!IsShown()) return;
