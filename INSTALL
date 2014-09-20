@@ -10,7 +10,7 @@ Linux
 
 - Pre-requisites
   --------------
-  wxWidgets >= 2.6
+  wxWidgets >= 2.8
   opencv >= 1.0
   gtk+-2.0
   libxtst
@@ -85,26 +85,20 @@ Windows
 
 - Pre-requisites
   --------------
-  VS2008
-  wxWidgets = 2.8.x
-  opencv >= 1.0
-  Platform SDK (tested with PSDK-x86_WindowsServer2003_SP1(2005))
-  DirectX SDK 9.0 Update (February 2005) or later
-  
-- Building using Visual Studio 2008
+
+  Visual Studio 2013
+  wxWidgets >= 2.8.x (tested with 3.0.1)
+  opencv >= 1.0 (tested with 2.4.9, custom compilation recommended)
+  Windows SDK for Windows 7 and .NET Framework 4 7.1 (tested 7.1.7600.0.30514)
+
+- Building using Visual Studio 2013
   ---------------------------------
 
-  Build project under
-  \Microsoft Platform SDK\Samples\Multimedia\DirectShow\BaseClasses\
-  Works with VS2008, but is also supposed to work for newer VS versions. 
-  Visual Studio solution (.sln) is in win32/ directory. 
-  You should set the following environment variables:
-
+  Set the following environment variables:
 	WXWIN to point to wxWidgets folder
-	CVPATH to point to opencv1 folder
-	PSDK_DIR to point the Platform SDK folder
-	
-  Build as Release.
-	
+	CVPATH to point to opencv folder
+	DSHOW_SAMPLES to point DirectShow samples directory usually at:
+        %PROGRAMFILES%\Microsoft SDKs\Windows\v7.1\Samples\multimedia
+
   Once the program is compiled, you may wish to create the installer. 
   Inno Setup is used for installer generation on Windows
