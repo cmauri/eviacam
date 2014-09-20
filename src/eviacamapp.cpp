@@ -126,7 +126,11 @@ void EViacamApp::Init()
  */
 
 bool EViacamApp::OnInit()
-{     	
+{     
+	// These functions are useful to pin down memory leaks on WIN32
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetBreakAlloc(489103);
+
 	// Call default behaviour
 	if (!wxApp::OnInit()) return false;
 

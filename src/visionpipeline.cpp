@@ -55,6 +55,7 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 // is not used at all.
 , m_condition(m_mutex)
 , m_faceCascade(NULL)
+, m_storage(NULL)
 {
 	InitDefaults();
 
@@ -111,6 +112,13 @@ CVisionPipeline::~CVisionPipeline ()
 		m_isRunning= false;
 		m_condition.Signal();
 		Wait();
+		cvReleaseHaarClassifierCascade(&m_faceCascade);
+		m_faceCascade = NULL;
+	}
+
+	if (m_storage) {
+		cvReleaseMemStorage(&m_storage);
+		m_storage = NULL;
 	}
 }
 
