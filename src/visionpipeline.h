@@ -100,7 +100,6 @@ private:
 	void AllocWorkingSpace (CIplImage &image);
 	void TrackMotion (CIplImage &image, float &xVel, float &yVel);
 	int PreprocessImage ();
-	void PostProcessImage ();
 	void ComputeFaceTrackArea (CIplImage &image);
 	void SetThreadPeriod (int value);
 };

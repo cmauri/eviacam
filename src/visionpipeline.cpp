@@ -34,6 +34,8 @@
 #if WIN32 || OPENCVVERSION >= 2004000
 # include <opencv2/legacy/legacy.hpp>
 #endif
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/video/tracking.hpp>
 
 #include <math.h>
 #include <wx/msgdlg.h>
@@ -211,7 +213,7 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		image.ptr(),
 		m_faceCascade,
 		m_storage,
-		1.1, 2, CV_HAAR_DO_CANNY_PRUNING,
+		1.5, 2, CV_HAAR_DO_CANNY_PRUNING,
 		cvSize(65, 65)
 	);
 	
@@ -224,8 +226,8 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		m_trackArea.GetBoxImg(&image, curBox);
 		
 		// Compute new face area size averaging with old area making it wider (horizontaly)
-		sx= ((float) faceRect->width  * 0.15f + (float) curBox.width  * 0.9f);
-		sy= ((float) faceRect->height * 0.1f + (float) curBox.height * 0.9f);
+		sx= ((float) faceRect->width  * 0.2f + (float) curBox.width  * 0.8f);
+		sy= ((float) faceRect->height * 0.2f + (float) curBox.height * 0.8f);
 		m_trackArea.SetSizeImg(&image, (int)sx, (int)sy);
 
 		// Computer new face position
@@ -247,6 +249,7 @@ bool CVisionPipeline::IsFaceDetected () const
 
 int CVisionPipeline::PreprocessImage ()
 {
+#if 0
 	TCrvHistogram his;
 	int range;
 		
@@ -255,21 +258,17 @@ int CVisionPipeline::PreprocessImage ()
 
 	crvLUTTransform (m_imgPrev.ptr(), m_imgPrevProc.ptr(), m_prevLut);
 	crvLUTTransform (m_imgCurr.ptr(), m_imgCurrProc.ptr(), m_prevLut);		
+#else
+	cvEqualizeHist(m_imgPrev.ptr(), m_imgPrevProc.ptr());
+	cvEqualizeHist(m_imgCurr.ptr(), m_imgCurrProc.ptr());
+#endif
 
 	return 0;
 }
 
-void CVisionPipeline::PostProcessImage ()
-{
-	/*
-	Histogram his;
-	int range;
-		
-	IplHistogram (m_imgCurr.ptr(), his);
-	range= IplNormalizeHistogram (his, m_prevLut, 50);
-	*/
+//#define OLD_TRACKER 1
 
-}
+#if OLD_TRACKER
 
 #define COMP_MATRIX_WIDTH	15
 #define COMP_MATRIX_HEIGHT	15
@@ -310,37 +309,49 @@ void MatrixMeanImageCells (CIplImage *pCImg, TAnalisysMatrix &m)
 		}
 	}
 }
+#endif
 
 void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 {
-	CvTermCriteria term;
+	
 	CvRect box;
+#if OLD_TRACKER
 	static TAnalisysMatrix velXMatrix, velYMatrix, velModulusMatrix;
+#endif
 
 	crvColorToGray (image.ptr(), m_imgCurr.ptr());
-
-	// Prepare ROI's
+	
+	// Save ROIs
 	m_imgPrev.PushROI ();
 	m_imgCurr.PushROI ();
-	m_imgVelX.PushROI ();
-	m_imgVelY.PushROI ();
 	m_imgCurrProc.PushROI ();
+#if OLD_TRACKER
+	m_imgVelX.PushROI();
+	m_imgVelY.PushROI();
+#endif
 
+	// Get face ROI
 	m_trackArea.GetBoxImg (&image, box);
-
+	box.x += box.width * 0.3;
+	box.y += box.height * 0.3;
+	box.width *= 0.4;
+	box.height *= 0.4;
 	m_imgPrev.SetROI (box); 
 	m_imgCurr.SetROI (box);
-
 	m_imgPrevProc.SetROI (box);
-		
-	// Mutex is not needed
 	m_imgCurrProc.SetROI (box);
+#if OLD_TRACKER
 	m_imgVelX.SetROI (box); 
 	m_imgVelY.SetROI (box);
+#endif
 
 	// Pre-processing
 	PreprocessImage ();
+	//m_imgCurrProc.Show("gray");
+
+#if OLD_TRACKER
 	// Compute optical flow
+	CvTermCriteria term;
 	term.type= CV_TERMCRIT_ITER;
 	term.max_iter= 6;
 	cvCalcOpticalFlowHS (m_imgPrevProc.ptr(), m_imgCurrProc.ptr(), 0,
@@ -384,13 +395,86 @@ void CVisionPipeline::TrackMotion (CIplImage &image, float &xVel, float &yVel)
 	// Compute speed
 	xVel= - (xVel / (float) validCells) * 40;
 	yVel= (yVel / (float) validCells) * 80;
+#else
+	//
+	// Find corners
+	//
+	#define NUM_CORNERS 15
+	#define QUALITY_LEVEL  0.001
+	#define MIN_DISTANTE 2
+	/*#define NUM_CORNERS 50
+	#define QUALITY_LEVEL  0.01
+	#define MIN_DISTANTE 2*/
+
+	CvPoint2D32f corners[NUM_CORNERS];
+	int corner_count = NUM_CORNERS;
+
+	cvGoodFeaturesToTrack(m_imgPrevProc.ptr(), NULL, NULL, corners,
+		&corner_count, QUALITY_LEVEL, MIN_DISTANTE);
+	CvTermCriteria termcrit = { CV_TERMCRIT_ITER | CV_TERMCRIT_EPS, 20, 0.03 };
+	cvFindCornerSubPix(m_imgPrevProc.ptr(), corners, corner_count, 
+		cvSize(5,5), cvSize(-1,-1), termcrit);
+	SLOG_DEBUG("num corners: %d\n", corner_count);
+
+	//
+	// Track corners
+	//
+	CvPoint2D32f new_corners[NUM_CORNERS];
+	char status[NUM_CORNERS];
+	termcrit = { CV_TERMCRIT_ITER | CV_TERMCRIT_EPS, 15, 0.03 };
+	cvCalcOpticalFlowPyrLK(m_imgPrevProc.ptr(), m_imgCurrProc.ptr(), NULL,
+		NULL, corners, new_corners, corner_count, cvSize(7, 7), 0, status,
+		NULL, termcrit, 0);
+	/*
+	termcrit = { CV_TERMCRIT_ITER | CV_TERMCRIT_EPS, 30, 0.01 };
+	cvCalcOpticalFlowPyrLK(m_imgPrevProc.ptr(), m_imgCurrProc.ptr(), NULL,
+		NULL, corners, new_corners, corner_count, cvSize(21, 21), 3, status,
+		NULL, termcrit, 0);
+	*/
+
+	//
+	// Accumulate motion
+	//	
+	int valid_corners = 0;
+	float dx = 0, dy = 0;
+
+	for (int j = 0; j< corner_count; j++) {
+		if (status[j]) {
+			cvEllipse(image.ptr(), cvPoint(corners[j].x + box.x, corners[j].y+box.y), 
+				cvSize(2, 2), 0, 0, 360, cvScalar(0, 255, 0), 4, 8, 0);
+			valid_corners++;
+
+			dx += corners[j].x - new_corners[j].x;
+			dy += corners[j].y - new_corners[j].y;
+		}
+	}
+	if (valid_corners) {
+		dx = dx / (float) valid_corners;
+		dy = dy / (float) valid_corners;
+
+		xVel = 2.0 * dx;
+		yVel = 2.0 * -dy;
+	}
+
+	//
+	// Update tracking area
+	//
+	dx = dx / 2.0f;
+	dy = dy / 2.0f;
+	//if (fabs(dx) < 1.0f) dx = 0;
+	//if (fabs(dy) < 1.0f) dy = 0;
+//	m_trackArea.GetBoxImg(&image, box);
+//	m_trackArea.SetP1MoveImg (&image, (float) box.x - dx, (float) box.y - dy);
+#endif
 
 	// Restore ROI's
 	m_imgCurrProc.PopROI ();
 	m_imgPrev.PopROI ();
 	m_imgCurr.PopROI ();
+#if OLD_TRACKER
 	m_imgVelX.PopROI ();
 	m_imgVelY.PopROI ();
+#endif
 }
 
 bool CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
