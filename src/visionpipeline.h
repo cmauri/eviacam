@@ -98,10 +98,11 @@ private:
 	
 	// Private methods
 	void AllocWorkingSpace (CIplImage &image);
-	void TrackMotion (CIplImage &image, float &xVel, float &yVel);
 	int PreprocessImage ();
 	void ComputeFaceTrackArea (CIplImage &image);
 	void SetThreadPeriod (int value);
+	void OldTracker(CIplImage &image, float &xVel, float &yVel);
+	void NewTracker(CIplImage &image, float &xVel, float &yVel);
 };
 
 #endif
