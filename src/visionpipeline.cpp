@@ -267,8 +267,6 @@ int CVisionPipeline::PreprocessImage ()
 	return 0;
 }
 
-//#define OLD_TRACKER 1
-
 #define COMP_MATRIX_WIDTH	15
 #define COMP_MATRIX_HEIGHT	15
 typedef float TAnalisysMatrix[COMP_MATRIX_WIDTH][COMP_MATRIX_HEIGHT];
@@ -497,11 +495,10 @@ bool CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 
 	crvColorToGray(image.ptr(), m_imgCurr.ptr());
 
-#if OLD_TRACKER
-	OldTracker(image, xVel, yVel);
-#else
-	NewTracker(image, xVel, yVel);
-#endif
+	if (m_useLegacyTracker)
+		OldTracker(image, xVel, yVel);
+	else
+		NewTracker(image, xVel, yVel);
 
 	// Store current image as previous
 	m_imgPrev.Swap (&m_imgCurr);
@@ -599,6 +596,7 @@ void CVisionPipeline::InitDefaults()
 {
 	m_trackFace= true;
 	m_enableWhenFaceDetected= false;
+	m_useLegacyTracker= false;
 	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
 	SetThreadPeriod(CPU_NORMAL);
 	m_trackArea.SetSize (DEFAULT_TRACK_AREA_WIDTH_PERCENT, DEFAULT_TRACK_AREA_HEIGHT_PERCENT);
@@ -614,6 +612,7 @@ void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)
 
 	pConfObj->Write(_T("trackFace"), m_trackFace);
 	pConfObj->Write(_T("enableWhenFaceDetected"), m_enableWhenFaceDetected);
+	pConfObj->Write(_T("useLegacyTracker"), m_useLegacyTracker);
 	pConfObj->Write(_T("locateFaceTimeout"), (int) m_waitTime.GetWaitTimeMs());
 	pConfObj->Write(_T("threadPeriod"), (int) m_threadPeriod);
 
@@ -645,6 +644,7 @@ void CVisionPipeline::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->SetPath (_T("motionTracker"));
 	pConfObj->Read(_T("trackFace"), &m_trackFace);
 	pConfObj->Read(_T("enableWhenFaceDetected"), &m_enableWhenFaceDetected);
+	pConfObj->Read(_T("useLegacyTracker"), &m_useLegacyTracker);
 	pConfObj->Read(_T("locateFaceTimeout"), &locateFaceTimeout);
 	pConfObj->Read (_T("trackAreaWidth"), &width);
 	pConfObj->Read (_T("trackAreaHeight"), &height);

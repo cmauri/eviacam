@@ -52,7 +52,10 @@ public:
 	
 	bool GetEnableWhenFaceDetected () const { return m_enableWhenFaceDetected; }
 	void SetEnableWhenFaceDetected (bool state) { m_enableWhenFaceDetected= state; }
-	
+
+	bool GetUseLegacyTracker() const { return m_useLegacyTracker; }
+	void SetUseLegacyTracker(bool state) { m_useLegacyTracker = state; }
+
 	bool IsFaceDetected () const;
 
 	unsigned int GetTimeout () const { return (unsigned int) (m_waitTime.GetWaitTimeMs()/1000); }
@@ -79,6 +82,7 @@ private:
 	bool m_trackFace;
 	bool m_enableWhenFaceDetected;
 	bool m_isRunning;
+	bool m_useLegacyTracker;
 	CWaitTime m_waitTime;
 	CWaitTime m_trackAreaTimeout;
 		
