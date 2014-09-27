@@ -99,6 +99,10 @@ private:
 	wxCriticalSection m_imageCopyMutex;
 	wxMutex m_mutex;
 	wxCondition m_condition;
+
+	// Face location detection
+	CvRect m_faceLocation;
+	int m_faceLocationStatus; // 0 -> not available, 1 -> available
 	
 	// Private methods
 	void AllocWorkingSpace (CIplImage &image);
