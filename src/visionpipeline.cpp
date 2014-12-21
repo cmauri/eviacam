@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-14 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -239,7 +239,7 @@ bool CVisionPipeline::IsFaceDetected () const
 
 int CVisionPipeline::PreprocessImage ()
 {
-#if 0
+#if 1
 	TCrvHistogram his;
 	int range;
 		
@@ -249,11 +249,8 @@ int CVisionPipeline::PreprocessImage ()
 	crvLUTTransform (m_imgPrev.ptr(), m_imgPrevProc.ptr(), m_prevLut);
 	crvLUTTransform (m_imgCurr.ptr(), m_imgCurrProc.ptr(), m_prevLut);		
 #else
-	//cvEqualizeHist(m_imgPrev.ptr(), m_imgPrevProc.ptr());
-	//cvEqualizeHist(m_imgCurr.ptr(), m_imgCurrProc.ptr());
-
-	cvCopy(m_imgPrev.ptr(), m_imgPrevProc.ptr());
-	cvCopy(m_imgCurr.ptr(), m_imgCurrProc.ptr());
+	cvEqualizeHist(m_imgPrev.ptr(), m_imgPrevProc.ptr());
+	cvEqualizeHist(m_imgCurr.ptr(), m_imgCurrProc.ptr());
 #endif
 
 	return 0;
@@ -417,7 +414,6 @@ void DrawCorners(CIplImage &image, CvPoint2D32f corners[], int num_corners, CvSc
 			cvSize(2, 2), 0, 0, 360, color, 4, 8, 0);
 }
 
-// TODO: support image size variation
 void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 {
 	#define NUM_CORNERS 15
@@ -443,9 +439,6 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 
 		return;
 	}
-
-	// Pre-processing (TODO: ROI only)
-	PreprocessImage();
 
 	bool updateFeatures = false;
 
@@ -480,16 +473,16 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 		#define QUALITY_LEVEL  0.001   // 0.01
 		#define MIN_DISTANTE 2
 
-		m_imgPrevProc.SetROI(featuresTrackArea);
-		m_imgCurrProc.SetROI(featuresTrackArea);
+		m_imgPrev.SetROI(featuresTrackArea);
+		m_imgCurr.SetROI(featuresTrackArea);
 		corner_count = NUM_CORNERS;
-		cvGoodFeaturesToTrack(m_imgPrevProc.ptr(), NULL, NULL, corners,
+		cvGoodFeaturesToTrack(m_imgPrev.ptr(), NULL, NULL, corners,
 			&corner_count, QUALITY_LEVEL, MIN_DISTANTE);
 		CvTermCriteria termcrit = { CV_TERMCRIT_ITER | CV_TERMCRIT_EPS, 20, 0.03 };
-		cvFindCornerSubPix(m_imgPrevProc.ptr(), corners, corner_count,
+		cvFindCornerSubPix(m_imgPrev.ptr(), corners, corner_count,
 			cvSize(5, 5), cvSize(-1, -1), termcrit);
-		m_imgPrevProc.ResetROI();
-		m_imgCurrProc.ResetROI();
+		m_imgPrev.ResetROI();
+		m_imgCurr.ResetROI();
 
 		//
 		// Update features location
@@ -518,18 +511,18 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 	ofTrackArea.y = trackAreaLocation.y;
 	ofTrackArea.width = trackAreaSize.width;
 	ofTrackArea.height = trackAreaSize.height;
-	m_imgPrevProc.SetROI(ofTrackArea);
-	m_imgCurrProc.SetROI(ofTrackArea);
+	m_imgPrev.SetROI(ofTrackArea);
+	m_imgCurr.SetROI(ofTrackArea);
 	// Update corners location
 	for (int i = 0; i < corner_count; i++) {
 		corners[i].x -= ofTrackArea.x;
 		corners[i].y -= ofTrackArea.y;
 	}
-	cvCalcOpticalFlowPyrLK(m_imgPrevProc.ptr(), m_imgCurrProc.ptr(), NULL,
+	cvCalcOpticalFlowPyrLK(m_imgPrev.ptr(), m_imgCurr.ptr(), NULL,
 		NULL, corners, new_corners, corner_count, cvSize(11, 11), 0, status,
 		NULL, termcrit, 0);	
-	m_imgPrevProc.ResetROI();
-	m_imgCurrProc.ResetROI();
+	m_imgPrev.ResetROI();
+	m_imgCurr.ResetROI();
 
 	// Update corners location
 	for (int i = 0; i < corner_count; i++) {
@@ -540,7 +533,7 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 	}
 
 	//
-	// Accumulate motion
+	// Accumulate motion (TODO: remove outliers?)
 	//	
 	int valid_corners = 0;
 	float dx = 0, dy = 0;
@@ -560,8 +553,6 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 	}
 	corner_count = valid_corners;
 
-
-	// TODO: compensate face size?
 	if (valid_corners) {
 		dx = dx / (float) valid_corners;
 		dy = dy / (float) valid_corners;
@@ -633,11 +624,10 @@ bool CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 	return false;
 }
 
+enum ECpuValues { LOWEST = 1500, LOW = 800, NORMAL = 400, HIGH = 100, HIGHEST = 0 };
 
 int CVisionPipeline::GetCpuUsage ()
 {
-	enum ECpuValues {LOWEST= 1000, LOW=500, NORMAL= 100, HIGH= 66, HIGHEST= 0};
-
 	switch (m_threadPeriod)
 	{
 		case LOWEST:
@@ -660,8 +650,6 @@ int CVisionPipeline::GetCpuUsage ()
 
 void CVisionPipeline::SetCpuUsage (int value)
 {
-	enum ECpuValues {LOWEST= 1000, LOW=500, NORMAL= 100, HIGH= 66, HIGHEST= 0};
-
 	switch (value)
 	{
 		case (int) CVisionPipeline::ECpuUsage(CPU_LOWEST):
