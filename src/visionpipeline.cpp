@@ -410,8 +410,7 @@ static
 void DrawCorners(CIplImage &image, CvPoint2D32f corners[], int num_corners, CvScalar color)
 {
 	for (int i = 0; i < num_corners; i++)
-		cvEllipse(image.ptr(), cvPoint(corners[i].x, corners[i].y),
-			cvSize(2, 2), 0, 0, 360, color, 4, 8, 0);
+		cvCircle(image.ptr(), cvPoint(corners[i].x, corners[i].y), 1, color);
 }
 
 void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
@@ -495,7 +494,8 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 		SLOG_DEBUG("Features updated\n");
 	}
 
-	DrawCorners(image, corners, corner_count, cvScalar(255, 0, 0));
+	if (slog_get_priority() >= SLOG_PRIO_DEBUG)
+		DrawCorners(image, corners, corner_count, cvScalar(255, 0, 0));
 
 	//
 	// Track corners
@@ -567,8 +567,10 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 	//
 	// Update tracking area location
 	//
-	trackAreaLocation.x -= dx;
-	trackAreaLocation.y -= dy;
+	if (m_trackFace) {
+		trackAreaLocation.x -= dx;
+		trackAreaLocation.y -= dy;
+	}
 	
 	//
 	// Update visible tracking area
@@ -672,8 +674,6 @@ void CVisionPipeline::SetCpuUsage (int value)
 
 void CVisionPipeline::SetThreadPeriod (int value)
 {
-	enum ECpuValues {LOWEST= 1000, LOW=500, NORMAL= 100, HIGH= 66, HIGHEST= 0};
-	
 	switch (value)
 	{
 		case LOWEST:
