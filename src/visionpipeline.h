@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-14 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -103,6 +103,11 @@ private:
 	// Face location detection
 	CvRect m_faceLocation;
 	int m_faceLocationStatus; // 0 -> not available, 1 -> available
+
+	// Corner array
+	enum { NUM_CORNERS = 15 };
+	CvPoint2D32f m_corners[NUM_CORNERS];
+	int m_corner_count = 0;
 	
 	// Private methods
 	void AllocWorkingSpace (CIplImage &image);

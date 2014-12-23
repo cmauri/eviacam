@@ -59,11 +59,13 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 , m_faceCascade(NULL)
 , m_storage(NULL)
 , m_faceLocationStatus(0) // 0 -> not available, 1 -> available
+, m_corner_count(0)
 {
 	InitDefaults();
 
 	m_isRunning= false;
 	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);
+	memset(m_corners, 0, sizeof(m_corners));
 
 	//
 	// Open face haarcascade
@@ -415,30 +417,8 @@ void DrawCorners(CIplImage &image, CvPoint2D32f corners[], int num_corners, CvSc
 
 void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 {
-	#define NUM_CORNERS 15
-
-	static bool firstRun = true;
-	static CvPoint2D32f trackAreaLocation;
-	static CvSize2D32f trackAreaSize;
-	static CvPoint2D32f corners[NUM_CORNERS];
-	static int corner_count = 0;
-
-	if (firstRun) {
-		firstRun = false;
-
-		memset(corners, 0, sizeof(corners));
-		CvRect box;
-		m_trackArea.GetBoxImg(&image, box);
-		trackAreaLocation.x = box.x;
-		trackAreaLocation.y = box.y;
-		trackAreaSize.width = box.width;
-		trackAreaSize.height = box.height;
-		
-		xVel = yVel = 0;
-
-		return;
-	}
-
+	CvPoint2D32f trackAreaLocation;
+	CvSize2D32f trackAreaSize;
 	bool updateFeatures = false;
 
 	// Face location has been updated?
@@ -450,7 +430,16 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 		m_faceLocationStatus = 0;
 		updateFeatures = true;
 	}
-	if (corner_count< NUM_CORNERS) updateFeatures = true;
+	else {
+		CvRect box;
+		m_trackArea.GetBoxImg(&image, box);
+		trackAreaLocation.x = box.x;
+		trackAreaLocation.y = box.y;
+		trackAreaSize.width = box.width;
+		trackAreaSize.height = box.height;
+		// Need to update corners?
+		if (m_corner_count< NUM_CORNERS) updateFeatures = true;
+	}	
 
 	if (updateFeatures) {
 		// 
@@ -474,11 +463,11 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 
 		m_imgPrev.SetROI(featuresTrackArea);
 		m_imgCurr.SetROI(featuresTrackArea);
-		corner_count = NUM_CORNERS;
-		cvGoodFeaturesToTrack(m_imgPrev.ptr(), NULL, NULL, corners,
-			&corner_count, QUALITY_LEVEL, MIN_DISTANTE);
+		m_corner_count = NUM_CORNERS;
+		cvGoodFeaturesToTrack(m_imgPrev.ptr(), NULL, NULL, m_corners,
+			&m_corner_count, QUALITY_LEVEL, MIN_DISTANTE);
 		CvTermCriteria termcrit = { CV_TERMCRIT_ITER | CV_TERMCRIT_EPS, 20, 0.03 };
-		cvFindCornerSubPix(m_imgPrev.ptr(), corners, corner_count,
+		cvFindCornerSubPix(m_imgPrev.ptr(), m_corners, m_corner_count,
 			cvSize(5, 5), cvSize(-1, -1), termcrit);
 		m_imgPrev.ResetROI();
 		m_imgCurr.ResetROI();
@@ -486,26 +475,28 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 		//
 		// Update features location
 		//
-		for (int i = 0; i < corner_count; i++) {
-			corners[i].x += featuresTrackArea.x;
-			corners[i].y += featuresTrackArea.y;
+		for (int i = 0; i < m_corner_count; i++) {
+			m_corners[i].x += featuresTrackArea.x;
+			m_corners[i].y += featuresTrackArea.y;
 		}
 
 		SLOG_DEBUG("Features updated\n");
 	}
 
 	if (slog_get_priority() >= SLOG_PRIO_DEBUG)
-		DrawCorners(image, corners, corner_count, cvScalar(255, 0, 0));
+		DrawCorners(image, m_corners, m_corner_count, cvScalar(255, 0, 0));
 
 	//
 	// Track corners
 	//
 	CvPoint2D32f new_corners[NUM_CORNERS];
 	char status[NUM_CORNERS];
+	
 	CvTermCriteria termcrit;
 	termcrit.type = CV_TERMCRIT_ITER | CV_TERMCRIT_EPS;
 	termcrit.max_iter = 14;
 	termcrit.epsilon = 0.03;
+	
 	CvRect ofTrackArea;
 	ofTrackArea.x = trackAreaLocation.x;
 	ofTrackArea.y = trackAreaLocation.y;
@@ -513,21 +504,24 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 	ofTrackArea.height = trackAreaSize.height;
 	m_imgPrev.SetROI(ofTrackArea);
 	m_imgCurr.SetROI(ofTrackArea);
-	// Update corners location
-	for (int i = 0; i < corner_count; i++) {
-		corners[i].x -= ofTrackArea.x;
-		corners[i].y -= ofTrackArea.y;
+
+	// Update corners location for the new ROI
+	for (int i = 0; i < m_corner_count; i++) {
+		m_corners[i].x -= ofTrackArea.x;
+		m_corners[i].y -= ofTrackArea.y;
 	}
+	
 	cvCalcOpticalFlowPyrLK(m_imgPrev.ptr(), m_imgCurr.ptr(), NULL,
-		NULL, corners, new_corners, corner_count, cvSize(11, 11), 0, status,
+		NULL, m_corners, new_corners, m_corner_count, cvSize(11, 11), 0, status,
 		NULL, termcrit, 0);	
+	
 	m_imgPrev.ResetROI();
 	m_imgCurr.ResetROI();
 
 	// Update corners location
-	for (int i = 0; i < corner_count; i++) {
-		corners[i].x += ofTrackArea.x;
-		corners[i].y += ofTrackArea.y;
+	for (int i = 0; i < m_corner_count; i++) {
+		m_corners[i].x += ofTrackArea.x;
+		m_corners[i].y += ofTrackArea.y;
 		new_corners[i].x += ofTrackArea.x;
 		new_corners[i].y += ofTrackArea.y;
 	}
@@ -538,20 +532,20 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 	int valid_corners = 0;
 	float dx = 0, dy = 0;
 
-	for (int i = 0; i< corner_count; i++) {
+	for (int i = 0; i< m_corner_count; i++) {
 		if (status[i] &&
-			corners[i].x >= trackAreaLocation.x &&
-			corners[i].x < trackAreaLocation.x + trackAreaSize.width &&
-			corners[i].y >= trackAreaLocation.y &&
-			corners[i].y < trackAreaLocation.y + trackAreaSize.height) {
-			dx += corners[i].x - new_corners[i].x;
-			dy += corners[i].y - new_corners[i].y;
+			m_corners[i].x >= trackAreaLocation.x &&
+			m_corners[i].x < trackAreaLocation.x + trackAreaSize.width &&
+			m_corners[i].y >= trackAreaLocation.y &&
+			m_corners[i].y < trackAreaLocation.y + trackAreaSize.height) {
+			dx += m_corners[i].x - new_corners[i].x;
+			dy += m_corners[i].y - new_corners[i].y;
 
 			// Save new corner location
-			corners[valid_corners++] = new_corners[i];
+			m_corners[valid_corners++] = new_corners[i];
 		}
 	}
-	corner_count = valid_corners;
+	m_corner_count = valid_corners;
 
 	if (valid_corners) {
 		dx = dx / (float) valid_corners;
@@ -583,7 +577,7 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 	//
 	// Draw corners
 	//
-	DrawCorners(image, corners, corner_count, cvScalar(0, 255, 0));
+	DrawCorners(image, m_corners, m_corner_count, cvScalar(0, 255, 0));
 }
 
 
@@ -592,7 +586,6 @@ bool CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 	try {
 		AllocWorkingSpace(image);
 
-		//crvColorToGray(image.ptr(), m_imgCurr.ptr());
 		cvCvtColor(image.ptr(), m_imgCurr.ptr(), CV_BGR2GRAY);
 
 		// TODO: fine grained synchronization
