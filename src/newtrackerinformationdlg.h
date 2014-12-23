@@ -98,6 +98,7 @@ private:
     static bool ShowToolTips();
 
 ////@begin NewTrackerInformationDlg member variables
+    wxCheckBox* m_chkShowOnStartup;
 ////@end NewTrackerInformationDlg member variables
 	bool m_useLegacyTracker;
 	bool m_showOnStartup;

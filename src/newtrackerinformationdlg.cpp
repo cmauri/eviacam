@@ -27,6 +27,7 @@
 #include "viacamcontroller.h"
 #include "newtrackerinformationdlg.h"
 #include "configmanager.h"
+#include "pointeraction.h"
 
 ////@begin XPM images
 ////@end XPM images
@@ -111,6 +112,7 @@ void NewTrackerInformationDlg::Init()
 	m_useLegacyTracker = false;
 	m_showOnStartup = false;
 ////@begin NewTrackerInformationDlg member initialisation
+    m_chkShowOnStartup = NULL;
 ////@end NewTrackerInformationDlg member initialisation
 }
 
@@ -142,9 +144,8 @@ void NewTrackerInformationDlg::CreateControls()
     wxBoxSizer* itemBoxSizer6 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer2->Add(itemBoxSizer6, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxRadioButton* itemRadioButton7 = new wxRadioButton( itemDialog1, ID_RADIOBUTTON_NEW_TRACKER, _("Yes (recommended)"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxRadioButton* itemRadioButton7 = new wxRadioButton( itemDialog1, ID_RADIOBUTTON_NEW_TRACKER, _("Yes and adjust some settings automatically (recommended)"), wxDefaultPosition, wxDefaultSize, 0 );
     itemRadioButton7->SetValue(true);
-    itemRadioButton7->SetFont(wxFont(-1, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Sans")));
     itemBoxSizer6->Add(itemRadioButton7, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxRadioButton* itemRadioButton8 = new wxRadioButton( itemDialog1, ID_RADIOBUTTON_LEGACY_TRACKER, _("No, use the legacy tracker"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -157,9 +158,9 @@ void NewTrackerInformationDlg::CreateControls()
 
     itemBoxSizer2->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    wxCheckBox* itemCheckBox11 = new wxCheckBox( itemDialog1, ID_CHECKBOX_SHOW_ON_STARTUP, _("Show this message on startup"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemCheckBox11->SetValue(false);
-    itemBoxSizer2->Add(itemCheckBox11, 0, wxALIGN_LEFT|wxALL, 5);
+    m_chkShowOnStartup = new wxCheckBox( itemDialog1, ID_CHECKBOX_SHOW_ON_STARTUP, _("Show this message on startup"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkShowOnStartup->SetValue(false);
+    itemBoxSizer2->Add(m_chkShowOnStartup, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxStaticLine* itemStaticLine12 = new wxStaticLine( itemDialog1, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     itemBoxSizer2->Add(itemStaticLine12, 0, wxGROW|wxALL, 5);
@@ -169,7 +170,7 @@ void NewTrackerInformationDlg::CreateControls()
 
     wxStdDialogButtonSizer* itemStdDialogButtonSizer14 = new wxStdDialogButtonSizer;
 
-    itemBoxSizer13->Add(itemStdDialogButtonSizer14, 0, 0, 0);
+    itemBoxSizer13->Add(itemStdDialogButtonSizer14, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     wxButton* itemButton15 = new wxButton( itemDialog1, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
     itemButton15->SetDefault();
     itemStdDialogButtonSizer14->AddButton(itemButton15);
@@ -223,6 +224,8 @@ wxIcon NewTrackerInformationDlg::GetIconResource( const wxString& name )
 void NewTrackerInformationDlg::OnRadiobuttonLegacyTrackerSelected( wxCommandEvent& event )
 {
 	m_useLegacyTracker = true;
+	m_showOnStartup = true;
+	m_chkShowOnStartup->SetValue(true);
     event.Skip(false);
 }
 
@@ -251,6 +254,10 @@ void NewTrackerInformationDlg::OnOkClick( wxCommandEvent& event )
 		wxGetApp().GetController().GetVisionPipeline().SetUseLegacyTracker(false);
 		wxGetApp().GetController().GetVisionPipeline().SetTrackFace(true);
 		wxGetApp().GetController().GetVisionPipeline().SetCpuUsage(CVisionPipeline::CPU_NORMAL);
+		wxGetApp().GetController().GetPointerAction().SetXSpeed(10);
+		wxGetApp().GetController().GetPointerAction().SetYSpeed(10);
+		wxGetApp().GetController().GetPointerAction().SetAcceleration(2);
+		wxGetApp().GetController().GetPointerAction().SetSmoothness(2);
 	}
 	wxGetApp().GetController().SetNewTrackerDialogAtStartup(m_showOnStartup);
 	wxGetApp().GetController().GetConfigManager().WriteAll();
