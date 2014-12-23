@@ -147,10 +147,13 @@ bool CMotionCalibration::InitMotionCalibration()
 			float newSpeedY = 600.0f / (m_posYVirtMax - m_posYVirtMin);
 			
 			// Set between reasonable limits
-			if (newSpeedX> 22.0f) newSpeedX= 22.0f;
-			else if (newSpeedX< 10.0f) newSpeedX= 10.0f;
-			if (newSpeedY> 20.0f) newSpeedY= 20.0f;
-			else if (newSpeedY< 10.0f) newSpeedY= 10.0f;
+			#define MAX_CALIBRATION_SPEED 18.0f
+			#define MIN_CALIBRATION_SPEED 5.0f
+
+			if (newSpeedX> MAX_CALIBRATION_SPEED) newSpeedX = MAX_CALIBRATION_SPEED;
+			else if (newSpeedX< MIN_CALIBRATION_SPEED) newSpeedX = MIN_CALIBRATION_SPEED;
+			if (newSpeedY> MAX_CALIBRATION_SPEED) newSpeedY = MAX_CALIBRATION_SPEED;
+			else if (newSpeedY< MIN_CALIBRATION_SPEED) newSpeedY = MIN_CALIBRATION_SPEED;
 			
 			// Set new parameters
 			wxGetApp().GetController().GetPointerAction().SetXSpeed((unsigned int) newSpeedX);
