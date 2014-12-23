@@ -106,6 +106,13 @@ public:
 
 	wxLocale* GetLocale() { return m_locale; }
 
+	bool GetNewTrackerDialogAtStartup() const {
+		return m_newTrackerDialogAtStartup;
+	}
+	void SetNewTrackerDialogAtStartup(bool value) {
+		m_newTrackerDialogAtStartup = value;
+	}
+
 	// Configuration methods
 	virtual void InitDefaults();
 
@@ -178,7 +185,8 @@ private:
 	wxString m_onScreenKeyboardCommand;
 	float m_frameRate;
 	bool m_motionCalibrationEnabled;
-	bool m_runWizardAtStartup;	
+	bool m_runWizardAtStartup;
+	bool m_newTrackerDialogAtStartup;
 };
 
 #endif

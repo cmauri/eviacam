@@ -108,6 +108,9 @@
     <ClCompile Include="wwizardmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="newtrackerinformationdlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cautostart.h">
@@ -213,6 +216,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="wwizardmanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="newtrackerinformationdlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -265,6 +265,7 @@ copy "$(CVPATH)\sources\data\haarcascades\haarcascade_frontalface_default.xml" $
     <ClCompile Include="eviacamapp.cpp" />
     <ClCompile Include="gestureclick.cpp" />
     <ClCompile Include="hotkeymanager.cpp" />
+    <ClCompile Include="newtrackerinformationdlg.cpp" />
     <ClCompile Include="paths.cpp" />
     <ClCompile Include="pointeraction.cpp" />
     <ClCompile Include="viacamcontroller.cpp" />
@@ -301,6 +302,7 @@ copy "$(CVPATH)\sources\data\haarcascades\haarcascade_frontalface_default.xml" $
     <ClInclude Include="hotkeymanager.h" />
     <ClInclude Include="langnames-utf8.h" />
     <ClInclude Include="mousecommand.h" />
+    <ClInclude Include="newtrackerinformationdlg.h" />
     <ClInclude Include="paths.h" />
     <ClInclude Include="pointeraction.h" />
     <ClInclude Include="version.h" />

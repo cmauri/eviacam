@@ -111,11 +111,11 @@ class wxPanel;
 #define ID_CHECKBOX_ENABLE_AT_STARTUP 10023
 #define ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND 10036
 #define ID_BUTTON_ONSCREENKEYBOARDCOMMAND 10049
+#define ID_CHECKBO_LEGACY_TRACKER 10009
 #define ID_CHECKBOX_AUTO_LOCATE_FACE 10038
 #define ID_CHOICE4 10109
 #define ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED 10039
 #define ID_SPINCTRL2 10107
-#define ID_CHECKBO_LEGACY_TRACKER 10009
 #define ID_SPIN_SEND_ACTION_WAIT 10131
 #define ID_PANEL 10050
 #define ID_CHOICE_PROFILE 10015
@@ -281,6 +281,9 @@ private:
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_ONSCREENKEYBOARDCOMMAND
     void OnButtonOnscreenkeyboardcommandClick( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBO_LEGACY_TRACKER
+    void OnCheckboLegacyTrackerClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTO_LOCATE_FACE
     void OnCheckboxAutoLocateFaceClick( wxCommandEvent& event );
 
@@ -292,9 +295,6 @@ private:
 
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL2
     void OnSpinLocateFaceTimeoutUpdated( wxSpinEvent& event );
-
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBO_LEGACY_TRACKER
-    void OnCheckboLegacyTrackerClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPIN_SEND_ACTION_WAIT
     void OnSpinSendActionWaitUpdated( wxSpinEvent& event );
@@ -447,6 +447,7 @@ private:
     wxTextCtrl* m_txtOnScreenKeyboardCommand;
     wxButton* m_btntOnScreenKeyboardCommand;
     wxStaticBox* m_sizerFaceLocalization;
+    wxCheckBox* m_chkLegacyTracker;
     wxCheckBox* m_chkAutoLocateFace;
     wxStaticText* m_staticCpuUsage;
     wxChoice* m_choCpuUsage;
@@ -454,7 +455,6 @@ private:
     wxStaticText* m_staticLocateFaceTimeout2;
     wxSpinCtrl* m_spinLocateFaceTimeout;
     wxStaticText* m_staticLocateFaceTimeout;
-    wxCheckBox* m_chkLegacyTracker;
     wxSpinCtrl* m_spinSendActionWait;
     wxChoice* m_choProfile;
     wxButton* m_btnAddProfile;
