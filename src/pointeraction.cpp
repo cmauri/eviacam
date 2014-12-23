@@ -64,12 +64,12 @@ CPointerAction::~CPointerAction ()
 void CPointerAction::InitDefaults()
 {
 	// General attributes
-	SetXSpeed (12);
+	SetXSpeed (10);
 	SetYSpeed (10);
 	SetAcceleration (2);
 	SetClickMode (CPointerAction::DWELL);
 	SetBeepOnClick (true);
-	SetSmoothness (4);
+	SetSmoothness (2);
 	SetEasyStopValue (1); 
 	SetWrapPointer(false);
 	SetSendActionWait(0);

@@ -258,11 +258,11 @@ void WWizard::UpdateToggleButtonStatus (wxToggleButton& toggle)
 {
 	if (wxGetApp().GetController().GetEnabled()) {
 		toggle.SetValue(true);
-		toggle.SetLabel(_("Disable head tracking"));
+		toggle.SetLabel(_("Disable pointer control"));
 	}
 	else {
 		toggle.SetValue(false);
-		toggle.SetLabel(_("Enable head tracking"));
+		toggle.SetLabel(_("Enable pointer control"));
 	}
 }
 
@@ -372,7 +372,7 @@ void WizardPage::CreateControls()
     itemWizardPageSimple2->SetSizer(itemFlexGridSizer3);
 
     wxStaticText* itemStaticText4 = new wxStaticText( itemWizardPageSimple2, wxID_STATIC, _("Welcome to the eViacam configuration wizard"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText4->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemStaticText4->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Sans")));
     itemFlexGridSizer3->Add(itemStaticText4, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticLine* itemStaticLine5 = new wxStaticLine( itemWizardPageSimple2, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
@@ -529,7 +529,7 @@ void WizardPage1::CreateControls()
     itemWizardPageSimple35->SetSizer(itemBoxSizer36);
 
     wxStaticText* itemStaticText37 = new wxStaticText( itemWizardPageSimple35, wxID_STATIC, _("Pointer calibration"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText37->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemStaticText37->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Sans")));
     itemBoxSizer36->Add(itemStaticText37, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxStaticLine* itemStaticLine38 = new wxStaticLine( itemWizardPageSimple35, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
@@ -693,7 +693,7 @@ void WizardPage2::CreateControls()
     itemWizardPageSimple44->SetSizer(itemBoxSizer45);
 
     wxStaticText* itemStaticText46 = new wxStaticText( itemWizardPageSimple44, wxID_STATIC, _("Pointer calibration "), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText46->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemStaticText46->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Sans")));
     itemBoxSizer45->Add(itemStaticText46, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxStaticLine* itemStaticLine47 = new wxStaticLine( itemWizardPageSimple44, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
@@ -870,7 +870,7 @@ void WizardPage3::CreateControls()
     itemWizardPageSimple63->SetSizer(itemBoxSizer64);
 
     wxStaticText* itemStaticText65 = new wxStaticText( itemWizardPageSimple63, wxID_STATIC, _("Click mode"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText65->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemStaticText65->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Sans")));
     itemBoxSizer64->Add(itemStaticText65, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxStaticLine* itemStaticLine66 = new wxStaticLine( itemWizardPageSimple63, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
@@ -1224,7 +1224,7 @@ void WizardPage4::CreateControls()
     itemWizardPageSimple77->SetSizer(itemFlexGridSizer78);
 
     wxStaticText* itemStaticText79 = new wxStaticText( itemWizardPageSimple77, wxID_STATIC, _("Wizard completed"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText79->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemStaticText79->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Sans")));
     itemFlexGridSizer78->Add(itemStaticText79, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticLine* itemStaticLine80 = new wxStaticLine( itemWizardPageSimple77, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
@@ -1427,7 +1427,7 @@ void WizardPage5::CreateControls()
     itemWizardPageSimple9->SetSizer(itemBoxSizer10);
 
     wxStaticText* itemStaticText11 = new wxStaticText( itemWizardPageSimple9, wxID_STATIC, _("Camera setup"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText11->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemStaticText11->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Sans")));
     itemBoxSizer10->Add(itemStaticText11, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer12 = new wxBoxSizer(wxHORIZONTAL);
@@ -1446,14 +1446,14 @@ void WizardPage5::CreateControls()
     itemFlexGridSizer15->Add(itemStaticText16, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_staticCameraName = new wxStaticText( itemWizardPageSimple9, wxID_STATIC, _("camera_name"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_staticCameraName->SetFont(wxFont(wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_DEFAULT, wxITALIC, wxNORMAL, false, wxT("")));
+    m_staticCameraName->SetFont(wxFont(wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_DEFAULT, wxFONTSTYLE_ITALIC, wxFONTWEIGHT_NORMAL, false, wxT("")));
     itemFlexGridSizer15->Add(m_staticCameraName, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText18 = new wxStaticText( itemWizardPageSimple9, wxID_STATIC, _("Framerate:"), wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer15->Add(itemStaticText18, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_staticFramerate = new wxStaticText( itemWizardPageSimple9, wxID_STATIC, _("framerate"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_staticFramerate->SetFont(wxFont(wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_DEFAULT, wxITALIC, wxNORMAL, false, wxT("")));
+    m_staticFramerate->SetFont(wxFont(wxNORMAL_FONT->GetPointSize(), wxFONTFAMILY_DEFAULT, wxFONTSTYLE_ITALIC, wxFONTWEIGHT_NORMAL, false, wxT("")));
     itemFlexGridSizer15->Add(m_staticFramerate, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     itemBoxSizer14->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
@@ -1607,7 +1607,7 @@ void WizardPage6::CreateControls()
     itemWizardPageSimple48->SetSizer(itemBoxSizer49);
 
     wxStaticText* itemStaticText50 = new wxStaticText( itemWizardPageSimple48, wxID_STATIC, _("Pointer calibration"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText50->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemStaticText50->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Sans")));
     itemBoxSizer49->Add(itemStaticText50, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxStaticLine* itemStaticLine51 = new wxStaticLine( itemWizardPageSimple48, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
@@ -1625,7 +1625,7 @@ void WizardPage6::CreateControls()
     wxStaticText* itemStaticText55 = new wxStaticText( itemWizardPageSimple48, wxID_STATIC, _("X axis speed"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer54->Add(itemStaticText55, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spinXSpeed = new wxSpinCtrl( itemWizardPageSimple48, ID_SPINCTRL, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 30, 0 );
+    m_spinXSpeed = new wxSpinCtrl( itemWizardPageSimple48, ID_SPINCTRL, wxT("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 30, 0 );
     itemBoxSizer54->Add(m_spinXSpeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer57 = new wxBoxSizer(wxHORIZONTAL);
@@ -1634,14 +1634,14 @@ void WizardPage6::CreateControls()
     wxStaticText* itemStaticText58 = new wxStaticText( itemWizardPageSimple48, wxID_STATIC, _("Y axis speed"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer57->Add(itemStaticText58, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spinYSpeed = new wxSpinCtrl( itemWizardPageSimple48, ID_SPINCTRL1, _T("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 30, 0 );
+    m_spinYSpeed = new wxSpinCtrl( itemWizardPageSimple48, ID_SPINCTRL1, wxT("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 30, 0 );
     itemBoxSizer57->Add(m_spinYSpeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     itemBoxSizer52->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     itemBoxSizer52->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
-    m_toggleHeadTrackingPage6 = new wxToggleButton( itemWizardPageSimple48, ID_TOGGLE_HEAD_TRACKING_PAGE6, _("Enable head tracking"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_toggleHeadTrackingPage6 = new wxToggleButton( itemWizardPageSimple48, ID_TOGGLE_HEAD_TRACKING_PAGE6, _("Enable pointer control"), wxDefaultPosition, wxDefaultSize, 0 );
     m_toggleHeadTrackingPage6->SetValue(false);
     itemBoxSizer52->Add(m_toggleHeadTrackingPage6, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
@@ -1904,7 +1904,7 @@ void WizardPage8::CreateControls()
     itemWizardPageSimple24->SetSizer(itemBoxSizer25);
 
     wxStaticText* itemStaticText26 = new wxStaticText( itemWizardPageSimple24, wxID_STATIC, _("Face detection setup"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText26->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxNORMAL, wxBOLD, false, wxT("Sans")));
+    itemStaticText26->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Sans")));
     itemBoxSizer25->Add(itemStaticText26, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer27 = new wxBoxSizer(wxHORIZONTAL);

@@ -34,6 +34,7 @@
 #include "cautostart.h"
 #include "hotkeymanager.h"
 #include "simplelog.h"
+#include "newtrackerinformationdlg.h"
 
 #include <wx/msgdlg.h>
 #include <wx/choicdlg.h>
@@ -63,6 +64,7 @@ CViacamController::CViacamController(void)
 , m_frameRate(0)
 , m_motionCalibrationEnabled(false)
 , m_runWizardAtStartup(false)
+, m_newTrackerDialogAtStartup(true)
 {
 	m_locale= new wxLocale ();
 	m_configManager= new CConfigManager(this);	
@@ -258,6 +260,12 @@ bool CViacamController::Initialize ()
 	// Enable pointeraction object
 	if (retval) m_pointerAction->SetEnabled(true);
 	
+	// Show new tracker information dialog when needed
+	if (retval && m_newTrackerDialogAtStartup) {
+		NewTrackerInformationDlg dlg(m_pMainWindow);
+		dlg.ShowModal();
+	}
+
 	// Run the wizard at startup
 	if (retval && m_runWizardAtStartup)
 		StartWizard();
@@ -316,6 +324,7 @@ void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("enabledAtStartup"), m_enabledAtStartup);	
 	pConfObj->Write(_T("onScreenKeyboardCommand"), m_onScreenKeyboardCommand);
 	pConfObj->Write(_T("runWizardAtStartup"), m_runWizardAtStartup);	
+	pConfObj->Write(_T("newTrackerDialogAtStartup"), m_newTrackerDialogAtStartup);
 
 	// Propagates calls
 	m_pointerAction->WriteProfileData (pConfObj);
@@ -335,6 +344,7 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
 	pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
 	pConfObj->Read(_T("runWizardAtStartup"), &m_runWizardAtStartup);
+	pConfObj->Read(_T("newTrackerDialogAtStartup"), &m_newTrackerDialogAtStartup);
 
 	// Propagates calls
 	m_pointerAction->ReadProfileData (pConfObj);

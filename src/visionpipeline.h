@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-14 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -52,7 +52,10 @@ public:
 	
 	bool GetEnableWhenFaceDetected () const { return m_enableWhenFaceDetected; }
 	void SetEnableWhenFaceDetected (bool state) { m_enableWhenFaceDetected= state; }
-	
+
+	bool GetUseLegacyTracker() const { return m_useLegacyTracker; }
+	void SetUseLegacyTracker(bool state) { m_useLegacyTracker = state; }
+
 	bool IsFaceDetected () const;
 
 	unsigned int GetTimeout () const { return (unsigned int) (m_waitTime.GetWaitTimeMs()/1000); }
@@ -79,6 +82,7 @@ private:
 	bool m_trackFace;
 	bool m_enableWhenFaceDetected;
 	bool m_isRunning;
+	bool m_useLegacyTracker;
 	CWaitTime m_waitTime;
 	CWaitTime m_trackAreaTimeout;
 		
@@ -95,14 +99,23 @@ private:
 	wxCriticalSection m_imageCopyMutex;
 	wxMutex m_mutex;
 	wxCondition m_condition;
+
+	// Face location detection
+	CvRect m_faceLocation;
+	int m_faceLocationStatus; // 0 -> not available, 1 -> available
+
+	// Corner array
+	enum { NUM_CORNERS = 15 };
+	CvPoint2D32f m_corners[NUM_CORNERS];
+	int m_corner_count = 0;
 	
 	// Private methods
 	void AllocWorkingSpace (CIplImage &image);
-	void TrackMotion (CIplImage &image, float &xVel, float &yVel);
 	int PreprocessImage ();
-	void PostProcessImage ();
 	void ComputeFaceTrackArea (CIplImage &image);
 	void SetThreadPeriod (int value);
+	void OldTracker(CIplImage &image, float &xVel, float &yVel);
+	void NewTracker(CIplImage &image, float &xVel, float &yVel);
 };
 
 #endif
