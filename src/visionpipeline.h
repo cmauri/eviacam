@@ -107,7 +107,7 @@ private:
 	// Corner array
 	enum { NUM_CORNERS = 15 };
 	CvPoint2D32f m_corners[NUM_CORNERS];
-	int m_corner_count = 0;
+	int m_corner_count;
 	
 	// Private methods
 	void AllocWorkingSpace (CIplImage &image);
