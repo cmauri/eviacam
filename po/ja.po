@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2014-05-02 19:36+0200\n"
+"POT-Creation-Date: 2014-12-24 16:56+0100\n"
 "PO-Revision-Date: 2013-11-20 11:13+0000\n"
 "Last-Translator: Jiro Matsuzawa <jmatsuzawa@gnome.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/eviacam/"
@@ -19,35 +19,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/wconfiguration.h:128
+#: src/wconfiguration.h:129
 msgid "Configuration"
 msgstr "設定"
 
-#: src/wconfiguration.cpp:348
+#: src/wconfiguration.cpp:350
 msgid "Motion calibration"
 msgstr "モーションキャリブレーション"
 
-#: src/wconfiguration.cpp:353 src/wwizard.cpp:1625
+#: src/wconfiguration.cpp:355 src/wwizard.cpp:1625
 msgid "X axis speed"
 msgstr "X 軸速度"
 
-#: src/wconfiguration.cpp:358
+#: src/wconfiguration.cpp:360
 msgid "Sets response sensitivity for the X axis."
 msgstr "X 軸の反応感度を設定します。"
 
-#: src/wconfiguration.cpp:361 src/wwizard.cpp:1634
+#: src/wconfiguration.cpp:363 src/wwizard.cpp:1634
 msgid "Y axis speed"
 msgstr "Y 軸速度"
 
-#: src/wconfiguration.cpp:366
+#: src/wconfiguration.cpp:368
 msgid "Sets response sensitivity for the Y axis."
 msgstr "Y 軸の反応感度を設定します。"
 
-#: src/wconfiguration.cpp:369
+#: src/wconfiguration.cpp:371
 msgid "Acceleration"
 msgstr "加速"
 
-#: src/wconfiguration.cpp:374
+#: src/wconfiguration.cpp:376
 msgid ""
 "Sets pointer's acceleration.\n"
 "0 means no acceleration and\n"
@@ -57,11 +57,11 @@ msgstr ""
 "0 は加速を無効にします。\n"
 "5 は加速の最大値です。"
 
-#: src/wconfiguration.cpp:377
+#: src/wconfiguration.cpp:379
 msgid "Smoothness"
 msgstr "滑らかさ"
 
-#: src/wconfiguration.cpp:382
+#: src/wconfiguration.cpp:384
 msgid ""
 "Tremor reduction filter.\n"
 "0 means no filter and \n"
@@ -71,11 +71,11 @@ msgstr ""
 "0 はフィルタリングしません。\n"
 "8 はフィルタリングの最大値です。"
 
-#: src/wconfiguration.cpp:385
+#: src/wconfiguration.cpp:387
 msgid "Motion threshold"
 msgstr "モーションしきい値"
 
-#: src/wconfiguration.cpp:390
+#: src/wconfiguration.cpp:392
 msgid ""
 "Minimum displacement (in pixels)\n"
 "to start moving pointer."
@@ -83,23 +83,23 @@ msgstr ""
 "ポインターが動き始めるまでの\n"
 "移動最小値(ピクセル単位)"
 
-#: src/wconfiguration.cpp:402
+#: src/wconfiguration.cpp:404
 msgid "Assisted calibration"
 msgstr "キャリブレーションアシスタント"
 
-#: src/wconfiguration.cpp:405
+#: src/wconfiguration.cpp:407
 msgid "Motion"
 msgstr "モーション"
 
-#: src/wconfiguration.cpp:411
+#: src/wconfiguration.cpp:413
 msgid "Workspace limit"
 msgstr "ワークスペースの制限"
 
-#: src/wconfiguration.cpp:414 src/hotkeymanager.cpp:49
+#: src/wconfiguration.cpp:416 src/hotkeymanager.cpp:49
 msgid "Enable workspace limit"
 msgstr "ワークスペースを制限する"
 
-#: src/wconfiguration.cpp:417
+#: src/wconfiguration.cpp:419
 msgid ""
 "Confines the mouse pointer\n"
 "to the selected area."
@@ -107,64 +107,64 @@ msgstr ""
 "マウスポインターの操作を\n"
 "指定領域に制限します。"
 
-#: src/wconfiguration.cpp:426
+#: src/wconfiguration.cpp:428
 msgid "Top"
 msgstr "上"
 
-#: src/wconfiguration.cpp:431
+#: src/wconfiguration.cpp:433
 msgid "Top limit workspace."
 msgstr "ワークスペースの上部制限"
 
-#: src/wconfiguration.cpp:435 src/wconfiguration.cpp:449
-#: src/wconfiguration.cpp:461 src/wconfiguration.cpp:475
+#: src/wconfiguration.cpp:437 src/wconfiguration.cpp:451
+#: src/wconfiguration.cpp:463 src/wconfiguration.cpp:477
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:440 src/clickwindowbitmap.cpp:236
+#: src/wconfiguration.cpp:442 src/clickwindowbitmap.cpp:236
 msgid "Left"
 msgstr "左"
 
-#: src/wconfiguration.cpp:445
+#: src/wconfiguration.cpp:447
 msgid "Left limit workspace."
 msgstr "ワークスペースの左部制限"
 
-#: src/wconfiguration.cpp:452 src/clickwindowbitmap.cpp:250
+#: src/wconfiguration.cpp:454 src/clickwindowbitmap.cpp:250
 msgid "Right"
 msgstr "右"
 
-#: src/wconfiguration.cpp:457
+#: src/wconfiguration.cpp:459
 msgid "Right limit workspace."
 msgstr "ワークスペースの右部制限"
 
-#: src/wconfiguration.cpp:466
+#: src/wconfiguration.cpp:468
 msgid "Bottom"
 msgstr "下"
 
-#: src/wconfiguration.cpp:471
+#: src/wconfiguration.cpp:473
 msgid "Bottom limit workspace."
 msgstr "ワークスペースの下部制限"
 
-#: src/wconfiguration.cpp:478
+#: src/wconfiguration.cpp:480
 msgid "Pointer wrapping"
 msgstr "ポインターの周回"
 
-#: src/wconfiguration.cpp:481
+#: src/wconfiguration.cpp:483
 msgid "Allow wrapping the pointer around the working area"
 msgstr "ワークスペースの端を越えて移動する場合反対側の端に移ります。"
 
-#: src/wconfiguration.cpp:485
+#: src/wconfiguration.cpp:487
 msgid "Workspace"
 msgstr "ワークスペース"
 
-#: src/wconfiguration.cpp:491
+#: src/wconfiguration.cpp:493
 msgid "Dwell click"
 msgstr "ホバークリック"
 
-#: src/wconfiguration.cpp:494
+#: src/wconfiguration.cpp:496
 msgid "Enable dwell click"
 msgstr "ホバークリックを有効にする"
 
-#: src/wconfiguration.cpp:497
+#: src/wconfiguration.cpp:499
 msgid ""
 "Enable/Disable automatic (dwell)\n"
 "click generation mechanism."
@@ -172,11 +172,11 @@ msgstr ""
 "ホバー (自動) クリックの有効/無効を\n"
 "切り替えます。"
 
-#: src/wconfiguration.cpp:504
+#: src/wconfiguration.cpp:506
 msgid "Dwell time (ds)"
 msgstr "ホバー時間 (ds)"
 
-#: src/wconfiguration.cpp:509
+#: src/wconfiguration.cpp:511
 msgid ""
 "Time to wait (deciseconds) \n"
 "before sending a click."
@@ -184,11 +184,11 @@ msgstr ""
 "クリックするまでに待機する\n"
 "時間 (0.1秒単位)"
 
-#: src/wconfiguration.cpp:512
+#: src/wconfiguration.cpp:514
 msgid "Dwell area"
 msgstr "ホバー領域"
 
-#: src/wconfiguration.cpp:517
+#: src/wconfiguration.cpp:519
 msgid ""
 "Maximum allowed displacement\n"
 "before restarting the dwell time\n"
@@ -198,11 +198,11 @@ msgstr ""
 "までにポインターが移動できる\n"
 "最大値です。"
 
-#: src/wconfiguration.cpp:522
+#: src/wconfiguration.cpp:524
 msgid "Allow consecutive clicks"
 msgstr "連続クリックを有効にする"
 
-#: src/wconfiguration.cpp:525
+#: src/wconfiguration.cpp:527
 msgid ""
 "Allows to send multiple clicks\n"
 "when the pointer is stopped."
@@ -210,51 +210,51 @@ msgstr ""
 "ポインターが停止している間\n"
 "クリック動作を複数回行うことができます。"
 
-#: src/wconfiguration.cpp:528
+#: src/wconfiguration.cpp:530
 msgid "Beep on click"
 msgstr "クリック時にビープ音を鳴らす"
 
-#: src/wconfiguration.cpp:531
+#: src/wconfiguration.cpp:533
 msgid "Play sound when click generated."
 msgstr "クリック動作を行ったときに音を鳴らします。"
 
-#: src/wconfiguration.cpp:535
+#: src/wconfiguration.cpp:537
 msgid "Allow visual alerts"
 msgstr "視覚警告を有効にする"
 
-#: src/wconfiguration.cpp:540
+#: src/wconfiguration.cpp:542
 msgid "Click window"
 msgstr "クリックウィンドウ"
 
-#: src/wconfiguration.cpp:543
+#: src/wconfiguration.cpp:545
 msgid "Show Click Window"
 msgstr "クリックウィンドウを表示する"
 
-#: src/wconfiguration.cpp:549
+#: src/wconfiguration.cpp:551
 msgid "Design:"
 msgstr "デザイン:"
 
-#: src/wconfiguration.cpp:553 src/wconfiguration.cpp:741
+#: src/wconfiguration.cpp:555 src/wconfiguration.cpp:751
 msgid "Normal"
 msgstr "普通"
 
-#: src/wconfiguration.cpp:554
+#: src/wconfiguration.cpp:556
 msgid "Thin"
 msgstr "細い"
 
-#: src/wconfiguration.cpp:558
+#: src/wconfiguration.cpp:560
 msgid "Behaviour:"
 msgstr "モード:"
 
-#: src/wconfiguration.cpp:562
+#: src/wconfiguration.cpp:564
 msgid "Normal mode"
 msgstr "通常モード"
 
-#: src/wconfiguration.cpp:563
+#: src/wconfiguration.cpp:565
 msgid "Fast mode"
 msgstr "高速モード"
 
-#: src/wconfiguration.cpp:566
+#: src/wconfiguration.cpp:568
 msgid ""
 "Fast mode enables click type\n"
 "selection by hovering the mouse\n"
@@ -266,113 +266,113 @@ msgstr ""
 "ボタンにホバーリングしてクリック種別\n"
 "を選択できます。"
 
-#: src/wconfiguration.cpp:570
+#: src/wconfiguration.cpp:572
 msgid "Location:"
 msgstr "位置:"
 
-#: src/wconfiguration.cpp:576
+#: src/wconfiguration.cpp:578
 msgid "Floating horizontal"
 msgstr "水平フロート"
 
-#: src/wconfiguration.cpp:577
+#: src/wconfiguration.cpp:579
 msgid "Floating vertical"
 msgstr "垂直フロート"
 
-#: src/wconfiguration.cpp:578
+#: src/wconfiguration.cpp:580
 msgid "Top docked"
 msgstr "画面上部"
 
-#: src/wconfiguration.cpp:579
+#: src/wconfiguration.cpp:581
 msgid "Bottom docked"
 msgstr "画面下部"
 
-#: src/wconfiguration.cpp:580
+#: src/wconfiguration.cpp:582
 msgid "Left docked"
 msgstr "画面左部"
 
-#: src/wconfiguration.cpp:581
+#: src/wconfiguration.cpp:583
 msgid "Right docked"
 msgstr "画面右部"
 
-#: src/wconfiguration.cpp:587
+#: src/wconfiguration.cpp:589
 msgid "Auto-hide"
 msgstr "自動非表示"
 
-#: src/wconfiguration.cpp:596 src/wwizard.cpp:897
+#: src/wconfiguration.cpp:598 src/wwizard.cpp:897
 msgid "Gesture click"
 msgstr "ジェスチャークリック"
 
-#: src/wconfiguration.cpp:599
+#: src/wconfiguration.cpp:601
 msgid "Enable gesture click"
 msgstr "ジェスチャークリックを有効にする"
 
-#: src/wconfiguration.cpp:605
+#: src/wconfiguration.cpp:607
 msgid "Move left:"
 msgstr "左移動:"
 
-#: src/wconfiguration.cpp:609 src/wconfiguration.cpp:622
-#: src/wconfiguration.cpp:635 src/wconfiguration.cpp:648 src/wviacam.cpp:211
+#: src/wconfiguration.cpp:611 src/wconfiguration.cpp:624
+#: src/wconfiguration.cpp:637 src/wconfiguration.cpp:650 src/wviacam.cpp:211
 msgid "Disable"
 msgstr "無効化"
 
-#: src/wconfiguration.cpp:610 src/wconfiguration.cpp:623
-#: src/wconfiguration.cpp:636 src/wconfiguration.cpp:649 src/wwizard.cpp:1067
+#: src/wconfiguration.cpp:612 src/wconfiguration.cpp:625
+#: src/wconfiguration.cpp:638 src/wconfiguration.cpp:651 src/wwizard.cpp:1067
 msgid "Left click"
 msgstr "左クリック"
 
-#: src/wconfiguration.cpp:611 src/wconfiguration.cpp:624
-#: src/wconfiguration.cpp:637 src/wconfiguration.cpp:650 src/wwizard.cpp:1100
+#: src/wconfiguration.cpp:613 src/wconfiguration.cpp:626
+#: src/wconfiguration.cpp:639 src/wconfiguration.cpp:652 src/wwizard.cpp:1100
 msgid "Middle click"
 msgstr "中クリック"
 
-#: src/wconfiguration.cpp:612 src/wconfiguration.cpp:625
-#: src/wconfiguration.cpp:638 src/wconfiguration.cpp:651 src/wwizard.cpp:1079
+#: src/wconfiguration.cpp:614 src/wconfiguration.cpp:627
+#: src/wconfiguration.cpp:640 src/wconfiguration.cpp:653 src/wwizard.cpp:1079
 msgid "Right click"
 msgstr "右クリック"
 
-#: src/wconfiguration.cpp:613 src/wconfiguration.cpp:626
-#: src/wconfiguration.cpp:639 src/wconfiguration.cpp:652 src/wwizard.cpp:1089
+#: src/wconfiguration.cpp:615 src/wconfiguration.cpp:628
+#: src/wconfiguration.cpp:641 src/wconfiguration.cpp:654 src/wwizard.cpp:1089
 msgid "Double click"
 msgstr "ダブルクリック"
 
-#: src/wconfiguration.cpp:614 src/wconfiguration.cpp:627
-#: src/wconfiguration.cpp:640 src/wconfiguration.cpp:653
+#: src/wconfiguration.cpp:616 src/wconfiguration.cpp:629
+#: src/wconfiguration.cpp:642 src/wconfiguration.cpp:655
 msgid "Drag click"
 msgstr "ドラッグクリック"
 
-#: src/wconfiguration.cpp:618
+#: src/wconfiguration.cpp:620
 msgid "Move right:"
 msgstr "右移動:"
 
-#: src/wconfiguration.cpp:631
+#: src/wconfiguration.cpp:633
 msgid "Move up:"
 msgstr "上移動:"
 
-#: src/wconfiguration.cpp:644
+#: src/wconfiguration.cpp:646
 msgid "Move down:"
 msgstr "下移動:"
 
-#: src/wconfiguration.cpp:662
+#: src/wconfiguration.cpp:664
 msgid "Click"
 msgstr "クリック"
 
-#: src/wconfiguration.cpp:669 src/wconfiguration.cpp:685
+#: src/wconfiguration.cpp:671 src/wconfiguration.cpp:687
 msgid "Hotkeys"
 msgstr "ホットキー"
 
-#: src/wconfiguration.cpp:692
+#: src/wconfiguration.cpp:694
 msgid "Startup"
 msgstr "起動"
 
-#: src/wconfiguration.cpp:696 src/wwizard.cpp:1243
+#: src/wconfiguration.cpp:698 src/wwizard.cpp:1243
 msgid "Start eViacam at user logon"
 msgstr "ログイン時に eViacam を起動する"
 
-#: src/wconfiguration.cpp:701 src/wwizard.cpp:1249
+#: src/wconfiguration.cpp:703 src/wwizard.cpp:1249
 msgid "Enable eViacam at startup"
 msgstr "起動時に eViacam を有効にする"
 
-#: src/wconfiguration.cpp:704 src/wwizard.cpp:1252
+#: src/wconfiguration.cpp:706 src/wwizard.cpp:1252
 msgid ""
 "If checked the program automatically \n"
 "enables cursor control at startup."
@@ -380,29 +380,40 @@ msgstr ""
 "チェックした場合、起動時にポインター制御が\n"
 "自動で有効になります。"
 
-#: src/wconfiguration.cpp:707
+#: src/wconfiguration.cpp:709
 msgid "On-screen keyboard command"
 msgstr "オンスクリーンキーボードのコマンド"
 
-#: src/wconfiguration.cpp:714
+#: src/wconfiguration.cpp:716
 msgid "Command to run an external on-screen keyboard application."
 msgstr ""
 "外部のオンスクリーンキーボードのアプリケーションを起動するためのコマンドで"
 "す。"
 
-#: src/wconfiguration.cpp:717
+#: src/wconfiguration.cpp:719
 msgid "Browse..."
 msgstr "参照..."
 
-#: src/wconfiguration.cpp:722
-msgid "Face localization"
+#: src/wconfiguration.cpp:724
+#, fuzzy
+msgid "Face localization and tracking"
 msgstr "顔検出"
 
-#: src/wconfiguration.cpp:727
+#: src/wconfiguration.cpp:729
+msgid "Use legacy face tracking algorithm"
+msgstr ""
+
+#: src/wconfiguration.cpp:732
+msgid ""
+"Use old face tracking method\n"
+"(not recommended)."
+msgstr ""
+
+#: src/wconfiguration.cpp:737
 msgid "Locate face automatically"
 msgstr "自動的に顔の位置を検出する"
 
-#: src/wconfiguration.cpp:730
+#: src/wconfiguration.cpp:740
 msgid ""
 "When enabled tries to automatically\n"
 "detect your face and center the\n"
@@ -412,129 +423,130 @@ msgstr ""
 "顔を検出し、トラッキング\n"
 "エリアを設定します。"
 
-#: src/wconfiguration.cpp:735
+#: src/wconfiguration.cpp:745
 msgid "CPU usage"
 msgstr "CPU 使用"
 
-#: src/wconfiguration.cpp:739
+#: src/wconfiguration.cpp:749
 msgid "Lowest"
 msgstr "最低"
 
-#: src/wconfiguration.cpp:740
+#: src/wconfiguration.cpp:750
 msgid "Low"
 msgstr "低"
 
-#: src/wconfiguration.cpp:742
+#: src/wconfiguration.cpp:752
 msgid "High"
 msgstr "高"
 
-#: src/wconfiguration.cpp:743
+#: src/wconfiguration.cpp:753
 msgid "Highest"
 msgstr "最高"
 
-#: src/wconfiguration.cpp:752
-msgid "Stop the pointer when no face is detected"
+#: src/wconfiguration.cpp:757
+#, fuzzy
+msgid "Stop pointer when face not detected"
 msgstr "顔を検出できない場合にポインター操作を無効にする"
 
-#: src/wconfiguration.cpp:755
+#: src/wconfiguration.cpp:760
 msgid "eViacam is only enabled when face is detected."
 msgstr "eViacam は顔が検出された場合だけ有効になります。"
 
-#: src/wconfiguration.cpp:761
+#: src/wconfiguration.cpp:766
 msgid "After"
 msgstr "無効にするまでの時間"
 
-#: src/wconfiguration.cpp:767
+#: src/wconfiguration.cpp:772
 msgid "seconds"
 msgstr "秒"
 
-#: src/wconfiguration.cpp:770
+#: src/wconfiguration.cpp:782
 #, fuzzy
 msgid "Mouse actions"
 msgstr "モーション"
 
-#: src/wconfiguration.cpp:777
+#: src/wconfiguration.cpp:789
 msgid "Increase this value if some application ignores click events."
 msgstr ""
 
-#: src/wconfiguration.cpp:780
+#: src/wconfiguration.cpp:792
 msgid "ms delay between up and down events"
 msgstr ""
 
-#: src/wconfiguration.cpp:783
+#: src/wconfiguration.cpp:795
 msgid "Advanced"
 msgstr "高度"
 
-#: src/wconfiguration.cpp:785
+#: src/wconfiguration.cpp:797
 msgid "Profile options"
 msgstr "プロファイル"
 
-#: src/wconfiguration.cpp:791
+#: src/wconfiguration.cpp:803
 msgid "Profile management"
 msgstr "プロファイル管理"
 
-#: src/wconfiguration.cpp:796
+#: src/wconfiguration.cpp:808
 msgid "Select profile:"
 msgstr "プロファイルの選択:"
 
-#: src/wconfiguration.cpp:798 src/wconfiguration.cpp:804
+#: src/wconfiguration.cpp:810 src/wconfiguration.cpp:816
 msgid "Chooses desired active profile"
 msgstr "お好みのアクティブなプロファイルを選択します。"
 
-#: src/wconfiguration.cpp:807 src/wconfiguration.cpp:1546
+#: src/wconfiguration.cpp:819 src/wconfiguration.cpp:1559
 msgid "Add profile"
 msgstr "プロファイルの追加"
 
-#: src/wconfiguration.cpp:810
+#: src/wconfiguration.cpp:822
 msgid "Delete profile"
 msgstr "プロファイルの削除"
 
-#: src/wconfiguration.cpp:815
+#: src/wconfiguration.cpp:827
 msgid "Camera"
 msgstr "カメラ"
 
-#: src/wconfiguration.cpp:824
+#: src/wconfiguration.cpp:836
 msgid "Settings..."
 msgstr "設定..."
 
-#: src/wconfiguration.cpp:827
+#: src/wconfiguration.cpp:839
 msgid "Change"
 msgstr "変更"
 
-#: src/wconfiguration.cpp:832
+#: src/wconfiguration.cpp:844
 msgid "Language"
 msgstr "言語"
 
-#: src/wconfiguration.cpp:837
+#: src/wconfiguration.cpp:849
 msgid "Language:"
 msgstr "言語:"
 
-#: src/wconfiguration.cpp:844
+#: src/wconfiguration.cpp:856
 msgid "General options"
 msgstr "一般"
 
-#: src/wconfiguration.cpp:851
+#: src/wconfiguration.cpp:863 src/newtrackerinformationdlg.cpp:174
 msgid "&OK"
 msgstr "&OK"
 
-#: src/wconfiguration.cpp:854
+#: src/wconfiguration.cpp:866
 msgid "&Cancel"
 msgstr "キャンセル(&C)"
 
-#: src/wconfiguration.cpp:863 src/wconfiguration.cpp:864
-#: src/wconfiguration.cpp:865 src/wconfiguration.cpp:866
+#: src/wconfiguration.cpp:875 src/wconfiguration.cpp:876
+#: src/wconfiguration.cpp:877 src/wconfiguration.cpp:878
 msgid "Key:"
 msgstr "キー:"
 
-#: src/wconfiguration.cpp:895
+#: src/wconfiguration.cpp:907
 msgid "Set key"
 msgstr "キーの設定"
 
-#: src/wconfiguration.cpp:1470 src/wconfiguration.cpp:1657
+#: src/wconfiguration.cpp:1483 src/wconfiguration.cpp:1670
 msgid "You should restart the application to apply this change"
 msgstr "変更を適用するにはアプリケーションを再起動してください"
 
-#: src/wconfiguration.cpp:1491
+#: src/wconfiguration.cpp:1504
 msgid ""
 "Current profile has unsaved changes.\n"
 "Continue anyway?"
@@ -542,7 +554,7 @@ msgstr ""
 "現在のプロファイルには未保存の変更があります。\n"
 "続行しますか?"
 
-#: src/wconfiguration.cpp:1497
+#: src/wconfiguration.cpp:1510
 #, c-format
 msgid ""
 "This action will load %s profile settings.\n"
@@ -551,7 +563,7 @@ msgstr ""
 "%s プロファイルの設定をロードします。\n"
 "よろしいですか?"
 
-#: src/wconfiguration.cpp:1528
+#: src/wconfiguration.cpp:1541
 #, c-format
 msgid ""
 "This action will delete %s profile.\n"
@@ -560,27 +572,27 @@ msgstr ""
 "%s プロファイルを削除します。\n"
 "よろしいですか?"
 
-#: src/wconfiguration.cpp:1546
+#: src/wconfiguration.cpp:1559
 msgid "Enter new profile name"
 msgstr "新しいプロファイル名を入力してください"
 
-#: src/wconfiguration.cpp:1557
+#: src/wconfiguration.cpp:1570
 msgid "Profile already exists."
 msgstr "プロファイルはすでに存在します。"
 
-#: src/wconfiguration.cpp:1563
+#: src/wconfiguration.cpp:1576
 msgid "Invalid profile name."
 msgstr "無効なプロファイル名。"
 
-#: src/wconfiguration.cpp:1609 src/wconfiguration.cpp:1612
+#: src/wconfiguration.cpp:1622 src/wconfiguration.cpp:1625
 msgid "Choose on-screen keyboard command"
 msgstr "オンスクリーンキーボードのコマンドを選択"
 
-#: src/wconfiguration.cpp:1610
+#: src/wconfiguration.cpp:1623
 msgid "Executable files|*.exe"
 msgstr "実行ファイル|*.exe"
 
-#: src/wconfiguration.cpp:1725
+#: src/wconfiguration.cpp:1738
 msgid ""
 "This action could make you lose the control of the computer.\n"
 "Do you want to continue?"
@@ -588,17 +600,17 @@ msgstr ""
 "この操作を行うとコンピューター操作に支障が出る可能性があります。\n"
 "続行しますか?"
 
-#: src/wconfiguration.cpp:1725 src/wconfiguration.cpp:1860
-#: src/wconfiguration.cpp:1986 src/viacamcontroller.cpp:350
-#: src/cmotioncalibration.cpp:183
+#: src/wconfiguration.cpp:1738 src/wconfiguration.cpp:1873
+#: src/wconfiguration.cpp:1999 src/viacamcontroller.cpp:365
+#: src/cmotioncalibration.cpp:186
 msgid "eViacam warning"
 msgstr "eViacam の警告"
 
-#: src/wconfiguration.cpp:1860
+#: src/wconfiguration.cpp:1873
 msgid "Discard changes?"
 msgstr "変更を破棄しますか?"
 
-#: src/wconfiguration.cpp:1986
+#: src/wconfiguration.cpp:1999
 msgid ""
 "This key is used by another command.\n"
 "Do you want to try another key?"
@@ -655,15 +667,15 @@ msgstr "ダブルクリック"
 msgid "About Enable Viacam"
 msgstr "Enable Viacam について"
 
-#: src/viacamcontroller.cpp:136
+#: src/viacamcontroller.cpp:143
 msgid "Not detected any camera. Aborting"
 msgstr "カメラが見つかりません。終了します。"
 
-#: src/viacamcontroller.cpp:157
+#: src/viacamcontroller.cpp:164
 msgid "Choose the camera to use"
 msgstr "使用するカメラを選択してください。"
 
-#: src/viacamcontroller.cpp:177
+#: src/viacamcontroller.cpp:184
 msgid ""
 "Can not initialize the camera.\n"
 "Perhaps is being used by other application."
@@ -671,7 +683,7 @@ msgstr ""
 "カメラを初期化できません。\n"
 "おそらく他のアプリケーションが使用しています。"
 
-#: src/viacamcontroller.cpp:350
+#: src/viacamcontroller.cpp:365
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -679,7 +691,7 @@ msgstr ""
 "eViacam を無効にします。\n"
 "よろしいですか?"
 
-#: src/viacamcontroller.cpp:379
+#: src/viacamcontroller.cpp:394
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -687,12 +699,12 @@ msgstr ""
 "オンスクリーンキーボードのコマンドが設定されていません。\n"
 "オプションダイアログから設定を行ってください。"
 
-#: src/viacamcontroller.cpp:379 src/viacamcontroller.cpp:393
+#: src/viacamcontroller.cpp:394 src/viacamcontroller.cpp:408
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "eViacam エラー"
 
-#: src/viacamcontroller.cpp:389
+#: src/viacamcontroller.cpp:404
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -703,7 +715,7 @@ msgstr ""
 "コマンド %s が失敗しました。\n"
 "オプションダイアログから設定を行ってください。"
 
-#: src/viacamcontroller.cpp:391
+#: src/viacamcontroller.cpp:406
 msgid ""
 "\n"
 "\n"
@@ -720,7 +732,7 @@ msgstr ""
 "までは、ユーザーアカウント制御 (UAC) を無効にして問題を避けるか、他の osk (た"
 "とえば Click-N-Type) を試すとよいでしょう。"
 
-#: src/viacamcontroller.cpp:465
+#: src/viacamcontroller.cpp:480
 msgid ""
 "Note that adjusting the camera controls while eViacam\n"
 "is enabled may cause loss of pointer control.\n"
@@ -895,7 +907,7 @@ msgid "Your face is not detected. This may produce wrong calibration results."
 msgstr ""
 "顔を検出できません。キャリブレーション結果が不正となる可能性があります。"
 
-#: src/cmotioncalibration.cpp:182
+#: src/cmotioncalibration.cpp:185
 msgid ""
 "No movement was detected.\n"
 "Do you want to repeat the calibration?"
@@ -909,13 +921,12 @@ msgstr "Enable Viacam 設定ウィザード"
 
 #: src/wwizard.cpp:261
 #, fuzzy
-msgid "Disable head tracking"
-msgstr "無効にするまでの時間"
+msgid "Disable pointer control"
+msgstr "モーションを無効にする"
 
-#: src/wwizard.cpp:265 src/wwizard.cpp:916 src/wwizard.cpp:1644
-#, fuzzy
-msgid "Enable head tracking"
-msgstr "モーションを有効にする"
+#: src/wwizard.cpp:265 src/wwizard.cpp:1644
+msgid "Enable pointer control"
+msgstr ""
 
 #: src/wwizard.cpp:374
 msgid "Welcome to the eViacam configuration wizard"
@@ -995,6 +1006,11 @@ msgstr ""
 #: src/wwizard.cpp:910
 msgid "No click. Click function disabled."
 msgstr "クリックしない。クリック機能を無効にします。"
+
+#: src/wwizard.cpp:916
+#, fuzzy
+msgid "Enable head tracking"
+msgstr "モーションを有効にする"
 
 #: src/wwizard.cpp:1065
 msgid "Drop"
@@ -1090,15 +1106,15 @@ msgstr "自動的に顔の位置を検出する (推奨)"
 msgid "Disable eViacam if no face is found"
 msgstr "顔を検出できない場合に eViacam を無効にする"
 
-#: src/wconfirmcalibration.cpp:158
+#: src/wconfirmcalibration.cpp:159
 msgid "Move your head to see how it works"
 msgstr "顔を動かして動作を確認してください"
 
-#: src/wconfirmcalibration.cpp:161
+#: src/wconfirmcalibration.cpp:162
 msgid "Hover one of the buttons to select your choice"
 msgstr "ボタンの上にポインターをホバーリングして決定します"
 
-#: src/wconfirmcalibration.cpp:166
+#: src/wconfirmcalibration.cpp:167
 msgid ""
 "- \"Ok\" saves this configuration.\n"
 "- \"Cancel\" retains the old configuration.\n"
@@ -1108,20 +1124,20 @@ msgstr ""
 "- \"キャンセル\" 以前の設定を使用します。\n"
 "- \"繰り返す\" キャリブレーションをもう一度行います。"
 
-#: src/wconfirmcalibration.cpp:172 src/wconfirmcalibration.cpp:290
-#: src/wconfirmcalibration.cpp:297 src/wconfirmcalibration.cpp:304
+#: src/wconfirmcalibration.cpp:173 src/wconfirmcalibration.cpp:291
+#: src/wconfirmcalibration.cpp:298 src/wconfirmcalibration.cpp:305
 #: wxutil/warnbaroverlap.cpp:136
 msgid "Ok"
 msgstr "OK"
 
-#: src/wconfirmcalibration.cpp:175 src/wconfirmcalibration.cpp:191
-#: src/wconfirmcalibration.cpp:291 src/wconfirmcalibration.cpp:298
-#: src/wconfirmcalibration.cpp:305
+#: src/wconfirmcalibration.cpp:176 src/wconfirmcalibration.cpp:192
+#: src/wconfirmcalibration.cpp:292 src/wconfirmcalibration.cpp:299
+#: src/wconfirmcalibration.cpp:306
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/wconfirmcalibration.cpp:178 src/wconfirmcalibration.cpp:292
-#: src/wconfirmcalibration.cpp:299 src/wconfirmcalibration.cpp:306
+#: src/wconfirmcalibration.cpp:179 src/wconfirmcalibration.cpp:293
+#: src/wconfirmcalibration.cpp:300 src/wconfirmcalibration.cpp:307
 msgid "Repeat"
 msgstr "繰り返す"
 
@@ -1221,6 +1237,45 @@ msgstr "更新の必要はありません"
 msgid "Error checking for updates"
 msgstr "更新確認時にエラーが発生しました"
 
+#: src/newtrackerinformationdlg.h:41
+msgid "New Tracker Information"
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:132
+msgid "Improved face tracker"
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:136
+msgid ""
+"This version of Enable Viacam includes an improved face tracking algorithm. "
+"We still provide the old algorithm, but it will most likely be removed in "
+"future versions."
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:140
+msgid "Do you want to use the new face tracker?"
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:147
+#, fuzzy
+msgid "Yes and adjust some settings automatically (recommended)"
+msgstr "自動的に顔の位置を検出する (推奨)"
+
+#: src/newtrackerinformationdlg.cpp:151
+msgid "No, use the legacy tracker"
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:155
+msgid ""
+"You could also change the tracker configuration under:\n"
+"Configuration -> Options... -> Advanced -> Face localization and tracking"
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:161
+#, fuzzy
+msgid "Show this message on startup"
+msgstr "このメッセージを再び表示しない"
+
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
 msgstr "カメラが未検出。終了します"
@@ -1242,6 +1297,10 @@ msgstr ""
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
 msgstr "このメッセージを再び表示しない"
+
+#, fuzzy
+#~ msgid "Disable head tracking"
+#~ msgstr "無効にするまでの時間"
 
 #~ msgid ""
 #~ "This wizard will guide you through the basic configuration of eViacam."
@@ -1268,9 +1327,6 @@ msgstr "このメッセージを再び表示しない"
 #~ msgstr ""
 #~ "マウスモーションの有効/無効を切り替えて、ポインターの速度を確認し、\n"
 #~ "パラメーターを手動で調整できます。"
-
-#~ msgid "Disable motion"
-#~ msgstr "モーションを無効にする"
 
 #~ msgid "How to make the click"
 #~ msgstr "クリック方法"
