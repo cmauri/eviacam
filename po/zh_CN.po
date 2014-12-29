@@ -1,0 +1,1184 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Cesar Mauri Loba - CREA Software Systems
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# vipuser2000 <2606417734@qq.com>, 2013
+# QQ48596 <chsome@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Enable Viacam (eviacam)\n"
+"Report-Msgid-Bugs-To: cesar@crea-si.com\n"
+"POT-Creation-Date: 2014-12-24 16:56+0100\n"
+"PO-Revision-Date: 2014-12-24 16:02+0000\n"
+"Last-Translator: cmauri <cesar@crea-si.com>\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/projects/p/eviacam/language/zh_CN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/wconfiguration.h:129
+msgid "Configuration"
+msgstr "配置"
+
+#: src/wconfiguration.cpp:350
+msgid "Motion calibration"
+msgstr "动作校准"
+
+#: src/wconfiguration.cpp:355 src/wwizard.cpp:1625
+msgid "X axis speed"
+msgstr "X 轴速度"
+
+#: src/wconfiguration.cpp:360
+msgid "Sets response sensitivity for the X axis."
+msgstr "设置 X 轴的响应灵敏度。"
+
+#: src/wconfiguration.cpp:363 src/wwizard.cpp:1634
+msgid "Y axis speed"
+msgstr "Y 轴速度"
+
+#: src/wconfiguration.cpp:368
+msgid "Sets response sensitivity for the Y axis."
+msgstr "设置 Y 轴的响应灵敏度。"
+
+#: src/wconfiguration.cpp:371
+msgid "Acceleration"
+msgstr "加速度"
+
+#: src/wconfiguration.cpp:376
+msgid ""
+"Sets pointer's acceleration.\n"
+"0 means no acceleration and\n"
+"5 maximum acceleration."
+msgstr "设置指针的加速度。\n0意思是没有加速度而\n5是最大加速度。"
+
+#: src/wconfiguration.cpp:379
+msgid "Smoothness"
+msgstr "平滑度"
+
+#: src/wconfiguration.cpp:384
+msgid ""
+"Tremor reduction filter.\n"
+"0 means no filter and \n"
+"8 maximum filtering."
+msgstr "颤抖减小过滤器。\n0意思是不过滤而\n8是最大过滤。"
+
+#: src/wconfiguration.cpp:387
+msgid "Motion threshold"
+msgstr "运动阈值"
+
+#: src/wconfiguration.cpp:392
+msgid ""
+"Minimum displacement (in pixels)\n"
+"to start moving pointer."
+msgstr "最小位移 (像素)\n以开始移动指针。"
+
+#: src/wconfiguration.cpp:404
+msgid "Assisted calibration"
+msgstr "辅助校准"
+
+#: src/wconfiguration.cpp:407
+msgid "Motion"
+msgstr "动作"
+
+#: src/wconfiguration.cpp:413
+msgid "Workspace limit"
+msgstr "工作区限制"
+
+#: src/wconfiguration.cpp:416 src/hotkeymanager.cpp:49
+msgid "Enable workspace limit"
+msgstr "启用工作区限制"
+
+#: src/wconfiguration.cpp:419
+msgid ""
+"Confines the mouse pointer\n"
+"to the selected area."
+msgstr "限定鼠标指针\n到选定区域。"
+
+#: src/wconfiguration.cpp:428
+msgid "Top"
+msgstr "上"
+
+#: src/wconfiguration.cpp:433
+msgid "Top limit workspace."
+msgstr "顶部限制区"
+
+#: src/wconfiguration.cpp:437 src/wconfiguration.cpp:451
+#: src/wconfiguration.cpp:463 src/wconfiguration.cpp:477
+msgid "%"
+msgstr "%"
+
+#: src/wconfiguration.cpp:442 src/clickwindowbitmap.cpp:236
+msgid "Left"
+msgstr "左"
+
+#: src/wconfiguration.cpp:447
+msgid "Left limit workspace."
+msgstr "左边限制区"
+
+#: src/wconfiguration.cpp:454 src/clickwindowbitmap.cpp:250
+msgid "Right"
+msgstr "右"
+
+#: src/wconfiguration.cpp:459
+msgid "Right limit workspace."
+msgstr "右边限制区"
+
+#: src/wconfiguration.cpp:468
+msgid "Bottom"
+msgstr "下"
+
+#: src/wconfiguration.cpp:473
+msgid "Bottom limit workspace."
+msgstr "底部限制区"
+
+#: src/wconfiguration.cpp:480
+msgid "Pointer wrapping"
+msgstr "指针包装"
+
+#: src/wconfiguration.cpp:483
+msgid "Allow wrapping the pointer around the working area"
+msgstr "允许在工作区周围包装指针"
+
+#: src/wconfiguration.cpp:487
+msgid "Workspace"
+msgstr "工作区"
+
+#: src/wconfiguration.cpp:493
+msgid "Dwell click"
+msgstr "替代点击"
+
+#: src/wconfiguration.cpp:496
+msgid "Enable dwell click"
+msgstr "启用替代点击"
+
+#: src/wconfiguration.cpp:499
+msgid ""
+"Enable/Disable automatic (dwell)\n"
+"click generation mechanism."
+msgstr "启用/禁用自动 (替代)\n点击机制。"
+
+#: src/wconfiguration.cpp:506
+msgid "Dwell time (ds)"
+msgstr "悬停时间 (十分之一秒)"
+
+#: src/wconfiguration.cpp:511
+msgid ""
+"Time to wait (deciseconds) \n"
+"before sending a click."
+msgstr "等待的时间 (十分之一秒)\n在发送一个点击前"
+
+#: src/wconfiguration.cpp:514
+msgid "Dwell area"
+msgstr "悬停区域"
+
+#: src/wconfiguration.cpp:519
+msgid ""
+"Maximum allowed displacement\n"
+"before restarting the dwell time\n"
+"countdown."
+msgstr "允许的最大位移\n在重启悬停时间\n倒计时之前。"
+
+#: src/wconfiguration.cpp:524
+msgid "Allow consecutive clicks"
+msgstr "允许连续点击"
+
+#: src/wconfiguration.cpp:527
+msgid ""
+"Allows to send multiple clicks\n"
+"when the pointer is stopped."
+msgstr "允许发送多个点击\n当指针停止时。"
+
+#: src/wconfiguration.cpp:530
+msgid "Beep on click"
+msgstr "点击时出声"
+
+#: src/wconfiguration.cpp:533
+msgid "Play sound when click generated."
+msgstr "点击生成时出声"
+
+#: src/wconfiguration.cpp:537
+msgid "Allow visual alerts"
+msgstr "允许视觉警报"
+
+#: src/wconfiguration.cpp:542
+msgid "Click window"
+msgstr "点击窗口"
+
+#: src/wconfiguration.cpp:545
+msgid "Show Click Window"
+msgstr "显示点击窗口"
+
+#: src/wconfiguration.cpp:551
+msgid "Design:"
+msgstr "设计："
+
+#: src/wconfiguration.cpp:555 src/wconfiguration.cpp:751
+msgid "Normal"
+msgstr "正常"
+
+#: src/wconfiguration.cpp:556
+msgid "Thin"
+msgstr "很少"
+
+#: src/wconfiguration.cpp:560
+msgid "Behaviour:"
+msgstr "行为："
+
+#: src/wconfiguration.cpp:564
+msgid "Normal mode"
+msgstr "正常模式"
+
+#: src/wconfiguration.cpp:565
+msgid "Fast mode"
+msgstr "快速模式"
+
+#: src/wconfiguration.cpp:568
+msgid ""
+"Fast mode enables click type\n"
+"selection by hovering the mouse\n"
+"pointer over the click window\n"
+"buttons."
+msgstr "快速模式启用点击类型\n选择通过悬停鼠标\n指针在点击窗口\n按钮上。"
+
+#: src/wconfiguration.cpp:572
+msgid "Location:"
+msgstr "位置："
+
+#: src/wconfiguration.cpp:578
+msgid "Floating horizontal"
+msgstr "浮动水平"
+
+#: src/wconfiguration.cpp:579
+msgid "Floating vertical"
+msgstr "浮动垂直"
+
+#: src/wconfiguration.cpp:580
+msgid "Top docked"
+msgstr "顶部停靠"
+
+#: src/wconfiguration.cpp:581
+msgid "Bottom docked"
+msgstr "底部停靠"
+
+#: src/wconfiguration.cpp:582
+msgid "Left docked"
+msgstr "左边停靠"
+
+#: src/wconfiguration.cpp:583
+msgid "Right docked"
+msgstr "右边停靠"
+
+#: src/wconfiguration.cpp:589
+msgid "Auto-hide"
+msgstr "自动隐藏"
+
+#: src/wconfiguration.cpp:598 src/wwizard.cpp:897
+msgid "Gesture click"
+msgstr "手势点击"
+
+#: src/wconfiguration.cpp:601
+msgid "Enable gesture click"
+msgstr "启用手势点击"
+
+#: src/wconfiguration.cpp:607
+msgid "Move left:"
+msgstr "左移："
+
+#: src/wconfiguration.cpp:611 src/wconfiguration.cpp:624
+#: src/wconfiguration.cpp:637 src/wconfiguration.cpp:650 src/wviacam.cpp:211
+msgid "Disable"
+msgstr "禁用"
+
+#: src/wconfiguration.cpp:612 src/wconfiguration.cpp:625
+#: src/wconfiguration.cpp:638 src/wconfiguration.cpp:651 src/wwizard.cpp:1067
+msgid "Left click"
+msgstr "左键点击"
+
+#: src/wconfiguration.cpp:613 src/wconfiguration.cpp:626
+#: src/wconfiguration.cpp:639 src/wconfiguration.cpp:652 src/wwizard.cpp:1100
+msgid "Middle click"
+msgstr "中键点击"
+
+#: src/wconfiguration.cpp:614 src/wconfiguration.cpp:627
+#: src/wconfiguration.cpp:640 src/wconfiguration.cpp:653 src/wwizard.cpp:1079
+msgid "Right click"
+msgstr "右键点击"
+
+#: src/wconfiguration.cpp:615 src/wconfiguration.cpp:628
+#: src/wconfiguration.cpp:641 src/wconfiguration.cpp:654 src/wwizard.cpp:1089
+msgid "Double click"
+msgstr "双击"
+
+#: src/wconfiguration.cpp:616 src/wconfiguration.cpp:629
+#: src/wconfiguration.cpp:642 src/wconfiguration.cpp:655
+msgid "Drag click"
+msgstr "拖动"
+
+#: src/wconfiguration.cpp:620
+msgid "Move right:"
+msgstr "右移："
+
+#: src/wconfiguration.cpp:633
+msgid "Move up:"
+msgstr "上移："
+
+#: src/wconfiguration.cpp:646
+msgid "Move down:"
+msgstr "下移："
+
+#: src/wconfiguration.cpp:664
+msgid "Click"
+msgstr "点击"
+
+#: src/wconfiguration.cpp:671 src/wconfiguration.cpp:687
+msgid "Hotkeys"
+msgstr "热键"
+
+#: src/wconfiguration.cpp:694
+msgid "Startup"
+msgstr "启动"
+
+#: src/wconfiguration.cpp:698 src/wwizard.cpp:1243
+msgid "Start eViacam at user logon"
+msgstr "用户登录时启动eViacam"
+
+#: src/wconfiguration.cpp:703 src/wwizard.cpp:1249
+msgid "Enable eViacam at startup"
+msgstr "开机时运行eViacam"
+
+#: src/wconfiguration.cpp:706 src/wwizard.cpp:1252
+msgid ""
+"If checked the program automatically \n"
+"enables cursor control at startup."
+msgstr "如果勾选程序自动\n开启指针控制在启动时。"
+
+#: src/wconfiguration.cpp:709
+msgid "On-screen keyboard command"
+msgstr "屏幕键盘命令"
+
+#: src/wconfiguration.cpp:716
+msgid "Command to run an external on-screen keyboard application."
+msgstr "运行一个外部屏幕键盘程序的命令。"
+
+#: src/wconfiguration.cpp:719
+msgid "Browse..."
+msgstr "浏览..."
+
+#: src/wconfiguration.cpp:724
+msgid "Face localization and tracking"
+msgstr ""
+
+#: src/wconfiguration.cpp:729
+msgid "Use legacy face tracking algorithm"
+msgstr ""
+
+#: src/wconfiguration.cpp:732
+msgid ""
+"Use old face tracking method\n"
+"(not recommended)."
+msgstr ""
+
+#: src/wconfiguration.cpp:737
+msgid "Locate face automatically"
+msgstr "自动定位面部"
+
+#: src/wconfiguration.cpp:740
+msgid ""
+"When enabled tries to automatically\n"
+"detect your face and center the\n"
+"tracking area."
+msgstr "启用时尝试自动\n检测你的面部并居中\n跟踪区域。"
+
+#: src/wconfiguration.cpp:745
+msgid "CPU usage"
+msgstr "CPU使用"
+
+#: src/wconfiguration.cpp:749
+msgid "Lowest"
+msgstr "最低"
+
+#: src/wconfiguration.cpp:750
+msgid "Low"
+msgstr "低"
+
+#: src/wconfiguration.cpp:752
+msgid "High"
+msgstr "高"
+
+#: src/wconfiguration.cpp:753
+msgid "Highest"
+msgstr "最高"
+
+#: src/wconfiguration.cpp:757
+msgid "Stop pointer when face not detected"
+msgstr ""
+
+#: src/wconfiguration.cpp:760
+msgid "eViacam is only enabled when face is detected."
+msgstr "检测到面部时eViacam才启用。"
+
+#: src/wconfiguration.cpp:766
+msgid "After"
+msgstr "之后"
+
+#: src/wconfiguration.cpp:772
+msgid "seconds"
+msgstr "秒"
+
+#: src/wconfiguration.cpp:782
+msgid "Mouse actions"
+msgstr "鼠标动作"
+
+#: src/wconfiguration.cpp:789
+msgid "Increase this value if some application ignores click events."
+msgstr "增加这个值如果一些程序忽略点击事件。"
+
+#: src/wconfiguration.cpp:792
+msgid "ms delay between up and down events"
+msgstr "前后事件之间的毫秒延迟"
+
+#: src/wconfiguration.cpp:795
+msgid "Advanced"
+msgstr "高级的"
+
+#: src/wconfiguration.cpp:797
+msgid "Profile options"
+msgstr "配置文件选项"
+
+#: src/wconfiguration.cpp:803
+msgid "Profile management"
+msgstr "配置文件管理"
+
+#: src/wconfiguration.cpp:808
+msgid "Select profile:"
+msgstr "选择配置文件："
+
+#: src/wconfiguration.cpp:810 src/wconfiguration.cpp:816
+msgid "Chooses desired active profile"
+msgstr "选择所需的活动配置文件"
+
+#: src/wconfiguration.cpp:819 src/wconfiguration.cpp:1559
+msgid "Add profile"
+msgstr "添加配置文件"
+
+#: src/wconfiguration.cpp:822
+msgid "Delete profile"
+msgstr "删除配置文件"
+
+#: src/wconfiguration.cpp:827
+msgid "Camera"
+msgstr "摄像头"
+
+#: src/wconfiguration.cpp:836
+msgid "Settings..."
+msgstr "设置..."
+
+#: src/wconfiguration.cpp:839
+msgid "Change"
+msgstr "修改"
+
+#: src/wconfiguration.cpp:844
+msgid "Language"
+msgstr "语言"
+
+#: src/wconfiguration.cpp:849
+msgid "Language:"
+msgstr "语言："
+
+#: src/wconfiguration.cpp:856
+msgid "General options"
+msgstr "一般选项"
+
+#: src/wconfiguration.cpp:863 src/newtrackerinformationdlg.cpp:174
+msgid "&OK"
+msgstr "&确定"
+
+#: src/wconfiguration.cpp:866
+msgid "&Cancel"
+msgstr "&取消"
+
+#: src/wconfiguration.cpp:875 src/wconfiguration.cpp:876
+#: src/wconfiguration.cpp:877 src/wconfiguration.cpp:878
+msgid "Key:"
+msgstr "键："
+
+#: src/wconfiguration.cpp:907
+msgid "Set key"
+msgstr "设置键"
+
+#: src/wconfiguration.cpp:1483 src/wconfiguration.cpp:1670
+msgid "You should restart the application to apply this change"
+msgstr "你应该重启程序以应用此更改"
+
+#: src/wconfiguration.cpp:1504
+msgid ""
+"Current profile has unsaved changes.\n"
+"Continue anyway?"
+msgstr "当前配置文件有未保存的修改。\n仍然继续？"
+
+#: src/wconfiguration.cpp:1510
+#, c-format
+msgid ""
+"This action will load %s profile settings.\n"
+"Are you sure you want to continue?"
+msgstr "此操作将加载%s配置文件设置。\n你确定想继续吗？"
+
+#: src/wconfiguration.cpp:1541
+#, c-format
+msgid ""
+"This action will delete %s profile.\n"
+"Are you sure you want to continue?"
+msgstr "此操作将删除%s配置文件。\n你确定想继续吗？"
+
+#: src/wconfiguration.cpp:1559
+msgid "Enter new profile name"
+msgstr "输入新的配置文件名"
+
+#: src/wconfiguration.cpp:1570
+msgid "Profile already exists."
+msgstr "配置文件已存在。"
+
+#: src/wconfiguration.cpp:1576
+msgid "Invalid profile name."
+msgstr "无效的配置文件名。"
+
+#: src/wconfiguration.cpp:1622 src/wconfiguration.cpp:1625
+msgid "Choose on-screen keyboard command"
+msgstr "选择屏幕键盘命令"
+
+#: src/wconfiguration.cpp:1623
+msgid "Executable files|*.exe"
+msgstr "可执行文件|*.exe"
+
+#: src/wconfiguration.cpp:1738
+msgid ""
+"This action could make you lose the control of the computer.\n"
+"Do you want to continue?"
+msgstr "此操作使你失去对电脑的控制。\n你想继续吗？"
+
+#: src/wconfiguration.cpp:1738 src/wconfiguration.cpp:1873
+#: src/wconfiguration.cpp:1999 src/viacamcontroller.cpp:365
+#: src/cmotioncalibration.cpp:186
+msgid "eViacam warning"
+msgstr "eViacam警告"
+
+#: src/wconfiguration.cpp:1873
+msgid "Discard changes?"
+msgstr "放弃更改？"
+
+#: src/wconfiguration.cpp:1999
+msgid ""
+"This key is used by another command.\n"
+"Do you want to try another key?"
+msgstr "键被其他命令使用。\n你想试试其他键吗？"
+
+#: src/clickwindowtext.cpp:141 src/clickwindowbitmap.cpp:227
+msgid "No click"
+msgstr "没有点击"
+
+#: src/clickwindowtext.cpp:148
+msgid "#Left#"
+msgstr "#左键#"
+
+#: src/clickwindowtext.cpp:152
+msgid "#Middle#"
+msgstr "#中键#"
+
+#: src/clickwindowtext.cpp:156
+msgid "#Right#"
+msgstr "#右键#"
+
+#: src/clickwindowtext.cpp:160
+msgid "#Drag#"
+msgstr "#拖放#"
+
+#: src/clickwindowtext.cpp:164
+msgid "#Double Click#"
+msgstr "#双击#"
+
+#: src/clickwindowtext.cpp:168 src/clickwindowtext.cpp:344
+#: src/clickwindowbitmap.cpp:271 src/clickwindowbitmap.cpp:502
+msgid "Hide main window"
+msgstr "隐藏主窗口"
+
+#: src/clickwindowtext.cpp:346 src/clickwindowbitmap.cpp:507
+msgid "Show main window"
+msgstr "显示主窗口"
+
+#: src/clickwindowbitmap.cpp:243
+msgid "Middle"
+msgstr "中键"
+
+#: src/clickwindowbitmap.cpp:257 src/wwizard.cpp:1047
+msgid "Drag"
+msgstr "拖放"
+
+#: src/clickwindowbitmap.cpp:264
+msgid "Double Click"
+msgstr "双击"
+
+#: src/wabout.h:51
+msgid "About Enable Viacam"
+msgstr "关于Enable Viacam"
+
+#: src/viacamcontroller.cpp:143
+msgid "Not detected any camera. Aborting"
+msgstr "未检测到任何摄像头。退出中"
+
+#: src/viacamcontroller.cpp:164
+msgid "Choose the camera to use"
+msgstr "选择要使用的摄像头"
+
+#: src/viacamcontroller.cpp:184
+msgid ""
+"Can not initialize the camera.\n"
+"Perhaps is being used by other application."
+msgstr "不能初始化摄像头。\n可能正被其他程序使用。"
+
+#: src/viacamcontroller.cpp:365
+msgid ""
+"This action will disable eViacam.\n"
+"Are you sure?"
+msgstr "此操作将禁用eViacam。\n你确定吗？"
+
+#: src/viacamcontroller.cpp:394
+msgid ""
+"On-screen keyboard command not set.\n"
+"Please, configure it through options dialog."
+msgstr "屏幕键盘命令没设置。\n请通过选项对话框配置它。"
+
+#: src/viacamcontroller.cpp:394 src/viacamcontroller.cpp:408
+#: wxcamwindow/capturethread.cpp:69
+msgid "eViacam error"
+msgstr "eViacam错误"
+
+#: src/viacamcontroller.cpp:404
+#, c-format
+msgid ""
+"Can't execute on-screen keyboard program.\n"
+"Command %s failed.\n"
+"Please, configure it through options dialog."
+msgstr "不能运行屏幕键盘程序。\n命令%s失败。\n请通过选项对话框配置它。"
+
+#: src/viacamcontroller.cpp:406
+msgid ""
+"\n"
+"\n"
+"On Windows Vista/7 several problems have been reported\n"
+"with the system's default on-screen keyboard (osk). These\n"
+"issues are under investigation. Meanwhile you might want\n"
+"to disable User Account Control (UAC) to avoid such problems\n"
+"or try another osk, e.g. Click-N-Type."
+msgstr "\n\n在Windows Vista/7上几个问题已被报告\n由于系统默认的屏幕键盘 (osk)。这些\n问题正在调查。同时你可能想\n关闭用户帐户控制 (UAC) 避免这些问题\n或者试试另一个osk，例如Click-N-Type。"
+
+#: src/viacamcontroller.cpp:480
+msgid ""
+"Note that adjusting the camera controls while eViacam\n"
+"is enabled may cause loss of pointer control.\n"
+"Are you sure you want to continue?"
+msgstr "注意调整摄像头控制在eViacam\n启用时可能导致失去指针控制。\n你确定要继续吗？"
+
+#: src/wabout.cpp:147 src/wcameradialog.cpp:164
+msgid "Close"
+msgstr "关闭"
+
+#: src/wabout.cpp:159
+msgid "A webcam based mouse emulator"
+msgstr "一个基于摄像头的鼠标模拟器"
+
+#: src/wabout.cpp:165
+msgid ""
+"If you find this software useful then please consider \t\t<a "
+"href='donation'>making a small donation</a> to show your appreciation "
+"\t\tand help support the continued development. Thanks!\t"
+msgstr "如果你感觉本软件有用那么请考虑⇥⇥<a href='donation'>捐助一点儿</a>来表达你的欣赏⇥⇥并且帮助支持继续开发。谢谢！⇥"
+
+#: src/wabout.cpp:170
+msgid "Visit website"
+msgstr "访问网站"
+
+#: src/wabout.cpp:175
+msgid "Thanks"
+msgstr "感谢"
+
+#: src/wabout.cpp:202
+msgid "License"
+msgstr "许可"
+
+#: src/wabout.cpp:206
+msgid "Released under the GNU/GPL v3 license. See COPYING file for details."
+msgstr "发行在GNU/GPL v3许可下，详情查看COPYING文件。"
+
+#: src/wviacam.cpp:187
+msgid "E&nable / Disable"
+msgstr "&启用/禁用"
+
+#: src/wviacam.cpp:189
+msgid "&Exit"
+msgstr "&退出"
+
+#: src/wviacam.cpp:190
+msgid "&File"
+msgstr "&文件"
+
+#: src/wviacam.cpp:192
+msgid "&Wizard..."
+msgstr "&向导..."
+
+#: src/wviacam.cpp:194
+msgid "&Options..."
+msgstr "&选项"
+
+#: src/wviacam.cpp:195
+msgid "&Configuration"
+msgstr "&配置"
+
+#: src/wviacam.cpp:197
+msgid "&Help contents"
+msgstr "&帮助内容"
+
+#: src/wviacam.cpp:198
+msgid "Check for &updates"
+msgstr "&检查更新"
+
+#: src/wviacam.cpp:200
+msgid "&About..."
+msgstr "&关于..."
+
+#: src/wviacam.cpp:201
+msgid "&Help"
+msgstr "&帮助"
+
+#: src/wviacam.cpp:208
+msgid "Enable"
+msgstr "启用"
+
+#: src/wviacam.cpp:215 src/clickwindow.h:31
+msgid "Click Window"
+msgstr "点击窗口"
+
+#: src/wviacam.cpp:218
+msgid "On-screen keyboard"
+msgstr "屏幕键盘"
+
+#: src/wviacam.cpp:222
+msgid "Options"
+msgstr "选项"
+
+#: src/wviacam.cpp:226
+msgid "Help"
+msgstr "帮助"
+
+#: src/wviacam.cpp:232
+msgid ""
+"Frame rate meter. For proper function\n"
+"should be greater than 25 fps. Reduce\n"
+"the exposure time of your camera when\n"
+"necessary."
+msgstr "帧率计。为了更好使用\n应该大于25fps。降低\n你的摄像头的曝光时间\n当需要时候。"
+
+#: src/wviacam.cpp:329
+#, c-format
+msgid " %li fps (good)"
+msgstr "%li fps (好)"
+
+#: src/wviacam.cpp:332
+#, c-format
+msgid " %li fps (could be improved)"
+msgstr "%li fps (可改进)"
+
+#: src/wviacam.cpp:335
+#, c-format
+msgid " %li fps (too low)"
+msgstr "%li fps (太慢)"
+
+#: src/wviacam.cpp:380
+msgid ""
+"This action will close the program.\n"
+"Are you sure?"
+msgstr "此操作将关闭程序。\n你确定吗？"
+
+#: src/langnames-utf8.h:32
+msgid "System default"
+msgstr "系统默认"
+
+#: src/pointeraction.cpp:271
+msgid ""
+"This action will disable eViacam click generation.\n"
+"Are you sure?"
+msgstr "此操作将关闭eViacam点击生成。你确定吗？"
+
+#: src/pointeraction.cpp:275
+msgid ""
+"This action will change the click generation method.\n"
+"Are you sure?"
+msgstr "此操作将改变点击生成方法。你确定吗？"
+
+#: src/wgetkey.cpp:139
+msgid "Press the desired key or 'Esc' to cancel this action."
+msgstr "按所需键或'Esc'取消此操作。"
+
+#: src/wgetkey.h:52
+msgid "Get key"
+msgstr "获得键"
+
+#: src/wmotioncalibrationx.cpp:148
+msgid "Move your head left and right."
+msgstr "左右移动你的头部。"
+
+#: src/wmotioncalibrationx.cpp:151 src/wmotioncalibrationy.cpp:146
+msgid "Your face is not detected. This may produce wrong calibration results."
+msgstr "你的脸未检测到。这将产生错误的校准结果。"
+
+#: src/cmotioncalibration.cpp:185
+msgid ""
+"No movement was detected.\n"
+"Do you want to repeat the calibration?"
+msgstr "没有移动被检测到。\n你想重新校准吗？"
+
+#: src/wwizard.cpp:103
+msgid "Enable Viacam configuration wizard"
+msgstr "Enable Viacam配置向导"
+
+#: src/wwizard.cpp:261
+msgid "Disable pointer control"
+msgstr ""
+
+#: src/wwizard.cpp:265 src/wwizard.cpp:1644
+msgid "Enable pointer control"
+msgstr ""
+
+#: src/wwizard.cpp:374
+msgid "Welcome to the eViacam configuration wizard"
+msgstr "欢迎来到eViacam配置向导"
+
+#: src/wwizard.cpp:387
+msgid "Click Next to continue."
+msgstr "点击下一步继续"
+
+#: src/wwizard.cpp:531 src/wwizard.cpp:1609
+msgid "Pointer calibration"
+msgstr "指针校准"
+
+#: src/wwizard.cpp:541
+msgid ""
+"The assisted calibration procedure will ask you to move your head in order to automatically configure the appropiate motion parameters.\n"
+"\n"
+"After this calibration stage, you can manually adjust the motion parameters.\n"
+"\n"
+"NOTE: the calibration assistant will enable the pointer control so that you can test your configuration."
+msgstr "辅助的校准程序将让你移动头部以自动配置合适的移动参数。\n\n校准完成后，你可以手动调整移动参数。\n\n注意：校准助手将启用指针控制所以你可以测试你的配置。"
+
+#: src/wwizard.cpp:549
+msgid "Perform assisted calibration"
+msgstr "执行辅助校准"
+
+#: src/wwizard.cpp:552
+msgid ""
+"If checked the next window will allow\n"
+"you to calibrate the speed of the pointer."
+msgstr "如果勾选下一个窗口将允许你校准指针的速度。"
+
+#: src/wwizard.cpp:695
+msgid "Pointer calibration "
+msgstr "指针校准"
+
+#: src/wwizard.cpp:872
+msgid "Click mode"
+msgstr "点击模式"
+
+#: src/wwizard.cpp:882
+msgid "Click here to test"
+msgstr "点这儿测试"
+
+#: src/wwizard.cpp:888
+msgid "Dwell Click (default)"
+msgstr "替代点击 (默认)"
+
+#: src/wwizard.cpp:892
+msgid ""
+"The click is generated automatically when you hover the mouse pointer "
+"momentarily. The Click the Window lets you choose between different actions."
+msgstr "当你悬停鼠标指针时点击自动生成。点击窗口让你在不同的动作中选择。"
+
+#: src/wwizard.cpp:904
+msgid ""
+"The click is automatically generated by stopping the pointer for a moment "
+"and then moving the pointer to one of the 4 directions to choose the action."
+msgstr "停止指针一段时间后点击自动生成，然后移动指针到4个方向的其中一个来选择动作。"
+
+#: src/wwizard.cpp:910
+msgid "No click. Click function disabled."
+msgstr "没有点击。点击功能关闭。"
+
+#: src/wwizard.cpp:916
+msgid "Enable head tracking"
+msgstr "启用头部跟踪"
+
+#: src/wwizard.cpp:1065
+msgid "Drop"
+msgstr "放下"
+
+#: src/wwizard.cpp:1226
+msgid "Wizard completed"
+msgstr "向导完成"
+
+#: src/wwizard.cpp:1236
+msgid "Run this wizard at startup"
+msgstr "启动时运行此向导"
+
+#: src/wwizard.cpp:1239
+msgid "If checked the wizard automatically appears at startup."
+msgstr "如果勾选向导就会在启动时自动出现。"
+
+#: src/wwizard.cpp:1257
+msgid "You may change the settings through Configuration -> Options"
+msgstr "你可以修改设置通过配置 -> 选项"
+
+#: src/wwizard.cpp:1429
+msgid "Camera setup"
+msgstr "摄像头设置"
+
+#: src/wwizard.cpp:1445
+msgid "Detected camera:"
+msgstr "检测到的摄像头"
+
+#: src/wwizard.cpp:1448
+msgid "camera_name"
+msgstr "摄像头_名称"
+
+#: src/wwizard.cpp:1452
+msgid "Framerate:"
+msgstr "帧率："
+
+#: src/wwizard.cpp:1455
+msgid "framerate"
+msgstr "帧率"
+
+#: src/wwizard.cpp:1461
+msgid ""
+"For best performance possible, the frame rate should be equal to or greater "
+"than 25 fps. eViacam tries to automatically configure your camera, but If "
+"this value is below this threshold you may need to manually adjust the "
+"camera settings."
+msgstr "为了更好的性能实现，帧率应该等于或大于25fps。eViacam尝试自动配置你的摄像头，但如果值低于这个门槛你可能需要手动调整摄像头的设置。"
+
+#: src/wwizard.cpp:1467
+msgid "Camera settings..."
+msgstr "摄像头设置..."
+
+#: src/wwizard.cpp:1619
+msgid ""
+"You can adjust motion speed manually and enable head tracking to test how it"
+" works."
+msgstr "你可以手动调整移动速度并启用头部跟踪来测试它如何工作。"
+
+#: src/wwizard.cpp:1808
+msgid "The frame rate is appropriate."
+msgstr "帧率合适。"
+
+#: src/wwizard.cpp:1906
+msgid "Face detection setup"
+msgstr "面部检测设置"
+
+#: src/wwizard.cpp:1919
+msgid ""
+"eViacam will try to detect your face automatically. But, if necessary, you "
+"can disable this feature and manually adjust the tracking area (blue "
+"rectangle) around your face.\n"
+msgstr "eViacam将尝试自动检测你的面部。但是，如果需要，你可以禁用此功能并手动调整你面部周围的跟踪区域 (蓝色矩形)。\n"
+
+#: src/wwizard.cpp:1925
+msgid "Locate face automatically (recommended)"
+msgstr "自动定位面部 (推荐)"
+
+#: src/wwizard.cpp:1931
+msgid "Disable eViacam if no face is found"
+msgstr "如果没找到面部就关闭eViacam"
+
+#: src/wconfirmcalibration.cpp:159
+msgid "Move your head to see how it works"
+msgstr "移动你的头部来看看它如何工作"
+
+#: src/wconfirmcalibration.cpp:162
+msgid "Hover one of the buttons to select your choice"
+msgstr "悬停在其中一个按钮上选择你的选择"
+
+#: src/wconfirmcalibration.cpp:167
+msgid ""
+"- \"Ok\" saves this configuration.\n"
+"- \"Cancel\" retains the old configuration.\n"
+"- \"Repeat\" starts again the calibration process."
+msgstr "- \"确认\" 保存这个配置。\n- \"取消\" 保持原有配置。\n- \"重做\" 重新进行校准。"
+
+#: src/wconfirmcalibration.cpp:173 src/wconfirmcalibration.cpp:291
+#: src/wconfirmcalibration.cpp:298 src/wconfirmcalibration.cpp:305
+#: wxutil/warnbaroverlap.cpp:136
+msgid "Ok"
+msgstr "确定"
+
+#: src/wconfirmcalibration.cpp:176 src/wconfirmcalibration.cpp:192
+#: src/wconfirmcalibration.cpp:292 src/wconfirmcalibration.cpp:299
+#: src/wconfirmcalibration.cpp:306
+msgid "Cancel"
+msgstr "取消"
+
+#: src/wconfirmcalibration.cpp:179 src/wconfirmcalibration.cpp:293
+#: src/wconfirmcalibration.cpp:300 src/wconfirmcalibration.cpp:307
+msgid "Repeat"
+msgstr "重做"
+
+#: src/wmotioncalibrationy.cpp:143
+msgid "Move your head up and down."
+msgstr "上下移动你的头部。"
+
+#: src/wconfirmcalibration.h:51
+msgid "Confirm Calibration"
+msgstr "确认校准"
+
+#: src/wmotioncalibrationx.h:50
+msgid "Motion Calibration X"
+msgstr "移动校准X"
+
+#: src/wmotioncalibrationy.h:50
+msgid "Motion Calibration Y"
+msgstr "移动校准Y"
+
+#: src/wcameradialog.h:59
+msgid "Camera settings"
+msgstr "摄像头设置"
+
+#: src/hotkeymanager.cpp:33
+msgid "Enable eViacam"
+msgstr "Enable Viacam"
+
+#: src/hotkeymanager.cpp:65
+msgid "Center the pointer"
+msgstr "居中指针"
+
+#: src/hotkeymanager.cpp:81
+msgid "Increase the X axis speed"
+msgstr "增加X轴速度"
+
+#: src/hotkeymanager.cpp:97
+msgid "Increase the Y axis speed"
+msgstr "增加Y轴速度"
+
+#: src/hotkeymanager.cpp:113
+msgid "Decrease the X axis speed"
+msgstr "减少X轴速度"
+
+#: src/hotkeymanager.cpp:129
+msgid "Decrease the Y axis speed"
+msgstr "减少Y轴速度"
+
+#: src/checkupdates.cpp:170
+msgid "Error checking for updates. Try again later."
+msgstr "检查更新出错，稍后再试。"
+
+#: src/checkupdates.cpp:192
+msgid "Cannot resolve host name: "
+msgstr "不能解析主机名："
+
+#: src/checkupdates.cpp:197
+msgid "Conection failed: "
+msgstr "连接失败："
+
+#: src/checkupdates.cpp:202
+msgid "Sorry. Version file not found. Please report us."
+msgstr "对不起，版本文件未找到，请报告我们。"
+
+#: src/checkupdates.cpp:206
+msgid "Sorry. Something bad happened."
+msgstr "对不起，不幸的事情发生了。"
+
+#: src/checkupdates_ui.h:57
+msgid "Check for updates"
+msgstr "检查更新"
+
+#: src/checkupdates_ui.cpp:158
+msgid "Checking for updates. Please wait."
+msgstr "正在检查更新，请稍等。"
+
+#: src/checkupdates_ui.cpp:166
+msgid "Visit Enable Viacam website"
+msgstr "访问Enable Viacam网站"
+
+#: src/checkupdates_ui.cpp:173
+msgid "&Close"
+msgstr "&关闭"
+
+#: src/checkupdates_ui.cpp:247
+msgid "New version available: "
+msgstr "新版可用："
+
+#: src/checkupdates_ui.cpp:249
+msgid "Installed version: "
+msgstr "已安装版本："
+
+#: src/checkupdates_ui.cpp:254
+msgid "No updates available"
+msgstr "没有更新可用"
+
+#: src/checkupdates_ui.cpp:257
+msgid "Error checking for updates"
+msgstr "检查更新出错"
+
+#: src/newtrackerinformationdlg.h:41
+msgid "New Tracker Information"
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:132
+msgid "Improved face tracker"
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:136
+msgid ""
+"This version of Enable Viacam includes an improved face tracking algorithm. "
+"We still provide the old algorithm, but it will most likely be removed in "
+"future versions."
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:140
+msgid "Do you want to use the new face tracker?"
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:147
+msgid "Yes and adjust some settings automatically (recommended)"
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:151
+msgid "No, use the legacy tracker"
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:155
+msgid ""
+"You could also change the tracker configuration under:\n"
+"Configuration -> Options... -> Advanced -> Face localization and tracking"
+msgstr ""
+
+#: src/newtrackerinformationdlg.cpp:161
+msgid "Show this message on startup"
+msgstr ""
+
+#: wxcamwindow/capturethread.cpp:69
+msgid "Camera not detected. Aborting"
+msgstr "摄像头未检测到。退出中"
+
+#: wxutil/warnbaroverlap.h:43
+msgid "Overlapping warning"
+msgstr "重复警告"
+
+#: wxutil/warnbaroverlap.cpp:127
+msgid ""
+"The chosen Click window position is taken up by another bar.\n"
+"This can prevent it from working properly when auto-hide mode is enabled.\n"
+"It is recommended to move the Click window to a free position."
+msgstr "选择的点击窗口位置被其他工具栏占用。\n这将阻止它正常工作当自动隐藏模式启用时。\n推荐移动点击窗口到一个空闲位置。"
+
+#: wxutil/warnbaroverlap.cpp:132
+msgid "Do not show this message again"
+msgstr "不要再显示此消息"

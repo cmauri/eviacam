@@ -35,6 +35,7 @@ static const struct lang_t g_languages[] = {
 	{ wxString::FromUTF8("Asturianu"),	wxLANGUAGE_ASTURIAN },
 #endif
 	{ wxString::FromUTF8("Català"),	wxLANGUAGE_CATALAN },
+	{ wxString::FromUTF8("简体中文"), wxLANGUAGE_CHINESE_SIMPLIFIED },
 	{ wxString::FromUTF8("正體中文"), wxLANGUAGE_CHINESE_TAIWAN },
 	{ wxString::FromUTF8("Deutsch"), wxLANGUAGE_GERMAN },
 	{ wxString::FromUTF8("Ελληνικά"), wxLANGUAGE_GREEK },
