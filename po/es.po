@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: eviacam 1.7.2\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2014-12-24 16:56+0100\n"
-"PO-Revision-Date: 2014-05-02 20:12+0200\n"
+"PO-Revision-Date: 2014-12-29 18:51+0200\n"
 "Last-Translator: Cesar Mauri <cesar@crea-si.com>\n"
-"Language-Team: cmauri\n"
+"Language-Team: Català\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.0\n"
+"X-Generator: Virtaal 0.7.1\n"
 
 #: src/wconfiguration.h:129
 msgid "Configuration"
@@ -58,7 +58,7 @@ msgid ""
 msgstr ""
 "Configura la aceleración del puntero.\n"
 "0 desactiva la aceleración\n"
-"5 configura la aceleración máxima."
+"5 aceleración máxima."
 
 #: src/wconfiguration.cpp:379
 msgid "Smoothness"
@@ -70,9 +70,9 @@ msgid ""
 "0 means no filter and \n"
 "8 maximum filtering."
 msgstr ""
-"Filtro para reducir temblores\n"
+"Filtro reductor de temblores\n"
 "0 desactiva el filtro y\n"
-"8 configura el filtrado máximo."
+"8 filtrado máximo."
 
 #: src/wconfiguration.cpp:387
 msgid "Motion threshold"
@@ -108,7 +108,7 @@ msgid ""
 "to the selected area."
 msgstr ""
 "Confina el puntero del ratón\n"
-"dentro del área seleccionada."
+"dentro de la área seleccionada."
 
 #: src/wconfiguration.cpp:428
 msgid "Top"
@@ -400,19 +400,20 @@ msgid "Browse..."
 msgstr "Buscar..."
 
 #: src/wconfiguration.cpp:724
-#, fuzzy
 msgid "Face localization and tracking"
-msgstr "Localización facial"
+msgstr "Localización facial y seguimiento"
 
 #: src/wconfiguration.cpp:729
 msgid "Use legacy face tracking algorithm"
-msgstr ""
+msgstr "Usar algoritmo antiguo de seguimiento facial"
 
 #: src/wconfiguration.cpp:732
 msgid ""
 "Use old face tracking method\n"
 "(not recommended)."
 msgstr ""
+"Usar antiguo método de seguimiento facial\n"
+"(no recomendado)."
 
 #: src/wconfiguration.cpp:737
 msgid "Locate face automatically"
@@ -449,9 +450,8 @@ msgid "Highest"
 msgstr "Muy alto"
 
 #: src/wconfiguration.cpp:757
-#, fuzzy
 msgid "Stop pointer when face not detected"
-msgstr "Detener el puntero cuando no se detecte el rostro"
+msgstr "Detener el puntero cuando no se detecte rostro"
 
 #: src/wconfiguration.cpp:760
 msgid "eViacam is only enabled when face is detected."
@@ -931,13 +931,12 @@ msgid "Enable Viacam configuration wizard"
 msgstr "Asistente de configuración de Enable Viacam"
 
 #: src/wwizard.cpp:261
-#, fuzzy
 msgid "Disable pointer control"
-msgstr "Desactivar movimiento"
+msgstr "Desactivar control del puntero"
 
 #: src/wwizard.cpp:265 src/wwizard.cpp:1644
 msgid "Enable pointer control"
-msgstr ""
+msgstr "Activar control del puntero"
 
 #: src/wwizard.cpp:374
 msgid "Welcome to the eViacam configuration wizard"
@@ -1248,13 +1247,12 @@ msgid "Error checking for updates"
 msgstr "Error comprobando actualizaciones"
 
 #: src/newtrackerinformationdlg.h:41
-#, fuzzy
 msgid "New Tracker Information"
-msgstr "Información"
+msgstr "Información Nuevo Seguimiento Facial"
 
 #: src/newtrackerinformationdlg.cpp:132
 msgid "Improved face tracker"
-msgstr ""
+msgstr "Seguimiento facial mejorado"
 
 #: src/newtrackerinformationdlg.cpp:136
 msgid ""
@@ -1262,38 +1260,41 @@ msgid ""
 "We still provide the old algorithm, but it will most likely be removed in "
 "future versions."
 msgstr ""
+"Esta versión de Enable Viacam incluye un algoritmo mejorado de seguimiento "
+"facial. Se continua proporcionando el antiguo algoritmo, pero probablemente "
+"se eliminará en versiones futuras."
 
 #: src/newtrackerinformationdlg.cpp:140
 msgid "Do you want to use the new face tracker?"
-msgstr ""
+msgstr "¿Usar el nuevo sistema de seguimiento facial?"
 
 #: src/newtrackerinformationdlg.cpp:147
-#, fuzzy
 msgid "Yes and adjust some settings automatically (recommended)"
-msgstr "Localizar rostro automáticamente (recomendado)"
+msgstr "Sí y optimizar automáticamente algunos ajustes (recomendado)"
 
 #: src/newtrackerinformationdlg.cpp:151
 msgid "No, use the legacy tracker"
-msgstr ""
+msgstr "No, usar al seguimiento facial antiguo"
 
 #: src/newtrackerinformationdlg.cpp:155
 msgid ""
 "You could also change the tracker configuration under:\n"
 "Configuration -> Options... -> Advanced -> Face localization and tracking"
 msgstr ""
+"Puede modificar la configuración del seguimiento bajo:\n"
+"Configuración -> Opciones… -> Avanzado -> Localización y seguimiento facial"
 
 #: src/newtrackerinformationdlg.cpp:161
-#, fuzzy
 msgid "Show this message on startup"
-msgstr "No volver a mostrar este mensaje"
+msgstr "Mostrar este mensaje al iniciar"
 
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
-msgstr "Cámara no detectada. Abortando."
+msgstr "Cámara no detectada. Abortando"
 
 #: wxutil/warnbaroverlap.h:43
 msgid "Overlapping warning"
-msgstr "Aviso"
+msgstr "Aviso solapamiento"
 
 #: wxutil/warnbaroverlap.cpp:127
 msgid ""

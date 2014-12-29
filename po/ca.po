@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: eviacam 1.7.2\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2014-12-24 16:56+0100\n"
-"PO-Revision-Date: 2014-05-02 20:05+0100\n"
+"PO-Revision-Date: 2014-12-29 18:33+0200\n"
 "Last-Translator: Cesar Mauri <cesar@crea-si.com>\n"
-"Language-Team: cmauri\n"
+"Language-Team: Català\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.0\n"
+"X-Generator: Virtaal 0.7.1\n"
 
 #: src/wconfiguration.h:129
 msgid "Configuration"
@@ -238,7 +238,7 @@ msgstr "Mostrar la Finestra del Clic"
 
 #: src/wconfiguration.cpp:551
 msgid "Design:"
-msgstr "Diseny"
+msgstr "Disseny"
 
 #: src/wconfiguration.cpp:555 src/wconfiguration.cpp:751
 msgid "Normal"
@@ -398,19 +398,20 @@ msgid "Browse..."
 msgstr "Cercar..."
 
 #: src/wconfiguration.cpp:724
-#, fuzzy
 msgid "Face localization and tracking"
-msgstr "Localització facial"
+msgstr "Localització facial i seguiment"
 
 #: src/wconfiguration.cpp:729
 msgid "Use legacy face tracking algorithm"
-msgstr ""
+msgstr "Emprar algorisme antic de seguiment facial"
 
 #: src/wconfiguration.cpp:732
 msgid ""
 "Use old face tracking method\n"
 "(not recommended)."
 msgstr ""
+"Usar l'antic mètode de seguiment facial\n"
+"(no recomanat)."
 
 #: src/wconfiguration.cpp:737
 msgid "Locate face automatically"
@@ -447,13 +448,12 @@ msgid "Highest"
 msgstr "Molt alt"
 
 #: src/wconfiguration.cpp:757
-#, fuzzy
 msgid "Stop pointer when face not detected"
-msgstr "Aturar el punter quan no es detecta el rostre"
+msgstr "Atura el punter quan no es detecta el rostre"
 
 #: src/wconfiguration.cpp:760
 msgid "eViacam is only enabled when face is detected."
-msgstr "eViacam només s'activa quan es detecta la cara."
+msgstr "eViacam només s'activa quan es detecta el rostre."
 
 #: src/wconfiguration.cpp:766
 msgid "After"
@@ -878,7 +878,7 @@ msgstr ""
 
 #: src/langnames-utf8.h:32
 msgid "System default"
-msgstr "Llengua del sistema"
+msgstr "Per defecte del sistema"
 
 #: src/pointeraction.cpp:271
 msgid ""
@@ -910,9 +910,7 @@ msgstr "Mogui el cap a dreta i a esquerra"
 
 #: src/wmotioncalibrationx.cpp:151 src/wmotioncalibrationy.cpp:146
 msgid "Your face is not detected. This may produce wrong calibration results."
-msgstr ""
-"La seva cara no es detecta. Això pot produir resultats incorrectes de "
-"calibratge."
+msgstr "No es detecta rostre. Això pot produir un calibratge incorrecte."
 
 #: src/cmotioncalibration.cpp:185
 msgid ""
@@ -920,20 +918,19 @@ msgid ""
 "Do you want to repeat the calibration?"
 msgstr ""
 "No s'ha detectat moviment.\n"
-"¿Vol repetir el calibratge?"
+"Vol repetir el calibratge?"
 
 #: src/wwizard.cpp:103
 msgid "Enable Viacam configuration wizard"
 msgstr "Assistent de configuració de l'Enable Viacam"
 
 #: src/wwizard.cpp:261
-#, fuzzy
 msgid "Disable pointer control"
-msgstr "Desactivar moviment"
+msgstr "Desactivar control del punter"
 
 #: src/wwizard.cpp:265 src/wwizard.cpp:1644
 msgid "Enable pointer control"
-msgstr ""
+msgstr "Activar control del punter"
 
 #: src/wwizard.cpp:374
 msgid "Welcome to the eViacam configuration wizard"
@@ -945,7 +942,7 @@ msgstr "Faci clic a Següent per continuar"
 
 #: src/wwizard.cpp:531 src/wwizard.cpp:1609
 msgid "Pointer calibration"
-msgstr "Calibratge del moviment"
+msgstr "Calibratge del punter"
 
 #: src/wwizard.cpp:541
 msgid ""
@@ -975,7 +972,7 @@ msgid ""
 "If checked the next window will allow\n"
 "you to calibrate the speed of the pointer."
 msgstr ""
-"Si es troba activat la pantalla següent li\n"
+"Si es troba activat, la pantalla següent li\n"
 "permetrà calibrar la velocitat del punter."
 
 #: src/wwizard.cpp:695
@@ -1000,7 +997,7 @@ msgid ""
 "momentarily. The Click the Window lets you choose between different actions."
 msgstr ""
 "El clic es genera automàticament aturant el punter uns instants. La Finestra "
-"del Clic (part superior) li permet triar entre les diferents accions."
+"del Clic li permet triar entre les diferents accions."
 
 #: src/wwizard.cpp:904
 msgid ""
@@ -1095,8 +1092,7 @@ msgid ""
 "eViacam will try to detect your face automatically. But, if necessary, you "
 "can disable this feature and manually adjust the tracking area (blue "
 "rectangle) around your face.\n"
-msgstr ""
-"eViacam intentarà detectar el rostre automàticament. Tot i que, si és "
+msgstr "eViacam intentarà detectar el rostre automàticament. Tot i que, si és "
 "necessari, pot desactivar aquesta funció i ajustar manualment l'àrea de "
 "seguiment (rectangle blau) fent que el seu rostre aparegui a l'interior.\n"
 
@@ -1110,7 +1106,7 @@ msgstr "Desactivar l'eViacam si no es detecta el rostre"
 
 #: src/wconfirmcalibration.cpp:159
 msgid "Move your head to see how it works"
-msgstr "Mogui el cap per comprovar com funciona."
+msgstr "Mogui el cap per comprovar com funciona"
 
 #: src/wconfirmcalibration.cpp:162
 msgid "Hover one of the buttons to select your choice"
@@ -1123,7 +1119,7 @@ msgid ""
 "- \"Repeat\" starts again the calibration process."
 msgstr ""
 "- \"Acceptar\" guarda aquesta configuració.\n"
-"- \"Cancel·lar \" reté la configuration antiga.\n"
+"- \"Cancel·lar\" reté la configuration antiga.\n"
 "- \"Repetir\" reinicia de nou el procés de calibratge."
 
 #: src/wconfirmcalibration.cpp:173 src/wconfirmcalibration.cpp:291
@@ -1219,7 +1215,7 @@ msgstr "Comprovant actualitzacions. Esperi."
 
 #: src/checkupdates_ui.cpp:166
 msgid "Visit Enable Viacam website"
-msgstr "Visitar el lloc web d'Enable Viacam"
+msgstr "Visitar el lloc web de l'Enable Viacam"
 
 #: src/checkupdates_ui.cpp:173
 msgid "&Close"
@@ -1242,13 +1238,12 @@ msgid "Error checking for updates"
 msgstr "Error comprovant actualitzacions"
 
 #: src/newtrackerinformationdlg.h:41
-#, fuzzy
 msgid "New Tracker Information"
-msgstr "Informació"
+msgstr "Informació Sobre Nou Seguiment"
 
 #: src/newtrackerinformationdlg.cpp:132
 msgid "Improved face tracker"
-msgstr ""
+msgstr "Seguiment facial millorat"
 
 #: src/newtrackerinformationdlg.cpp:136
 msgid ""
@@ -1256,38 +1251,41 @@ msgid ""
 "We still provide the old algorithm, but it will most likely be removed in "
 "future versions."
 msgstr ""
+"Aquesta versió d'Enable Viacam inclou un algorisme millorat de seguiment "
+"facial. Es continua proporcionant l'antic algorisme, però probablement "
+"s'eliminarà en versions futures."
 
 #: src/newtrackerinformationdlg.cpp:140
 msgid "Do you want to use the new face tracker?"
-msgstr ""
+msgstr "Vol fer servir el nou seguiment facial?"
 
 #: src/newtrackerinformationdlg.cpp:147
-#, fuzzy
 msgid "Yes and adjust some settings automatically (recommended)"
-msgstr "Localitzar rostre automàticament (recomanat)"
+msgstr "Sí i optimitzar automàticament alguns ajustos (recomanat)"
 
 #: src/newtrackerinformationdlg.cpp:151
 msgid "No, use the legacy tracker"
-msgstr ""
+msgstr "No, fer servir el seguiment facial antic"
 
 #: src/newtrackerinformationdlg.cpp:155
 msgid ""
 "You could also change the tracker configuration under:\n"
 "Configuration -> Options... -> Advanced -> Face localization and tracking"
 msgstr ""
+"També pot modificar la configuració del seguiment facial sota:\n"
+"Configuració -> Opcions... -> Avançat -> Localització facial i seguiment"
 
 #: src/newtrackerinformationdlg.cpp:161
-#, fuzzy
 msgid "Show this message on startup"
-msgstr "No tornis a mostrar aquest missatge"
+msgstr "Mostrar aquest missatge a l'engegar"
 
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
-msgstr "Càmera no detectada. Abortant."
+msgstr "Càmera no detectada. Avortant."
 
 #: wxutil/warnbaroverlap.h:43
 msgid "Overlapping warning"
-msgstr "Avís"
+msgstr "Advertiment de solapament"
 
 #: wxutil/warnbaroverlap.cpp:127
 msgid ""
@@ -1303,7 +1301,7 @@ msgstr ""
 
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
-msgstr "No tornis a mostrar aquest missatge"
+msgstr "No tornar a mostrar aquest missatge"
 
 #~ msgid "Disable head tracking"
 #~ msgstr "Desactivar seguiment del cap"
