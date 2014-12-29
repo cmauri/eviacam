@@ -88,6 +88,7 @@ mkdir $(TargetDir)pt_BR
 mkdir $(TargetDir)ja
 mkdir $(TargetDir)el
 mkdir $(TargetDir)lt
+mkdir $(TargetDir)zh_TW
 
 copy "$(SolutionDir)..\po\ca.gmo" $(TargetDir)ca\eviacam.mo
 copy "$(SolutionDir)..\po\es.gmo" $(TargetDir)es\eviacam.mo
@@ -104,6 +105,7 @@ copy "$(SolutionDir)..\po\pt_BR.gmo" $(TargetDir)pt_BR\eviacam.mo
 copy "$(SolutionDir)..\po\ja.gmo" $(TargetDir)ja\eviacam.mo
 copy "$(SolutionDir)..\po\el.gmo" $(TargetDir)el\eviacam.mo
 copy "$(SolutionDir)..\po\lt.gmo" $(TargetDir)lt\eviacam.mo
+copy "$(SolutionDir)..\po\zh_TW.gmo" $(TargetDir)zh_TW\eviacam.mo
 
 copy "%25WXWIN%25\locale\ca.mo" $(TargetDir)ca\wxstd.mo
 copy "%25WXWIN%25\locale\es.mo" $(TargetDir)es\wxstd.mo
@@ -119,6 +121,7 @@ copy "%25WXWIN%25\locale\ru.mo" $(TargetDir)ru\wxstd.mo
 copy "%25WXWIN%25\locale\pt_BR.mo" $(TargetDir)pt_BR\wxstd.mo
 copy "%25WXWIN%25\locale\ja.mo" $(TargetDir)ja\wxstd.mo
 copy "%25WXWIN%25\locale\el.mo" $(TargetDir)el\wxstd.mo
+copy "%25WXWIN%25\locale\zh_TW.mo" $(TargetDir)zh_TW\wxstd.mo
 </Command>
     </PreLinkEvent>
     <Link>
@@ -184,6 +187,7 @@ mkdir $(TargetDir)pt_BR
 mkdir $(TargetDir)ja
 mkdir $(TargetDir)el
 mkdir $(TargetDir)lt
+mkdir $(TargetDir)zh_TW
 
 copy "$(SolutionDir)..\po\ca.gmo" $(TargetDir)ca\eviacam.mo
 copy "$(SolutionDir)..\po\es.gmo" $(TargetDir)es\eviacam.mo
@@ -200,6 +204,7 @@ copy "$(SolutionDir)..\po\pt_BR.gmo" $(TargetDir)pt_BR\eviacam.mo
 copy "$(SolutionDir)..\po\ja.gmo" $(TargetDir)ja\eviacam.mo
 copy "$(SolutionDir)..\po\el.gmo" $(TargetDir)el\eviacam.mo
 copy "$(SolutionDir)..\po\lt.gmo" $(TargetDir)lt\eviacam.mo
+copy "$(SolutionDir)..\po\zh_TW.gmo" $(TargetDir)zh_TW\eviacam.mo
 
 copy "%25WXWIN%25\locale\ca.mo" $(TargetDir)ca\wxstd.mo
 copy "%25WXWIN%25\locale\es.mo" $(TargetDir)es\wxstd.mo
@@ -215,6 +220,7 @@ copy "%25WXWIN%25\locale\ru.mo" $(TargetDir)ru\wxstd.mo
 copy "%25WXWIN%25\locale\pt_BR.mo" $(TargetDir)pt_BR\wxstd.mo
 copy "%25WXWIN%25\locale\ja.mo" $(TargetDir)ja\wxstd.mo
 copy "%25WXWIN%25\locale\el.mo" $(TargetDir)el\wxstd.mo
+copy "%25WXWIN%25\locale\zh_TW.mo" $(TargetDir)zh_TW\wxstd.mo
 </Command>
     </PreLinkEvent>
     <Link>
