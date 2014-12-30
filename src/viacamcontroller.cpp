@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-14 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -259,9 +259,10 @@ bool CViacamController::Initialize ()
 		m_pMainWindow->GetCamWindow()->RegisterControl (m_visionPipeline.GetTrackAreaControl());
 
 	// Load configuration
-	if (retval) m_configManager->ReadAll (true);
+	if (retval) m_configManager->ReadAll ();
 	
 	// Enable pointeraction object
+	if (retval && m_enabledAtStartup) SetEnabled(true);
 	if (retval) m_pointerAction->SetEnabled(true);
 	
 	// Show new tracker information dialog when needed
@@ -355,12 +356,6 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 	m_visionPipeline.ReadProfileData (pConfObj);	
 	m_hotKeyManager->ReadProfileData (pConfObj);
 }
-
-void CViacamController::StartupRun()
-{
-	if (m_enabledAtStartup) SetEnabled (true);
-}
-
 
 void CViacamController::SetEnabled (bool value, bool silent, wxWindow* parent)
 {

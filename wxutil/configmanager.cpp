@@ -81,7 +81,7 @@ void CConfigManager::WriteLanguage (const int id)
 	}
 }
 
-void CConfigManager::ReadAll (bool callStartupRun)
+void CConfigManager::ReadAll ()
 {
 	wxConfigBase* pConfObj= wxConfigBase::Get();
 	
@@ -103,8 +103,6 @@ void CConfigManager::ReadAll (bool callStartupRun)
 	m_configRoot->ReadProfileData (pConfObj);
 
 	pConfObj->SetPath (_T(".."));
-
-	if (callStartupRun) m_configRoot->StartupRun();
 
 	assert (wxConfigBase::Get()->GetPath().Cmp(BASE_PATH)== 0);
 }

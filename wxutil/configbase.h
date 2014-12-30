@@ -34,11 +34,6 @@ class CConfigBase {
 	virtual void WriteAppData(wxConfigBase* pConfObj);
     virtual void WriteProfileData(wxConfigBase* pConfObj) = 0;    
 
-    //Should be called during program startup and after Load in order to start-up needed things.
-    
-    virtual void StartupRun();
-
 	virtual ~CConfigBase();
-
 };
 #endif

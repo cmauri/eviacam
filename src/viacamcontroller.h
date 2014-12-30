@@ -122,8 +122,6 @@ public:
 	virtual void WriteAppData(wxConfigBase* pConfObj);
 	virtual void WriteProfileData(wxConfigBase* pConfObj);  
 
-	virtual void StartupRun();
-
 	// Initialize application. false if failed
 	bool Initialize ();
 	void Finalize ();
