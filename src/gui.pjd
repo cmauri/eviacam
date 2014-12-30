@@ -1294,14 +1294,6 @@ necessary."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Horizontal"</string>
             <string name="proxy-Member variable name">""</string>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -2571,14 +2563,6 @@ necessary."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -8563,32 +8547,6 @@ tracking area."</string>
                           </document>
                         </document>
                       </document>
-                      <document>
-                        <string name="title">"wxBoxSizer H"</string>
-                        <string name="type">"dialog-control-document"</string>
-                        <string name="filename">""</string>
-                        <string name="icon-name">"sizer"</string>
-                        <long name="is-transient">0</long>
-                        <long name="owns-file">1</long>
-                        <long name="title-mode">0</long>
-                        <long name="locked">0</long>
-                        <string name="proxy-type">"wbBoxSizerProxy"</string>
-                        <string name="proxy-Orientation">"Horizontal"</string>
-                        <string name="proxy-Member variable name">""</string>
-                        <string name="proxy-AlignH">"Expand"</string>
-                        <string name="proxy-AlignV">"Centre"</string>
-                        <long name="proxy-Stretch factor">0</long>
-                        <long name="proxy-Border">5</long>
-                        <bool name="proxy-wxLEFT">1</bool>
-                        <bool name="proxy-wxRIGHT">1</bool>
-                        <bool name="proxy-wxTOP">1</bool>
-                        <bool name="proxy-wxBOTTOM">1</bool>
-                        <bool name="proxy-wxSHAPED">0</bool>
-                        <bool name="proxy-wxADJUST_MINSIZE">0</bool>
-                        <bool name="proxy-wxFIXED_MINSIZE">0</bool>
-                        <bool name="proxy-wxRESERVE_SPACE_EVEN_IF_HIDDEN">0</bool>
-                        <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
-                      </document>
                     </document>
                     <document>
                       <string name="title">"wxStaticBoxSizer V"</string>
@@ -13305,32 +13263,6 @@ tracking area."</string>
                 <string name="proxy-Custom ctor arguments">""</string>
               </document>
               <document>
-                <string name="title">"wxBoxSizer H"</string>
-                <string name="type">"dialog-control-document"</string>
-                <string name="filename">""</string>
-                <string name="icon-name">"sizer"</string>
-                <long name="is-transient">0</long>
-                <long name="owns-file">1</long>
-                <long name="title-mode">0</long>
-                <long name="locked">0</long>
-                <string name="proxy-type">"wbBoxSizerProxy"</string>
-                <string name="proxy-Orientation">"Horizontal"</string>
-                <string name="proxy-Member variable name">""</string>
-                <string name="proxy-AlignH">"Left"</string>
-                <string name="proxy-AlignV">"Centre"</string>
-                <long name="proxy-Stretch factor">0</long>
-                <long name="proxy-Border">5</long>
-                <bool name="proxy-wxLEFT">0</bool>
-                <bool name="proxy-wxRIGHT">0</bool>
-                <bool name="proxy-wxTOP">0</bool>
-                <bool name="proxy-wxBOTTOM">0</bool>
-                <bool name="proxy-wxSHAPED">0</bool>
-                <bool name="proxy-wxADJUST_MINSIZE">0</bool>
-                <bool name="proxy-wxFIXED_MINSIZE">0</bool>
-                <bool name="proxy-wxRESERVE_SPACE_EVEN_IF_HIDDEN">0</bool>
-                <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
-              </document>
-              <document>
                 <string name="title">"wxStaticLine: wxID_STATIC"</string>
                 <string name="type">"dialog-control-document"</string>
                 <string name="filename">""</string>
@@ -14068,32 +14000,6 @@ tracking area."</string>
                 <bool name="proxy-wxRESERVE_SPACE_EVEN_IF_HIDDEN">0</bool>
                 <string name="proxy-Custom arguments">""</string>
                 <string name="proxy-Custom ctor arguments">""</string>
-              </document>
-              <document>
-                <string name="title">"wxBoxSizer H"</string>
-                <string name="type">"dialog-control-document"</string>
-                <string name="filename">""</string>
-                <string name="icon-name">"sizer"</string>
-                <long name="is-transient">0</long>
-                <long name="owns-file">1</long>
-                <long name="title-mode">0</long>
-                <long name="locked">0</long>
-                <string name="proxy-type">"wbBoxSizerProxy"</string>
-                <string name="proxy-Orientation">"Horizontal"</string>
-                <string name="proxy-Member variable name">""</string>
-                <string name="proxy-AlignH">"Left"</string>
-                <string name="proxy-AlignV">"Centre"</string>
-                <long name="proxy-Stretch factor">0</long>
-                <long name="proxy-Border">5</long>
-                <bool name="proxy-wxLEFT">0</bool>
-                <bool name="proxy-wxRIGHT">0</bool>
-                <bool name="proxy-wxTOP">0</bool>
-                <bool name="proxy-wxBOTTOM">0</bool>
-                <bool name="proxy-wxSHAPED">0</bool>
-                <bool name="proxy-wxADJUST_MINSIZE">0</bool>
-                <bool name="proxy-wxFIXED_MINSIZE">0</bool>
-                <bool name="proxy-wxRESERVE_SPACE_EVEN_IF_HIDDEN">0</bool>
-                <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
               </document>
               <document>
                 <string name="title">"wxStaticLine: wxID_STATIC"</string>
@@ -16655,7 +16561,7 @@ you to calibrate the speed of the pointer."</string>
               <long name="locked">0</long>
               <string name="proxy-type">"wbFlexGridSizerProxy"</string>
               <string name="proxy-GrowableColumns">"0"</string>
-              <string name="proxy-GrowableRows">"2"</string>
+              <string name="proxy-GrowableRows">""</string>
               <long name="proxy-Columns">1</long>
               <long name="proxy-Rows">0</long>
               <long name="proxy-ColumnSpacing">0</long>
@@ -16811,8 +16717,8 @@ you to calibrate the speed of the pointer."</string>
                 <long name="title-mode">0</long>
                 <long name="locked">0</long>
                 <string name="proxy-type">"wbFlexGridSizerProxy"</string>
-                <string name="proxy-GrowableColumns">"0"</string>
-                <string name="proxy-GrowableRows">"5"</string>
+                <string name="proxy-GrowableColumns">""</string>
+                <string name="proxy-GrowableRows">""</string>
                 <long name="proxy-Columns">1</long>
                 <long name="proxy-Rows">0</long>
                 <long name="proxy-ColumnSpacing">0</long>
@@ -17533,14 +17439,6 @@ enables cursor control at startup."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
@@ -18746,14 +18644,6 @@ orientation to avoid overlap between both bars."</string>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Member variable name">""</string>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
