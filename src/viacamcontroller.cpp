@@ -108,7 +108,7 @@ void CViacamController::SetUpLanguage ()
 	m_locale->AddCatalogLookupPathPrefix(wxT("/usr/local/share/locale/"));
 #endif
 
-	if (!m_locale->Init(m_languageId, wxLOCALE_CONV_ENCODING))
+	if (!m_locale->Init(m_languageId))
 		slog_write (SLOG_PRIO_WARNING, "Cannot load locale. Switching to default locale.\n");
 	m_locale->AddCatalog(wxT("wxstd"));
 	m_locale->AddCatalog(wxT("eviacam"));
@@ -203,6 +203,10 @@ bool CViacamController::Initialize ()
 	assert (!m_pMainWindow && !m_pCamera && !m_pCaptureThread);
 
 	SetUpLanguage ();
+
+	// Is the first time eviacam is executed on this computer?
+	if (!wxConfigBase::Get()->Exists(_T("/settings/default")))
+		m_newTrackerDialogAtStartup = false;
 
 	// Create camera object
 	m_pCamera= SetUpCamera();	
@@ -317,14 +321,14 @@ void CViacamController::WriteAppData(wxConfigBase* pConfObj)
 	// General options
 	m_configManager->WriteLanguage (m_languageId);
 	pConfObj->Write(_T("cameraName"), m_cameraName);
+	pConfObj->Write(_T("newTrackerDialogAtStartup"), m_newTrackerDialogAtStartup);
 }
 
 void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 {
-	pConfObj->Write(_T("enabledAtStartup"), m_enabledAtStartup);	
+	pConfObj->Write(_T("enabledAtStartup"), m_enabledAtStartup);
 	pConfObj->Write(_T("onScreenKeyboardCommand"), m_onScreenKeyboardCommand);
-	pConfObj->Write(_T("runWizardAtStartup"), m_runWizardAtStartup);	
-	pConfObj->Write(_T("newTrackerDialogAtStartup"), m_newTrackerDialogAtStartup);
+	pConfObj->Write(_T("runWizardAtStartup"), m_runWizardAtStartup);
 
 	// Propagates calls
 	m_pointerAction->WriteProfileData (pConfObj);
@@ -337,6 +341,7 @@ void CViacamController::ReadAppData(wxConfigBase* pConfObj)
 	// General options
 	SetLanguage (m_configManager->ReadLanguage());	// Only load, dont't apply
 	pConfObj->Read(_T("cameraName"), &m_cameraName);
+	pConfObj->Read(_T("newTrackerDialogAtStartup"), &m_newTrackerDialogAtStartup);
 }
 
 void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
@@ -344,8 +349,7 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
 	pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
 	pConfObj->Read(_T("runWizardAtStartup"), &m_runWizardAtStartup);
-	pConfObj->Read(_T("newTrackerDialogAtStartup"), &m_newTrackerDialogAtStartup);
-
+	
 	// Propagates calls
 	m_pointerAction->ReadProfileData (pConfObj);
 	m_visionPipeline.ReadProfileData (pConfObj);	
