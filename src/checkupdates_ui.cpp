@@ -3,7 +3,7 @@
 // Purpose:     Check updates dialog
 // Author:      César Mauri Loba
 // Created:     12/10/2012 20:15:41
-// Copyright:   (C) 2008-12 Cesar Mauri from CREA Sistemes Informatics
+// Copyright:   (C) 2008-14 Cesar Mauri from CREA Sistemes Informatics
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -40,6 +40,8 @@
 
 ////@begin XPM images
 ////@end XPM images
+
+using namespace eviacam;
 
 /*!
  * CheckUpdatesUI type definition
@@ -104,7 +106,8 @@ bool CheckUpdatesUI::Create( wxWindow* parent, wxWindowID id, const wxString& ca
     m_timer.Start (200);
 
 	// Create updates "checker"
-	m_checker= eviacam::CheckUpdates::GetInstance();
+	//m_checker= CheckUpdates::GetInstance();
+	m_checker.Connect(CHECKUPDATE_FINISHED_EVENT, wxCommandEventHandler(CheckUpdatesUI::OnCheckUpdatesFinished));
 
     return true;
 }
@@ -234,28 +237,32 @@ void CheckUpdatesUI::OnHyperlinkctrlWebsiteHyperlinkClicked( wxHyperlinkEvent& e
     event.Skip(false);
 }
 
+void CheckUpdatesUI::OnCheckUpdatesFinished(wxCommandEvent& event)
+{
+	event.Skip();
+}
 
 void CheckUpdatesUI::OnTimer(wxTimerEvent& event)
 {
-	if (m_checker->GetStatus()!= eviacam::CheckUpdates::CHECK_IN_PROGRESS) { // Search finished
+	if (m_checker.GetStatus()!= CheckUpdates::CHECK_IN_PROGRESS) { // Search finished
 		wxString txt1, txt2;
 
 		m_timer.Stop();
 
-		switch (m_checker->GetStatus()) {
-			case eviacam::CheckUpdates::NEW_VERSION_AVAILABLE:
+		switch (m_checker.GetStatus()) {
+			case CheckUpdates::NEW_VERSION_AVAILABLE:
 				txt1= _("New version available: ");
-				txt1+= m_checker->GetStatusMessage();
+				txt1+= m_checker.GetStatusMessage();
 				txt2= _("Installed version: ");
 				txt2+= _T(VERSION);
 				m_link->Show (true);
 				break;
-			case eviacam::CheckUpdates::NO_NEW_VERSION_AVAILABLE:
+			case CheckUpdates::NO_NEW_VERSION_AVAILABLE:
 				txt1= _("No updates available");
 				break;
-			case eviacam::CheckUpdates::ERROR_CHECKING_NEW_VERSION:
+			case CheckUpdates::ERROR_CHECKING_NEW_VERSION:
 				txt1= _("Error checking for updates");
-				txt2= m_checker->GetStatusMessage();
+				txt2= m_checker.GetStatusMessage();
 				break;
 			default:
 				assert (false);
@@ -270,8 +277,8 @@ void CheckUpdatesUI::OnTimer(wxTimerEvent& event)
 		}
 		Centre();
 
-		m_checker->Release();
-		m_checker= NULL;
+		//m_checker->Release();
+		//m_checker= NULL;
 	}
 	else {
 		// Update progress indicator

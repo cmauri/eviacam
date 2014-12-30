@@ -3,7 +3,7 @@
 // Purpose:     Check updates dialog
 // Author:      César Mauri Loba
 // Created:     12/10/2012 20:15:41
-// Copyright:   (C) 2008-12 Cesar Mauri from CREA Sistemes Informatics
+// Copyright:   (C) 2008-14 Cesar Mauri from CREA Sistemes Informatics
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -34,6 +34,8 @@
 #include <wx/dialog.h>
 #include <wx/stattext.h>
 
+#include "checkupdates.h"
+
 /*!
  * Forward declarations
  */
@@ -43,7 +45,9 @@ class wxHyperlinkCtrl;
 ////@end forward declarations
 namespace eviacam {
 	class CheckUpdates;
-};
+}
+
+
 
 /*!
  * Control identifiers
@@ -99,6 +103,7 @@ private:
 ////@end CheckUpdatesUI event handler declarations
 
     void OnTimer(wxTimerEvent& event);
+	void OnCheckUpdatesFinished(wxCommandEvent& event);
 
 ////@begin CheckUpdatesUI member function declarations
 
@@ -118,7 +123,7 @@ private:
     wxHyperlinkCtrl* m_link;
 ////@end CheckUpdatesUI member variables
     wxTimer m_timer;
-	eviacam::CheckUpdates* m_checker;
+	eviacam::CheckUpdates m_checker;
 };
 
 #endif
