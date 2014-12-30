@@ -1617,6 +1617,7 @@ void WizardPage6::CreateControls()
     itemBoxSizer49->Add(itemBoxSizer52, 0, wxGROW|wxALL, 5);
 
     wxStaticText* itemStaticText53 = new wxStaticText( itemWizardPageSimple48, wxID_STATIC, _("You can adjust motion speed manually and enable head tracking to test how it works."), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStaticText53->Wrap(450);
     itemBoxSizer52->Add(itemStaticText53, 0, wxALIGN_LEFT|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer54 = new wxBoxSizer(wxHORIZONTAL);
