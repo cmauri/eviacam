@@ -124,6 +124,9 @@ private:
 
 ////@begin WWizard event handler declarations
 
+    /// wxEVT_WIZARD_CANCEL event handler for ID_WWIZARD
+    void OnWwizardCancel( wxWizardEvent& event );
+
     /// wxEVT_WIZARD_FINISHED event handler for ID_WWIZARD
     void OnWwizardFinished( wxWizardEvent& event );
 

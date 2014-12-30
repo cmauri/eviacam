@@ -70,6 +70,7 @@ IMPLEMENT_DYNAMIC_CLASS( WWizard, wxWizard )
 BEGIN_EVENT_TABLE( WWizard, wxWizard )
 
 ////@begin WWizard event table entries
+    EVT_WIZARD_CANCEL( ID_WWIZARD, WWizard::OnWwizardCancel )
     EVT_WIZARD_FINISHED( ID_WWIZARD, WWizard::OnWwizardFinished )
 ////@end WWizard event table entries
 
@@ -1987,6 +1988,18 @@ void WizardPage8::OnCheckboxLocateFaceClick( wxCommandEvent& event )
 void WizardPage8::OnCheckboxEnableWhenFaceDetectedClick( wxCommandEvent& event )
 {
 	wxGetApp().GetController().GetVisionPipeline().SetEnableWhenFaceDetected (m_chkEnableWhenFaceDetected->GetValue());
+    event.Skip();
+}
+
+
+/*!
+ * wxEVT_WIZARD_CANCEL event handler for ID_WWIZARD
+ */
+
+void WWizard::OnWwizardCancel( wxWizardEvent& event )
+{
+	wxGetApp().GetController().SetRunWizardAtStartup(false);
+	wxGetApp().GetController().GetConfigManager().WriteAll();
     event.Skip();
 }
 

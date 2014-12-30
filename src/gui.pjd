@@ -12683,7 +12683,8 @@ tracking area."</string>
           <string name="app-kind">"Standard"</string>
           <long name="use-xrc">0</long>
           <long name="working-mode">0</long>
-          <string name="event-handler-0">"wxEVT_WIZARD_FINISHED|OnWwizardFinished|NONE||WWizard"</string>
+          <string name="event-handler-0">"wxEVT_WIZARD_CANCEL|OnWwizardCancel|NONE||WWizard"</string>
+          <string name="event-handler-1">"wxEVT_WIZARD_FINISHED|OnWwizardFinished|NONE||WWizard"</string>
           <string name="proxy-Id name">"ID_WWIZARD"</string>
           <long name="proxy-Id value">10090</long>
           <string name="proxy-Class">"WWizard"</string>
