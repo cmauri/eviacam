@@ -140,38 +140,57 @@ END_EVENT_TABLE()
 
 namespace eviacam {
 
+// Create thread to avoid blocking the GUI while checking
+class CheckUpdatesWorker : public wxThread {
+public:
+	CheckUpdatesWorker(wxEvtHandler& msgDest);
+	virtual wxThread::ExitCode Entry();
+private:
+	wxEvtHandler* m_msgDest;
+};
+
 void CheckUpdates::OnThreadFinished(wxCommandEvent& event)
 {
-	// This event handler translates the event sent from the worker thread
-	// which encodes version name using a SetClientData into regular wxCommandEvent
-	// using SetString. We need to do so in order to maintain compatibility with 
+	// This event handler translates the event sent from the worker thread,
+	// which stores version name using a SetClientData, into a new wxCommandEvent
+	// which uses SetString to do so. We need to do so in order to maintain compatibility with
 	// wx2.x. TODO: when wx 3.0 takes over 2.x remove this stuff and send 
 	// the event directly from the thread using wxQueueEvent. See here for more info:
 	// // http://docs.wxwidgets.org/trunk/group__group__funcmacro__events.html#ga0cf60a1ad3a5f1e659f7ae591570f58d
 
-	wxString* msg = static_cast<wxString*>(event.GetClientData());
-	m_statusMessage = wxString(msg->c_str());	// Take a deep copy of the string
-	delete msg;
-	m_resultStatus = static_cast<ResultStatus>(event.GetInt());
-	event.Skip(true); // Finish processing
+	assert(wxIsMainThread());
 
 	wxCommandEvent eventNew(CHECKUPDATE_FINISHED_EVENT);
-	eventNew.SetInt(m_resultStatus);
-	eventNew.SetString(m_statusMessage);	
-	wxPostEvent(this, eventNew); // Use this instead of wxQueueEvent for wx2.8 compatibility
+
+	// String
+	wxString* msg = static_cast<wxString*>(event.GetClientData());
+	eventNew.SetString(wxString(msg->mb_str(wxConvUTF8), wxConvUTF8)); // Take a deep copy of the string
+	delete msg;
+	
+	// Status code
+	eventNew.SetInt(event.GetInt());
+	
+	// Finish processing old event
+	event.Skip(true); 
+
+	// Fire new event. Use this instead of wxQueueEvent for wx2.8 compatibility
+	wxPostEvent(this, eventNew); 
 }
 
 CheckUpdates::CheckUpdates()
-: m_resultStatus(CheckUpdates::CHECK_IN_PROGRESS)
 {
-	new CheckUpdates::CheckUpdatesWorker(*this);
 }
 
 CheckUpdates::~CheckUpdates()
 {
 }
 
-CheckUpdates::CheckUpdatesWorker::CheckUpdatesWorker(wxEvtHandler& msgDest)
+void CheckUpdates::Start()
+{
+	new CheckUpdatesWorker(*this);
+}
+
+CheckUpdatesWorker::CheckUpdatesWorker(wxEvtHandler& msgDest)
 : wxThread(wxTHREAD_DETACHED)
 , m_msgDest(&msgDest)
 {
@@ -192,7 +211,7 @@ CheckUpdates::CheckUpdatesWorker::CheckUpdatesWorker(wxEvtHandler& msgDest)
 	}
 }
 
-wxThread::ExitCode CheckUpdates::CheckUpdatesWorker::Entry()
+wxThread::ExitCode CheckUpdatesWorker::Entry()
 {
 	std::string new_version;
 	int result= check_updates(&new_version);

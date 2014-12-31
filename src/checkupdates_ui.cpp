@@ -105,9 +105,12 @@ bool CheckUpdatesUI::Create( wxWindow* parent, wxWindowID id, const wxString& ca
     m_timer.SetOwner(this);
     m_timer.Start (200);
 
-	// Create updates "checker"
-	//m_checker= CheckUpdates::GetInstance();
-	m_checker.Connect(CHECKUPDATE_FINISHED_EVENT, wxCommandEventHandler(CheckUpdatesUI::OnCheckUpdatesFinished));
+	// Receive events from the update checker
+	m_checker.Connect(
+		CHECKUPDATE_FINISHED_EVENT, 
+		wxCommandEventHandler(CheckUpdatesUI::OnCheckUpdatesFinished), 
+		NULL, this);
+	m_checker.Start();
 
     return true;
 }
@@ -239,56 +242,52 @@ void CheckUpdatesUI::OnHyperlinkctrlWebsiteHyperlinkClicked( wxHyperlinkEvent& e
 
 void CheckUpdatesUI::OnCheckUpdatesFinished(wxCommandEvent& event)
 {
-	event.Skip();
+	wxString txt1, txt2;
+
+	assert(wxIsMainThread());
+	m_timer.Stop();
+
+	CheckUpdates::ResultStatus status = static_cast<CheckUpdates::ResultStatus>(event.GetInt());
+	switch (status) {
+	case CheckUpdates::NEW_VERSION_AVAILABLE:
+		txt1 = _("New version available: ");
+		txt1 += event.GetString();
+		txt2 = _("Installed version: ");
+		txt2 += _T(VERSION);
+		m_link->Show(true);
+		break;
+	case CheckUpdates::NO_NEW_VERSION_AVAILABLE:
+		txt1 = _("No updates available");
+		break;
+	case CheckUpdates::ERROR_CHECKING_NEW_VERSION:
+		txt1 = _("Error checking for updates");
+		txt2 = event.GetString();
+		break;
+	default:
+		assert(false);
+	}
+
+	m_msg1->SetLabel(txt1);
+	m_msg2->SetLabel(txt2);
+
+	// Fit content
+	if (GetSizer())	{
+		GetSizer()->SetSizeHints(this);
+	}
+	Centre();
+
+	event.Skip(false);
 }
 
 void CheckUpdatesUI::OnTimer(wxTimerEvent& event)
 {
-	if (m_checker.GetStatus()!= CheckUpdates::CHECK_IN_PROGRESS) { // Search finished
-		wxString txt1, txt2;
+	// Update progress indicator
+	wxString txt= m_msg2->GetLabel();
 
-		m_timer.Stop();
+	if (txt.Len()> 15) txt= _T(".");
+	else txt+=  _T(".");
 
-		switch (m_checker.GetStatus()) {
-			case CheckUpdates::NEW_VERSION_AVAILABLE:
-				txt1= _("New version available: ");
-				txt1+= m_checker.GetStatusMessage();
-				txt2= _("Installed version: ");
-				txt2+= _T(VERSION);
-				m_link->Show (true);
-				break;
-			case CheckUpdates::NO_NEW_VERSION_AVAILABLE:
-				txt1= _("No updates available");
-				break;
-			case CheckUpdates::ERROR_CHECKING_NEW_VERSION:
-				txt1= _("Error checking for updates");
-				txt2= m_checker.GetStatusMessage();
-				break;
-			default:
-				assert (false);
-		}
-
-		m_msg1->SetLabel (txt1);
-		m_msg2->SetLabel (txt2);
-		
-		// Fit content
-		if (GetSizer())	{
-			GetSizer()->SetSizeHints(this);
-		}
-		Centre();
-
-		//m_checker->Release();
-		//m_checker= NULL;
-	}
-	else {
-		// Update progress indicator
-		wxString txt= m_msg2->GetLabel();
-
-		if (txt.Len()> 15) txt= _T(".");
-		else txt+=  _T(".");
-
-		m_msg2->SetLabel (txt);
-	}
+	m_msg2->SetLabel (txt);
 
 	event.Skip(false);
 }
