@@ -263,6 +263,7 @@ copy "$(CVPATH)\sources\data\haarcascades\haarcascade_frontalface_default.xml" $
   <ItemGroup>
     <ClCompile Include="cautostart.cpp" />
     <ClCompile Include="checkupdates.cpp" />
+    <ClCompile Include="checkupdates_listener.cpp" />
     <ClCompile Include="checkupdates_ui.cpp" />
     <ClCompile Include="ckeyboardcode.cpp" />
     <ClCompile Include="clickwindow.cpp" />
@@ -297,6 +298,7 @@ copy "$(CVPATH)\sources\data\haarcascades\haarcascade_frontalface_default.xml" $
   <ItemGroup>
     <ClInclude Include="cautostart.h" />
     <ClInclude Include="checkupdates.h" />
+    <ClInclude Include="checkupdates_listener.h" />
     <ClInclude Include="checkupdates_ui.h" />
     <ClInclude Include="ckeyboardcode.h" />
     <ClInclude Include="clickwindow.h" />

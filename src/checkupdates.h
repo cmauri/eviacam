@@ -47,6 +47,20 @@ public:
 private:
 	void OnThreadFinished(wxCommandEvent& event);
 
+	// Create thread to avoid blocking the GUI while checking
+	class CheckUpdatesWorker : public wxThread {
+	public:
+		CheckUpdatesWorker(CheckUpdates& handler);
+		virtual ~CheckUpdatesWorker();
+		virtual wxThread::ExitCode Entry();
+	private:
+		CheckUpdates* m_handler;
+	};
+
+	friend class CheckUpdatesWorker;
+
+	volatile bool m_threadRunning;
+
 	DECLARE_EVENT_TABLE()
 };
 

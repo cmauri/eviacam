@@ -144,15 +144,6 @@ END_EVENT_TABLE()
 
 namespace eviacam {
 
-// Create thread to avoid blocking the GUI while checking
-class CheckUpdatesWorker : public wxThread {
-public:
-	CheckUpdatesWorker(wxEvtHandler& msgDest);
-	virtual wxThread::ExitCode Entry();
-private:
-	wxEvtHandler* m_msgDest;
-};
-
 void CheckUpdates::OnThreadFinished(wxCommandEvent& event)
 {
 	// This event handler translates the event sent from the worker thread,
@@ -182,26 +173,33 @@ void CheckUpdates::OnThreadFinished(wxCommandEvent& event)
 }
 
 CheckUpdates::CheckUpdates()
+: m_threadRunning(false)
 {
 }
 
 CheckUpdates::~CheckUpdates()
 {
+	// Wait for the thread to finish
+	while (m_threadRunning)
+		wxThread::This()->Sleep(1);
 }
 
 void CheckUpdates::Start()
 {
+	m_threadRunning = true;
 	new CheckUpdatesWorker(*this);
 }
 
-CheckUpdatesWorker::CheckUpdatesWorker(wxEvtHandler& msgDest)
+CheckUpdates::CheckUpdatesWorker::CheckUpdatesWorker(CheckUpdates& handler)
 : wxThread(wxTHREAD_DETACHED)
-, m_msgDest(&msgDest)
+, m_handler(&handler)
 {
 	wxThreadError retval= this->Create();
 	if (retval== wxTHREAD_NO_ERROR) retval= this->Run();
 
 	if (retval!= wxTHREAD_NO_ERROR) {
+		m_handler->m_threadRunning = false;
+
 		wxCommandEvent event(THREAD_FINISHED_EVENT);
 		
 		// Store information string using SetClientData instead of SetString
@@ -211,11 +209,16 @@ CheckUpdatesWorker::CheckUpdatesWorker(wxEvtHandler& msgDest)
 		event.SetInt(CheckUpdates::ERROR_CHECKING_NEW_VERSION);
 		
 		// Use this instead of wxQueueEvent for wx2.8 compatibility
-		wxPostEvent(m_msgDest, event);  
+		wxPostEvent(m_handler, event);  
 	}
 }
 
-wxThread::ExitCode CheckUpdatesWorker::Entry()
+CheckUpdates::CheckUpdatesWorker::~CheckUpdatesWorker()
+{
+	m_handler->m_threadRunning = false;
+}
+
+wxThread::ExitCode CheckUpdates::CheckUpdatesWorker::Entry()
 {
 	std::string new_version;
 	int result= check_updates(&new_version);
@@ -258,7 +261,7 @@ wxThread::ExitCode CheckUpdatesWorker::Entry()
 	event.SetClientData(msg);
 
 	// Use this instead of wxQueueEvent for wx2.8 compatibility
-	wxPostEvent(m_msgDest, event);
+	wxPostEvent(m_handler, event);
 
 	return ExitCode(0);
 }

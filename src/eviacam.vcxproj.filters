@@ -111,6 +111,9 @@
     <ClCompile Include="newtrackerinformationdlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="checkupdates_listener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cautostart.h">
@@ -219,6 +222,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="newtrackerinformationdlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="checkupdates_listener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
