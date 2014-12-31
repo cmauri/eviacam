@@ -26,7 +26,11 @@
 #include <wx/thread.h>
 
 #define UPDATE_HOSTNAME "eviacam.sourceforge.net"
-#define UPDATE_FILE "/version"
+#if defined(__WXGTK__)
+#define UPDATE_FILE _T("/version.php?cv=") _T(VERSION) _T("&p=linux")
+#else
+	#define UPDATE_FILE _T("/version.php?cv=") _T(VERSION) _T("&p=windows")
+#endif
 
 // Compare two version strings
 // Return:
@@ -87,7 +91,7 @@ int check_updates(std::string* new_version)
 	}
 
 	// Set file to request & make connection
-	httpStream = request->GetInputStream(_T(UPDATE_FILE));
+	httpStream = request->GetInputStream(UPDATE_FILE);
 	if (!httpStream) {
 		// Due to a buggy wxHTTP implementation, many errors are reported
 		// this way. User only sees "connection error".
