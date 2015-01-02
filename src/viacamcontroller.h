@@ -39,6 +39,9 @@ class CCamera;
 class CAutostart;
 class wxLocale;
 class WCameraDialog;
+namespace eviacam {
+	class CheckUpdatesManager;
+}
 
 class CViacamController : public CProcessImage, public CConfigBase
 {
@@ -64,6 +67,9 @@ public:
 	const bool GetRunWizardAtStartup () const {	return m_runWizardAtStartup; }
 	void SetRunWizardAtStartup (bool value) { m_runWizardAtStartup= value; }
 		
+	const bool GetCheckUpdatesAtStartup() const { return m_checkUpdatesAtStartup; }
+	void SetCheckUpdatesAtStartup(bool value) { m_checkUpdatesAtStartup = value; }
+
 	void SetLanguage (const int id);
 	const int GetLanguage () const { return m_languageId; }
 
@@ -174,6 +180,7 @@ private:
 	WCameraDialog* m_pCameraDialog;
 	WConfigurationListener m_wConfigurationListener;
 	WCameraDialogListener m_wCameraDialogListener;
+	eviacam::CheckUpdatesManager* m_pCheckUpdateManager;
 
 
 	wxString m_cameraName;
@@ -185,6 +192,8 @@ private:
 	bool m_motionCalibrationEnabled;
 	bool m_runWizardAtStartup;
 	bool m_newTrackerDialogAtStartup;
+	bool m_checkUpdatesAtStartup;
+
 };
 
 #endif

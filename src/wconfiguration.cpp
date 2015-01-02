@@ -139,6 +139,7 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
     EVT_BUTTON( ID_BUTTON_CAMERA_SETTINGS, WConfiguration::OnButtonCameraSettingsClick )
     EVT_BUTTON( ID_BUTTON_CHANGE_CAMERA, WConfiguration::OnButtonChangeCameraClick )
     EVT_CHOICE( ID_CHOICE_LANGUAGE, WConfiguration::OnChoiceLanguageSelected )
+    EVT_CHECKBOX( ID_CHECKBOX_CHECK_UPDATES, WConfiguration::OnCheckboxCheckUpdatesClick )
     EVT_BUTTON( wxID_OK, WConfiguration::OnOkClick )
     EVT_BUTTON( wxID_CANCEL, WConfiguration::OnCancelClick )
 ////@end WConfiguration event table entries
@@ -307,6 +308,7 @@ void WConfiguration::Init()
     m_txtSelectedCamera = NULL;
     m_btnCameraSettings = NULL;
     m_choLanguage = NULL;
+    m_chkCheckUpdatesAtStartup = NULL;
     m_btnCancel = NULL;
 ////@end WConfiguration member initialisation
     m_cmbLeft = NULL;
@@ -850,21 +852,28 @@ void WConfiguration::CreateControls()
     m_choLanguage = new wxChoice( itemPanel111, ID_CHOICE_LANGUAGE, wxDefaultPosition, wxDefaultSize, m_choLanguageStrings, 0 );
     itemFlexGridSizer125->Add(m_choLanguage, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
+    wxStaticBox* itemStaticBoxSizer128Static = new wxStaticBox(itemPanel111, wxID_ANY, _("Check for updates"));
+    wxStaticBoxSizer* itemStaticBoxSizer128 = new wxStaticBoxSizer(itemStaticBoxSizer128Static, wxVERTICAL);
+    itemBoxSizer112->Add(itemStaticBoxSizer128, 0, wxGROW|wxALL, 5);
+    m_chkCheckUpdatesAtStartup = new wxCheckBox( itemPanel111, ID_CHECKBOX_CHECK_UPDATES, _("Automatically check for updates at startup"), wxDefaultPosition, wxDefaultSize, 0 );
+    m_chkCheckUpdatesAtStartup->SetValue(false);
+    itemStaticBoxSizer128->Add(m_chkCheckUpdatesAtStartup, 0, wxALIGN_LEFT|wxALL, 5);
+
     itemListbook3->AddPage(itemPanel111, _("General options"), false, 1);
 
     itemBoxSizer2->Add(itemListbook3, 0, wxALIGN_LEFT|wxALL, 5);
 
-    wxStdDialogButtonSizer* itemStdDialogButtonSizer128 = new wxStdDialogButtonSizer;
+    wxStdDialogButtonSizer* itemStdDialogButtonSizer130 = new wxStdDialogButtonSizer;
 
-    itemBoxSizer2->Add(itemStdDialogButtonSizer128, 0, wxALIGN_RIGHT|wxALL, 5);
-    wxButton* itemButton129 = new wxButton( itemDialog1, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemStdDialogButtonSizer128->AddButton(itemButton129);
+    itemBoxSizer2->Add(itemStdDialogButtonSizer130, 0, wxALIGN_RIGHT|wxALL, 5);
+    wxButton* itemButton131 = new wxButton( itemDialog1, wxID_OK, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemStdDialogButtonSizer130->AddButton(itemButton131);
 
     m_btnCancel = new wxButton( itemDialog1, wxID_CANCEL, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
     m_btnCancel->Enable(false);
-    itemStdDialogButtonSizer128->AddButton(m_btnCancel);
+    itemStdDialogButtonSizer130->AddButton(m_btnCancel);
 
-    itemStdDialogButtonSizer128->Realize();
+    itemStdDialogButtonSizer130->Realize();
 
 ////@end WConfiguration content construction
 #if defined(__WXGTK__)
@@ -1106,6 +1115,9 @@ void WConfiguration::InitializeData ()
 		m_btnCameraSettings->Enable (true);
 	else
 		m_btnCameraSettings->Enable (false);
+
+	// Check updates at startup
+	m_chkCheckUpdatesAtStartup->SetValue(wxGetApp().GetController().GetCheckUpdatesAtStartup());
 }
 
 void WConfiguration::UpdateGUIClickOptions()
@@ -2072,4 +2084,17 @@ void WConfiguration::OnCheckboLegacyTrackerClick( wxCommandEvent& event )
 	event.Skip(false);
 	Changed();
 }
+
+
+/*!
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_CHECK_UPDATES
+ */
+
+void WConfiguration::OnCheckboxCheckUpdatesClick(wxCommandEvent& event)
+{
+	wxGetApp().GetController().SetCheckUpdatesAtStartup(m_chkCheckUpdatesAtStartup->GetValue());
+	event.Skip(false);
+	Changed();
+}
+
 

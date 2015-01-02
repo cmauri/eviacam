@@ -2,7 +2,7 @@
 // Name:        checkupdates.cpp
 // Purpose:     
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Copyright:   (C) 2012 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2012-14 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -26,9 +26,11 @@
 #include <wx/thread.h>
 
 #define UPDATE_HOSTNAME "eviacam.sourceforge.net"
-#define UPDATE_FILE "/version"
-
-namespace eviacam {
+#if defined(__WXGTK__)
+#define UPDATE_FILE _T("/version.php?cv=") _T(VERSION) _T("&p=linux")
+#else
+	#define UPDATE_FILE _T("/version.php?cv=") _T(VERSION) _T("&p=windows")
+#endif
 
 // Compare two version strings
 // Return:
@@ -89,7 +91,7 @@ int check_updates(std::string* new_version)
 	}
 
 	// Set file to request & make connection
-	httpStream = request->GetInputStream(_T(UPDATE_FILE));
+	httpStream = request->GetInputStream(UPDATE_FILE);
 	if (!httpStream) {
 		// Due to a buggy wxHTTP implementation, many errors are reported
 		// this way. User only sees "connection error".
@@ -131,89 +133,139 @@ check_update_error:
 	return retval;	
 }
 
-CheckUpdates* CheckUpdates::GetInstance()
+DECLARE_EVENT_TYPE(THREAD_FINISHED_EVENT, wxCommandEvent);
+
+DEFINE_EVENT_TYPE(THREAD_FINISHED_EVENT);
+DEFINE_EVENT_TYPE(CHECKUPDATE_FINISHED_EVENT);
+
+BEGIN_EVENT_TABLE(eviacam::CheckUpdates, wxEvtHandler)
+	EVT_COMMAND(wxID_ANY, THREAD_FINISHED_EVENT, eviacam::CheckUpdates::OnThreadFinished)
+END_EVENT_TABLE()
+
+namespace eviacam {
+
+void CheckUpdates::OnThreadFinished(wxCommandEvent& event)
 {
-	return new CheckUpdates();
+	// This event handler translates the event sent from the worker thread,
+	// which stores version name using a SetClientData, into a new wxCommandEvent
+	// which uses SetString. We need to do so in order to maintain compatibility with
+	// wx2.x. There are chances to leak some memory if some THREAD_FINISHED_EVENT are
+	// discarded and thus not properly deallocated. 
+	// TODO: when wx 3.0 takes over 2.x remove this stuff and send events directly 
+	// from the thread using wxQueueEvent. See here for more info:
+	// // http://docs.wxwidgets.org/trunk/group__group__funcmacro__events.html#ga0cf60a1ad3a5f1e659f7ae591570f58d
+
+	assert(wxIsMainThread());
+
+	wxCommandEvent eventNew(CHECKUPDATE_FINISHED_EVENT);
+
+	// String
+	wxString* msg = static_cast<wxString*>(event.GetClientData());
+	eventNew.SetString(wxString(msg->mb_str(wxConvUTF8), wxConvUTF8)); // Take a deep copy of the string
+	delete msg;
+	
+	// Status code
+	eventNew.SetInt(event.GetInt());
+	
+	// Finish processing old event
+	event.Skip(true); 
+
+	// Fire new event. Use this instead of wxQueueEvent for wx2.8 compatibility
+	wxPostEvent(this, eventNew); 
 }
 
-void CheckUpdates::Release()
+CheckUpdates::CheckUpdates()
+: m_threadRunning(false)
 {
-	m_mutex.Lock();
-	m_refCount--;
-	int cur_refCount= m_refCount;
-	m_mutex.Unlock();
-
-	assert (cur_refCount>= 0);
-	if (cur_refCount== 0) delete this;
-}
-
-CheckUpdates::CheckUpdates() 
-: m_resultStatus(CheckUpdates::CHECK_IN_PROGRESS)
-, m_refCount(2)	// One for the caller and other for the internal thread
-{
-	new CheckUpdates::CheckUpdatesWorker(*this);
 }
 
 CheckUpdates::~CheckUpdates()
 {
-	assert (m_refCount== 0);
+	// Wait for the thread to finish
+	while (m_threadRunning)
+		wxThread::This()->Sleep(1);
 }
 
-CheckUpdates::CheckUpdatesWorker::CheckUpdatesWorker (CheckUpdates& parent) 
+void CheckUpdates::Start()
+{
+	m_threadRunning = true;
+	new CheckUpdatesWorker(*this);
+}
+
+CheckUpdates::CheckUpdatesWorker::CheckUpdatesWorker(CheckUpdates& handler)
 : wxThread(wxTHREAD_DETACHED)
-, m_parent(&parent)
+, m_handler(&handler)
 {
 	wxThreadError retval= this->Create();
 	if (retval== wxTHREAD_NO_ERROR) retval= this->Run();
 
 	if (retval!= wxTHREAD_NO_ERROR) {
-		m_parent->m_statusMessage= _("Error checking for updates. Try again later.");
-		m_parent->m_resultStatus= CheckUpdates::ERROR_CHECKING_NEW_VERSION;
-		m_parent->Release();
+		m_handler->m_threadRunning = false;
+
+		wxCommandEvent event(THREAD_FINISHED_EVENT);
+		
+		// Store information string using SetClientData instead of SetString
+		wxString* msg = new wxString(_("Error checking for updates. Try again later."));
+		event.SetClientData(msg);
+
+		event.SetInt(CheckUpdates::ERROR_CHECKING_NEW_VERSION);
+		
+		// Use this instead of wxQueueEvent for wx2.8 compatibility
+		wxPostEvent(m_handler, event);  
 	}
+}
+
+CheckUpdates::CheckUpdatesWorker::~CheckUpdatesWorker()
+{
+	m_handler->m_threadRunning = false;
 }
 
 wxThread::ExitCode CheckUpdates::CheckUpdatesWorker::Entry()
 {
 	std::string new_version;
 	int result= check_updates(&new_version);
-
-	m_parent->m_statusMessage= wxString(new_version.c_str(), wxConvUTF8);
+	wxString* msg = NULL;
+	wxCommandEvent event(THREAD_FINISHED_EVENT);
 	
 	switch (result) {
 		case 1: // newer version available
-			m_parent->m_resultStatus= CheckUpdates::NEW_VERSION_AVAILABLE;
+			msg = new wxString(new_version.c_str(), wxConvUTF8);
+			event.SetInt(CheckUpdates::NEW_VERSION_AVAILABLE);
 			break;
 		case 0: // no newer version available
 		case -1: // local version newer than remote!
-			m_parent->m_resultStatus= CheckUpdates::NO_NEW_VERSION_AVAILABLE;
+			msg = new wxString(new_version.c_str(), wxConvUTF8);
+			event.SetInt(CheckUpdates::NO_NEW_VERSION_AVAILABLE);
 			break;
 		case -2: // cannot resolve host name
-			m_parent->m_statusMessage= _("Cannot resolve host name: ");
-			m_parent->m_statusMessage+= _T(UPDATE_HOSTNAME);
-			m_parent->m_resultStatus= CheckUpdates::ERROR_CHECKING_NEW_VERSION;
+			msg = new wxString(_("Cannot resolve host name: "));
+			msg->Append(_T(UPDATE_HOSTNAME));
+			event.SetInt(CheckUpdates::ERROR_CHECKING_NEW_VERSION);
 			break;
 		case -3: // cannot connect to host
-			m_parent->m_statusMessage= _("Conection failed: ");
-			m_parent->m_statusMessage+= _T(UPDATE_HOSTNAME);
-			m_parent->m_resultStatus= CheckUpdates::ERROR_CHECKING_NEW_VERSION;
+			msg = new wxString(_("Conection failed: "));
+			msg->Append(_T(UPDATE_HOSTNAME));
+			event.SetInt(CheckUpdates::ERROR_CHECKING_NEW_VERSION);
 			break;
 		case -4: // file does not exist (on server)
-			m_parent->m_statusMessage= _("Sorry. Version file not found. Please report us.");
-			m_parent->m_resultStatus= CheckUpdates::ERROR_CHECKING_NEW_VERSION;
+			msg = new wxString(_("Sorry. Version file not found. Please report us."));
+			event.SetInt(CheckUpdates::ERROR_CHECKING_NEW_VERSION);
 			break;
 		case -5: // generic error
-			m_parent->m_statusMessage= _("Sorry. Something bad happened.");
-			m_parent->m_resultStatus= CheckUpdates::ERROR_CHECKING_NEW_VERSION;
+			msg = new wxString(_("Sorry. Something bad happened."));
+			event.SetInt(CheckUpdates::ERROR_CHECKING_NEW_VERSION);
 			break;
 		default:
 			assert (false);
 	}
 
-	m_parent->Release();
+	// Store information string using SetClientData instead of SetString
+	event.SetClientData(msg);
 
+	// Use this instead of wxQueueEvent for wx2.8 compatibility
+	wxPostEvent(m_handler, event);
+	
 	return ExitCode(0);
 }
 
-
-};
+}

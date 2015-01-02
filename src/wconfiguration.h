@@ -125,6 +125,7 @@ class wxPanel;
 #define ID_BUTTON_CAMERA_SETTINGS 10053
 #define ID_BUTTON_CHANGE_CAMERA 10054
 #define ID_CHOICE_LANGUAGE 10012
+#define ID_CHECKBOX_CHECK_UPDATES 10010
 #define SYMBOL_WCONFIGURATION_STYLE wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX|wxTAB_TRAVERSAL
 #define SYMBOL_WCONFIGURATION_TITLE _("Configuration")
 #define SYMBOL_WCONFIGURATION_IDNAME ID_WCONFIGURATION
@@ -317,6 +318,9 @@ private:
     /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE_LANGUAGE
     void OnChoiceLanguageSelected( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_CHECK_UPDATES
+    void OnCheckboxCheckUpdatesClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for wxID_OK
     void OnOkClick( wxCommandEvent& event );
 
@@ -462,6 +466,7 @@ private:
     wxTextCtrl* m_txtSelectedCamera;
     wxButton* m_btnCameraSettings;
     wxChoice* m_choLanguage;
+    wxCheckBox* m_chkCheckUpdatesAtStartup;
     wxButton* m_btnCancel;
 ////@end WConfiguration member variables
     wxComboBox* m_cmbLeft;

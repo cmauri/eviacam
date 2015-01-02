@@ -35,10 +35,13 @@
 #include "hotkeymanager.h"
 #include "simplelog.h"
 #include "newtrackerinformationdlg.h"
+#include "checkupdates_manager.h"
 
 #include <wx/msgdlg.h>
 #include <wx/choicdlg.h>
 #include <wx/filename.h>
+
+using namespace eviacam;
 
 CViacamController::CViacamController(void)
 : m_pMainWindow(NULL)
@@ -56,6 +59,7 @@ CViacamController::CViacamController(void)
 , m_pCameraDialog(NULL)
 , m_wConfigurationListener(*this)
 , m_wCameraDialogListener(*this)
+, m_pCheckUpdateManager(NULL)
 , m_cameraName()
 , m_enabled(false)
 , m_enabledAtStartup(false)
@@ -65,6 +69,7 @@ CViacamController::CViacamController(void)
 , m_motionCalibrationEnabled(false)
 , m_runWizardAtStartup(false)
 , m_newTrackerDialogAtStartup(true)
+, m_checkUpdatesAtStartup(true)
 {
 	m_locale= new wxLocale ();
 	m_configManager= new CConfigManager(this);	
@@ -265,6 +270,13 @@ bool CViacamController::Initialize ()
 	if (retval && m_enabledAtStartup) SetEnabled(true);
 	if (retval) m_pointerAction->SetEnabled(true);
 	
+	// Check for updates
+	if (retval && m_checkUpdatesAtStartup) {
+		assert(m_pCheckUpdateManager == NULL);
+		m_pCheckUpdateManager = new CheckUpdatesManager(m_pMainWindow);
+		m_pCheckUpdateManager->LaunchBackground();
+	}
+
 	// Show new tracker information dialog when needed
 	if (retval && m_newTrackerDialogAtStartup) {
 		NewTrackerInformationDlg dlg(m_pMainWindow);
@@ -305,10 +317,15 @@ void CViacamController::Finalize ()
 	if (m_hotKeyManager) {
 		delete m_hotKeyManager;
 		m_hotKeyManager= NULL;		
-	}	
+	}
+
+	if (m_pCheckUpdateManager) {
+		delete m_pCheckUpdateManager;
+		m_pCheckUpdateManager = NULL;
+	}
 
 	if (m_pMainWindow) {
-		WViacam* mainWin= m_pMainWindow;
+ 		WViacam* mainWin= m_pMainWindow;
 		m_pMainWindow= NULL;
 		mainWin->GetCamWindow()->UnregisterControl (m_visionPipeline.GetTrackAreaControl());
 		mainWin->Close (true);
@@ -323,6 +340,7 @@ void CViacamController::WriteAppData(wxConfigBase* pConfObj)
 	m_configManager->WriteLanguage (m_languageId);
 	pConfObj->Write(_T("cameraName"), m_cameraName);
 	pConfObj->Write(_T("newTrackerDialogAtStartup"), m_newTrackerDialogAtStartup);
+	pConfObj->Write(_T("checkUpdatesAtStartup"), m_checkUpdatesAtStartup);
 }
 
 void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
@@ -343,6 +361,7 @@ void CViacamController::ReadAppData(wxConfigBase* pConfObj)
 	SetLanguage (m_configManager->ReadLanguage());	// Only load, dont't apply
 	pConfObj->Read(_T("cameraName"), &m_cameraName);
 	pConfObj->Read(_T("newTrackerDialogAtStartup"), &m_newTrackerDialogAtStartup);
+	pConfObj->Read(_T("checkUpdatesAtStartup"), &m_checkUpdatesAtStartup);
 }
 
 void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
