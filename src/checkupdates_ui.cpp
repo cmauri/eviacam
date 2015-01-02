@@ -101,16 +101,7 @@ bool CheckUpdatesUI::Create( wxWindow* parent, wxWindowID id, const wxString& ca
     Centre();
 ////@end CheckUpdatesUI creation
 
-	// Start timer
-    m_timer.SetOwner(this);
-    m_timer.Start (200);
-
-	// Receive events from the update checker
-	m_checker.Connect(
-		CHECKUPDATE_FINISHED_EVENT, 
-		wxCommandEventHandler(CheckUpdatesUI::OnCheckUpdatesFinished), 
-		NULL, this);
-	m_checker.Start();
+	
 
     return true;
 }
@@ -225,7 +216,7 @@ wxIcon CheckUpdatesUI::GetIconResource( const wxString& name )
 
 void CheckUpdatesUI::OnButtonCheckupdateCloseClick( wxCommandEvent& event )
 {
-	EndModal (0);
+	EndModal(wxCANCEL);
     event.Skip(false);
 }
 
@@ -240,43 +231,30 @@ void CheckUpdatesUI::OnHyperlinkctrlWebsiteHyperlinkClicked( wxHyperlinkEvent& e
     event.Skip(false);
 }
 
-void CheckUpdatesUI::OnCheckUpdatesFinished(wxCommandEvent& event)
+void CheckUpdatesUI::StartProgress()
 {
-	wxString txt1, txt2;
+	// Start timer
+	m_timer.SetOwner(this);
+	m_timer.Start(200);
+}
 
-	assert(wxIsMainThread());
+void CheckUpdatesUI::StopProgress()
+{
+	// Stop timer
 	m_timer.Stop();
+}
 
-	CheckUpdates::ResultStatus status = static_cast<CheckUpdates::ResultStatus>(event.GetInt());
-	switch (status) {
-	case CheckUpdates::NEW_VERSION_AVAILABLE:
-		txt1 = _("New version available: ");
-		txt1 += event.GetString();
-		txt2 = _("Installed version: ");
-		txt2 += _T(VERSION);
-		m_link->Show(true);
-		break;
-	case CheckUpdates::NO_NEW_VERSION_AVAILABLE:
-		txt1 = _("No updates available");
-		break;
-	case CheckUpdates::ERROR_CHECKING_NEW_VERSION:
-		txt1 = _("Error checking for updates");
-		txt2 = event.GetString();
-		break;
-	default:
-		assert(false);
-	}
-
+void CheckUpdatesUI::SetResults(const wxString& txt1, const wxString& txt2, bool showLink)
+{
 	m_msg1->SetLabel(txt1);
 	m_msg2->SetLabel(txt2);
+	m_link->Show(showLink);
 
 	// Fit content
 	if (GetSizer())	{
 		GetSizer()->SetSizeHints(this);
 	}
 	Centre();
-
-	event.Skip(false);
 }
 
 void CheckUpdatesUI::OnTimer(wxTimerEvent& event)

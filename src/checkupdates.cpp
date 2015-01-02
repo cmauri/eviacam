@@ -148,9 +148,11 @@ void CheckUpdates::OnThreadFinished(wxCommandEvent& event)
 {
 	// This event handler translates the event sent from the worker thread,
 	// which stores version name using a SetClientData, into a new wxCommandEvent
-	// which uses SetString to do so. We need to do so in order to maintain compatibility with
-	// wx2.x. TODO: when wx 3.0 takes over 2.x remove this stuff and send 
-	// the event directly from the thread using wxQueueEvent. See here for more info:
+	// which uses SetString. We need to do so in order to maintain compatibility with
+	// wx2.x. There are chances to leak some memory if some THREAD_FINISHED_EVENT are
+	// discarded and thus not properly deallocated. 
+	// TODO: when wx 3.0 takes over 2.x remove this stuff and send events directly 
+	// from the thread using wxQueueEvent. See here for more info:
 	// // http://docs.wxwidgets.org/trunk/group__group__funcmacro__events.html#ga0cf60a1ad3a5f1e659f7ae591570f58d
 
 	assert(wxIsMainThread());
@@ -262,7 +264,7 @@ wxThread::ExitCode CheckUpdates::CheckUpdatesWorker::Entry()
 
 	// Use this instead of wxQueueEvent for wx2.8 compatibility
 	wxPostEvent(m_handler, event);
-
+	
 	return ExitCode(0);
 }
 

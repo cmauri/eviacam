@@ -35,7 +35,7 @@
 #include "hotkeymanager.h"
 #include "simplelog.h"
 #include "newtrackerinformationdlg.h"
-#include "checkupdates_listener.h"
+#include "checkupdates_manager.h"
 
 #include <wx/msgdlg.h>
 #include <wx/choicdlg.h>
@@ -55,11 +55,11 @@ CViacamController::CViacamController(void)
 , m_pAutostart(NULL)
 , m_pConfiguration(NULL)
 , m_pMotionCalibration(NULL)
-, m_checkUpdateListener(NULL)
 , m_wizardManager()
 , m_pCameraDialog(NULL)
 , m_wConfigurationListener(*this)
 , m_wCameraDialogListener(*this)
+, m_pCheckUpdateManager(NULL)
 , m_cameraName()
 , m_enabled(false)
 , m_enabledAtStartup(false)
@@ -272,8 +272,9 @@ bool CViacamController::Initialize ()
 	
 	// Check for updates
 	if (retval && m_checkUpdatesAtStartup) {
-		assert(m_checkUpdateListener == NULL);
-		m_checkUpdateListener = new CheckUpdatesListener(m_pMainWindow);
+		assert(m_pCheckUpdateManager == NULL);
+		m_pCheckUpdateManager = new CheckUpdatesManager(m_pMainWindow);
+		m_pCheckUpdateManager->LaunchBackground();
 	}
 
 	// Show new tracker information dialog when needed
@@ -318,13 +319,13 @@ void CViacamController::Finalize ()
 		m_hotKeyManager= NULL;		
 	}
 
-	if (m_checkUpdateListener) {
-		delete m_checkUpdateListener;
-		m_checkUpdateListener = NULL;
+	if (m_pCheckUpdateManager) {
+		delete m_pCheckUpdateManager;
+		m_pCheckUpdateManager = NULL;
 	}
 
 	if (m_pMainWindow) {
-		WViacam* mainWin= m_pMainWindow;
+ 		WViacam* mainWin= m_pMainWindow;
 		m_pMainWindow= NULL;
 		mainWin->GetCamWindow()->UnregisterControl (m_visionPipeline.GetTrackAreaControl());
 		mainWin->Close (true);

@@ -25,20 +25,25 @@
 #include <wx/event.h>
 
 class wxWindow;
+class CheckUpdatesUI;
 
 namespace eviacam {
 
-class CheckUpdatesListener : public wxEvtHandler
+class CheckUpdatesManager : public wxEvtHandler
 {
 public:
-	CheckUpdatesListener(wxWindow* parent= NULL);
-	virtual ~CheckUpdatesListener();
+	CheckUpdatesManager(wxWindow* parent= NULL);
+	virtual ~CheckUpdatesManager();
+
+	void LaunchBackground();
+	void LaunchForeground();
 
 private:
 	void OnCheckUpdatesFinished(wxCommandEvent& event);
 	
 	CheckUpdates m_checker;
 	wxWindow* m_parent;
+	CheckUpdatesUI* m_pCheckUpdatesUI;
 };
 
 } // namespace eviacam

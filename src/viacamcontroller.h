@@ -40,7 +40,7 @@ class CAutostart;
 class wxLocale;
 class WCameraDialog;
 namespace eviacam {
-	class CheckUpdatesListener;
+	class CheckUpdatesManager;
 }
 
 class CViacamController : public CProcessImage, public CConfigBase
@@ -180,7 +180,7 @@ private:
 	WCameraDialog* m_pCameraDialog;
 	WConfigurationListener m_wConfigurationListener;
 	WCameraDialogListener m_wCameraDialogListener;
-	eviacam::CheckUpdatesListener* m_checkUpdateListener;
+	eviacam::CheckUpdatesManager* m_pCheckUpdateManager;
 
 
 	wxString m_cameraName;

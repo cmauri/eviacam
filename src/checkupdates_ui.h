@@ -34,7 +34,6 @@
 #include <wx/dialog.h>
 #include <wx/stattext.h>
 
-#include "checkupdates.h"
 
 /*!
  * Forward declarations
@@ -82,6 +81,10 @@ public:
     /// Creation
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_CHECKUPDATESUI_IDNAME, const wxString& caption = SYMBOL_CHECKUPDATESUI_TITLE, const wxPoint& pos = SYMBOL_CHECKUPDATESUI_POSITION, const wxSize& size = SYMBOL_CHECKUPDATESUI_SIZE, long style = SYMBOL_CHECKUPDATESUI_STYLE );
 
+	void StartProgress();
+	void StopProgress();
+	void SetResults(const wxString& txt1, const wxString& txt2, bool showLink);
+
     /// Destructor
     ~CheckUpdatesUI();
 
@@ -103,7 +106,7 @@ private:
 ////@end CheckUpdatesUI event handler declarations
 
     void OnTimer(wxTimerEvent& event);
-	void OnCheckUpdatesFinished(wxCommandEvent& event);
+
 
 ////@begin CheckUpdatesUI member function declarations
 
@@ -123,7 +126,6 @@ private:
     wxHyperlinkCtrl* m_link;
 ////@end CheckUpdatesUI member variables
     wxTimer m_timer;
-	eviacam::CheckUpdates m_checker;
 };
 
 #endif
