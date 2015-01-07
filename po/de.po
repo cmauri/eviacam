@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: eViacam 1.7.2\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2014-12-24 16:56+0100\n"
-"PO-Revision-Date: 2014-05-26 17:05+0100\n"
+"PO-Revision-Date: 2014-12-31 14:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -382,19 +382,20 @@ msgid "Browse..."
 msgstr "Durchsuchen..."
 
 #: src/wconfiguration.cpp:724
-#, fuzzy
 msgid "Face localization and tracking"
-msgstr "Gesicht lokalisieren"
+msgstr "Lokalisierung und Erkennung des Gesichts"
 
 #: src/wconfiguration.cpp:729
 msgid "Use legacy face tracking algorithm"
-msgstr ""
+msgstr "Verwende den bisherigen Gesichtserkennungsalgorithmus"
 
 #: src/wconfiguration.cpp:732
 msgid ""
 "Use old face tracking method\n"
 "(not recommended)."
 msgstr ""
+"Verwende die alte Gesichtserkennungsmethode\n"
+"(nicht empfohlen)."
 
 #: src/wconfiguration.cpp:737
 msgid "Locate face automatically"
@@ -431,7 +432,6 @@ msgid "Highest"
 msgstr "Höchste"
 
 #: src/wconfiguration.cpp:757
-#, fuzzy
 msgid "Stop pointer when face not detected"
 msgstr "Stoppe den Mauszeiger wenn kein Gesicht erkannt wurde"
 
@@ -778,7 +778,7 @@ msgstr "&Assistent..."
 
 #: src/wviacam.cpp:194
 msgid "&Options..."
-msgstr "&Optionen"
+msgstr "&Optionen..."
 
 #: src/wviacam.cpp:195
 msgid "&Configuration"
@@ -794,7 +794,7 @@ msgstr "Auf &Updates prüfen"
 
 #: src/wviacam.cpp:200
 msgid "&About..."
-msgstr "&Über"
+msgstr "&Über..."
 
 #: src/wviacam.cpp:201
 msgid "&Help"
@@ -900,13 +900,12 @@ msgid "Enable Viacam configuration wizard"
 msgstr "Enable Viacam Konfigurationsassistent"
 
 #: src/wwizard.cpp:261
-#, fuzzy
 msgid "Disable pointer control"
 msgstr "Mauszeigersteuerung ausschalten"
 
 #: src/wwizard.cpp:265 src/wwizard.cpp:1644
 msgid "Enable pointer control"
-msgstr ""
+msgstr "Mauszeigersteuerung einschalten"
 
 #: src/wwizard.cpp:374
 msgid "Welcome to the eViacam configuration wizard"
@@ -1220,11 +1219,11 @@ msgstr "Fehler beim Überprüfen von Updates"
 
 #: src/newtrackerinformationdlg.h:41
 msgid "New Tracker Information"
-msgstr ""
+msgstr "Neue Erkennungsinformationen"
 
 #: src/newtrackerinformationdlg.cpp:132
 msgid "Improved face tracker"
-msgstr ""
+msgstr "Verbesserte Gesichtserkennung"
 
 #: src/newtrackerinformationdlg.cpp:136
 msgid ""
@@ -1232,30 +1231,35 @@ msgid ""
 "We still provide the old algorithm, but it will most likely be removed in "
 "future versions."
 msgstr ""
+"Diese Version von Enable Viacam enthält einen verbesserten "
+"Gesichtserkennungsalgorithmus. Der alte Algorithmus wird weiterhin "
+"angeboten, aber er wird wahrscheinlich in einer der nächsten Versionen "
+"entfernt werden."
 
 #: src/newtrackerinformationdlg.cpp:140
 msgid "Do you want to use the new face tracker?"
-msgstr ""
+msgstr "Soll die neue Gesichtserkennung verwendet werden?"
 
 #: src/newtrackerinformationdlg.cpp:147
-#, fuzzy
 msgid "Yes and adjust some settings automatically (recommended)"
-msgstr "Gesicht automatisch lokalisieren (empfohlen)"
+msgstr "Ja und konfiguriere einige Einstellungen automatisch (empfohlen)"
 
 #: src/newtrackerinformationdlg.cpp:151
 msgid "No, use the legacy tracker"
-msgstr ""
+msgstr "Nein, verwende die bisherige Erkennung"
 
 #: src/newtrackerinformationdlg.cpp:155
 msgid ""
 "You could also change the tracker configuration under:\n"
 "Configuration -> Options... -> Advanced -> Face localization and tracking"
 msgstr ""
+"Ändern der Erkennungseinstellungen unter:\n"
+"Konfiguration -> Optionen... -> Erweitert -> Lokalisierung und Erkennung des "
+"Gesichts"
 
 #: src/newtrackerinformationdlg.cpp:161
-#, fuzzy
 msgid "Show this message on startup"
-msgstr "Zeige diese Nachricht nicht mehr an"
+msgstr "Zeige diese Meldung beim Starten an"
 
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
