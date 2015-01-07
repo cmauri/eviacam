@@ -151,7 +151,7 @@ public:
 	}
 
 	void SetSendActionWait(unsigned int ms) {
-		if (ms> 10) ms= 10;
+		if (ms> 50) ms= 50;
 		m_pMouseControl->SetSendActionWait(ms);
 	}
 	unsigned int GetSendActionWait() const { return m_pMouseControl->GetSendActionWait(); }

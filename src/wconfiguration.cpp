@@ -783,7 +783,7 @@ void WConfiguration::CreateControls()
     itemBoxSizer86->Add(itemStaticBoxSizer107, 0, wxGROW|wxALL, 5);
     wxBoxSizer* itemBoxSizer108 = new wxBoxSizer(wxHORIZONTAL);
     itemStaticBoxSizer107->Add(itemBoxSizer108, 0, wxALIGN_LEFT|wxALL, 0);
-    m_spinSendActionWait = new wxSpinCtrl( itemPanel85, ID_SPIN_SEND_ACTION_WAIT, wxT("0"), wxDefaultPosition, wxSize(50, -1), wxSP_ARROW_KEYS, 0, 10, 0 );
+    m_spinSendActionWait = new wxSpinCtrl( itemPanel85, ID_SPIN_SEND_ACTION_WAIT, wxT("0"), wxDefaultPosition, wxSize(50, -1), wxSP_ARROW_KEYS, 0, 50, 0 );
     if (WConfiguration::ShowToolTips())
         m_spinSendActionWait->SetToolTip(_("Increase this value if some application ignores click events."));
     itemBoxSizer108->Add(m_spinSendActionWait, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);

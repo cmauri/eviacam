@@ -8638,7 +8638,7 @@ tracking area."</string>
                           <string name="proxy-Header filename">""</string>
                           <string name="proxy-Member variable name">"m_spinSendActionWait"</string>
                           <long name="proxy-Minimum value">0</long>
-                          <long name="proxy-Maximum value">10</long>
+                          <long name="proxy-Maximum value">50</long>
                           <long name="proxy-Initial value">0</long>
                           <string name="proxy-Help text">""</string>
                           <string name="proxy-Tooltip text">"Increase this value if some application ignores click events."</string>
