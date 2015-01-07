@@ -25,12 +25,20 @@
 #include <wx/protocol/http.h>
 #include <wx/thread.h>
 
-#define UPDATE_HOSTNAME "eviacam.sourceforge.net"
-#if defined(__WXGTK__)
-#define UPDATE_FILE _T("/version.php?cv=") _T(VERSION) _T("&p=linux")
+#define UPDATE_HOSTNAME "eviacam.crea-si.com"
+#ifdef NDEBUG		
+	#define MODE_DEBUG _T("&m=r")
 #else
-	#define UPDATE_FILE _T("/version.php?cv=") _T(VERSION) _T("&p=windows")
+	#define MODE_DEBUG _T("&m=d")
 #endif
+
+#if defined(__WXGTK__)
+	#define UPDATE_FILE _T("/version.php?cv=") _T(VERSION) _T("&p=linux") MODE_DEBUG
+#else
+	#define UPDATE_FILE _T("/version.php?cv=") _T(VERSION) _T("&p=windows") MODE_DEBUG
+#endif
+
+
 
 // Compare two version strings
 // Return:
