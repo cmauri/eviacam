@@ -126,7 +126,11 @@ void EViacamApp::Init()
  */
 
 bool EViacamApp::OnInit()
-{     	
+{     
+	// These functions are useful to pin down memory leaks on WIN32
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetBreakAlloc(489103);
+
 	// Call default behaviour
 	if (!wxApp::OnInit()) return false;
 
@@ -177,9 +181,9 @@ bool EViacamApp::OnInit()
 
 static const wxCmdLineEntryDesc g_cmdLineDesc [] =
 {
-     { wxCMD_LINE_SWITCH, wxT("h"), wxT("help"), wxT("displays help on the command line parameters."),
+     { wxCMD_LINE_SWITCH, wxT_2("h"), wxT_2("help"), wxT_2("displays help on the command line parameters."),
           wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
-     { wxCMD_LINE_SWITCH, wxT("d"), wxT("debug"), wxT("debug mode. Print debug messages to the console."),
+     { wxCMD_LINE_SWITCH, wxT_2("d"), wxT_2("debug"), wxT_2("debug mode. Print debug messages to the console."),
           wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
       
      { wxCMD_LINE_NONE }
@@ -195,6 +199,9 @@ void EViacamApp::OnInitCmdLine(wxCmdLineParser& parser)
 bool EViacamApp::OnCmdLineParsed(wxCmdLineParser& parser)
 {
 	bool debug_mode= parser.Found(wxT("d"));
+#ifndef NDEBUG
+	debug_mode = true;
+#endif
 
 	if (debug_mode) {
 		// Set log priority level

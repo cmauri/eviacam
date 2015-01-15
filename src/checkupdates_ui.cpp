@@ -3,7 +3,7 @@
 // Purpose:     Check updates dialog
 // Author:      César Mauri Loba
 // Created:     12/10/2012 20:15:41
-// Copyright:   (C) 2008-12 Cesar Mauri from CREA Sistemes Informatics
+// Copyright:   (C) 2008-14 Cesar Mauri from CREA Sistemes Informatics
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -40,6 +40,8 @@
 
 ////@begin XPM images
 ////@end XPM images
+
+using namespace eviacam;
 
 /*!
  * CheckUpdatesUI type definition
@@ -99,12 +101,7 @@ bool CheckUpdatesUI::Create( wxWindow* parent, wxWindowID id, const wxString& ca
     Centre();
 ////@end CheckUpdatesUI creation
 
-	// Start timer
-    m_timer.SetOwner(this);
-    m_timer.Start (200);
-
-	// Create updates "checker"
-	m_checker= eviacam::CheckUpdates::GetInstance();
+	
 
     return true;
 }
@@ -219,7 +216,7 @@ wxIcon CheckUpdatesUI::GetIconResource( const wxString& name )
 
 void CheckUpdatesUI::OnButtonCheckupdateCloseClick( wxCommandEvent& event )
 {
-	EndModal (0);
+	EndModal(wxCANCEL);
     event.Skip(false);
 }
 
@@ -234,54 +231,41 @@ void CheckUpdatesUI::OnHyperlinkctrlWebsiteHyperlinkClicked( wxHyperlinkEvent& e
     event.Skip(false);
 }
 
+void CheckUpdatesUI::StartProgress()
+{
+	// Start timer
+	m_timer.SetOwner(this);
+	m_timer.Start(200);
+}
+
+void CheckUpdatesUI::StopProgress()
+{
+	// Stop timer
+	m_timer.Stop();
+}
+
+void CheckUpdatesUI::SetResults(const wxString& txt1, const wxString& txt2, bool showLink)
+{
+	m_msg1->SetLabel(txt1);
+	m_msg2->SetLabel(txt2);
+	m_link->Show(showLink);
+
+	// Fit content
+	if (GetSizer())	{
+		GetSizer()->SetSizeHints(this);
+	}
+	Centre();
+}
 
 void CheckUpdatesUI::OnTimer(wxTimerEvent& event)
 {
-	if (m_checker->GetStatus()!= eviacam::CheckUpdates::CHECK_IN_PROGRESS) { // Search finished
-		wxString txt1, txt2;
+	// Update progress indicator
+	wxString txt= m_msg2->GetLabel();
 
-		m_timer.Stop();
+	if (txt.Len()> 15) txt= _T(".");
+	else txt+=  _T(".");
 
-		switch (m_checker->GetStatus()) {
-			case eviacam::CheckUpdates::NEW_VERSION_AVAILABLE:
-				txt1= _("New version available: ");
-				txt1+= m_checker->GetStatusMessage();
-				txt2= _("Installed version: ");
-				txt2+= _T(VERSION);
-				m_link->Show (true);
-				break;
-			case eviacam::CheckUpdates::NO_NEW_VERSION_AVAILABLE:
-				txt1= _("No updates available");
-				break;
-			case eviacam::CheckUpdates::ERROR_CHECKING_NEW_VERSION:
-				txt1= _("Error checking for updates");
-				txt2= m_checker->GetStatusMessage();
-				break;
-			default:
-				assert (false);
-		}
-
-		m_msg1->SetLabel (txt1);
-		m_msg2->SetLabel (txt2);
-		
-		// Fit content
-		if (GetSizer())	{
-			GetSizer()->SetSizeHints(this);
-		}
-		Centre();
-
-		m_checker->Release();
-		m_checker= NULL;
-	}
-	else {
-		// Update progress indicator
-		wxString txt= m_msg2->GetLabel();
-
-		if (txt.Len()> 15) txt= _T(".");
-		else txt+=  _T(".");
-
-		m_msg2->SetLabel (txt);
-	}
+	m_msg2->SetLabel (txt);
 
 	event.Skip(false);
 }

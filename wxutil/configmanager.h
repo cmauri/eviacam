@@ -31,7 +31,7 @@ public:
 	CConfigManager(CConfigBase* configRoot);
 
 	// Read/write both app wide and specific profile config
-	void ReadAll (bool callStartupRun= false);
+	void ReadAll ();
 	void WriteAll ();
 
 	// For language setting only

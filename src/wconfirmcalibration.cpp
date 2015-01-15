@@ -113,6 +113,7 @@ bool WConfirmCalibration::Create( wxWindow* parent, wxWindowID id, const wxStrin
         GetSizer()->SetSizeHints(this);
     }
     Centre();
+   // ShowModal();
 ////@end WConfirmCalibration creation
     return true;
 }

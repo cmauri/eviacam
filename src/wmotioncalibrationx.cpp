@@ -149,6 +149,7 @@ void WMotionCalibrationX::CreateControls()
     itemBoxSizer2->Add(m_staticText, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     m_staticTextFaceNotDetected = new wxStaticText( itemDialog1, wxID_STATIC, _("Your face is not detected. This may produce wrong calibration results."), wxDefaultPosition, wxDefaultSize, 0 );
+    m_staticTextFaceNotDetected->SetForegroundColour(wxColour(128, 0, 0));
     itemBoxSizer2->Add(m_staticTextFaceNotDetected, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
 ////@end WMotionCalibrationX content construction
@@ -173,7 +174,7 @@ wxBitmap WMotionCalibrationX::GetBitmapResource( const wxString& name )
     // Bitmap retrieval
 ////@begin WMotionCalibrationX bitmap retrieval
     wxUnusedVar(name);
-    if (name == _T("icons/usermoveh64.xpm"))
+    if (name == wxT("icons/usermoveh64.xpm"))
     {
         wxBitmap bitmap(usermoveh64);
         return bitmap;

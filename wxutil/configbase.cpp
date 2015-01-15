@@ -18,12 +18,6 @@
 
 #include "configbase.h"
 
-//Should be called during program startup and after Load in order to start-up needed things.
-
-void CConfigBase::StartupRun() 
-{
-}
-
 void CConfigBase::ReadAppData(wxConfigBase*)
 {
 }

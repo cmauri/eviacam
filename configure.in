@@ -4,8 +4,8 @@ AM_CONFIG_HEADER(config.h)
 
 ##############################################################
 # Editable parameters
-AM_INIT_AUTOMAKE([eviacam], 1.7.2)
-COPYRIGHT="© 2008-14"
+AM_INIT_AUTOMAKE([eviacam], 2.0.1)
+COPYRIGHT="© 2008-15"
 PUBLISHER="César Mauri Loba"
 ##############################################################
 
@@ -31,7 +31,7 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
 
-ALL_LINGUAS="ca es gl it tr ast de oc fr ar he ru pt_BR ja el lt"
+ALL_LINGUAS="ca es gl it tr ast de oc fr ar he ru pt_BR ja el lt zh_TW zh_CN"
 
 AM_GNU_GETTEXT([external])
 

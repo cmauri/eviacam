@@ -45,8 +45,7 @@
 #include "pointeraction.h"
 #include "dwellclick.h"
 #include "paths.h"
-#include "checkupdates.h"
-#include "checkupdates_ui.h"
+#include "checkupdates_manager.h"
 
 ////@begin XPM images
 #include "icons/eviacam_mini.xpm"
@@ -660,8 +659,8 @@ void WViacam::OnMenuWizardClick( wxCommandEvent& event )
 
 void WViacam::OnMenuCheckupdatesClick( wxCommandEvent& event )
 {	
-	CheckUpdatesUI dlg(this);
-	dlg.ShowModal();
+	eviacam::CheckUpdatesManager updateManager(this);
+	updateManager.LaunchForeground();
 
 	event.Skip(false);
 }
