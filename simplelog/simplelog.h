@@ -33,7 +33,7 @@ extern "C" {
  */
 #ifndef SLOG_DECLSPEC
 # if defined(WIN32)
-#  define SLOG_DECLSPEC	__declspec(dllexport)
+#  define SLOG_DECLSPEC	
 # else
 #  define SLOG_DECLSPEC
 # endif
