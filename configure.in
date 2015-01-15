@@ -4,7 +4,7 @@ AM_CONFIG_HEADER(config.h)
 
 ##############################################################
 # Editable parameters
-AM_INIT_AUTOMAKE([eviacam], 2.0.0)
+AM_INIT_AUTOMAKE([eviacam], 2.0.1)
 COPYRIGHT="© 2008-15"
 PUBLISHER="César Mauri Loba"
 ##############################################################

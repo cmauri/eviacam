@@ -1,4 +1,4 @@
-2015-01-14 - Release 2.0.0
+2015-01-15 - Release 2.0.1
 * Face tracking algorithm improved
 * Automatically check updates on start up
 * Add support for wxWidgets 3.x
