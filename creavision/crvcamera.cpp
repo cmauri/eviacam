@@ -62,7 +62,7 @@ void CCamera::Close()
 {
 	DoClose();
 }
-
+/*
 bool CCamera::QueryFrame (CIplImage& image)
 {
 	if (!DoQueryFrame(image)) return false;
@@ -73,6 +73,7 @@ bool CCamera::QueryFrame (CIplImage& image)
 
 	return true;
 }
+*/
 
 IplImage* CCamera::QueryFrame()
 {

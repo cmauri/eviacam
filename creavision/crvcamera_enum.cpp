@@ -21,9 +21,9 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #ifdef WIN32
-	#include "crvcamera_wdm.h"
+	#include "crvcamera_cv.h"
 
-	#define CAMCLASS CCameraWDM
+	#define CAMCLASS CCameraCV
 #else
 	#include <string.h>
 	#include "webcam.h"
