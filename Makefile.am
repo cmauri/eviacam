@@ -28,6 +28,7 @@ INCLUDES = \
 	-I$(top_srcdir)/wxutil \
 	-I$(top_srcdir)/creavision \
 	-I$(top_srcdir)/wxcamwindow \
+	-I$(top_srcdir)/simplelog \
 	-I$(top_srcdir)
 
 maintainer-clean-local:
@@ -74,7 +75,7 @@ deb: configure dist
 	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	cd $(PACKAGE)-$(VERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
-	dpkg-buildpackage -B -rfakeroot ; \
+	dpkg-buildpackage -B -rfakeroot --force-sign ; \
 	cd .. ; \
 	$(RM) -r $(PACKAGE)-$(VERSION)
 
@@ -87,7 +88,7 @@ deb-src: configure dist
 	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	cd $(PACKAGE)-$(VERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
-	dpkg-buildpackage -S -i -rfakeroot ; \
+	dpkg-buildpackage -S -i -rfakeroot --force-sign ; \
 	cd .. ; \
 	$(RM) -r $(PACKAGE)-$(VERSION)
 
@@ -97,7 +98,7 @@ deb-src-changes: configure
 	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	cd $(PACKAGE)-$(VERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
-	dpkg-buildpackage -S -i -rfakeroot --changes-option=-sd ; \
+	dpkg-buildpackage -S -i -rfakeroot --force-sign --changes-option=-sd ; \
 	cd .. ; \
 	$(RM) -r $(PACKAGE)-$(VERSION)
 

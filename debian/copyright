@@ -24,7 +24,7 @@ License: GPL-3+
  Public License can be found in the file
  `/usr/share/common-licenses/GPL-3'.
 
-Files: libwebcam/*
+Files: creavision/libwebcam/*
 Copyright: Copyright 2006-2011 Logitech.
 License: LGPL-3+
  libwebcam is free software: you can redistribute it and/or modify

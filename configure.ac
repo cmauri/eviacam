@@ -1,10 +1,11 @@
-AC_INIT(src/eviacamapp.cpp)
+AC_INIT([eviacam], 2.0.1)
+AC_CONFIG_SRCDIR([src/eviacamapp.cpp])
 AC_PREREQ(2.61)
 AM_CONFIG_HEADER(config.h)
 
 ##############################################################
 # Editable parameters
-AM_INIT_AUTOMAKE([eviacam], 2.0.1)
+AM_INIT_AUTOMAKE
 COPYRIGHT="© 2008-15"
 PUBLISHER="César Mauri Loba"
 ##############################################################
