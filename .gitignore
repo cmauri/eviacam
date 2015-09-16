@@ -41,6 +41,8 @@ wxutil/.libs/
 po/remove-potcdate.sed
 src/eviacam
 src/eviacamloader
+debian-src
+debian-build
 *.o
 *.lo
 *.la
