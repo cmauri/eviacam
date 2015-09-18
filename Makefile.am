@@ -19,8 +19,7 @@ EXTRA_DIST = \
 	win32/installer.iss \
 	win32/installer.ico \
 	win32/Info \
-	eviacam.kdevelop \
-	m4 
+	eviacam.kdevelop
 
 dist_pkgdata_DATA = THANKS
 
