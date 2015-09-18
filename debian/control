@@ -10,7 +10,7 @@ Build-Depends: debhelper (>= 9),
                libopencv-dev | libcv-dev,
                libpng12-dev,
                libv4l-dev,
-               libwxgtk2.8-dev,
+               libwxgtk3.0-dev,
                libxext-dev,
                libxtst-dev,
                po-debconf
@@ -20,7 +20,7 @@ Homepage: http://viacam.org
 Package: eviacam
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Recommends: wx2.8-i18n
+Recommends: wx3.0-i18n
 Description: webcam based mouse emulator
  Enable Viacam (aka eViacam) is a mouse replacement program that moves
  the pointer as you move your head. It works on a standard computer
