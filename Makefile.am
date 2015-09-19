@@ -15,10 +15,6 @@ SUBDIRS = \
 EXTRA_DIST = \
 	autogen.sh \
 	AGRAIMENTS.txt \
-	win32/eviacam.sln \
-	win32/installer.iss \
-	win32/installer.ico \
-	win32/Info \
 	eviacam.kdevelop
 
 dist_pkgdata_DATA = THANKS
@@ -87,9 +83,10 @@ deb-src: configure dist
 	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
 	cd $(PACKAGE)-$(VERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
-	dpkg-buildpackage -S -i -rfakeroot --force-sign ; \
+	dpkg-buildpackage -S -i -rfakeroot --force-sign --check-command=lintian ; \
 	cd .. ; \
 	$(RM) -r $(PACKAGE)-$(VERSION)
+	
 
 ## make a Debian .changes files without sources
 deb-src-changes: configure
