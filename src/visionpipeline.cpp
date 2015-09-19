@@ -82,7 +82,7 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 	if (!m_faceCascade)	{
 		try {
 			m_faceCascade = (CvHaarClassifierCascade*)
-				cvLoad("/usr/share/eviacam/haarcascade_frontalface_default.xml", 0, 0, 0);
+				cvLoad("/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml", 0, 0, 0);
 		}
 		catch (cv::Exception& e) {
 			slog_write(SLOG_PRIO_WARNING, "%s:%d %s\n", __FILE__, __LINE__, e.what());
