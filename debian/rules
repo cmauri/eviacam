@@ -2,5 +2,8 @@
 
 export DH_VERBOSE=1
 
+clean:
+	debconf-updatepo
+
 %:
 	dh $@ --with autoreconf
