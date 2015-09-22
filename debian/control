@@ -4,9 +4,8 @@ Priority: optional
 Maintainer: Cesar Mauri <cesar@crea-si.com>
 Build-Depends: debhelper (>= 9),
                dh-autoreconf,
-               libopencv-dev (>= 1.0),
-			   opencv-data,
                libgtk2.0-dev,
+               libopencv-dev (>= 2.0),
                libpng12-dev,
                libv4l-dev,
                libwxgtk3.0-dev,

@@ -155,6 +155,8 @@ OPENCVTEST
 
 OPENCVVERSION=`echo $opencvversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
 AC_SUBST(OPENCVVERSION)
+OPENCV_CPPFLAGS="`$OPENCVCONFIG --cflags`"
+OPENCV_LIBS=" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_objdetect -lopencv_video"
 # -----------------       opencv  --------------------
 
 # Checks for header files.
@@ -175,8 +177,7 @@ AC_HEADER_STDBOOL
 AC_C_CONST
 AC_C_INLINE
 
-OPENCV_CPPFLAGS="`$OPENCVCONFIG --cflags`"
-OPENCV_LIBS="`$OPENCVCONFIG --libs`"
+
 
 COMPFLAGS="-Wall -fexceptions -Wconversion $WX_CPPFLAGS $OPENCV_CPPFLAGS $GTK_CPPFLAGS"
 
