@@ -18,7 +18,7 @@ Homepage: http://viacam.org
 
 Package: eviacam
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}, opencv-data
 Recommends: wx3.0-i18n
 Description: webcam based mouse emulator
  Enable Viacam (aka eViacam) is a mouse replacement program that moves
