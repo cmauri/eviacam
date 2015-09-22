@@ -10,8 +10,6 @@ noinst_HEADERS = \
 INCLUDES = -I$(top_srcdir)/simplelog
 METASOURCES = AUTO
 
-dist_noinst_DATA = wxutil.vcproj
-
 noinst_LTLIBRARIES = libwxutil.la
 
 libwxutil_la_LDFLAGS = $(all_libraries)

@@ -41,7 +41,6 @@ dist_noinst_DATA= version.h.in \
 	eviacamloader.c.in \
 	gui.pjd \
 	gui.rc \
-	eviacam.vcproj \
 	icons/on.xpm \
 	icons/eviacam.ico \
 	icons/clickwindowoff.xpm \
