@@ -2,8 +2,9 @@
 
 export DH_VERBOSE=1
 
-clean:
+override_dh_clean:
 	debconf-updatepo
+	dh_clean
 
 %:
 	dh $@ --with autoreconf
