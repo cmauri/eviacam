@@ -19,7 +19,7 @@
 /////////////////////////////////////////////////////////////////////////////
 #include "checkupdates_manager.h"
 #include "checkupdates_ui.h"
-#include "version.h"
+#include "config.h"
 #include <wx/window.h>
 
 namespace eviacam {

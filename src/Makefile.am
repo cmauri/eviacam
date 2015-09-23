@@ -12,7 +12,6 @@ noinst_HEADERS = wgetkey.h \
 	eviacamapp.h \
 	langnames-utf8.h \
 	visionpipeline.h \
-	version.h \
 	viacamcontroller.h \
 	wabout.h \
 	wconfiguration.h \
@@ -37,7 +36,7 @@ noinst_HEADERS = wgetkey.h \
 	newtrackerinformationdlg.h \
 	checkupdates_manager.h
 
-dist_noinst_DATA= version.h.in \
+dist_noinst_DATA= \
 	eviacamloader.c.in \
 	gui.pjd \
 	gui.rc \

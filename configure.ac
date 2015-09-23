@@ -7,7 +7,9 @@ COPYRIGHT="© 2008-15"
 PUBLISHER="César Mauri Loba"
 
 AC_SUBST(COPYRIGHT, [`echo $COPYRIGHT`])
+AC_DEFINE_UNQUOTED([COPYRIGHT], ["$COPYRIGHT"], [Copyright notice])
 AC_SUBST(PUBLISHER, [`echo $PUBLISHER`])
+AC_DEFINE_UNQUOTED([PUBLISHER], ["$PUBLISHER"], [Publisher info])
 
 # Use libtool for building static libraries only
 #
@@ -214,6 +216,7 @@ AC_SUBST(LTLIBOBJS)
 #LTALLOCA=`echo X"$ALLOCA"|[$Xsed -e "s,\.$[^.]*,.lo,g"]`
 #AC_SUBST(LTALLOCA)
 #BUILD_DATE=`LC_ALL="C" date`
+#AC_DEFINE_UNQUOTED
 
 AC_OUTPUT(
 	[Makefile] 
@@ -225,7 +228,6 @@ AC_OUTPUT(
 	[simplelog/Makefile] 
 	[wxcamwindow/Makefile] 
 	[src/Makefile] 
-	[src/version.h]
 	[src/eviacamloader.c]
 	[rpm/Makefile]
 	[rpm/eviacam.spec]

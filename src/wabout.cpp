@@ -39,7 +39,7 @@
 #include "wabout.h"
 #include "eviacamapp.h"
 #include "viacamcontroller.h"
-#include "version.h"
+#include "config.h"
 #include "paths.h"
 #include "website.h"
 
