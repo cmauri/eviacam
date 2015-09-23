@@ -84,7 +84,8 @@ void CheckUpdatesManager::OnCheckUpdatesFinished(wxCommandEvent& event)
 
 	// Checking in background
 	if (status != CheckUpdates::NEW_VERSION_AVAILABLE) return;
-		
+
+#if defined(ENABLE_UPDATES_CHECK)		
 	m_pCheckUpdatesUI = new CheckUpdatesUI(m_parent);
 
 	SetResults(m_pCheckUpdatesUI, status, event.GetString());
@@ -92,6 +93,7 @@ void CheckUpdatesManager::OnCheckUpdatesFinished(wxCommandEvent& event)
 	m_pCheckUpdatesUI->ShowModal();
 	
 	wxDELETE(m_pCheckUpdatesUI);
+#endif
 }
 
 void CheckUpdatesManager::LaunchBackground()

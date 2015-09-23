@@ -20,11 +20,11 @@ EXTRA_DIST = \
 dist_pkgdata_DATA = THANKS
 
 INCLUDES = \
-	-I$(top_srcdir)/wxutil \
+	-I$(top_srcdir) \
 	-I$(top_srcdir)/creavision \
 	-I$(top_srcdir)/wxcamwindow \
 	-I$(top_srcdir)/simplelog \
-	-I$(top_srcdir)
+	-I$(top_srcdir)/wxutil
 
 maintainer-clean-local:
 	-rm -rf win32/Release
