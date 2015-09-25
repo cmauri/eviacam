@@ -221,6 +221,7 @@ AC_SUBST(LTLIBOBJS)
 AC_OUTPUT(
 	[Makefile] 
 	[po/Makefile.in] 
+	[man/Makefile] 
 	[doc/Makefile] 
 	[wxutil/Makefile] 
 	[creavision/Makefile] 

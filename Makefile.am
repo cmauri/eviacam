@@ -8,6 +8,7 @@ SUBDIRS = \
 	wxutil \
 	wxcamwindow \
 	po \
+	man \
 	doc \
 	src \
 	rpm
