@@ -26,7 +26,7 @@
 
 // This event provides two fields
 //		GetInt: see CheckUpdates::ResultStatus
-//		GetString: wxString with an appropiate message for the user
+//		GetString: wxString with an appropriate message for the user
 DECLARE_EVENT_TYPE(CHECKUPDATE_FINISHED_EVENT, wxCommandEvent);
 
 namespace eviacam {

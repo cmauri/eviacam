@@ -35,7 +35,7 @@ public:
 	static const char *GetDeviceName (unsigned int id);
 	
 	// Create a camera instace given its number. 
-	// It allows to indicate desired frame size and rate.
+	// Expects the desired frame size and rate.
 	// Returns NULL if the camera doesn't exist or another
 	// error occurred.
 	static CCamera* GetCamera 

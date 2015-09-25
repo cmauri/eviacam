@@ -105,7 +105,7 @@ bool CCameraWDM::DoQueryFrame(CIplImage& image)
 	assert (image.ptr()->imageSize== m_VI->getSize(m_Id));
 	
 	m_VI->getPixels(m_Id, reinterpret_cast<unsigned char *>(image.ptr()->imageData), false, false);
-	// Set appropiate origin
+	// Set appropriate origin
 	image.ptr()->origin= 1;
 
 	return true;

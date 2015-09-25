@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2015-01-15 13:26+0100\n"
+"POT-Creation-Date: 2015-09-24 15:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -185,7 +185,7 @@ msgstr ""
 
 #: src/wconfiguration.cpp:529
 msgid ""
-"Allows to send multiple clicks\n"
+"Send multiple clicks\n"
 "when the pointer is stopped."
 msgstr ""
 
@@ -286,7 +286,7 @@ msgid "Move left:"
 msgstr ""
 
 #: src/wconfiguration.cpp:613 src/wconfiguration.cpp:626
-#: src/wconfiguration.cpp:639 src/wconfiguration.cpp:652 src/wviacam.cpp:210
+#: src/wconfiguration.cpp:639 src/wconfiguration.cpp:652 src/wviacam.cpp:215
 msgid "Disable"
 msgstr ""
 
@@ -718,67 +718,67 @@ msgstr ""
 msgid "Released under the GNU/GPL v3 license. See COPYING file for details."
 msgstr ""
 
-#: src/wviacam.cpp:186
+#: src/wviacam.cpp:189
 msgid "E&nable / Disable"
 msgstr ""
 
-#: src/wviacam.cpp:188
+#: src/wviacam.cpp:191
 msgid "&Exit"
 msgstr ""
 
-#: src/wviacam.cpp:189
+#: src/wviacam.cpp:192
 msgid "&File"
 msgstr ""
 
-#: src/wviacam.cpp:191
+#: src/wviacam.cpp:194
 msgid "&Wizard..."
 msgstr ""
 
-#: src/wviacam.cpp:193
+#: src/wviacam.cpp:196
 msgid "&Options..."
 msgstr ""
 
-#: src/wviacam.cpp:194
+#: src/wviacam.cpp:197
 msgid "&Configuration"
 msgstr ""
 
-#: src/wviacam.cpp:196
+#: src/wviacam.cpp:199
 msgid "&Help contents"
 msgstr ""
 
-#: src/wviacam.cpp:197
+#: src/wviacam.cpp:201
 msgid "Check for &updates"
 msgstr ""
 
-#: src/wviacam.cpp:199
+#: src/wviacam.cpp:204
 msgid "&About..."
 msgstr ""
 
-#: src/wviacam.cpp:200
+#: src/wviacam.cpp:205
 msgid "&Help"
 msgstr ""
 
-#: src/wviacam.cpp:207
+#: src/wviacam.cpp:212
 msgid "Enable"
 msgstr ""
 
-#: src/wviacam.cpp:214 src/clickwindow.h:31
+#: src/wviacam.cpp:219 src/clickwindow.h:31
 msgid "Click Window"
 msgstr ""
 
-#: src/wviacam.cpp:217
+#: src/wviacam.cpp:222
 msgid "On-screen keyboard"
 msgstr ""
 
-#: src/wviacam.cpp:221
+#: src/wviacam.cpp:226
 msgid "Options"
 msgstr ""
 
-#: src/wviacam.cpp:225
+#: src/wviacam.cpp:230
 msgid "Help"
 msgstr ""
 
-#: src/wviacam.cpp:231
+#: src/wviacam.cpp:236
 msgid ""
 "Frame rate meter. For proper function\n"
 "should be greater than 25 fps. Reduce\n"
@@ -786,22 +786,22 @@ msgid ""
 "necessary."
 msgstr ""
 
-#: src/wviacam.cpp:328
+#: src/wviacam.cpp:333
 #, c-format
 msgid " %li fps (good)"
 msgstr ""
 
-#: src/wviacam.cpp:331
+#: src/wviacam.cpp:336
 #, c-format
 msgid " %li fps (could be improved)"
 msgstr ""
 
-#: src/wviacam.cpp:334
+#: src/wviacam.cpp:339
 #, c-format
 msgid " %li fps (too low)"
 msgstr ""
 
-#: src/wviacam.cpp:379
+#: src/wviacam.cpp:384
 msgid ""
 "This action will close the program.\n"
 "Are you sure?"
@@ -872,7 +872,7 @@ msgstr ""
 #: src/wwizard.cpp:542
 msgid ""
 "The assisted calibration procedure will ask you to move your head in order "
-"to automatically configure the appropiate motion parameters.\n"
+"to automatically configure the appropriate motion parameters.\n"
 "\n"
 "After this calibration stage, you can manually adjust the motion "
 "parameters.\n"

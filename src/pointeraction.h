@@ -45,7 +45,7 @@ public:
 	bool GetEnabled() const { return m_enabled; }
 	void SetEnabled(bool value);
 
-	// Allows to choose among diferent types of click generation modes
+	// Choose among diferent types of click generation modes
 	enum EClickMode { NONE, DWELL, GESTURE };
 	EClickMode GetClickMode() const { return m_clickMode; }
 	bool SetClickMode(EClickMode mode, bool silent= true, wxWindow* parent= NULL);
