@@ -12,8 +12,6 @@ AC_SUBST(PUBLISHER, [`echo $PUBLISHER`])
 AC_DEFINE_UNQUOTED([PUBLISHER], ["$PUBLISHER"], [Publisher info])
 
 # Use libtool for building static libraries only
-#
-#AC_DISABLE_SHARED
 AC_ENABLE_SHARED
 AC_DISABLE_STATIC
 
@@ -193,14 +191,7 @@ else
 	COMPFLAGS="$COMPFLAGS -Wall -Wconversion -DDEBUG -g -O0"
 fi
 
-#CPPFLAGS="$CPPFLAGS $COMPFLAGS"
-CPPFLAGS="$COMPFLAGS"
-#CXXFLAGS="$CXXFLAGS $COMPFLAGS"
-CXXFLAGS="$COMPFLAGS"
-
-#AC_MSG_NOTICE([CPPFLAGS: $CPPFLAGS])
-#AC_MSG_NOTICE([CXXFLAGS: $CXXFLAGS])
-
+CXXFLAGS="$CXXFLAGS $COMPFLAGS"
 LDFLAGS="$LDFLAGS -Wl,--as-needed"
 
 AC_SUBST(WX_LIBS)
@@ -212,11 +203,6 @@ Xsed="sed -e s/^X//"
 LTLIBOBJS=`echo X"$LIBOBJS"|\
            [$Xsed -e "s,\.[^.]* ,.lo ,g;s,\.[^.]*$,.lo,"]`
 AC_SUBST(LTLIBOBJS)
-
-#LTALLOCA=`echo X"$ALLOCA"|[$Xsed -e "s,\.$[^.]*,.lo,g"]`
-#AC_SUBST(LTALLOCA)
-#BUILD_DATE=`LC_ALL="C" date`
-#AC_DEFINE_UNQUOTED
 
 AC_OUTPUT(
 	[Makefile] 

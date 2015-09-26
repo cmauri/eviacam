@@ -5,6 +5,6 @@ noinst_LTLIBRARIES = libwxcamwindow.la
 libwxcamwindow_la_SOURCES = camwindow.cpp capturethread.cpp visiblenormroi.cpp \
 	wxnormroi.cpp
 
-INCLUDES = -I$(top_srcdir)/creavision
+AM_CPPFLAGS = -I$(top_srcdir)/creavision
 
 libwxcamwindow_la_LIBADD = $(top_builddir)/creavision/libcreavision.la

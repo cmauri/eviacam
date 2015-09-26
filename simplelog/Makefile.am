@@ -1,6 +1,6 @@
 noinst_HEADERS = simplelog.h
 
-INCLUDES = 
+AM_CPPFLAGS = 
 METASOURCES = AUTO
 
 noinst_LTLIBRARIES = libsimplelog.la

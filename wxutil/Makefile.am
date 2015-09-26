@@ -7,7 +7,7 @@ noinst_HEADERS = \
 	timeutil.h \
 	warnbaroverlap.h
 
-INCLUDES = -I$(top_srcdir)/simplelog
+AM_CPPFLAGS = -I$(top_srcdir)/simplelog
 METASOURCES = AUTO
 
 noinst_LTLIBRARIES = libwxutil.la

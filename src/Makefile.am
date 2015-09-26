@@ -138,10 +138,10 @@ eviacam_SOURCES = wgetkey.cpp \
 	newtrackerinformationdlg.cpp \
 	checkupdates_manager.cpp
 	
-eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" -DOPENCVVERSION=$(OPENCVVERSION)
+eviacam_CXXFLAGS = -DLOCALEDIR=\"$(localedir)\" -DOPENCVVERSION=$(OPENCVVERSION)
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)/creavision \
 	-I$(top_srcdir)/simplelog \
 	-I$(top_srcdir)/wxcamwindow \

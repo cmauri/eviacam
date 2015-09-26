@@ -20,7 +20,7 @@ EXTRA_DIST = \
 
 dist_pkgdata_DATA = THANKS
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/creavision \
 	-I$(top_srcdir)/wxcamwindow \
