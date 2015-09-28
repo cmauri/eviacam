@@ -9,5 +9,8 @@ override_dh_clean:
 override_dh_auto_configure:
 	dh_auto_configure -- --disable-updates-check
 
+override_dh_auto_build:
+	cd po; make update-po; cd ..
+
 %:
 	dh $@ --with autoreconf
