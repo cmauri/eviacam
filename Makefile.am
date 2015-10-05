@@ -58,72 +58,81 @@ dist-hook:
 		echo A git clone is required to generate a ChangeLog >&2; \
 	fi
 
+
+GITTAG= `git describe --tags`
+
+GITVERSION= `git describe --tags | cut -d 'v' -f 2,3,4,5,6`
+	
+git-dist:
+	git archive --format=tar --prefix=$(PACKAGE)-$(GITVERSION)/ $(GITTAG) | xz > $(PACKAGE)-$(GITVERSION).tar.xz
+
+
 ##
 ## Debian packages
 ##
 
 ## make a Debian binary package
-deb: configure dist
+deb: configure git-dist
 	-$(RM) -r debian-build
 	-mkdir debian-build
 	cd debian-build ; \
-	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	cd $(PACKAGE)-$(VERSION) ; \
+	mv ../$(PACKAGE)-$(GITVERSION).tar.xz $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	tar xJf $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
 	dpkg-buildpackage -B -rfakeroot --force-sign ; \
 	cd .. ; \
-	$(RM) -r $(PACKAGE)-$(VERSION)
+	$(RM) -r $(PACKAGE)-$(GITVERSION)
 
 ## make a Debian source package
-deb-src: configure dist
+deb-src: configure git-dist
 	-$(RM) -r debian-src
 	-mkdir debian-src
 	cd debian-src ; \
-	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	cd $(PACKAGE)-$(VERSION) ; \
+	mv ../$(PACKAGE)-$(GITVERSION).tar.xz $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	tar xJf $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
 	dpkg-buildpackage -S -i -rfakeroot --force-sign --check-command=lintian ; \
 	cd .. ; \
-	$(RM) -r $(PACKAGE)-$(VERSION)
+	$(RM) -r $(PACKAGE)-$(GITVERSION)
 	
 
 ## make a Debian .changes files without sources
 deb-src-changes: configure
 	cd debian-src ; \
-	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	cd $(PACKAGE)-$(VERSION) ; \
+	tar xJf $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
 	dpkg-buildpackage -S -i -rfakeroot --force-sign --changes-option=-sd ; \
 	cd .. ; \
-	$(RM) -r $(PACKAGE)-$(VERSION)
+	$(RM) -r $(PACKAGE)-$(GITVERSION)
 
 ## make a Debian binary package (non signed)
-deb-nosig: configure dist
+deb-nosig: configure git-dist
 	-$(RM) -r debian-build
 	-mkdir debian-build
 	cd debian-build ; \
-	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	cd $(PACKAGE)-$(VERSION) ; \
+	mv ../$(PACKAGE)-$(GITVERSION).tar.gz $(PACKAGE)_$(GITVERSION).orig.tar.gz ; \
+	tar xfvz $(PACKAGE)_$(GITVERSION).orig.tar.gz ; \
+	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
 	dpkg-buildpackage -B -rfakeroot -uc ; \
 	cd .. ; \
-	$(RM) -r $(PACKAGE)-$(VERSION)
+	$(RM) -r $(PACKAGE)-$(GITVERSION)
 
 ## make a Debian source package  (non signed)
-deb-src-nosig: configure dist
+deb-src-nosig: configure git-dist
 	-$(RM) -r debian-src
 	-mkdir debian-src
 	cd debian-src ; \
-	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	cd $(PACKAGE)-$(VERSION) ; \
+	mv ../$(PACKAGE)-$(GITVERSION).tar.gz $(PACKAGE)_$(GITVERSION).orig.tar.gz ; \
+	tar xfvz $(PACKAGE)_$(GITVERSION).orig.tar.gz ; \
+	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
 	dpkg-buildpackage -S -i -rfakeroot -uc -us ; \
 	cd .. ; \
-	$(RM) -r $(PACKAGE)-$(VERSION)
+	$(RM) -r $(PACKAGE)-$(GITVERSION)
 
 
 ##
