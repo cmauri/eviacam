@@ -59,9 +59,10 @@ dist-hook:
 	fi
 
 
-GITTAG= `git describe --tags`
+GITTAGCMD= if [ -z "$$TAG" ]; then git describe --tags; else echo $$TAG; fi
+GITTAG= `$(GITTAGCMD)`
 
-GITVERSION= `git describe --tags | cut -d 'v' -f 2,3,4,5,6`
+GITVERSION= `$(GITTAGCMD) | cut -d 'v' -f 2,3,4,5,6`
 	
 git-dist:
 	git archive --format=tar --prefix=$(PACKAGE)-$(GITVERSION)/ $(GITTAG) | xz > $(PACKAGE)-$(GITVERSION).tar.xz
