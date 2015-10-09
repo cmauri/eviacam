@@ -65,7 +65,8 @@ GITTAG= `$(GITTAGCMD)`
 GITVERSION= `$(GITTAGCMD) | cut -d 'v' -f 2,3,4,5,6`
 	
 git-dist:
-	git archive --format=tar --prefix=$(PACKAGE)-$(GITVERSION)/ $(GITTAG) | xz > $(PACKAGE)-$(GITVERSION).tar.xz
+	git archive --format=tar --prefix=$(PACKAGE)-$(GITVERSION)/ $(GITTAG) | xz > $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	gpg2 -o $(PACKAGE)_$(GITVERSION).orig.tar.xz.asc -a --detach-sign $(PACKAGE)_$(GITVERSION).orig.tar.xz
 
 
 ##
@@ -77,7 +78,7 @@ deb: configure git-dist
 	-$(RM) -r debian-build
 	-mkdir debian-build
 	cd debian-build ; \
-	mv ../$(PACKAGE)-$(GITVERSION).tar.xz $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	mv ../$(PACKAGE)_$(GITVERSION).orig.tar.xz* . ; \
 	tar xJf $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
 	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
@@ -90,7 +91,7 @@ deb-src: configure git-dist
 	-$(RM) -r debian-src
 	-mkdir debian-src
 	cd debian-src ; \
-	mv ../$(PACKAGE)-$(GITVERSION).tar.xz $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	mv ../$(PACKAGE)_$(GITVERSION).orig.tar.xz* . ; \
 	tar xJf $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
 	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
@@ -114,7 +115,7 @@ deb-nosig: configure git-dist
 	-$(RM) -r debian-build
 	-mkdir debian-build
 	cd debian-build ; \
-	mv ../$(PACKAGE)-$(GITVERSION).tar.gz $(PACKAGE)_$(GITVERSION).orig.tar.gz ; \
+	mv ../$(PACKAGE)_$(GITVERSION).orig.tar.xz* . ; \
 	tar xfvz $(PACKAGE)_$(GITVERSION).orig.tar.gz ; \
 	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
@@ -127,7 +128,7 @@ deb-src-nosig: configure git-dist
 	-$(RM) -r debian-src
 	-mkdir debian-src
 	cd debian-src ; \
-	mv ../$(PACKAGE)-$(GITVERSION).tar.gz $(PACKAGE)_$(GITVERSION).orig.tar.gz ; \
+	mv ../$(PACKAGE)_$(GITVERSION).orig.tar.xz* . ; \
 	tar xfvz $(PACKAGE)_$(GITVERSION).orig.tar.gz ; \
 	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
