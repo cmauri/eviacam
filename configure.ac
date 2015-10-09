@@ -216,8 +216,6 @@ AC_OUTPUT(
 	[wxcamwindow/Makefile] 
 	[src/Makefile] 
 	[src/eviacamloader.c]
-	[rpm/Makefile]
-	[rpm/eviacam.spec]
 	[win32/installer.iss]
 	[creavision/libwebcam/incvideodev.h]
 )

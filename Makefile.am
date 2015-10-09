@@ -10,8 +10,7 @@ SUBDIRS = \
 	po \
 	man \
 	doc \
-	src \
-	rpm
+	src
 
 EXTRA_DIST = \
 	autogen.sh \
@@ -140,6 +139,6 @@ deb-src-nosig: configure git-dist
 ##
 ## RPM packages
 ##
-rpm:	configure dist-bzip2
+#rpm:	configure dist-bzip2
 #	(cd rpm && $(MAKE) $(AM_MAKEFLAGS) Makefile *.spec) || exit 1
-	(cd rpm && $(MAKE) $(AM_MAKEFLAGS) this) || exit 1
+#	(cd rpm && $(MAKE) $(AM_MAKEFLAGS) this) || exit 1
