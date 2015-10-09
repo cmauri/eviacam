@@ -269,13 +269,15 @@ bool CViacamController::Initialize ()
 	// Enable pointeraction object
 	if (retval && m_enabledAtStartup) SetEnabled(true);
 	if (retval) m_pointerAction->SetEnabled(true);
-	
+
+#if defined(ENABLE_UPDATES_CHECK)
 	// Check for updates
 	if (retval && m_checkUpdatesAtStartup) {
 		assert(m_pCheckUpdateManager == NULL);
 		m_pCheckUpdateManager = new CheckUpdatesManager(m_pMainWindow);
 		m_pCheckUpdateManager->LaunchBackground();
 	}
+#endif
 
 	// Show new tracker information dialog when needed
 	if (retval && m_newTrackerDialogAtStartup) {
