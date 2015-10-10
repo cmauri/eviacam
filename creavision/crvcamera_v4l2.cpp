@@ -468,7 +468,7 @@ uint range_value_fit (uint min, uint max, uint step, uint val)
 
 
 // Look for best matching entries for a desired frame rate and remove all other entries
-// fr= 0 means that nothing is done (all formats are appropiate), fr=UINT_MAX selects highest
+// fr= 0 means that nothing is done (all formats are appropriate), fr=UINT_MAX selects highest
 // frame rate
 static void SelectBestFrameRate (unsigned int fr, std::list<TImageFormatEx>& availableFormats)
 {

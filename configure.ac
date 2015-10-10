@@ -1,21 +1,17 @@
-AC_INIT([eviacam], 2.0.1)
+AC_INIT([eviacam], 2.0.3)
 AC_CONFIG_SRCDIR([src/eviacamapp.cpp])
 AC_PREREQ(2.61)
 AM_CONFIG_HEADER(config.h)
-
-##############################################################
-# Editable parameters
 AM_INIT_AUTOMAKE
 COPYRIGHT="© 2008-15"
 PUBLISHER="César Mauri Loba"
-##############################################################
 
 AC_SUBST(COPYRIGHT, [`echo $COPYRIGHT`])
+AC_DEFINE_UNQUOTED([COPYRIGHT], ["$COPYRIGHT"], [Copyright notice])
 AC_SUBST(PUBLISHER, [`echo $PUBLISHER`])
+AC_DEFINE_UNQUOTED([PUBLISHER], ["$PUBLISHER"], [Publisher info])
 
 # Use libtool for building static libraries only
-#
-#AC_DISABLE_SHARED
 AC_ENABLE_SHARED
 AC_DISABLE_STATIC
 
@@ -36,9 +32,9 @@ ALL_LINGUAS="ca es gl it tr ast de oc fr ar he ru pt_BR ja el lt zh_TW zh_CN"
 
 AM_GNU_GETTEXT([external])
 
-# Check debug mode
+# ----------------- Debug mode switch --------------------
 AC_ARG_ENABLE(debug,
-[  --enable-debug    Turn on debugging],
+[  --enable-debug          turn on debug build],
 [case "${enableval}" in
 yes) debug=true ;;
 full) debug=true ;;
@@ -46,7 +42,30 @@ no)  debug=false ;;
 *) AC_MSG_ERROR(bad value ${enableval} for --enable-debug) ;;
 esac],[debug=false])
 AM_CONDITIONAL(DEBUG, test x"$debug" = x"true")
+AC_MSG_NOTICE([build in debug mode... $debug])
+# ----------------- Debug mode switch --------------------
 
+# ------------- Check for updates switch  ----------------
+# This adds the option of compiling without automatic check for
+# updates which is undesired for some builds (e.g. debian)
+AC_ARG_ENABLE(updates_check,
+  [  --disable-updates-check disable check for updates feature],
+  [case "${enableval}" in
+     yes | no ) WITH_UPDATES_CHECK="${enableval}" ;;
+     *) AC_MSG_ERROR(bad value ${enableval} for --disable-updates-check) ;;
+   esac],
+  [WITH_UPDATES_CHECK="yes"]
+)
+AM_CONDITIONAL([WITH_UPDATES_CHECK], [test "x$WITH_UPDATES_CHECK" = "xyes"])
+
+# Define UPDATES_CHECK in config.h if we're going to compile it
+if test "x$WITH_UPDATES_CHECK" = "xyes"; then
+    AC_DEFINE([ENABLE_UPDATES_CHECK], [], [Enable check for updates feature])
+    AC_MSG_NOTICE([check for updates feature... yes])
+else
+    AC_MSG_NOTICE([check for updates feature... no])
+fi
+# ------------- Check for updates switch  ----------------
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function of each library
@@ -54,15 +73,8 @@ AM_CONDITIONAL(DEBUG, test x"$debug" = x"true")
 AC_CHECK_LIB([X11], [main])
 AC_CHECK_LIB([Xext], [main], , AC_MSG_ERROR([libXext is required.]) )
 AC_CHECK_LIB([Xtst], [main], , AC_MSG_ERROR([libXtst is required.]) )
-
 AC_CHECK_FUNCS([pow])
 AC_CHECK_FUNCS([sqrt])
-
-#AC_CHECK_LIB([cv], [main])
-#AC_CHECK_LIB([cvaux], [main])
-#AC_CHECK_LIB([cxcore], [main])
-#AC_CHECK_LIB([highgui], [main])
-#AC_CHECK_LIB([ml], [main])
 
 # -----------------       gtk+-2.0  --------------------
 # TODO: check if gtk-2.0-devel is really needed
@@ -86,7 +98,6 @@ GTKTEST
 
 GTK_CPPFLAGS="`$GTKCONFIG --cflags`"
 GTK_LIBS="`$GTKCONFIG --libs`"
-
 # -----------------   gtk+-2.0      --------------------
 
 # -----------------       wxWidgets --------------------
@@ -124,10 +135,6 @@ if test -n "$vers" && test "$vers" -ge 2006003; then
 		WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
 		WX_LIBS="`$WXCONFIG --libs`"
 	else
-# Lines below are used to with to wx debug library
-#		WX_CPPFLAGS="`$WXCONFIG --debug=yes --cppflags`"
-#		WX_CXXFLAGS="`$WXCONFIG --debug=yes --cxxflags | sed -e 's/-fno-exceptions//'`"
-#		WX_LIBS="`$WXCONFIG --debug=yes --libs`"
 		WX_CPPFLAGS="`$WXCONFIG --cppflags`"
 		WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
 		WX_LIBS="`$WXCONFIG --libs`"
@@ -155,6 +162,8 @@ OPENCVTEST
 
 OPENCVVERSION=`echo $opencvversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
 AC_SUBST(OPENCVVERSION)
+OPENCV_CPPFLAGS="`$OPENCVCONFIG --cflags`"
+OPENCV_LIBS=" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_objdetect -lopencv_video"
 # -----------------       opencv  --------------------
 
 # Checks for header files.
@@ -175,26 +184,14 @@ AC_HEADER_STDBOOL
 AC_C_CONST
 AC_C_INLINE
 
-OPENCV_CPPFLAGS="`$OPENCVCONFIG --cflags`"
-OPENCV_LIBS="`$OPENCVCONFIG --libs`"
-
-COMPFLAGS="-Wall -fexceptions -Wconversion $WX_CPPFLAGS $OPENCV_CPPFLAGS $GTK_CPPFLAGS"
-
-
+COMPFLAGS="-fexceptions $WX_CPPFLAGS $OPENCV_CPPFLAGS $GTK_CPPFLAGS"
 if ! "$debug"; then
 	COMPFLAGS="$COMPFLAGS -DNDEBUG -O2"
 else
-	COMPFLAGS="$COMPFLAGS -DDEBUG -g -O0"
+	COMPFLAGS="$COMPFLAGS -Wall -Wconversion -DDEBUG -g -O0"
 fi
 
-#CPPFLAGS="$CPPFLAGS $COMPFLAGS"
-CPPFLAGS="$COMPFLAGS"
-#CXXFLAGS="$CXXFLAGS $COMPFLAGS"
-CXXFLAGS="$COMPFLAGS"
-
-#AC_MSG_NOTICE([CPPFLAGS: $CPPFLAGS])
-#AC_MSG_NOTICE([CXXFLAGS: $CXXFLAGS])
-
+CXXFLAGS="$CXXFLAGS $COMPFLAGS"
 LDFLAGS="$LDFLAGS -Wl,--as-needed"
 
 AC_SUBST(WX_LIBS)
@@ -207,13 +204,10 @@ LTLIBOBJS=`echo X"$LIBOBJS"|\
            [$Xsed -e "s,\.[^.]* ,.lo ,g;s,\.[^.]*$,.lo,"]`
 AC_SUBST(LTLIBOBJS)
 
-#LTALLOCA=`echo X"$ALLOCA"|[$Xsed -e "s,\.$[^.]*,.lo,g"]`
-#AC_SUBST(LTALLOCA)
-#BUILD_DATE=`LC_ALL="C" date`
-
 AC_OUTPUT(
 	[Makefile] 
 	[po/Makefile.in] 
+	[man/Makefile] 
 	[doc/Makefile] 
 	[wxutil/Makefile] 
 	[creavision/Makefile] 
@@ -221,10 +215,7 @@ AC_OUTPUT(
 	[simplelog/Makefile] 
 	[wxcamwindow/Makefile] 
 	[src/Makefile] 
-	[src/version.h]
 	[src/eviacamloader.c]
-	[rpm/Makefile]
-	[rpm/eviacam.spec]
 	[win32/installer.iss]
 	[creavision/libwebcam/incvideodev.h]
 )

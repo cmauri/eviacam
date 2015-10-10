@@ -35,7 +35,7 @@
 
 #include "checkupdates_ui.h"
 #include "checkupdates.h"
-#include "version.h"
+#include "config.h"
 #include "website.h"
 
 ////@begin XPM images

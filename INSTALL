@@ -20,72 +20,59 @@ Linux
  
 - Generic compilation and installation
   ------------------------------------
-  If you downloaded a release tarball:
+  ./autogen.sh
   ./configure
   make 
   make install
 
-  If you got sources from repositories, first you need to install 
-  libtool
-  automake
-  autoconf
-
-  then run:
-  ./autogen.sh
-  ./configure
-  make
-  make install
-
 - Generic compilation and installation (debug mode)
   -------------------------------------------------
+  ./autogen.sh
   ./configure --enable-debug
   make 
   make install  
 
 - Source package generation
   -------------------------
-  ./configure 
-  make dist
+  make git-dist [TAG="v1.0.1"]
+
+  The optional TAG parameter can be used to selected a commit given its tag.
 
 - DEB Packages
   -------------
-  
   Before generating any .deb package make sure file debian/changelog is up
   to date. Run the following command and check that contents are correct:
+
     dch -i
 
   * DEB source package generation
-      ./configure
-      make deb-src
+
+    make deb-src [TAG="v1.0.1"]
 	  
   * changes file generation
-      Useful when generating packages for several distros. Assumes previous 
-	  step has been done. For each distro edit debian/changes with 
-		dch -i
-      add the right information then run
-	    make deb-src-changes
-	  
+     Useful when generating packages for several distros. Assumes previous 
+     step has been done. For each distro edit debian/changes with 
+
+     dch -i
+
+    add the right information then run
+
+     make deb-src-changes [TAG="v1.0.1"]
+  
   * DEB binary package generation
-      ./configure
-      make deb
+
+     make deb [TAG="v1.0.1"]
 	  
-    Old way:
-      1.- Ensure that config.status doesn't exists (i.e. make distclean)
-      2.- Run: fakeroot debian/rules binary
-      3.- Clean tree:fakeroot debian/rules clean
-  	  
 - RPM package generation
   ----------------------
+  (this section is obsolete)
 
-  ./configure
   make rpm
 
 Windows
 =======
-
 - Pre-requisites
   --------------
-
   Visual Studio 2013
   wxWidgets >= 2.8.x (tested with 3.0.1)
   opencv >= 1.0 (tested with 2.4.9, custom compilation recommended)
@@ -93,12 +80,11 @@ Windows
 
 - Building using Visual Studio 2013
   ---------------------------------
-
   Set the following environment variables:
-	WXWIN to point to wxWidgets folder
-	CVPATH to point to opencv folder
-	DSHOW_SAMPLES to point DirectShow samples directory usually at:
-        %PROGRAMFILES%\Microsoft SDKs\Windows\v7.1\Samples\multimedia
+    WXWIN to point to wxWidgets folder
+    CVPATH to point to opencv folder
+    DSHOW_SAMPLES to point DirectShow samples directory usually at:
+    %PROGRAMFILES%\Microsoft SDKs\Windows\v7.1\Samples\multimedia
 
   Once the program is compiled, you may wish to create the installer. 
   Inno Setup is used for installer generation on Windows

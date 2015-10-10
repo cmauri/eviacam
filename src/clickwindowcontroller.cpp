@@ -206,8 +206,8 @@ mousecmd::mousecmd CClickWindowController::GetAction(long x, long y)
 	return retval;
 }
 
-// Select appropiate window taking into account design and location
-void CClickWindowController::SelectAppropiateWindow (EDesign design, ELocation location)
+// Select appropriate window taking into account design and location
+void CClickWindowController::SelectAppropriateWindow (EDesign design, ELocation location)
 {
 	bool isAutohide= m_autohide;
 	bool isHorizontal=
@@ -249,7 +249,7 @@ void CClickWindowController::SetDesign(CClickWindowController::EDesign design)
 	bool wasShown= IsShown();
 	if (wasShown) Show(false);
 
-	SelectAppropiateWindow (design, m_location);
+	SelectAppropriateWindow (design, m_location);
 		
 	if (wasShown) Show(true);
 	
@@ -269,7 +269,7 @@ void CClickWindowController::SetLocation(CClickWindowController::ELocation locat
 	bool isShown= IsShown();	
 	if (isShown) Show(false);
 	
-	SelectAppropiateWindow (m_design, location);
+	SelectAppropriateWindow (m_design, location);
 	
 	switch(location) {
 		case FLOATING_HORIZONTAL:

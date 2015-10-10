@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.7.2\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2015-01-15 13:26+0100\n"
+"POT-Creation-Date: 2015-09-24 15:52+0200\n"
 "PO-Revision-Date: 2015-01-15 11:52+0200\n"
 "Last-Translator: Cesar Mauri <cesar@crea-si.com>\n"
 "Language-Team: Català\n"
@@ -210,7 +210,7 @@ msgstr "Permet clics consecutius"
 
 #: src/wconfiguration.cpp:529
 msgid ""
-"Allows to send multiple clicks\n"
+"Send multiple clicks\n"
 "when the pointer is stopped."
 msgstr ""
 "Permet enviar múltiples clics\n"
@@ -316,7 +316,7 @@ msgid "Move left:"
 msgstr "Esquerra:"
 
 #: src/wconfiguration.cpp:613 src/wconfiguration.cpp:626
-#: src/wconfiguration.cpp:639 src/wconfiguration.cpp:652 src/wviacam.cpp:210
+#: src/wconfiguration.cpp:639 src/wconfiguration.cpp:652 src/wviacam.cpp:215
 msgid "Disable"
 msgstr "Desactivar"
 
@@ -790,67 +790,67 @@ msgstr "Llicència"
 msgid "Released under the GNU/GPL v3 license. See COPYING file for details."
 msgstr "Alliberat sota llicencia GNU/GPL. Vegi fitxer COPYING per detalls."
 
-#: src/wviacam.cpp:186
+#: src/wviacam.cpp:189
 msgid "E&nable / Disable"
 msgstr "A&ctivar / Desactivar"
 
-#: src/wviacam.cpp:188
+#: src/wviacam.cpp:191
 msgid "&Exit"
 msgstr "&Sortir"
 
-#: src/wviacam.cpp:189
+#: src/wviacam.cpp:192
 msgid "&File"
 msgstr "&Arxiu"
 
-#: src/wviacam.cpp:191
+#: src/wviacam.cpp:194
 msgid "&Wizard..."
 msgstr "&Assistent..."
 
-#: src/wviacam.cpp:193
+#: src/wviacam.cpp:196
 msgid "&Options..."
 msgstr "&Opcions..."
 
-#: src/wviacam.cpp:194
+#: src/wviacam.cpp:197
 msgid "&Configuration"
 msgstr "&Configuració"
 
-#: src/wviacam.cpp:196
+#: src/wviacam.cpp:199
 msgid "&Help contents"
 msgstr "&Continguts ajuda"
 
-#: src/wviacam.cpp:197
+#: src/wviacam.cpp:201
 msgid "Check for &updates"
 msgstr "&Comprovar actualitzacions"
 
-#: src/wviacam.cpp:199
+#: src/wviacam.cpp:204
 msgid "&About..."
 msgstr "&Quant a..."
 
-#: src/wviacam.cpp:200
+#: src/wviacam.cpp:205
 msgid "&Help"
 msgstr "A&juda"
 
-#: src/wviacam.cpp:207
+#: src/wviacam.cpp:212
 msgid "Enable"
 msgstr "Activar"
 
-#: src/wviacam.cpp:214 src/clickwindow.h:31
+#: src/wviacam.cpp:219 src/clickwindow.h:31
 msgid "Click Window"
 msgstr "Finestra del clic"
 
-#: src/wviacam.cpp:217
+#: src/wviacam.cpp:222
 msgid "On-screen keyboard"
 msgstr "Teclat en pantalla"
 
-#: src/wviacam.cpp:221
+#: src/wviacam.cpp:226
 msgid "Options"
 msgstr "Opcions"
 
-#: src/wviacam.cpp:225
+#: src/wviacam.cpp:230
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/wviacam.cpp:231
+#: src/wviacam.cpp:236
 msgid ""
 "Frame rate meter. For proper function\n"
 "should be greater than 25 fps. Reduce\n"
@@ -861,22 +861,22 @@ msgstr ""
 "funcionament ha de ser superior a 25. Redueixi\n"
 "el temps d'exposició de la càmera si és necessari."
 
-#: src/wviacam.cpp:328
+#: src/wviacam.cpp:333
 #, c-format
 msgid " %li fps (good)"
 msgstr " %li fps (correcte)"
 
-#: src/wviacam.cpp:331
+#: src/wviacam.cpp:336
 #, c-format
 msgid " %li fps (could be improved)"
 msgstr " %li fps (millorable)"
 
-#: src/wviacam.cpp:334
+#: src/wviacam.cpp:339
 #, c-format
 msgid " %li fps (too low)"
 msgstr " %li fps (massa baix)"
 
-#: src/wviacam.cpp:379
+#: src/wviacam.cpp:384
 msgid ""
 "This action will close the program.\n"
 "Are you sure?"
@@ -955,7 +955,7 @@ msgstr "Calibratge del punter"
 #: src/wwizard.cpp:542
 msgid ""
 "The assisted calibration procedure will ask you to move your head in order "
-"to automatically configure the appropiate motion parameters.\n"
+"to automatically configure the appropriate motion parameters.\n"
 "\n"
 "After this calibration stage, you can manually adjust the motion "
 "parameters.\n"
@@ -1498,11 +1498,13 @@ msgstr "No tornar a mostrar aquest missatge"
 #~ "</font>"
 
 #~ msgid ""
-#~ "<br><h3>Contributions:</h3><br>Miguel Bouzada (Galego translation)"
-#~ "<br>Giuseppe Masciopinto (Italiano translation)<br>Samuel Thibault"
+#~ "<br><h3>Contributions:</h3><br>Miguel Bouzada (Galego "
+#~ "translation)<br>Giuseppe Masciopinto (Italiano translation)<br>Samuel "
+#~ "Thibault"
 #~ msgstr ""
-#~ "<br><h3>Contribucions:</h3><br>Miguel Bouzada (Galego translation)"
-#~ "<br>Giuseppe Masciopinto (Italiano translation)<br>Samuel Thibault"
+#~ "<br><h3>Contribucions:</h3><br>Miguel Bouzada (Galego "
+#~ "translation)<br>Giuseppe Masciopinto (Italiano translation)<br>Samuel "
+#~ "Thibault"
 
 #~ msgid "Catalan"
 #~ msgstr "Català"

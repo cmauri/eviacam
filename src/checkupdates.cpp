@@ -19,7 +19,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #include "checkupdates.h"
-#include "version.h"
+#include "config.h"
 
 #include <wx/intl.h>
 #include <wx/protocol/http.h>

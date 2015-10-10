@@ -92,7 +92,10 @@ BEGIN_EVENT_TABLE( WViacam, wxFrame )
     EVT_MENU( ID_MENU_WIZARD, WViacam::OnMenuWizardClick )
     EVT_MENU( ID_MENU_OPTIONS, WViacam::OnMenuOptionsClick )
     EVT_MENU( ID_MENU_HELP_CONTENTS, WViacam::OnToolHelpClick )
+#if defined(ENABLE_UPDATES_CHECK)
     EVT_MENU( ID_MENU_CHECKUPDATES, WViacam::OnMenuCheckupdatesClick )
+#endif
+
     EVT_MENU( ID_MENU_ABOUT, WViacam::OnMenuAboutClick )
     EVT_MENU( ID_TOOL_ENABLE, WViacam::OnToolEnableClick )
     EVT_UPDATE_UI( ID_TOOL_ENABLE, WViacam::OnToolEnableUpdate )
@@ -194,7 +197,9 @@ void WViacam::CreateControls()
     menuBar->Append(itemMenu7, _("&Configuration"));
     wxMenu* itemMenu11 = new wxMenu;
     itemMenu11->Append(ID_MENU_HELP_CONTENTS, _("&Help contents"), wxEmptyString, wxITEM_NORMAL);
+#if defined(ENABLE_UPDATES_CHECK)
     itemMenu11->Append(ID_MENU_CHECKUPDATES, _("Check for &updates"), wxEmptyString, wxITEM_NORMAL);
+#endif
     itemMenu11->AppendSeparator();
     itemMenu11->Append(ID_MENU_ABOUT, _("&About..."), wxEmptyString, wxITEM_NORMAL);
     menuBar->Append(itemMenu11, _("&Help"));
@@ -259,32 +264,32 @@ wxBitmap WViacam::GetBitmapResource( const wxString& name )
     // Bitmap retrieval
 ////@begin WViacam bitmap retrieval
     wxUnusedVar(name);
-    if (name == _T("icons/on.xpm"))
+    if (name == wxT("icons/on.xpm"))
     {
         wxBitmap bitmap(on);
         return bitmap;
     }
-    else if (name == _T("icons/off.xpm"))
+    else if (name == wxT("icons/off.xpm"))
     {
         wxBitmap bitmap(off);
         return bitmap;
     }
-    else if (name == _T("icons/clickwindow.xpm"))
+    else if (name == wxT("icons/clickwindow.xpm"))
     {
         wxBitmap bitmap(clickwindow);
         return bitmap;
     }
-    else if (name == _T("icons/keyboard.xpm"))
+    else if (name == wxT("icons/keyboard.xpm"))
     {
         wxBitmap bitmap(keyboard);
         return bitmap;
     }
-    else if (name == _T("icons/preferences.xpm"))
+    else if (name == wxT("icons/preferences.xpm"))
     {
         wxBitmap bitmap(preferences);
         return bitmap;
     }
-    else if (name == _T("icons/help.xpm"))
+    else if (name == wxT("icons/help.xpm"))
     {
         wxBitmap bitmap(help);
         return bitmap;
@@ -302,7 +307,7 @@ wxIcon WViacam::GetIconResource( const wxString& name )
     // Icon retrieval
 ////@begin WViacam icon retrieval
     wxUnusedVar(name);
-    if (name == _T("icons/eviacam_mini.xpm"))
+    if (name == wxT("icons/eviacam_mini.xpm"))
     {
         wxIcon icon(eviacam_mini);
         return icon;
@@ -652,7 +657,7 @@ void WViacam::OnMenuWizardClick( wxCommandEvent& event )
 	event.Skip(false);
 }
 
-
+#if defined(ENABLE_UPDATES_CHECK)
 /*!
  * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CHECKUPDATES
  */
@@ -664,4 +669,5 @@ void WViacam::OnMenuCheckupdatesClick( wxCommandEvent& event )
 
 	event.Skip(false);
 }
+#endif
 

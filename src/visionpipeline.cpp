@@ -50,6 +50,26 @@
 #define COLOR_DEGRADATION_TIME 5000
 
 
+/**
+ * Load haar cascade managing exceptions
+ *
+ * @param file filename to open
+ * @return pointer to the newly loaded cascade or NULL if error
+ */
+static CvHaarClassifierCascade* loadCascade (const char* file)
+{
+	CvHaarClassifierCascade* result= NULL;
+
+	try {
+		result = (CvHaarClassifierCascade*) cvLoad(file, 0, 0, 0);
+	}
+	catch (cv::Exception& e) {
+		slog_write(SLOG_PRIO_WARNING, "%s:%d %s\n", __FILE__, __LINE__, e.what());
+	}
+
+	return result;
+}
+
 CVisionPipeline::CVisionPipeline (wxThreadKind kind) 
 : wxThread (kind)
 // Actually it is not needed all the features a condition object offers, but
@@ -68,48 +88,36 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 	memset(m_corners, 0, sizeof(m_corners));
 
 	//
-	// Open face haarcascade
+	// Load face haarcascade
 	// 
 	wxString cascadePath (eviacam::GetDataDir() + _T("/haarcascade_frontalface_default.xml"));
-	try {
-		m_faceCascade = (CvHaarClassifierCascade*)cvLoad(cascadePath.mb_str(wxConvUTF8), 0, 0, 0);
+	m_faceCascade = loadCascade (cascadePath.mb_str(wxConvUTF8));
+	
+	if (!m_faceCascade) {
+		m_faceCascade = loadCascade (
+			"/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml");
 	}
-	catch (cv::Exception& e) {
-		slog_write(SLOG_PRIO_WARNING, "%s:%d %s\n", __FILE__, __LINE__, e.what());
-	}
-	// In debug mode if previous load attemp try to open it from the standard unix location.
-#ifndef NDEBUG
-	if (!m_faceCascade)	{
-		try {
-			m_faceCascade = (CvHaarClassifierCascade*)
-				cvLoad("/usr/share/eviacam/haarcascade_frontalface_default.xml", 0, 0, 0);
-		}
-		catch (cv::Exception& e) {
-			slog_write(SLOG_PRIO_WARNING, "%s:%d %s\n", __FILE__, __LINE__, e.what());
-		}
-	}
-#endif
+	
 	if (!m_faceCascade) {
 		wxMessageDialog dlg (NULL, _("The face localization option is not enabled."), _T("Enable Viacam"), wxICON_ERROR | wxOK );
 		dlg.ShowModal();
+		return;
 	}
+
 	m_storage = cvCreateMemStorage(0);
 
 	// Create and start face detection thread
-	if (m_faceCascade) {	
-		if (Create() == wxTHREAD_NO_ERROR) {
+	if (Create() == wxTHREAD_NO_ERROR) {
 #if defined (WIN32)
-			// On linux this ends up calling setpriority syscall which changes
-			// the priority of the whole process :-( (see wxWidgets threadpsx.cpp)
-			// TODO: implement it using pthreads
-			SetPriority (WXTHREAD_MIN_PRIORITY);
+		// On linux this ends up calling setpriority syscall which changes
+		// the priority of the whole process :-( (see wxWidgets threadpsx.cpp)
+		// TODO: implement it using pthreads
+		SetPriority (WXTHREAD_MIN_PRIORITY);
 #endif
-			m_isRunning= true;
-			Run();
-		}
+		m_isRunning= true;
+		Run();
 	}
 }
-
 
 CVisionPipeline::~CVisionPipeline ()
 {
@@ -126,6 +134,7 @@ CVisionPipeline::~CVisionPipeline ()
 		m_storage = NULL;
 	}
 }
+
 
 void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
 {

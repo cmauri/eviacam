@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2014-12-24 16:56+0100\n"
+"POT-Creation-Date: 2015-09-24 15:52+0200\n"
 "PO-Revision-Date: 2013-05-11 02:03+0000\n"
 "Last-Translator: Wasilis <m.wasilis@yahoo.de>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/eviacam/language/"
@@ -19,35 +19,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/wconfiguration.h:129
+#: src/wconfiguration.h:130
 msgid "Configuration"
 msgstr "Ρυθμιση"
 
-#: src/wconfiguration.cpp:350
+#: src/wconfiguration.cpp:352
 msgid "Motion calibration"
 msgstr " Κίνηση βαθμονόμησης"
 
-#: src/wconfiguration.cpp:355 src/wwizard.cpp:1625
+#: src/wconfiguration.cpp:357 src/wwizard.cpp:1620
 msgid "X axis speed"
 msgstr "X άξονας ταχείας"
 
-#: src/wconfiguration.cpp:360
+#: src/wconfiguration.cpp:362
 msgid "Sets response sensitivity for the X axis."
 msgstr "Ρυθμίζει την ευαισθησία ανταπόκρισης για τον άξονα Χ."
 
-#: src/wconfiguration.cpp:363 src/wwizard.cpp:1634
+#: src/wconfiguration.cpp:365 src/wwizard.cpp:1629
 msgid "Y axis speed"
 msgstr "Y άξονας ταχείας"
 
-#: src/wconfiguration.cpp:368
+#: src/wconfiguration.cpp:370
 msgid "Sets response sensitivity for the Y axis."
 msgstr "Ρυθμίζει την ευαισθησία ανταπόκρισης για τον άξονα Y."
 
-#: src/wconfiguration.cpp:371
+#: src/wconfiguration.cpp:373
 msgid "Acceleration"
 msgstr "Επιτάχυνση "
 
-#: src/wconfiguration.cpp:376
+#: src/wconfiguration.cpp:378
 msgid ""
 "Sets pointer's acceleration.\n"
 "0 means no acceleration and\n"
@@ -56,11 +56,11 @@ msgstr ""
 "Ορίζει την επιτάχυνση του δείκτη. ⏎ 0 σημαίνει καμία επιτάχυνση και ⏎ 5 "
 "μέγιστη επιτάχυνση. "
 
-#: src/wconfiguration.cpp:379
+#: src/wconfiguration.cpp:381
 msgid "Smoothness"
 msgstr "Ομαλότητα"
 
-#: src/wconfiguration.cpp:384
+#: src/wconfiguration.cpp:386
 msgid ""
 "Tremor reduction filter.\n"
 "0 means no filter and \n"
@@ -69,96 +69,96 @@ msgstr ""
 "Φίλτρο μείωσης. ⏎ 0 σημαίνει ότι δεν υπάρχει φίλτρο και ⏎ 8 φιλτράρισμα κατ "
 "'ανώτατο όριο."
 
-#: src/wconfiguration.cpp:387
+#: src/wconfiguration.cpp:389
 msgid "Motion threshold"
 msgstr "Κατώφλι κίνησης "
 
-#: src/wconfiguration.cpp:392
+#: src/wconfiguration.cpp:394
 msgid ""
 "Minimum displacement (in pixels)\n"
 "to start moving pointer."
 msgstr "Ελάχιστη μετατόπιση (σε πιξελ) ⏎ να αρχίσει να κινείται ο δείκτης."
 
-#: src/wconfiguration.cpp:404
+#: src/wconfiguration.cpp:406
 msgid "Assisted calibration"
 msgstr "Υποβοηθούμενη βαθμονόμηση "
 
-#: src/wconfiguration.cpp:407
+#: src/wconfiguration.cpp:409
 msgid "Motion"
 msgstr "Κίνηση"
 
-#: src/wconfiguration.cpp:413
+#: src/wconfiguration.cpp:415
 msgid "Workspace limit"
 msgstr "Workspace όριο "
 
-#: src/wconfiguration.cpp:416 src/hotkeymanager.cpp:49
+#: src/wconfiguration.cpp:418 src/hotkeymanager.cpp:49
 msgid "Enable workspace limit"
 msgstr "Ενεργοποίηση workspace όριου "
 
-#: src/wconfiguration.cpp:419
+#: src/wconfiguration.cpp:421
 msgid ""
 "Confines the mouse pointer\n"
 "to the selected area."
 msgstr "Περιορίζει το ⏎ δείκτη του ποντικιού στην επιλεγμένη περιοχή."
 
-#: src/wconfiguration.cpp:428
+#: src/wconfiguration.cpp:430
 msgid "Top"
 msgstr "Επάνω "
 
-#: src/wconfiguration.cpp:433
+#: src/wconfiguration.cpp:435
 msgid "Top limit workspace."
 msgstr "Top workspace όριο. "
 
-#: src/wconfiguration.cpp:437 src/wconfiguration.cpp:451
-#: src/wconfiguration.cpp:463 src/wconfiguration.cpp:477
+#: src/wconfiguration.cpp:439 src/wconfiguration.cpp:453
+#: src/wconfiguration.cpp:465 src/wconfiguration.cpp:479
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:442 src/clickwindowbitmap.cpp:236
+#: src/wconfiguration.cpp:444 src/clickwindowbitmap.cpp:236
 msgid "Left"
 msgstr "Αριστερά "
 
-#: src/wconfiguration.cpp:447
+#: src/wconfiguration.cpp:449
 msgid "Left limit workspace."
 msgstr "Αριστερός χώρος εργασίας όριου. "
 
-#: src/wconfiguration.cpp:454 src/clickwindowbitmap.cpp:250
+#: src/wconfiguration.cpp:456 src/clickwindowbitmap.cpp:250
 msgid "Right"
 msgstr "Δεξια"
 
-#: src/wconfiguration.cpp:459
+#: src/wconfiguration.cpp:461
 msgid "Right limit workspace."
 msgstr "Δεξιος χώρος εργασίας όριου. "
 
-#: src/wconfiguration.cpp:468
+#: src/wconfiguration.cpp:470
 msgid "Bottom"
 msgstr "Κάτω "
 
-#: src/wconfiguration.cpp:473
+#: src/wconfiguration.cpp:475
 msgid "Bottom limit workspace."
 msgstr "Κάτω όριο του χώρου εργασίας. "
 
-#: src/wconfiguration.cpp:480
+#: src/wconfiguration.cpp:482
 msgid "Pointer wrapping"
 msgstr "Περιτύλιγμα pointer "
 
-#: src/wconfiguration.cpp:483
+#: src/wconfiguration.cpp:485
 msgid "Allow wrapping the pointer around the working area"
 msgstr "Αφήστε το περιτύλιγμα του δείκτη γύρω από την περιοχή εργασίας "
 
-#: src/wconfiguration.cpp:487
+#: src/wconfiguration.cpp:489
 msgid "Workspace"
 msgstr "Χώρος εργασίας"
 
-#: src/wconfiguration.cpp:493
+#: src/wconfiguration.cpp:495
 msgid "Dwell click"
 msgstr "Κρατημένο κλικ"
 
-#: src/wconfiguration.cpp:496
+#: src/wconfiguration.cpp:498
 msgid "Enable dwell click"
 msgstr "Ενεργοποίηση κρατημένου κλικ"
 
-#: src/wconfiguration.cpp:499
+#: src/wconfiguration.cpp:501
 msgid ""
 "Enable/Disable automatic (dwell)\n"
 "click generation mechanism."
@@ -166,21 +166,21 @@ msgstr ""
 "Ενεργοποίηση / απενεργοποίηση του αυτόματου (dwell) ⏎ μηχανισμόυ δημιουργιας "
 "κλικ."
 
-#: src/wconfiguration.cpp:506
+#: src/wconfiguration.cpp:508
 msgid "Dwell time (ds)"
 msgstr "Ο χρόνος παραμονής (DS) "
 
-#: src/wconfiguration.cpp:511
+#: src/wconfiguration.cpp:513
 msgid ""
 "Time to wait (deciseconds) \n"
 "before sending a click."
 msgstr "Ώρα υπομομης (deciseconds) ⏎ πριν από την αποστολή ένος κλικ. "
 
-#: src/wconfiguration.cpp:514
+#: src/wconfiguration.cpp:516
 msgid "Dwell area"
 msgstr "Κρατημένη περιοχή "
 
-#: src/wconfiguration.cpp:519
+#: src/wconfiguration.cpp:521
 msgid ""
 "Maximum allowed displacement\n"
 "before restarting the dwell time\n"
@@ -189,61 +189,61 @@ msgstr ""
 "Το μέγιστο επιτρεπόμενο εκτόπισμα ⏎ πριν από την επανεκκίνηση του χρόνου "
 "παραμονής ⏎ αντίστροφη μέτρηση. "
 
-#: src/wconfiguration.cpp:524
+#: src/wconfiguration.cpp:526
 msgid "Allow consecutive clicks"
 msgstr "Αφήστε διαδοχικά κλικ"
 
-#: src/wconfiguration.cpp:527
+#: src/wconfiguration.cpp:529
 msgid ""
-"Allows to send multiple clicks\n"
+"Send multiple clicks\n"
 "when the pointer is stopped."
 msgstr "Επιτρέπει να στείλθουν πολλαπλά κλικ ⏎ όταν ο δείκτης έχει σταματήσει "
 
-#: src/wconfiguration.cpp:530
+#: src/wconfiguration.cpp:532
 msgid "Beep on click"
 msgstr "Προειδοποιητικός ήχος σε καθε κλικ"
 
-#: src/wconfiguration.cpp:533
+#: src/wconfiguration.cpp:535
 msgid "Play sound when click generated."
 msgstr "Αναπαραγωγή ήχου οταν δημιουργητε το κλικ. "
 
-#: src/wconfiguration.cpp:537
+#: src/wconfiguration.cpp:539
 msgid "Allow visual alerts"
 msgstr "Αφήστε οπτικές ειδοποιήσεις "
 
-#: src/wconfiguration.cpp:542
+#: src/wconfiguration.cpp:544
 msgid "Click window"
 msgstr "Κάντε κλικ στο παράθυρο "
 
-#: src/wconfiguration.cpp:545
+#: src/wconfiguration.cpp:547
 msgid "Show Click Window"
 msgstr "Εμφάνιση Κλικ παράθυρου"
 
-#: src/wconfiguration.cpp:551
+#: src/wconfiguration.cpp:553
 msgid "Design:"
 msgstr "Σχεδιασμός:"
 
-#: src/wconfiguration.cpp:555 src/wconfiguration.cpp:751
+#: src/wconfiguration.cpp:557 src/wconfiguration.cpp:753
 msgid "Normal"
 msgstr "Κανονικος"
 
-#: src/wconfiguration.cpp:556
+#: src/wconfiguration.cpp:558
 msgid "Thin"
 msgstr "Λεπτός "
 
-#: src/wconfiguration.cpp:560
+#: src/wconfiguration.cpp:562
 msgid "Behaviour:"
 msgstr "Συμπεριφορά: "
 
-#: src/wconfiguration.cpp:564
+#: src/wconfiguration.cpp:566
 msgid "Normal mode"
 msgstr "Κανονική λειτουργία "
 
-#: src/wconfiguration.cpp:565
+#: src/wconfiguration.cpp:567
 msgid "Fast mode"
 msgstr "Γρήγορη λειτουργία"
 
-#: src/wconfiguration.cpp:568
+#: src/wconfiguration.cpp:570
 msgid ""
 "Fast mode enables click type\n"
 "selection by hovering the mouse\n"
@@ -253,113 +253,113 @@ msgstr ""
 "Γρήγορη λειτουργία επιτρέπει τον τύπο του κλικ ⏎ επιλογή οπου αιωρείται το "
 "ποντίκι ⏎ δείκτης πάνω από το παράθυρο κλικ ⏎ κουμπιων."
 
-#: src/wconfiguration.cpp:572
+#: src/wconfiguration.cpp:574
 msgid "Location:"
 msgstr "Περιοχή: "
 
-#: src/wconfiguration.cpp:578
+#: src/wconfiguration.cpp:580
 msgid "Floating horizontal"
 msgstr "Κυμαινόμενη οριζόντια"
 
-#: src/wconfiguration.cpp:579
+#: src/wconfiguration.cpp:581
 msgid "Floating vertical"
 msgstr "Κυμαινόμενη κάθετα "
 
-#: src/wconfiguration.cpp:580
+#: src/wconfiguration.cpp:582
 msgid "Top docked"
 msgstr "Κορυφή συνδεσης"
 
-#: src/wconfiguration.cpp:581
+#: src/wconfiguration.cpp:583
 msgid "Bottom docked"
 msgstr " Κάτω ελλιμενίζεται"
 
-#: src/wconfiguration.cpp:582
+#: src/wconfiguration.cpp:584
 msgid "Left docked"
 msgstr "Αριστερά αγκυροβολημένο"
 
-#: src/wconfiguration.cpp:583
+#: src/wconfiguration.cpp:585
 msgid "Right docked"
 msgstr "Δεξια αγκυροβολημένο"
 
-#: src/wconfiguration.cpp:589
+#: src/wconfiguration.cpp:591
 msgid "Auto-hide"
 msgstr "Αυτοματη αποκρυψη"
 
-#: src/wconfiguration.cpp:598 src/wwizard.cpp:897
+#: src/wconfiguration.cpp:600 src/wwizard.cpp:898
 msgid "Gesture click"
 msgstr " Κλικ χειρονομίας"
 
-#: src/wconfiguration.cpp:601
+#: src/wconfiguration.cpp:603
 msgid "Enable gesture click"
 msgstr "Ενεργοποιηση του κλικ χειρονομιας"
 
-#: src/wconfiguration.cpp:607
+#: src/wconfiguration.cpp:609
 msgid "Move left:"
 msgstr "Μετακίνηση αριστερά:"
 
-#: src/wconfiguration.cpp:611 src/wconfiguration.cpp:624
-#: src/wconfiguration.cpp:637 src/wconfiguration.cpp:650 src/wviacam.cpp:211
+#: src/wconfiguration.cpp:613 src/wconfiguration.cpp:626
+#: src/wconfiguration.cpp:639 src/wconfiguration.cpp:652 src/wviacam.cpp:215
 msgid "Disable"
 msgstr "Απενεργοποιηση"
 
-#: src/wconfiguration.cpp:612 src/wconfiguration.cpp:625
-#: src/wconfiguration.cpp:638 src/wconfiguration.cpp:651 src/wwizard.cpp:1067
+#: src/wconfiguration.cpp:614 src/wconfiguration.cpp:627
+#: src/wconfiguration.cpp:640 src/wconfiguration.cpp:653 src/wwizard.cpp:1068
 msgid "Left click"
 msgstr "Μετακινηση δεξια"
 
-#: src/wconfiguration.cpp:613 src/wconfiguration.cpp:626
-#: src/wconfiguration.cpp:639 src/wconfiguration.cpp:652 src/wwizard.cpp:1100
+#: src/wconfiguration.cpp:615 src/wconfiguration.cpp:628
+#: src/wconfiguration.cpp:641 src/wconfiguration.cpp:654 src/wwizard.cpp:1101
 msgid "Middle click"
 msgstr "Μεσαιο κλικ"
 
-#: src/wconfiguration.cpp:614 src/wconfiguration.cpp:627
-#: src/wconfiguration.cpp:640 src/wconfiguration.cpp:653 src/wwizard.cpp:1079
+#: src/wconfiguration.cpp:616 src/wconfiguration.cpp:629
+#: src/wconfiguration.cpp:642 src/wconfiguration.cpp:655 src/wwizard.cpp:1080
 msgid "Right click"
 msgstr "Δεξι κλικ"
 
-#: src/wconfiguration.cpp:615 src/wconfiguration.cpp:628
-#: src/wconfiguration.cpp:641 src/wconfiguration.cpp:654 src/wwizard.cpp:1089
+#: src/wconfiguration.cpp:617 src/wconfiguration.cpp:630
+#: src/wconfiguration.cpp:643 src/wconfiguration.cpp:656 src/wwizard.cpp:1090
 msgid "Double click"
 msgstr "Διπλο κλικ"
 
-#: src/wconfiguration.cpp:616 src/wconfiguration.cpp:629
-#: src/wconfiguration.cpp:642 src/wconfiguration.cpp:655
+#: src/wconfiguration.cpp:618 src/wconfiguration.cpp:631
+#: src/wconfiguration.cpp:644 src/wconfiguration.cpp:657
 msgid "Drag click"
 msgstr "Τραβηγμενο κλικ"
 
-#: src/wconfiguration.cpp:620
+#: src/wconfiguration.cpp:622
 msgid "Move right:"
 msgstr "Μετακινηση δεξια:"
 
-#: src/wconfiguration.cpp:633
+#: src/wconfiguration.cpp:635
 msgid "Move up:"
 msgstr "Μετακινηση επανω:"
 
-#: src/wconfiguration.cpp:646
+#: src/wconfiguration.cpp:648
 msgid "Move down:"
 msgstr "Μετακινηση κατω:"
 
-#: src/wconfiguration.cpp:664
+#: src/wconfiguration.cpp:666
 msgid "Click"
 msgstr "Κλικ"
 
-#: src/wconfiguration.cpp:671 src/wconfiguration.cpp:687
+#: src/wconfiguration.cpp:673 src/wconfiguration.cpp:689
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
-#: src/wconfiguration.cpp:694
+#: src/wconfiguration.cpp:696
 msgid "Startup"
 msgstr "Εκκίνηση "
 
-#: src/wconfiguration.cpp:698 src/wwizard.cpp:1243
+#: src/wconfiguration.cpp:700 src/wwizard.cpp:1244
 msgid "Start eViacam at user logon"
 msgstr "Εναρξη του eViacam κατά την εκκίνηση "
 
-#: src/wconfiguration.cpp:703 src/wwizard.cpp:1249
+#: src/wconfiguration.cpp:705 src/wwizard.cpp:1250
 msgid "Enable eViacam at startup"
 msgstr "Ενεργοποίηση του eViacam κατά την εκκίνηση "
 
-#: src/wconfiguration.cpp:706 src/wwizard.cpp:1252
+#: src/wconfiguration.cpp:708 src/wwizard.cpp:1253
 msgid ""
 "If checked the program automatically \n"
 "enables cursor control at startup."
@@ -367,38 +367,38 @@ msgstr ""
 "Αν ελεγχθεί αυτόματα με το πρόγραμμα ⏎ επιτρέπει τον έλεγχο του δρομέα κατά "
 "την εκκίνηση. "
 
-#: src/wconfiguration.cpp:709
+#: src/wconfiguration.cpp:711
 msgid "On-screen keyboard command"
 msgstr "On-screen εντολή πληκτρολογίου "
 
-#: src/wconfiguration.cpp:716
+#: src/wconfiguration.cpp:718
 msgid "Command to run an external on-screen keyboard application."
 msgstr "Εντολή για να εκτελέσετε μια εξωτερικη επί της οθόνης εφαρμογή. "
 
-#: src/wconfiguration.cpp:719
+#: src/wconfiguration.cpp:721
 msgid "Browse..."
 msgstr "Περιηγηση..."
 
-#: src/wconfiguration.cpp:724
+#: src/wconfiguration.cpp:726
 #, fuzzy
 msgid "Face localization and tracking"
 msgstr "Εντοπισμος προσώπου "
 
-#: src/wconfiguration.cpp:729
+#: src/wconfiguration.cpp:731
 msgid "Use legacy face tracking algorithm"
 msgstr ""
 
-#: src/wconfiguration.cpp:732
+#: src/wconfiguration.cpp:734
 msgid ""
 "Use old face tracking method\n"
 "(not recommended)."
 msgstr ""
 
-#: src/wconfiguration.cpp:737
+#: src/wconfiguration.cpp:739
 msgid "Locate face automatically"
 msgstr "Αυτοματος εντοπισμος προσωπου"
 
-#: src/wconfiguration.cpp:740
+#: src/wconfiguration.cpp:742
 msgid ""
 "When enabled tries to automatically\n"
 "detect your face and center the\n"
@@ -407,138 +407,146 @@ msgstr ""
 "Όταν ενεργοποιηθεί προσπαθεί να εντοπίσει αυτοματα το πρόσωπό σας και το "
 "κέντρο ⏎ περιοχής παρακολούθησης. "
 
-#: src/wconfiguration.cpp:745
+#: src/wconfiguration.cpp:747
 msgid "CPU usage"
 msgstr "CPU χρηση"
 
-#: src/wconfiguration.cpp:749
+#: src/wconfiguration.cpp:751
 msgid "Lowest"
 msgstr "Χαμηλοτερη"
 
-#: src/wconfiguration.cpp:750
+#: src/wconfiguration.cpp:752
 msgid "Low"
 msgstr "Χαμηλη"
 
-#: src/wconfiguration.cpp:752
+#: src/wconfiguration.cpp:754
 msgid "High"
 msgstr "Υψηλη"
 
-#: src/wconfiguration.cpp:753
+#: src/wconfiguration.cpp:755
 msgid "Highest"
 msgstr "Υψηλοτερη"
 
-#: src/wconfiguration.cpp:757
+#: src/wconfiguration.cpp:759
 #, fuzzy
 msgid "Stop pointer when face not detected"
 msgstr "Σταματήσμος του δείκτη όταν δεν ανιχνευτεί πρόσωπο"
 
-#: src/wconfiguration.cpp:760
+#: src/wconfiguration.cpp:762
 msgid "eViacam is only enabled when face is detected."
 msgstr "Το eViacam ενεργοποιείται μόνο όταν εντοπιστεί πρόσωπο. "
 
-#: src/wconfiguration.cpp:766
+#: src/wconfiguration.cpp:768
 msgid "After"
 msgstr "Μετα"
 
-#: src/wconfiguration.cpp:772
+#: src/wconfiguration.cpp:774
 msgid "seconds"
 msgstr "δευτερολεπτα"
 
-#: src/wconfiguration.cpp:782
+#: src/wconfiguration.cpp:781
 #, fuzzy
 msgid "Mouse actions"
 msgstr "Κίνηση"
 
-#: src/wconfiguration.cpp:789
+#: src/wconfiguration.cpp:788
 msgid "Increase this value if some application ignores click events."
 msgstr ""
 
-#: src/wconfiguration.cpp:792
+#: src/wconfiguration.cpp:791
 msgid "ms delay between up and down events"
 msgstr ""
 
-#: src/wconfiguration.cpp:795
+#: src/wconfiguration.cpp:794
 msgid "Advanced"
 msgstr "Εξελιγμένα "
 
-#: src/wconfiguration.cpp:797
+#: src/wconfiguration.cpp:796
 msgid "Profile options"
 msgstr "Ρυθμισεις του προφιλ"
 
-#: src/wconfiguration.cpp:803
+#: src/wconfiguration.cpp:802
 msgid "Profile management"
 msgstr "Διαχειριση του προφιλ"
 
-#: src/wconfiguration.cpp:808
+#: src/wconfiguration.cpp:807
 msgid "Select profile:"
 msgstr "Επιλογη του προφιλ:"
 
-#: src/wconfiguration.cpp:810 src/wconfiguration.cpp:816
+#: src/wconfiguration.cpp:809 src/wconfiguration.cpp:815
 msgid "Chooses desired active profile"
 msgstr "Επιλέγει επιθυμητο ενεργό προφίλ "
 
-#: src/wconfiguration.cpp:819 src/wconfiguration.cpp:1559
+#: src/wconfiguration.cpp:818 src/wconfiguration.cpp:1568
 msgid "Add profile"
 msgstr "Προσθηκη προφιλ"
 
-#: src/wconfiguration.cpp:822
+#: src/wconfiguration.cpp:821
 msgid "Delete profile"
 msgstr "Διαγραφη προφιλ"
 
-#: src/wconfiguration.cpp:827
+#: src/wconfiguration.cpp:826
 msgid "Camera"
 msgstr "Καμερα"
 
-#: src/wconfiguration.cpp:836
+#: src/wconfiguration.cpp:835
 msgid "Settings..."
 msgstr "Ρυθμισεις..."
 
-#: src/wconfiguration.cpp:839
+#: src/wconfiguration.cpp:838
 msgid "Change"
 msgstr "Αλλαγη"
 
-#: src/wconfiguration.cpp:844
+#: src/wconfiguration.cpp:843
 msgid "Language"
 msgstr "Γλωσσα"
 
-#: src/wconfiguration.cpp:849
+#: src/wconfiguration.cpp:848
 msgid "Language:"
 msgstr "Γλωσσα:"
 
-#: src/wconfiguration.cpp:856
+#: src/wconfiguration.cpp:855 src/checkupdates_ui.h:60
+msgid "Check for updates"
+msgstr "Ελεγχος για νεες εκδοσεις"
+
+#: src/wconfiguration.cpp:858
+msgid "Automatically check for updates at startup"
+msgstr ""
+
+#: src/wconfiguration.cpp:862
 msgid "General options"
 msgstr "Γενικες ρυθμισεις"
 
-#: src/wconfiguration.cpp:863 src/newtrackerinformationdlg.cpp:174
+#: src/wconfiguration.cpp:869 src/newtrackerinformationdlg.cpp:174
 msgid "&OK"
 msgstr "&OK"
 
-#: src/wconfiguration.cpp:866
+#: src/wconfiguration.cpp:872
 msgid "&Cancel"
 msgstr "Διακοπη"
 
-#: src/wconfiguration.cpp:875 src/wconfiguration.cpp:876
-#: src/wconfiguration.cpp:877 src/wconfiguration.cpp:878
+#: src/wconfiguration.cpp:881 src/wconfiguration.cpp:882
+#: src/wconfiguration.cpp:883 src/wconfiguration.cpp:884
 msgid "Key:"
 msgstr "Κλειδι:"
 
-#: src/wconfiguration.cpp:907
+#: src/wconfiguration.cpp:913
 msgid "Set key"
 msgstr "Εφαρμογη κλειδιου"
 
-#: src/wconfiguration.cpp:1483 src/wconfiguration.cpp:1670
+#: src/wconfiguration.cpp:1492 src/wconfiguration.cpp:1679
 msgid "You should restart the application to apply this change"
 msgstr ""
 "Θα πρέπει να επανεκκινήσετε την εφαρμογή για να εφαρμόσετε αυτήν την αλλαγή "
 
-#: src/wconfiguration.cpp:1504
+#: src/wconfiguration.cpp:1513
 msgid ""
 "Current profile has unsaved changes.\n"
 "Continue anyway?"
 msgstr ""
 "Τρέχον προφίλ έχει μη αποθηκευμένες αλλαγές. ⏎ Συνέχεια ούτως ή άλλως; "
 
-#: src/wconfiguration.cpp:1510
+#: src/wconfiguration.cpp:1519
 #, c-format
 msgid ""
 "This action will load %s profile settings.\n"
@@ -547,7 +555,7 @@ msgstr ""
 "Η δράση αυτή θα φορτώσει τις ρυθμίσεις του προφίλ %s. ⏎ Είστε βέβαιοι ότι "
 "θέλετε να συνεχίσετε;"
 
-#: src/wconfiguration.cpp:1541
+#: src/wconfiguration.cpp:1550
 #, c-format
 msgid ""
 "This action will delete %s profile.\n"
@@ -556,27 +564,27 @@ msgstr ""
 "Αυτή η ενέργεια θα διαγράψει το προφίλ%s. ⏎ Είστε βέβαιοι ότι θέλετε να "
 "συνεχίσετε;"
 
-#: src/wconfiguration.cpp:1559
+#: src/wconfiguration.cpp:1568
 msgid "Enter new profile name"
 msgstr "Εισαγετε ενα νεο ονομα του προφιλ"
 
-#: src/wconfiguration.cpp:1570
+#: src/wconfiguration.cpp:1579
 msgid "Profile already exists."
 msgstr "Το προφιλ υπαρχει ηδη."
 
-#: src/wconfiguration.cpp:1576
+#: src/wconfiguration.cpp:1585
 msgid "Invalid profile name."
 msgstr "Λαθος ονομα του προφιλ."
 
-#: src/wconfiguration.cpp:1622 src/wconfiguration.cpp:1625
+#: src/wconfiguration.cpp:1631 src/wconfiguration.cpp:1634
 msgid "Choose on-screen keyboard command"
 msgstr "Επιλογη μιας On-screen εντολής πληκτρολογίου "
 
-#: src/wconfiguration.cpp:1623
+#: src/wconfiguration.cpp:1632
 msgid "Executable files|*.exe"
 msgstr "Executable files|*.exe"
 
-#: src/wconfiguration.cpp:1738
+#: src/wconfiguration.cpp:1747
 msgid ""
 "This action could make you lose the control of the computer.\n"
 "Do you want to continue?"
@@ -584,17 +592,17 @@ msgstr ""
 "Αυτή η ενέργεια θα μπορούσε να σας κάνει να χάσετε τον έλεγχο του υπολογιστη."
 "⏎ Θέλετε να συνεχίσετε;"
 
-#: src/wconfiguration.cpp:1738 src/wconfiguration.cpp:1873
-#: src/wconfiguration.cpp:1999 src/viacamcontroller.cpp:365
+#: src/wconfiguration.cpp:1747 src/wconfiguration.cpp:1882
+#: src/wconfiguration.cpp:2008 src/viacamcontroller.cpp:383
 #: src/cmotioncalibration.cpp:186
 msgid "eViacam warning"
 msgstr "eViacam προειδοποιηση"
 
-#: src/wconfiguration.cpp:1873
+#: src/wconfiguration.cpp:1882
 msgid "Discard changes?"
 msgstr "Αναιρεση αλλαγων?"
 
-#: src/wconfiguration.cpp:1999
+#: src/wconfiguration.cpp:2008
 msgid ""
 "This key is used by another command.\n"
 "Do you want to try another key?"
@@ -639,7 +647,7 @@ msgstr "Εμφανιση κεντρικου παραθυρου"
 msgid "Middle"
 msgstr "Μεσαιο"
 
-#: src/clickwindowbitmap.cpp:257 src/wwizard.cpp:1047
+#: src/clickwindowbitmap.cpp:257 src/wwizard.cpp:1048
 msgid "Drag"
 msgstr "Τραβηγμενο"
 
@@ -651,15 +659,15 @@ msgstr "Διπλο κλικ"
 msgid "About Enable Viacam"
 msgstr "Σχετικα με την ενεργοποιηση του Viacam"
 
-#: src/viacamcontroller.cpp:143
+#: src/viacamcontroller.cpp:148
 msgid "Not detected any camera. Aborting"
 msgstr "Δεν εντοπίστηκε οποιαδήποτε καμερα. Εγκατάλειψη "
 
-#: src/viacamcontroller.cpp:164
+#: src/viacamcontroller.cpp:169
 msgid "Choose the camera to use"
 msgstr "Επιλεξτε μια καμερα για χρηση"
 
-#: src/viacamcontroller.cpp:184
+#: src/viacamcontroller.cpp:189
 msgid ""
 "Can not initialize the camera.\n"
 "Perhaps is being used by other application."
@@ -667,13 +675,13 @@ msgstr ""
 "Δεν μπορεί να αναγνωρισθει η κάμερα.⏎ Ίσως χρησιμοποιείται από άλλη "
 "εφαρμογή. "
 
-#: src/viacamcontroller.cpp:365
+#: src/viacamcontroller.cpp:383
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
 msgstr "Αυτή η ενέργεια θα απενεργοποιήσει το eViacam. ⏎ Είσαι σίγουρος; "
 
-#: src/viacamcontroller.cpp:394
+#: src/viacamcontroller.cpp:412
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -681,12 +689,12 @@ msgstr ""
 "On-screen εντολή του πληκτρολογίου δεν έχει οριστεί. ⏎ Παρακαλώ, να "
 "ρυθμίσετε μέσα από τις επιλογές διαλόγου. "
 
-#: src/viacamcontroller.cpp:394 src/viacamcontroller.cpp:408
+#: src/viacamcontroller.cpp:412 src/viacamcontroller.cpp:426
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "eViacam σφαλμα"
 
-#: src/viacamcontroller.cpp:404
+#: src/viacamcontroller.cpp:422
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -696,7 +704,7 @@ msgstr ""
 "Δεν μπορεί να εκτελέστει στην οθόνη του προγράμματος του πληκτρολογίου.⏎ Η "
 "εντολή %s απέτυχε.⏎ Παρακαλώ, να ρυθμίσετε μέσα από τις επιλογές διαλόγου."
 
-#: src/viacamcontroller.cpp:406
+#: src/viacamcontroller.cpp:424
 msgid ""
 "\n"
 "\n"
@@ -714,7 +722,7 @@ msgstr ""
 "έλεγχο λογαριασμού χρήστη (UAC) για να αποφευχθούν τέτοια προβλήματα ⏎ ή "
 "δοκιμάστε ενα άλλο OSK, π.χ. το Click- N-Type."
 
-#: src/viacamcontroller.cpp:480
+#: src/viacamcontroller.cpp:498
 msgid ""
 "Note that adjusting the camera controls while eViacam\n"
 "is enabled may cause loss of pointer control.\n"
@@ -760,67 +768,67 @@ msgstr ""
 "Με άδεια GNU/GPL v3. Ανατρέξτε στην ενότητα Αντιγραφή αρχείων για "
 "λεπτομέρειες."
 
-#: src/wviacam.cpp:187
+#: src/wviacam.cpp:189
 msgid "E&nable / Disable"
 msgstr "Ενεργοποιηση/Απενεργοποιηση"
 
-#: src/wviacam.cpp:189
+#: src/wviacam.cpp:191
 msgid "&Exit"
 msgstr "Αποχωρηση"
 
-#: src/wviacam.cpp:190
+#: src/wviacam.cpp:192
 msgid "&File"
 msgstr "Αρχειο"
 
-#: src/wviacam.cpp:192
+#: src/wviacam.cpp:194
 msgid "&Wizard..."
 msgstr "Βοηθος..."
 
-#: src/wviacam.cpp:194
+#: src/wviacam.cpp:196
 msgid "&Options..."
 msgstr "Ρυθμισεις..."
 
-#: src/wviacam.cpp:195
+#: src/wviacam.cpp:197
 msgid "&Configuration"
 msgstr "Ρυθμιση"
 
-#: src/wviacam.cpp:197
+#: src/wviacam.cpp:199
 msgid "&Help contents"
 msgstr "Θεματα βοηθειας"
 
-#: src/wviacam.cpp:198
+#: src/wviacam.cpp:201
 msgid "Check for &updates"
 msgstr "Ελεγχος για νεες εκδοσεις"
 
-#: src/wviacam.cpp:200
+#: src/wviacam.cpp:204
 msgid "&About..."
 msgstr "Σχετικα..."
 
-#: src/wviacam.cpp:201
+#: src/wviacam.cpp:205
 msgid "&Help"
 msgstr "Βοηθεια"
 
-#: src/wviacam.cpp:208
+#: src/wviacam.cpp:212
 msgid "Enable"
 msgstr "Ενεργοποιηση"
 
-#: src/wviacam.cpp:215 src/clickwindow.h:31
+#: src/wviacam.cpp:219 src/clickwindow.h:31
 msgid "Click Window"
 msgstr "Κάντε κλικ στο παράθυρο "
 
-#: src/wviacam.cpp:218
+#: src/wviacam.cpp:222
 msgid "On-screen keyboard"
 msgstr "On-screen πληκτρολογίο"
 
-#: src/wviacam.cpp:222
+#: src/wviacam.cpp:226
 msgid "Options"
 msgstr "Ρυθμισεις"
 
-#: src/wviacam.cpp:226
+#: src/wviacam.cpp:230
 msgid "Help"
 msgstr "Βοηθεια"
 
-#: src/wviacam.cpp:232
+#: src/wviacam.cpp:236
 msgid ""
 "Frame rate meter. For proper function\n"
 "should be greater than 25 fps. Reduce\n"
@@ -831,22 +839,22 @@ msgstr ""
 "μεγαλύτερη από 25 fps. Μείωνει ⏎ τον χρόνο έκθεσης της καμερας σας, όταν "
 "ειναι ⏎ απαραίτητο. "
 
-#: src/wviacam.cpp:329
+#: src/wviacam.cpp:333
 #, c-format
 msgid " %li fps (good)"
 msgstr "%li fps (καλα)"
 
-#: src/wviacam.cpp:332
+#: src/wviacam.cpp:336
 #, c-format
 msgid " %li fps (could be improved)"
 msgstr "%li fps (θα μπορούσε να βελτιωθεί)"
 
-#: src/wviacam.cpp:335
+#: src/wviacam.cpp:339
 #, c-format
 msgid " %li fps (too low)"
 msgstr "%li fps (πολυ χαμηλο)"
 
-#: src/wviacam.cpp:380
+#: src/wviacam.cpp:384
 msgid ""
 "This action will close the program.\n"
 "Are you sure?"
@@ -897,35 +905,35 @@ msgid ""
 msgstr ""
 "Καμμια κινηση δεν εχει αναγνωρισθει.⏎ Θέλετε να επαναλάβετε τη βαθμονόμηση; "
 
-#: src/wwizard.cpp:103
+#: src/wwizard.cpp:104
 msgid "Enable Viacam configuration wizard"
 msgstr "Ενεργοποίηση του Viacam οδηγου διαμόρφωσης ρυθμισεων"
 
-#: src/wwizard.cpp:261
+#: src/wwizard.cpp:262
 #, fuzzy
 msgid "Disable pointer control"
 msgstr "Απενεργοποιηση κινησης"
 
-#: src/wwizard.cpp:265 src/wwizard.cpp:1644
+#: src/wwizard.cpp:266 src/wwizard.cpp:1639
 msgid "Enable pointer control"
 msgstr ""
 
-#: src/wwizard.cpp:374
+#: src/wwizard.cpp:375
 msgid "Welcome to the eViacam configuration wizard"
 msgstr "Καλως ηρθατε στον eViacam οδηγο ρυθμισεων"
 
-#: src/wwizard.cpp:387
+#: src/wwizard.cpp:388
 msgid "Click Next to continue."
 msgstr "Κάντε κλικ στο κουμπί Παρακατω για να συνεχίσετε. "
 
-#: src/wwizard.cpp:531 src/wwizard.cpp:1609
+#: src/wwizard.cpp:532 src/wwizard.cpp:1603
 msgid "Pointer calibration"
 msgstr " Βαθμονόμηση Δεικτη"
 
-#: src/wwizard.cpp:541
+#: src/wwizard.cpp:542
 msgid ""
 "The assisted calibration procedure will ask you to move your head in order "
-"to automatically configure the appropiate motion parameters.\n"
+"to automatically configure the appropriate motion parameters.\n"
 "\n"
 "After this calibration stage, you can manually adjust the motion "
 "parameters.\n"
@@ -939,11 +947,11 @@ msgstr ""
 "παραμέτρους κίνησης . ⏎ ⏎ ΣΗΜΕΙΩΣΗ : ο βοηθός βαθμονόμησης θα επιτρέψει τον "
 "έλεγχο δείκτη , έτσι ώστε να μπορείτε να ελέγξετε τις ρυθμίσεις σας."
 
-#: src/wwizard.cpp:549
+#: src/wwizard.cpp:550
 msgid "Perform assisted calibration"
 msgstr "Εκτελέση υποβοηθούμενης βαθμονόμησης"
 
-#: src/wwizard.cpp:552
+#: src/wwizard.cpp:553
 msgid ""
 "If checked the next window will allow\n"
 "you to calibrate the speed of the pointer."
@@ -951,23 +959,23 @@ msgstr ""
 "Εάν επιλεγεί το επόμενο παράθυρο θα επιτρέψει ⏎ πως μπορείτε να ρυθμίσετε "
 "την ταχύτητα του δείκτη."
 
-#: src/wwizard.cpp:695
+#: src/wwizard.cpp:696
 msgid "Pointer calibration "
 msgstr "Βαθμονόμηση δεικτη"
 
-#: src/wwizard.cpp:872
+#: src/wwizard.cpp:873
 msgid "Click mode"
 msgstr "Κάντε κλικ στο κουμπί λειτουργίας "
 
-#: src/wwizard.cpp:882
+#: src/wwizard.cpp:883
 msgid "Click here to test"
 msgstr "Πατηστε εδω για δοκιμη"
 
-#: src/wwizard.cpp:888
+#: src/wwizard.cpp:889
 msgid "Dwell Click (default)"
 msgstr "Κρατημένο κλικ (προεπιλογη)"
 
-#: src/wwizard.cpp:892
+#: src/wwizard.cpp:893
 msgid ""
 "The click is generated automatically when you hover the mouse pointer "
 "momentarily. The Click the Window lets you choose between different actions."
@@ -976,7 +984,7 @@ msgstr ""
 "στιγμή. Το κλικ, στο παράθυρο σας επιτρέπει να επιλέξετε μεταξύ διαφορετικων "
 "ενέργειων."
 
-#: src/wwizard.cpp:904
+#: src/wwizard.cpp:905
 msgid ""
 "The click is automatically generated by stopping the pointer for a moment "
 "and then moving the pointer to one of the 4 directions to choose the action."
@@ -985,61 +993,61 @@ msgstr ""
 "λίγο και στη συνέχεια μετακίνηση του δείκτη σε μία από τις 4 κατευθύνσεις "
 "για να επιλέξετε την ενέργεια."
 
-#: src/wwizard.cpp:910
+#: src/wwizard.cpp:911
 msgid "No click. Click function disabled."
 msgstr "Κανενα κλικ. Η λειτουργια του κλικ ειναι απενεργοποιημενη."
 
-#: src/wwizard.cpp:916
+#: src/wwizard.cpp:917
 #, fuzzy
 msgid "Enable head tracking"
 msgstr "Ενεργοποίηση κίνησης"
 
-#: src/wwizard.cpp:1065
+#: src/wwizard.cpp:1066
 msgid "Drop"
 msgstr "Μεταβαση"
 
-#: src/wwizard.cpp:1226
+#: src/wwizard.cpp:1227
 msgid "Wizard completed"
 msgstr "Ο οδηγος ολοκληρωθηκε"
 
-#: src/wwizard.cpp:1236
+#: src/wwizard.cpp:1237
 msgid "Run this wizard at startup"
 msgstr "Εκτέλεση αυτού του οδηγού κατά την εκκίνηση"
 
-#: src/wwizard.cpp:1239
+#: src/wwizard.cpp:1240
 msgid "If checked the wizard automatically appears at startup."
 msgstr ""
 "Αν ελεγχθεί αυτόματα με το πρόγραμμα ⏎ επιτρέπει τον έλεγχο του δρομέα κατά "
 "την εκκίνηση. "
 
-#: src/wwizard.cpp:1257
+#: src/wwizard.cpp:1258
 #, fuzzy
 msgid "You may change the settings through Configuration -> Options"
 msgstr ""
 "Μπορείτε να αλλάξετε τις ρυθμίσεις μέσω της διαμόρφωσης - Επιλογές > ⏎. ⏎ "
 "Κάντε κλικ στο Finish για να κλείσετε τον οδηγό. "
 
-#: src/wwizard.cpp:1429
+#: src/wwizard.cpp:1426
 msgid "Camera setup"
 msgstr "Εγκατασταση καμερας"
 
-#: src/wwizard.cpp:1445
+#: src/wwizard.cpp:1439
 msgid "Detected camera:"
 msgstr "Εντοπισμενη καμερα:"
 
-#: src/wwizard.cpp:1448
+#: src/wwizard.cpp:1442
 msgid "camera_name"
 msgstr "ονομα_καμερας"
 
-#: src/wwizard.cpp:1452
+#: src/wwizard.cpp:1446
 msgid "Framerate:"
 msgstr "Ρυθμός καρέ: "
 
-#: src/wwizard.cpp:1455
+#: src/wwizard.cpp:1449
 msgid "framerate"
 msgstr "Ρυθμός καρέ "
 
-#: src/wwizard.cpp:1461
+#: src/wwizard.cpp:1455
 msgid ""
 "For best performance possible, the frame rate should be equal to or greater "
 "than 25 fps. eViacam tries to automatically configure your camera, but If "
@@ -1051,25 +1059,25 @@ msgstr ""
 "σας, αλλά αν η τιμή αυτή είναι κάτω από το όριο αυτό μπορεί να χρειαστεί να "
 "ρυθμίσετε χειροκίνητα τις ρυθμίσεις της κάμερας."
 
-#: src/wwizard.cpp:1467
+#: src/wwizard.cpp:1461
 msgid "Camera settings..."
 msgstr "Ρυθμισεις καμερας..."
 
-#: src/wwizard.cpp:1619
+#: src/wwizard.cpp:1613
 msgid ""
 "You can adjust motion speed manually and enable head tracking to test how it "
 "works."
 msgstr ""
 
-#: src/wwizard.cpp:1808
+#: src/wwizard.cpp:1803
 msgid "The frame rate is appropriate."
 msgstr ""
 
-#: src/wwizard.cpp:1906
+#: src/wwizard.cpp:1901
 msgid "Face detection setup"
 msgstr ""
 
-#: src/wwizard.cpp:1919
+#: src/wwizard.cpp:1911
 #, fuzzy
 msgid ""
 "eViacam will try to detect your face automatically. But, if necessary, you "
@@ -1083,11 +1091,11 @@ msgstr ""
 "προχωρήσουμε και να αλλάξετε το μέγεθος της παρακολούθησης χώρου να "
 "βρίσκονται γύρω από το πρόσωπό σας."
 
-#: src/wwizard.cpp:1925
+#: src/wwizard.cpp:1917
 msgid "Locate face automatically (recommended)"
 msgstr "Αυτοματος εντοπισμος προσωπου (συνισταται)"
 
-#: src/wwizard.cpp:1931
+#: src/wwizard.cpp:1923
 msgid "Disable eViacam if no face is found"
 msgstr "Απενεργοποιήση του eViacam, άν το πρόσωπο δεν εντοπιζεται"
 
@@ -1169,56 +1177,52 @@ msgstr "Μειώση ταχύτητας του άξονα Χ "
 msgid "Decrease the Y axis speed"
 msgstr "Μειώση ταχύτητας του άξονα Y "
 
-#: src/checkupdates.cpp:170
+#: src/checkupdates.cpp:216
 msgid "Error checking for updates. Try again later."
 msgstr "Σφάλμα κατα τον έλεγχο νεων εκδοσεων. Δοκιμάστε ξανά αργότερα. "
 
-#: src/checkupdates.cpp:192
+#: src/checkupdates.cpp:249
 msgid "Cannot resolve host name: "
 msgstr "Δεν μπορεί να επιλύσει το όνομα κεντρικού υπολογιστή:"
 
-#: src/checkupdates.cpp:197
+#: src/checkupdates.cpp:254
 msgid "Conection failed: "
 msgstr "Η δημιουργια συνδεσης απέτυχε: "
 
-#: src/checkupdates.cpp:202
+#: src/checkupdates.cpp:259
 msgid "Sorry. Version file not found. Please report us."
 msgstr ""
 "Λυπάμαι. Το αρχείο έκδοσης δεν βρέθηκε. Παρακαλείστε να μας το αναφέρετε. "
 
-#: src/checkupdates.cpp:206
+#: src/checkupdates.cpp:263
 msgid "Sorry. Something bad happened."
 msgstr "Συγνωμη. Κάτι κακό συνέβη. "
 
-#: src/checkupdates_ui.h:57
-msgid "Check for updates"
-msgstr "Ελεγχος για νεες εκδοσεις"
-
-#: src/checkupdates_ui.cpp:158
+#: src/checkupdates_ui.cpp:155
 msgid "Checking for updates. Please wait."
 msgstr "Ελεγχος για νεες εκδοσεις. Παρακαλω περιμενετε."
 
-#: src/checkupdates_ui.cpp:166
+#: src/checkupdates_ui.cpp:163
 msgid "Visit Enable Viacam website"
 msgstr "Επισκεφθειτε την ιστοσελιδα του Enable Viacam "
 
-#: src/checkupdates_ui.cpp:173
+#: src/checkupdates_ui.cpp:170
 msgid "&Close"
 msgstr "Κλεισιμο"
 
-#: src/checkupdates_ui.cpp:247
+#: src/checkupdates_manager.cpp:53
 msgid "New version available: "
 msgstr "Μια νεα εκδοση ειναι διαθεσιμη:  "
 
-#: src/checkupdates_ui.cpp:249
+#: src/checkupdates_manager.cpp:55
 msgid "Installed version: "
 msgstr "Εγκατεστημενη εκδοση: "
 
-#: src/checkupdates_ui.cpp:254
+#: src/checkupdates_manager.cpp:60
 msgid "No updates available"
 msgstr "Δεν υπαρχουν νεες εκδοσεις"
 
-#: src/checkupdates_ui.cpp:257
+#: src/checkupdates_manager.cpp:64
 msgid "Error checking for updates"
 msgstr "Σφαλμα κατα τον ελεγχο νεων εκδοσεων"
 

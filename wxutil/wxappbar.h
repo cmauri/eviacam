@@ -79,7 +79,6 @@ public:
 	void SetWarnBarOverlap (bool value);
 	bool CheckForBar ();
 		
-	// Allows to know and change whether the dialog has borders or not
 	bool GetBorderDecorations () const;
 	void SetBorderDecorations (bool enable, bool apply= false);
 	
@@ -99,7 +98,7 @@ private:
 #if defined(__WXMSW__)
 //	void AppBarCallback (UINT uMsg, WPARAM wParam, LPARAM lParam);
 #endif
-	// Allows to set the stickness of the window, i.e. whether it should
+	// Set the stickness of the window, i.e. whether it should
 	// appear in the different desktops (GTK+ only)
 	void SetSticky (bool stick);
 	

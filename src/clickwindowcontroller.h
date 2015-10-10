@@ -93,7 +93,7 @@ public:
 private:
 	bool IsCursorOverNoClickButton(long x, long y);
 	bool IsCursorOverWindow(long x, long y);
-	void SelectAppropiateWindow (EDesign design, ELocation location);
+	void SelectAppropriateWindow (EDesign design, ELocation location);
 
 	// Associations
 	CClickWindow* m_pWindow;
