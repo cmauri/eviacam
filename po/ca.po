@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.7.2\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2015-09-24 15:52+0200\n"
+"POT-Creation-Date: 2015-10-10 18:46+0200\n"
 "PO-Revision-Date: 2015-01-15 11:52+0200\n"
 "Last-Translator: Cesar Mauri <cesar@crea-si.com>\n"
 "Language-Team: Català\n"
@@ -612,7 +612,7 @@ msgstr ""
 "Està segur que vol continuar?"
 
 #: src/wconfiguration.cpp:1747 src/wconfiguration.cpp:1882
-#: src/wconfiguration.cpp:2008 src/viacamcontroller.cpp:383
+#: src/wconfiguration.cpp:2008 src/viacamcontroller.cpp:385
 #: src/cmotioncalibration.cpp:186
 msgid "eViacam warning"
 msgstr "Advertiment"
@@ -694,7 +694,7 @@ msgstr ""
 "No es pot inicialitzar la càmera.\n"
 "Potser està essent utilitzada per una altra aplicació."
 
-#: src/viacamcontroller.cpp:383
+#: src/viacamcontroller.cpp:385
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -702,7 +702,7 @@ msgstr ""
 "Aquesta acció desactivarà eViacam.\n"
 "Està segur?"
 
-#: src/viacamcontroller.cpp:412
+#: src/viacamcontroller.cpp:414
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -710,12 +710,12 @@ msgstr ""
 "La comanda obrir el teclat en pantalla no està definida.La pot configurar a "
 "través del diàleg de configuració."
 
-#: src/viacamcontroller.cpp:412 src/viacamcontroller.cpp:426
+#: src/viacamcontroller.cpp:414 src/viacamcontroller.cpp:428
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "Error"
 
-#: src/viacamcontroller.cpp:422
+#: src/viacamcontroller.cpp:424
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -726,7 +726,7 @@ msgstr ""
 "La comanda %s ha fallat.\n"
 "Configuri-la a través del diàleg de configuració."
 
-#: src/viacamcontroller.cpp:424
+#: src/viacamcontroller.cpp:426
 msgid ""
 "\n"
 "\n"
@@ -745,7 +745,7 @@ msgstr ""
 "evitar aquests problemes o  provar un altre teclat en\n"
 "pantalla, e.g. Click-N-Type."
 
-#: src/viacamcontroller.cpp:498
+#: src/viacamcontroller.cpp:500
 msgid ""
 "Note that adjusting the camera controls while eViacam\n"
 "is enabled may cause loss of pointer control.\n"
