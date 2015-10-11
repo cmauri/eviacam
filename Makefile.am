@@ -75,8 +75,11 @@ git-dist:
 	@if [ -z "$$TAG" ]; then \
 		make -C po update-po ; \
 		if [ -n "$$(git status --porcelain)" ]; then \
-			echo "Error: Working directory not clean" ; \
-			exit 1 ; \
+			read -p "Working directory not clean, continue?" -n 1 -r ; \
+			echo ; \
+			if [[ ! $$REPLY =~ ^[Yy]$$ ]]; then \
+				exit 1 ; \ 
+			fi ; \
 		fi ; \
 	fi
 	@git archive --format=tar --prefix=$(PACKAGE)-$(GITVERSION)/ $(GITTAG) | xz > $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
