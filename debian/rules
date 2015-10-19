@@ -21,6 +21,9 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 %:
 	dh $@ --with autoreconf
 
+override_dh_autoreconf:
+	dh_autoreconf ./autogen.sh	
+	
 override_dh_clean:
 	debconf-updatepo
 	dh_clean
