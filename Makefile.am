@@ -8,27 +8,23 @@ SUBDIRS = \
 	wxutil \
 	wxcamwindow \
 	po \
+	man \
 	doc \
-	src \
-	rpm
+	src
 
 EXTRA_DIST = \
 	autogen.sh \
 	AGRAIMENTS.txt \
-	win32/eviacam.sln \
-	win32/installer.iss \
-	win32/installer.ico \
-	win32/Info \
-	eviacam.kdevelop \
-	m4 
+	eviacam.kdevelop
 
 dist_pkgdata_DATA = THANKS
 
-INCLUDES = \
-	-I$(top_srcdir)/wxutil \
+AM_CPPFLAGS = \
+	-I$(top_srcdir) \
 	-I$(top_srcdir)/creavision \
 	-I$(top_srcdir)/wxcamwindow \
-	-I$(top_srcdir)
+	-I$(top_srcdir)/simplelog \
+	-I$(top_srcdir)/wxutil
 
 maintainer-clean-local:
 	-rm -rf win32/Release
@@ -61,76 +57,106 @@ dist-hook:
 		echo A git clone is required to generate a ChangeLog >&2; \
 	fi
 
+
+GITTAGCMD= \
+	if [ -z "$$TAG" ]; then \
+		git describe --tags; \
+	else \
+		echo $$TAG; \
+	fi
+
+GITTAG= `$(GITTAGCMD)`
+
+GITVERSION= `$(GITTAGCMD) | cut -d 'v' -f 2- | cut -d '-' -f 1`
+	
+# make tarball form repository
+# if no specific tag selected check that the build directory is clean
+git-dist:
+	@if [ -z "$$TAG" ]; then \
+		make -C po update-po ; \
+		if [ -n "$$(git status --porcelain)" ]; then \
+			read -p "Working directory not clean, continue?" -n 1 -r ; \
+			echo ; \
+			if [[ ! $$REPLY =~ ^[Yy]$$ ]]; then \
+				exit 1 ; \ 
+			fi ; \
+		fi ; \
+	fi
+	@git archive --format=tar --prefix=$(PACKAGE)-$(GITVERSION)/ $(GITTAG) | xz > $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	gpg2 -o $(PACKAGE)_$(GITVERSION).orig.tar.xz.asc -a --detach-sign $(PACKAGE)_$(GITVERSION).orig.tar.xz
+
+
 ##
 ## Debian packages
 ##
 
 ## make a Debian binary package
-deb: configure dist
+deb: configure git-dist
 	-$(RM) -r debian-build
 	-mkdir debian-build
 	cd debian-build ; \
-	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	cd $(PACKAGE)-$(VERSION) ; \
+	mv ../$(PACKAGE)_$(GITVERSION).orig.tar.xz* . ; \
+	tar xJf $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
-	dpkg-buildpackage -B -rfakeroot ; \
+	dpkg-buildpackage -B -rfakeroot --force-sign ; \
 	cd .. ; \
-	$(RM) -r $(PACKAGE)-$(VERSION)
+	$(RM) -r $(PACKAGE)-$(GITVERSION)
 
 ## make a Debian source package
-deb-src: configure dist
+deb-src: configure git-dist
 	-$(RM) -r debian-src
 	-mkdir debian-src
 	cd debian-src ; \
-	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	cd $(PACKAGE)-$(VERSION) ; \
+	mv ../$(PACKAGE)_$(GITVERSION).orig.tar.xz* . ; \
+	tar xJf $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
-	dpkg-buildpackage -S -i -rfakeroot ; \
+	dpkg-buildpackage -S -i -rfakeroot --force-sign --check-command=lintian ; \
 	cd .. ; \
-	$(RM) -r $(PACKAGE)-$(VERSION)
+	$(RM) -r $(PACKAGE)-$(GITVERSION)
+	
 
 ## make a Debian .changes files without sources
 deb-src-changes: configure
 	cd debian-src ; \
-	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	cd $(PACKAGE)-$(VERSION) ; \
+	tar xJf $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
-	dpkg-buildpackage -S -i -rfakeroot --changes-option=-sd ; \
+	dpkg-buildpackage -S -i -rfakeroot --force-sign --changes-option=-sd ; \
 	cd .. ; \
-	$(RM) -r $(PACKAGE)-$(VERSION)
+	$(RM) -r $(PACKAGE)-$(GITVERSION)
 
 ## make a Debian binary package (non signed)
-deb-nosig: configure dist
+deb-nosig: configure git-dist
 	-$(RM) -r debian-build
 	-mkdir debian-build
 	cd debian-build ; \
-	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	cd $(PACKAGE)-$(VERSION) ; \
+	mv ../$(PACKAGE)_$(GITVERSION).orig.tar.xz* . ; \
+	tar xfvz $(PACKAGE)_$(GITVERSION).orig.tar.gz ; \
+	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
 	dpkg-buildpackage -B -rfakeroot -uc ; \
 	cd .. ; \
-	$(RM) -r $(PACKAGE)-$(VERSION)
+	$(RM) -r $(PACKAGE)-$(GITVERSION)
 
 ## make a Debian source package  (non signed)
-deb-src-nosig: configure dist
+deb-src-nosig: configure git-dist
 	-$(RM) -r debian-src
 	-mkdir debian-src
 	cd debian-src ; \
-	mv ../$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	tar xfvz $(PACKAGE)_$(VERSION).orig.tar.gz ; \
-	cd $(PACKAGE)-$(VERSION) ; \
+	mv ../$(PACKAGE)_$(GITVERSION).orig.tar.xz* . ; \
+	tar xfvz $(PACKAGE)_$(GITVERSION).orig.tar.gz ; \
+	cd $(PACKAGE)-$(GITVERSION) ; \
 	cp -a "$(abs_srcdir)/debian" . ; \
 	dpkg-buildpackage -S -i -rfakeroot -uc -us ; \
 	cd .. ; \
-	$(RM) -r $(PACKAGE)-$(VERSION)
+	$(RM) -r $(PACKAGE)-$(GITVERSION)
 
 
 ##
 ## RPM packages
 ##
-rpm:	configure dist-bzip2
+#rpm:	configure dist-bzip2
 #	(cd rpm && $(MAKE) $(AM_MAKEFLAGS) Makefile *.spec) || exit 1
-	(cd rpm && $(MAKE) $(AM_MAKEFLAGS) this) || exit 1
+#	(cd rpm && $(MAKE) $(AM_MAKEFLAGS) this) || exit 1

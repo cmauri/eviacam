@@ -251,13 +251,14 @@ void WXAppBar::Init()
 }
 
 
-// Allows to know and change whether the dialog has borders or not
+// Get whether the dialog has borders or not
 bool WXAppBar::GetBorderDecorations () const
 {
 	// Honours the wxNO_BORDER flag
 	return (GetWindowStyleFlag() & wxNO_BORDER? false : true);	
 }
 
+// Set whether the dialog has borders or not
 void WXAppBar::SetBorderDecorations (bool enable, bool apply)
 {
 	if (enable == GetBorderDecorations()) return;

@@ -12,7 +12,6 @@ noinst_HEADERS = wgetkey.h \
 	eviacamapp.h \
 	langnames-utf8.h \
 	visionpipeline.h \
-	version.h \
 	viacamcontroller.h \
 	wabout.h \
 	wconfiguration.h \
@@ -37,11 +36,10 @@ noinst_HEADERS = wgetkey.h \
 	newtrackerinformationdlg.h \
 	checkupdates_manager.h
 
-dist_noinst_DATA= version.h.in \
+dist_noinst_DATA= \
 	eviacamloader.c.in \
 	gui.pjd \
 	gui.rc \
-	eviacam.vcproj \
 	icons/on.xpm \
 	icons/eviacam.ico \
 	icons/clickwindowoff.xpm \
@@ -87,7 +85,6 @@ dist_noinst_DATA= version.h.in \
 	icons/usermovev64.xpm
 
 EXTRA_DIST = eviacam.desktop icons/eviacam.png
-dist_pkgdata_DATA= eviacam.desktop data/haarcascade_frontalface_default.xml
 	
 desktopdir		=	$(datadir)/applications/
 desktop_DATA	=	eviacam.desktop
@@ -141,10 +138,10 @@ eviacam_SOURCES = wgetkey.cpp \
 	newtrackerinformationdlg.cpp \
 	checkupdates_manager.cpp
 	
-eviacam_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" -DOPENCVVERSION=$(OPENCVVERSION)
+eviacam_CXXFLAGS = -DLOCALEDIR=\"$(localedir)\" -DOPENCVVERSION=$(OPENCVVERSION)
 eviacam_LDFLAGS = $(WX_LIBS) $(OPENCV_LIBS) -lXtst -lXext -lX11
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)/creavision \
 	-I$(top_srcdir)/simplelog \
 	-I$(top_srcdir)/wxcamwindow \

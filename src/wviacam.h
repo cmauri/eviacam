@@ -35,6 +35,7 @@
 ////@end includes
 
 #include <wx/taskbar.h>
+#include "config.h"
 
 /*!
  * Forward declarations
@@ -145,9 +146,11 @@ private:
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_HELP_CONTENTS
     void OnToolHelpClick( wxCommandEvent& event );
 
+#if defined(ENABLE_UPDATES_CHECK)
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CHECKUPDATES
     void OnMenuCheckupdatesClick( wxCommandEvent& event );
 
+#endif
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_ABOUT
     void OnMenuAboutClick( wxCommandEvent& event );
 

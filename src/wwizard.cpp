@@ -539,7 +539,7 @@ void WizardPage1::CreateControls()
     wxBoxSizer* itemBoxSizer37 = new wxBoxSizer(wxVERTICAL);
     itemBoxSizer34->Add(itemBoxSizer37, 0, wxGROW|wxALL, 5);
 
-    wxStaticText* itemStaticText38 = new wxStaticText( itemWizardPageSimple33, wxID_STATIC, _("The assisted calibration procedure will ask you to move your head in order to automatically configure the appropiate motion parameters.\n\nAfter this calibration stage, you can manually adjust the motion parameters.\n\nNOTE: the calibration assistant will enable the pointer control so that you can test your configuration."), wxDefaultPosition, wxDefaultSize, 0 );
+    wxStaticText* itemStaticText38 = new wxStaticText( itemWizardPageSimple33, wxID_STATIC, _("The assisted calibration procedure will ask you to move your head in order to automatically configure the appropriate motion parameters.\n\nAfter this calibration stage, you can manually adjust the motion parameters.\n\nNOTE: the calibration assistant will enable the pointer control so that you can test your configuration."), wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText38->Wrap(450);
     itemBoxSizer37->Add(itemStaticText38, 0, wxGROW|wxALL, 5);
 

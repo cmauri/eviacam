@@ -1,8 +1,0 @@
-#ifndef VERSION_H
-#define VERSION_H
-
-#define VERSION "@VERSION@"
-#define COPYRIGHT "@COPYRIGHT@"
-#define PUBLISHER "@PUBLISHER@"
-
-#endif
