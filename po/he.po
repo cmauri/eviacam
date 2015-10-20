@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2015-09-24 15:52+0200\n"
+"POT-Creation-Date: 2015-10-10 18:46+0200\n"
 "PO-Revision-Date: 2014-12-24 21:58+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew (http://www.transifex.com/projects/p/eviacam/language/"
@@ -603,7 +603,7 @@ msgstr ""
 "האם ברצונך להמשיך?"
 
 #: src/wconfiguration.cpp:1747 src/wconfiguration.cpp:1882
-#: src/wconfiguration.cpp:2008 src/viacamcontroller.cpp:383
+#: src/wconfiguration.cpp:2008 src/viacamcontroller.cpp:385
 #: src/cmotioncalibration.cpp:186
 msgid "eViacam warning"
 msgstr "אזהרה של eViacam"
@@ -685,7 +685,7 @@ msgstr ""
 "לא ניתן להפעיל את המצלמה.\n"
 "כנראה שנעשה בה שימוש על ידי יישום אחר."
 
-#: src/viacamcontroller.cpp:383
+#: src/viacamcontroller.cpp:385
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -693,7 +693,7 @@ msgstr ""
 "פעולה זו תנטרל את eViacam.\n"
 "האם לעשות זאת?"
 
-#: src/viacamcontroller.cpp:412
+#: src/viacamcontroller.cpp:414
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -701,12 +701,12 @@ msgstr ""
 "הפקודה להפעלת המקלדת על גבי המסך אינה מוגדרת.\n"
 "נא להגדיר אותה באמצעות דו־שיח ההגדרות."
 
-#: src/viacamcontroller.cpp:412 src/viacamcontroller.cpp:426
+#: src/viacamcontroller.cpp:414 src/viacamcontroller.cpp:428
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "שגיאת eViacam"
 
-#: src/viacamcontroller.cpp:422
+#: src/viacamcontroller.cpp:424
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -717,7 +717,7 @@ msgstr ""
 "הפקודה %s נכשלה.\n"
 "נא להגדיר אותה באמצעות דו־שיח האפשרויות."
 
-#: src/viacamcontroller.cpp:424
+#: src/viacamcontroller.cpp:426
 msgid ""
 "\n"
 "\n"
@@ -735,7 +735,7 @@ msgstr ""
 "גישת המשתמש (UAC) כדי להימנע מבעיות כאלה\n"
 "או לנסות osk חלופי, לדוגמה Click-N-Type."
 
-#: src/viacamcontroller.cpp:498
+#: src/viacamcontroller.cpp:500
 msgid ""
 "Note that adjusting the camera controls while eViacam\n"
 "is enabled may cause loss of pointer control.\n"

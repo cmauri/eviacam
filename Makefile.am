@@ -58,13 +58,31 @@ dist-hook:
 	fi
 
 
-GITTAGCMD= if [ -z "$$TAG" ]; then git describe --tags; else echo $$TAG; fi
+GITTAGCMD= \
+	if [ -z "$$TAG" ]; then \
+		git describe --tags; \
+	else \
+		echo $$TAG; \
+	fi
+
 GITTAG= `$(GITTAGCMD)`
 
-GITVERSION= `$(GITTAGCMD) | cut -d 'v' -f 2,3,4,5,6`
+GITVERSION= `$(GITTAGCMD) | cut -d 'v' -f 2- | cut -d '-' -f 1`
 	
+# make tarball form repository
+# if no specific tag selected check that the build directory is clean
 git-dist:
-	git archive --format=tar --prefix=$(PACKAGE)-$(GITVERSION)/ $(GITTAG) | xz > $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
+	@if [ -z "$$TAG" ]; then \
+		make -C po update-po ; \
+		if [ -n "$$(git status --porcelain)" ]; then \
+			read -p "Working directory not clean, continue?" -n 1 -r ; \
+			echo ; \
+			if [[ ! $$REPLY =~ ^[Yy]$$ ]]; then \
+				exit 1 ; \ 
+			fi ; \
+		fi ; \
+	fi
+	@git archive --format=tar --prefix=$(PACKAGE)-$(GITVERSION)/ $(GITTAG) | xz > $(PACKAGE)_$(GITVERSION).orig.tar.xz ; \
 	gpg2 -o $(PACKAGE)_$(GITVERSION).orig.tar.xz.asc -a --detach-sign $(PACKAGE)_$(GITVERSION).orig.tar.xz
 
 

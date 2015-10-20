@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2015-09-24 15:52+0200\n"
+"POT-Creation-Date: 2015-10-10 18:46+0200\n"
 "PO-Revision-Date: 2014-12-25 13:18+0000\n"
 "Last-Translator: Agnius Svigaris <agniussv@gmail.com>\n"
 "Language-Team: Lithuanian (http://www.transifex.com/projects/p/eviacam/"
@@ -606,7 +606,7 @@ msgstr ""
 "Ar norite tęsti?"
 
 #: src/wconfiguration.cpp:1747 src/wconfiguration.cpp:1882
-#: src/wconfiguration.cpp:2008 src/viacamcontroller.cpp:383
+#: src/wconfiguration.cpp:2008 src/viacamcontroller.cpp:385
 #: src/cmotioncalibration.cpp:186
 msgid "eViacam warning"
 msgstr "eViacam įspėjimas"
@@ -688,7 +688,7 @@ msgstr ""
 "Negalima inicijuotikameros.\n"
 "Galbūt ji naudojama kitos programos."
 
-#: src/viacamcontroller.cpp:383
+#: src/viacamcontroller.cpp:385
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -696,7 +696,7 @@ msgstr ""
 "Šis veiksmas išjungs eViacam.\n"
 "Ar tikrai?"
 
-#: src/viacamcontroller.cpp:412
+#: src/viacamcontroller.cpp:414
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -704,12 +704,12 @@ msgstr ""
 "Ekraninė klaviatūra neįdiegta.\n"
 "Prašom pakeisti nustatymus."
 
-#: src/viacamcontroller.cpp:412 src/viacamcontroller.cpp:426
+#: src/viacamcontroller.cpp:414 src/viacamcontroller.cpp:428
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "eViacam klaida"
 
-#: src/viacamcontroller.cpp:422
+#: src/viacamcontroller.cpp:424
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -720,7 +720,7 @@ msgstr ""
 "Komanda %s nepavyko.\n"
 "Prašom pakeisti nustatymus."
 
-#: src/viacamcontroller.cpp:424
+#: src/viacamcontroller.cpp:426
 msgid ""
 "\n"
 "\n"
@@ -738,7 +738,7 @@ msgstr ""
 "galima atjungti vartotojo abonemento valdymo tarnyba (UAC),\n"
 "arba pabandyti kitą klaviatūrą, pvz. Click-N-Type."
 
-#: src/viacamcontroller.cpp:498
+#: src/viacamcontroller.cpp:500
 msgid ""
 "Note that adjusting the camera controls while eViacam\n"
 "is enabled may cause loss of pointer control.\n"

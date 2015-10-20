@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.0\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2015-09-24 15:52+0200\n"
+"POT-Creation-Date: 2015-10-10 18:46+0200\n"
 "PO-Revision-Date: 2010-03-05 17:33+0100\n"
 "Last-Translator: AluminiuM <aluminium@softastur.org>\n"
 "Language-Team: Asturian <softastur@softastur.org>\n"
@@ -626,7 +626,7 @@ msgstr ""
 "¿Ta seguru?"
 
 #: src/wconfiguration.cpp:1747 src/wconfiguration.cpp:1882
-#: src/wconfiguration.cpp:2008 src/viacamcontroller.cpp:383
+#: src/wconfiguration.cpp:2008 src/viacamcontroller.cpp:385
 #: src/cmotioncalibration.cpp:186
 msgid "eViacam warning"
 msgstr "Alvertencia"
@@ -706,7 +706,7 @@ msgstr ""
 "Nun se pué anicializar la cámara.\n"
 "Quiciabes ta siendo usá per otra aplicación."
 
-#: src/viacamcontroller.cpp:383
+#: src/viacamcontroller.cpp:385
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -714,7 +714,7 @@ msgstr ""
 "Esta aición desactivará eViacam.\n"
 "¿Ta seguru?"
 
-#: src/viacamcontroller.cpp:412
+#: src/viacamcontroller.cpp:414
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -722,12 +722,12 @@ msgstr ""
 "Nun se configuró'l comandu del teclau en pantalla.\n"
 "Pue seleicionalu al traviés del dialogu d'opciones."
 
-#: src/viacamcontroller.cpp:412 src/viacamcontroller.cpp:426
+#: src/viacamcontroller.cpp:414 src/viacamcontroller.cpp:428
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "Error"
 
-#: src/viacamcontroller.cpp:422
+#: src/viacamcontroller.cpp:424
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -738,7 +738,7 @@ msgstr ""
 "Falló el comandu %s.\n"
 "Pue configuralu al traviés del diálogu d'opciones."
 
-#: src/viacamcontroller.cpp:424
+#: src/viacamcontroller.cpp:426
 msgid ""
 "\n"
 "\n"
@@ -757,7 +757,7 @@ msgstr ""
 "estos problemes\n"
 "o probar con otru teclau, por exemplo."
 
-#: src/viacamcontroller.cpp:498
+#: src/viacamcontroller.cpp:500
 msgid ""
 "Note that adjusting the camera controls while eViacam\n"
 "is enabled may cause loss of pointer control.\n"
