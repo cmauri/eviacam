@@ -62,18 +62,6 @@ void CCamera::Close()
 {
 	DoClose();
 }
-/*
-bool CCamera::QueryFrame (CIplImage& image)
-{
-	if (!DoQueryFrame(image)) return false;
-
-	assert(image.Initialized());
-
-	PostQueryFrame(image.ptr());
-
-	return true;
-}
-*/
 
 IplImage* CCamera::QueryFrame()
 {

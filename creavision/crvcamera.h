@@ -51,9 +51,8 @@ public:
 	//
 	bool Open();
 	void Close();
-	IplImage* QueryFrame();	// TODO: return const ptr
-//	bool QueryFrame (CIplImage& image);
-
+	// TODO: return const ptr
+	IplImage* QueryFrame();
 
 	//
 	// Capture information. Intended only for informational
