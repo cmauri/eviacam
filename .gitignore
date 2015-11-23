@@ -36,6 +36,7 @@ win32/Release/
 win32/eviacam.suo
 win32/eviacam.ncb
 win32/installer.iss
+win32/*.exe
 
 # linux build
 creavision/.libs/
