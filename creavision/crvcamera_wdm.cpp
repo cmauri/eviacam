@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     30/01/2009
-// Copyright:   (C) 2009 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2009-15 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -94,17 +94,30 @@ bool CCameraWDM::DoQueryFrame(CIplImage& image)
 {
 	if (!m_VI) return false;
 
-	if (!image.Initialized() || m_VI->getWidth(m_Id)!= image.Width() || m_VI->getHeight(m_Id)!= image.Height()) {
+	const int width = m_VI->getWidth(m_Id);
+	const int height = m_VI->getHeight(m_Id);
+	const int size = m_VI->getSize(m_Id);
+
+	if (!image.Initialized() || width!= image.Width()
+		|| height!= image.Height() || size> image.ptr()->imageSize) {
 		// Allocate image in case is not properly set up
-		if (!image.Create (m_Width, m_Height, IPL_DEPTH_8U, "BGR", 1)) {
+		if (!image.Create(width, height, IPL_DEPTH_8U, "BGR", 1)) {
 			assert (!"CCameraWDM::DoQueryFrame: cannot create image");
 			return false;
 		}
 	}		
 	assert (image.Initialized());
 	assert (image.ptr()->imageSize== m_VI->getSize(m_Id));
-	
+
+	// make sure that both images have the same size
+	if (image.ptr()->imageSize != m_VI->getSize(m_Id)) {
+		// size mismatch
+		slog_write(SLOG_PRIO_DEBUG, "%s: %d. image size mismatch", __FILE__, __LINE__);
+		return false;
+	}
+
 	m_VI->getPixels(m_Id, reinterpret_cast<unsigned char *>(image.ptr()->imageData), false, false);
+
 	// Set appropriate origin
 	image.ptr()->origin= 1;
 
