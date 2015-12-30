@@ -40,7 +40,7 @@ CClickWindowController::CClickWindowController(CViacamController & pViacamContro
 	m_pWindowText->SetController (*this);	
 	
 	// Create bitmap window
-	m_pWindowBitmap= new CClickWindowBitmap (NULL);
+	m_pWindowBitmap = new CClickWindowBitmap(NULL, ID_CCLICKWINDOWBITMAP);
 	m_pWindowBitmap->SetController (*this);	
 	
 	// Create bitmap vertical window

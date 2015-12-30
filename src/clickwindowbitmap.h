@@ -31,6 +31,7 @@
 #include "clickwindow.h"
 #include <wx/bitmap.h>
 ////@begin includes
+#include "wx/xrc/xmlres.h"
 ////@end includes
 
 /*!
@@ -46,14 +47,7 @@ class wxBitmapButton;
 
 ////@begin control identifiers
 #define ID_CCLICKWINDOWBITMAP 10020
-#define ID_BITMAPBUTTON_NOCLICK 10055
-#define ID_BITMAPBUTTON_LEFT 10056
-#define ID_BITMAPBUTTON_MIDDLE 10100
-#define ID_BITMAPBUTTON_RIGHT 10057
-#define ID_BITMAPBUTTON_DRAG 10058
-#define ID_BITMAPBUTTON_DBLCLICK 10059
-#define ID_BITMAPBUTTON 10060
-#define SYMBOL_CCLICKWINDOWBITMAP_STYLE wxCAPTION|wxSYSTEM_MENU|wxSTAY_ON_TOP
+#define SYMBOL_CCLICKWINDOWBITMAP_STYLE wxSTAY_ON_TOP
 #define SYMBOL_CCLICKWINDOWBITMAP_TITLE _("eViacam")
 #define SYMBOL_CCLICKWINDOWBITMAP_IDNAME ID_CCLICKWINDOWBITMAP
 #define SYMBOL_CCLICKWINDOWBITMAP_SIZE wxDefaultSize
@@ -79,10 +73,10 @@ class CClickWindowBitmap: public CClickWindow
 public:
     /// Constructors
     CClickWindowBitmap();
-    CClickWindowBitmap( wxWindow* parent, wxWindowID id = SYMBOL_CCLICKWINDOWBITMAP_IDNAME, const wxString& caption = SYMBOL_CCLICKWINDOWBITMAP_TITLE, const wxPoint& pos = SYMBOL_CCLICKWINDOWBITMAP_POSITION, const wxSize& size = SYMBOL_CCLICKWINDOWBITMAP_SIZE, long style = SYMBOL_CCLICKWINDOWBITMAP_STYLE );
+    CClickWindowBitmap( wxWindow* parent, wxWindowID id, const wxString& caption = SYMBOL_CCLICKWINDOWBITMAP_TITLE, const wxPoint& pos = SYMBOL_CCLICKWINDOWBITMAP_POSITION, const wxSize& size = SYMBOL_CCLICKWINDOWBITMAP_SIZE, long style = SYMBOL_CCLICKWINDOWBITMAP_STYLE );
 
     /// Creation
-    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_CCLICKWINDOWBITMAP_IDNAME, const wxString& caption = SYMBOL_CCLICKWINDOWBITMAP_TITLE, const wxPoint& pos = SYMBOL_CCLICKWINDOWBITMAP_POSITION, const wxSize& size = SYMBOL_CCLICKWINDOWBITMAP_SIZE, long style = SYMBOL_CCLICKWINDOWBITMAP_STYLE );
+    bool Create( wxWindow* parent, wxWindowID id, const wxString& caption = SYMBOL_CCLICKWINDOWBITMAP_TITLE, const wxPoint& pos = SYMBOL_CCLICKWINDOWBITMAP_POSITION, const wxSize& size = SYMBOL_CCLICKWINDOWBITMAP_SIZE, long style = SYMBOL_CCLICKWINDOWBITMAP_STYLE );
 
     /// Destructor
     ~CClickWindowBitmap();

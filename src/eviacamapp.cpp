@@ -37,6 +37,7 @@
 #include <wx/socket.h>
 #include <wx/stdpaths.h>
 #include <wx/cmdline.h>
+#include <wx/xrc/xmlres.h>
 
 #include "eviacamapp.h"
 #include "paths.h"
@@ -168,6 +169,10 @@ bool EViacamApp::OnInit()
 	// See http://wiki.wxwidgets.org/wiki.pl?WxSocket or 
 	// http://www.litwindow.com/knowhow/knowhow.html for more details.
 	wxSocketBase::Initialize();
+
+	// Initialize resources
+	wxXmlResource::Get()->InitAllHandlers();
+	wxXmlResource::Get()->LoadAllFiles("resources");
 
 	m_pController= new CViacamController();
 	assert (m_pController);

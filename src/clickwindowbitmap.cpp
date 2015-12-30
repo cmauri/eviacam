@@ -38,7 +38,9 @@
 #include "clickwindowbitmap.h"
 
 ////@begin XPM images
-#include "icons/eviacam_gray_bg.xpm"
+////@end XPM images
+
+//#include "icons/eviacam_gray_bg.xpm"
 #include "icons/buttonNoClick.xpm"
 #include "icons/buttonLeft.xpm"
 #include "icons/buttonLeftDisabled.xpm"
@@ -51,8 +53,6 @@
 #include "icons/buttonDblLeft.xpm"
 #include "icons/buttonDblLeftDisabled.xpm"
 #include "icons/buttonHideMainWindow.xpm"
-////@end XPM images
-
 #include "icons/buttonDblLeftLocked.xpm"
 #include "icons/buttonDblLeftSelectedLocked.xpm"
 #include "icons/buttonDblLeftSelected.xpm"
@@ -162,8 +162,7 @@ bool CClickWindowBitmap::Create( wxWindow* parent, wxWindowID id, const wxString
 {
 ////@begin CClickWindowBitmap creation
     SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
-    CClickWindow::Create( parent, id, caption, pos, size, style );
-
+    SetParent(parent);
     CreateControls();
     if (GetSizer())
     {
@@ -211,68 +210,17 @@ void CClickWindowBitmap::Init()
 void CClickWindowBitmap::CreateControls()
 {    
 ////@begin CClickWindowBitmap content construction
-    CClickWindowBitmap* itemCClickWindow1 = this;
-
-    this->SetBackgroundColour(wxColour(102, 102, 102));
-    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
-    itemCClickWindow1->SetSizer(itemBoxSizer2);
-
-    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemCClickWindow1, wxID_STATIC, itemCClickWindow1->GetBitmapResource(wxT("icons/eviacam_gray_bg.xpm")), wxDefaultPosition, wxSize(48, 48), 0 );
-    itemBoxSizer2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    itemBoxSizer2->Add(5, 5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    m_btnNoClick = new wxBitmapButton( itemCClickWindow1, ID_BITMAPBUTTON_NOCLICK, itemCClickWindow1->GetBitmapResource(wxT("icons/buttonNoClick.xpm")), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxNO_BORDER );
-    if (CClickWindowBitmap::ShowToolTips())
-        m_btnNoClick->SetToolTip(_("No click"));
-    itemBoxSizer2->Add(m_btnNoClick, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2);
-
-    itemBoxSizer2->Add(5, 5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    m_btnLeft = new wxBitmapButton( itemCClickWindow1, ID_BITMAPBUTTON_LEFT, itemCClickWindow1->GetBitmapResource(wxT("icons/buttonLeft.xpm")), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
-    wxBitmap m_btnLeftBitmapDisabled(itemCClickWindow1->GetBitmapResource(wxT("icons/buttonLeftDisabled.xpm")));
-    m_btnLeft->SetBitmapDisabled(m_btnLeftBitmapDisabled);
-    if (CClickWindowBitmap::ShowToolTips())
-        m_btnLeft->SetToolTip(_("Left"));
-    itemBoxSizer2->Add(m_btnLeft, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2);
-
-    m_btnMiddle = new wxBitmapButton( itemCClickWindow1, ID_BITMAPBUTTON_MIDDLE, itemCClickWindow1->GetBitmapResource(wxT("icons/buttonMiddle.xpm")), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
-    wxBitmap m_btnMiddleBitmapDisabled(itemCClickWindow1->GetBitmapResource(wxT("icons/buttonMiddleDisabled.xpm")));
-    m_btnMiddle->SetBitmapDisabled(m_btnMiddleBitmapDisabled);
-    if (CClickWindowBitmap::ShowToolTips())
-        m_btnMiddle->SetToolTip(_("Middle"));
-    itemBoxSizer2->Add(m_btnMiddle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2);
-
-    m_btnRight = new wxBitmapButton( itemCClickWindow1, ID_BITMAPBUTTON_RIGHT, itemCClickWindow1->GetBitmapResource(wxT("icons/buttonRight.xpm")), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
-    wxBitmap m_btnRightBitmapDisabled(itemCClickWindow1->GetBitmapResource(wxT("icons/buttonRightDisabled.xpm")));
-    m_btnRight->SetBitmapDisabled(m_btnRightBitmapDisabled);
-    if (CClickWindowBitmap::ShowToolTips())
-        m_btnRight->SetToolTip(_("Right"));
-    itemBoxSizer2->Add(m_btnRight, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2);
-
-    m_btnDrag = new wxBitmapButton( itemCClickWindow1, ID_BITMAPBUTTON_DRAG, itemCClickWindow1->GetBitmapResource(wxT("icons/buttonDrag.xpm")), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
-    wxBitmap m_btnDragBitmapDisabled(itemCClickWindow1->GetBitmapResource(wxT("icons/buttonDragDisabled.xpm")));
-    m_btnDrag->SetBitmapDisabled(m_btnDragBitmapDisabled);
-    if (CClickWindowBitmap::ShowToolTips())
-        m_btnDrag->SetToolTip(_("Drag"));
-    itemBoxSizer2->Add(m_btnDrag, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2);
-
-    m_btnDblLeft = new wxBitmapButton( itemCClickWindow1, ID_BITMAPBUTTON_DBLCLICK, itemCClickWindow1->GetBitmapResource(wxT("icons/buttonDblLeft.xpm")), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
-    wxBitmap m_btnDblLeftBitmapDisabled(itemCClickWindow1->GetBitmapResource(wxT("icons/buttonDblLeftDisabled.xpm")));
-    m_btnDblLeft->SetBitmapDisabled(m_btnDblLeftBitmapDisabled);
-    if (CClickWindowBitmap::ShowToolTips())
-        m_btnDblLeft->SetToolTip(_("Double Click"));
-    itemBoxSizer2->Add(m_btnDblLeft, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2);
-
-    itemBoxSizer2->Add(5, 5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    m_btnShowFrame = new wxBitmapButton( itemCClickWindow1, ID_BITMAPBUTTON, itemCClickWindow1->GetBitmapResource(wxT("icons/buttonHideMainWindow.xpm")), wxDefaultPosition, wxDefaultSize, wxNO_BORDER );
-    if (CClickWindowBitmap::ShowToolTips())
-        m_btnShowFrame->SetToolTip(_("Hide main window"));
-    itemBoxSizer2->Add(m_btnShowFrame, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2);
-
+    if (!wxXmlResource::Get()->LoadDialog(this, GetParent(), wxT("ID_CCLICKWINDOWBITMAP")))
+        wxLogError(wxT("Missing wxXmlResource::Get()->Load() in OnInit()?"));
+    m_btnNoClick = XRCCTRL(*this, "ID_BITMAPBUTTON_NOCLICK", wxBitmapButton);
+    m_btnLeft = XRCCTRL(*this, "ID_BITMAPBUTTON_LEFT", wxBitmapButton);
+    m_btnMiddle = XRCCTRL(*this, "ID_BITMAPBUTTON_MIDDLE", wxBitmapButton);
+    m_btnRight = XRCCTRL(*this, "ID_BITMAPBUTTON_RIGHT", wxBitmapButton);
+    m_btnDrag = XRCCTRL(*this, "ID_BITMAPBUTTON_DRAG", wxBitmapButton);
+    m_btnDblLeft = XRCCTRL(*this, "ID_BITMAPBUTTON_DBLCLICK", wxBitmapButton);
+    m_btnShowFrame = XRCCTRL(*this, "ID_BITMAPBUTTON", wxBitmapButton);
     // Connect events and objects
-    m_btnNoClick->Connect(ID_BITMAPBUTTON_NOCLICK, wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindowBitmap::OnEnterWindow), NULL, this);
+    FindWindow(XRCID("ID_BITMAPBUTTON_NOCLICK"))->Connect(XRCID("ID_BITMAPBUTTON_NOCLICK"), wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindowBitmap::OnEnterWindow), NULL, this);
 ////@end CClickWindowBitmap content construction
 
 	ConnectEvents ();
@@ -297,71 +245,6 @@ wxBitmap CClickWindowBitmap::GetBitmapResource( const wxString& name )
     // Bitmap retrieval
 ////@begin CClickWindowBitmap bitmap retrieval
     wxUnusedVar(name);
-    if (name == _T("icons/eviacam_gray_bg.xpm"))
-    {
-        wxBitmap bitmap(eviacam);
-        return bitmap;
-    }
-    else if (name == _T("icons/buttonNoClick.xpm"))
-    {
-        wxBitmap bitmap(buttonNoClick);
-        return bitmap;
-    }
-    else if (name == _T("icons/buttonLeft.xpm"))
-    {
-        wxBitmap bitmap(buttonLeft);
-        return bitmap;
-    }
-    else if (name == _T("icons/buttonLeftDisabled.xpm"))
-    {
-        wxBitmap bitmap(buttonLeftDisabled);
-        return bitmap;
-    }
-    else if (name == _T("icons/buttonMiddle.xpm"))
-    {
-        wxBitmap bitmap(buttonMiddle);
-        return bitmap;
-    }
-    else if (name == _T("icons/buttonMiddleDisabled.xpm"))
-    {
-        wxBitmap bitmap(buttonMiddleDisabled);
-        return bitmap;
-    }
-    else if (name == _T("icons/buttonRight.xpm"))
-    {
-        wxBitmap bitmap(buttonRight);
-        return bitmap;
-    }
-    else if (name == _T("icons/buttonRightDisabled.xpm"))
-    {
-        wxBitmap bitmap(buttonRightDisabled);
-        return bitmap;
-    }
-    else if (name == _T("icons/buttonDrag.xpm"))
-    {
-        wxBitmap bitmap(buttonDrag);
-        return bitmap;
-    }
-    else if (name == _T("icons/buttonDragDisabled.xpm"))
-    {
-        wxBitmap bitmap(buttonDragDisabled);
-        return bitmap;
-    }
-    else if (name == _T("icons/buttonDblLeft.xpm"))
-    {
-        wxBitmap bitmap(buttonDblLeft);
-        return bitmap;
-    }
-    else if (name == _T("icons/buttonDblLeftDisabled.xpm"))
-    {
-        wxBitmap bitmap(buttonDblLeftDisabled);
-        return bitmap;
-    }
-    else if (name == _T("icons/buttonHideMainWindow.xpm"))
-    {
-        wxBitmap bitmap(buttonHideMainWindow);
-        return bitmap;
-    }
     return wxNullBitmap;
 ////@end CClickWindowBitmap bitmap retrieval
 }
