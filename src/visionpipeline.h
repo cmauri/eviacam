@@ -66,7 +66,7 @@ public:
 	int GetCpuUsage ();
 	void SetCpuUsage (int value);
 
-	bool IsTrackFaceAllowed () { return (m_faceCascade!= NULL); }	
+	bool IsTrackFaceAllowed () { return (!m_faceCascade.empty()); }	
 
 	CVisibleNormROI* GetTrackAreaControl () { return &m_trackArea; }
 
@@ -92,8 +92,7 @@ private:
 	CIplImage m_imgVelX, m_imgVelY;
 	TCrvLookupTable m_prevLut;
 	
-	CvHaarClassifierCascade* m_faceCascade;
-	CvMemStorage* m_storage;
+	cv::CascadeClassifier m_faceCascade;
 	int m_threadPeriod;
 	
 	wxCriticalSection m_imageCopyMutex;
