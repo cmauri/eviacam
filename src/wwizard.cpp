@@ -1229,7 +1229,7 @@ void WizardPage4::CreateControls()
     itemFlexGridSizer76->Add(itemStaticText77, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticLine* itemStaticLine78 = new wxStaticLine( itemWizardPageSimple75, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-    itemFlexGridSizer76->Add(itemStaticLine78, 0, wxGROW|wxGROW|wxALL, 5);
+    itemFlexGridSizer76->Add(itemStaticLine78, 0, wxGROW|wxALL, 5);
 
     wxFlexGridSizer* itemFlexGridSizer79 = new wxFlexGridSizer(0, 1, 0, 0);
     itemFlexGridSizer76->Add(itemFlexGridSizer79, 0, wxGROW|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -1620,7 +1620,7 @@ void WizardPage6::CreateControls()
     wxStaticText* itemStaticText53 = new wxStaticText( itemWizardPageSimple46, wxID_STATIC, _("X axis speed"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer52->Add(itemStaticText53, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spinXSpeed = new wxSpinCtrl( itemWizardPageSimple46, ID_SPINCTRL, wxT("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 30, 0 );
+    m_spinXSpeed = new wxSpinCtrl( itemWizardPageSimple46, ID_SPINCTRL, wxT("0"), wxDefaultPosition, wxSize(75, -1), wxSP_ARROW_KEYS, 0, 30, 0 );
     itemBoxSizer52->Add(m_spinXSpeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxBoxSizer* itemBoxSizer55 = new wxBoxSizer(wxHORIZONTAL);
@@ -1629,7 +1629,7 @@ void WizardPage6::CreateControls()
     wxStaticText* itemStaticText56 = new wxStaticText( itemWizardPageSimple46, wxID_STATIC, _("Y axis speed"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer55->Add(itemStaticText56, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_spinYSpeed = new wxSpinCtrl( itemWizardPageSimple46, ID_SPINCTRL1, wxT("0"), wxDefaultPosition, wxSize(45, 25), wxSP_ARROW_KEYS, 0, 30, 0 );
+    m_spinYSpeed = new wxSpinCtrl( itemWizardPageSimple46, ID_SPINCTRL1, wxT("0"), wxDefaultPosition, wxSize(75, -1), wxSP_ARROW_KEYS, 0, 30, 0 );
     itemBoxSizer55->Add(m_spinYSpeed, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     itemBoxSizer50->Add(5, 5, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
