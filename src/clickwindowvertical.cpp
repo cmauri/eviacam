@@ -341,7 +341,7 @@ wxControl* CClickWindowTextVertical::GetShowFrame()
 	
 void CClickWindowTextVertical::OnMainWindowShow ( wxShowEvent& event )
 {
-	if (event.GetShow())
+	if (event.IsShown())
 		m_btnShowFrame->SetLabel(_("Hide main window"));
 	else
 		m_btnShowFrame->SetLabel(_("Show main window"));		

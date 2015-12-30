@@ -66,7 +66,10 @@ protected:
     virtual wxControl* GetDragButton()= 0;
     virtual wxControl* GetDblClickButton()= 0;
     virtual wxControl* GetShowFrame()= 0;
-	  
+	
+private:
+	void ConnectButtonEvents(wxControl* c);
+
 	void OnCloseWindow( wxCloseEvent& event );
 
 	void OnLeftUp( wxMouseEvent& event );

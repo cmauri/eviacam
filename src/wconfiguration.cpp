@@ -1062,16 +1062,6 @@ void WConfiguration::InitializeData ()
 	m_spinLocateFaceTimeout->Enable(m_chkAutoLocateFace->GetValue() && m_chkEnableWhenFaceDetected->GetValue());
 	m_choCpuUsage->Select(wxGetApp().GetController().GetVisionPipeline().GetCpuUsage());
 	m_choCpuUsage->Enable(m_chkAutoLocateFace->GetValue());
-	if (!wxGetApp().GetController().GetVisionPipeline().IsTrackFaceAllowed()) {
-		m_sizerFaceLocalization->Enable(false);
-		m_chkAutoLocateFace->Enable(false);
-		m_chkEnableWhenFaceDetected->Enable(false);
-		m_staticCpuUsage->Enable(false);
-		m_choCpuUsage->Enable(false);
-		m_staticLocateFaceTimeout->Enable(false);
-		m_staticLocateFaceTimeout2->Enable(false);	
-		m_spinLocateFaceTimeout->Enable(false);
-	}
 	m_chkLegacyTracker->SetValue(wxGetApp().GetController().GetVisionPipeline().GetUseLegacyTracker());
 	m_txtOnScreenKeyboardCommand->SetValue(
 		wxGetApp().GetController().GetOnScreenKeyboardCommand());

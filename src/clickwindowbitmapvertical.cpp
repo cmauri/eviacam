@@ -496,13 +496,11 @@ void CClickWindowBitmapVertical::UpdateButtons (bool noClickStatus, CClickWindow
 
 void CClickWindowBitmapVertical::OnMainWindowShow ( wxShowEvent& event )
 {
-	if (event.GetShow())	
-	{
+	if (event.IsShown()) {
 		m_btnShowFrame->SetBitmapLabel(m_bmpButtonHideMainWindow);
 		m_btnShowFrame->SetToolTip(_("Hide main window"));
 	}
-	else
-	{
+	else {
 		m_btnShowFrame->SetBitmapLabel(m_bmpButtonShowMainWindow);
 		m_btnShowFrame->SetToolTip(_("Show main window"));
 	}
