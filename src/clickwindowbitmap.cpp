@@ -5,7 +5,7 @@
 // Modified by: 
 // Created:     16/11/2009 15:10:47
 // RCS-ID:      
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-15 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -23,10 +23,6 @@
 
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
-
-#ifdef __BORLANDC__
-#pragma hdrstop
-#endif
 
 #ifndef WX_PRECOMP
 #include "wx/wx.h"
@@ -73,29 +69,10 @@
 
 
 /*!
- * CClickWindowBitmap type definition
- */
-
-IMPLEMENT_DYNAMIC_CLASS( CClickWindowBitmap, CClickWindow )
-
-
-/*!
- * CClickWindowBitmap event table definition
- */
-
-BEGIN_EVENT_TABLE( CClickWindowBitmap, CClickWindow )
-
-////@begin CClickWindowBitmap event table entries
-////@end CClickWindowBitmap event table entries
-
-END_EVENT_TABLE()
-
-
-/*!
  * CClickWindowBitmap constructors
  */
 
-CClickWindowBitmap::CClickWindowBitmap()
+CClickWindowBitmap::CClickWindowBitmap( wxWindow* parent, wxWindowID id)
 : m_bmpButtonDblLeftLocked(buttonDblLeftLocked)
 , m_bmpButtonDblLeftSelectedLocked(buttonDblLeftSelectedLocked)
 , m_bmpButtonDblLeftSelected(buttonDblLeftSelected)
@@ -122,43 +99,14 @@ CClickWindowBitmap::CClickWindowBitmap()
 , m_bmpButtonShowMainWindow(buttonShowMainWindow)
 {
     Init();
-}
-
-CClickWindowBitmap::CClickWindowBitmap( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
-: m_bmpButtonDblLeftLocked(buttonDblLeftLocked)
-, m_bmpButtonDblLeftSelectedLocked(buttonDblLeftSelectedLocked)
-, m_bmpButtonDblLeftSelected(buttonDblLeftSelected)
-, m_bmpButtonDblLeft(buttonDblLeft)
-, m_bmpButtonDragLocked(buttonDragLocked)
-, m_bmpButtonDragSelectedLocked(buttonDragSelectedLocked)
-, m_bmpButtonDragSelected(buttonDragSelected)
-, m_bmpButtonDrag(buttonDrag)
-, m_bmpButtonHideMainWindow(buttonHideMainWindow)
-, m_bmpButtonLeftLocked(buttonLeftLocked)
-, m_bmpButtonLeftSelectedLocked(buttonLeftSelectedLocked)
-, m_bmpButtonLeftSelected(buttonLeftSelected)
-, m_bmpButtonLeft(buttonLeft)
-, m_bmpButtonNoClickSelected(buttonNoClickSelected)
-, m_bmpButtonNoClick(buttonNoClick)
-, m_bmpButtonMiddleLocked(buttonMiddleLocked)
-, m_bmpButtonMiddleSelectedLocked(buttonMiddleSelectedLocked)
-, m_bmpButtonMiddleSelected(buttonMiddleSelected)
-, m_bmpButtonMiddle(buttonMiddle)
-, m_bmpButtonRightLocked(buttonRightLocked)
-, m_bmpButtonRightSelectedLocked(buttonRightSelectedLocked)
-, m_bmpButtonRightSelected(buttonRightSelected)
-, m_bmpButtonRight(buttonRight)
-, m_bmpButtonShowMainWindow(buttonShowMainWindow)
-{
-    Init();
-    Create(parent, id, caption, pos, size, style);
+    Create(parent, id);
 }
 
 /*!
  * CClickWindowBitmap creator
  */
 
-bool CClickWindowBitmap::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+bool CClickWindowBitmap::Create( wxWindow* parent, wxWindowID id)
 {
 ////@begin CClickWindowBitmap creation
     SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
@@ -219,47 +167,9 @@ void CClickWindowBitmap::CreateControls()
     m_btnDrag = XRCCTRL(*this, "ID_BITMAPBUTTON_DRAG", wxBitmapButton);
     m_btnDblLeft = XRCCTRL(*this, "ID_BITMAPBUTTON_DBLCLICK", wxBitmapButton);
     m_btnShowFrame = XRCCTRL(*this, "ID_BITMAPBUTTON", wxBitmapButton);
-    // Connect events and objects
-    FindWindow(XRCID("ID_BITMAPBUTTON_NOCLICK"))->Connect(XRCID("ID_BITMAPBUTTON_NOCLICK"), wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindowBitmap::OnEnterWindow), NULL, this);
 ////@end CClickWindowBitmap content construction
 
 	ConnectEvents ();
-}
-
-
-/*!
- * Should we show tooltips?
- */
-
-bool CClickWindowBitmap::ShowToolTips()
-{
-    return true;
-}
-
-/*!
- * Get bitmap resources
- */
-
-wxBitmap CClickWindowBitmap::GetBitmapResource( const wxString& name )
-{
-    // Bitmap retrieval
-////@begin CClickWindowBitmap bitmap retrieval
-    wxUnusedVar(name);
-    return wxNullBitmap;
-////@end CClickWindowBitmap bitmap retrieval
-}
-
-/*!
- * Get icon resources
- */
-
-wxIcon CClickWindowBitmap::GetIconResource( const wxString& name )
-{
-    // Icon retrieval
-////@begin CClickWindowBitmap icon retrieval
-    wxUnusedVar(name);
-    return wxNullIcon;
-////@end CClickWindowBitmap icon retrieval
 }
 
 wxControl* CClickWindowBitmap::GetNoClickButton()
@@ -393,11 +303,30 @@ void CClickWindowBitmap::OnMainWindowShow ( wxShowEvent& event )
 
 
 /*!
- * wxEVT_ENTER_WINDOW event handler for ID_BITMAPBUTTON_NOCLICK
+ * Get bitmap resources
  */
 
-void CClickWindowBitmap::OnEnterWindow( wxMouseEvent& event )
+wxBitmap CClickWindowBitmap::GetBitmapResource( const wxString& name )
 {
-	event.Skip(true);
+    // Bitmap retrieval
+////@begin CClickWindowBitmap bitmap retrieval
+    wxUnusedVar(name);
+    return wxNullBitmap;
+////@end CClickWindowBitmap bitmap retrieval
 }
+
+/*!
+ * Get icon resources
+ */
+
+wxIcon CClickWindowBitmap::GetIconResource( const wxString& name )
+{
+    // Icon retrieval
+////@begin CClickWindowBitmap icon retrieval
+    wxUnusedVar(name);
+    return wxNullIcon;
+////@end CClickWindowBitmap icon retrieval
+}
+
+
 

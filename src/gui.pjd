@@ -10408,7 +10408,6 @@ tracking area."</string>
             </document>
             <document>
               <string name="proxy-type">"wbBitmapButtonProxy"</string>
-              <string name="event-handler-0">"wxEVT_ENTER_WINDOW|OnEnterWindow|NONE||CClickWindowBitmap"</string>
               <string name="filename">""</string>
               <string name="icon-name">"bitmapbutton"</string>
               <long name="is-transient">0</long>

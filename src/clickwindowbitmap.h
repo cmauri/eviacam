@@ -1,11 +1,11 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        clickwindowbitmap.h
 // Purpose:     
-// Author:      C�sar Mauri Loba
+// Author:      Cesar Mauri Loba
 // Modified by: 
 // Created:     16/11/2009 15:10:47
 // RCS-ID:      
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-15 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@
 
 #ifndef _CLICKWINDOWBITMAP_H_
 #define _CLICKWINDOWBITMAP_H_
-
 
 /*!
  * Includes
@@ -67,19 +66,16 @@ class wxBitmapButton;
 
 class CClickWindowBitmap: public CClickWindow
 {    
-    DECLARE_DYNAMIC_CLASS( CClickWindowBitmap )
-    DECLARE_EVENT_TABLE()
-
 public:
     /// Constructors
-    CClickWindowBitmap();
-    CClickWindowBitmap( wxWindow* parent, wxWindowID id, const wxString& caption = SYMBOL_CCLICKWINDOWBITMAP_TITLE, const wxPoint& pos = SYMBOL_CCLICKWINDOWBITMAP_POSITION, const wxSize& size = SYMBOL_CCLICKWINDOWBITMAP_SIZE, long style = SYMBOL_CCLICKWINDOWBITMAP_STYLE );
+    CClickWindowBitmap( wxWindow* parent, wxWindowID id);
 
+	/// Destructor
+	~CClickWindowBitmap();
+
+private:
     /// Creation
-    bool Create( wxWindow* parent, wxWindowID id, const wxString& caption = SYMBOL_CCLICKWINDOWBITMAP_TITLE, const wxPoint& pos = SYMBOL_CCLICKWINDOWBITMAP_POSITION, const wxSize& size = SYMBOL_CCLICKWINDOWBITMAP_SIZE, long style = SYMBOL_CCLICKWINDOWBITMAP_STYLE );
-
-    /// Destructor
-    ~CClickWindowBitmap();
+    bool Create( wxWindow* parent, wxWindowID id);
 
     /// Initialises member variables
     void Init();
@@ -88,9 +84,6 @@ public:
     void CreateControls();
 
 ////@begin CClickWindowBitmap event handler declarations
-
-    /// wxEVT_ENTER_WINDOW event handler for ID_BITMAPBUTTON_NOCLICK
-    void OnEnterWindow( wxMouseEvent& event );
 
 ////@end CClickWindowBitmap event handler declarations
 
@@ -103,9 +96,8 @@ public:
     wxIcon GetIconResource( const wxString& name );
 ////@end CClickWindowBitmap member function declarations
 
-    /// Should we show tooltips?
-    static bool ShowToolTips();
-	virtual void UpdateButtons (bool noClickStatus, CClickWindowController::EButton selected, CClickWindowController::EButton locked);
+	virtual void UpdateButtons (bool noClickStatus, CClickWindowController::EButton selected,
+		CClickWindowController::EButton locked);
 
 protected:
 	
@@ -154,8 +146,6 @@ protected:
     wxBitmapButton* m_btnShowFrame;
 ////@end CClickWindowBitmap member variables
 };
-
-
 
 #endif
     // _CLICKWINDOWBITMAP_H_
