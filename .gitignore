@@ -63,3 +63,8 @@ src/gui-autosave.pjd
 *.opensdf
 *.sdf
 *.suo
+
+# Eclipse CDT
+.cproject
+.project
+.settings/
