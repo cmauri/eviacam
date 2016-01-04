@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        cclickwindowbitmap.cpp
 // Purpose:     
-// Author:      César Mauri Loba
+// Author:      Cesar Mauri Loba
 // Modified by: 
 // Created:     16/11/2009 15:10:47
 // RCS-ID:      
@@ -72,7 +72,7 @@
  * CClickWindowBitmap constructors
  */
 
-CClickWindowBitmap::CClickWindowBitmap( wxWindow* parent, wxWindowID id)
+CClickWindowBitmap::CClickWindowBitmap( wxWindow* parent, const wxString& name)
 : m_bmpButtonDblLeftLocked(buttonDblLeftLocked)
 , m_bmpButtonDblLeftSelectedLocked(buttonDblLeftSelectedLocked)
 , m_bmpButtonDblLeftSelected(buttonDblLeftSelected)
@@ -99,19 +99,19 @@ CClickWindowBitmap::CClickWindowBitmap( wxWindow* parent, wxWindowID id)
 , m_bmpButtonShowMainWindow(buttonShowMainWindow)
 {
     Init();
-    Create(parent, id);
+    Create(parent, name);
 }
 
 /*!
  * CClickWindowBitmap creator
  */
 
-bool CClickWindowBitmap::Create( wxWindow* parent, wxWindowID id)
+bool CClickWindowBitmap::Create( wxWindow* parent, const wxString& name)
 {
 ////@begin CClickWindowBitmap creation
     SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
     SetParent(parent);
-    CreateControls();
+    CreateControls(name);
     if (GetSizer())
     {
         GetSizer()->SetSizeHints(this);
@@ -155,10 +155,9 @@ void CClickWindowBitmap::Init()
  * Control creation for CClickWindowBitmap
  */
 
-void CClickWindowBitmap::CreateControls()
+void CClickWindowBitmap::CreateControls(const wxString& name)
 {    
-////@begin CClickWindowBitmap content construction
-    if (!wxXmlResource::Get()->LoadDialog(this, GetParent(), wxT("ID_CCLICKWINDOWBITMAP")))
+    if (!wxXmlResource::Get()->LoadDialog(this, GetParent(), name))
         wxLogError(wxT("Missing wxXmlResource::Get()->Load() in OnInit()?"));
     m_btnNoClick = XRCCTRL(*this, "ID_BITMAPBUTTON_NOCLICK", wxBitmapButton);
     m_btnLeft = XRCCTRL(*this, "ID_BITMAPBUTTON_LEFT", wxBitmapButton);
@@ -167,7 +166,6 @@ void CClickWindowBitmap::CreateControls()
     m_btnDrag = XRCCTRL(*this, "ID_BITMAPBUTTON_DRAG", wxBitmapButton);
     m_btnDblLeft = XRCCTRL(*this, "ID_BITMAPBUTTON_DBLCLICK", wxBitmapButton);
     m_btnShowFrame = XRCCTRL(*this, "ID_BITMAPBUTTON", wxBitmapButton);
-////@end CClickWindowBitmap content construction
 
 	ConnectEvents ();
 }
@@ -207,12 +205,12 @@ wxControl* CClickWindowBitmap::GetShowFrame()
 	return m_btnShowFrame;
 }
 
-void CClickWindowBitmap::UpdateButtons (bool noClickStatus, CClickWindowController::EButton selected, CClickWindowController::EButton locked)
+void CClickWindowBitmap::UpdateButtons (bool noClickStatus, CClickWindowController::EButton selected,
+		CClickWindowController::EButton locked)
 {
 	// No click button
 	
-	if (noClickStatus)
-	{
+	if (noClickStatus) {
 		m_btnNoClick->SetBitmapLabel (m_bmpButtonNoClick);
 		m_btnLeft->Enable();
 		m_btnMiddle->Enable();
@@ -220,8 +218,7 @@ void CClickWindowBitmap::UpdateButtons (bool noClickStatus, CClickWindowControll
 		m_btnDrag->Enable();
 		m_btnDblLeft->Enable();
 	}
-	else
-	{
+	else {
 		m_btnNoClick->SetBitmapLabel (m_bmpButtonNoClickSelected);
 		m_btnLeft->Disable();
 		m_btnMiddle->Disable();
@@ -229,8 +226,8 @@ void CClickWindowBitmap::UpdateButtons (bool noClickStatus, CClickWindowControll
 		m_btnDrag->Disable();
 		m_btnDblLeft->Disable();
 	}
-		
 
+	/* Update bitmaps */
 	if (selected== CClickWindowController::LEFT)
 		if (locked== CClickWindowController::LEFT)
 			m_btnLeft->SetBitmapLabel (m_bmpButtonLeftSelectedLocked);

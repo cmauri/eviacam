@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource version="2.3.0.1" xmlns="http://www.wxwidgets.org/wxxrc">
+    <object class="wxDialog" name="ID_CLICKWINDOWBITMAPVERTICAL" subclass="CClickWindowBitmapVertical">
+        <style>wxCAPTION|wxSYSTEM_MENU|wxSTAY_ON_TOP</style>
+        <exstyle>wxWS_EX_BLOCK_EVENTS</exstyle>
+        <bg>#666666</bg>
+        <title>eViacam</title>
+        <centered>1</centered>
+        <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>5</border>
+                <object class="wxStaticBitmap" name="wxID_STATIC">
+                    <size>48,48</size>
+                    <bitmap>icons/eviacam_gray_bg.xpm</bitmap>
+                </object>
+            </object>
+            <object class="spacer">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>5</border>
+                <size>4,0</size>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>2</border>
+                <object class="wxBitmapButton" name="ID_BITMAPBUTTON_NOCLICK">
+                    <tooltip>No click</tooltip>
+                    <style>wxBU_AUTODRAW|wxNO_BORDER</style>
+                    <bitmap>icons/buttonNoClick.xpm</bitmap>
+                </object>
+            </object>
+            <object class="spacer">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>5</border>
+                <size>4,0</size>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>2</border>
+                <object class="wxBitmapButton" name="ID_BITMAPBUTTON_LEFT">
+                    <tooltip>Left</tooltip>
+                    <style>wxNO_BORDER</style>
+                    <bitmap>icons/buttonLeft.xpm</bitmap>
+                    <disabled>icons/buttonLeftDisabled.xpm</disabled>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>2</border>
+                <object class="wxBitmapButton" name="ID_BITMAPBUTTON_MIDDLE">
+                    <tooltip>Middle</tooltip>
+                    <style>wxNO_BORDER</style>
+                    <bitmap>icons/buttonMiddle.xpm</bitmap>
+                    <disabled>icons/buttonMiddleDisabled.xpm</disabled>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>2</border>
+                <object class="wxBitmapButton" name="ID_BITMAPBUTTON_RIGHT">
+                    <tooltip>Right</tooltip>
+                    <style>wxNO_BORDER</style>
+                    <bitmap>icons/buttonRight.xpm</bitmap>
+                    <disabled>icons/buttonRightDisabled.xpm</disabled>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>2</border>
+                <object class="wxBitmapButton" name="ID_BITMAPBUTTON_DRAG">
+                    <tooltip>Drag</tooltip>
+                    <style>wxNO_BORDER</style>
+                    <bitmap>icons/buttonDrag.xpm</bitmap>
+                    <disabled>icons/buttonDragDisabled.xpm</disabled>
+                </object>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>2</border>
+                <object class="wxBitmapButton" name="ID_BITMAPBUTTON_DBLCLICK">
+                    <tooltip>Double Click</tooltip>
+                    <style>wxNO_BORDER</style>
+                    <bitmap>icons/buttonDblLeft.xpm</bitmap>
+                    <disabled>icons/buttonDblLeftDisabled.xpm</disabled>
+                </object>
+            </object>
+            <object class="spacer">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>5</border>
+                <size>4,0</size>
+            </object>
+            <object class="sizeritem">
+                <flag>wxALIGN_CENTER_HORIZONTAL|wxALL</flag>
+                <border>2</border>
+                <object class="wxBitmapButton" name="ID_BITMAPBUTTON">
+                    <tooltip>Hide main window</tooltip>
+                    <style>wxNO_BORDER</style>
+                    <bitmap>icons/buttonHideMainWindow.xpm</bitmap>
+                </object>
+            </object>
+        </object>
+    </object>
+</resource>

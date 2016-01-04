@@ -268,7 +268,6 @@ copy "$(CVPATH)\sources\data\haarcascades\haarcascade_frontalface_default.xml" $
     <ClCompile Include="ckeyboardcode.cpp" />
     <ClCompile Include="clickwindow.cpp" />
     <ClCompile Include="clickwindowbitmap.cpp" />
-    <ClCompile Include="clickwindowbitmapvertical.cpp" />
     <ClCompile Include="clickwindowcontroller.cpp" />
     <ClCompile Include="clickwindowtext.cpp" />
     <ClCompile Include="clickwindowvertical.cpp" />
@@ -303,7 +302,6 @@ copy "$(CVPATH)\sources\data\haarcascades\haarcascade_frontalface_default.xml" $
     <ClInclude Include="ckeyboardcode.h" />
     <ClInclude Include="clickwindow.h" />
     <ClInclude Include="clickwindowbitmap.h" />
-    <ClInclude Include="clickwindowbitmapvertical.h" />
     <ClInclude Include="clickwindowcontroller.h" />
     <ClInclude Include="clickwindowtext.h" />
     <ClInclude Include="clickwindowvertical.h" />

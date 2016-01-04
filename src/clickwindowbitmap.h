@@ -53,12 +53,9 @@ class wxBitmapButton;
 #define SYMBOL_CCLICKWINDOWBITMAP_POSITION wxPoint(0, 0)
 ////@end control identifiers
 
-#undef SYMBOL_CCLICKWINDOWBITMAP_STYLE
-#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXX11__)
-#define SYMBOL_CCLICKWINDOWBITMAP_STYLE wxCAPTION|wxSYSTEM_MENU|wxSTAY_ON_TOP
-#else
-#define SYMBOL_CCLICKWINDOWBITMAP_STYLE wxSYSTEM_MENU|wxSTAY_ON_TOP
-#endif
+#define CLICK_WINDOW_BITMAP wxT("ID_CCLICKWINDOWBITMAP")
+#define CLICK_WINDOW_BITMAP_VERTICAL wxT("ID_CLICKWINDOWBITMAPVERTICAL")
+
 
 /*!
  * CClickWindowBitmap class declaration
@@ -68,20 +65,20 @@ class CClickWindowBitmap: public CClickWindow
 {    
 public:
     /// Constructors
-    CClickWindowBitmap( wxWindow* parent, wxWindowID id);
+    CClickWindowBitmap( wxWindow* parent, const wxString& name);
 
 	/// Destructor
 	~CClickWindowBitmap();
 
 private:
     /// Creation
-    bool Create( wxWindow* parent, wxWindowID id);
+    bool Create( wxWindow* parent, const wxString& name);
 
     /// Initialises member variables
     void Init();
 
     /// Creates the controls and sizers
-    void CreateControls();
+    void CreateControls(const wxString& name);
 
 ////@begin CClickWindowBitmap event handler declarations
 
