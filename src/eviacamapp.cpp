@@ -172,9 +172,7 @@ bool EViacamApp::OnInit()
 
 	// Initialize resources
 	wxXmlResource::Get()->InitAllHandlers();
-	bool result= wxXmlResource::Get()->LoadFile(wxFileName(wxT("resources/clickWindowText.xrc")));
-	result= wxXmlResource::Get()->Load(wxT("resources/*.xrc"));
-	result= wxXmlResource::Get()->LoadAllFiles(wxT("resources"));
+	wxXmlResource::Get()->LoadAllFiles(wxT("resources"));
 
 	m_pController= new CViacamController();
 	assert (m_pController);
