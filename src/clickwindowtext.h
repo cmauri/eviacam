@@ -30,10 +30,11 @@
 
 #include "clickwindow.h"
 ////@begin includes
+#include "wx/xrc/xmlres.h"
 #include "wx/tglbtn.h"
 ////@end includes
 #include <wx/button.h>
-#include "clickwindowcontroller.h"
+//#include "clickwindowcontroller.h"
 
 /*!
  * Forward declarations
@@ -49,26 +50,15 @@ class wxToggleButton;
 
 ////@begin control identifiers
 #define ID_CCLICKWINDOW_TEXT 10003
-#define ID_BUTTON_NOCLICK 10004
-#define ID_BTN_LEFT 10007
-#define ID_BTN_MIDDLE 10126
-#define ID_BTN_RIGHT 10008
-#define ID_BTN_DRAG 10009
-#define ID_BTN_DBLCLICK 10010
-#define ID_BUTTON_SHOW_FRAME 10013
-#define SYMBOL_CCLICKWINDOWTEXT_STYLE wxCAPTION|wxSYSTEM_MENU|wxSTAY_ON_TOP
+#define SYMBOL_CCLICKWINDOWTEXT_STYLE wxSTAY_ON_TOP
 #define SYMBOL_CCLICKWINDOWTEXT_TITLE _("eViacam")
 #define SYMBOL_CCLICKWINDOWTEXT_IDNAME ID_CCLICKWINDOW_TEXT
 #define SYMBOL_CCLICKWINDOWTEXT_SIZE wxDefaultSize
 #define SYMBOL_CCLICKWINDOWTEXT_POSITION wxPoint(0, 0)
 ////@end control identifiers
 
-#undef SYMBOL_CCLICKWINDOWTEXT_STYLE
-#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXX11__)
-#define SYMBOL_CCLICKWINDOWTEXT_STYLE wxCAPTION|wxSYSTEM_MENU|wxSTAY_ON_TOP
-#else
-#define SYMBOL_CCLICKWINDOWTEXT_STYLE wxSYSTEM_MENU|wxSTAY_ON_TOP
-#endif
+#define CLICK_WINDOW_TEXT wxT("ID_CCLICKWINDOW_TEXT")
+#define CLICK_WINDOW_TEXT_VERTICAL wxT("ID_CLICKWINDOW_TEXT_VERTICAL")
 
 /*!
  * CClickWindowText class declaration
@@ -76,25 +66,22 @@ class wxToggleButton;
 
 class CClickWindowText: public CClickWindow
 {    
-    DECLARE_DYNAMIC_CLASS( CClickWindowText )
-    DECLARE_EVENT_TABLE()
-
 public:
     /// Constructors
-    CClickWindowText();
-    CClickWindowText( wxWindow* parent, wxWindowID id = SYMBOL_CCLICKWINDOWTEXT_IDNAME, const wxString& caption = SYMBOL_CCLICKWINDOWTEXT_TITLE, const wxPoint& pos = SYMBOL_CCLICKWINDOWTEXT_POSITION, const wxSize& size = SYMBOL_CCLICKWINDOWTEXT_SIZE, long style = SYMBOL_CCLICKWINDOWTEXT_STYLE );
-
-    /// Creation
-    bool Create( wxWindow* parent, wxWindowID id = SYMBOL_CCLICKWINDOWTEXT_IDNAME, const wxString& caption = SYMBOL_CCLICKWINDOWTEXT_TITLE, const wxPoint& pos = SYMBOL_CCLICKWINDOWTEXT_POSITION, const wxSize& size = SYMBOL_CCLICKWINDOWTEXT_SIZE, long style = SYMBOL_CCLICKWINDOWTEXT_STYLE );
+    CClickWindowText( wxWindow* parent, const wxString& name);
 
     /// Destructor
     ~CClickWindowText();
+
+private:
+    /// Creation
+    bool Create( wxWindow* parent, const wxString& name);
 
     /// Initialises member variables
     void Init();
 
     /// Creates the controls and sizers
-    void CreateControls();
+    void CreateControls(const wxString& name);
 
 ////@begin CClickWindowText event handler declarations
 
@@ -109,10 +96,8 @@ public:
     wxIcon GetIconResource( const wxString& name );
 ////@end CClickWindowText member function declarations
 
-    /// Should we show tooltips?
-    static bool ShowToolTips();
-
-	virtual void UpdateButtons (bool noClickStatus, CClickWindowController::EButton selected, CClickWindowController::EButton locked);
+	virtual void UpdateButtons (bool noClickStatus, CClickWindowController::EButton selected,
+			CClickWindowController::EButton locked);
 protected:
 
 	virtual void OnMainWindowShow ( wxShowEvent& event );
