@@ -91,23 +91,23 @@ mkdir $(TargetDir)lt
 mkdir $(TargetDir)zh_TW
 mkdir $(TargetDir)zh_CN
 
-if not exist $(TargetDir)ca\eviacam.mo copy "$(SolutionDir)..\po\ca.gmo" $(TargetDir)ca\eviacam.mo
-if not exist $(TargetDir)es\eviacam.mo copy "$(SolutionDir)..\po\es.gmo" $(TargetDir)es\eviacam.mo
-if not exist $(TargetDir)gl\eviacam.mo copy "$(SolutionDir)..\po\gl.gmo" $(TargetDir)gl\eviacam.mo
-if not exist $(TargetDir)it\eviacam.mo copy "$(SolutionDir)..\po\it.gmo" $(TargetDir)it\eviacam.mo
-if not exist $(TargetDir)tr\eviacam.mo copy "$(SolutionDir)..\po\tr.gmo" $(TargetDir)tr\eviacam.mo
-if not exist $(TargetDir)de\eviacam.mo copy "$(SolutionDir)..\po\de.gmo" $(TargetDir)de\eviacam.mo
-if not exist $(TargetDir)oc\eviacam.mo copy "$(SolutionDir)..\po\oc.gmo" $(TargetDir)oc\eviacam.mo
-if not exist $(TargetDir)fr\eviacam.mo copy "$(SolutionDir)..\po\fr.gmo" $(TargetDir)fr\eviacam.mo
-if not exist $(TargetDir)ar\eviacam.mo copy "$(SolutionDir)..\po\ar.gmo" $(TargetDir)ar\eviacam.mo
-if not exist $(TargetDir)he\eviacam.mo copy "$(SolutionDir)..\po\he.gmo" $(TargetDir)he\eviacam.mo
-if not exist $(TargetDir)ru\eviacam.mo copy "$(SolutionDir)..\po\ru.gmo" $(TargetDir)ru\eviacam.mo
-if not exist $(TargetDir)pt_BR\eviacam.mo copy "$(SolutionDir)..\po\pt_BR.gmo" $(TargetDir)pt_BR\eviacam.mo
-if not exist $(TargetDir)ja\eviacam.mo copy "$(SolutionDir)..\po\ja.gmo" $(TargetDir)ja\eviacam.mo
-if not exist $(TargetDir)el\eviacam.mo copy "$(SolutionDir)..\po\el.gmo" $(TargetDir)el\eviacam.mo
-if not exist $(TargetDir)lt\eviacam.mo copy "$(SolutionDir)..\po\lt.gmo" $(TargetDir)lt\eviacam.mo
-if not exist $(TargetDir)zh_TW\eviacam.mo copy "$(SolutionDir)..\po\zh_TW.gmo" $(TargetDir)zh_TW\eviacam.mo
-if not exist $(TargetDir)zh_CN\eviacam.mo copy "$(SolutionDir)..\po\zh_CN.gmo" $(TargetDir)zh_CN\eviacam.mo
+echo F | xcopy "$(SolutionDir)..\po\ca.gmo" $(TargetDir)ca\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\es.gmo" $(TargetDir)es\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\gl.gmo" $(TargetDir)gl\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\it.gmo" $(TargetDir)it\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\tr.gmo" $(TargetDir)tr\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\de.gmo" $(TargetDir)de\eviacam.mo /D
+echo F |  xcopy "$(SolutionDir)..\po\oc.gmo" $(TargetDir)oc\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\fr.gmo" $(TargetDir)fr\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ar.gmo" $(TargetDir)ar\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\he.gmo" $(TargetDir)he\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ru.gmo" $(TargetDir)ru\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\pt_BR.gmo" $(TargetDir)pt_BR\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ja.gmo" $(TargetDir)ja\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\el.gmo" $(TargetDir)el\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\lt.gmo" $(TargetDir)lt\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\zh_TW.gmo" $(TargetDir)zh_TW\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\zh_CN.gmo" $(TargetDir)zh_CN\eviacam.mo /D
 
 if not exist $(TargetDir)ca\wxstd.mo copy "%25WXWIN%25\locale\ca.mo" $(TargetDir)ca\wxstd.mo
 if not exist $(TargetDir)es\wxstd.mo copy "%25WXWIN%25\locale\es.mo" $(TargetDir)es\wxstd.mo
@@ -201,23 +201,23 @@ mkdir $(TargetDir)lt
 mkdir $(TargetDir)zh_TW
 mkdir $(TargetDir)zh_CN
 
-if not exist $(TargetDir)ca\eviacam.mo copy "$(SolutionDir)..\po\ca.gmo" $(TargetDir)ca\eviacam.mo
-if not exist $(TargetDir)es\eviacam.mo copy "$(SolutionDir)..\po\es.gmo" $(TargetDir)es\eviacam.mo
-if not exist $(TargetDir)gl\eviacam.mo copy "$(SolutionDir)..\po\gl.gmo" $(TargetDir)gl\eviacam.mo
-if not exist $(TargetDir)it\eviacam.mo copy "$(SolutionDir)..\po\it.gmo" $(TargetDir)it\eviacam.mo
-if not exist $(TargetDir)tr\eviacam.mo copy "$(SolutionDir)..\po\tr.gmo" $(TargetDir)tr\eviacam.mo
-if not exist $(TargetDir)de\eviacam.mo copy "$(SolutionDir)..\po\de.gmo" $(TargetDir)de\eviacam.mo
-if not exist $(TargetDir)oc\eviacam.mo copy "$(SolutionDir)..\po\oc.gmo" $(TargetDir)oc\eviacam.mo
-if not exist $(TargetDir)fr\eviacam.mo copy "$(SolutionDir)..\po\fr.gmo" $(TargetDir)fr\eviacam.mo
-if not exist $(TargetDir)ar\eviacam.mo copy "$(SolutionDir)..\po\ar.gmo" $(TargetDir)ar\eviacam.mo
-if not exist $(TargetDir)he\eviacam.mo copy "$(SolutionDir)..\po\he.gmo" $(TargetDir)he\eviacam.mo
-if not exist $(TargetDir)ru\eviacam.mo copy "$(SolutionDir)..\po\ru.gmo" $(TargetDir)ru\eviacam.mo
-if not exist $(TargetDir)pt_BR\eviacam.mo copy "$(SolutionDir)..\po\pt_BR.gmo" $(TargetDir)pt_BR\eviacam.mo
-if not exist $(TargetDir)ja\eviacam.mo copy "$(SolutionDir)..\po\ja.gmo" $(TargetDir)ja\eviacam.mo
-if not exist $(TargetDir)el\eviacam.mo copy "$(SolutionDir)..\po\el.gmo" $(TargetDir)el\eviacam.mo
-if not exist $(TargetDir)lt\eviacam.mo copy "$(SolutionDir)..\po\lt.gmo" $(TargetDir)lt\eviacam.mo
-if not exist $(TargetDir)zh_TW\eviacam.mo copy "$(SolutionDir)..\po\zh_TW.gmo" $(TargetDir)zh_TW\eviacam.mo
-if not exist $(TargetDir)zh_CN\eviacam.mo copy "$(SolutionDir)..\po\zh_CN.gmo" $(TargetDir)zh_CN\eviacam.mo
+echo F | xcopy "$(SolutionDir)..\po\ca.gmo" $(TargetDir)ca\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\es.gmo" $(TargetDir)es\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\gl.gmo" $(TargetDir)gl\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\it.gmo" $(TargetDir)it\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\tr.gmo" $(TargetDir)tr\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\de.gmo" $(TargetDir)de\eviacam.mo /D
+echo F |  xcopy "$(SolutionDir)..\po\oc.gmo" $(TargetDir)oc\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\fr.gmo" $(TargetDir)fr\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ar.gmo" $(TargetDir)ar\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\he.gmo" $(TargetDir)he\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ru.gmo" $(TargetDir)ru\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\pt_BR.gmo" $(TargetDir)pt_BR\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ja.gmo" $(TargetDir)ja\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\el.gmo" $(TargetDir)el\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\lt.gmo" $(TargetDir)lt\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\zh_TW.gmo" $(TargetDir)zh_TW\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\zh_CN.gmo" $(TargetDir)zh_CN\eviacam.mo /D
 
 if not exist $(TargetDir)ca\wxstd.mo copy "%25WXWIN%25\locale\ca.mo" $(TargetDir)ca\wxstd.mo
 if not exist $(TargetDir)es\wxstd.mo copy "%25WXWIN%25\locale\es.mo" $(TargetDir)es\wxstd.mo
