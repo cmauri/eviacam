@@ -19,7 +19,7 @@
                 <border>3</border>
                 <object class="wxStaticBitmap" name="wxID_STATIC">
                     <size>16,16</size>
-                    <bitmap>icons/eviacam_mini.xpm</bitmap>
+                    <bitmap>eviacam_mini.xpm</bitmap>
                 </object>
             </object>
             <object class="sizeritem">

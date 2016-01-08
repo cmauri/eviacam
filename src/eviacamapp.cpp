@@ -155,7 +155,7 @@ bool EViacamApp::OnInit()
 
 // Set up globals
 #ifndef NDEBUG
-	// Assume project runs from src/ 
+	// TODO: in debug mode assume project runs from src/
 	eviacam::SetDataDir(wxGetCwd() + _T("/../doc/"));
 #else
 	eviacam::SetDataDir(wxStandardPaths::Get().GetDataDir());
@@ -172,16 +172,16 @@ bool EViacamApp::OnInit()
 
 	// Initialize resources
 	wxXmlResource::Get()->InitAllHandlers();
-	wxXmlResource::Get()->LoadAllFiles(wxT("resources"));
+	wxXmlResource::Get()->LoadAllFiles(eviacam::GetDataDir() + wxT("/resources"));
 
+	// Start main controller
 	m_pController= new CViacamController();
-	assert (m_pController);
-	if (!m_pController->Initialize()) 
-	{
+	if (!m_pController->Initialize()) {
 		OnExit();
 		return false;
 	}
-	else return true;
+	else
+		return true;
 }
 
 static const wxCmdLineEntryDesc g_cmdLineDesc [] =

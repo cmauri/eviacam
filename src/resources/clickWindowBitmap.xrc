@@ -13,7 +13,7 @@
                 <border>5</border>
                 <object class="wxStaticBitmap" name="wxID_STATIC">
                     <size>48,48</size>
-                    <bitmap>icons/eviacam_gray_bg.xpm</bitmap>
+                    <bitmap>eviacam_gray_bg.xpm</bitmap>
                 </object>
             </object>
             <object class="spacer">
@@ -27,7 +27,7 @@
                 <object class="wxBitmapButton" name="ID_BITMAPBUTTON_NOCLICK">
                     <tooltip>No click</tooltip>
                     <style>wxBU_AUTODRAW|wxNO_BORDER</style>
-                    <bitmap>icons/buttonNoClick.xpm</bitmap>
+                    <bitmap>buttonNoClick.xpm</bitmap>
                 </object>
             </object>
             <object class="spacer">
@@ -41,8 +41,8 @@
                 <object class="wxBitmapButton" name="ID_BITMAPBUTTON_LEFT">
                     <tooltip>Left</tooltip>
                     <style>wxNO_BORDER</style>
-                    <bitmap>icons/buttonLeft.xpm</bitmap>
-                    <disabled>icons/buttonLeftDisabled.xpm</disabled>
+                    <bitmap>buttonLeft.xpm</bitmap>
+                    <disabled>buttonLeftDisabled.xpm</disabled>
                 </object>
             </object>
             <object class="sizeritem">
@@ -51,8 +51,8 @@
                 <object class="wxBitmapButton" name="ID_BITMAPBUTTON_MIDDLE">
                     <tooltip>Middle</tooltip>
                     <style>wxNO_BORDER</style>
-                    <bitmap>icons/buttonMiddle.xpm</bitmap>
-                    <disabled>icons/buttonMiddleDisabled.xpm</disabled>
+                    <bitmap>buttonMiddle.xpm</bitmap>
+                    <disabled>buttonMiddleDisabled.xpm</disabled>
                 </object>
             </object>
             <object class="sizeritem">
@@ -61,8 +61,8 @@
                 <object class="wxBitmapButton" name="ID_BITMAPBUTTON_RIGHT">
                     <tooltip>Right</tooltip>
                     <style>wxNO_BORDER</style>
-                    <bitmap>icons/buttonRight.xpm</bitmap>
-                    <disabled>icons/buttonRightDisabled.xpm</disabled>
+                    <bitmap>buttonRight.xpm</bitmap>
+                    <disabled>buttonRightDisabled.xpm</disabled>
                 </object>
             </object>
             <object class="sizeritem">
@@ -71,8 +71,8 @@
                 <object class="wxBitmapButton" name="ID_BITMAPBUTTON_DRAG">
                     <tooltip>Drag</tooltip>
                     <style>wxNO_BORDER</style>
-                    <bitmap>icons/buttonDrag.xpm</bitmap>
-                    <disabled>icons/buttonDragDisabled.xpm</disabled>
+                    <bitmap>buttonDrag.xpm</bitmap>
+                    <disabled>buttonDragDisabled.xpm</disabled>
                 </object>
             </object>
             <object class="sizeritem">
@@ -81,8 +81,8 @@
                 <object class="wxBitmapButton" name="ID_BITMAPBUTTON_DBLCLICK">
                     <tooltip>Double Click</tooltip>
                     <style>wxNO_BORDER</style>
-                    <bitmap>icons/buttonDblLeft.xpm</bitmap>
-                    <disabled>icons/buttonDblLeftDisabled.xpm</disabled>
+                    <bitmap>buttonDblLeft.xpm</bitmap>
+                    <disabled>buttonDblLeftDisabled.xpm</disabled>
                 </object>
             </object>
             <object class="spacer">
@@ -96,7 +96,7 @@
                 <object class="wxBitmapButton" name="ID_BITMAPBUTTON">
                     <tooltip>Hide main window</tooltip>
                     <style>wxNO_BORDER</style>
-                    <bitmap>icons/buttonHideMainWindow.xpm</bitmap>
+                    <bitmap>buttonHideMainWindow.xpm</bitmap>
                 </object>
             </object>
         </object>

@@ -46,9 +46,9 @@
 #include "gestureclick.h"
 
 ////@begin XPM images
-#include "icons/eviacam_mini.xpm"
-#include "icons/user.xpm"
-#include "icons/eviacam_small.xpm"
+#include "resources/eviacam_mini.xpm"
+#include "resources/user.xpm"
+#include "resources/eviacam_small.xpm"
 ////@end XPM images
 #define FIRST_CONTROL_ID 12000
 
@@ -181,7 +181,7 @@ bool WConfiguration::Create( wxWindow* parent, wxWindowID id, const wxString& ca
     wxDialog::Create( parent, id, caption, pos, size, style );
 
     CreateControls();
-    SetIcon(GetIconResource(wxT("icons/eviacam_mini.xpm")));
+    SetIcon(GetIconResource(wxT("resources/eviacam_mini.xpm")));
     if (GetSizer())
     {
         GetSizer()->SetSizeHints(this);
@@ -336,9 +336,9 @@ void WConfiguration::CreateControls()
     wxListbook* itemListbook3 = new wxListbook( itemDialog1, ID_LISTBOOK, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
     wxImageList* itemListbook3ImageList = new wxImageList(32, 32, true, 2);
     {
-        wxIcon itemListbook3Icon0(itemDialog1->GetIconResource(wxT("icons/user.xpm")));
+        wxIcon itemListbook3Icon0(itemDialog1->GetIconResource(wxT("resources/user.xpm")));
         itemListbook3ImageList->Add(itemListbook3Icon0);
-        wxIcon itemListbook3Icon1(itemDialog1->GetIconResource(wxT("icons/eviacam_small.xpm")));
+        wxIcon itemListbook3Icon1(itemDialog1->GetIconResource(wxT("resources/eviacam_small.xpm")));
         itemListbook3ImageList->Add(itemListbook3Icon1);
     }
     itemListbook3->AssignImageList(itemListbook3ImageList);
@@ -952,17 +952,17 @@ wxIcon WConfiguration::GetIconResource( const wxString& name )
     // Icon retrieval
 ////@begin WConfiguration icon retrieval
     wxUnusedVar(name);
-    if (name == wxT("icons/eviacam_mini.xpm"))
+    if (name == wxT("resources/eviacam_mini.xpm"))
     {
         wxIcon icon(eviacam_mini);
         return icon;
     }
-    else if (name == wxT("icons/user.xpm"))
+    else if (name == wxT("resources/user.xpm"))
     {
         wxIcon icon(user);
         return icon;
     }
-    else if (name == wxT("icons/eviacam_small.xpm"))
+    else if (name == wxT("resources/eviacam_small.xpm"))
     {
         wxIcon icon(eviacam_small);
         return icon;
