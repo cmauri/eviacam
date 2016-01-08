@@ -57,6 +57,7 @@ debian-build
 # Editor backup & autosave
 src/gui.pjd.bak
 src/gui-autosave.pjd
+*.prv.jpg
 *~
 
 *.vcproj.*.user
