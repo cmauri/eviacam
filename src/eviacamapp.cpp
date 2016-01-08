@@ -153,13 +153,8 @@ bool EViacamApp::OnInit()
 #endif		
 /* ////@end EViacamApp initialisation */
 
-// Set up globals
-#ifndef NDEBUG
-	// TODO: in debug mode assume project runs from src/
-	eviacam::SetDataDir(wxGetCwd() + _T("/../doc/"));
-#else
+	// Set up globals (TODO: remove paths.cpp)
 	eviacam::SetDataDir(wxStandardPaths::Get().GetDataDir());
-#endif
 	
 	// Initialize sockets support
 	// Note: (Workaround for implementation limitation for wxWidgets up to 2.5.x) 
