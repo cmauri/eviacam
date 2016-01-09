@@ -127,7 +127,7 @@ if not exist $(TargetDir)zh_TW\wxstd.mo copy "%25WXWIN%25\locale\zh_TW.mo" $(Tar
 if not exist $(TargetDir)zh_CN\wxstd.mo copy "%25WXWIN%25\locale\zh_CN.mo" $(TargetDir)zh_CN\wxstd.mo
 
 mkdir $(TargetDir)\resources
-robocopy "$(SolutionDir)..\src\resources" "$(TargetDir)\resources" /E /XN
+robocopy "$(SolutionDir)..\src\resources" "$(TargetDir)\resources" /E /Xo
 if %ERRORLEVEL% LEQ 1 exit 0
 </Command>
     </PreLinkEvent>
@@ -237,7 +237,7 @@ if not exist $(TargetDir)zh_TW\wxstd.mo copy "%25WXWIN%25\locale\zh_TW.mo" $(Tar
 if not exist $(TargetDir)zh_CN\wxstd.mo copy "%25WXWIN%25\locale\zh_CN.mo" $(TargetDir)zh_CN\wxstd.mo
 
 mkdir $(TargetDir)\resources
-robocopy "$(SolutionDir)..\src\resources" "$(TargetDir)\resources" /E /XN
+robocopy "$(SolutionDir)..\src\resources" "$(TargetDir)\resources" /E /Xo
 if %ERRORLEVEL% LEQ 1 exit 0
 </Command>
     </PreLinkEvent>
