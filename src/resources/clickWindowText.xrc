@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resource version="2.3.0.1" xmlns="http://www.wxwidgets.org/wxxrc">
     <object class="wxDialog" name="ID_CCLICKWINDOW_TEXT" subclass="CClickWindowText">
-        <style>wxSTAY_ON_TOP</style>
+        <style platform="unix">wxCAPTION|wxSTAY_ON_TOP</style>
+		<style platform="win">wxSTAY_ON_TOP</style>
         <exstyle>wxWS_EX_BLOCK_EVENTS</exstyle>
         <title>eViacam</title>
         <object class="wxBoxSizer">
