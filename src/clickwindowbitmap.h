@@ -5,7 +5,7 @@
 // Modified by: 
 // Created:     16/11/2009 15:10:47
 // RCS-ID:      
-// Copyright:   (C) 2008-15 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-16 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -24,42 +24,15 @@
 #ifndef _CLICKWINDOWBITMAP_H_
 #define _CLICKWINDOWBITMAP_H_
 
-/*!
- * Includes
- */
 #include "clickwindow.h"
 #include <wx/bitmap.h>
-////@begin includes
 #include "wx/xrc/xmlres.h"
-////@end includes
 
-/*!
- * Forward declarations
- */
 class wxBitmapButton;
-////@begin forward declarations
-////@end forward declarations
-
-/*!
- * Control identifiers
- */
-
-////@begin control identifiers
-#define ID_CCLICKWINDOWBITMAP 10020
-#define SYMBOL_CCLICKWINDOWBITMAP_STYLE wxSTAY_ON_TOP
-#define SYMBOL_CCLICKWINDOWBITMAP_TITLE _("eViacam")
-#define SYMBOL_CCLICKWINDOWBITMAP_IDNAME ID_CCLICKWINDOWBITMAP
-#define SYMBOL_CCLICKWINDOWBITMAP_SIZE wxDefaultSize
-#define SYMBOL_CCLICKWINDOWBITMAP_POSITION wxPoint(0, 0)
-////@end control identifiers
 
 #define CLICK_WINDOW_BITMAP wxT("ID_CCLICKWINDOWBITMAP")
 #define CLICK_WINDOW_BITMAP_VERTICAL wxT("ID_CLICKWINDOWBITMAPVERTICAL")
 
-
-/*!
- * CClickWindowBitmap class declaration
- */
 
 class CClickWindowBitmap: public CClickWindow
 {    
@@ -71,24 +44,8 @@ public:
 	~CClickWindowBitmap();
 
 private:
-    /// Initialises member variables
-    void Init();
-
     /// Creates the controls and sizers
     void CreateControls(const wxString& name);
-
-////@begin CClickWindowBitmap event handler declarations
-
-////@end CClickWindowBitmap event handler declarations
-
-////@begin CClickWindowBitmap member function declarations
-
-    /// Retrieves bitmap resources
-    wxBitmap GetBitmapResource( const wxString& name );
-
-    /// Retrieves icon resources
-    wxIcon GetIconResource( const wxString& name );
-////@end CClickWindowBitmap member function declarations
 
 	virtual void UpdateButtons (bool noClickStatus, CClickWindowController::EButton selected,
 		CClickWindowController::EButton locked);
@@ -130,7 +87,6 @@ protected:
 	wxBitmap m_bmpButtonRight;
 	wxBitmap m_bmpButtonShowMainWindow;
 	
-////@begin CClickWindowBitmap member variables
     wxBitmapButton* m_btnNoClick;
     wxBitmapButton* m_btnLeft;
     wxBitmapButton* m_btnMiddle;
@@ -138,7 +94,6 @@ protected:
     wxBitmapButton* m_btnDrag;
     wxBitmapButton* m_btnDblLeft;
     wxBitmapButton* m_btnShowFrame;
-////@end CClickWindowBitmap member variables
 };
 
 #endif

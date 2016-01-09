@@ -27,27 +27,19 @@
 #include "wxappbar.h"
 #include "clickwindowcontroller.h"
 
-#define SYMBOL_CCLICKWINDOW_STYLE wxSTAY_ON_TOP|wxSIMPLE_BORDER
-#define SYMBOL_CCLICKWINDOW_TITLE _("Click Window")
-#define SYMBOL_CCLICKWINDOW_IDNAME ID_CCLICKWINDOW
-#define SYMBOL_CCLICKWINDOW_SIZE wxDefaultSize
-#define SYMBOL_CCLICKWINDOW_POSITION wxPoint(0, 0)
-
 class CClickWindow: public WXAppBar
 {    
     DECLARE_EVENT_TABLE()
 
-public:
+protected:
     /// Constructors
     CClickWindow();
 
+public:
 	bool Create(wxWindow* parent, const wxString& name);
 
     /// Destructor
     ~CClickWindow();
-
-    /// Initialises member variables
-    void Init();
 
     void ConnectEvents();
 	
@@ -56,6 +48,7 @@ public:
 	virtual void UpdateButtons (bool noClickStatus, CClickWindowController::EButton selected, CClickWindowController::EButton locked)= 0;
 
 	virtual void OnMainWindowShow ( wxShowEvent& event );
+
 	virtual wxControl* GetNoClickButton()= 0;
 protected:
 	/// Creates the controls and sizers

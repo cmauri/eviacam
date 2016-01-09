@@ -23,46 +23,15 @@
 #ifndef _CLICKWINDOWTEXT_H_
 #define _CLICKWINDOWTEXT_H_
 
-
-/*!
- * Includes
- */
-
 #include "clickwindow.h"
-////@begin includes
 #include "wx/xrc/xmlres.h"
 #include "wx/tglbtn.h"
-////@end includes
 #include <wx/button.h>
-//#include "clickwindowcontroller.h"
 
-/*!
- * Forward declarations
- */
-
-////@begin forward declarations
 class wxToggleButton;
-////@end forward declarations
-
-/*!
- * Control identifiers
- */
-
-////@begin control identifiers
-#define ID_CCLICKWINDOW_TEXT 10003
-#define SYMBOL_CCLICKWINDOWTEXT_STYLE wxSTAY_ON_TOP
-#define SYMBOL_CCLICKWINDOWTEXT_TITLE _("eViacam")
-#define SYMBOL_CCLICKWINDOWTEXT_IDNAME ID_CCLICKWINDOW_TEXT
-#define SYMBOL_CCLICKWINDOWTEXT_SIZE wxDefaultSize
-#define SYMBOL_CCLICKWINDOWTEXT_POSITION wxPoint(0, 0)
-////@end control identifiers
 
 #define CLICK_WINDOW_TEXT wxT("ID_CCLICKWINDOW_TEXT")
 #define CLICK_WINDOW_TEXT_VERTICAL wxT("ID_CLICKWINDOW_TEXT_VERTICAL")
-
-/*!
- * CClickWindowText class declaration
- */
 
 class CClickWindowText: public CClickWindow
 {    
@@ -74,24 +43,8 @@ public:
     ~CClickWindowText();
 
 private:
-    /// Initialises member variables
-    void Init();
-
     /// Creates the controls and sizers
     void CreateControls(const wxString& name);
-
-////@begin CClickWindowText event handler declarations
-
-////@end CClickWindowText event handler declarations
-
-////@begin CClickWindowText member function declarations
-
-    /// Retrieves bitmap resources
-    wxBitmap GetBitmapResource( const wxString& name );
-
-    /// Retrieves icon resources
-    wxIcon GetIconResource( const wxString& name );
-////@end CClickWindowText member function declarations
 
 	virtual void UpdateButtons (bool noClickStatus, CClickWindowController::EButton selected,
 			CClickWindowController::EButton locked);
@@ -113,7 +66,6 @@ protected:
 	void UpdateLockedButtons ( wxControl* btnLocked, wxControl* btnNoLocked1, 
 							   wxControl* btnNoLocked2, wxControl* btnNoLocked3, wxControl* btnNoLocked4);
 
-////@begin CClickWindowText member variables
     wxToggleButton* m_noClickButton;
     wxToggleButton* m_leftButton;
     wxToggleButton* m_middleButton;
@@ -121,8 +73,6 @@ protected:
     wxToggleButton* m_dragButton;
     wxToggleButton* m_dblClickButton;
     wxButton* m_btnShowFrame;
-////@end CClickWindowText member variables
-
 };
 
 #endif

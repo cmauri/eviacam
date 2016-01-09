@@ -28,13 +28,8 @@
 #include "wx/wx.h"
 #endif
 
-////@begin includes
-////@end includes
 
 #include "clickwindowbitmap.h"
-
-////@begin XPM images
-////@end XPM images
 
 #include "resources/buttonNoClick.xpm"
 #include "resources/buttonLeft.xpm"
@@ -97,7 +92,14 @@ CClickWindowBitmap::CClickWindowBitmap( wxWindow* parent, const wxString& name)
 , m_bmpButtonRight(buttonRight)
 , m_bmpButtonShowMainWindow(buttonShowMainWindow)
 {
-    Init();
+	m_btnNoClick = NULL;
+	m_btnLeft = NULL;
+	m_btnMiddle = NULL;
+	m_btnRight = NULL;
+	m_btnDrag = NULL;
+	m_btnDblLeft = NULL;
+	m_btnShowFrame = NULL;
+
     Create(parent, name);
 }
 
@@ -107,28 +109,7 @@ CClickWindowBitmap::CClickWindowBitmap( wxWindow* parent, const wxString& name)
 
 CClickWindowBitmap::~CClickWindowBitmap()
 {
-////@begin CClickWindowBitmap destruction
-////@end CClickWindowBitmap destruction
 }
-
-
-/*!
- * Member initialisation
- */
-
-void CClickWindowBitmap::Init()
-{
-////@begin CClickWindowBitmap member initialisation
-    m_btnNoClick = NULL;
-    m_btnLeft = NULL;
-    m_btnMiddle = NULL;
-    m_btnRight = NULL;
-    m_btnDrag = NULL;
-    m_btnDblLeft = NULL;
-    m_btnShowFrame = NULL;
-////@end CClickWindowBitmap member initialisation
-}
-
 
 /*!
  * Control creation for CClickWindowBitmap
@@ -276,33 +257,4 @@ void CClickWindowBitmap::OnMainWindowShow ( wxShowEvent& event )
 	// Set to true to propagate events to the text mode clickwindow
 	event.Skip (true);
 }
-
-
-/*!
- * Get bitmap resources
- */
-
-wxBitmap CClickWindowBitmap::GetBitmapResource( const wxString& name )
-{
-    // Bitmap retrieval
-////@begin CClickWindowBitmap bitmap retrieval
-    wxUnusedVar(name);
-    return wxNullBitmap;
-////@end CClickWindowBitmap bitmap retrieval
-}
-
-/*!
- * Get icon resources
- */
-
-wxIcon CClickWindowBitmap::GetIconResource( const wxString& name )
-{
-    // Icon retrieval
-////@begin CClickWindowBitmap icon retrieval
-    wxUnusedVar(name);
-    return wxNullIcon;
-////@end CClickWindowBitmap icon retrieval
-}
-
-
 

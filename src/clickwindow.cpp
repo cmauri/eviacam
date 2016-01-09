@@ -49,7 +49,7 @@ END_EVENT_TABLE()
 
 CClickWindow::CClickWindow()
 {
-    Init();
+	m_pController= NULL;
 }
 
 bool CClickWindow::Create(wxWindow* parent, const wxString& name)
@@ -63,11 +63,6 @@ bool CClickWindow::Create(wxWindow* parent, const wxString& name)
 	SetEntryInPager(false);
 	SetAcceptFocus(false);
 
-#if defined (WIN32)
-	SetWindowStyle(wxSYSTEM_MENU | wxSTAY_ON_TOP | wxBORDER_NONE);
-#else
-	SetWindowStyle(wxSYSTEM_MENU | wxSTAY_ON_TOP | wxBORDER_NONE | wxCAPTION);
-#endif
 	if (GetSizer())
 	{
 		GetSizer()->SetSizeHints(this);
@@ -82,17 +77,6 @@ bool CClickWindow::Create(wxWindow* parent, const wxString& name)
 CClickWindow::~CClickWindow()
 {
 }
-
-
-/*!
- * Member initialisation
- */
-
-void CClickWindow::Init()
-{
-	m_pController= NULL;
-}
-
 
 /*
  * Connect events to button
@@ -133,7 +117,7 @@ CClickWindowController::EButton CClickWindow::ButtonId2EButton (int id)
     if (id== GetDblClickButton()->GetId()) return CClickWindowController::DBLCLICK;
 	
     assert (false);
-	return CClickWindowController::NO_CLICK;	// Avoid warning
+	return CClickWindowController::NO_CLICK;	// Avoid compilation warning
 }
 
 void CClickWindow::OnCloseWindow( wxCloseEvent& event )

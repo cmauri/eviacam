@@ -31,17 +31,8 @@
 #include "wx/wx.h"
 #endif
 
-//#include "wxappbar.h"
 #include "clickwindowtext.h"
 #include "clickwindowcontroller.h"
-
-
-////@begin includes
-////@end includes
-
-////@begin XPM images
-////@end XPM images
-
 
 /*!
  * CClickWindowText constructors
@@ -49,7 +40,14 @@
 
 CClickWindowText::CClickWindowText( wxWindow* parent,  const wxString& name)
 {
-	Init();
+    m_noClickButton = NULL;
+    m_leftButton = NULL;
+    m_middleButton = NULL;
+    m_rightButton = NULL;
+    m_dragButton = NULL;
+    m_dblClickButton = NULL;
+    m_btnShowFrame = NULL;
+
 	Create(parent, name);
 }
 
@@ -60,28 +58,7 @@ CClickWindowText::CClickWindowText( wxWindow* parent,  const wxString& name)
 
 CClickWindowText::~CClickWindowText()
 {
-////@begin CClickWindowText destruction
-////@end CClickWindowText destruction
 }
-
-
-/*!
- * Member initialisation
- */
-
-void CClickWindowText::Init()
-{
-////@begin CClickWindowText member initialisation
-    m_noClickButton = NULL;
-    m_leftButton = NULL;
-    m_middleButton = NULL;
-    m_rightButton = NULL;
-    m_dragButton = NULL;
-    m_dblClickButton = NULL;
-    m_btnShowFrame = NULL;
-////@end CClickWindowText member initialisation
-}
-
 
 /*!
  * Control creation for CClickWindow
@@ -100,32 +77,6 @@ void CClickWindowText::CreateControls(const wxString& name)
     m_btnShowFrame = XRCCTRL(*this, "ID_BUTTON_SHOW_FRAME", wxButton);
 
 	ConnectEvents();
-}
-
-/*!
- * Get bitmap resources
- */
-
-wxBitmap CClickWindowText::GetBitmapResource( const wxString& name )
-{
-    // Bitmap retrieval
-////@begin CClickWindowText bitmap retrieval
-    wxUnusedVar(name);
-    return wxNullBitmap;
-////@end CClickWindowText bitmap retrieval
-}
-
-/*!
- * Get icon resources
- */
-
-wxIcon CClickWindowText::GetIconResource( const wxString& name )
-{
-    // Icon retrieval
-////@begin CClickWindowText icon retrieval
-    wxUnusedVar(name);
-    return wxNullIcon;
-////@end CClickWindowText icon retrieval
 }
 
 void CClickWindowText::UpdateButtons (bool noClickStatus, CClickWindowController::EButton selected, CClickWindowController::EButton locked)
