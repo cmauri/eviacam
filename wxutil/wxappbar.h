@@ -91,17 +91,16 @@ public:
 	virtual bool Show(bool show = true);
 
 	virtual bool ProcessEvent(wxEvent& event);
-	
-	
+
+protected:
+	// Set the stickness of the window, i.e. whether it should
+	// appear in the different desktops (GTK+ only)
+	void SetSticky(bool stick);
 
 private:
 #if defined(__WXMSW__)
 //	void AppBarCallback (UINT uMsg, WPARAM wParam, LPARAM lParam);
 #endif
-	// Set the stickness of the window, i.e. whether it should
-	// appear in the different desktops (GTK+ only)
-	void SetSticky (bool stick);
-	
 	void SetDockedModeStep1();
 	void SetDockedModeStep2();
 	void UnSetDockedModeStep1();

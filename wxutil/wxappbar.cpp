@@ -312,8 +312,8 @@ void WXAppBar::SetSticky (bool stick)
 {
 #if defined(__WXMSW__)
 	// TODO
-	(void)(stick); // Remove warning
-	//assert (false);
+	(void)(stick); // Avoid compilation warning
+
 #elif defined(__WXGTK__)	
 	// Get X11 handle for our window
 	GtkWindow *gtkWindow= (GtkWindow *) GetHandle();
@@ -324,8 +324,6 @@ void WXAppBar::SetSticky (bool stick)
 		gtk_window_stick (gtkWindow);
 	else 
 		gtk_window_unstick (gtkWindow);	
-#else
-	assert (false);
 #endif
 }
 

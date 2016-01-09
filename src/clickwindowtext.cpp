@@ -55,25 +55,6 @@ CClickWindowText::CClickWindowText( wxWindow* parent,  const wxString& name)
 
 
 /*!
- * CClickWindow creator
- */
-
-bool CClickWindowText::Create( wxWindow* parent, const wxString& name)
-{
-////@begin CClickWindowText creation
-    SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
-    SetParent(parent);
-    CreateControls(name);
-    if (GetSizer())
-    {
-        GetSizer()->SetSizeHints(this);
-    }
-////@end CClickWindowText creation
-    return true;
-}
-
-
-/*!
  * CClickWindowText destructor
  */
 

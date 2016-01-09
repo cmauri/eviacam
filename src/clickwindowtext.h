@@ -50,7 +50,7 @@ class wxToggleButton;
 
 ////@begin control identifiers
 #define ID_CCLICKWINDOW_TEXT 10003
-#define SYMBOL_CCLICKWINDOWTEXT_STYLE wxCAPTION|wxSTAY_ON_TOP
+#define SYMBOL_CCLICKWINDOWTEXT_STYLE wxSTAY_ON_TOP
 #define SYMBOL_CCLICKWINDOWTEXT_TITLE _("eViacam")
 #define SYMBOL_CCLICKWINDOWTEXT_IDNAME ID_CCLICKWINDOW_TEXT
 #define SYMBOL_CCLICKWINDOWTEXT_SIZE wxDefaultSize
@@ -74,9 +74,6 @@ public:
     ~CClickWindowText();
 
 private:
-    /// Creation
-    bool Create( wxWindow* parent, const wxString& name);
-
     /// Initialises member variables
     void Init();
 

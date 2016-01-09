@@ -102,26 +102,6 @@ CClickWindowBitmap::CClickWindowBitmap( wxWindow* parent, const wxString& name)
 }
 
 /*!
- * CClickWindowBitmap creator
- */
-
-bool CClickWindowBitmap::Create( wxWindow* parent, const wxString& name)
-{
-////@begin CClickWindowBitmap creation
-    SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
-    SetParent(parent);
-    CreateControls(name);
-    if (GetSizer())
-    {
-        GetSizer()->SetSizeHints(this);
-    }
-    Centre();
-////@end CClickWindowBitmap creation
-    return true;
-}
-
-
-/*!
  * CClickWindowBitmap destructor
  */
 

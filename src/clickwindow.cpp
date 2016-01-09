@@ -52,28 +52,28 @@ CClickWindow::CClickWindow()
     Init();
 }
 
-CClickWindow::CClickWindow( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
-{
-	Init();
-	Create(parent, id, caption, pos, size, style);
-}
-
-
-/*!
- * CClickWindow creator
- */
-
-bool CClickWindow::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+bool CClickWindow::Create(wxWindow* parent, const wxString& name)
 {
 	SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
-	bool retval= WXAppBar::Create( parent, id, caption, pos, size, style );
-	//SetSticky(true);
-	SetEntryInTaskBar (false);
-	SetEntryInPager (false);
-	SetAcceptFocus (false);
-	return retval;
-}
+	SetParent(parent);
+	CreateControls(name);
 
+	SetSticky(true);
+	SetEntryInTaskBar(false);
+	SetEntryInPager(false);
+	SetAcceptFocus(false);
+
+#if defined (WIN32)
+	SetWindowStyle(wxSYSTEM_MENU | wxSTAY_ON_TOP | wxBORDER_NONE);
+#else
+	SetWindowStyle(wxSYSTEM_MENU | wxSTAY_ON_TOP | wxBORDER_NONE | wxCAPTION);
+#endif
+	if (GetSizer())
+	{
+		GetSizer()->SetSizeHints(this);
+	}
+	return true;
+}
 
 /*!
  * CClickWindow destructor

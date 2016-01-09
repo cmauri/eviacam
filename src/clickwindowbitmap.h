@@ -46,7 +46,7 @@ class wxBitmapButton;
 
 ////@begin control identifiers
 #define ID_CCLICKWINDOWBITMAP 10020
-#define SYMBOL_CCLICKWINDOWBITMAP_STYLE wxCAPTION|wxSTAY_ON_TOP
+#define SYMBOL_CCLICKWINDOWBITMAP_STYLE wxSTAY_ON_TOP
 #define SYMBOL_CCLICKWINDOWBITMAP_TITLE _("eViacam")
 #define SYMBOL_CCLICKWINDOWBITMAP_IDNAME ID_CCLICKWINDOWBITMAP
 #define SYMBOL_CCLICKWINDOWBITMAP_SIZE wxDefaultSize
@@ -71,9 +71,6 @@ public:
 	~CClickWindowBitmap();
 
 private:
-    /// Creation
-    bool Create( wxWindow* parent, const wxString& name);
-
     /// Initialises member variables
     void Init();
 
