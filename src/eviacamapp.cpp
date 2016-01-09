@@ -37,6 +37,7 @@
 #include <wx/socket.h>
 #include <wx/stdpaths.h>
 #include <wx/cmdline.h>
+#include <wx/xrc/xmlres.h>
 
 #include "eviacamapp.h"
 #include "paths.h"
@@ -152,13 +153,8 @@ bool EViacamApp::OnInit()
 #endif		
 /* ////@end EViacamApp initialisation */
 
-// Set up globals
-#ifndef NDEBUG
-	// Assume project runs from src/ 
-	eviacam::SetDataDir(wxGetCwd() + _T("/../doc/"));
-#else
+	// Set up globals (TODO: remove paths.cpp)
 	eviacam::SetDataDir(wxStandardPaths::Get().GetDataDir());
-#endif
 	
 	// Initialize sockets support
 	// Note: (Workaround for implementation limitation for wxWidgets up to 2.5.x) 
@@ -169,14 +165,18 @@ bool EViacamApp::OnInit()
 	// http://www.litwindow.com/knowhow/knowhow.html for more details.
 	wxSocketBase::Initialize();
 
+	// Initialize resources
+	wxXmlResource::Get()->InitAllHandlers();
+	wxXmlResource::Get()->LoadAllFiles(eviacam::GetDataDir() + wxT("/resources"));
+
+	// Start main controller
 	m_pController= new CViacamController();
-	assert (m_pController);
-	if (!m_pController->Initialize()) 
-	{
+	if (!m_pController->Initialize()) {
 		OnExit();
 		return false;
 	}
-	else return true;
+	else
+		return true;
 }
 
 static const wxCmdLineEntryDesc g_cmdLineDesc [] =

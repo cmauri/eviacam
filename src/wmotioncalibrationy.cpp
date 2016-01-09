@@ -37,7 +37,7 @@
 #include "wmotioncalibrationy.h"
 
 ////@begin XPM images
-#include "icons/usermovev64.xpm"
+#include "resources/usermovev64.xpm"
 ////@end XPM images
 
 
@@ -137,7 +137,7 @@ void WMotionCalibrationY::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, itemDialog1->GetBitmapResource(wxT("icons/usermovev64.xpm")), wxDefaultPosition, wxSize(64, 64), 0 );
+    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, itemDialog1->GetBitmapResource(wxT("resources/usermovev64.xpm")), wxDefaultPosition, wxSize(64, 64), 0 );
     itemBoxSizer2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     m_staticText = new wxStaticText( itemDialog1, wxID_STATIC, _("Move your head up and down."), wxDefaultPosition, wxDefaultSize, 0 );
@@ -169,7 +169,7 @@ wxBitmap WMotionCalibrationY::GetBitmapResource( const wxString& name )
     // Bitmap retrieval
 ////@begin WMotionCalibrationY bitmap retrieval
     wxUnusedVar(name);
-    if (name == wxT("icons/usermovev64.xpm"))
+    if (name == wxT("resources/usermovev64.xpm"))
     {
         wxBitmap bitmap(usermovev64);
         return bitmap;

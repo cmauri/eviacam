@@ -40,10 +40,8 @@ class CClickWindow: public WXAppBar
 public:
     /// Constructors
     CClickWindow();
-    CClickWindow( wxWindow* parent, wxWindowID id, const wxString& caption = SYMBOL_CCLICKWINDOW_TITLE, const wxPoint& pos = SYMBOL_CCLICKWINDOW_POSITION, const wxSize& size = SYMBOL_CCLICKWINDOW_SIZE, long style = SYMBOL_CCLICKWINDOW_STYLE );
 
-    /// Creation
-    bool Create( wxWindow* parent, wxWindowID id, const wxString& caption = SYMBOL_CCLICKWINDOW_TITLE, const wxPoint& pos = SYMBOL_CCLICKWINDOW_POSITION, const wxSize& size = SYMBOL_CCLICKWINDOW_SIZE, long style = SYMBOL_CCLICKWINDOW_STYLE );
+	bool Create(wxWindow* parent, const wxString& name);
 
     /// Destructor
     ~CClickWindow();
@@ -60,6 +58,9 @@ public:
 	virtual void OnMainWindowShow ( wxShowEvent& event );
 	virtual wxControl* GetNoClickButton()= 0;
 protected:
+	/// Creates the controls and sizers
+	virtual void CreateControls(const wxString& name)= 0;
+
     virtual wxControl* GetLeftButton()= 0;
     virtual wxControl* GetMiddleButton()= 0;
     virtual wxControl* GetRightButton()= 0;

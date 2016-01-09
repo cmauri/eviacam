@@ -40,60 +40,17 @@
 ////@end includes
 
 ////@begin XPM images
-#include "icons/eviacam_mini.xpm"
 ////@end XPM images
 
-/*!
- * CClickWindowText type definition
- */
-
-IMPLEMENT_DYNAMIC_CLASS( CClickWindowText, CClickWindow )
-
-
-/*!
- * CClickWindowText event table definition
- */
-
-BEGIN_EVENT_TABLE( CClickWindowText, CClickWindow )
-
-////@begin CClickWindowText event table entries
-////@end CClickWindowText event table entries
-
-END_EVENT_TABLE()
 
 /*!
  * CClickWindowText constructors
  */
 
-CClickWindowText::CClickWindowText()
-{
-    Init();
-}
-
-CClickWindowText::CClickWindowText( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+CClickWindowText::CClickWindowText( wxWindow* parent,  const wxString& name)
 {
 	Init();
-	Create(parent, id, caption, pos, size, style);
-}
-
-
-/*!
- * CClickWindow creator
- */
-
-bool CClickWindowText::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
-{
-////@begin CClickWindowText creation
-    SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
-    CClickWindow::Create( parent, id, caption, pos, size, style );
-
-    CreateControls();
-    if (GetSizer())
-    {
-        GetSizer()->SetSizeHints(this);
-    }
-////@end CClickWindowText creation
-    return true;
+	Create(parent, name);
 }
 
 
@@ -130,56 +87,19 @@ void CClickWindowText::Init()
  * Control creation for CClickWindow
  */
 
-void CClickWindowText::CreateControls()
+void CClickWindowText::CreateControls(const wxString& name)
 {  
-////@begin CClickWindowText content construction
-    CClickWindowText* itemCClickWindow1 = this;
-
-    wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
-    itemCClickWindow1->SetSizer(itemBoxSizer2);
-
-    m_noClickButton = new wxToggleButton( itemCClickWindow1, ID_BUTTON_NOCLICK, _("No click"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_noClickButton->SetValue(false);
-    itemBoxSizer2->Add(m_noClickButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
-
-    wxStaticBitmap* itemStaticBitmap4 = new wxStaticBitmap( itemCClickWindow1, wxID_STATIC, itemCClickWindow1->GetBitmapResource(wxT("icons/eviacam_mini.xpm")), wxDefaultPosition, wxSize(16, 16), 0 );
-    itemBoxSizer2->Add(itemStaticBitmap4, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
-
-    m_leftButton = new wxToggleButton( itemCClickWindow1, ID_BTN_LEFT, _("#Left#"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_leftButton->SetValue(false);
-    itemBoxSizer2->Add(m_leftButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
-
-    m_middleButton = new wxToggleButton( itemCClickWindow1, ID_BTN_MIDDLE, _("#Middle#"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_middleButton->SetValue(false);
-    itemBoxSizer2->Add(m_middleButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
-
-    m_rightButton = new wxToggleButton( itemCClickWindow1, ID_BTN_RIGHT, _("#Right#"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_rightButton->SetValue(false);
-    itemBoxSizer2->Add(m_rightButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
-
-    m_dragButton = new wxToggleButton( itemCClickWindow1, ID_BTN_DRAG, _("#Drag#"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_dragButton->SetValue(false);
-    itemBoxSizer2->Add(m_dragButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
-
-    m_dblClickButton = new wxToggleButton( itemCClickWindow1, ID_BTN_DBLCLICK, _("#Double Click#"), wxDefaultPosition, wxDefaultSize, 0 );
-    m_dblClickButton->SetValue(false);
-    itemBoxSizer2->Add(m_dblClickButton, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
-
-    m_btnShowFrame = new wxButton( itemCClickWindow1, ID_BUTTON_SHOW_FRAME, _("Hide main window"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer2->Add(m_btnShowFrame, 0, wxALIGN_CENTER_VERTICAL|wxALL, 3);
-
-////@end CClickWindowText content construction
+    if (!wxXmlResource::Get()->LoadDialog(this, GetParent(), name))
+        wxLogError(wxT("Missing wxXmlResource::Get()->Load() in OnInit()?"));
+    m_noClickButton = XRCCTRL(*this, "ID_BUTTON_NOCLICK", wxToggleButton);
+    m_leftButton = XRCCTRL(*this, "ID_BTN_LEFT", wxToggleButton);
+    m_middleButton = XRCCTRL(*this, "ID_BTN_MIDDLE", wxToggleButton);
+    m_rightButton = XRCCTRL(*this, "ID_BTN_RIGHT", wxToggleButton);
+    m_dragButton = XRCCTRL(*this, "ID_BTN_DRAG", wxToggleButton);
+    m_dblClickButton = XRCCTRL(*this, "ID_BTN_DBLCLICK", wxToggleButton);
+    m_btnShowFrame = XRCCTRL(*this, "ID_BUTTON_SHOW_FRAME", wxButton);
 
 	ConnectEvents();
-}
-
-/*!
- * Should we show tooltips?
- */
-
-bool CClickWindowText::ShowToolTips()
-{
-    return true;
 }
 
 /*!
@@ -191,11 +111,6 @@ wxBitmap CClickWindowText::GetBitmapResource( const wxString& name )
     // Bitmap retrieval
 ////@begin CClickWindowText bitmap retrieval
     wxUnusedVar(name);
-    if (name == _T("icons/eviacam_mini.xpm"))
-    {
-        wxBitmap bitmap(eviacam_mini);
-        return bitmap;
-    }
     return wxNullBitmap;
 ////@end CClickWindowText bitmap retrieval
 }

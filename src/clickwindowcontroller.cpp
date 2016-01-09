@@ -23,8 +23,6 @@
 
 #include "clickwindowtext.h"
 #include "clickwindowbitmap.h"
-#include "clickwindowbitmapvertical.h"
-#include "clickwindowvertical.h"
 #include "wviacam.h"
 #include "clickwindowcontroller.h"
 #include "viacamcontroller.h"
@@ -36,19 +34,19 @@ CClickWindowController::CClickWindowController(CViacamController & pViacamContro
 	m_pViacamController= &pViacamController;
 
 	// Create text window
-	m_pWindowText= new CClickWindowText (NULL);	
+	m_pWindowText= new CClickWindowText (NULL, CLICK_WINDOW_TEXT);
 	m_pWindowText->SetController (*this);	
 	
 	// Create bitmap window
-	m_pWindowBitmap= new CClickWindowBitmap (NULL);
-	m_pWindowBitmap->SetController (*this);	
-	
+	m_pWindowBitmap = new CClickWindowBitmap(NULL, CLICK_WINDOW_BITMAP);
+	m_pWindowBitmap->SetController (*this);
+
 	// Create bitmap vertical window
-	m_pWindowBitmapVertical= new CClickWindowBitmapVertical (NULL);
+	m_pWindowBitmapVertical= new CClickWindowBitmap(NULL, CLICK_WINDOW_BITMAP_VERTICAL);
 	m_pWindowBitmapVertical->SetController (*this);	
 	
 	// Create text vertical window
-	m_pWindowTextVertical= new CClickWindowTextVertical (NULL);
+	m_pWindowTextVertical= new CClickWindowText (NULL, CLICK_WINDOW_TEXT_VERTICAL);
 	m_pWindowTextVertical->SetController (*this);	
 	
 	// Set current window

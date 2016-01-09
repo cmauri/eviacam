@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <anthemion-project version="1.0.0.0" xmlns="http://www.anthemion.co.uk">
   <header>
-    <bool name="always_generate_xrc">1</bool>
+    <bool name="always_generate_xrc">0</bool>
     <string name="app_class_name">"Application"</string>
     <string name="app_file_header">"app.h"</string>
     <string name="app_file_implementation">"app.cpp"</string>
@@ -109,7 +109,7 @@
     <string name="xrc_encoding">"utf-8"</string>
     <string name="xrc_filename">""</string>
     <bool name="xrc_generate_id_tags">0</bool>
-    <bool name="xrc_retain_relative_paths">1</bool>
+    <bool name="xrc_retain_relative_paths">0</bool>
     <bool name="xrc_use_name_property">0</bool>
   </header>
   <data>
@@ -149,7 +149,7 @@
         <string name="Linker flags">"%AUTO%"</string>
         <long name="locked">0</long>
         <string name="Make command">"%AUTO%"</string>
-        <long name="makefile-last-written">-8519680</long>
+        <long name="makefile-last-written">8470657</long>
         <string name="Modularity">"Modular"</string>
         <string name="Objects path">"%AUTO%"</string>
         <string name="Optimizations">"%AUTO%"</string>
@@ -220,7 +220,7 @@
           <string name="Linker flags">"%AUTO%"</string>
           <long name="locked">0</long>
           <string name="Make command">"%AUTO%"</string>
-          <long name="makefile-last-written">-8519680</long>
+          <long name="makefile-last-written">8470657</long>
           <string name="Modularity">"Modular"</string>
           <string name="Objects path">"%AUTO%"</string>
           <string name="Optimizations">"%AUTO%"</string>
@@ -292,7 +292,7 @@
           <string name="Linker flags">"%AUTO%"</string>
           <long name="locked">0</long>
           <string name="Make command">"%AUTO%"</string>
-          <long name="makefile-last-written">-8519680</long>
+          <long name="makefile-last-written">8470657</long>
           <string name="Modularity">"Modular"</string>
           <string name="Objects path">"%AUTO%"</string>
           <string name="Optimizations">"%AUTO%"</string>
@@ -367,7 +367,7 @@
           <string name="Linker flags">"%AUTO%"</string>
           <long name="locked">0</long>
           <string name="Make command">"%AUTO%"</string>
-          <long name="makefile-last-written">-8519680</long>
+          <long name="makefile-last-written">8470657</long>
           <string name="Minimum OS version">"%AUTO%"</string>
           <string name="Modularity">"Modular"</string>
           <string name="Objects path">"%AUTO%"</string>
@@ -446,7 +446,7 @@
           <string name="Linker flags">"%AUTO%"</string>
           <long name="locked">0</long>
           <string name="Make command">"%AUTO%"</string>
-          <long name="makefile-last-written">-8519680</long>
+          <long name="makefile-last-written">8470657</long>
           <string name="Minimum OS version">"%AUTO%"</string>
           <string name="Modularity">"Modular"</string>
           <string name="Objects path">"%AUTO%"</string>
@@ -579,7 +579,7 @@
           <long name="proxy-Height">300</long>
           <string name="proxy-Help text">""</string>
           <bool name="proxy-Hidden">0</bool>
-          <string name="proxy-Icon">"icons/eviacam_mini.xpm"</string>
+          <string name="proxy-Icon">"resources/eviacam_mini.xpm"</string>
           <string name="proxy-Id name">"ID_WVIACAM"</string>
           <long name="proxy-Id value">10000</long>
           <string name="proxy-Implementation filename">"wviacam.cpp"</string>
@@ -975,7 +975,7 @@
               <long name="is-transient">0</long>
               <long name="locked">0</long>
               <long name="owns-file">1</long>
-              <string name="proxy-Bitmap">"icons/on.xpm"</string>
+              <string name="proxy-Bitmap">"resources/on.xpm"</string>
               <string name="proxy-Bitmap (disabled)">""</string>
               <bool name="proxy-Enabled">1</bool>
               <string name="proxy-Help text">""</string>
@@ -999,7 +999,7 @@
               <long name="is-transient">0</long>
               <long name="locked">0</long>
               <long name="owns-file">1</long>
-              <string name="proxy-Bitmap">"icons/off.xpm"</string>
+              <string name="proxy-Bitmap">"resources/off.xpm"</string>
               <string name="proxy-Bitmap (disabled)">""</string>
               <bool name="proxy-Enabled">0</bool>
               <string name="proxy-Help text">""</string>
@@ -1023,7 +1023,7 @@
               <long name="is-transient">0</long>
               <long name="locked">0</long>
               <long name="owns-file">1</long>
-              <string name="proxy-Bitmap">"icons/clickwindow.xpm"</string>
+              <string name="proxy-Bitmap">"resources/clickwindow.xpm"</string>
               <string name="proxy-Bitmap (disabled)">""</string>
               <bool name="proxy-Enabled">1</bool>
               <string name="proxy-Help text">""</string>
@@ -1046,7 +1046,7 @@
               <long name="is-transient">0</long>
               <long name="locked">0</long>
               <long name="owns-file">1</long>
-              <string name="proxy-Bitmap">"icons/keyboard.xpm"</string>
+              <string name="proxy-Bitmap">"resources/keyboard.xpm"</string>
               <string name="proxy-Bitmap (disabled)">""</string>
               <bool name="proxy-Enabled">1</bool>
               <string name="proxy-Help text">""</string>
@@ -1082,7 +1082,7 @@
               <long name="is-transient">0</long>
               <long name="locked">0</long>
               <long name="owns-file">1</long>
-              <string name="proxy-Bitmap">"icons/preferences.xpm"</string>
+              <string name="proxy-Bitmap">"resources/preferences.xpm"</string>
               <string name="proxy-Bitmap (disabled)">""</string>
               <bool name="proxy-Enabled">1</bool>
               <string name="proxy-Help text">""</string>
@@ -1118,7 +1118,7 @@
               <long name="is-transient">0</long>
               <long name="locked">0</long>
               <long name="owns-file">1</long>
-              <string name="proxy-Bitmap">"icons/help.xpm"</string>
+              <string name="proxy-Bitmap">"resources/help.xpm"</string>
               <string name="proxy-Bitmap (disabled)">""</string>
               <bool name="proxy-Enabled">1</bool>
               <string name="proxy-Help text">""</string>
@@ -1247,7 +1247,7 @@ necessary."</string>
           <long name="proxy-Width">-1</long>
           <string name="proxy-Window kind">"wxDialog"</string>
           <bool name="proxy-wxBORDER_THEME">0</bool>
-          <bool name="proxy-wxCAPTION">1</bool>
+          <bool name="proxy-wxCAPTION">0</bool>
           <bool name="proxy-wxCLIP_CHILDREN">0</bool>
           <bool name="proxy-wxCLOSE_BOX">0</bool>
           <bool name="proxy-wxDEFAULT_DIALOG_STYLE">0</bool>
@@ -1266,22 +1266,22 @@ necessary."</string>
           <bool name="proxy-wxSTATIC_BORDER">0</bool>
           <bool name="proxy-wxSTAY_ON_TOP">1</bool>
           <bool name="proxy-wxSUNKEN_BORDER">0</bool>
-          <bool name="proxy-wxSYSTEM_MENU">1</bool>
+          <bool name="proxy-wxSYSTEM_MENU">0</bool>
           <bool name="proxy-wxTAB_TRAVERSAL">0</bool>
           <bool name="proxy-wxWANTS_CHARS">0</bool>
           <bool name="proxy-wxWS_EX_BLOCK_EVENTS">1</bool>
           <bool name="proxy-wxWS_EX_TRANSIENT">0</bool>
           <bool name="proxy-wxWS_EX_VALIDATE_RECURSIVELY">0</bool>
           <long name="proxy-X">0</long>
-          <string name="proxy-XRC filename">""</string>
+          <string name="proxy-XRC filename">"resources/clickWindowText.xrc"</string>
           <long name="proxy-Y">0</long>
           <string name="title">"Click Window"</string>
           <long name="title-mode">0</long>
           <string name="type">"dialog-document"</string>
           <bool name="use-id-prefix">0</bool>
           <bool name="use-id-suffix">0</bool>
-          <long name="use-xrc">0</long>
-          <long name="working-mode">0</long>
+          <long name="use-xrc">2</long>
+          <long name="working-mode">2</long>
           <document>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="created">"11/11/2008"</string>
@@ -1290,21 +1290,13 @@ necessary."</string>
             <long name="is-transient">0</long>
             <long name="locked">0</long>
             <long name="owns-file">1</long>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Border">5</long>
             <string name="proxy-Member variable name">""</string>
             <string name="proxy-Orientation">"Horizontal"</string>
             <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
-            <long name="proxy-Stretch factor">0</long>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
-            <bool name="proxy-wxLEFT">1</bool>
             <bool name="proxy-wxRESERVE_SPACE_EVEN_IF_HIDDEN">0</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
-            <bool name="proxy-wxTOP">1</bool>
             <string name="title">"wxBoxSizer H"</string>
             <long name="title-mode">0</long>
             <string name="type">"dialog-control-document"</string>
@@ -1387,7 +1379,7 @@ necessary."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxStaticBitmap"</string>
-              <string name="proxy-Bitmap">"icons/eviacam_mini.xpm"</string>
+              <string name="proxy-Bitmap">"resources/eviacam_mini.xpm"</string>
               <long name="proxy-Border">3</long>
               <string name="proxy-Class">"wxStaticBitmap"</string>
               <string name="proxy-Custom arguments">""</string>
@@ -1873,14 +1865,14 @@ necessary."</string>
           <bool name="proxy-Fit to content">1</bool>
           <string name="proxy-Font">""</string>
           <string name="proxy-Foreground colour">""</string>
-          <string name="proxy-Header filename">"clickwindowvertical.h"</string>
+          <string name="proxy-Header filename">""</string>
           <long name="proxy-Height">-1</long>
           <string name="proxy-Help text">""</string>
           <bool name="proxy-Hidden">0</bool>
           <string name="proxy-Icon">""</string>
           <string name="proxy-Id name">"ID_CLICKWINDOW_TEXT_VERTICAL"</string>
           <long name="proxy-Id value">10112</long>
-          <string name="proxy-Implementation filename">"clickwindowvertical.cpp"</string>
+          <string name="proxy-Implementation filename">""</string>
           <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
           <string name="proxy-Texture">""</string>
           <string name="proxy-Texture style">"Tiled"</string>
@@ -1889,7 +1881,7 @@ necessary."</string>
           <long name="proxy-Width">-1</long>
           <string name="proxy-Window kind">"wxDialog"</string>
           <bool name="proxy-wxBORDER_THEME">0</bool>
-          <bool name="proxy-wxCAPTION">1</bool>
+          <bool name="proxy-wxCAPTION">0</bool>
           <bool name="proxy-wxCLIP_CHILDREN">0</bool>
           <bool name="proxy-wxCLOSE_BOX">0</bool>
           <bool name="proxy-wxDEFAULT_DIALOG_STYLE">0</bool>
@@ -1908,22 +1900,22 @@ necessary."</string>
           <bool name="proxy-wxSTATIC_BORDER">0</bool>
           <bool name="proxy-wxSTAY_ON_TOP">1</bool>
           <bool name="proxy-wxSUNKEN_BORDER">0</bool>
-          <bool name="proxy-wxSYSTEM_MENU">1</bool>
+          <bool name="proxy-wxSYSTEM_MENU">0</bool>
           <bool name="proxy-wxTAB_TRAVERSAL">0</bool>
           <bool name="proxy-wxWANTS_CHARS">0</bool>
           <bool name="proxy-wxWS_EX_BLOCK_EVENTS">1</bool>
           <bool name="proxy-wxWS_EX_TRANSIENT">0</bool>
           <bool name="proxy-wxWS_EX_VALIDATE_RECURSIVELY">0</bool>
           <long name="proxy-X">0</long>
-          <string name="proxy-XRC filename">""</string>
+          <string name="proxy-XRC filename">"resources/clickWindowTextVertical.xrc"</string>
           <long name="proxy-Y">0</long>
           <string name="title">"Click Window Vertical"</string>
           <long name="title-mode">0</long>
           <string name="type">"dialog-document"</string>
           <bool name="use-id-prefix">0</bool>
           <bool name="use-id-suffix">0</bool>
-          <long name="use-xrc">0</long>
-          <long name="working-mode">0</long>
+          <long name="use-xrc">2</long>
+          <long name="working-mode">2</long>
           <document>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="filename">""</string>
@@ -1931,21 +1923,13 @@ necessary."</string>
             <long name="is-transient">0</long>
             <long name="locked">0</long>
             <long name="owns-file">1</long>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Border">5</long>
             <string name="proxy-Member variable name">""</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
-            <long name="proxy-Stretch factor">0</long>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
-            <bool name="proxy-wxLEFT">1</bool>
             <bool name="proxy-wxRESERVE_SPACE_EVEN_IF_HIDDEN">0</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
-            <bool name="proxy-wxTOP">1</bool>
             <string name="title">"wxBoxSizer V"</string>
             <long name="title-mode">0</long>
             <string name="type">"dialog-control-document"</string>
@@ -2026,7 +2010,7 @@ necessary."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxStaticBitmap"</string>
-              <string name="proxy-Bitmap">"icons/eviacam_mini.xpm"</string>
+              <string name="proxy-Bitmap">"resources/eviacam_mini.xpm"</string>
               <long name="proxy-Border">3</long>
               <string name="proxy-Class">"wxStaticBitmap"</string>
               <string name="proxy-Custom arguments">""</string>
@@ -2512,7 +2496,7 @@ necessary."</string>
           <long name="proxy-Height">-1</long>
           <string name="proxy-Help text">""</string>
           <bool name="proxy-Hidden">0</bool>
-          <string name="proxy-Icon">"icons/eviacam_mini.xpm"</string>
+          <string name="proxy-Icon">"resources/eviacam_mini.xpm"</string>
           <string name="proxy-Id name">"ID_WCONFIGURATION"</string>
           <long name="proxy-Id value">10014</long>
           <string name="proxy-Implementation filename">"wconfiguration.cpp"</string>
@@ -2698,7 +2682,7 @@ necessary."</string>
                 <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
                 <bool name="proxy-Separate files">0</bool>
                 <long name="proxy-Stretch factor">0</long>
-                <string name="proxy-Tab icon">"icons/user.xpm"</string>
+                <string name="proxy-Tab icon">"resources/user.xpm"</string>
                 <string name="proxy-Tab label">"Profile options"</string>
                 <string name="proxy-Tooltip text">""</string>
                 <long name="proxy-Width">-1</long>
@@ -8813,7 +8797,7 @@ tracking area."</string>
                 <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
                 <bool name="proxy-Separate files">0</bool>
                 <long name="proxy-Stretch factor">0</long>
-                <string name="proxy-Tab icon">"icons/eviacam_small.xpm"</string>
+                <string name="proxy-Tab icon">"resources/eviacam_small.xpm"</string>
                 <string name="proxy-Tab label">"General options"</string>
                 <string name="proxy-Texture">""</string>
                 <string name="proxy-Texture style">"Tiled"</string>
@@ -10262,7 +10246,7 @@ tracking area."</string>
           <long name="proxy-Width">-1</long>
           <string name="proxy-Window kind">"wxDialog"</string>
           <bool name="proxy-wxBORDER_THEME">0</bool>
-          <bool name="proxy-wxCAPTION">1</bool>
+          <bool name="proxy-wxCAPTION">0</bool>
           <bool name="proxy-wxCLIP_CHILDREN">0</bool>
           <bool name="proxy-wxCLOSE_BOX">0</bool>
           <bool name="proxy-wxDEFAULT_DIALOG_STYLE">0</bool>
@@ -10281,22 +10265,22 @@ tracking area."</string>
           <bool name="proxy-wxSTATIC_BORDER">0</bool>
           <bool name="proxy-wxSTAY_ON_TOP">1</bool>
           <bool name="proxy-wxSUNKEN_BORDER">0</bool>
-          <bool name="proxy-wxSYSTEM_MENU">1</bool>
+          <bool name="proxy-wxSYSTEM_MENU">0</bool>
           <bool name="proxy-wxTAB_TRAVERSAL">0</bool>
           <bool name="proxy-wxWANTS_CHARS">0</bool>
           <bool name="proxy-wxWS_EX_BLOCK_EVENTS">1</bool>
           <bool name="proxy-wxWS_EX_TRANSIENT">0</bool>
           <bool name="proxy-wxWS_EX_VALIDATE_RECURSIVELY">0</bool>
           <long name="proxy-X">0</long>
-          <string name="proxy-XRC filename">""</string>
+          <string name="proxy-XRC filename">"resources/clickWindowBitmap.xrc"</string>
           <long name="proxy-Y">0</long>
           <string name="title">"Click Window Bitmap"</string>
           <long name="title-mode">0</long>
           <string name="type">"dialog-document"</string>
           <bool name="use-id-prefix">0</bool>
           <bool name="use-id-suffix">0</bool>
-          <long name="use-xrc">0</long>
-          <long name="working-mode">0</long>
+          <long name="use-xrc">2</long>
+          <long name="working-mode">2</long>
           <document>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="filename">""</string>
@@ -10304,21 +10288,13 @@ tracking area."</string>
             <long name="is-transient">0</long>
             <long name="locked">0</long>
             <long name="owns-file">1</long>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Border">5</long>
             <string name="proxy-Member variable name">""</string>
             <string name="proxy-Orientation">"Horizontal"</string>
             <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
-            <long name="proxy-Stretch factor">0</long>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
-            <bool name="proxy-wxLEFT">1</bool>
             <bool name="proxy-wxRESERVE_SPACE_EVEN_IF_HIDDEN">0</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
-            <bool name="proxy-wxTOP">1</bool>
             <string name="title">"wxBoxSizer H"</string>
             <long name="title-mode">0</long>
             <string name="type">"dialog-control-document"</string>
@@ -10333,8 +10309,8 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxStaticBitmap"</string>
-              <string name="proxy-Bitmap">"icons/eviacam_gray_bg.xpm"</string>
-              <long name="proxy-Border">5</long>
+              <string name="proxy-Bitmap">"resources/eviacam_gray_bg.xpm"</string>
+              <long name="proxy-Border">0</long>
               <string name="proxy-Class">"wxStaticBitmap"</string>
               <string name="proxy-Custom arguments">""</string>
               <string name="proxy-Custom ctor arguments">""</string>
@@ -10416,7 +10392,6 @@ tracking area."</string>
             </document>
             <document>
               <string name="proxy-type">"wbBitmapButtonProxy"</string>
-              <string name="event-handler-0">"wxEVT_ENTER_WINDOW|OnEnterWindow|NONE||CClickWindowBitmap"</string>
               <string name="filename">""</string>
               <string name="icon-name">"bitmapbutton"</string>
               <long name="is-transient">0</long>
@@ -10426,7 +10401,7 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonNoClick.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonNoClick.xpm"</string>
               <string name="proxy-Bitmap (disabled)">""</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
@@ -10522,8 +10497,8 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonLeft.xpm"</string>
-              <string name="proxy-Bitmap (disabled)">"icons/buttonLeftDisabled.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonLeft.xpm"</string>
+              <string name="proxy-Bitmap (disabled)">"resources/buttonLeftDisabled.xpm"</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
               <string name="proxy-Bitmap (selected)">""</string>
@@ -10592,8 +10567,8 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonMiddle.xpm"</string>
-              <string name="proxy-Bitmap (disabled)">"icons/buttonMiddleDisabled.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonMiddle.xpm"</string>
+              <string name="proxy-Bitmap (disabled)">"resources/buttonMiddleDisabled.xpm"</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
               <string name="proxy-Bitmap (selected)">""</string>
@@ -10662,8 +10637,8 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonRight.xpm"</string>
-              <string name="proxy-Bitmap (disabled)">"icons/buttonRightDisabled.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonRight.xpm"</string>
+              <string name="proxy-Bitmap (disabled)">"resources/buttonRightDisabled.xpm"</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
               <string name="proxy-Bitmap (selected)">""</string>
@@ -10732,8 +10707,8 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonDrag.xpm"</string>
-              <string name="proxy-Bitmap (disabled)">"icons/buttonDragDisabled.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonDrag.xpm"</string>
+              <string name="proxy-Bitmap (disabled)">"resources/buttonDragDisabled.xpm"</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
               <string name="proxy-Bitmap (selected)">""</string>
@@ -10802,8 +10777,8 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonDblLeft.xpm"</string>
-              <string name="proxy-Bitmap (disabled)">"icons/buttonDblLeftDisabled.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonDblLeft.xpm"</string>
+              <string name="proxy-Bitmap (disabled)">"resources/buttonDblLeftDisabled.xpm"</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
               <string name="proxy-Bitmap (selected)">""</string>
@@ -10898,7 +10873,7 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonHideMainWindow.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonHideMainWindow.xpm"</string>
               <string name="proxy-Bitmap (disabled)">""</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
@@ -10987,14 +10962,14 @@ tracking area."</string>
           <bool name="proxy-Fit to content">1</bool>
           <string name="proxy-Font">""</string>
           <string name="proxy-Foreground colour">""</string>
-          <string name="proxy-Header filename">"clickwindowbitmapvertical.h"</string>
+          <string name="proxy-Header filename">""</string>
           <long name="proxy-Height">-1</long>
           <string name="proxy-Help text">""</string>
           <bool name="proxy-Hidden">0</bool>
           <string name="proxy-Icon">""</string>
           <string name="proxy-Id name">"ID_CLICKWINDOWBITMAPVERTICAL"</string>
           <long name="proxy-Id value">10069</long>
-          <string name="proxy-Implementation filename">"clickwindowbitmapvertical.cpp"</string>
+          <string name="proxy-Implementation filename">""</string>
           <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
           <string name="proxy-Texture">""</string>
           <string name="proxy-Texture style">"Tiled"</string>
@@ -11003,7 +10978,7 @@ tracking area."</string>
           <long name="proxy-Width">-1</long>
           <string name="proxy-Window kind">"wxDialog"</string>
           <bool name="proxy-wxBORDER_THEME">0</bool>
-          <bool name="proxy-wxCAPTION">1</bool>
+          <bool name="proxy-wxCAPTION">0</bool>
           <bool name="proxy-wxCLIP_CHILDREN">0</bool>
           <bool name="proxy-wxCLOSE_BOX">0</bool>
           <bool name="proxy-wxDEFAULT_DIALOG_STYLE">0</bool>
@@ -11022,22 +10997,22 @@ tracking area."</string>
           <bool name="proxy-wxSTATIC_BORDER">0</bool>
           <bool name="proxy-wxSTAY_ON_TOP">1</bool>
           <bool name="proxy-wxSUNKEN_BORDER">0</bool>
-          <bool name="proxy-wxSYSTEM_MENU">1</bool>
+          <bool name="proxy-wxSYSTEM_MENU">0</bool>
           <bool name="proxy-wxTAB_TRAVERSAL">0</bool>
           <bool name="proxy-wxWANTS_CHARS">0</bool>
           <bool name="proxy-wxWS_EX_BLOCK_EVENTS">1</bool>
           <bool name="proxy-wxWS_EX_TRANSIENT">0</bool>
           <bool name="proxy-wxWS_EX_VALIDATE_RECURSIVELY">0</bool>
           <long name="proxy-X">0</long>
-          <string name="proxy-XRC filename">""</string>
+          <string name="proxy-XRC filename">"resources/clickWindowBitmapVertical.xrc"</string>
           <long name="proxy-Y">0</long>
           <string name="title">"Click Window Bitmap Vertical"</string>
           <long name="title-mode">0</long>
           <string name="type">"dialog-document"</string>
           <bool name="use-id-prefix">0</bool>
           <bool name="use-id-suffix">0</bool>
-          <long name="use-xrc">0</long>
-          <long name="working-mode">0</long>
+          <long name="use-xrc">2</long>
+          <long name="working-mode">2</long>
           <document>
             <string name="proxy-type">"wbBoxSizerProxy"</string>
             <string name="filename">""</string>
@@ -11045,21 +11020,13 @@ tracking area."</string>
             <long name="is-transient">0</long>
             <long name="locked">0</long>
             <long name="owns-file">1</long>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Border">5</long>
             <string name="proxy-Member variable name">""</string>
             <string name="proxy-Orientation">"Vertical"</string>
             <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
-            <long name="proxy-Stretch factor">0</long>
             <bool name="proxy-wxADJUST_MINSIZE">0</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
             <bool name="proxy-wxFIXED_MINSIZE">0</bool>
-            <bool name="proxy-wxLEFT">1</bool>
             <bool name="proxy-wxRESERVE_SPACE_EVEN_IF_HIDDEN">0</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
             <bool name="proxy-wxSHAPED">0</bool>
-            <bool name="proxy-wxTOP">1</bool>
             <string name="title">"wxBoxSizer V"</string>
             <long name="title-mode">0</long>
             <string name="type">"dialog-control-document"</string>
@@ -11074,7 +11041,7 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxStaticBitmap"</string>
-              <string name="proxy-Bitmap">"icons/eviacam_gray_bg.xpm"</string>
+              <string name="proxy-Bitmap">"resources/eviacam_gray_bg.xpm"</string>
               <long name="proxy-Border">5</long>
               <string name="proxy-Class">"wxStaticBitmap"</string>
               <string name="proxy-Custom arguments">""</string>
@@ -11166,7 +11133,7 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonNoClick.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonNoClick.xpm"</string>
               <string name="proxy-Bitmap (disabled)">""</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
@@ -11262,8 +11229,8 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonLeft.xpm"</string>
-              <string name="proxy-Bitmap (disabled)">"icons/buttonLeftDisabled.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonLeft.xpm"</string>
+              <string name="proxy-Bitmap (disabled)">"resources/buttonLeftDisabled.xpm"</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
               <string name="proxy-Bitmap (selected)">""</string>
@@ -11332,8 +11299,8 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonMiddle.xpm"</string>
-              <string name="proxy-Bitmap (disabled)">"icons/buttonMiddleDisabled.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonMiddle.xpm"</string>
+              <string name="proxy-Bitmap (disabled)">"resources/buttonMiddleDisabled.xpm"</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
               <string name="proxy-Bitmap (selected)">""</string>
@@ -11402,8 +11369,8 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonRight.xpm"</string>
-              <string name="proxy-Bitmap (disabled)">"icons/buttonRightDisabled.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonRight.xpm"</string>
+              <string name="proxy-Bitmap (disabled)">"resources/buttonRightDisabled.xpm"</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
               <string name="proxy-Bitmap (selected)">""</string>
@@ -11472,8 +11439,8 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonDrag.xpm"</string>
-              <string name="proxy-Bitmap (disabled)">"icons/buttonDragDisabled.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonDrag.xpm"</string>
+              <string name="proxy-Bitmap (disabled)">"resources/buttonDragDisabled.xpm"</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
               <string name="proxy-Bitmap (selected)">""</string>
@@ -11542,8 +11509,8 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonDblLeft.xpm"</string>
-              <string name="proxy-Bitmap (disabled)">"icons/buttonDblLeftDisabled.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonDblLeft.xpm"</string>
+              <string name="proxy-Bitmap (disabled)">"resources/buttonDblLeftDisabled.xpm"</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
               <string name="proxy-Bitmap (selected)">""</string>
@@ -11638,7 +11605,7 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxBitmapButton"</string>
-              <string name="proxy-Bitmap">"icons/buttonHideMainWindow.xpm"</string>
+              <string name="proxy-Bitmap">"resources/buttonHideMainWindow.xpm"</string>
               <string name="proxy-Bitmap (disabled)">""</string>
               <string name="proxy-Bitmap (focused)">""</string>
               <string name="proxy-Bitmap (hover)">""</string>
@@ -12006,7 +11973,7 @@ tracking area."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxStaticBitmap"</string>
-              <string name="proxy-Bitmap">"icons/usermovev64.xpm"</string>
+              <string name="proxy-Bitmap">"resources/usermovev64.xpm"</string>
               <long name="proxy-Border">5</long>
               <string name="proxy-Class">"wxStaticBitmap"</string>
               <string name="proxy-Custom arguments">""</string>
@@ -17268,7 +17235,7 @@ enables cursor control at startup."</string>
               <string name="proxy-AlignV">"Centre"</string>
               <string name="proxy-Background colour">""</string>
               <string name="proxy-Base class">"wxStaticBitmap"</string>
-              <string name="proxy-Bitmap">"icons/usermoveh64.xpm"</string>
+              <string name="proxy-Bitmap">"resources/usermoveh64.xpm"</string>
               <long name="proxy-Border">5</long>
               <string name="proxy-Class">"wxStaticBitmap"</string>
               <string name="proxy-Custom arguments">""</string>
@@ -19578,7 +19545,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"eviacam_mini.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/eviacam_mini.xpm"</string>
+          <string name="filename">"resources/eviacam_mini.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19590,7 +19557,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"on.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/on.xpm"</string>
+          <string name="filename">"resources/on.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19602,7 +19569,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"off.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/off.xpm"</string>
+          <string name="filename">"resources/off.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19614,7 +19581,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"clickwindow.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/clickwindow.xpm"</string>
+          <string name="filename">"resources/clickwindow.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19626,7 +19593,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"clickwindowoff.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/clickwindowoff.xpm"</string>
+          <string name="filename">"resources/clickwindowoff.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19638,7 +19605,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"help.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/help.xpm"</string>
+          <string name="filename">"resources/help.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19650,7 +19617,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"keyboard.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/keyboard.xpm"</string>
+          <string name="filename">"resources/keyboard.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19662,7 +19629,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"preferences.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/preferences.xpm"</string>
+          <string name="filename">"resources/preferences.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19674,7 +19641,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"user.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/user.xpm"</string>
+          <string name="filename">"resources/user.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19686,7 +19653,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonLeft.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonLeft.xpm"</string>
+          <string name="filename">"resources/buttonLeft.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19697,7 +19664,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonDblLeft.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonDblLeft.xpm"</string>
+          <string name="filename">"resources/buttonDblLeft.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19708,7 +19675,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonDrag.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonDrag.xpm"</string>
+          <string name="filename">"resources/buttonDrag.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19719,7 +19686,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonNoClick.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonNoClick.xpm"</string>
+          <string name="filename">"resources/buttonNoClick.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19730,7 +19697,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonRight.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonRight.xpm"</string>
+          <string name="filename">"resources/buttonRight.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19741,7 +19708,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonHideMainWindow.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonHideMainWindow.xpm"</string>
+          <string name="filename">"resources/buttonHideMainWindow.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19752,7 +19719,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonDblLeftDisabled.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonDblLeftDisabled.xpm"</string>
+          <string name="filename">"resources/buttonDblLeftDisabled.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19763,7 +19730,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonDragDisabled.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonDragDisabled.xpm"</string>
+          <string name="filename">"resources/buttonDragDisabled.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19774,7 +19741,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonLeftDisabled.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonLeftDisabled.xpm"</string>
+          <string name="filename">"resources/buttonLeftDisabled.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19785,7 +19752,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonRightDisabled.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonRightDisabled.xpm"</string>
+          <string name="filename">"resources/buttonRightDisabled.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19807,7 +19774,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"usermoveh64.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/usermoveh64.xpm"</string>
+          <string name="filename">"resources/usermoveh64.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19818,7 +19785,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"usermovev64.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/usermovev64.xpm"</string>
+          <string name="filename">"resources/usermovev64.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19829,7 +19796,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonMiddle.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonMiddle.xpm"</string>
+          <string name="filename">"resources/buttonMiddle.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19840,7 +19807,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonMiddleDisabled.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonMiddleDisabled.xpm"</string>
+          <string name="filename">"resources/buttonMiddleDisabled.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19851,7 +19818,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonMiddleLocked.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonMiddleLocked.xpm"</string>
+          <string name="filename">"resources/buttonMiddleLocked.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19862,7 +19829,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonMiddleSelected.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonMiddleSelected.xpm"</string>
+          <string name="filename">"resources/buttonMiddleSelected.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19873,7 +19840,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"buttonMiddleSelectedLocked.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/buttonMiddleSelectedLocked.xpm"</string>
+          <string name="filename">"resources/buttonMiddleSelectedLocked.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
@@ -19895,7 +19862,7 @@ Configuration -&gt; Options... -&gt; Advanced -&gt; Face localization and tracki
         <document>
           <string name="title">"eviacam_gray_bg.xpm"</string>
           <string name="type">"image-document"</string>
-          <string name="filename">"icons/eviacam_gray_bg.xpm"</string>
+          <string name="filename">"resources/eviacam_gray_bg.xpm"</string>
           <string name="icon-name">"image"</string>
           <long name="is-transient">0</long>
           <long name="owns-file">0</long>
