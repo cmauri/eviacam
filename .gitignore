@@ -69,3 +69,8 @@ src/gui-autosave.pjd
 .cproject
 .project
 .settings/
+
+# tarball
+*.tar.xz
+*.tar.xz.asc
+
