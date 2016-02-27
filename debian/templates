@@ -1,12 +1,11 @@
 Template: eviacamloader/eviacamloader_setuid
 Type: boolean
 Default: false
-_Description: Should eviacamloader be installed 'setuid root'?
- In order to enable users of the group 'eviacam' to run eviacam in 
- high priority (which improves responsiveness), the eviacamloader 
- program can be installed with the set-user-ID bit set, so that it 
- will run with the permissions of the superuser.
+_Description: Should eviacamloader be installed "setuid root"?
+ Installing eviacamloader with the set-user-ID bit set enables all
+ users who have been added to the group "eviacam" to launch eviacam
+ with a modified scheduling priority for better responsiveness.
  .
- Such a setting requires that the sysadmin adds authorized users to the 
- 'eviacam' group and may have security implications in the case of 
+ Since this setting allows eviacamloader to be run with superuser
+ privileges, it may have security implications in the case of
  vulnerabilities in eviacamloader's code.

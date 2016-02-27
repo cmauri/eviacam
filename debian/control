@@ -19,8 +19,8 @@ Package: eviacam
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, opencv-data
 Recommends: wx3.0-i18n
-Description: webcam based mouse emulator
+Description: camera based mouse emulator
  Enable Viacam (aka eViacam) is a mouse replacement program that moves
- the pointer as you move your head. It works on a standard computer
- equipped with a web camera. No additional hardware is required. Based
- on the award winning Facial Mouse software.
+ the pointer tracking the user's head movements. It works on a standard
+ computer equipped with a camera. No additional hardware is required.
+ Based on the award winning Facial Mouse.
