@@ -666,12 +666,12 @@ void WConfiguration::CreateControls()
     itemNotebook4->AddPage(m_panelClick, _("Click"));
 
 #if defined(__WXGTK__)
-    m_panelKeys = new wxPanel( itemNotebook4, ID_PANEL_KEYS, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+    wxPanel* itemPanel80 = new wxPanel( itemNotebook4, ID_PANEL_KEYS, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer81 = new wxBoxSizer(wxVERTICAL);
-    m_panelKeys->SetSizer(itemBoxSizer81);
+    itemPanel80->SetSizer(itemBoxSizer81);
 
-    wxStaticBox* itemStaticBoxSizer82Static = new wxStaticBox(m_panelKeys, wxID_ANY, _("Hotkeys"));
-    wxStaticBoxSizer* itemStaticBoxSizer82 = new wxStaticBoxSizer(itemStaticBoxSizer82Static, wxVERTICAL);
+    m_panelKeys = new wxStaticBox(itemPanel80, wxID_ANY, _("Hotkeys"));
+    wxStaticBoxSizer* itemStaticBoxSizer82 = new wxStaticBoxSizer(m_panelKeys, wxVERTICAL);
     itemBoxSizer81->Add(itemStaticBoxSizer82, 0, wxGROW|wxALL, 5);
     wxStaticText* itemStaticText83 = new wxStaticText( itemStaticBoxSizer82->GetStaticBox(), wxID_STATIC, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticBoxSizer82->Add(itemStaticText83, 0, wxALIGN_LEFT|wxALL, 5);
@@ -686,7 +686,7 @@ void WConfiguration::CreateControls()
 #endif
 
 #if defined(__WXGTK__)
-    itemNotebook4->AddPage(m_panelKeys, _("Hotkeys"));
+    itemNotebook4->AddPage(itemPanel80, _("Hotkeys"));
 #endif
 
     wxPanel* itemPanel85 = new wxPanel( itemNotebook4, ID_PANEL_ADVANCED, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );

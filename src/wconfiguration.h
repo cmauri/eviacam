@@ -439,7 +439,7 @@ private:
     wxChoice* m_choDown;
 #endif
 #if defined(__WXGTK__)
-    wxPanel* m_panelKeys;
+    wxStaticBox* m_panelKeys;
 #endif
 #if defined(__WXGTK__)
     wxFlexGridSizer* m_hotkeysSizer;
