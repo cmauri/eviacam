@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.5.2\n"
 "Report-Msgid-Bugs-To: eviacam@packages.debian.org\n"
-"POT-Creation-Date: 2016-03-07 06:59+0100\n"
+"POT-Creation-Date: 2016-03-21 12:57+0100\n"
 "PO-Revision-Date: 2016-03-18 18:01+0100\n"
 "Last-Translator: Cesar Mauri <cesar@crea-si.com>\n"
 "Language-Team: Catalan\n"
@@ -19,13 +19,13 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../templates:2001
+#: ../templates:1001
 msgid "Should eviacamloader be installed \"setuid root\"?"
 msgstr "eviacamloader ha de ser instal·lat com a \"setuid root\"?"
 
 #. Type: boolean
 #. Description
-#: ../templates:2001
+#: ../templates:1001
 msgid ""
 "Installing eviacamloader with the set-user-ID bit set enables all users who "
 "have been added to the group \"eviacam\" to launch eviacam with a modified "
@@ -37,7 +37,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../templates:2001
+#: ../templates:1001
 msgid ""
 "Since this setting allows eviacamloader to be run with superuser privileges, "
 "it may have security implications in the case of vulnerabilities in "

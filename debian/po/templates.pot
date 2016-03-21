@@ -1,14 +1,14 @@
-# PO template for eviacam debian package.
-# Copyright (C) 2011 Cesar Mauri
-# This file is distributed under the same license as the eviacam package.
-# Cesar Mauri <cesar@crea-si.com>, 2011.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: eviacam\n"
 "Report-Msgid-Bugs-To: eviacam@packages.debian.org\n"
-"POT-Creation-Date: 2011-08-23 19:44+0200\n"
+"POT-Creation-Date: 2016-03-21 12:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,24 +20,23 @@ msgstr ""
 #. Type: boolean
 #. Description
 #: ../templates:1001
-msgid "Should eviacamloader be installed 'setuid root'?"
+msgid "Should eviacamloader be installed \"setuid root\"?"
 msgstr ""
 
 #. Type: boolean
 #. Description
 #: ../templates:1001
 msgid ""
-"In order to enable users of the group 'eviacam' to run eviacam in  high "
-"priority (which improves responsiveness), the eviacamloader  program can be "
-"installed with the set-user-ID bit set, so that it  will run with the "
-"permissions of the superuser."
+"Installing eviacamloader with the set-user-ID bit set enables all users who "
+"have been added to the group \"eviacam\" to launch eviacam with a modified "
+"scheduling priority for better responsiveness."
 msgstr ""
 
 #. Type: boolean
 #. Description
 #: ../templates:1001
 msgid ""
-"Such a setting requires that the sysadmin adds authorized users to the  "
-"'eviacam' group and may have security implications in the case of  "
-"vulnerabilities in eviacamloader's code."
+"Since this setting allows eviacamloader to be run with superuser privileges, "
+"it may have security implications in the case of vulnerabilities in "
+"eviacamloader's code."
 msgstr ""
