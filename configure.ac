@@ -54,7 +54,7 @@ AC_ARG_ENABLE(updates_check,
      yes | no ) WITH_UPDATES_CHECK="${enableval}" ;;
      *) AC_MSG_ERROR(bad value ${enableval} for --disable-updates-check) ;;
    esac],
-  [WITH_UPDATES_CHECK="yes"]
+  [WITH_UPDATES_CHECK="no"]
 )
 AM_CONDITIONAL([WITH_UPDATES_CHECK], [test "x$WITH_UPDATES_CHECK" = "xyes"])
 
