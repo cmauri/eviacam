@@ -24,16 +24,16 @@
 
 #include <wx/string.h>
 
-class CKeyboardCode
+class KeyboardCode
 {
 public:
-    CKeyboardCode();
+    KeyboardCode();
 	// Default destructor, copy constructor and copy operator are fine
-	bool operator==(const CKeyboardCode &other) const {
+	bool operator==(const KeyboardCode &other) const {
 		return m_virtualKeyCode== other.m_virtualKeyCode;
 	}
 
-	bool operator!=(const CKeyboardCode &other) const {
+	bool operator!=(const KeyboardCode &other) const {
 		return !(*this== other);
 	} 
 	
@@ -46,24 +46,24 @@ public:
 	bool IsValid() const { return m_virtualKeyCode!= 0; }
 	
 	// Reads a keycode from keyboard and returns a CKeyboardCode object
-	static CKeyboardCode ReadKeyCode();
+	static KeyboardCode ReadKeyCode();
 
 	// Given an scan code returns the corresponding CKeyboardCode object
-	static CKeyboardCode FromScanCode (unsigned int scanCode);
+	static KeyboardCode FromScanCode (unsigned int scanCode);
 
 	// Given a platform dependent virtual-key or KeySym returns the 
 	// corresponding CKeyboardCode object
-	static CKeyboardCode FromVirtualKeyCode (unsigned long vkCode);
+	static KeyboardCode FromVirtualKeyCode (unsigned long vkCode);
 
 	// Given an ASCII code returns the corresponding CKeyboardCode object
-	static CKeyboardCode FromASCII (char ascii);
+	static KeyboardCode FromASCII (char ascii);
 
 	// Given an wxKeyCode code returns the corresponding CKeyboardCode object
-	static CKeyboardCode FromWXKeyCode (wxKeyCode kc);
+	static KeyboardCode FromWXKeyCode (wxKeyCode kc);
 
 	// Set the internal raw value. NOTE: intended only
 	// for storage purposes not to work with
-	static CKeyboardCode FromRawValue (unsigned long kc);
+	static KeyboardCode FromRawValue (unsigned long kc);
 
 	// Get the internal raw value. NOTE: intended only
 	// for storage purposes not to work with
@@ -80,7 +80,7 @@ private:
 	unsigned long m_virtualKeyCode;
 
 	// Construct object from an KeySym or virtual-key
-	CKeyboardCode(unsigned long vkCode);
+	KeyboardCode(unsigned long vkCode);
 };
 
 #endif

@@ -109,7 +109,7 @@ public:
 		m_actionBottom = action; 
 	}
 
-	CKeyboardCode GetKeyboardCode(unsigned int position) {
+	KeyboardCode GetKeyboardCode(unsigned int position) {
 		assert (position< m_keyboardCodes.size());
 		return m_keyboardCodes[position];
 	}
@@ -152,7 +152,7 @@ private:
 	EAction m_actionTop;
 	EAction m_actionBottom;
 	bool m_fastGestureAction;	
-	std::vector<CKeyboardCode> m_keyboardCodes;
+	std::vector<KeyboardCode> m_keyboardCodes;
 };
 
 #endif

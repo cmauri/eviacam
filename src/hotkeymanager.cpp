@@ -31,7 +31,7 @@ public:
 	{
 		SetName(_T("hotKeyEnable"));
 		SetDescription(_("Enable eViacam"));
-		SetKey(CKeyboardCode::FromWXKeyCode(WXK_SCROLL));
+		SetKey(KeyboardCode::FromWXKeyCode(WXK_SCROLL));
 		SetEnabled(true);
 	}
 
@@ -47,7 +47,7 @@ public:
 	{
 		SetName(_T("hotKeyWorkspace"));
 		SetDescription(_("Enable workspace limit"));
-		SetKey(CKeyboardCode::FromWXKeyCode(WXK_F12));
+		SetKey(KeyboardCode::FromWXKeyCode(WXK_F12));
 		SetEnabled(false);
 	}
 
@@ -63,7 +63,7 @@ public:
 	{
 		SetName(_T("hotKeyCenterPointer"));
 		SetDescription(_("Center the pointer"));
-		SetKey(CKeyboardCode::FromWXKeyCode(WXK_HOME));
+		SetKey(KeyboardCode::FromWXKeyCode(WXK_HOME));
 		SetEnabled(true);
 	}
 
@@ -79,7 +79,7 @@ public:
 	{
 		SetName(_T("hotKeyIncreaseX"));
 		SetDescription(_("Increase the X axis speed"));
-		SetKey(CKeyboardCode::FromWXKeyCode (WXK_RIGHT));
+		SetKey(KeyboardCode::FromWXKeyCode (WXK_RIGHT));
 		SetEnabled(false);
 	}
 
@@ -95,7 +95,7 @@ public:
 	{
 		SetName(_T("hotKeyIncreaseY"));
 		SetDescription(_("Increase the Y axis speed"));
-		SetKey(CKeyboardCode::FromWXKeyCode (WXK_UP));
+		SetKey(KeyboardCode::FromWXKeyCode (WXK_UP));
 		SetEnabled(false);
 	}
 
@@ -111,7 +111,7 @@ public:
 	{
 		SetName(_T("hotKeyDecreaseX"));
 		SetDescription(_("Decrease the X axis speed"));
-		SetKey(CKeyboardCode::FromWXKeyCode (WXK_LEFT));
+		SetKey(KeyboardCode::FromWXKeyCode (WXK_LEFT));
 		SetEnabled(false);	
 	}
 
@@ -127,7 +127,7 @@ public:
 	{
 		SetName(_T("hotKeyDecreaseY"));
 		SetDescription(_("Decrease the Y axis speed"));
-		SetKey(CKeyboardCode::FromWXKeyCode (WXK_DOWN));
+		SetKey(KeyboardCode::FromWXKeyCode (WXK_DOWN));
 		SetEnabled(false);
 	}
 
@@ -171,7 +171,7 @@ void CHotkeyManager::CheckKeyboardStatus()
 {
 #if defined(__WXGTK__) 
 	BEGIN_GUI_CALL_MUTEX()
-	CKeyboardCode kc = CKeyboardCode::ReadKeyCode();
+	KeyboardCode kc = KeyboardCode::ReadKeyCode();
 	if (kc!= m_lastKeyCode) {
 		m_lastKeyCode= kc;
 		int index= IsKeyUsed(kc);
@@ -207,13 +207,13 @@ void CHotkeyManager::ReadProfileData(wxConfigBase* pConfObj)
 			m_keyCommands[i]->SetEnabled(isEnabled);
 		
 		if (pConfObj->Read(m_keyCommands[i]->GetName() + _T("Key"), &rawKeyCode))
-			m_keyCommands[i]->SetKey(CKeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
+			m_keyCommands[i]->SetKey(KeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
 	}
 #endif // __WXGTK___
 	pConfObj->SetPath (_T(".."));
 }
 
-int CHotkeyManager::IsKeyUsed (CKeyboardCode kc)
+int CHotkeyManager::IsKeyUsed (KeyboardCode kc)
 {
 	for (unsigned int i=0; i<m_keyCommands.size(); i++)
 	{
@@ -223,7 +223,7 @@ int CHotkeyManager::IsKeyUsed (CKeyboardCode kc)
 	return -1;
 }
 
-bool CHotkeyManager::SetKeyCommand (unsigned int index, CKeyboardCode kc)
+bool CHotkeyManager::SetKeyCommand (unsigned int index, KeyboardCode kc)
 {
 	assert (index < m_keyCommands.size());
 	if (IsKeyUsed(kc) == -1) {

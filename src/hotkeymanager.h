@@ -30,14 +30,14 @@ using namespace std;
 
 class CKeyCommand {
 protected:
-	void SetKey (CKeyboardCode kc) { key= kc; }
+	void SetKey (KeyboardCode kc) { key= kc; }
 
 public:
 	wxString GetName () const { return name; }
 	void SetName (wxString s) { name= s; }
 	wxString GetDescription () const { return description; }
 	void SetDescription (wxString s) { description= s; }
-	CKeyboardCode GetKey () const { return key; }
+	KeyboardCode GetKey () const { return key; }
 	bool IsEnabled () const { return enabled; }
 	void SetEnabled (bool value) { enabled= value; }
 	virtual void Command() =0;
@@ -46,7 +46,7 @@ public:
 private:
 	wxString name;	
 	wxString description;
-	CKeyboardCode key;
+	KeyboardCode key;
 	bool enabled;
 };
 
@@ -65,8 +65,8 @@ public:
 		return m_keyCommands[index];
 	}
 	
-	int IsKeyUsed (CKeyboardCode kc);
-	bool SetKeyCommand (unsigned int index, CKeyboardCode kc);
+	int IsKeyUsed (KeyboardCode kc);
+	bool SetKeyCommand (unsigned int index, KeyboardCode kc);
 	vector<CKeyCommand*> GetKeyCommands () { return m_keyCommands; }
 
 	// This method must be called periodically to check
@@ -84,7 +84,7 @@ public:
 	virtual void WriteProfileData(wxConfigBase* pConfObj);  
 
 private:
-	CKeyboardCode m_lastKeyCode;
+	KeyboardCode m_lastKeyCode;
 	vector<CKeyCommand*> m_keyCommands;
 };
 

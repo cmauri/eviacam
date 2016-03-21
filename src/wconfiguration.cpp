@@ -1991,7 +1991,7 @@ void WConfiguration::OnHotkeyButtonClick( wxCommandEvent& event )
 	do {
 		isFinished = true;
 		if (dlgGetKey.ShowModal()== wxID_YES) {
-			CKeyboardCode kc= dlgGetKey.GetKeyCode();
+			KeyboardCode kc= dlgGetKey.GetKeyCode();
 			if (wxGetApp().GetController().getHotkeyManager().SetKeyCommand((event.GetId()-FIRST_CONTROL_ID-3)/4, kc)) {
 				((wxTextCtrl*)m_controlList[event.GetId()-FIRST_CONTROL_ID-2])->SetValue(wxString(kc.GetName(),wxConvUTF8));		
 			} else {

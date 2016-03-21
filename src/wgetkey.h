@@ -75,7 +75,7 @@ public:
     /// Destructor
     ~WGetKey();
 
-	CKeyboardCode GetKeyCode();
+	KeyboardCode GetKeyCode();
 
 private:
     /// Initialises member variables
@@ -112,7 +112,7 @@ private:
 ////@end WGetKey member variables
 private:
 	//wxTimer m_timer;
-	CKeyboardCode m_keyCode;
+	KeyboardCode m_keyCode;
 };
 
 #endif
