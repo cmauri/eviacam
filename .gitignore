@@ -66,6 +66,4 @@ src/gui-autosave.pjd
 *.suo
 
 # Eclipse CDT
-.cproject
-.project
 .settings/
