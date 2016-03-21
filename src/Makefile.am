@@ -1,7 +1,7 @@
 # these are the headers for your project
 noinst_HEADERS = wgetkey.h \
 	cautostart.h \
-	ckeyboardcode.h \
+	keyboardcode.h \
 	clickwindow.h \
 	clickwindowbitmap.h \
 	clickwindowcontroller.h \
@@ -110,7 +110,7 @@ install-exec-hook:
 # the application source, library search path, and link libraries
 eviacam_SOURCES = wgetkey.cpp \
 	cautostart.cpp \
-	ckeyboardcode.cpp \
+	keyboardcode.cpp \
 	clickwindow.cpp \
 	clickwindowbitmap.cpp \
 	clickwindowcontroller.cpp \

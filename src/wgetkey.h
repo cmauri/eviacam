@@ -29,7 +29,8 @@
 
 //#include <wx/timer.h>
 #include <wx/dialog.h>
-#include "ckeyboardcode.h"
+
+#include "keyboardcode.h"
 
 ////@begin includes
 ////@end includes

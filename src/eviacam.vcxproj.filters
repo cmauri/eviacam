@@ -24,7 +24,7 @@
     <ClCompile Include="checkupdates_ui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ckeyboardcode.cpp">
+    <ClCompile Include="keyboardcode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="clickwindow.cpp">
@@ -119,7 +119,7 @@
     <ClInclude Include="checkupdates_ui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ckeyboardcode.h">
+    <ClInclude Include="keyboardcode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="clickwindow.h">

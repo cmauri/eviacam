@@ -22,9 +22,9 @@
 #ifndef HOTKEYMANAGER_H
 #define HOTKEYMANAGER_H
 
-#include "ckeyboardcode.h"
 #include "configbase.h"
 #include <vector>
+#include "keyboardcode.h"
 
 using namespace std;
 

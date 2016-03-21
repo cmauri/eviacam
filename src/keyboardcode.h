@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        ckeyboardcode.h
+// Name:        keyboardcode.h
 // Purpose:
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 

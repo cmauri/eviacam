@@ -25,10 +25,10 @@
 #include "waittime.h"
 #include "configbase.h"
 #include "cvisualalert.h"
-#include "ckeyboardcode.h"
 #include "mousecommand.h"
 #include <math.h>
 #include <vector>
+#include "keyboardcode.h"
 
 class CMouseControl;
 

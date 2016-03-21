@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        ckeyboardcode.cpp
+// Name:        keyboardcode.cpp
 // Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
@@ -19,7 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
-#include "ckeyboardcode.h"
+#include "keyboardcode.h"
+
 #include <wx/utils.h>
 #include <wx/stdpaths.h>
 #include <wx/defs.h>

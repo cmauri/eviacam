@@ -216,7 +216,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ckeyboardcode.cpp"
+				RelativePath=".\keyboardcode.cpp"
 				>
 			</File>
 			<File
@@ -346,7 +346,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ckeyboardcode.h"
+				RelativePath=".\keyboardcode.h"
 				>
 			</File>
 			<File
