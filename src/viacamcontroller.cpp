@@ -40,6 +40,7 @@
 #include <wx/msgdlg.h>
 #include <wx/choicdlg.h>
 #include <wx/filename.h>
+#include <wx/stdpaths.h>
 
 using namespace eviacam;
 
@@ -110,7 +111,9 @@ void CViacamController::SetUpLanguage ()
 	m_locale->AddCatalogLookupPathPrefix(wxT("."));
 	
 #if defined(__WXGTK__)	
-	m_locale->AddCatalogLookupPathPrefix(wxT("/usr/local/share/locale/"));
+	wxString prefix= wxStandardPaths::Get().GetInstallPrefix();
+	prefix+= wxT("/share/locale/");
+	m_locale->AddCatalogLookupPathPrefix(prefix);
 #endif
 
 	if (!m_locale->Init(m_languageId))
