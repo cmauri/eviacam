@@ -1,0 +1,48 @@
+# Translation of eviacam debconf templates to French.
+# Copyright (C) 2016, French l10n team <debian-l10n-french@lists.debian.org>
+# This file is distributed under the same license as the eviacam package.
+# Julien Patriarca <leatherface@debian.org>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: eviacam\n"
+"Report-Msgid-Bugs-To: eviacam@packages.debian.org\n"
+"POT-Creation-Date: 2016-03-07 06:59+0100\n"
+"PO-Revision-Date: 2016-03-07 14:29+0100\n"
+"Last-Translator: Julien Patriarca <leatherface@debian.org>\n"
+"Language-Team: FRENCH <debian-l10n-french@lists.debian.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.10\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "Should eviacamloader be installed \"setuid root\"?"
+msgstr "Faut-il utiliser eviacamloader avec les privilèges du superutilisateur  ?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"Installing eviacamloader with the set-user-ID bit set enables all users who "
+"have been added to the group \"eviacam\" to launch eviacam with a modified "
+"scheduling priority for better responsiveness."
+msgstr ""
+"Installer eviacamloader avec l'octet set-user-ID autorise tous les "
+"utilisateurs membres du groupe « eviacam », à lancer eviacam avec une "
+"priorité d'exécution modifiée pour de meilleurs temps de réponse."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"Since this setting allows eviacamloader to be run with superuser privileges, "
+"it may have security implications in the case of vulnerabilities in "
+"eviacamloader's code."
+msgstr ""
+"Puisque ce paramètre autorise eviacamloader à être exécuté avec les droits "
+"superutilisateur, cela peut avoir des répercussions sur la sécurité dans le "
+"cas où le code d'eviacamloader contiendrait des vulnérabilités."

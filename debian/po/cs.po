@@ -1,0 +1,47 @@
+# Czech PO debconf template translation of eviacam.
+# Copyright (C) 2016 Michal Simunek <michal.simunek@gmail.com>
+# This file is distributed under the same license as the eviacam package.
+# Michal Simunek <michal.simunek@gmail.com>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: eviacam 2.0.3-2\n"
+"Report-Msgid-Bugs-To: eviacam@packages.debian.org\n"
+"POT-Creation-Date: 2016-03-07 06:59+0100\n"
+"PO-Revision-Date: 2016-03-16 09:15+0100\n"
+"Last-Translator: Michal Simunek <michal.simunek@gmail.com>\n"
+"Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "Should eviacamloader be installed \"setuid root\"?"
+msgstr "Má se eviacamloader nainstalovat se \"setuid root\"?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"Installing eviacamloader with the set-user-ID bit set enables all users who "
+"have been added to the group \"eviacam\" to launch eviacam with a modified "
+"scheduling priority for better responsiveness."
+msgstr ""
+"Instalace eviacamloader s nastaveným bitem set-user-ID umožňuje všem "
+"uživatelům, kteří byli přidáni do skupiny \"eviacam\", spouštět eviacam "
+"s upraveným plánováním pro lepší citlivost."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"Since this setting allows eviacamloader to be run with superuser privileges, "
+"it may have security implications in the case of vulnerabilities in "
+"eviacamloader's code."
+msgstr ""
+"Protože toto nastavení umožňuje spouštět eviacamloader s oprávněními "
+"superuživatele, může to mít v případě zranitelnosti v kódu eviacamloader "
+"dopady na zabezpečení."

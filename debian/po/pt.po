@@ -1,0 +1,51 @@
+# Translation of eviacam's debconf messages to European Portuguese
+# Copyright (C) 2016 THE eviacam'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the eviacam package.
+#
+# Américo Monteiro <a_monteiro@gmx.com>, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: eviacam 2.0.3-2\n"
+"Report-Msgid-Bugs-To: eviacam@packages.debian.org\n"
+"POT-Creation-Date: 2016-03-07 06:59+0100\n"
+"PO-Revision-Date: 2016-03-20 01:38+0000\n"
+"Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
+"Language-Team: Portuguese <traduz@debianpt.org>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.4\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "Should eviacamloader be installed \"setuid root\"?"
+msgstr "Deve o eviacamloader ser instalado com \"setuid root\"?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"Installing eviacamloader with the set-user-ID bit set enables all users who "
+"have been added to the group \"eviacam\" to launch eviacam with a modified "
+"scheduling priority for better responsiveness."
+msgstr ""
+"Instalar o eviacamloader com o bit set-user-ID definido permite que todos "
+"os utilizadores que foram adicionados ao grupo \"eviacam\" lançarem o "
+"eviacam com um agendamento de prioridade modificado para melhor "
+"capacidade de resposta."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"Since this setting allows eviacamloader to be run with superuser privileges, "
+"it may have security implications in the case of vulnerabilities in "
+"eviacamloader's code."
+msgstr ""
+"Como esta configuração permite ao eviacamloader correr com privilégios de "
+"super-utilizador, pode trazer implicações à segurança no caso de existirem "
+"vulnerabilidades no código do eviacamloader."
+

@@ -1,0 +1,52 @@
+# Dutch translation of eviacam debconf templates.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the eviacam package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Frans Spiesschaert <Frans.Spiesschaert@yucom.be>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: eviacam\n"
+"Report-Msgid-Bugs-To: eviacam@packages.debian.org\n"
+"POT-Creation-Date: 2016-03-07 06:59+0100\n"
+"PO-Revision-Date: 2016-03-09 10:11+0100\n"
+"Last-Translator: Frans Spiesschaert <Frans.Spiesschaert@yucom.be>\n"
+"Language-Team: Debian Dutch l10n Team <debian-l10n-dutch@lists.debian.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 2.91.6\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "Should eviacamloader be installed \"setuid root\"?"
+msgstr "Wilt u eviacamloader installeren met \"setuid root\" ingesteld?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"Installing eviacamloader with the set-user-ID bit set enables all users who "
+"have been added to the group \"eviacam\" to launch eviacam with a modified "
+"scheduling priority for better responsiveness."
+msgstr ""
+"Het installeren van eviacamloader met de set-user-ID-bit ingesteld, laat "
+"alle gebruikers die toegevoegd werden aan de groep \"eviacam\" toe om "
+"eviacam op te starten met een aangepaste procesprioriteit, hetgeen een "
+"verhoogde reactiesnelheid geeft."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"Since this setting allows eviacamloader to be run with superuser privileges, "
+"it may have security implications in the case of vulnerabilities in "
+"eviacamloader's code."
+msgstr ""
+"Aangezien deze instelling toelaat dat eviacamloader uitgevoerd wordt met "
+"systeembeheerdersrechten, kan dit implicaties hebben op de beveiliging van "
+"het systeem, mocht blijken dat de code van eviacamloader veiligheidsrisico's "
+"inhoudt."

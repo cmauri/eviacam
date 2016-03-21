@@ -1,0 +1,48 @@
+# Debconf translations for eviacam.
+# Copyright (C) 2016 THE eviacam'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the eviacam package.
+# Adriano Rafael Gomes <adrianorg@arg.eti.br>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: eviacam\n"
+"Report-Msgid-Bugs-To: eviacam@packages.debian.org\n"
+"POT-Creation-Date: 2016-03-07 06:59+0100\n"
+"PO-Revision-Date: 2016-03-07 08:34-0300\n"
+"Last-Translator: Adriano Rafael Gomes <adrianorg@arg.eti.br>\n"
+"Language-Team: Brazilian Portuguese <debian-l10n-portuguese@lists.debian."
+"org>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "Should eviacamloader be installed \"setuid root\"?"
+msgstr "O eviacamloader deve ser instalado com \"setuid root\"?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"Installing eviacamloader with the set-user-ID bit set enables all users who "
+"have been added to the group \"eviacam\" to launch eviacam with a modified "
+"scheduling priority for better responsiveness."
+msgstr ""
+"Instalar o eviacamloader com o bit \"set-user-ID\" ligado habilita todos os "
+"usuários que foram adicionados ao grupo \"eviacam\" a disparar o eviacam com "
+"uma prioridade de escalonamento modificada para melhor responsividade."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"Since this setting allows eviacamloader to be run with superuser privileges, "
+"it may have security implications in the case of vulnerabilities in "
+"eviacamloader's code."
+msgstr ""
+"Uma vez que essa configuração permite que o eviacamloader seja executado com "
+"poderes de superusuário, tal configuração pode ter implicações de segurança "
+"no caso de vulnerabilidades no código do eviacamloader."
