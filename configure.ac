@@ -154,7 +154,7 @@ if test "x$WITH_DEPENDENCIES_CHECK" = "xyes"; then
 
 	# Verify minimum requires
 	vers=`echo $wxversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
-	if test -n "$vers" && test "$vers" -ge 2006003; then
+	if test -n "$vers" && test "$vers" -ge 2008003; then
 		if ! "$debug"; then
 			WX_CPPFLAGS="`$WXCONFIG --cppflags`"
 			WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
@@ -165,7 +165,7 @@ if test "x$WITH_DEPENDENCIES_CHECK" = "xyes"; then
 			WX_LIBS="`$WXCONFIG --libs`"
 		fi
 	else
-		AC_MSG_ERROR([wxWidgets 2.6.3 or newer is required])
+		AC_MSG_ERROR([wxWidgets 2.8.3 or newer is required])
 	fi
 fi
 # -----------------       wxWidgets --------------------
