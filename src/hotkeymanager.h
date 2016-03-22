@@ -20,6 +20,7 @@
 #define HOTKEYMANAGER_H
 
 #include <vector>
+#include <wx/event.h>
 
 #include "configbase.h"
 #include "keyboardcode.h"
@@ -79,6 +80,7 @@ public:
 	virtual void WriteProfileData(wxConfigBase* pConfObj) override;
 
 private:
+	void HotkeyEventHandler(wxKeyEvent& event);
 	int IsKeyUsed (KeyboardCode kc) const;
 
 	KeyboardCode m_lastKeyCode;

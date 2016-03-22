@@ -18,10 +18,14 @@
 /////////////////////////////////////////////////////////////////////////////
 #include "hotkeymanager.h"
 
+#include <wx/window.h>
+
 #include "eviacamdefs.h"
 #include "eviacamapp.h"
 #include "viacamcontroller.h"
 #include "pointeraction.h"
+#include "simplelog.h"
+
 
 namespace eviacam {
 
@@ -103,9 +107,18 @@ public:
 	}
 };
 
+void HotkeyManager::HotkeyEventHandler(wxKeyEvent& event) {
+	SLOG_DEBUG("CALLED!!!!!!!!!!!!!!!!! %d", event.GetKeyCode());
+}
 
 HotkeyManager::HotkeyManager() {
 	InitDefaults();
+
+	wxWindow* mainWin = wxGetApp().GetController().GetMainWindow();
+
+	bool result = mainWin->RegisterHotKey(1, wxMOD_ALT, 'A');
+	SLOG_DEBUG("Hotkey: %d", result);
+	mainWin->Bind(wxEVT_HOTKEY,	[this](wxKeyEvent& e) {	this->HotkeyEventHandler(e); });
 }
 
 HotkeyManager::~HotkeyManager() {
