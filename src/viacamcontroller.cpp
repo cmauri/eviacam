@@ -288,7 +288,7 @@ bool CViacamController::Initialize ()
 	// Create hotkey manager
 	if (retval) {
 		assert (!m_hotKeyManager);
-		m_hotKeyManager= new CHotkeyManager();
+		m_hotKeyManager= new eviacam::HotkeyManager();
 	}
 
 	// Create pointer action object

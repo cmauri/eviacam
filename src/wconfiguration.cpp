@@ -894,7 +894,7 @@ void WConfiguration::CreateControls()
 }
 
 
-void WConfiguration::CreateHotkey (const CKeyCommand* kc, wxWindow* parent, wxSizer* sizer)
+void WConfiguration::CreateHotkey (const eviacam::KeyCommand* kc, wxWindow* parent, wxSizer* sizer)
 {
 	wxStaticText* itemStaticText = new wxStaticText( parent, m_lastId, wxString((const wxChar*)kc->GetDescription(),wxConvUTF8), wxDefaultPosition, wxDefaultSize, 0 );
 	sizer->Add(itemStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);

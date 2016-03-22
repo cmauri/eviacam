@@ -1,10 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        hotkeymanager.cpp
-// Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     30/12/2010
-// Copyright:   (C) 2010-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2010-16 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,155 +17,121 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "hotkeymanager.h"
+
 #include "eviacamdefs.h"
 #include "eviacamapp.h"
 #include "viacamcontroller.h"
 #include "pointeraction.h"
 
-class CKeyCommandEnable : public CKeyCommand {
-public:
-	CKeyCommandEnable()
-	{
-		SetName(_T("hotKeyEnable"));
-		SetDescription(_("Enable eViacam"));
-		SetKey(KeyboardCode::FromWXKeyCode(WXK_SCROLL));
-		SetEnabled(true);
-	}
+namespace eviacam {
 
-	void Command()
-	{
+//
+// Define the available key commands
+//
+
+class KeyCommandEnable : public KeyCommand {
+public:
+	KeyCommandEnable()
+	: KeyCommand(_T("hotKeyEnable"), _("Enable eViacam"), KeyboardCode::FromWXKeyCode(WXK_SCROLL), true) {}
+
+	void Command() override {
 		wxGetApp().GetController().SetEnabled(!wxGetApp().GetController().GetEnabled(), true);
 	}
 };
 
-class CKeyCommandWorkspace : public CKeyCommand {
+class KeyCommandWorkspace : public KeyCommand {
 public:
-	CKeyCommandWorkspace()
-	{
-		SetName(_T("hotKeyWorkspace"));
-		SetDescription(_("Enable workspace limit"));
-		SetKey(KeyboardCode::FromWXKeyCode(WXK_F12));
-		SetEnabled(false);
-	}
+	KeyCommandWorkspace()
+	: KeyCommand(_T("hotKeyWorkspace"), _("Enable workspace limit"), KeyboardCode::FromWXKeyCode(WXK_F12), false) {}
 
-	void Command()
-	{
-		wxGetApp().GetController().GetPointerAction().SetRestrictedWorkingArea(!wxGetApp().GetController().GetPointerAction().GetRestrictedWorkingArea());
+	void Command() override {
+		wxGetApp().GetController().GetPointerAction().SetRestrictedWorkingArea(
+			!wxGetApp().GetController().GetPointerAction().GetRestrictedWorkingArea());
 	}
 };
 
-class CKeyCommandCenterPointer : public CKeyCommand {
+class KeyCommandCenterPointer : public KeyCommand {
 public:
-	CKeyCommandCenterPointer()
-	{
-		SetName(_T("hotKeyCenterPointer"));
-		SetDescription(_("Center the pointer"));
-		SetKey(KeyboardCode::FromWXKeyCode(WXK_HOME));
-		SetEnabled(true);
-	}
+	KeyCommandCenterPointer()
+	: KeyCommand(_T("hotKeyCenterPointer"), _("Center the pointer"), KeyboardCode::FromWXKeyCode(WXK_HOME), true) {}
 
-	void Command()
-	{
+	void Command() override {
 		wxGetApp().GetController().GetPointerAction().CenterPointer();
 	}
 };
 
-class CKeyCommandIncreaseX : public CKeyCommand {
+class KeyCommandIncreaseX : public KeyCommand {
 public:
-	CKeyCommandIncreaseX()
-	{
-		SetName(_T("hotKeyIncreaseX"));
-		SetDescription(_("Increase the X axis speed"));
-		SetKey(KeyboardCode::FromWXKeyCode (WXK_RIGHT));
-		SetEnabled(false);
-	}
+	KeyCommandIncreaseX()
+	: KeyCommand(("hotKeyIncreaseX"), _("Increase the X axis speed"), KeyboardCode::FromWXKeyCode(WXK_RIGHT), false) {}
 
-	void Command()
-	{
+	void Command() override {
 		wxGetApp().GetController().GetPointerAction().SetXSpeed(wxGetApp().GetController().GetPointerAction().GetXSpeed()+1);
 	}
 };
 
-class CKeyCommandIncreaseY : public CKeyCommand {
+class KeyCommandIncreaseY : public KeyCommand {
 public:
-	CKeyCommandIncreaseY()
-	{
-		SetName(_T("hotKeyIncreaseY"));
-		SetDescription(_("Increase the Y axis speed"));
-		SetKey(KeyboardCode::FromWXKeyCode (WXK_UP));
-		SetEnabled(false);
-	}
+	KeyCommandIncreaseY()
+	: KeyCommand(_T("hotKeyIncreaseY"), _("Increase the Y axis speed"), KeyboardCode::FromWXKeyCode(WXK_UP), false) {}
 
-	void Command()
-	{
-		wxGetApp().GetController().GetPointerAction().SetYSpeed(wxGetApp().GetController().GetPointerAction().GetYSpeed()+1);
+	void Command() override {
+		wxGetApp().GetController().GetPointerAction().SetYSpeed(
+			wxGetApp().GetController().GetPointerAction().GetYSpeed()+1);
 	}
 };
 
-class CKeyCommandDecreaseX : public CKeyCommand {
+class KeyCommandDecreaseX : public KeyCommand {
 public:
-	CKeyCommandDecreaseX()
-	{
-		SetName(_T("hotKeyDecreaseX"));
-		SetDescription(_("Decrease the X axis speed"));
-		SetKey(KeyboardCode::FromWXKeyCode (WXK_LEFT));
-		SetEnabled(false);	
-	}
+	KeyCommandDecreaseX()
+	: KeyCommand(_T("hotKeyDecreaseX"), _("Decrease the X axis speed"), KeyboardCode::FromWXKeyCode(WXK_LEFT), false) {}
 
-	void Command()
-	{
-		wxGetApp().GetController().GetPointerAction().SetXSpeed(wxGetApp().GetController().GetPointerAction().GetXSpeed()-1);
+	void Command() override {
+		wxGetApp().GetController().GetPointerAction().SetXSpeed(
+			wxGetApp().GetController().GetPointerAction().GetXSpeed()-1);
 	}
 };
 
-class CKeyCommandDecreaseY : public CKeyCommand {
+class KeyCommandDecreaseY : public KeyCommand {
 public:
-	CKeyCommandDecreaseY()
-	{
-		SetName(_T("hotKeyDecreaseY"));
-		SetDescription(_("Decrease the Y axis speed"));
-		SetKey(KeyboardCode::FromWXKeyCode (WXK_DOWN));
-		SetEnabled(false);
-	}
+	KeyCommandDecreaseY()
+	: KeyCommand(_T("hotKeyDecreaseY"), _("Decrease the Y axis speed"), KeyboardCode::FromWXKeyCode(WXK_DOWN), false) {}
 
-	void Command()
-	{
-		wxGetApp().GetController().GetPointerAction().SetYSpeed(wxGetApp().GetController().GetPointerAction().GetYSpeed()-1);
+	void Command() override {
+		wxGetApp().GetController().GetPointerAction().SetYSpeed(
+			wxGetApp().GetController().GetPointerAction().GetYSpeed()-1);
 	}
 };
 
 
-// TODO: to avoid problems with synchronization, implement this by deriving 
-// from wxEvtHandler and sending hot-key messages using wxPostEvent. This
-// way we make sure that all hot-key driven actions are always executed from
-// the main thread. This approach will also make easier the transition to 
-// an implementation based on keyboard hooks
-
-CHotkeyManager::CHotkeyManager() : m_lastKeyCode()
-{
+HotkeyManager::HotkeyManager() {
 	InitDefaults();
 }
 
-CHotkeyManager::~CHotkeyManager()
-{
-	while (!m_keyCommands.empty()) m_keyCommands.pop_back();
+HotkeyManager::~HotkeyManager() {
+	for (int i= 0; i< m_keyCommands.size(); i++) {
+		delete m_keyCommands[i];
+	}
 }
 
-void CHotkeyManager::InitDefaults()
-{
+void HotkeyManager::InitDefaults() {
 #if defined(__WXGTK__) 
-	m_keyCommands.push_back(new CKeyCommandEnable());
-	m_keyCommands.push_back(new CKeyCommandWorkspace());
-	m_keyCommands.push_back(new CKeyCommandCenterPointer());
-	m_keyCommands.push_back(new CKeyCommandIncreaseX());
-	m_keyCommands.push_back(new CKeyCommandIncreaseY());
-	m_keyCommands.push_back(new CKeyCommandDecreaseX());
-	m_keyCommands.push_back(new CKeyCommandDecreaseY());
+	m_keyCommands.push_back(new KeyCommandEnable());
+	m_keyCommands.push_back(new KeyCommandWorkspace());
+	m_keyCommands.push_back(new KeyCommandCenterPointer());
+	m_keyCommands.push_back(new KeyCommandIncreaseX());
+	m_keyCommands.push_back(new KeyCommandIncreaseY());
+	m_keyCommands.push_back(new KeyCommandDecreaseX());
+	m_keyCommands.push_back(new KeyCommandDecreaseY());
 #endif // __WXGTK___
 }
 
-void CHotkeyManager::CheckKeyboardStatus()
-{
+// TODO: to avoid problems with synchronization, implement this by deriving
+// from wxEvtHandler and sending hot-key messages using wxPostEvent. This
+// way we make sure that all hot-key driven actions are always executed from
+// the main thread. This approach will also make easier the transition to
+// an implementation based on keyboard hooks
+void HotkeyManager::CheckKeyboardStatus() {
 #if defined(__WXGTK__) 
 	BEGIN_GUI_CALL_MUTEX()
 	KeyboardCode kc = KeyboardCode::ReadKeyCode();
@@ -182,9 +145,7 @@ void CHotkeyManager::CheckKeyboardStatus()
 #endif // __WXGTK___
 }
 
-
-void CHotkeyManager::WriteProfileData(wxConfigBase* pConfObj)
-{
+void HotkeyManager::WriteProfileData(wxConfigBase* pConfObj) {
 	pConfObj->SetPath (_T("hotKeyManager"));
 #if defined(__WXGTK__) 
 	for (unsigned int i=0; i<m_keyCommands.size(); i++) {
@@ -195,8 +156,7 @@ void CHotkeyManager::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->SetPath (_T(".."));
 } 
 
-void CHotkeyManager::ReadProfileData(wxConfigBase* pConfObj)
-{
+void HotkeyManager::ReadProfileData(wxConfigBase* pConfObj) {
 	pConfObj->SetPath (_T("hotKeyManager"));
 #if defined(__WXGTK__) 
 	bool isEnabled;
@@ -213,18 +173,15 @@ void CHotkeyManager::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->SetPath (_T(".."));
 }
 
-int CHotkeyManager::IsKeyUsed (KeyboardCode kc)
-{
-	for (unsigned int i=0; i<m_keyCommands.size(); i++)
-	{
+int HotkeyManager::IsKeyUsed (KeyboardCode kc) const {
+	for (unsigned int i=0; i<m_keyCommands.size(); i++) {
 		if (m_keyCommands[i]->GetKey() == kc)
 			return i;
 	}
 	return -1;
 }
 
-bool CHotkeyManager::SetKeyCommand (unsigned int index, KeyboardCode kc)
-{
+bool HotkeyManager::SetKeyCommand (unsigned int index, KeyboardCode kc) {
 	assert (index < m_keyCommands.size());
 	if (IsKeyUsed(kc) == -1) {
 		m_keyCommands[index]->SetKey(kc);
@@ -233,3 +190,5 @@ bool CHotkeyManager::SetKeyCommand (unsigned int index, KeyboardCode kc)
 		return false;
 	}
 }
+
+} // namespace

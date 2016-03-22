@@ -1,10 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        hotkeymanager.h
-// Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     30/12/2010
-// Copyright:   (C) 2010-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2010-16 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -27,62 +24,67 @@
 #include "configbase.h"
 #include "keyboardcode.h"
 
-class CKeyCommand {
-protected:
-	void SetKey (KeyboardCode kc) { key= kc; }
+namespace eviacam {
 
+/**
+ * Stores an arbitrary command associated with a key along with a description
+ */
+class KeyCommand {
 public:
-	wxString GetName () const { return name; }
-	void SetName (wxString s) { name= s; }
-	wxString GetDescription () const { return description; }
-	void SetDescription (wxString s) { description= s; }
-	KeyboardCode GetKey () const { return key; }
-	bool IsEnabled () const { return enabled; }
-	void SetEnabled (bool value) { enabled= value; }
-	virtual void Command() =0;
-	friend class CHotkeyManager;
+	KeyCommand (const wxString& name, const wxString& desc, KeyboardCode key, bool enabled)
+	: name_(name), description_(desc), key_(key), enabled_(enabled) {}
+	virtual ~KeyCommand() {}
+
+	const wxString& GetName () const { return name_; }
+	const wxString& GetDescription () const { return description_; }
+	const KeyboardCode& GetKey () const { return key_; }
+
+	bool IsEnabled () const { return enabled_; }
+	void SetEnabled (bool value) { enabled_= value; }
+
+	// Command to be defined by derived classes
+	virtual void Command()= 0;
 
 private:
-	wxString name;	
-	wxString description;
-	KeyboardCode key;
-	bool enabled;
+	friend class HotkeyManager;
+	void SetKey (KeyboardCode key) { key_= key; }
+
+	wxString name_;
+	wxString description_;
+	KeyboardCode key_;
+	bool enabled_;
 };
 
-
-class CHotkeyManager : public CConfigBase {
+/**
+ * Keeps the hotkeys registry and triggers actions
+ */
+class HotkeyManager : public CConfigBase {
 public:
-	CHotkeyManager();
-	~CHotkeyManager();
+	HotkeyManager();
+	~HotkeyManager();
 	
-	const int GetNumKeyCommands () const {
-		return (int) m_keyCommands.size();
-	}
-	
-	CKeyCommand* GetKeyCommand (unsigned int index) {
-		assert (index < m_keyCommands.size());
-		return m_keyCommands[index];
-	}
-	
-	int IsKeyUsed (KeyboardCode kc);
 	bool SetKeyCommand (unsigned int index, KeyboardCode kc);
-	std::vector<CKeyCommand*> GetKeyCommands () { return m_keyCommands; }
 
-	// This method must be called periodically to check
-	// the keyboard status and perform actions accordingly
-	// TODO: switch to a hook based mechanisn instead of pulling
+	const std::vector<KeyCommand*>& GetKeyCommands() const { return m_keyCommands; }
+
+	// This method is called from secondary thread (linux only) to poll the state
+	// of the keyboard and trigger the command associated with a hotkey
 	void CheckKeyboardStatus();
 
 	// Configuration methods
-	virtual void InitDefaults();
+	virtual void InitDefaults() override;
 
-	virtual void ReadProfileData(wxConfigBase* pConfObj);
+	virtual void ReadProfileData(wxConfigBase* pConfObj) override;
 
-	virtual void WriteProfileData(wxConfigBase* pConfObj);  
+	virtual void WriteProfileData(wxConfigBase* pConfObj) override;
 
 private:
+	int IsKeyUsed (KeyboardCode kc) const;
+
 	KeyboardCode m_lastKeyCode;
-	std::vector<CKeyCommand*> m_keyCommands;
+	std::vector<KeyCommand*> m_keyCommands;
 };
+
+} // namespace
 
 #endif

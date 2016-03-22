@@ -353,7 +353,7 @@ private:
     wxIcon GetIconResource( const wxString& name );
 ////@end WConfiguration member function declarations
 
-	void CreateHotkey (const CKeyCommand* kc, wxWindow* parent, wxSizer* sizer);
+	void CreateHotkey (const eviacam::KeyCommand* kc, wxWindow* parent, wxSizer* sizer);
 
     /// Should we show tooltips?
     static bool ShowToolTips();
