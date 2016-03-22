@@ -22,11 +22,10 @@
 #ifndef HOTKEYMANAGER_H
 #define HOTKEYMANAGER_H
 
-#include "configbase.h"
 #include <vector>
-#include "keyboardcode.h"
 
-using namespace std;
+#include "configbase.h"
+#include "keyboardcode.h"
 
 class CKeyCommand {
 protected:
@@ -67,7 +66,7 @@ public:
 	
 	int IsKeyUsed (KeyboardCode kc);
 	bool SetKeyCommand (unsigned int index, KeyboardCode kc);
-	vector<CKeyCommand*> GetKeyCommands () { return m_keyCommands; }
+	std::vector<CKeyCommand*> GetKeyCommands () { return m_keyCommands; }
 
 	// This method must be called periodically to check
 	// the keyboard status and perform actions accordingly
@@ -77,15 +76,13 @@ public:
 	// Configuration methods
 	virtual void InitDefaults();
 
-//	virtual void ReadAppData(wxConfigBase* pConfObj);
 	virtual void ReadProfileData(wxConfigBase* pConfObj);
 
-//	virtual void WriteAppData(wxConfigBase* pConfObj);
 	virtual void WriteProfileData(wxConfigBase* pConfObj);  
 
 private:
 	KeyboardCode m_lastKeyCode;
-	vector<CKeyCommand*> m_keyCommands;
+	std::vector<CKeyCommand*> m_keyCommands;
 };
 
 #endif

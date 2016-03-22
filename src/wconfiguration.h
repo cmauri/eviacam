@@ -473,7 +473,7 @@ private:
     wxComboBox* m_cmbRight;
     wxComboBox* m_cmbTop;
     wxComboBox* m_cmbBottom;
-	vector<wxControl*> m_controlList;
+	std::vector<wxControl*> m_controlList;
 	int m_lastId;
 	bool m_dirty;
 };
