@@ -217,10 +217,6 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 		m_faceLocation = faces[0];
 		m_faceLocationStatus = 1;
 
-		SLOG_DEBUG("face detected: location (%d, %d) size (%d, %d)",
-			m_faceLocation.x, m_faceLocation.y,
-			m_faceLocation.width, m_faceLocation.height);
-
 		m_waitTime.Reset();
 		m_trackAreaTimeout.Reset();
 	}
@@ -473,8 +469,6 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 			m_corners[i].x += featuresTrackArea.x;
 			m_corners[i].y += featuresTrackArea.y;
 		}
-
-		SLOG_DEBUG("Features updated\n");
 	}
 
 	if (slog_get_priority() >= SLOG_PRIO_DEBUG)
