@@ -36,7 +36,7 @@ namespace eviacam {
 class KeyCommandEnable : public KeyCommand {
 public:
 	KeyCommandEnable()
-	: KeyCommand(_T("hotKeyEnable"), _("Enable eViacam"), KeyboardCode::FromWXKeyCode(WXK_SCROLL), true) {}
+	: KeyCommand(_T("hotKeyEnable"), _("Enable eViacam"), KeyboardCode::FromWXK(WXK_SCROLL), true) {}
 
 	void Command() override {
 		wxGetApp().GetController().SetEnabled(!wxGetApp().GetController().GetEnabled(), true);
@@ -46,7 +46,7 @@ public:
 class KeyCommandWorkspace : public KeyCommand {
 public:
 	KeyCommandWorkspace()
-	: KeyCommand(_T("hotKeyWorkspace"), _("Enable workspace limit"), KeyboardCode::FromWXKeyCode(WXK_F12), false) {}
+	: KeyCommand(_T("hotKeyWorkspace"), _("Enable workspace limit"), KeyboardCode::FromWXK(WXK_F12), false) {}
 
 	void Command() override {
 		wxGetApp().GetController().GetPointerAction().SetRestrictedWorkingArea(
@@ -57,7 +57,7 @@ public:
 class KeyCommandCenterPointer : public KeyCommand {
 public:
 	KeyCommandCenterPointer()
-	: KeyCommand(_T("hotKeyCenterPointer"), _("Center the pointer"), KeyboardCode::FromWXKeyCode(WXK_HOME), true) {}
+	: KeyCommand(_T("hotKeyCenterPointer"), _("Center the pointer"), KeyboardCode::FromWXK(WXK_HOME), true) {}
 
 	void Command() override {
 		wxGetApp().GetController().GetPointerAction().CenterPointer();
@@ -67,7 +67,7 @@ public:
 class KeyCommandIncreaseX : public KeyCommand {
 public:
 	KeyCommandIncreaseX()
-	: KeyCommand(("hotKeyIncreaseX"), _("Increase the X axis speed"), KeyboardCode::FromWXKeyCode(WXK_RIGHT), false) {}
+	: KeyCommand(("hotKeyIncreaseX"), _("Increase the X axis speed"), KeyboardCode::FromWXK(WXK_RIGHT), false) {}
 
 	void Command() override {
 		wxGetApp().GetController().GetPointerAction().SetXSpeed(wxGetApp().GetController().GetPointerAction().GetXSpeed()+1);
@@ -77,7 +77,7 @@ public:
 class KeyCommandIncreaseY : public KeyCommand {
 public:
 	KeyCommandIncreaseY()
-	: KeyCommand(_T("hotKeyIncreaseY"), _("Increase the Y axis speed"), KeyboardCode::FromWXKeyCode(WXK_UP), false) {}
+	: KeyCommand(_T("hotKeyIncreaseY"), _("Increase the Y axis speed"), KeyboardCode::FromWXK(WXK_UP), false) {}
 
 	void Command() override {
 		wxGetApp().GetController().GetPointerAction().SetYSpeed(
@@ -88,7 +88,7 @@ public:
 class KeyCommandDecreaseX : public KeyCommand {
 public:
 	KeyCommandDecreaseX()
-	: KeyCommand(_T("hotKeyDecreaseX"), _("Decrease the X axis speed"), KeyboardCode::FromWXKeyCode(WXK_LEFT), false) {}
+	: KeyCommand(_T("hotKeyDecreaseX"), _("Decrease the X axis speed"), KeyboardCode::FromWXK(WXK_LEFT), false) {}
 
 	void Command() override {
 		wxGetApp().GetController().GetPointerAction().SetXSpeed(
@@ -99,7 +99,7 @@ public:
 class KeyCommandDecreaseY : public KeyCommand {
 public:
 	KeyCommandDecreaseY()
-	: KeyCommand(_T("hotKeyDecreaseY"), _("Decrease the Y axis speed"), KeyboardCode::FromWXKeyCode(WXK_DOWN), false) {}
+	: KeyCommand(_T("hotKeyDecreaseY"), _("Decrease the Y axis speed"), KeyboardCode::FromWXK(WXK_DOWN), false) {}
 
 	void Command() override {
 		wxGetApp().GetController().GetPointerAction().SetYSpeed(
@@ -114,15 +114,17 @@ void HotkeyManager::HotkeyEventHandler(wxKeyEvent& event) {
 HotkeyManager::HotkeyManager() {
 	InitDefaults();
 
+#if !defined(__WXGTK__)
 	wxWindow* mainWin = wxGetApp().GetController().GetMainWindow();
 
 	bool result = mainWin->RegisterHotKey(1, wxMOD_ALT, 'A');
 	SLOG_DEBUG("Hotkey: %d", result);
 	mainWin->Bind(wxEVT_HOTKEY,	[this](wxKeyEvent& e) {	this->HotkeyEventHandler(e); });
+#endif
 }
 
 HotkeyManager::~HotkeyManager() {
-	for (int i= 0; i< m_keyCommands.size(); i++) {
+	for (size_t i= 0; i< m_keyCommands.size(); i++) {
 		delete m_keyCommands[i];
 	}
 }
@@ -163,7 +165,7 @@ void HotkeyManager::WriteProfileData(wxConfigBase* pConfObj) {
 #if defined(__WXGTK__) 
 	for (unsigned int i=0; i<m_keyCommands.size(); i++) {
 		pConfObj->Write(m_keyCommands[i]->GetName(), m_keyCommands[i]->IsEnabled());
-		pConfObj->Write(m_keyCommands[i]->GetName() + _T("Key"), static_cast<long>(m_keyCommands[i]->GetKey().GetRawValue()));
+		pConfObj->Write(m_keyCommands[i]->GetName() + _T("Key"), static_cast<long>(m_keyCommands[i]->GetKey().get_native()));
 	}
 #endif // __WXGTK___
 	pConfObj->SetPath (_T(".."));
@@ -171,16 +173,16 @@ void HotkeyManager::WriteProfileData(wxConfigBase* pConfObj) {
 
 void HotkeyManager::ReadProfileData(wxConfigBase* pConfObj) {
 	pConfObj->SetPath (_T("hotKeyManager"));
+
 #if defined(__WXGTK__) 
-	bool isEnabled;
-	long rawKeyCode;
-	
 	for (unsigned int i=0; i<m_keyCommands.size(); i++) {
+		bool isEnabled= false;
 		if(pConfObj->Read(m_keyCommands[i]->GetName(), &isEnabled))
 			m_keyCommands[i]->SetEnabled(isEnabled);
-		
+
+		int rawKeyCode= 0;
 		if (pConfObj->Read(m_keyCommands[i]->GetName() + _T("Key"), &rawKeyCode))
-			m_keyCommands[i]->SetKey(KeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
+			m_keyCommands[i]->SetKey(KeyboardCode(rawKeyCode));
 	}
 #endif // __WXGTK___
 	pConfObj->SetPath (_T(".."));

@@ -878,10 +878,10 @@ void WConfiguration::CreateControls()
 ////@end WConfiguration content construction
 #if defined(__WXGTK__)
 	for (unsigned int i=0; i<wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyEventsCount(); i++) {
-		m_choLeft->Append(_("Key:") + wxString(wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName(), wxConvLocal));
-		m_choRight->Append(_("Key:") + wxString(wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName(), wxConvLocal));
-		m_choUp->Append(_("Key:") + wxString(wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName(), wxConvLocal));
-		m_choDown->Append(_("Key:") + wxString(wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName(), wxConvLocal));
+		m_choLeft->Append(_("Key:") + wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName());
+		m_choRight->Append(_("Key:") + wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName());
+		m_choUp->Append(_("Key:") + wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName());
+		m_choDown->Append(_("Key:") + wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName());
 	}
 	
 	//Add hotkeys.
@@ -900,7 +900,7 @@ void WConfiguration::CreateHotkey (const eviacam::KeyCommand* kc, wxWindow* pare
 	sizer->Add(itemStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	m_controlList.push_back((wxControl*) itemStaticText);
 
-	wxTextCtrl* itemTextCtrl = new wxTextCtrl( parent, m_lastId+1, wxString(kc->GetKey().GetName(),wxConvUTF8), wxDefaultPosition, wxDefaultSize, 0 );
+	wxTextCtrl* itemTextCtrl = new wxTextCtrl( parent, m_lastId+1, kc->GetKey().GetName(), wxDefaultPosition, wxDefaultSize, 0 );
 	itemTextCtrl->SetEditable(false);
 	sizer->Add(itemTextCtrl, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	m_controlList.push_back((wxControl*) itemTextCtrl);
@@ -1993,7 +1993,7 @@ void WConfiguration::OnHotkeyButtonClick( wxCommandEvent& event )
 		if (dlgGetKey.ShowModal()== wxID_YES) {
 			KeyboardCode kc= dlgGetKey.GetKeyCode();
 			if (wxGetApp().GetController().getHotkeyManager().SetKeyCommand((event.GetId()-FIRST_CONTROL_ID-3)/4, kc)) {
-				((wxTextCtrl*)m_controlList[event.GetId()-FIRST_CONTROL_ID-2])->SetValue(wxString(kc.GetName(),wxConvUTF8));		
+				((wxTextCtrl*)m_controlList[event.GetId()-FIRST_CONTROL_ID-2])->SetValue(kc.GetName());
 			} else {
 				wxMessageDialog dlg (NULL, _("This key is used by another command.\nDo you want to try another key?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
 				if (dlg.ShowModal()== wxID_YES) isFinished= false;

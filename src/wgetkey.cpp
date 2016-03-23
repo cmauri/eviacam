@@ -213,7 +213,7 @@ void WGetKey::OnKeyUp( wxKeyEvent& event )
 		// Note that GetRawKeyCode() returns the KeySym on wxGTK (untested for
 		// wxMSW) instead of the hardware scan code (KeyCode) as the documentation
 		// explains
-		m_keyCode= KeyboardCode::FromVirtualKeyCode(event.GetRawKeyCode()); 
+		m_keyCode= KeyboardCode(event.GetRawKeyCode());
 		EndModal(wxID_YES);
 	}
     event.Skip(false);
