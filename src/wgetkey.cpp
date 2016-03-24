@@ -39,9 +39,10 @@
 #include <wx/timer.h>
 #include <wx/defs.h>
 
+#include "simplelog.h"
+
 ////@begin XPM images
 ////@end XPM images
-//#define TIMER_ID 1234
 
 /*!
  * WGetKey type definition
@@ -69,13 +70,11 @@ END_EVENT_TABLE()
  * WGetKey constructors
  */
 
-WGetKey::WGetKey() //: m_timer(this, TIMER_ID)
-{
+WGetKey::WGetKey() {
     Init();
 }
 
-WGetKey::WGetKey( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) //: m_timer(this, TIMER_ID)
-{
+WGetKey::WGetKey( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) {
     Init();
     Create(parent, id, caption, pos, size, style);
 }
@@ -84,8 +83,7 @@ WGetKey::WGetKey( wxWindow* parent, wxWindowID id, const wxString& caption, cons
  * Activationkey creator
  */
 
-bool WGetKey::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
-{
+bool WGetKey::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) {
 ////@begin WGetKey creation
     SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
@@ -143,7 +141,7 @@ void WGetKey::CreateControls()
     m_txtKey->Connect(ID_TEXTCTRL, wxEVT_LEFT_DOWN, wxMouseEventHandler(WGetKey::OnLeftDown), NULL, this);
     m_txtKey->Connect(ID_TEXTCTRL, wxEVT_KEY_UP, wxKeyEventHandler(WGetKey::OnKeyUp), NULL, this);
 ////@end WGetKey content construction
-	//m_timer.Start(50);
+
 	m_txtKey->SetFocus();
 }
 
@@ -183,23 +181,6 @@ wxIcon WGetKey::GetIconResource( const wxString& name )
 ////@end WGetKey icon retrieval
 }
 
-/*
-void WGetKey::OnTimer(wxTimerEvent& event)
-{
-	CKeyboardCode kc = CKeyboardCode::ReadKeyCode();
-	
-	if (kc.IsValid()) {
-		if (kc== CKeyboardCode::FromWXKeyCode (WXK_ESCAPE)) {
-			EndModal(wxID_NO);		
-		} else {		
-			m_keyCode = kc;
-			EndModal(wxID_YES);
-		}
-		m_timer.Stop();	
-	}
-	event.Skip(false);
-}*/
-
 /*!
  * wxEVT_KEY_UP event handler for ID_ACTIVATIONKEY
  */
@@ -210,10 +191,13 @@ void WGetKey::OnKeyUp( wxKeyEvent& event )
 		EndModal(wxID_NO);
 	}
 	else {
-		// Note that GetRawKeyCode() returns the KeySym on wxGTK (untested for
-		// wxMSW) instead of the hardware scan code (KeyCode) as the documentation
-		// explains
-		m_keyCode= KeyboardCode(event.GetRawKeyCode());
+		// Note that GetRawKeyCode() returns the KeySym on wxGTK and the
+		// virtual key code on Windows. See:
+		// http://docs.wxwidgets.org/trunk/classwx_key_event.html#a6fddcd170d05b0852a7eb2a0cb730795
+		// and
+		// https://msdn.microsoft.com/en-us/library/windows/desktop/gg153546(v=vs.85).aspx
+		wxUint32 rkc= event.GetRawKeyCode();
+		m_keyCode= KeyboardCode(rkc);
 		EndModal(wxID_YES);
 	}
     event.Skip(false);
@@ -231,6 +215,5 @@ KeyboardCode WGetKey::GetKeyCode()
 void WGetKey::OnLeftDown( wxMouseEvent& event )
 {
 	EndModal(wxID_NO);
-	//m_timer.Stop();	
 	event.Skip(false);
 }

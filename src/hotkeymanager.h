@@ -30,26 +30,27 @@ namespace eviacam {
 /**
  * Stores an arbitrary command associated with a key along with a description
  */
-class KeyCommand {
+class HotKey {
 public:
-	KeyCommand (const wxString& name, const wxString& desc, KeyboardCode key, bool enabled)
-	: name_(name), description_(desc), key_(key), enabled_(enabled) {}
-	virtual ~KeyCommand() {}
+	HotKey (int id, const wxString& name, const wxString& desc, KeyboardCode key)
+	: id_(id), name_(name), description_(desc), key_(key), enabled_(false) {}
+	virtual ~HotKey() {}
 
 	const wxString& GetName () const { return name_; }
 	const wxString& GetDescription () const { return description_; }
 	const KeyboardCode& GetKey () const { return key_; }
-
 	bool IsEnabled () const { return enabled_; }
-	void SetEnabled (bool value) { enabled_= value; }
 
+protected:
 	// Command to be defined by derived classes
 	virtual void Command()= 0;
 
 private:
 	friend class HotkeyManager;
 	void SetKey (KeyboardCode key) { key_= key; }
+	void SetEnabled (bool value) { enabled_= value; }
 
+	int id_;
 	wxString name_;
 	wxString description_;
 	KeyboardCode key_;
@@ -64,9 +65,14 @@ public:
 	HotkeyManager();
 	~HotkeyManager();
 	
-	bool SetKeyCommand (unsigned int index, KeyboardCode kc);
+	// Query available hotkeys
+	size_t get_num_hotkeys() const { return m_HotKeys.size(); }
+	HotKey& GetHotKey(int index) { return *m_HotKeys[index]; };
 
-	const std::vector<KeyCommand*>& GetKeyCommands() const { return m_keyCommands; }
+	// Manage hotkeys
+	bool SetHotKeyKeyboardCode (HotKey& hk, KeyboardCode kc);
+	bool EnableHotKey(HotKey& hk);
+	void DisableHotKey(HotKey& hk);
 
 	// This method is called from secondary thread (linux only) to poll the state
 	// of the keyboard and trigger the command associated with a hotkey
@@ -81,10 +87,17 @@ public:
 
 private:
 	void HotkeyEventHandler(wxKeyEvent& event);
-	int IsKeyUsed (KeyboardCode kc) const;
+
+	// Look for a hot key with a certain KeyboardCode.
+	// Return the index of the hot key or -1 if not found
+	int FindByKeyboardCode (KeyboardCode kc) const;
+
+	// Disable and remove all hotkeys
+	void ResetHotKeys();
+
 
 	KeyboardCode m_lastKeyCode;
-	std::vector<KeyCommand*> m_keyCommands;
+	std::vector<HotKey*> m_HotKeys;
 };
 
 } // namespace

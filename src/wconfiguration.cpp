@@ -280,12 +280,8 @@ void WConfiguration::Init()
 #if defined(__WXGTK__)
     m_choDown = NULL;
 #endif
-#if defined(__WXGTK__)
     m_panelKeys = NULL;
-#endif
-#if defined(__WXGTK__)
     m_hotkeysSizer = NULL;
-#endif
 #if defined(__WXGTK__)
     m_chkStartup = NULL;
 #endif
@@ -665,7 +661,6 @@ void WConfiguration::CreateControls()
 
     itemNotebook4->AddPage(m_panelClick, _("Click"));
 
-#if defined(__WXGTK__)
     wxPanel* itemPanel80 = new wxPanel( itemNotebook4, ID_PANEL_KEYS, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer81 = new wxBoxSizer(wxVERTICAL);
     itemPanel80->SetSizer(itemBoxSizer81);
@@ -683,11 +678,7 @@ void WConfiguration::CreateControls()
     m_hotkeysSizer->AddGrowableCol(2);
     m_hotkeysSizer->AddGrowableCol(3);
 
-#endif
-
-#if defined(__WXGTK__)
     itemNotebook4->AddPage(itemPanel80, _("Hotkeys"));
-#endif
 
     wxPanel* itemPanel85 = new wxPanel( itemNotebook4, ID_PANEL_ADVANCED, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer86 = new wxBoxSizer(wxVERTICAL);
@@ -883,30 +874,27 @@ void WConfiguration::CreateControls()
 		m_choUp->Append(_("Key:") + wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName());
 		m_choDown->Append(_("Key:") + wxGetApp().GetController().GetPointerAction().GetGestureClick().GetKeyboardCode(i).GetName());
 	}
-	
-	//Add hotkeys.
-	for (unsigned int j=0; j<wxGetApp().GetController().getHotkeyManager().GetKeyCommands().size(); j++) {
-		CreateHotkey (wxGetApp().GetController().getHotkeyManager().GetKeyCommands()[j], m_panelKeys, m_hotkeysSizer);
-	}
-	
 #endif
-
+	//Add hotkeys
+	eviacam::HotkeyManager& hkManager= wxGetApp().GetController().getHotkeyManager();
+	for (unsigned int j=0; j< hkManager.get_num_hotkeys(); j++) {
+		CreateHotkey (hkManager.GetHotKey(j), m_panelKeys, m_hotkeysSizer);
+	}
 }
 
-
-void WConfiguration::CreateHotkey (const eviacam::KeyCommand* kc, wxWindow* parent, wxSizer* sizer)
+void WConfiguration::CreateHotkey (const eviacam::HotKey& kc, wxWindow* parent, wxSizer* sizer)
 {
-	wxStaticText* itemStaticText = new wxStaticText( parent, m_lastId, wxString((const wxChar*)kc->GetDescription(),wxConvUTF8), wxDefaultPosition, wxDefaultSize, 0 );
+	wxStaticText* itemStaticText = new wxStaticText( parent, m_lastId, wxString((const wxChar*)kc.GetDescription(),wxConvUTF8), wxDefaultPosition, wxDefaultSize, 0 );
 	sizer->Add(itemStaticText, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	m_controlList.push_back((wxControl*) itemStaticText);
 
-	wxTextCtrl* itemTextCtrl = new wxTextCtrl( parent, m_lastId+1, kc->GetKey().GetName(), wxDefaultPosition, wxDefaultSize, 0 );
+	wxTextCtrl* itemTextCtrl = new wxTextCtrl( parent, m_lastId+1, kc.GetKey().GetName(), wxDefaultPosition, wxDefaultSize, 0 );
 	itemTextCtrl->SetEditable(false);
 	sizer->Add(itemTextCtrl, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	m_controlList.push_back((wxControl*) itemTextCtrl);
 
 	wxCheckBox* itemCheckBox = new wxCheckBox( parent, m_lastId+2, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	itemCheckBox->SetValue(kc->IsEnabled());
+	itemCheckBox->SetValue(kc.IsEnabled());
 	sizer->Add(itemCheckBox, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 	m_controlList.push_back((wxControl*) itemCheckBox);
 
@@ -1974,7 +1962,12 @@ void WConfiguration::OnChoCpuUsageSelected( wxCommandEvent& event )
 
 void WConfiguration::OnHotkeyCheckboxClick( wxCommandEvent& event )
 {
-	wxGetApp().GetController().getHotkeyManager().GetKeyCommands()[(event.GetId()-FIRST_CONTROL_ID-2)/4]->SetEnabled((event.GetInt()? true : false));
+	eviacam::HotkeyManager& hkm= wxGetApp().GetController().getHotkeyManager();
+	// TODO: this is ugly...
+	eviacam::HotKey& hk= hkm.GetHotKey((event.GetId()-FIRST_CONTROL_ID-2)/4);
+	if (event.GetInt()) hkm.EnableHotKey(hk);
+	else hkm.DisableHotKey(hk);
+
 	event.Skip(false);
 }
 
@@ -1986,13 +1979,15 @@ void WConfiguration::OnHotkeyCheckboxClick( wxCommandEvent& event )
 void WConfiguration::OnHotkeyButtonClick( wxCommandEvent& event )
 {
 	WGetKey dlgGetKey(this);
-	bool isFinished;
+	eviacam::HotkeyManager& hkm= wxGetApp().GetController().getHotkeyManager();
+	eviacam::HotKey& hk= hkm.GetHotKey((event.GetId()-FIRST_CONTROL_ID-3)/4);
 
+	bool isFinished= true;
 	do {
 		isFinished = true;
 		if (dlgGetKey.ShowModal()== wxID_YES) {
 			KeyboardCode kc= dlgGetKey.GetKeyCode();
-			if (wxGetApp().GetController().getHotkeyManager().SetKeyCommand((event.GetId()-FIRST_CONTROL_ID-3)/4, kc)) {
+			if (hkm.SetHotKeyKeyboardCode(hk, kc)) {
 				((wxTextCtrl*)m_controlList[event.GetId()-FIRST_CONTROL_ID-2])->SetValue(kc.GetName());
 			} else {
 				wxMessageDialog dlg (NULL, _("This key is used by another command.\nDo you want to try another key?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );

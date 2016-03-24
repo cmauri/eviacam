@@ -7171,7 +7171,7 @@ buttons."</string>
                   <string name="proxy-Implementation filename">""</string>
                   <string name="proxy-Member variable name">""</string>
                   <string name="proxy-Name">""</string>
-                  <string name="proxy-Platform">"__WXGTK__"</string>
+                  <string name="proxy-Platform">""</string>
                   <bool name="proxy-Separate files">0</bool>
                   <long name="proxy-Stretch factor">0</long>
                   <string name="proxy-Tab icon">""</string>
