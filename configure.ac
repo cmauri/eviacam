@@ -1,9 +1,9 @@
-AC_INIT([eviacam], 2.0.3)
+AC_INIT([eviacam], 2.1.0)
 AC_CONFIG_SRCDIR([src/eviacamapp.cpp])
 AC_PREREQ(2.61)
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE
-COPYRIGHT="© 2008-15"
+COPYRIGHT="© 2008-16"
 PUBLISHER="César Mauri Loba"
 
 AC_SUBST(COPYRIGHT, [`echo $COPYRIGHT`])
