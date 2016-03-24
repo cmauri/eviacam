@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2015-10-10 18:46+0200\n"
+"POT-Creation-Date: 2016-03-24 13:48+0100\n"
 "PO-Revision-Date: 2014-12-25 13:18+0000\n"
 "Last-Translator: Agnius Svigaris <agniussv@gmail.com>\n"
 "Language-Team: Lithuanian (http://www.transifex.com/projects/p/eviacam/"
@@ -24,31 +24,31 @@ msgstr ""
 msgid "Configuration"
 msgstr "Nustatymai"
 
-#: src/wconfiguration.cpp:352
+#: src/wconfiguration.cpp:348
 msgid "Motion calibration"
 msgstr "Judesio kalibravimas"
 
-#: src/wconfiguration.cpp:357 src/wwizard.cpp:1620
+#: src/wconfiguration.cpp:353 src/wwizard.cpp:1620
 msgid "X axis speed"
 msgstr "X ašies greitis"
 
-#: src/wconfiguration.cpp:362
+#: src/wconfiguration.cpp:358
 msgid "Sets response sensitivity for the X axis."
 msgstr "Nustatyti X ašies reagavimo jautrumą."
 
-#: src/wconfiguration.cpp:365 src/wwizard.cpp:1629
+#: src/wconfiguration.cpp:361 src/wwizard.cpp:1629
 msgid "Y axis speed"
 msgstr "Y ašies greitis"
 
-#: src/wconfiguration.cpp:370
+#: src/wconfiguration.cpp:366
 msgid "Sets response sensitivity for the Y axis."
 msgstr "Nustatyti Y ašies reagavimo jautrumą."
 
-#: src/wconfiguration.cpp:373
+#: src/wconfiguration.cpp:369
 msgid "Acceleration"
 msgstr "Pagreitis"
 
-#: src/wconfiguration.cpp:378
+#: src/wconfiguration.cpp:374
 msgid ""
 "Sets pointer's acceleration.\n"
 "0 means no acceleration and\n"
@@ -58,11 +58,11 @@ msgstr ""
 "0 nėra greitėjimo ir\n"
 "5 maksimalus greitėjimas"
 
-#: src/wconfiguration.cpp:381
+#: src/wconfiguration.cpp:377
 msgid "Smoothness"
 msgstr "Sklandumas"
 
-#: src/wconfiguration.cpp:386
+#: src/wconfiguration.cpp:382
 msgid ""
 "Tremor reduction filter.\n"
 "0 means no filter and \n"
@@ -72,11 +72,11 @@ msgstr ""
 "0 išjungta ir\n"
 "8 maksimumas."
 
-#: src/wconfiguration.cpp:389
+#: src/wconfiguration.cpp:385
 msgid "Motion threshold"
 msgstr "Judesio riba"
 
-#: src/wconfiguration.cpp:394
+#: src/wconfiguration.cpp:390
 msgid ""
 "Minimum displacement (in pixels)\n"
 "to start moving pointer."
@@ -84,23 +84,23 @@ msgstr ""
 "Mažiausias poslinkis (pikseliais),\n"
 "kad pradėtų judėti žymeklis"
 
-#: src/wconfiguration.cpp:406
+#: src/wconfiguration.cpp:402
 msgid "Assisted calibration"
 msgstr "Asistuojanti kalibracija"
 
-#: src/wconfiguration.cpp:409
+#: src/wconfiguration.cpp:405
 msgid "Motion"
 msgstr "Judesys"
 
-#: src/wconfiguration.cpp:415
+#: src/wconfiguration.cpp:411
 msgid "Workspace limit"
 msgstr "Darbo srities riba"
 
-#: src/wconfiguration.cpp:418 src/hotkeymanager.cpp:49
+#: src/wconfiguration.cpp:414 src/hotkeymanager.cpp:59
 msgid "Enable workspace limit"
 msgstr "Įjungti darbo srities ribą"
 
-#: src/wconfiguration.cpp:421
+#: src/wconfiguration.cpp:417
 msgid ""
 "Confines the mouse pointer\n"
 "to the selected area."
@@ -108,64 +108,64 @@ msgstr ""
 "Kursoriaus apribojimas\n"
 "pažymėtoje srityje."
 
-#: src/wconfiguration.cpp:430
+#: src/wconfiguration.cpp:426
 msgid "Top"
 msgstr "Viršus"
 
-#: src/wconfiguration.cpp:435
+#: src/wconfiguration.cpp:431
 msgid "Top limit workspace."
 msgstr "Darbo srities viršaus riba."
 
-#: src/wconfiguration.cpp:439 src/wconfiguration.cpp:453
-#: src/wconfiguration.cpp:465 src/wconfiguration.cpp:479
+#: src/wconfiguration.cpp:435 src/wconfiguration.cpp:449
+#: src/wconfiguration.cpp:461 src/wconfiguration.cpp:475
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:444 src/clickwindowbitmap.cpp:236
+#: src/wconfiguration.cpp:440
 msgid "Left"
 msgstr "Kairė"
 
-#: src/wconfiguration.cpp:449
+#: src/wconfiguration.cpp:445
 msgid "Left limit workspace."
 msgstr "Darbo srities kairės riba."
 
-#: src/wconfiguration.cpp:456 src/clickwindowbitmap.cpp:250
+#: src/wconfiguration.cpp:452
 msgid "Right"
 msgstr "Dešinė"
 
-#: src/wconfiguration.cpp:461
+#: src/wconfiguration.cpp:457
 msgid "Right limit workspace."
 msgstr "Darbo srities dešinės riba."
 
-#: src/wconfiguration.cpp:470
+#: src/wconfiguration.cpp:466
 msgid "Bottom"
 msgstr "Apačia"
 
-#: src/wconfiguration.cpp:475
+#: src/wconfiguration.cpp:471
 msgid "Bottom limit workspace."
 msgstr "Darbo srities apačios riba."
 
-#: src/wconfiguration.cpp:482
+#: src/wconfiguration.cpp:478
 msgid "Pointer wrapping"
 msgstr "Kursoriaus pernešimas"
 
-#: src/wconfiguration.cpp:485
+#: src/wconfiguration.cpp:481
 msgid "Allow wrapping the pointer around the working area"
 msgstr "Kursoriaus apribojimo ribų atjungimas"
 
-#: src/wconfiguration.cpp:489
+#: src/wconfiguration.cpp:485
 msgid "Workspace"
 msgstr "Darbo sritis"
 
-#: src/wconfiguration.cpp:495
+#: src/wconfiguration.cpp:491
 msgid "Dwell click"
 msgstr "Automatinis paspaudimas"
 
-#: src/wconfiguration.cpp:498
+#: src/wconfiguration.cpp:494
 msgid "Enable dwell click"
 msgstr "Įjungti automatinį paspaudimą"
 
-#: src/wconfiguration.cpp:501
+#: src/wconfiguration.cpp:497
 msgid ""
 "Enable/Disable automatic (dwell)\n"
 "click generation mechanism."
@@ -173,11 +173,11 @@ msgstr ""
 "Įjungti išjungti automatinį  (dwell)\n"
 "paspaudimo generavimo mechanizmą."
 
-#: src/wconfiguration.cpp:508
+#: src/wconfiguration.cpp:504
 msgid "Dwell time (ds)"
 msgstr "Automatinio paspaudimo laikas (ds)"
 
-#: src/wconfiguration.cpp:513
+#: src/wconfiguration.cpp:509
 msgid ""
 "Time to wait (deciseconds) \n"
 "before sending a click."
@@ -185,11 +185,11 @@ msgstr ""
 "Laiko uždelsimas (ds)\n"
 "prieš siunčian paspaudimą."
 
-#: src/wconfiguration.cpp:516
+#: src/wconfiguration.cpp:512
 msgid "Dwell area"
 msgstr "Auto paspaudimo sritis"
 
-#: src/wconfiguration.cpp:521
+#: src/wconfiguration.cpp:517
 msgid ""
 "Maximum allowed displacement\n"
 "before restarting the dwell time\n"
@@ -199,11 +199,11 @@ msgstr ""
 "kursoriaus autopaspaudimo\n"
 "suveikimui."
 
-#: src/wconfiguration.cpp:526
+#: src/wconfiguration.cpp:522
 msgid "Allow consecutive clicks"
 msgstr "Leisti nepertraukiamus paspaudimus"
 
-#: src/wconfiguration.cpp:529
+#: src/wconfiguration.cpp:525
 msgid ""
 "Send multiple clicks\n"
 "when the pointer is stopped."
@@ -211,51 +211,51 @@ msgstr ""
 "Leisti siųsti keleta paspaudimų\n"
 "kai žymeklis sustojęs."
 
-#: src/wconfiguration.cpp:532
+#: src/wconfiguration.cpp:528
 msgid "Beep on click"
 msgstr "Spustelėjus pyptelti"
 
-#: src/wconfiguration.cpp:535
+#: src/wconfiguration.cpp:531
 msgid "Play sound when click generated."
 msgstr "Sugroti garsą kai paspaudimas sugeneruotas"
 
-#: src/wconfiguration.cpp:539
+#: src/wconfiguration.cpp:535
 msgid "Allow visual alerts"
 msgstr "Leisti vizdo perspėjimus"
 
-#: src/wconfiguration.cpp:544
+#: src/wconfiguration.cpp:540
 msgid "Click window"
 msgstr "Spauskite langą"
 
-#: src/wconfiguration.cpp:547
+#: src/wconfiguration.cpp:543
 msgid "Show Click Window"
 msgstr "Rodyti paspaustą langą"
 
-#: src/wconfiguration.cpp:553
+#: src/wconfiguration.cpp:549
 msgid "Design:"
 msgstr "Dizainas:"
 
-#: src/wconfiguration.cpp:557 src/wconfiguration.cpp:753
+#: src/wconfiguration.cpp:553 src/wconfiguration.cpp:744
 msgid "Normal"
 msgstr "Normalus"
 
-#: src/wconfiguration.cpp:558
+#: src/wconfiguration.cpp:554
 msgid "Thin"
 msgstr "Plonas"
 
-#: src/wconfiguration.cpp:562
+#: src/wconfiguration.cpp:558
 msgid "Behaviour:"
 msgstr "Elgesys:"
 
-#: src/wconfiguration.cpp:566
+#: src/wconfiguration.cpp:562
 msgid "Normal mode"
 msgstr "Įprastas režimas"
 
-#: src/wconfiguration.cpp:567
+#: src/wconfiguration.cpp:563
 msgid "Fast mode"
 msgstr "Greitas režimas"
 
-#: src/wconfiguration.cpp:570
+#: src/wconfiguration.cpp:566
 msgid ""
 "Fast mode enables click type\n"
 "selection by hovering the mouse\n"
@@ -267,113 +267,113 @@ msgstr ""
 "žymekliu spauskite lango\n"
 "mygtuką"
 
-#: src/wconfiguration.cpp:574
+#: src/wconfiguration.cpp:570
 msgid "Location:"
 msgstr "Vieta:"
 
-#: src/wconfiguration.cpp:580
+#: src/wconfiguration.cpp:576
 msgid "Floating horizontal"
 msgstr "Slankus horizontaliai"
 
-#: src/wconfiguration.cpp:581
+#: src/wconfiguration.cpp:577
 msgid "Floating vertical"
 msgstr "Slankus vertikaliai"
 
-#: src/wconfiguration.cpp:582
+#: src/wconfiguration.cpp:578
 msgid "Top docked"
 msgstr "Sumažintas viršuje"
 
-#: src/wconfiguration.cpp:583
+#: src/wconfiguration.cpp:579
 msgid "Bottom docked"
 msgstr "Sumažintas apačioje"
 
-#: src/wconfiguration.cpp:584
+#: src/wconfiguration.cpp:580
 msgid "Left docked"
 msgstr "Sumažintas kairėje"
 
-#: src/wconfiguration.cpp:585
+#: src/wconfiguration.cpp:581
 msgid "Right docked"
 msgstr "Sumažintas dešinėje"
 
-#: src/wconfiguration.cpp:591
+#: src/wconfiguration.cpp:587
 msgid "Auto-hide"
 msgstr "Automatiškai slėpti"
 
-#: src/wconfiguration.cpp:600 src/wwizard.cpp:898
+#: src/wconfiguration.cpp:596 src/wwizard.cpp:898
 msgid "Gesture click"
 msgstr "Gestas spustelti"
 
-#: src/wconfiguration.cpp:603
+#: src/wconfiguration.cpp:599
 msgid "Enable gesture click"
 msgstr "Įjungti gestu paspaudimą"
 
-#: src/wconfiguration.cpp:609
+#: src/wconfiguration.cpp:605
 msgid "Move left:"
 msgstr "Judėti į kairę"
 
-#: src/wconfiguration.cpp:613 src/wconfiguration.cpp:626
-#: src/wconfiguration.cpp:639 src/wconfiguration.cpp:652 src/wviacam.cpp:215
+#: src/wconfiguration.cpp:609 src/wconfiguration.cpp:622
+#: src/wconfiguration.cpp:635 src/wconfiguration.cpp:648 src/wviacam.cpp:215
 msgid "Disable"
 msgstr "Uždrausti"
 
-#: src/wconfiguration.cpp:614 src/wconfiguration.cpp:627
-#: src/wconfiguration.cpp:640 src/wconfiguration.cpp:653 src/wwizard.cpp:1068
+#: src/wconfiguration.cpp:610 src/wconfiguration.cpp:623
+#: src/wconfiguration.cpp:636 src/wconfiguration.cpp:649 src/wwizard.cpp:1068
 msgid "Left click"
 msgstr "Kairys paspaudimas"
 
-#: src/wconfiguration.cpp:615 src/wconfiguration.cpp:628
-#: src/wconfiguration.cpp:641 src/wconfiguration.cpp:654 src/wwizard.cpp:1101
+#: src/wconfiguration.cpp:611 src/wconfiguration.cpp:624
+#: src/wconfiguration.cpp:637 src/wconfiguration.cpp:650 src/wwizard.cpp:1101
 msgid "Middle click"
 msgstr "Vidurinis paspaudimas"
 
-#: src/wconfiguration.cpp:616 src/wconfiguration.cpp:629
-#: src/wconfiguration.cpp:642 src/wconfiguration.cpp:655 src/wwizard.cpp:1080
+#: src/wconfiguration.cpp:612 src/wconfiguration.cpp:625
+#: src/wconfiguration.cpp:638 src/wconfiguration.cpp:651 src/wwizard.cpp:1080
 msgid "Right click"
 msgstr "Dešinys paspaudimas"
 
-#: src/wconfiguration.cpp:617 src/wconfiguration.cpp:630
-#: src/wconfiguration.cpp:643 src/wconfiguration.cpp:656 src/wwizard.cpp:1090
+#: src/wconfiguration.cpp:613 src/wconfiguration.cpp:626
+#: src/wconfiguration.cpp:639 src/wconfiguration.cpp:652 src/wwizard.cpp:1090
 msgid "Double click"
 msgstr "Dvigubas paspaudimas"
 
-#: src/wconfiguration.cpp:618 src/wconfiguration.cpp:631
-#: src/wconfiguration.cpp:644 src/wconfiguration.cpp:657
+#: src/wconfiguration.cpp:614 src/wconfiguration.cpp:627
+#: src/wconfiguration.cpp:640 src/wconfiguration.cpp:653
 msgid "Drag click"
 msgstr "Vilkti paspaudus"
 
-#: src/wconfiguration.cpp:622
+#: src/wconfiguration.cpp:618
 msgid "Move right:"
 msgstr "Perkelti į dešinę:"
 
-#: src/wconfiguration.cpp:635
+#: src/wconfiguration.cpp:631
 msgid "Move up:"
 msgstr "Perkelti į viršų:"
 
-#: src/wconfiguration.cpp:648
+#: src/wconfiguration.cpp:644
 msgid "Move down:"
 msgstr "Perkelti į apačia:"
 
-#: src/wconfiguration.cpp:666
+#: src/wconfiguration.cpp:662
 msgid "Click"
 msgstr "Spustelėjimas"
 
-#: src/wconfiguration.cpp:673 src/wconfiguration.cpp:689
+#: src/wconfiguration.cpp:668 src/wconfiguration.cpp:681
 msgid "Hotkeys"
 msgstr "Spartusis mygtukai"
 
-#: src/wconfiguration.cpp:696
+#: src/wconfiguration.cpp:687
 msgid "Startup"
 msgstr "Paleidimas"
 
-#: src/wconfiguration.cpp:700 src/wwizard.cpp:1244
+#: src/wconfiguration.cpp:691 src/wwizard.cpp:1244
 msgid "Start eViacam at user logon"
 msgstr "Paleisti eViacam vartotojui prisijungus"
 
-#: src/wconfiguration.cpp:705 src/wwizard.cpp:1250
+#: src/wconfiguration.cpp:696 src/wwizard.cpp:1250
 msgid "Enable eViacam at startup"
 msgstr "Įgalinti eViacam paleisties metu"
 
-#: src/wconfiguration.cpp:708 src/wwizard.cpp:1253
+#: src/wconfiguration.cpp:699 src/wwizard.cpp:1253
 msgid ""
 "If checked the program automatically \n"
 "enables cursor control at startup."
@@ -381,27 +381,27 @@ msgstr ""
 "Jei pažymėta, programa automatiškai\n"
 "įjungia žymeklio valdymą paleisties metu."
 
-#: src/wconfiguration.cpp:711
+#: src/wconfiguration.cpp:702
 msgid "On-screen keyboard command"
 msgstr "Ekraninė klaviatūra"
 
-#: src/wconfiguration.cpp:718
+#: src/wconfiguration.cpp:709
 msgid "Command to run an external on-screen keyboard application."
 msgstr "Komanda ekraninės klaviatūros paleidimo."
 
-#: src/wconfiguration.cpp:721
+#: src/wconfiguration.cpp:712
 msgid "Browse..."
 msgstr "Pasirinkti..."
 
-#: src/wconfiguration.cpp:726
+#: src/wconfiguration.cpp:717
 msgid "Face localization and tracking"
 msgstr "Veido lokalizavimas ir sekimas"
 
-#: src/wconfiguration.cpp:731
+#: src/wconfiguration.cpp:722
 msgid "Use legacy face tracking algorithm"
 msgstr "Naudokite atnaujintą veido sekimo algoritmą"
 
-#: src/wconfiguration.cpp:734
+#: src/wconfiguration.cpp:725
 msgid ""
 "Use old face tracking method\n"
 "(not recommended)."
@@ -409,11 +409,11 @@ msgstr ""
 "Naudoti senąjį veido sekimo metodą \n"
 "(nerekomenduojama)."
 
-#: src/wconfiguration.cpp:739
+#: src/wconfiguration.cpp:730
 msgid "Locate face automatically"
 msgstr "Rasti veidą automatiškai"
 
-#: src/wconfiguration.cpp:742
+#: src/wconfiguration.cpp:733
 msgid ""
 "When enabled tries to automatically\n"
 "detect your face and center the\n"
@@ -422,136 +422,136 @@ msgstr ""
 "Automatinis veido vietos ir sekimo\n"
 "centro nustatymas"
 
-#: src/wconfiguration.cpp:747
+#: src/wconfiguration.cpp:738
 msgid "CPU usage"
 msgstr "CPU naudojimas"
 
-#: src/wconfiguration.cpp:751
+#: src/wconfiguration.cpp:742
 msgid "Lowest"
 msgstr "Mažiausia"
 
-#: src/wconfiguration.cpp:752
+#: src/wconfiguration.cpp:743
 msgid "Low"
 msgstr "Mažai"
 
-#: src/wconfiguration.cpp:754
+#: src/wconfiguration.cpp:745
 msgid "High"
 msgstr "Aukštas"
 
-#: src/wconfiguration.cpp:755
+#: src/wconfiguration.cpp:746
 msgid "Highest"
 msgstr "Aukščiausias"
 
-#: src/wconfiguration.cpp:759
+#: src/wconfiguration.cpp:750
 msgid "Stop pointer when face not detected"
 msgstr "Sustabdyti žymeklį, kai neaptiktas veidas"
 
-#: src/wconfiguration.cpp:762
+#: src/wconfiguration.cpp:753
 msgid "eViacam is only enabled when face is detected."
 msgstr "eViacam aktyvuojamas, kai aptinkamas veidas."
 
-#: src/wconfiguration.cpp:768
+#: src/wconfiguration.cpp:759
 msgid "After"
 msgstr "Po"
 
-#: src/wconfiguration.cpp:774
+#: src/wconfiguration.cpp:765
 msgid "seconds"
 msgstr "sekundės"
 
-#: src/wconfiguration.cpp:781
+#: src/wconfiguration.cpp:772
 msgid "Mouse actions"
 msgstr "Pelės veiksmas"
 
-#: src/wconfiguration.cpp:788
+#: src/wconfiguration.cpp:779
 msgid "Increase this value if some application ignores click events."
 msgstr "Padiddinti reikšmę jei yra ignoruojamas veiksmas"
 
-#: src/wconfiguration.cpp:791
+#: src/wconfiguration.cpp:782
 msgid "ms delay between up and down events"
 msgstr "ms uždelsimas tarp aukštyn ir žemyn eventų"
 
-#: src/wconfiguration.cpp:794
+#: src/wconfiguration.cpp:785
 msgid "Advanced"
 msgstr "Išplėstinė"
 
-#: src/wconfiguration.cpp:796
+#: src/wconfiguration.cpp:787
 msgid "Profile options"
 msgstr "Profilio nustatymai"
 
-#: src/wconfiguration.cpp:802
+#: src/wconfiguration.cpp:793
 msgid "Profile management"
 msgstr "Profilio valdymas"
 
-#: src/wconfiguration.cpp:807
+#: src/wconfiguration.cpp:798
 msgid "Select profile:"
 msgstr "Pasirinkti profilį:"
 
-#: src/wconfiguration.cpp:809 src/wconfiguration.cpp:815
+#: src/wconfiguration.cpp:800 src/wconfiguration.cpp:806
 msgid "Chooses desired active profile"
 msgstr "Pasirinkite norimą aktyvų profilį"
 
-#: src/wconfiguration.cpp:818 src/wconfiguration.cpp:1568
+#: src/wconfiguration.cpp:809 src/wconfiguration.cpp:1546
 msgid "Add profile"
 msgstr "Pridėti profilį"
 
-#: src/wconfiguration.cpp:821
+#: src/wconfiguration.cpp:812
 msgid "Delete profile"
 msgstr "Ištrinti profilį"
 
-#: src/wconfiguration.cpp:826
+#: src/wconfiguration.cpp:817
 msgid "Camera"
 msgstr "Kamera"
 
-#: src/wconfiguration.cpp:835
+#: src/wconfiguration.cpp:826
 msgid "Settings..."
 msgstr "Nustatymai..."
 
-#: src/wconfiguration.cpp:838
+#: src/wconfiguration.cpp:829
 msgid "Change"
 msgstr "Pakeisti"
 
-#: src/wconfiguration.cpp:843
+#: src/wconfiguration.cpp:834
 msgid "Language"
 msgstr "Kalba"
 
-#: src/wconfiguration.cpp:848
+#: src/wconfiguration.cpp:839
 msgid "Language:"
 msgstr "Kalba:"
 
-#: src/wconfiguration.cpp:855 src/checkupdates_ui.h:60
+#: src/wconfiguration.cpp:846 src/checkupdates_ui.h:60
 msgid "Check for updates"
 msgstr "Patikrinti atnaujinimus"
 
-#: src/wconfiguration.cpp:858
+#: src/wconfiguration.cpp:849
 msgid "Automatically check for updates at startup"
 msgstr ""
 
-#: src/wconfiguration.cpp:862
+#: src/wconfiguration.cpp:853
 msgid "General options"
 msgstr "Bendrosios parinktys"
 
-#: src/wconfiguration.cpp:869 src/newtrackerinformationdlg.cpp:174
+#: src/wconfiguration.cpp:860 src/newtrackerinformationdlg.cpp:174
 msgid "&OK"
 msgstr "&OK"
 
-#: src/wconfiguration.cpp:872
+#: src/wconfiguration.cpp:863
 msgid "&Cancel"
 msgstr "&Atšaukti"
 
-#: src/wconfiguration.cpp:881 src/wconfiguration.cpp:882
-#: src/wconfiguration.cpp:883 src/wconfiguration.cpp:884
+#: src/wconfiguration.cpp:872 src/wconfiguration.cpp:873
+#: src/wconfiguration.cpp:874 src/wconfiguration.cpp:875
 msgid "Key:"
 msgstr "Raktas:"
 
-#: src/wconfiguration.cpp:913
+#: src/wconfiguration.cpp:901
 msgid "Set key"
 msgstr "Nustatyti raktą"
 
-#: src/wconfiguration.cpp:1492 src/wconfiguration.cpp:1679
+#: src/wconfiguration.cpp:1470 src/wconfiguration.cpp:1657
 msgid "You should restart the application to apply this change"
 msgstr "Jūs turite iš naujo paleisti programą, kad priimti pakeitimus"
 
-#: src/wconfiguration.cpp:1513
+#: src/wconfiguration.cpp:1491
 msgid ""
 "Current profile has unsaved changes.\n"
 "Continue anyway?"
@@ -559,7 +559,7 @@ msgstr ""
 "Dabartiniam profilyje yra neišsaugotų pakeitimų.\n"
 "Tęsti?"
 
-#: src/wconfiguration.cpp:1519
+#: src/wconfiguration.cpp:1497
 #, c-format
 msgid ""
 "This action will load %s profile settings.\n"
@@ -568,7 +568,7 @@ msgstr ""
 "Šis veiksmas įkels %s profilio nustatymus.\n"
 "Ar tikrai norite tęsti?"
 
-#: src/wconfiguration.cpp:1550
+#: src/wconfiguration.cpp:1528
 #, c-format
 msgid ""
 "This action will delete %s profile.\n"
@@ -577,27 +577,27 @@ msgstr ""
 "Šis veiksmas ištrins %s profilį.\n"
 "Ar tikrai norite tęsti?"
 
-#: src/wconfiguration.cpp:1568
+#: src/wconfiguration.cpp:1546
 msgid "Enter new profile name"
 msgstr "Įveskite naują profilio vardą"
 
-#: src/wconfiguration.cpp:1579
+#: src/wconfiguration.cpp:1557
 msgid "Profile already exists."
 msgstr "Profilis jau egzistuoja."
 
-#: src/wconfiguration.cpp:1585
+#: src/wconfiguration.cpp:1563
 msgid "Invalid profile name."
 msgstr "Neteisingas profilio vardas."
 
-#: src/wconfiguration.cpp:1631 src/wconfiguration.cpp:1634
+#: src/wconfiguration.cpp:1609 src/wconfiguration.cpp:1612
 msgid "Choose on-screen keyboard command"
 msgstr "Pasirinkite ekraninės klaviatūros komandas"
 
-#: src/wconfiguration.cpp:1632
+#: src/wconfiguration.cpp:1610
 msgid "Executable files|*.exe"
 msgstr "Vykdomieji failai|*.exe"
 
-#: src/wconfiguration.cpp:1747
+#: src/wconfiguration.cpp:1725
 msgid ""
 "This action could make you lose the control of the computer.\n"
 "Do you want to continue?"
@@ -605,82 +605,36 @@ msgstr ""
 "Dėl šio veiksmo galite prarasti kompiuterio kontrolę. \n"
 "Ar norite tęsti?"
 
-#: src/wconfiguration.cpp:1747 src/wconfiguration.cpp:1882
-#: src/wconfiguration.cpp:2008 src/viacamcontroller.cpp:385
-#: src/cmotioncalibration.cpp:186
+#: src/wconfiguration.cpp:1725 src/wconfiguration.cpp:1860
+#: src/viacamcontroller.cpp:436 src/cmotioncalibration.cpp:186
 msgid "eViacam warning"
 msgstr "eViacam įspėjimas"
 
-#: src/wconfiguration.cpp:1882
+#: src/wconfiguration.cpp:1860
 msgid "Discard changes?"
 msgstr "Atsisakyti pakeitimų?"
 
-#: src/wconfiguration.cpp:2008
-msgid ""
-"This key is used by another command.\n"
-"Do you want to try another key?"
-msgstr ""
-"Šis raktas yra naudojamas kitos komandos. \n"
-"Norite pabandyti kitą raktą ?"
-
-#: src/clickwindowtext.cpp:141 src/clickwindowbitmap.cpp:227
-msgid "No click"
-msgstr "Nėra paspaudimo"
-
-#: src/clickwindowtext.cpp:148
-msgid "#Left#"
-msgstr "#Kairė#"
-
-#: src/clickwindowtext.cpp:152
-msgid "#Middle#"
-msgstr "#Vidurys#"
-
-#: src/clickwindowtext.cpp:156
-msgid "#Right#"
-msgstr "#Dešinė#"
-
-#: src/clickwindowtext.cpp:160
-msgid "#Drag#"
-msgstr "#Vilkti#"
-
-#: src/clickwindowtext.cpp:164
-msgid "#Double Click#"
-msgstr "#Dvigubas paspaudimas#"
-
-#: src/clickwindowtext.cpp:168 src/clickwindowtext.cpp:344
-#: src/clickwindowbitmap.cpp:271 src/clickwindowbitmap.cpp:502
+#: src/clickwindowtext.cpp:210 src/clickwindowbitmap.cpp:251
 msgid "Hide main window"
 msgstr "Slėpti pagrindinį langą"
 
-#: src/clickwindowtext.cpp:346 src/clickwindowbitmap.cpp:507
+#: src/clickwindowtext.cpp:212 src/clickwindowbitmap.cpp:255
 msgid "Show main window"
 msgstr "Rodyti pagrindinį langą"
-
-#: src/clickwindowbitmap.cpp:243
-msgid "Middle"
-msgstr "Vidurys"
-
-#: src/clickwindowbitmap.cpp:257 src/wwizard.cpp:1048
-msgid "Drag"
-msgstr "Vilkti"
-
-#: src/clickwindowbitmap.cpp:264
-msgid "Double Click"
-msgstr "Dvigubas paspaudimas"
 
 #: src/wabout.h:51
 msgid "About Enable Viacam"
 msgstr "Apie eViacam"
 
-#: src/viacamcontroller.cpp:148
+#: src/viacamcontroller.cpp:176
 msgid "Not detected any camera. Aborting"
 msgstr "Neaptikta kamera. Nutraukiama"
 
-#: src/viacamcontroller.cpp:169
+#: src/viacamcontroller.cpp:211
 msgid "Choose the camera to use"
 msgstr "Pasirinkite kamerą kurią naudosit"
 
-#: src/viacamcontroller.cpp:189
+#: src/viacamcontroller.cpp:240
 msgid ""
 "Can not initialize the camera.\n"
 "Perhaps is being used by other application."
@@ -688,7 +642,7 @@ msgstr ""
 "Negalima inicijuotikameros.\n"
 "Galbūt ji naudojama kitos programos."
 
-#: src/viacamcontroller.cpp:385
+#: src/viacamcontroller.cpp:436
 msgid ""
 "This action will disable eViacam.\n"
 "Are you sure?"
@@ -696,7 +650,7 @@ msgstr ""
 "Šis veiksmas išjungs eViacam.\n"
 "Ar tikrai?"
 
-#: src/viacamcontroller.cpp:414
+#: src/viacamcontroller.cpp:465
 msgid ""
 "On-screen keyboard command not set.\n"
 "Please, configure it through options dialog."
@@ -704,12 +658,12 @@ msgstr ""
 "Ekraninė klaviatūra neįdiegta.\n"
 "Prašom pakeisti nustatymus."
 
-#: src/viacamcontroller.cpp:414 src/viacamcontroller.cpp:428
+#: src/viacamcontroller.cpp:465 src/viacamcontroller.cpp:479
 #: wxcamwindow/capturethread.cpp:69
 msgid "eViacam error"
 msgstr "eViacam klaida"
 
-#: src/viacamcontroller.cpp:424
+#: src/viacamcontroller.cpp:475
 #, c-format
 msgid ""
 "Can't execute on-screen keyboard program.\n"
@@ -720,7 +674,7 @@ msgstr ""
 "Komanda %s nepavyko.\n"
 "Prašom pakeisti nustatymus."
 
-#: src/viacamcontroller.cpp:426
+#: src/viacamcontroller.cpp:477
 msgid ""
 "\n"
 "\n"
@@ -738,7 +692,7 @@ msgstr ""
 "galima atjungti vartotojo abonemento valdymo tarnyba (UAC),\n"
 "arba pabandyti kitą klaviatūrą, pvz. Click-N-Type."
 
-#: src/viacamcontroller.cpp:500
+#: src/viacamcontroller.cpp:551
 msgid ""
 "Note that adjusting the camera controls while eViacam\n"
 "is enabled may cause loss of pointer control.\n"
@@ -827,7 +781,7 @@ msgstr "&Pagalba"
 msgid "Enable"
 msgstr "Įjungti"
 
-#: src/wviacam.cpp:219 src/clickwindow.h:31
+#: src/wviacam.cpp:219
 msgid "Click Window"
 msgstr "Paspausti langą"
 
@@ -898,11 +852,11 @@ msgstr ""
 "Šis veiksmas pakeis paspaudimo generavimo metodą.\n"
 "Ar tikrai?"
 
-#: src/wgetkey.cpp:139
+#: src/wgetkey.cpp:137
 msgid "Press the desired key or 'Esc' to cancel this action."
 msgstr "Paspauskite norimą klavišą arba \"Esc\" kad atšaukti šį veiksmą."
 
-#: src/wgetkey.h:52
+#: src/wgetkey.h:53
 msgid "Get key"
 msgstr "Gauti raktą"
 
@@ -1017,6 +971,10 @@ msgstr "Nėra paspaudimo. Paspaudimo funkcija išjungta."
 msgid "Enable head tracking"
 msgstr "Įjungti galvos sekimą"
 
+#: src/wwizard.cpp:1048
+msgid "Drag"
+msgstr "Vilkti"
+
 #: src/wwizard.cpp:1066
 msgid "Drop"
 msgstr "Atmesti"
@@ -1106,15 +1064,15 @@ msgstr "Rasti veidą automatiškai (rekomenduojama)"
 msgid "Disable eViacam if no face is found"
 msgstr "Išjungti eViacam jei veidas neaptiktas"
 
-#: src/wconfirmcalibration.cpp:159
+#: src/wconfirmcalibration.cpp:154
 msgid "Move your head to see how it works"
 msgstr "Pajudinkit galvą, kad pamatyti kaip tai veikia"
 
-#: src/wconfirmcalibration.cpp:162
+#: src/wconfirmcalibration.cpp:157
 msgid "Hover one of the buttons to select your choice"
 msgstr "Užveskite vieną iš mygtukų, kad pasirinkti norimą"
 
-#: src/wconfirmcalibration.cpp:167
+#: src/wconfirmcalibration.cpp:162
 msgid ""
 "- \"Ok\" saves this configuration.\n"
 "- \"Cancel\" retains the old configuration.\n"
@@ -1124,20 +1082,20 @@ msgstr ""
 "- \"Nutraukti\" atstatys seną konfiguraciją.\n"
 "- \"Kartoti\" iš naujo pradėti kalibravimo procesą."
 
-#: src/wconfirmcalibration.cpp:173 src/wconfirmcalibration.cpp:291
-#: src/wconfirmcalibration.cpp:298 src/wconfirmcalibration.cpp:305
+#: src/wconfirmcalibration.cpp:168 src/wconfirmcalibration.cpp:286
+#: src/wconfirmcalibration.cpp:293 src/wconfirmcalibration.cpp:300
 #: wxutil/warnbaroverlap.cpp:136
 msgid "Ok"
 msgstr "Ok"
 
-#: src/wconfirmcalibration.cpp:176 src/wconfirmcalibration.cpp:192
-#: src/wconfirmcalibration.cpp:292 src/wconfirmcalibration.cpp:299
-#: src/wconfirmcalibration.cpp:306
+#: src/wconfirmcalibration.cpp:171 src/wconfirmcalibration.cpp:187
+#: src/wconfirmcalibration.cpp:287 src/wconfirmcalibration.cpp:294
+#: src/wconfirmcalibration.cpp:301
 msgid "Cancel"
 msgstr "Nutraukti"
 
-#: src/wconfirmcalibration.cpp:179 src/wconfirmcalibration.cpp:293
-#: src/wconfirmcalibration.cpp:300 src/wconfirmcalibration.cpp:307
+#: src/wconfirmcalibration.cpp:174 src/wconfirmcalibration.cpp:288
+#: src/wconfirmcalibration.cpp:295 src/wconfirmcalibration.cpp:302
 msgid "Repeat"
 msgstr "Kartoti"
 
@@ -1161,27 +1119,27 @@ msgstr "Judesio kalibravimas Y"
 msgid "Camera settings"
 msgstr "Kameros nustatymai"
 
-#: src/hotkeymanager.cpp:33
+#: src/hotkeymanager.cpp:39
 msgid "Enable eViacam"
 msgstr "Įjungti eViacam"
 
-#: src/hotkeymanager.cpp:65
+#: src/hotkeymanager.cpp:49
 msgid "Center the pointer"
 msgstr "Centruoti žymeklį"
 
-#: src/hotkeymanager.cpp:81
+#: src/hotkeymanager.cpp:70
 msgid "Increase the X axis speed"
 msgstr "Padidinti X ašies greitį"
 
-#: src/hotkeymanager.cpp:97
+#: src/hotkeymanager.cpp:80
 msgid "Increase the Y axis speed"
 msgstr "Padidinti Y ašies greitį"
 
-#: src/hotkeymanager.cpp:113
+#: src/hotkeymanager.cpp:91
 msgid "Decrease the X axis speed"
 msgstr "Sumažinti X ašies greitį"
 
-#: src/hotkeymanager.cpp:129
+#: src/hotkeymanager.cpp:102
 msgid "Decrease the Y axis speed"
 msgstr "Sumažinti Y ašies greitį"
 
@@ -1205,15 +1163,15 @@ msgstr "Atsiprašome. Versijos failas nerastas . Prašome pranešti mums ."
 msgid "Sorry. Something bad happened."
 msgstr "Atsiprašome. Įvyko klaida."
 
-#: src/checkupdates_ui.cpp:155
+#: src/checkupdates_ui.cpp:153
 msgid "Checking for updates. Please wait."
 msgstr "Ieškoma atnaujinimų . Prašome palaukti ."
 
-#: src/checkupdates_ui.cpp:163
+#: src/checkupdates_ui.cpp:161
 msgid "Visit Enable Viacam website"
 msgstr "Aplankykite eViacam svetainę"
 
-#: src/checkupdates_ui.cpp:170
+#: src/checkupdates_ui.cpp:168
 msgid "&Close"
 msgstr "&Uždaryti"
 
@@ -1298,3 +1256,34 @@ msgstr ""
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
 msgstr "Neberodyti šio pranešimo"
+
+#~ msgid ""
+#~ "This key is used by another command.\n"
+#~ "Do you want to try another key?"
+#~ msgstr ""
+#~ "Šis raktas yra naudojamas kitos komandos. \n"
+#~ "Norite pabandyti kitą raktą ?"
+
+#~ msgid "No click"
+#~ msgstr "Nėra paspaudimo"
+
+#~ msgid "#Left#"
+#~ msgstr "#Kairė#"
+
+#~ msgid "#Middle#"
+#~ msgstr "#Vidurys#"
+
+#~ msgid "#Right#"
+#~ msgstr "#Dešinė#"
+
+#~ msgid "#Drag#"
+#~ msgstr "#Vilkti#"
+
+#~ msgid "#Double Click#"
+#~ msgstr "#Dvigubas paspaudimas#"
+
+#~ msgid "Middle"
+#~ msgstr "Vidurys"
+
+#~ msgid "Double Click"
+#~ msgstr "Dvigubas paspaudimas"
