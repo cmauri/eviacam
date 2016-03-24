@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Yaron Shahrabani <sh.yaron@gmail.com>, 2010,2012,2014
+# Yaron Shahrabani <sh.yaron@gmail.com>, 2010,2012,2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2016-03-24 13:48+0100\n"
-"PO-Revision-Date: 2014-12-24 21:58+0000\n"
+"PO-Revision-Date: 2016-03-24 13:04+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew (http://www.transifex.com/projects/p/eviacam/language/"
+"Language-Team: Hebrew (http://www.transifex.com/cmauri/eviacam/language/"
 "he/)\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
@@ -207,8 +207,6 @@ msgid ""
 "Send multiple clicks\n"
 "when the pointer is stopped."
 msgstr ""
-"מתן האפשרות לשליחה של מספר\n"
-"לחיצות כאשר הסמן נעצר."
 
 #: src/wconfiguration.cpp:528
 msgid "Beep on click"
@@ -404,6 +402,8 @@ msgid ""
 "Use old face tracking method\n"
 "(not recommended)."
 msgstr ""
+"שימוש בשיטת המעקב הישנה\n"
+"(לא מומלץ)."
 
 #: src/wconfiguration.cpp:730
 msgid "Locate face automatically"
@@ -906,13 +906,6 @@ msgid ""
 "NOTE: the calibration assistant will enable the pointer control so that you "
 "can test your configuration."
 msgstr ""
-"תהליך הכיול עם סיוע יבקש ממך להזיז את ראשך כדי להגדיר אוטומטית את הפרמטרים "
-"המתאימים של התנועה.\n"
-"\n"
-"לאחר שלב כיול זה, ניתן להתאים ידנית את הפרמטרים של התנועה.\n"
-"\n"
-"לתשומת לבך: המסייע בכיול יפעיל את השליטה בסמן כדי שתהיה באפשרות לבחון את "
-"התצורה שלך."
 
 #: src/wwizard.cpp:550
 msgid "Perform assisted calibration"
@@ -1199,6 +1192,8 @@ msgid ""
 "We still provide the old algorithm, but it will most likely be removed in "
 "future versions."
 msgstr ""
+"גרסה זו של הפעלת Viacam כוללת אלגוריתם משופר למעקב אחר פנים. אנו עדיין "
+"מספקים את האלגוריתם הישן אך רוב הסיכויים הם שהוא יוסר בגרסאות העתידיות."
 
 #: src/newtrackerinformationdlg.cpp:140
 msgid "Do you want to use the new face tracker?"
@@ -1217,6 +1212,8 @@ msgid ""
 "You could also change the tracker configuration under:\n"
 "Configuration -> Options... -> Advanced -> Face localization and tracking"
 msgstr ""
+"ניתן לשנות את אפשרויות העוקב תחת:\n"
+"תצורה -> אפשרויות… -> מתקדם -> מיקומיות ומעקב אחר פנים"
 
 #: src/newtrackerinformationdlg.cpp:161
 msgid "Show this message on startup"
@@ -1243,34 +1240,3 @@ msgstr ""
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
 msgstr "אין להציג הודעה זו שוב"
-
-#~ msgid ""
-#~ "This key is used by another command.\n"
-#~ "Do you want to try another key?"
-#~ msgstr ""
-#~ "מקש זה משמש לפקודה אחרת.\n"
-#~ "האם ברצונך לנסות מקש אחר?"
-
-#~ msgid "No click"
-#~ msgstr "ללא לחיצה"
-
-#~ msgid "#Left#"
-#~ msgstr "#שמאל#"
-
-#~ msgid "#Middle#"
-#~ msgstr "#אמצעי#"
-
-#~ msgid "#Right#"
-#~ msgstr "#ימין#"
-
-#~ msgid "#Drag#"
-#~ msgstr "#גרירה#"
-
-#~ msgid "#Double Click#"
-#~ msgstr "#לחיצה כפולה#"
-
-#~ msgid "Middle"
-#~ msgstr "אמצעי"
-
-#~ msgid "Double Click"
-#~ msgstr "לחיצה כפולה"

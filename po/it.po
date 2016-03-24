@@ -1,16 +1,23 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Cesar Mauri Loba - CREA Software Systems
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Giuseppe1 Masciopinto <kktc.ags@gmail.com>, 2009-2015
 msgid ""
 msgstr ""
-"Project-Id-Version: eviacam 1.3\n"
+"Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2016-03-24 13:48+0100\n"
-"PO-Revision-Date: 2012-10-25 10:41+0100\n"
-"Last-Translator: giuseppe <kktc.ags@gmail.com>\n"
-"Language-Team: Giuseppe Masciopinto <kktc.ags@gmail.com>\n"
-"Language: \n"
+"PO-Revision-Date: 2016-03-24 13:04+0000\n"
+"Last-Translator: Giuseppe1 Masciopinto <kktc.ags@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/cmauri/eviacam/language/"
+"it/)\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Country: ITALY\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/wconfiguration.h:130
 msgid "Configuration"
@@ -198,8 +205,6 @@ msgid ""
 "Send multiple clicks\n"
 "when the pointer is stopped."
 msgstr ""
-"Consentire multipli click\n"
-"quando il cursore è fermo."
 
 #: src/wconfiguration.cpp:528
 msgid "Beep on click"
@@ -383,19 +388,20 @@ msgid "Browse..."
 msgstr "Sfoglia..."
 
 #: src/wconfiguration.cpp:717
-#, fuzzy
 msgid "Face localization and tracking"
-msgstr "Localizzazione del volto"
+msgstr "Localizzazione del volto e tracciamento"
 
 #: src/wconfiguration.cpp:722
 msgid "Use legacy face tracking algorithm"
-msgstr ""
+msgstr "Utilizza attuale algoritmo del tracciamento del volto"
 
 #: src/wconfiguration.cpp:725
 msgid ""
 "Use old face tracking method\n"
 "(not recommended)."
 msgstr ""
+"Utilizza vecchio algoritmo del tracciamento del volto\n"
+"(non raccomandabile)"
 
 #: src/wconfiguration.cpp:730
 msgid "Locate face automatically"
@@ -432,7 +438,6 @@ msgid "Highest"
 msgstr "Più alto"
 
 #: src/wconfiguration.cpp:750
-#, fuzzy
 msgid "Stop pointer when face not detected"
 msgstr "Arrestare il puntatore quando viene rilevato un volto"
 
@@ -449,17 +454,17 @@ msgid "seconds"
 msgstr "secondi"
 
 #: src/wconfiguration.cpp:772
-#, fuzzy
 msgid "Mouse actions"
-msgstr "Moto"
+msgstr "azione mouse"
 
 #: src/wconfiguration.cpp:779
 msgid "Increase this value if some application ignores click events."
 msgstr ""
+"Aumenta questo valore se qualche applicazione ignora eventi click del mouse."
 
 #: src/wconfiguration.cpp:782
 msgid "ms delay between up and down events"
-msgstr ""
+msgstr "ritardo ms tra eventi su e giù"
 
 #: src/wconfiguration.cpp:785
 msgid "Advanced"
@@ -874,13 +879,12 @@ msgid "Enable Viacam configuration wizard"
 msgstr "Abilita eViacam configurazione procedura guidata"
 
 #: src/wwizard.cpp:262
-#, fuzzy
 msgid "Disable pointer control"
-msgstr "Disabilita movimento"
+msgstr "Disabilita controllo puntatore del mouse"
 
 #: src/wwizard.cpp:266 src/wwizard.cpp:1639
 msgid "Enable pointer control"
-msgstr ""
+msgstr "Abilita controllo puntatore del mouse"
 
 #: src/wwizard.cpp:375
 msgid "Welcome to the eViacam configuration wizard"
@@ -905,14 +909,6 @@ msgid ""
 "NOTE: the calibration assistant will enable the pointer control so that you "
 "can test your configuration."
 msgstr ""
-"La procedura di calibrazione assistita vi chiederà di spostare la testa per "
-"configurare automaticamente i parametri di movimento appropriato.\n"
-"\n"
-"Dopo questa fase di calibrazione, è possibile regolare manualmente i "
-"parametri di movimento.\n"
-"\n"
-"NOTA: L'assistente di calibrazione consentirà il controllo del puntatore in "
-"modo da poter verificare la configurazione."
 
 #: src/wwizard.cpp:550
 msgid "Perform assisted calibration"
@@ -964,9 +960,8 @@ msgid "No click. Click function disabled."
 msgstr "Nessun click. Funzione del click disabilitata."
 
 #: src/wwizard.cpp:917
-#, fuzzy
 msgid "Enable head tracking"
-msgstr "Abilita movimento"
+msgstr "Abilitare controllo con la testa"
 
 #: src/wwizard.cpp:1048
 msgid "Drag"
@@ -991,12 +986,9 @@ msgstr ""
 "all'avvio."
 
 #: src/wwizard.cpp:1258
-#, fuzzy
 msgid "You may change the settings through Configuration -> Options"
 msgstr ""
-"E' possibile cambiare le impostazioni attraerso Configurazione - > Opzioni.\n"
-"\n"
-"Clicca su terminato per uscire dal wizard."
+"È possibile modificare le impostazioni tramite Configurazione -> Opzioni"
 
 #: src/wwizard.cpp:1426
 msgid "Camera setup"
@@ -1039,26 +1031,26 @@ msgid ""
 "You can adjust motion speed manually and enable head tracking to test how it "
 "works."
 msgstr ""
+"E' possibile regolare manualmente la velocità di movimento e abilitare il "
+"controllo con la testa per testare come funziona."
 
 #: src/wwizard.cpp:1803
 msgid "The frame rate is appropriate."
-msgstr ""
+msgstr "La frequenza dei fotogrammi è appropriata."
 
 #: src/wwizard.cpp:1901
 msgid "Face detection setup"
-msgstr ""
+msgstr "Setup detenzione del volto "
 
 #: src/wwizard.cpp:1911
-#, fuzzy
 msgid ""
 "eViacam will try to detect your face automatically. But, if necessary, you "
 "can disable this feature and manually adjust the tracking area (blue "
 "rectangle) around your face.\n"
 msgstr ""
-"Il viso dell'utente deve apparire all'interno del rettangolo blu (areadel "
-"tracciamento) per spostare il puntatore.\n"
-" Spostare e ridimensionare questo settore, se necessario, e impostarlo "
-"intorno al viso. "
+"eViacam cercherà di rilevare automaticamente il tuo viso. Ma, se necessario, "
+"è possibile disattivare questa funzione e regolare manualmente l'area di "
+"controllo (rettangolo blu) intorno al viso.\\n\n"
 
 #: src/wwizard.cpp:1917
 msgid "Locate face automatically (recommended)"
@@ -1198,11 +1190,11 @@ msgstr "Errore di controllo degli aggiornamenti"
 
 #: src/newtrackerinformationdlg.h:41
 msgid "New Tracker Information"
-msgstr ""
+msgstr "Informazioni nuovo tracciamento"
 
 #: src/newtrackerinformationdlg.cpp:132
 msgid "Improved face tracker"
-msgstr ""
+msgstr "Migliore tracciamento del volto"
 
 #: src/newtrackerinformationdlg.cpp:136
 msgid ""
@@ -1210,30 +1202,34 @@ msgid ""
 "We still provide the old algorithm, but it will most likely be removed in "
 "future versions."
 msgstr ""
+"Questa versione di Enable Viacam include un migliore algoritmo di "
+"ftracciamento del volto. Abbiamo ancora a disposizione il vecchio algoritmo, "
+"ma molto probabilmente sarà rimosso in versioni future."
 
 #: src/newtrackerinformationdlg.cpp:140
 msgid "Do you want to use the new face tracker?"
-msgstr ""
+msgstr "Tu desideri utilizzare il nuovo tracciamento del volto?"
 
 #: src/newtrackerinformationdlg.cpp:147
-#, fuzzy
 msgid "Yes and adjust some settings automatically (recommended)"
-msgstr "Localizza automaticamente il volto "
+msgstr "Sì e regola alcune impostazioni automaticamente (consigliata)"
 
 #: src/newtrackerinformationdlg.cpp:151
 msgid "No, use the legacy tracker"
-msgstr ""
+msgstr "No, utilizza l'attuale tracciamento"
 
 #: src/newtrackerinformationdlg.cpp:155
 msgid ""
 "You could also change the tracker configuration under:\n"
 "Configuration -> Options... -> Advanced -> Face localization and tracking"
 msgstr ""
+"Tu puoi anche modificare la configurazione del tracciamento: \n"
+"Configurazione -> Opzioni ... -> Avanzate -> Localizzazione del volto e "
+"tracciamento"
 
 #: src/newtrackerinformationdlg.cpp:161
-#, fuzzy
 msgid "Show this message on startup"
-msgstr "Non visualizzare più questo messaggio"
+msgstr "Mostra questo messaggio all'avvio"
 
 #: wxcamwindow/capturethread.cpp:69
 msgid "Camera not detected. Aborting"
@@ -1257,244 +1253,3 @@ msgstr ""
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
 msgstr "Non visualizzare più questo messaggio"
-
-#~ msgid ""
-#~ "This key is used by another command.\n"
-#~ "Do you want to try another key?"
-#~ msgstr ""
-#~ "questo tasto è usato per altri comandi.\n"
-#~ " Tu desideri provare con un altro tasto?"
-
-#~ msgid "No click"
-#~ msgstr "No click"
-
-#~ msgid "#Left#"
-#~ msgstr "#Sinistra#"
-
-#~ msgid "#Middle#"
-#~ msgstr "#Centrale#"
-
-#~ msgid "#Right#"
-#~ msgstr "#Destra#"
-
-#~ msgid "#Drag#"
-#~ msgstr "#Trascina#"
-
-#~ msgid "#Double Click#"
-#~ msgstr "#Doppio Click#"
-
-#~ msgid "Middle"
-#~ msgstr "Centrale"
-
-#~ msgid "Double Click"
-#~ msgstr "Doppio Click"
-
-#, fuzzy
-#~ msgid "Disable head tracking"
-#~ msgstr "Disabilita "
-
-#~ msgid ""
-#~ "This wizard will guide you through the basic configuration of eViacam."
-#~ msgstr ""
-#~ "Questa procedura vi guiderà attraverso la configurazione di base di "
-#~ "eViacam."
-
-#~ msgid "Setting motion parameters"
-#~ msgstr "Calibrazione del movimento"
-
-#~ msgid "Test and select the click mode"
-#~ msgstr "Test e selziona la modalità cllic."
-
-#~ msgid "Congratulations! You have completed the configuration wizard."
-#~ msgstr "Congratulazioni! Tu hai completato la canfigurazione del wizard."
-
-#~ msgid "Checking your camera settings"
-#~ msgstr "Controllare le impostazioni della fotocamera"
-
-#~ msgid "Fine tuning motion parameters"
-#~ msgstr "Fine tuning motion parameters"
-
-#~ msgid ""
-#~ "You can enable/disable the mouse motion to test the pointer speed\n"
-#~ "and adjust the parameters manually."
-#~ msgstr ""
-#~ "È possibile attivare/disattivare il movimento del mouse per testare la "
-#~ "velocità del puntatore  \n"
-#~ " e regolare i parametri manualmente."
-
-#~ msgid "How to make the click"
-#~ msgstr "Come fare il click"
-
-#~ msgid "eViacam provides several methods to generate mouse click actions:"
-#~ msgstr ""
-#~ "eViacam fornisce diversi metodi per generare azioni di clic del mouse:"
-
-#~ msgid ""
-#~ "- Dwell Click (default). The click is generated automatically when you "
-#~ "hover the mouse pointer momentarily. The Click the Window lets you choose "
-#~ "between different actions."
-#~ msgstr ""
-#~ "Pausa Click (default). Il click viene generato automaticamente quando si "
-#~ "passa il puntatore del mouse momentaneamente. Il  click di Windows "
-#~ "consente di scegliere tra diverse azioni."
-
-#~ msgid ""
-#~ "- Gesture Click. The click is automatically generated by stopping the "
-#~ "pointer for a moment and then moving the pointer to one of the 4 "
-#~ "directions to choose the action."
-#~ msgstr ""
-#~ "- Gesto click. Il click viene generato automaticamente fermando il "
-#~ "puntatore per un attimo e poi spostando il puntatore in una delle 4 "
-#~ "direzioni per scegliere l'azione."
-
-#~ msgid "- No click. Click function disabled."
-#~ msgstr "- No clic. Funzione del clic disabilitata."
-
-#~ msgid ""
-#~ "In the next window you can choose the method to click. eViacam will be "
-#~ "enabled to allow you to test the different ways of clicking."
-#~ msgstr ""
-#~ "Nella finestra successiva si può scegliere il metodo di fare clic. "
-#~ "eViacam sarà in grado di permettere di testare le diverse modalità di "
-#~ "clic."
-
-#~ msgid "Tracker setup"
-#~ msgstr "Tracciamento setup"
-
-#~ msgid "Configure motion tracking area"
-#~ msgstr "Configura l'area del movimento tracciabile"
-
-#~ msgid "Enable Viacam"
-#~ msgstr "Enable Viacam"
-
-#, fuzzy
-#~ msgid "Enable Viacam is up to date"
-#~ msgstr "Abilita eViacam dall'inizio."
-
-#~ msgid "Contributions:"
-#~ msgstr "Configurazione"
-
-#, fuzzy
-#~ msgid "hotKeyEnable"
-#~ msgstr "Abilita"
-
-#, fuzzy
-#~ msgid "hotKeyWorkspace"
-#~ msgstr "Area di lavoro"
-
-#~ msgid "Activation key"
-#~ msgstr "Attivazione chiave"
-
-#~ msgid "Use activation key"
-#~ msgstr "Utilizzare la chiave di attivazione"
-
-#~ msgid ""
-#~ "When checked it allows to enable or \n"
-#~ "disable eViacam by pressing a key."
-#~ msgstr ""
-#~ "Quando selezionato permette di attivare o disattivare eViacam premendo un "
-#~ "tasto."
-
-#~ msgid "Shows the selected key."
-#~ msgstr "Mostra la chiave selezionata."
-
-#~ msgid "Set key..."
-#~ msgstr "Settaggio chiave."
-
-#~ msgid "Show locate face filter"
-#~ msgstr "Visualizza i filtri del volto localizzati"
-
-#~ msgid "Open Click Window at startup"
-#~ msgstr "Apri la finestra Click dall'inizio"
-
-#~ msgid ""
-#~ "If checked the Click Window is automatically\n"
-#~ "opened at program startup."
-#~ msgstr ""
-#~ "Se è selezionata la finestra Click automaticamente\n"
-#~ "apre il programma dall'inizio"
-
-#, fuzzy
-#~ msgid "default"
-#~ msgstr "Sistema di base"
-
-#~ msgid "Easy stop"
-#~ msgstr "Facile stop"
-
-#~ msgid "Show click countdown"
-#~ msgstr "Visualizza il conto alla rovescia del click"
-
-#~ msgid "Run at system startup"
-#~ msgstr "Avvio del sistema dall'inizio"
-
-#~ msgid "&Click Window"
-#~ msgstr "Finestra del &Click"
-
-#~ msgid "&Track face"
-#~ msgstr "&Localizza il volto"
-
-#, fuzzy
-#~ msgid "Enabled run on startup"
-#~ msgstr "Abilita dall'inizio"
-
-#, fuzzy
-#~ msgid "If checked the program will run on startup."
-#~ msgstr ""
-#~ "Se è selezionato il programma automaticamente\n"
-#~ "abilita il controllo del cursore dall'inizio."
-
-#~ msgid "Profiles allows storing several named sets of options."
-#~ msgstr ""
-#~ "I profili  permetteno di immagazzinare gruppi  di opzioni  che hanno un "
-#~ "nome."
-
-#~ msgid ""
-#~ "<font face=\"Arial, Helvetica, sans-serif\">\n"
-#~ "<h1><img src=\"#IMAGE_PATH#/viacam_cam4_html.png\" width=\"120\" height="
-#~ "\"96\">Enable Viacam</h1>\n"
-#~ "<p>A cross platform webcam based mouse emulator</p>\n"
-#~ "<p>v#APPVERSION#</p>\n"
-#~ "<p>(c) 2008-09 C&eacute;sar Mauri Loba - CREA Software Systems<br>\n"
-#~ "  http://viacam.org<br>\n"
-#~ "  E-Mail: Cesar Mauri &lt;cesar@crea-si.com&gt;</p>\n"
-#~ "<p> Released under GNU/GPL license. See license for details.<br>\n"
-#~ "  With the support of: </p>\n"
-#~ "<p><img src=\"#IMAGE_PATH#/stsi_logo.png\" width=\"200\" height=\"57\" "
-#~ "border=\"0\"><br>\n"
-#~ "<img src=\"#IMAGE_PATH#/appc_logo.png\" width=\"200\" height=\"57\" "
-#~ "border=\"0\"> </p>\n"
-#~ "</font>"
-#~ msgstr ""
-#~ "<font face=\"Arial, Helvetica, sans-serif\">\n"
-#~ "<h1><img src=\"#IMAGE_PATH#/viacam_cam4_html.png\" width=\"120\" height="
-#~ "\"96\">Enable Viacam</h1>\n"
-#~ "<p>Una multi piattaforma che emula il mouse attraversa la webcam</p>\n"
-#~ "<p>v#APPVERSION#</p>\n"
-#~ "<p>(c) 2008-09 C&eacute;sar Mauri Loba - CREA Software Systems<br>\n"
-#~ "  http://viacam.org<br>\n"
-#~ "  E-Mail: Cesar Mauri &lt;cesar@crea-si.com&gt;</p>\n"
-#~ "<p> Realizzato sotto licenza GNU/GPL. Vedere la licenza per ulteriori "
-#~ "dettagli.<br>\n"
-#~ "  Con il supporto di: </p>\n"
-#~ "<p><img src=\"#IMAGE_PATH#/stsi_logo.png\" width=\"200\" height=\"57\" "
-#~ "border=\"0\"><br>\n"
-#~ "<img src=\"#IMAGE_PATH#/appc_logo.png\" width=\"200\" height=\"57\" "
-#~ "border=\"0\"> </p>\n"
-#~ "</font>"
-
-#~ msgid ""
-#~ "<br><h3>Contributions:</h3><br>Miguel Bouzada (Galego "
-#~ "translation)<br>Giuseppe Masciopinto (Italiano translation)<br>Samuel "
-#~ "Thibault"
-#~ msgstr ""
-#~ "<br><h3>Contributi:</h3><br>Miguel Bouzada (traduzione dal "
-#~ "galego)<br>Giuseppe Masciopinto (traduzione italiana)<br>Samuel Thibault"
-
-#~ msgid "Catalan"
-#~ msgstr "Catalano"
-
-#~ msgid "English"
-#~ msgstr "Inglese"
-
-#~ msgid "Spanish"
-#~ msgstr "Spagnolo"
