@@ -1,7 +1,7 @@
 ﻿2016-03-24 - Release 2.1.0
 * Add hotkeys for Windows (bugs #21, #42, #52)
 * Fix support for some cameras, most notability those models integrated
-  integrated in tablets (e.g. MS Surface) (bug #51)
+  in tablets (e.g. MS Surface) (bug #51)
 * Fix drop down boxes not displaying correctly on Windows 10 (bug #55)
 * Part of the user interface (Click window) is now stored as .xrc files
   and thus can be modified without recompiling.
