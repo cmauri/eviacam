@@ -1982,19 +1982,15 @@ void WConfiguration::OnHotkeyButtonClick( wxCommandEvent& event )
 	eviacam::HotkeyManager& hkm= wxGetApp().GetController().getHotkeyManager();
 	eviacam::HotKey& hk= hkm.GetHotKey((event.GetId()-FIRST_CONTROL_ID-3)/4);
 
-	bool isFinished= true;
-	do {
-		isFinished = true;
-		if (dlgGetKey.ShowModal()== wxID_YES) {
-			KeyboardCode kc= dlgGetKey.GetKeyCode();
-			if (hkm.SetHotKeyKeyboardCode(hk, kc)) {
-				((wxTextCtrl*)m_controlList[event.GetId()-FIRST_CONTROL_ID-2])->SetValue(kc.GetName());
-			} else {
-				wxMessageDialog dlg (NULL, _("This key is used by another command.\nDo you want to try another key?"), _("eViacam warning"), wxICON_EXCLAMATION | wxYES_NO );
-				if (dlg.ShowModal()== wxID_YES) isFinished= false;
-			}
+	for (;;) {
+		if (dlgGetKey.ShowModal()!= wxID_YES) break;
+		KeyboardCode kc= dlgGetKey.GetKeyCode();
+		if (hkm.SetHotKeyKeyboardCode(hk, kc)) {
+			((wxTextCtrl*)m_controlList[event.GetId()-FIRST_CONTROL_ID-2])->SetValue(kc.GetName());
+			break;
 		}
-	} while (!isFinished);
+	}
+
 	event.Skip(false);
 }
 
