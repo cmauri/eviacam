@@ -22,65 +22,84 @@
 #ifndef KEYBOARDCODE_H
 #define KEYBOARDCODE_H
 
+#include <wx/event.h> // for wxKeyCode
 #include <wx/string.h>
 
-class KeyboardCode
-{
+// Store a keyboard code which is a unique key identifier after
+// taking into account the keyboard layout.
+//
+// The code is stored in its native format (KeySym on X11 and as
+// virtual key code on Windows)
+//
+// Several conversion methods are provided
+//
+// This class has only one integer in its layout (is cheap)
+//
+// TODO: for X11, consider storing a KeyCode instead of a KeySym.
+// https://tronche.com/gui/x/xlib/input/keyboard-encoding.html
+// https://wiki.archlinux.org/index.php/extra_keyboard_keys
+
+
+class KeyboardCode {
+
 public:
-    KeyboardCode();
-	// Default destructor, copy constructor and copy operator are fine
+    // Default constructor: initializes internal keycode to a invalid value
+    KeyboardCode() : m_nativeKeyCode(0) { }
+
+	// Construct object from its native value
+	KeyboardCode(int v) : m_nativeKeyCode(v) { }
+
+   	// Default destructor, copy constructor and copy operator are fine
+
 	bool operator==(const KeyboardCode &other) const {
-		return m_virtualKeyCode== other.m_virtualKeyCode;
+		return m_nativeKeyCode== other.m_nativeKeyCode;
 	}
 
 	bool operator!=(const KeyboardCode &other) const {
 		return !(*this== other);
 	} 
 	
+	// Get its native value (KeySym on X11, virtual key codes)
+	int get_native() const { return m_nativeKeyCode; }
+
+	bool is_valud() const { return m_nativeKeyCode!= 0; }
+
 	// Get its readable name
-	const char* GetName() const;
+	wxString GetName() const;
 
 	// Send a keystoke to the system
 	void SendKey();
 
-	bool IsValid() const { return m_virtualKeyCode!= 0; }
-	
-	// Reads a keycode from keyboard and returns a CKeyboardCode object
+	// Reads a keycode from keyboard and returns a KeyboardCode object
 	static KeyboardCode ReadKeyCode();
 
-	// Given an scan code returns the corresponding CKeyboardCode object
-	static KeyboardCode FromScanCode (unsigned int scanCode);
+	// Given an char returns the corresponding KeyboardCode object
+	// Currently ignores shift state (SHIFT, CTRL, ALT, etc.)
+	static KeyboardCode FromChar (char c);
 
-	// Given a platform dependent virtual-key or KeySym returns the 
-	// corresponding CKeyboardCode object
-	static KeyboardCode FromVirtualKeyCode (unsigned long vkCode);
+	// Given an scan code returns the corresponding KeyboardCode object
+	static KeyboardCode FromScanCode (int scanCode);
 
-	// Given an ASCII code returns the corresponding CKeyboardCode object
-	static KeyboardCode FromASCII (char ascii);
+	// Given an wxKeyCode code returns the corresponding KeyboardCode object
+	static KeyboardCode FromWXK (wxKeyCode kc);
 
-	// Given an wxKeyCode code returns the corresponding CKeyboardCode object
-	static KeyboardCode FromWXKeyCode (wxKeyCode kc);
 
-	// Set the internal raw value. NOTE: intended only
-	// for storage purposes not to work with
-	static KeyboardCode FromRawValue (unsigned long kc);
-
-	// Get the internal raw value. NOTE: intended only
-	// for storage purposes not to work with
-	unsigned long GetRawValue() const;
-
+#if defined(DEBUG)
 	void Dump() const;
+#endif
 
 private:
-	// Stores the virtual key code. This corresponds to a unique key
-	// after taking into account the keyboard layout (the keyboard
-	// returns a scan code which, using the layout, is converted to 
-	// this value). In Unix systems this corresponds to KeySym
-	// while for Windows systems it is called virtual-key code.
-	unsigned long m_virtualKeyCode;
-
-	// Construct object from an KeySym or virtual-key
-	KeyboardCode(unsigned long vkCode);
+	// Stores the native value for virtual key codes. This corresponds to a
+	// unique key after taking into account the keyboard layout (the keyboard
+	// returns a scan code which, using the layout, is converted to this
+	// value). In Unix systems this corresponds to KeySym. For Windows
+	// systems it is called virtual-key code. According to:
+	// https://cgit.freedesktop.org/xorg/proto/x11proto/plain/keysymdef.h
+	// KeySym is a 29-bit value and according to
+	// https://msdn.microsoft.com/en-us//library/windows/desktop/dd375731(v=vs.85).aspx
+	// it seems that virtual key codes are 8-bit values. Therefore, we store
+	// it as 32-bit value
+	int m_nativeKeyCode;
 };
 
-#endif
+#endif // KEYBOARDCODE_H

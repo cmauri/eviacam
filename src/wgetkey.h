@@ -94,7 +94,6 @@ private:
     void OnKeyUp( wxKeyEvent& event );
 
 ////@end WGetKey event handler declarations
-//	void OnTimer(wxTimerEvent& event);
 
 ////@begin WGetKey member function declarations
 
@@ -111,8 +110,7 @@ private:
 ////@begin WGetKey member variables
     wxTextCtrl* m_txtKey;
 ////@end WGetKey member variables
-private:
-	//wxTimer m_timer;
+
 	KeyboardCode m_keyCode;
 };
 

@@ -18,10 +18,14 @@
 /////////////////////////////////////////////////////////////////////////////
 #include "hotkeymanager.h"
 
+#include <wx/window.h>
+
 #include "eviacamdefs.h"
 #include "eviacamapp.h"
 #include "viacamcontroller.h"
 #include "pointeraction.h"
+#include "simplelog.h"
+
 
 namespace eviacam {
 
@@ -29,20 +33,30 @@ namespace eviacam {
 // Define the available key commands
 //
 
-class KeyCommandEnable : public KeyCommand {
+class HotKeyCommandEnable : public HotKey {
 public:
-	KeyCommandEnable()
-	: KeyCommand(_T("hotKeyEnable"), _("Enable eViacam"), KeyboardCode::FromWXKeyCode(WXK_SCROLL), true) {}
+	HotKeyCommandEnable(int id)
+	: HotKey(id, _T("hotKeyEnable"), _("Enable eViacam"), KeyboardCode::FromWXK(WXK_F11)) {}
 
 	void Command() override {
 		wxGetApp().GetController().SetEnabled(!wxGetApp().GetController().GetEnabled(), true);
 	}
 };
 
-class KeyCommandWorkspace : public KeyCommand {
+class HotKeyCommandCenterPointer : public HotKey {
 public:
-	KeyCommandWorkspace()
-	: KeyCommand(_T("hotKeyWorkspace"), _("Enable workspace limit"), KeyboardCode::FromWXKeyCode(WXK_F12), false) {}
+	HotKeyCommandCenterPointer(int id)
+	: HotKey(id, _T("hotKeyCenterPointer"), _("Center the pointer"), KeyboardCode::FromWXK(WXK_F10)) {}
+
+	void Command() override {
+		wxGetApp().GetController().GetPointerAction().CenterPointer();
+	}
+};
+
+class HotKeyCommandWorkspace : public HotKey {
+public:
+	HotKeyCommandWorkspace(int id)
+	: HotKey(id, _T("hotKeyWorkspace"), _("Enable workspace limit"), KeyboardCode::FromWXK(WXK_F9)) {}
 
 	void Command() override {
 		wxGetApp().GetController().GetPointerAction().SetRestrictedWorkingArea(
@@ -50,30 +64,20 @@ public:
 	}
 };
 
-class KeyCommandCenterPointer : public KeyCommand {
+class HotKeyCommandIncreaseX : public HotKey {
 public:
-	KeyCommandCenterPointer()
-	: KeyCommand(_T("hotKeyCenterPointer"), _("Center the pointer"), KeyboardCode::FromWXKeyCode(WXK_HOME), true) {}
-
-	void Command() override {
-		wxGetApp().GetController().GetPointerAction().CenterPointer();
-	}
-};
-
-class KeyCommandIncreaseX : public KeyCommand {
-public:
-	KeyCommandIncreaseX()
-	: KeyCommand(("hotKeyIncreaseX"), _("Increase the X axis speed"), KeyboardCode::FromWXKeyCode(WXK_RIGHT), false) {}
+	HotKeyCommandIncreaseX(int id)
+	: HotKey(id, ("hotKeyIncreaseX"), _("Increase the X axis speed"), KeyboardCode::FromWXK(WXK_RIGHT)) {}
 
 	void Command() override {
 		wxGetApp().GetController().GetPointerAction().SetXSpeed(wxGetApp().GetController().GetPointerAction().GetXSpeed()+1);
 	}
 };
 
-class KeyCommandIncreaseY : public KeyCommand {
+class HotKeyCommandIncreaseY : public HotKey {
 public:
-	KeyCommandIncreaseY()
-	: KeyCommand(_T("hotKeyIncreaseY"), _("Increase the Y axis speed"), KeyboardCode::FromWXKeyCode(WXK_UP), false) {}
+	HotKeyCommandIncreaseY(int id)
+	: HotKey(id, _T("hotKeyIncreaseY"), _("Increase the Y axis speed"), KeyboardCode::FromWXK(WXK_UP)) {}
 
 	void Command() override {
 		wxGetApp().GetController().GetPointerAction().SetYSpeed(
@@ -81,10 +85,10 @@ public:
 	}
 };
 
-class KeyCommandDecreaseX : public KeyCommand {
+class HotKeyCommandDecreaseX : public HotKey {
 public:
-	KeyCommandDecreaseX()
-	: KeyCommand(_T("hotKeyDecreaseX"), _("Decrease the X axis speed"), KeyboardCode::FromWXKeyCode(WXK_LEFT), false) {}
+	HotKeyCommandDecreaseX(int id)
+	: HotKey(id, _T("hotKeyDecreaseX"), _("Decrease the X axis speed"), KeyboardCode::FromWXK(WXK_LEFT)) {}
 
 	void Command() override {
 		wxGetApp().GetController().GetPointerAction().SetXSpeed(
@@ -92,10 +96,10 @@ public:
 	}
 };
 
-class KeyCommandDecreaseY : public KeyCommand {
+class HotKeyCommandDecreaseY : public HotKey {
 public:
-	KeyCommandDecreaseY()
-	: KeyCommand(_T("hotKeyDecreaseY"), _("Decrease the Y axis speed"), KeyboardCode::FromWXKeyCode(WXK_DOWN), false) {}
+	HotKeyCommandDecreaseY(int id)
+	: HotKey(id, _T("hotKeyDecreaseY"), _("Decrease the Y axis speed"), KeyboardCode::FromWXK(WXK_DOWN)) {}
 
 	void Command() override {
 		wxGetApp().GetController().GetPointerAction().SetYSpeed(
@@ -103,30 +107,125 @@ public:
 	}
 };
 
+static const KeyboardCode g_banned_hotkeys[]= {
+#if defined(__WXMSW__)
+	KeyboardCode(VK_SHIFT),
+	KeyboardCode(VK_CONTROL),
+	KeyboardCode(VK_MENU),
+	KeyboardCode(VK_LWIN),
+	KeyboardCode(VK_RWIN),
+	KeyboardCode(VK_APPS),
+	KeyboardCode(VK_LSHIFT),
+	KeyboardCode(VK_RSHIFT),
+	KeyboardCode(VK_LCONTROL),
+	KeyboardCode(VK_RCONTROL),
+	KeyboardCode(VK_LMENU),
+	// For Windows the F12 key is reserved for use by the debugger at all
+	// times, so it should not be registered as a hot key. See:
+	// https://msdn.microsoft.com/en-us//library/windows/desktop/ms646309(v=vs.85).aspx
+	KeyboardCode(VK_F12)
+#endif
+};
+
 
 HotkeyManager::HotkeyManager() {
+	// Create the hotkeys
+	m_HotKeys.push_back(new HotKeyCommandEnable(m_HotKeys.size()));
+	m_HotKeys.push_back(new HotKeyCommandCenterPointer(m_HotKeys.size()));
+	m_HotKeys.push_back(new HotKeyCommandWorkspace(m_HotKeys.size()));
+	m_HotKeys.push_back(new HotKeyCommandIncreaseX(m_HotKeys.size()));
+	m_HotKeys.push_back(new HotKeyCommandIncreaseY(m_HotKeys.size()));
+	m_HotKeys.push_back(new HotKeyCommandDecreaseX(m_HotKeys.size()));
+	m_HotKeys.push_back(new HotKeyCommandDecreaseY(m_HotKeys.size()));
+
 	InitDefaults();
+
+	// Bind hotkey handler
+	#if defined(__WXMSW__)
+		wxWindow* mainWin = wxGetApp().GetController().GetMainWindow();
+		mainWin->Bind(wxEVT_HOTKEY,	[this](wxKeyEvent& e) {	this->HotkeyEventHandler(e); });
+	#endif
 }
 
 HotkeyManager::~HotkeyManager() {
-	for (int i= 0; i< m_keyCommands.size(); i++) {
-		delete m_keyCommands[i];
+	// free memory
+	for (size_t i= 0; i< m_HotKeys.size(); i++) {
+		delete m_HotKeys[i];
+	}
+
+#if defined(__WXMSW__)
+	// TODO: unbind handler. See:
+	// http://docs.wxwidgets.org/trunk/classwx_evt_handler.html#a2b7df8272075a96daea78cdd799c00da
+#endif
+}
+
+void HotkeyManager::ResetHotKeys() {
+	// Disable hot keys
+	for (size_t i= 0; i< m_HotKeys.size(); i++) {
+		DisableHotKey(*m_HotKeys[i]);
 	}
 }
 
-void HotkeyManager::InitDefaults() {
-#if defined(__WXGTK__) 
-	m_keyCommands.push_back(new KeyCommandEnable());
-	m_keyCommands.push_back(new KeyCommandWorkspace());
-	m_keyCommands.push_back(new KeyCommandCenterPointer());
-	m_keyCommands.push_back(new KeyCommandIncreaseX());
-	m_keyCommands.push_back(new KeyCommandIncreaseY());
-	m_keyCommands.push_back(new KeyCommandDecreaseX());
-	m_keyCommands.push_back(new KeyCommandDecreaseY());
-#endif // __WXGTK___
+bool HotkeyManager::SetHotKeyKeyboardCode (HotKey& hk, KeyboardCode kc) {
+	if (hk.GetKey()== kc) return true; 		// Do nothing if is the same
+	//if (FindByKeyboardCode(kc) != -1) return false; 	// Already in use
+
+	// Is banned?
+	for (size_t i= 0; i< sizeof(g_banned_hotkeys)/sizeof(KeyboardCode); ++i) {
+		if (g_banned_hotkeys[i] == kc) return false;
+	}
+
+	bool wasEnabled= hk.IsEnabled();
+	if (wasEnabled) DisableHotKey(hk);
+	hk.SetKey(kc);
+	bool result= true;
+	if (wasEnabled) result= EnableHotKey(hk);
+	return result;
 }
 
-// TODO: to avoid problems with synchronization, implement this by deriving
+int HotkeyManager::FindByKeyboardCode (KeyboardCode kc) const {
+	for (size_t i=0; i< m_HotKeys.size(); i++) {
+		if (m_HotKeys[i]->GetKey() == kc) return i;
+	}
+	return -1; // not found
+}
+
+bool HotkeyManager::EnableHotKey(HotKey& hk) {
+	bool result= true;
+	if (!hk.IsEnabled()) {
+		#if defined(__WXMSW__)
+			wxWindow* mainWin = wxGetApp().GetController().GetMainWindow();
+			result = mainWin->RegisterHotKey(hk.id_, 0, hk.GetKey().get_native());
+		#endif
+
+		if (result) hk.SetEnabled(true);
+	}
+	return result;
+}
+
+void HotkeyManager::DisableHotKey(HotKey& hk) {
+	if (hk.IsEnabled()) {
+		#if defined(__WXMSW__)
+			wxWindow* mainWin = wxGetApp().GetController().GetMainWindow();
+			mainWin->UnregisterHotKey(hk.id_);
+		#endif
+
+		hk.SetEnabled(false);
+	}
+}
+
+void HotkeyManager::HotkeyEventHandler(wxKeyEvent& event) {
+	KeyboardCode kc(event.GetRawKeyCode());
+
+	SLOG_DEBUG("HotKey Handler called, KeyboardCode: %d (%s)", kc.get_native(), kc.GetName().mb_str());
+
+	int i= FindByKeyboardCode(kc);
+	if (i== -1) return;
+	if (m_HotKeys[i]->IsEnabled()) m_HotKeys[i]->Command();
+}
+
+
+// TODO: to avoid synchronization problems, implement this by deriving
 // from wxEvtHandler and sending hot-key messages using wxPostEvent. This
 // way we make sure that all hot-key driven actions are always executed from
 // the main thread. This approach will also make easier the transition to
@@ -137,58 +236,53 @@ void HotkeyManager::CheckKeyboardStatus() {
 	KeyboardCode kc = KeyboardCode::ReadKeyCode();
 	if (kc!= m_lastKeyCode) {
 		m_lastKeyCode= kc;
-		int index= IsKeyUsed(kc);
-		if (index != -1 and m_keyCommands[index]->IsEnabled())
-			m_keyCommands[index]->Command();
+		int index= FindByKeyboardCode(kc);
+		if (index != -1 and m_HotKeys[index]->IsEnabled())
+			m_HotKeys[index]->Command();
 	}
 	END_GUI_CALL_MUTEX()
 #endif // __WXGTK___
 }
 
+void HotkeyManager::InitDefaults() {
+	// Hotkeys disabled by default
+	for (size_t i= 0; i< m_HotKeys.size(); i++) {
+		DisableHotKey(*m_HotKeys[i]);
+	}
+}
+
 void HotkeyManager::WriteProfileData(wxConfigBase* pConfObj) {
 	pConfObj->SetPath (_T("hotKeyManager"));
-#if defined(__WXGTK__) 
-	for (unsigned int i=0; i<m_keyCommands.size(); i++) {
-		pConfObj->Write(m_keyCommands[i]->GetName(), m_keyCommands[i]->IsEnabled());
-		pConfObj->Write(m_keyCommands[i]->GetName() + _T("Key"), static_cast<long>(m_keyCommands[i]->GetKey().GetRawValue()));
+
+	for (unsigned int i=0; i<m_HotKeys.size(); i++) {
+		HotKey* hk= m_HotKeys[i];
+		pConfObj->Write(hk->GetName(), hk->IsEnabled());
+		pConfObj->Write(hk->GetName() + _T("Key"),
+				static_cast<int>(hk->GetKey().get_native()));
 	}
-#endif // __WXGTK___
+
 	pConfObj->SetPath (_T(".."));
 } 
 
 void HotkeyManager::ReadProfileData(wxConfigBase* pConfObj) {
 	pConfObj->SetPath (_T("hotKeyManager"));
-#if defined(__WXGTK__) 
-	bool isEnabled;
-	long rawKeyCode;
-	
-	for (unsigned int i=0; i<m_keyCommands.size(); i++) {
-		if(pConfObj->Read(m_keyCommands[i]->GetName(), &isEnabled))
-			m_keyCommands[i]->SetEnabled(isEnabled);
-		
-		if (pConfObj->Read(m_keyCommands[i]->GetName() + _T("Key"), &rawKeyCode))
-			m_keyCommands[i]->SetKey(KeyboardCode::FromRawValue(static_cast<unsigned long>(rawKeyCode)));
+
+	for (unsigned int i=0; i<m_HotKeys.size(); i++) {
+		HotKey* hk= m_HotKeys[i];
+
+		bool isEnabled= hk->IsEnabled();
+		pConfObj->Read(hk->GetName(), &isEnabled);
+
+		int rawKeyCode= hk->GetKey().get_native();
+		pConfObj->Read(m_HotKeys[i]->GetName() + _T("Key"), &rawKeyCode);
+
+		DisableHotKey(*hk);
+		SetHotKeyKeyboardCode (*hk, KeyboardCode(rawKeyCode));
+		if (isEnabled) EnableHotKey(*hk);
 	}
-#endif // __WXGTK___
+
 	pConfObj->SetPath (_T(".."));
 }
 
-int HotkeyManager::IsKeyUsed (KeyboardCode kc) const {
-	for (unsigned int i=0; i<m_keyCommands.size(); i++) {
-		if (m_keyCommands[i]->GetKey() == kc)
-			return i;
-	}
-	return -1;
-}
-
-bool HotkeyManager::SetKeyCommand (unsigned int index, KeyboardCode kc) {
-	assert (index < m_keyCommands.size());
-	if (IsKeyUsed(kc) == -1) {
-		m_keyCommands[index]->SetKey(kc);
-		return true;
-	} else {
-		return false;
-	}
-}
 
 } // namespace

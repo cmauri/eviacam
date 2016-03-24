@@ -353,7 +353,7 @@ private:
     wxIcon GetIconResource( const wxString& name );
 ////@end WConfiguration member function declarations
 
-	void CreateHotkey (const eviacam::KeyCommand* kc, wxWindow* parent, wxSizer* sizer);
+	void CreateHotkey (const eviacam::HotKey& kc, wxWindow* parent, wxSizer* sizer);
 
     /// Should we show tooltips?
     static bool ShowToolTips();
@@ -438,12 +438,8 @@ private:
 #if defined(__WXGTK__)
     wxChoice* m_choDown;
 #endif
-#if defined(__WXGTK__)
     wxStaticBox* m_panelKeys;
-#endif
-#if defined(__WXGTK__)
     wxFlexGridSizer* m_hotkeysSizer;
-#endif
 #if defined(__WXGTK__)
     wxCheckBox* m_chkStartup;
 #endif
