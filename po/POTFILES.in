@@ -41,4 +41,4 @@ wxcamwindow/capturethread.cpp
 wxcamwindow/camwindow.cpp
 wxutil/warnbaroverlap.h
 wxutil/warnbaroverlap.cpp
-
+po/xrc.cpp
