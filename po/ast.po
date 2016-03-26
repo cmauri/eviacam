@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam 1.0\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2016-03-24 13:48+0100\n"
+"POT-Creation-Date: 2016-03-26 13:44+0100\n"
 "PO-Revision-Date: 2010-03-05 17:33+0100\n"
 "Last-Translator: AluminiuM <aluminium@softastur.org>\n"
 "Language-Team: Asturian <softastur@softastur.org>\n"
@@ -120,7 +120,8 @@ msgstr ""
 msgid "%"
 msgstr ""
 
-#: src/wconfiguration.cpp:440
+#: src/wconfiguration.cpp:440 ../src/resources/clickWindowBitmap.xrc:43
+#: ../src/resources/clickWindowBitmapVertical.xrc:43
 msgid "Left"
 msgstr "Esquierdu"
 
@@ -128,7 +129,8 @@ msgstr "Esquierdu"
 msgid "Left limit workspace."
 msgstr ""
 
-#: src/wconfiguration.cpp:452
+#: src/wconfiguration.cpp:452 ../src/resources/clickWindowBitmap.xrc:63
+#: ../src/resources/clickWindowBitmapVertical.xrc:63
 msgid "Right"
 msgstr "Drechu"
 
@@ -341,7 +343,6 @@ msgstr "Non clic"
 
 #: src/wconfiguration.cpp:613 src/wconfiguration.cpp:626
 #: src/wconfiguration.cpp:639 src/wconfiguration.cpp:652 src/wwizard.cpp:1090
-#, fuzzy
 msgid "Double click"
 msgstr "Doble clic"
 
@@ -529,9 +530,8 @@ msgid "Change"
 msgstr "Cambear"
 
 #: src/wconfiguration.cpp:834
-#, fuzzy
 msgid "Language"
-msgstr "Llingua:"
+msgstr "Llingua"
 
 #: src/wconfiguration.cpp:839
 msgid "Language:"
@@ -635,6 +635,10 @@ msgid "Discard changes?"
 msgstr "¿Descartar cambeos?"
 
 #: src/clickwindowtext.cpp:210 src/clickwindowbitmap.cpp:251
+#: ../src/resources/clickWindowBitmap.xrc:98
+#: ../src/resources/clickWindowBitmapVertical.xrc:98
+#: ../src/resources/clickWindowText.xrc:70
+#: ../src/resources/clickWindowTextVertical.xrc:70
 msgid "Hide main window"
 msgstr "Anubrir ventana"
 
@@ -725,7 +729,6 @@ msgid "Close"
 msgstr "Zarrar"
 
 #: src/wabout.cpp:159
-#, fuzzy
 msgid "A webcam based mouse emulator"
 msgstr "Emulador de mur al traviés de cámara web"
 
@@ -749,11 +752,8 @@ msgid "License"
 msgstr ""
 
 #: src/wabout.cpp:206
-#, fuzzy
 msgid "Released under the GNU/GPL v3 license. See COPYING file for details."
-msgstr ""
-"Espublizau baxo llicencia GNU/GPL. Ver la llicencia pa los detais.<br>\n"
-" Col sofitu de:"
+msgstr "Espublizau baxo llicencia GNU/GPL v3. Ver COPYING pa los detais."
 
 #: src/wviacam.cpp:189
 msgid "E&nable / Disable"
@@ -980,7 +980,8 @@ msgstr ""
 msgid "Enable head tracking"
 msgstr "Opciones xenerales"
 
-#: src/wwizard.cpp:1048
+#: src/wwizard.cpp:1048 ../src/resources/clickWindowBitmap.xrc:73
+#: ../src/resources/clickWindowBitmapVertical.xrc:73
 msgid "Drag"
 msgstr "Arrastre"
 
@@ -1265,23 +1266,54 @@ msgstr ""
 msgid "Do not show this message again"
 msgstr ""
 
-#~ msgid "No click"
-#~ msgstr "Non clic"
+#: ../src/resources/clickWindowBitmap.xrc:8
+#: ../src/resources/clickWindowBitmapVertical.xrc:8
+#: ../src/resources/clickWindowText.xrc:7
+#: ../src/resources/clickWindowTextVertical.xrc:7
+msgid "eViacam"
+msgstr "eViacam"
 
-#~ msgid "#Left#"
-#~ msgstr "#Esquierdu#"
+#: ../src/resources/clickWindowBitmap.xrc:29
+#: ../src/resources/clickWindowBitmapVertical.xrc:29
+#: ../src/resources/clickWindowText.xrc:14
+#: ../src/resources/clickWindowTextVertical.xrc:14
+msgid "No click"
+msgstr "Non clic"
 
-#~ msgid "#Right#"
-#~ msgstr "#Drechu#"
+#: ../src/resources/clickWindowBitmap.xrc:53
+#: ../src/resources/clickWindowBitmapVertical.xrc:53
+msgid "Middle"
+msgstr ""
 
-#~ msgid "#Drag#"
-#~ msgstr "#Arrastre#"
+#: ../src/resources/clickWindowBitmap.xrc:83
+#: ../src/resources/clickWindowBitmapVertical.xrc:83
+msgid "Double Click"
+msgstr "Doble clic"
 
-#~ msgid "#Double Click#"
-#~ msgstr "#Doble clic#"
+#: ../src/resources/clickWindowText.xrc:30
+#: ../src/resources/clickWindowTextVertical.xrc:30
+msgid "#Left#"
+msgstr "#Esquierdu#"
 
-#~ msgid "Double Click"
-#~ msgstr "Doble clic"
+#: ../src/resources/clickWindowText.xrc:38
+#: ../src/resources/clickWindowTextVertical.xrc:38
+msgid "#Middle#"
+msgstr ""
+
+#: ../src/resources/clickWindowText.xrc:46
+#: ../src/resources/clickWindowTextVertical.xrc:46
+msgid "#Right#"
+msgstr "#Drechu#"
+
+#: ../src/resources/clickWindowText.xrc:54
+#: ../src/resources/clickWindowTextVertical.xrc:54
+msgid "#Drag#"
+msgstr "#Arrastre#"
+
+#: ../src/resources/clickWindowText.xrc:62
+#: ../src/resources/clickWindowTextVertical.xrc:62
+msgid "#Double Click#"
+msgstr "#Doble clic#"
 
 #, fuzzy
 #~ msgid "Disable head tracking"

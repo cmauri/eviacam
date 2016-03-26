@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2016-03-24 13:48+0100\n"
+"POT-Creation-Date: 2016-03-26 13:44+0100\n"
 "PO-Revision-Date: 2014-12-24 16:02+0000\n"
 "Last-Translator: cmauri <cesar@crea-si.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/eviacam/"
@@ -121,7 +121,8 @@ msgstr "顶部限制区"
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:440
+#: src/wconfiguration.cpp:440 ../src/resources/clickWindowBitmap.xrc:43
+#: ../src/resources/clickWindowBitmapVertical.xrc:43
 msgid "Left"
 msgstr "左"
 
@@ -129,7 +130,8 @@ msgstr "左"
 msgid "Left limit workspace."
 msgstr "左边限制区"
 
-#: src/wconfiguration.cpp:452
+#: src/wconfiguration.cpp:452 ../src/resources/clickWindowBitmap.xrc:63
+#: ../src/resources/clickWindowBitmapVertical.xrc:63
 msgid "Right"
 msgstr "右"
 
@@ -614,6 +616,10 @@ msgid "Discard changes?"
 msgstr "放弃更改？"
 
 #: src/clickwindowtext.cpp:210 src/clickwindowbitmap.cpp:251
+#: ../src/resources/clickWindowBitmap.xrc:98
+#: ../src/resources/clickWindowBitmapVertical.xrc:98
+#: ../src/resources/clickWindowText.xrc:70
+#: ../src/resources/clickWindowTextVertical.xrc:70
 msgid "Hide main window"
 msgstr "隐藏主窗口"
 
@@ -957,7 +963,8 @@ msgstr "没有点击。点击功能关闭。"
 msgid "Enable head tracking"
 msgstr "启用头部跟踪"
 
-#: src/wwizard.cpp:1048
+#: src/wwizard.cpp:1048 ../src/resources/clickWindowBitmap.xrc:73
+#: ../src/resources/clickWindowBitmapVertical.xrc:73
 msgid "Drag"
 msgstr "拖放"
 
@@ -1232,33 +1239,58 @@ msgstr ""
 msgid "Do not show this message again"
 msgstr "不要再显示此消息"
 
+#: ../src/resources/clickWindowBitmap.xrc:8
+#: ../src/resources/clickWindowBitmapVertical.xrc:8
+#: ../src/resources/clickWindowText.xrc:7
+#: ../src/resources/clickWindowTextVertical.xrc:7
+msgid "eViacam"
+msgstr "eViacam"
+
+#: ../src/resources/clickWindowBitmap.xrc:29
+#: ../src/resources/clickWindowBitmapVertical.xrc:29
+#: ../src/resources/clickWindowText.xrc:14
+#: ../src/resources/clickWindowTextVertical.xrc:14
+msgid "No click"
+msgstr "没有点击"
+
+#: ../src/resources/clickWindowBitmap.xrc:53
+#: ../src/resources/clickWindowBitmapVertical.xrc:53
+msgid "Middle"
+msgstr "中键"
+
+#: ../src/resources/clickWindowBitmap.xrc:83
+#: ../src/resources/clickWindowBitmapVertical.xrc:83
+msgid "Double Click"
+msgstr "双击"
+
+#: ../src/resources/clickWindowText.xrc:30
+#: ../src/resources/clickWindowTextVertical.xrc:30
+msgid "#Left#"
+msgstr "#左键#"
+
+#: ../src/resources/clickWindowText.xrc:38
+#: ../src/resources/clickWindowTextVertical.xrc:38
+msgid "#Middle#"
+msgstr "#中键#"
+
+#: ../src/resources/clickWindowText.xrc:46
+#: ../src/resources/clickWindowTextVertical.xrc:46
+msgid "#Right#"
+msgstr "#右键#"
+
+#: ../src/resources/clickWindowText.xrc:54
+#: ../src/resources/clickWindowTextVertical.xrc:54
+msgid "#Drag#"
+msgstr "#拖放#"
+
+#: ../src/resources/clickWindowText.xrc:62
+#: ../src/resources/clickWindowTextVertical.xrc:62
+msgid "#Double Click#"
+msgstr "#双击#"
+
 #~ msgid ""
 #~ "This key is used by another command.\n"
 #~ "Do you want to try another key?"
 #~ msgstr ""
 #~ "键被其他命令使用。\n"
 #~ "你想试试其他键吗？"
-
-#~ msgid "No click"
-#~ msgstr "没有点击"
-
-#~ msgid "#Left#"
-#~ msgstr "#左键#"
-
-#~ msgid "#Middle#"
-#~ msgstr "#中键#"
-
-#~ msgid "#Right#"
-#~ msgstr "#右键#"
-
-#~ msgid "#Drag#"
-#~ msgstr "#拖放#"
-
-#~ msgid "#Double Click#"
-#~ msgstr "#双击#"
-
-#~ msgid "Middle"
-#~ msgstr "中键"
-
-#~ msgid "Double Click"
-#~ msgstr "双击"

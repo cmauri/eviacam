@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2016-03-24 13:48+0100\n"
+"POT-Creation-Date: 2016-03-26 13:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -108,7 +108,8 @@ msgstr ""
 msgid "%"
 msgstr ""
 
-#: src/wconfiguration.cpp:440
+#: src/wconfiguration.cpp:440 ../src/resources/clickWindowBitmap.xrc:43
+#: ../src/resources/clickWindowBitmapVertical.xrc:43
 msgid "Left"
 msgstr ""
 
@@ -116,7 +117,8 @@ msgstr ""
 msgid "Left limit workspace."
 msgstr ""
 
-#: src/wconfiguration.cpp:452
+#: src/wconfiguration.cpp:452 ../src/resources/clickWindowBitmap.xrc:63
+#: ../src/resources/clickWindowBitmapVertical.xrc:63
 msgid "Right"
 msgstr ""
 
@@ -575,6 +577,10 @@ msgid "Discard changes?"
 msgstr ""
 
 #: src/clickwindowtext.cpp:210 src/clickwindowbitmap.cpp:251
+#: ../src/resources/clickWindowBitmap.xrc:98
+#: ../src/resources/clickWindowBitmapVertical.xrc:98
+#: ../src/resources/clickWindowText.xrc:70
+#: ../src/resources/clickWindowTextVertical.xrc:70
 msgid "Hide main window"
 msgstr ""
 
@@ -883,7 +889,8 @@ msgstr ""
 msgid "Enable head tracking"
 msgstr ""
 
-#: src/wwizard.cpp:1048
+#: src/wwizard.cpp:1048 ../src/resources/clickWindowBitmap.xrc:73
+#: ../src/resources/clickWindowBitmapVertical.xrc:73
 msgid "Drag"
 msgstr ""
 
@@ -1146,4 +1153,53 @@ msgstr ""
 
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
+msgstr ""
+
+#: ../src/resources/clickWindowBitmap.xrc:8
+#: ../src/resources/clickWindowBitmapVertical.xrc:8
+#: ../src/resources/clickWindowText.xrc:7
+#: ../src/resources/clickWindowTextVertical.xrc:7
+msgid "eViacam"
+msgstr ""
+
+#: ../src/resources/clickWindowBitmap.xrc:29
+#: ../src/resources/clickWindowBitmapVertical.xrc:29
+#: ../src/resources/clickWindowText.xrc:14
+#: ../src/resources/clickWindowTextVertical.xrc:14
+msgid "No click"
+msgstr ""
+
+#: ../src/resources/clickWindowBitmap.xrc:53
+#: ../src/resources/clickWindowBitmapVertical.xrc:53
+msgid "Middle"
+msgstr ""
+
+#: ../src/resources/clickWindowBitmap.xrc:83
+#: ../src/resources/clickWindowBitmapVertical.xrc:83
+msgid "Double Click"
+msgstr ""
+
+#: ../src/resources/clickWindowText.xrc:30
+#: ../src/resources/clickWindowTextVertical.xrc:30
+msgid "#Left#"
+msgstr ""
+
+#: ../src/resources/clickWindowText.xrc:38
+#: ../src/resources/clickWindowTextVertical.xrc:38
+msgid "#Middle#"
+msgstr ""
+
+#: ../src/resources/clickWindowText.xrc:46
+#: ../src/resources/clickWindowTextVertical.xrc:46
+msgid "#Right#"
+msgstr ""
+
+#: ../src/resources/clickWindowText.xrc:54
+#: ../src/resources/clickWindowTextVertical.xrc:54
+msgid "#Drag#"
+msgstr ""
+
+#: ../src/resources/clickWindowText.xrc:62
+#: ../src/resources/clickWindowTextVertical.xrc:62
+msgid "#Double Click#"
 msgstr ""

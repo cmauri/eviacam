@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2016-03-24 13:48+0100\n"
+"POT-Creation-Date: 2016-03-26 13:44+0100\n"
 "PO-Revision-Date: 2014-12-24 19:05+0000\n"
 "Last-Translator: Serg47 <neftekum@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/eviacam/language/"
@@ -122,7 +122,8 @@ msgstr "Верхняя граница."
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:440
+#: src/wconfiguration.cpp:440 ../src/resources/clickWindowBitmap.xrc:43
+#: ../src/resources/clickWindowBitmapVertical.xrc:43
 msgid "Left"
 msgstr "Левый клик"
 
@@ -130,7 +131,8 @@ msgstr "Левый клик"
 msgid "Left limit workspace."
 msgstr "Левая граница."
 
-#: src/wconfiguration.cpp:452
+#: src/wconfiguration.cpp:452 ../src/resources/clickWindowBitmap.xrc:63
+#: ../src/resources/clickWindowBitmapVertical.xrc:63
 msgid "Right"
 msgstr "Правый клик"
 
@@ -620,6 +622,10 @@ msgid "Discard changes?"
 msgstr "Отменить изменения?"
 
 #: src/clickwindowtext.cpp:210 src/clickwindowbitmap.cpp:251
+#: ../src/resources/clickWindowBitmap.xrc:98
+#: ../src/resources/clickWindowBitmapVertical.xrc:98
+#: ../src/resources/clickWindowText.xrc:70
+#: ../src/resources/clickWindowTextVertical.xrc:70
 msgid "Hide main window"
 msgstr "Скрыть главное окно"
 
@@ -985,7 +991,8 @@ msgstr "Функция \"клик\" выключена."
 msgid "Enable head tracking"
 msgstr "Включить слежение"
 
-#: src/wwizard.cpp:1048
+#: src/wwizard.cpp:1048 ../src/resources/clickWindowBitmap.xrc:73
+#: ../src/resources/clickWindowBitmapVertical.xrc:73
 msgid "Drag"
 msgstr "Перемещение"
 
@@ -1267,33 +1274,58 @@ msgstr "Выбранная позиция занята. Рекомендуетс
 msgid "Do not show this message again"
 msgstr "Не показывать это сообщение"
 
+#: ../src/resources/clickWindowBitmap.xrc:8
+#: ../src/resources/clickWindowBitmapVertical.xrc:8
+#: ../src/resources/clickWindowText.xrc:7
+#: ../src/resources/clickWindowTextVertical.xrc:7
+msgid "eViacam"
+msgstr "eViacam "
+
+#: ../src/resources/clickWindowBitmap.xrc:29
+#: ../src/resources/clickWindowBitmapVertical.xrc:29
+#: ../src/resources/clickWindowText.xrc:14
+#: ../src/resources/clickWindowTextVertical.xrc:14
+msgid "No click"
+msgstr "Выключено"
+
+#: ../src/resources/clickWindowBitmap.xrc:53
+#: ../src/resources/clickWindowBitmapVertical.xrc:53
+msgid "Middle"
+msgstr "Средний клик"
+
+#: ../src/resources/clickWindowBitmap.xrc:83
+#: ../src/resources/clickWindowBitmapVertical.xrc:83
+msgid "Double Click"
+msgstr "Двойной клик"
+
+#: ../src/resources/clickWindowText.xrc:30
+#: ../src/resources/clickWindowTextVertical.xrc:30
+msgid "#Left#"
+msgstr "#Левый клик#"
+
+#: ../src/resources/clickWindowText.xrc:38
+#: ../src/resources/clickWindowTextVertical.xrc:38
+msgid "#Middle#"
+msgstr "#Средний клик#"
+
+#: ../src/resources/clickWindowText.xrc:46
+#: ../src/resources/clickWindowTextVertical.xrc:46
+msgid "#Right#"
+msgstr "#Правый клик#"
+
+#: ../src/resources/clickWindowText.xrc:54
+#: ../src/resources/clickWindowTextVertical.xrc:54
+msgid "#Drag#"
+msgstr "#Перемещение#"
+
+#: ../src/resources/clickWindowText.xrc:62
+#: ../src/resources/clickWindowTextVertical.xrc:62
+msgid "#Double Click#"
+msgstr "#Двойной клик#"
+
 #~ msgid ""
 #~ "This key is used by another command.\n"
 #~ "Do you want to try another key?"
 #~ msgstr ""
 #~ "Эта клавиша используется.\n"
 #~ "Хотите назначить другую?"
-
-#~ msgid "No click"
-#~ msgstr "Выключено"
-
-#~ msgid "#Left#"
-#~ msgstr "#Левый клик#"
-
-#~ msgid "#Middle#"
-#~ msgstr "#Средний клик#"
-
-#~ msgid "#Right#"
-#~ msgstr "#Правый клик#"
-
-#~ msgid "#Drag#"
-#~ msgstr "#Перемещение#"
-
-#~ msgid "#Double Click#"
-#~ msgstr "#Двойной клик#"
-
-#~ msgid "Middle"
-#~ msgstr "Средний клик"
-
-#~ msgid "Double Click"
-#~ msgstr "Двойной клик"

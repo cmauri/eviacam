@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2016-03-24 13:48+0100\n"
+"POT-Creation-Date: 2016-03-26 13:44+0100\n"
 "PO-Revision-Date: 2014-12-25 18:32+0000\n"
 "Last-Translator: seblecointre <sebastien.lecointre@free.fr>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/eviacam/language/"
@@ -121,7 +121,8 @@ msgstr "Limite haute de l'espace de travail."
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:440
+#: src/wconfiguration.cpp:440 ../src/resources/clickWindowBitmap.xrc:43
+#: ../src/resources/clickWindowBitmapVertical.xrc:43
 msgid "Left"
 msgstr "Clic gauche"
 
@@ -129,7 +130,8 @@ msgstr "Clic gauche"
 msgid "Left limit workspace."
 msgstr "Limite gauche de l'espace de travail."
 
-#: src/wconfiguration.cpp:452
+#: src/wconfiguration.cpp:452 ../src/resources/clickWindowBitmap.xrc:63
+#: ../src/resources/clickWindowBitmapVertical.xrc:63
 msgid "Right"
 msgstr "Clic droit"
 
@@ -618,6 +620,10 @@ msgid "Discard changes?"
 msgstr "Annuler les changements ?"
 
 #: src/clickwindowtext.cpp:210 src/clickwindowbitmap.cpp:251
+#: ../src/resources/clickWindowBitmap.xrc:98
+#: ../src/resources/clickWindowBitmapVertical.xrc:98
+#: ../src/resources/clickWindowText.xrc:70
+#: ../src/resources/clickWindowTextVertical.xrc:70
 msgid "Hide main window"
 msgstr "Cacher la fenêtre principale"
 
@@ -976,7 +982,8 @@ msgstr "Pas de clic. La fonction clic est désactivée."
 msgid "Enable head tracking"
 msgstr "Activer le suivi de visage"
 
-#: src/wwizard.cpp:1048
+#: src/wwizard.cpp:1048 ../src/resources/clickWindowBitmap.xrc:73
+#: ../src/resources/clickWindowBitmapVertical.xrc:73
 msgid "Drag"
 msgstr "Clic maintenu"
 
@@ -1266,33 +1273,58 @@ msgstr ""
 msgid "Do not show this message again"
 msgstr "Ne plus montrer ce message à l'avenir"
 
+#: ../src/resources/clickWindowBitmap.xrc:8
+#: ../src/resources/clickWindowBitmapVertical.xrc:8
+#: ../src/resources/clickWindowText.xrc:7
+#: ../src/resources/clickWindowTextVertical.xrc:7
+msgid "eViacam"
+msgstr "eViacam"
+
+#: ../src/resources/clickWindowBitmap.xrc:29
+#: ../src/resources/clickWindowBitmapVertical.xrc:29
+#: ../src/resources/clickWindowText.xrc:14
+#: ../src/resources/clickWindowTextVertical.xrc:14
+msgid "No click"
+msgstr "Pas de clic"
+
+#: ../src/resources/clickWindowBitmap.xrc:53
+#: ../src/resources/clickWindowBitmapVertical.xrc:53
+msgid "Middle"
+msgstr "Clic milieu"
+
+#: ../src/resources/clickWindowBitmap.xrc:83
+#: ../src/resources/clickWindowBitmapVertical.xrc:83
+msgid "Double Click"
+msgstr "Double clic"
+
+#: ../src/resources/clickWindowText.xrc:30
+#: ../src/resources/clickWindowTextVertical.xrc:30
+msgid "#Left#"
+msgstr "#Clic gauche#"
+
+#: ../src/resources/clickWindowText.xrc:38
+#: ../src/resources/clickWindowTextVertical.xrc:38
+msgid "#Middle#"
+msgstr "#Clic milieu#"
+
+#: ../src/resources/clickWindowText.xrc:46
+#: ../src/resources/clickWindowTextVertical.xrc:46
+msgid "#Right#"
+msgstr "#Clic droit#"
+
+#: ../src/resources/clickWindowText.xrc:54
+#: ../src/resources/clickWindowTextVertical.xrc:54
+msgid "#Drag#"
+msgstr "#Clic maintenu#"
+
+#: ../src/resources/clickWindowText.xrc:62
+#: ../src/resources/clickWindowTextVertical.xrc:62
+msgid "#Double Click#"
+msgstr "#Double clic#"
+
 #~ msgid ""
 #~ "This key is used by another command.\n"
 #~ "Do you want to try another key?"
 #~ msgstr ""
 #~ "Cette touche est utilisée par une autre commande.\n"
 #~ "Voulez-vous essayer une autre touche ?"
-
-#~ msgid "No click"
-#~ msgstr "Pas de clic"
-
-#~ msgid "#Left#"
-#~ msgstr "#Clic gauche#"
-
-#~ msgid "#Middle#"
-#~ msgstr "#Clic milieu#"
-
-#~ msgid "#Right#"
-#~ msgstr "#Clic droit#"
-
-#~ msgid "#Drag#"
-#~ msgstr "#Clic maintenu#"
-
-#~ msgid "#Double Click#"
-#~ msgstr "#Double clic#"
-
-#~ msgid "Middle"
-#~ msgstr "Clic milieu"
-
-#~ msgid "Double Click"
-#~ msgstr "Double clic"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2016-03-24 13:48+0100\n"
+"POT-Creation-Date: 2016-03-26 13:44+0100\n"
 "PO-Revision-Date: 2010-07-11 20:35+0300\n"
 "Last-Translator: Anıl Özbek <anil@artistanbulpr.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -122,7 +122,8 @@ msgstr "Çalışma alanı üst sınır."
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:440
+#: src/wconfiguration.cpp:440 ../src/resources/clickWindowBitmap.xrc:43
+#: ../src/resources/clickWindowBitmapVertical.xrc:43
 msgid "Left"
 msgstr "Sol"
 
@@ -130,7 +131,8 @@ msgstr "Sol"
 msgid "Left limit workspace."
 msgstr "Çalışmaalanı sol sınır."
 
-#: src/wconfiguration.cpp:452
+#: src/wconfiguration.cpp:452 ../src/resources/clickWindowBitmap.xrc:63
+#: ../src/resources/clickWindowBitmapVertical.xrc:63
 msgid "Right"
 msgstr "Sağ"
 
@@ -527,9 +529,8 @@ msgid "Change"
 msgstr "Değiştir"
 
 #: src/wconfiguration.cpp:834
-#, fuzzy
 msgid "Language"
-msgstr "Dil:"
+msgstr "Dil"
 
 #: src/wconfiguration.cpp:839
 msgid "Language:"
@@ -561,7 +562,6 @@ msgid "Key:"
 msgstr ""
 
 #: src/wconfiguration.cpp:901
-#, fuzzy
 msgid "Set key"
 msgstr "Tuşu ayarla"
 
@@ -633,6 +633,10 @@ msgid "Discard changes?"
 msgstr "Değişiklikler yoksayılsın mı?"
 
 #: src/clickwindowtext.cpp:210 src/clickwindowbitmap.cpp:251
+#: ../src/resources/clickWindowBitmap.xrc:98
+#: ../src/resources/clickWindowBitmapVertical.xrc:98
+#: ../src/resources/clickWindowText.xrc:70
+#: ../src/resources/clickWindowTextVertical.xrc:70
 msgid "Hide main window"
 msgstr "Ana pencereyi gizle"
 
@@ -979,7 +983,8 @@ msgstr ""
 msgid "Enable head tracking"
 msgstr "Genel seçenekler"
 
-#: src/wwizard.cpp:1048
+#: src/wwizard.cpp:1048 ../src/resources/clickWindowBitmap.xrc:73
+#: ../src/resources/clickWindowBitmapVertical.xrc:73
 msgid "Drag"
 msgstr "Sürükleme"
 
@@ -1263,23 +1268,54 @@ msgstr ""
 msgid "Do not show this message again"
 msgstr ""
 
-#~ msgid "No click"
-#~ msgstr "Tıklama yok"
+#: ../src/resources/clickWindowBitmap.xrc:8
+#: ../src/resources/clickWindowBitmapVertical.xrc:8
+#: ../src/resources/clickWindowText.xrc:7
+#: ../src/resources/clickWindowTextVertical.xrc:7
+msgid "eViacam"
+msgstr "eViacam"
 
-#~ msgid "#Left#"
-#~ msgstr "#Sol#"
+#: ../src/resources/clickWindowBitmap.xrc:29
+#: ../src/resources/clickWindowBitmapVertical.xrc:29
+#: ../src/resources/clickWindowText.xrc:14
+#: ../src/resources/clickWindowTextVertical.xrc:14
+msgid "No click"
+msgstr "Tıklama yok"
 
-#~ msgid "#Right#"
-#~ msgstr "#Sağ#"
+#: ../src/resources/clickWindowBitmap.xrc:53
+#: ../src/resources/clickWindowBitmapVertical.xrc:53
+msgid "Middle"
+msgstr ""
 
-#~ msgid "#Drag#"
-#~ msgstr "#Sürükleme#"
+#: ../src/resources/clickWindowBitmap.xrc:83
+#: ../src/resources/clickWindowBitmapVertical.xrc:83
+msgid "Double Click"
+msgstr "Çift tıklama"
 
-#~ msgid "#Double Click#"
-#~ msgstr "#Çift tıklama#"
+#: ../src/resources/clickWindowText.xrc:30
+#: ../src/resources/clickWindowTextVertical.xrc:30
+msgid "#Left#"
+msgstr "#Sol#"
 
-#~ msgid "Double Click"
-#~ msgstr "Çift tıklama"
+#: ../src/resources/clickWindowText.xrc:38
+#: ../src/resources/clickWindowTextVertical.xrc:38
+msgid "#Middle#"
+msgstr ""
+
+#: ../src/resources/clickWindowText.xrc:46
+#: ../src/resources/clickWindowTextVertical.xrc:46
+msgid "#Right#"
+msgstr "#Sağ#"
+
+#: ../src/resources/clickWindowText.xrc:54
+#: ../src/resources/clickWindowTextVertical.xrc:54
+msgid "#Drag#"
+msgstr "#Sürükleme#"
+
+#: ../src/resources/clickWindowText.xrc:62
+#: ../src/resources/clickWindowTextVertical.xrc:62
+msgid "#Double Click#"
+msgstr "#Çift tıklama#"
 
 #, fuzzy
 #~ msgid "Disable head tracking"

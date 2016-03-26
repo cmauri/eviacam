@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2016-03-24 13:48+0100\n"
+"POT-Creation-Date: 2016-03-26 13:44+0100\n"
 "PO-Revision-Date: 2016-03-24 13:04+0000\n"
 "Last-Translator: Giuseppe1 Masciopinto <kktc.ags@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/cmauri/eviacam/language/"
@@ -118,7 +118,8 @@ msgstr "Llimite superiore dell'area di lavoro"
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:440
+#: src/wconfiguration.cpp:440 ../src/resources/clickWindowBitmap.xrc:43
+#: ../src/resources/clickWindowBitmapVertical.xrc:43
 msgid "Left"
 msgstr "Sinistra"
 
@@ -126,7 +127,8 @@ msgstr "Sinistra"
 msgid "Left limit workspace."
 msgstr "Llimite sinistro dell'area di lavoro."
 
-#: src/wconfiguration.cpp:452
+#: src/wconfiguration.cpp:452 ../src/resources/clickWindowBitmap.xrc:63
+#: ../src/resources/clickWindowBitmapVertical.xrc:63
 msgid "Right"
 msgstr "Destra"
 
@@ -205,6 +207,8 @@ msgid ""
 "Send multiple clicks\n"
 "when the pointer is stopped."
 msgstr ""
+"Consentire multipli click\n"
+"quando il cursore è fermo."
 
 #: src/wconfiguration.cpp:528
 msgid "Beep on click"
@@ -611,6 +615,10 @@ msgid "Discard changes?"
 msgstr "Annullare le modifiche?"
 
 #: src/clickwindowtext.cpp:210 src/clickwindowbitmap.cpp:251
+#: ../src/resources/clickWindowBitmap.xrc:98
+#: ../src/resources/clickWindowBitmapVertical.xrc:98
+#: ../src/resources/clickWindowText.xrc:70
+#: ../src/resources/clickWindowTextVertical.xrc:70
 msgid "Hide main window"
 msgstr "Nascondi la finestra principale"
 
@@ -909,6 +917,14 @@ msgid ""
 "NOTE: the calibration assistant will enable the pointer control so that you "
 "can test your configuration."
 msgstr ""
+"La procedura di calibrazione assistita vi chiederà di spostare la testa per "
+"configurare automaticamente i parametri di movimento appropriato.\n"
+"\n"
+"Dopo questa fase di calibrazione, è possibile regolare manualmente i "
+"parametri di movimento.\n"
+"\n"
+"NOTA: L'assistente di calibrazione consentirà il controllo del puntatore in "
+"modo da poter verificare la configurazione."
 
 #: src/wwizard.cpp:550
 msgid "Perform assisted calibration"
@@ -963,7 +979,8 @@ msgstr "Nessun click. Funzione del click disabilitata."
 msgid "Enable head tracking"
 msgstr "Abilitare controllo con la testa"
 
-#: src/wwizard.cpp:1048
+#: src/wwizard.cpp:1048 ../src/resources/clickWindowBitmap.xrc:73
+#: ../src/resources/clickWindowBitmapVertical.xrc:73
 msgid "Drag"
 msgstr "Trascina"
 
@@ -1253,3 +1270,52 @@ msgstr ""
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
 msgstr "Non visualizzare più questo messaggio"
+
+#: ../src/resources/clickWindowBitmap.xrc:8
+#: ../src/resources/clickWindowBitmapVertical.xrc:8
+#: ../src/resources/clickWindowText.xrc:7
+#: ../src/resources/clickWindowTextVertical.xrc:7
+msgid "eViacam"
+msgstr "eViacam"
+
+#: ../src/resources/clickWindowBitmap.xrc:29
+#: ../src/resources/clickWindowBitmapVertical.xrc:29
+#: ../src/resources/clickWindowText.xrc:14
+#: ../src/resources/clickWindowTextVertical.xrc:14
+msgid "No click"
+msgstr "No click"
+
+#: ../src/resources/clickWindowBitmap.xrc:53
+#: ../src/resources/clickWindowBitmapVertical.xrc:53
+msgid "Middle"
+msgstr "Centrale"
+
+#: ../src/resources/clickWindowBitmap.xrc:83
+#: ../src/resources/clickWindowBitmapVertical.xrc:83
+msgid "Double Click"
+msgstr "Doppio Click"
+
+#: ../src/resources/clickWindowText.xrc:30
+#: ../src/resources/clickWindowTextVertical.xrc:30
+msgid "#Left#"
+msgstr "#Sinistra#"
+
+#: ../src/resources/clickWindowText.xrc:38
+#: ../src/resources/clickWindowTextVertical.xrc:38
+msgid "#Middle#"
+msgstr "#Centrale#"
+
+#: ../src/resources/clickWindowText.xrc:46
+#: ../src/resources/clickWindowTextVertical.xrc:46
+msgid "#Right#"
+msgstr "#Destra#"
+
+#: ../src/resources/clickWindowText.xrc:54
+#: ../src/resources/clickWindowTextVertical.xrc:54
+msgid "#Drag#"
+msgstr "#Trascina#"
+
+#: ../src/resources/clickWindowText.xrc:62
+#: ../src/resources/clickWindowTextVertical.xrc:62
+msgid "#Double Click#"
+msgstr "#Doppio Click#"

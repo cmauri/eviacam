@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: viacam 1.3.1\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2016-03-24 13:48+0100\n"
+"POT-Creation-Date: 2016-03-26 13:44+0100\n"
 "PO-Revision-Date: 2015-05-19 03:49+0300\n"
 "Last-Translator: sea <dr.hatim@hotmail.com>\n"
 "Language-Team: Hatim Alahmady\n"
@@ -116,7 +116,8 @@ msgstr "الحد العلوي لمنطقة العمل"
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:440
+#: src/wconfiguration.cpp:440 ../src/resources/clickWindowBitmap.xrc:43
+#: ../src/resources/clickWindowBitmapVertical.xrc:43
 msgid "Left"
 msgstr "يسار"
 
@@ -124,7 +125,8 @@ msgstr "يسار"
 msgid "Left limit workspace."
 msgstr "الحد الايسر لمنطقة العمل"
 
-#: src/wconfiguration.cpp:452
+#: src/wconfiguration.cpp:452 ../src/resources/clickWindowBitmap.xrc:63
+#: ../src/resources/clickWindowBitmapVertical.xrc:63
 msgid "Right"
 msgstr "يمين"
 
@@ -602,6 +604,10 @@ msgid "Discard changes?"
 msgstr "تجهل التغييرات؟"
 
 #: src/clickwindowtext.cpp:210 src/clickwindowbitmap.cpp:251
+#: ../src/resources/clickWindowBitmap.xrc:98
+#: ../src/resources/clickWindowBitmapVertical.xrc:98
+#: ../src/resources/clickWindowText.xrc:70
+#: ../src/resources/clickWindowTextVertical.xrc:70
 msgid "Hide main window"
 msgstr "اخفاء النافذة الرئيسية"
 
@@ -933,7 +939,8 @@ msgstr ""
 msgid "Enable head tracking"
 msgstr "تفعيل تتبع الرأس"
 
-#: src/wwizard.cpp:1048
+#: src/wwizard.cpp:1048 ../src/resources/clickWindowBitmap.xrc:73
+#: ../src/resources/clickWindowBitmapVertical.xrc:73
 msgid "Drag"
 msgstr "سحب"
 
@@ -1208,36 +1215,61 @@ msgstr ""
 msgid "Do not show this message again"
 msgstr "لا تظهر هذه الرسالة مجددا"
 
+#: ../src/resources/clickWindowBitmap.xrc:8
+#: ../src/resources/clickWindowBitmapVertical.xrc:8
+#: ../src/resources/clickWindowText.xrc:7
+#: ../src/resources/clickWindowTextVertical.xrc:7
+msgid "eViacam"
+msgstr "eViacam"
+
+#: ../src/resources/clickWindowBitmap.xrc:29
+#: ../src/resources/clickWindowBitmapVertical.xrc:29
+#: ../src/resources/clickWindowText.xrc:14
+#: ../src/resources/clickWindowTextVertical.xrc:14
+msgid "No click"
+msgstr "بدون نقر"
+
+#: ../src/resources/clickWindowBitmap.xrc:53
+#: ../src/resources/clickWindowBitmapVertical.xrc:53
+msgid "Middle"
+msgstr "وسط"
+
+#: ../src/resources/clickWindowBitmap.xrc:83
+#: ../src/resources/clickWindowBitmapVertical.xrc:83
+msgid "Double Click"
+msgstr "نقرتين"
+
+#: ../src/resources/clickWindowText.xrc:30
+#: ../src/resources/clickWindowTextVertical.xrc:30
+msgid "#Left#"
+msgstr "#يسار#"
+
+#: ../src/resources/clickWindowText.xrc:38
+#: ../src/resources/clickWindowTextVertical.xrc:38
+msgid "#Middle#"
+msgstr "#وسط#"
+
+#: ../src/resources/clickWindowText.xrc:46
+#: ../src/resources/clickWindowTextVertical.xrc:46
+msgid "#Right#"
+msgstr "#يمين#"
+
+#: ../src/resources/clickWindowText.xrc:54
+#: ../src/resources/clickWindowTextVertical.xrc:54
+msgid "#Drag#"
+msgstr "#سحب#"
+
+#: ../src/resources/clickWindowText.xrc:62
+#: ../src/resources/clickWindowTextVertical.xrc:62
+msgid "#Double Click#"
+msgstr "#نقرتين#"
+
 #~ msgid ""
 #~ "This key is used by another command.\n"
 #~ "Do you want to try another key?"
 #~ msgstr ""
 #~ "هذا المفتاح يستخدم لأمر آخر.\n"
 #~ "هل ترغب بتجربة مفتاح آخر؟"
-
-#~ msgid "No click"
-#~ msgstr "بدون نقر"
-
-#~ msgid "#Left#"
-#~ msgstr "#يسار#"
-
-#~ msgid "#Middle#"
-#~ msgstr "#وسط#"
-
-#~ msgid "#Right#"
-#~ msgstr "#يمين#"
-
-#~ msgid "#Drag#"
-#~ msgstr "#سحب#"
-
-#~ msgid "#Double Click#"
-#~ msgstr "#نقرتين#"
-
-#~ msgid "Middle"
-#~ msgstr "وسط"
-
-#~ msgid "Double Click"
-#~ msgstr "نقرتين"
 
 #, fuzzy
 #~ msgid "Disable head tracking"

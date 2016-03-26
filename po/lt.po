@@ -1,18 +1,18 @@
-# SOME DESCRIPTIVE TITLE.
+# Lithuanian translations for eviacam package
 # Copyright (C) YEAR Cesar Mauri Loba - CREA Software Systems
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Agnius Svigaris <agniussv@gmail.com>, 2013-2014
+# Agnius Svigaris <agniussv@gmail.com>, 2013-2014,2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2016-03-24 13:48+0100\n"
-"PO-Revision-Date: 2014-12-25 13:18+0000\n"
+"POT-Creation-Date: 2016-03-26 13:44+0100\n"
+"PO-Revision-Date: 2016-03-24 20:41+0000\n"
 "Last-Translator: Agnius Svigaris <agniussv@gmail.com>\n"
-"Language-Team: Lithuanian (http://www.transifex.com/projects/p/eviacam/"
-"language/lt/)\n"
+"Language-Team: Lithuanian (http://www.transifex.com/cmauri/eviacam/language/"
+"lt/)\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -121,7 +121,8 @@ msgstr "Darbo srities viršaus riba."
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:440
+#: src/wconfiguration.cpp:440 ../src/resources/clickWindowBitmap.xrc:43
+#: ../src/resources/clickWindowBitmapVertical.xrc:43
 msgid "Left"
 msgstr "Kairė"
 
@@ -129,7 +130,8 @@ msgstr "Kairė"
 msgid "Left limit workspace."
 msgstr "Darbo srities kairės riba."
 
-#: src/wconfiguration.cpp:452
+#: src/wconfiguration.cpp:452 ../src/resources/clickWindowBitmap.xrc:63
+#: ../src/resources/clickWindowBitmapVertical.xrc:63
 msgid "Right"
 msgstr "Dešinė"
 
@@ -524,7 +526,7 @@ msgstr "Patikrinti atnaujinimus"
 
 #: src/wconfiguration.cpp:849
 msgid "Automatically check for updates at startup"
-msgstr ""
+msgstr "Automatiškai patikrinti ar yra atnaujinimų paleidžiant programą"
 
 #: src/wconfiguration.cpp:853
 msgid "General options"
@@ -615,6 +617,10 @@ msgid "Discard changes?"
 msgstr "Atsisakyti pakeitimų?"
 
 #: src/clickwindowtext.cpp:210 src/clickwindowbitmap.cpp:251
+#: ../src/resources/clickWindowBitmap.xrc:98
+#: ../src/resources/clickWindowBitmapVertical.xrc:98
+#: ../src/resources/clickWindowText.xrc:70
+#: ../src/resources/clickWindowTextVertical.xrc:70
 msgid "Hide main window"
 msgstr "Slėpti pagrindinį langą"
 
@@ -971,7 +977,8 @@ msgstr "Nėra paspaudimo. Paspaudimo funkcija išjungta."
 msgid "Enable head tracking"
 msgstr "Įjungti galvos sekimą"
 
-#: src/wwizard.cpp:1048
+#: src/wwizard.cpp:1048 ../src/resources/clickWindowBitmap.xrc:73
+#: ../src/resources/clickWindowBitmapVertical.xrc:73
 msgid "Drag"
 msgstr "Vilkti"
 
@@ -1257,33 +1264,58 @@ msgstr ""
 msgid "Do not show this message again"
 msgstr "Neberodyti šio pranešimo"
 
+#: ../src/resources/clickWindowBitmap.xrc:8
+#: ../src/resources/clickWindowBitmapVertical.xrc:8
+#: ../src/resources/clickWindowText.xrc:7
+#: ../src/resources/clickWindowTextVertical.xrc:7
+msgid "eViacam"
+msgstr "eViacam"
+
+#: ../src/resources/clickWindowBitmap.xrc:29
+#: ../src/resources/clickWindowBitmapVertical.xrc:29
+#: ../src/resources/clickWindowText.xrc:14
+#: ../src/resources/clickWindowTextVertical.xrc:14
+msgid "No click"
+msgstr "Nėra paspaudimo"
+
+#: ../src/resources/clickWindowBitmap.xrc:53
+#: ../src/resources/clickWindowBitmapVertical.xrc:53
+msgid "Middle"
+msgstr "Vidurys"
+
+#: ../src/resources/clickWindowBitmap.xrc:83
+#: ../src/resources/clickWindowBitmapVertical.xrc:83
+msgid "Double Click"
+msgstr "Dvigubas paspaudimas"
+
+#: ../src/resources/clickWindowText.xrc:30
+#: ../src/resources/clickWindowTextVertical.xrc:30
+msgid "#Left#"
+msgstr "#Kairė#"
+
+#: ../src/resources/clickWindowText.xrc:38
+#: ../src/resources/clickWindowTextVertical.xrc:38
+msgid "#Middle#"
+msgstr "#Vidurys#"
+
+#: ../src/resources/clickWindowText.xrc:46
+#: ../src/resources/clickWindowTextVertical.xrc:46
+msgid "#Right#"
+msgstr "#Dešinė#"
+
+#: ../src/resources/clickWindowText.xrc:54
+#: ../src/resources/clickWindowTextVertical.xrc:54
+msgid "#Drag#"
+msgstr "#Vilkti#"
+
+#: ../src/resources/clickWindowText.xrc:62
+#: ../src/resources/clickWindowTextVertical.xrc:62
+msgid "#Double Click#"
+msgstr "#Dvigubas paspaudimas#"
+
 #~ msgid ""
 #~ "This key is used by another command.\n"
 #~ "Do you want to try another key?"
 #~ msgstr ""
 #~ "Šis raktas yra naudojamas kitos komandos. \n"
 #~ "Norite pabandyti kitą raktą ?"
-
-#~ msgid "No click"
-#~ msgstr "Nėra paspaudimo"
-
-#~ msgid "#Left#"
-#~ msgstr "#Kairė#"
-
-#~ msgid "#Middle#"
-#~ msgstr "#Vidurys#"
-
-#~ msgid "#Right#"
-#~ msgstr "#Dešinė#"
-
-#~ msgid "#Drag#"
-#~ msgstr "#Vilkti#"
-
-#~ msgid "#Double Click#"
-#~ msgstr "#Dvigubas paspaudimas#"
-
-#~ msgid "Middle"
-#~ msgstr "Vidurys"
-
-#~ msgid "Double Click"
-#~ msgstr "Dvigubas paspaudimas"

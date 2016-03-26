@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
-"POT-Creation-Date: 2016-03-24 13:48+0100\n"
-"PO-Revision-Date: 2016-03-24 13:04+0000\n"
+"POT-Creation-Date: 2016-03-26 13:44+0100\n"
+"PO-Revision-Date: 2014-12-24 21:58+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew (http://www.transifex.com/cmauri/eviacam/language/"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/eviacam/language/"
 "he/)\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
@@ -120,7 +120,8 @@ msgstr "הגבול העליון של סביבת העבודה."
 msgid "%"
 msgstr "%"
 
-#: src/wconfiguration.cpp:440
+#: src/wconfiguration.cpp:440 ../src/resources/clickWindowBitmap.xrc:43
+#: ../src/resources/clickWindowBitmapVertical.xrc:43
 msgid "Left"
 msgstr "שמאל"
 
@@ -128,7 +129,8 @@ msgstr "שמאל"
 msgid "Left limit workspace."
 msgstr "הגבול השמאלי של סביבת העבודה."
 
-#: src/wconfiguration.cpp:452
+#: src/wconfiguration.cpp:452 ../src/resources/clickWindowBitmap.xrc:63
+#: ../src/resources/clickWindowBitmapVertical.xrc:63
 msgid "Right"
 msgstr "ימין"
 
@@ -207,6 +209,8 @@ msgid ""
 "Send multiple clicks\n"
 "when the pointer is stopped."
 msgstr ""
+"מתן האפשרות לשליחה של מספר\n"
+"לחיצות כאשר הסמן נעצר."
 
 #: src/wconfiguration.cpp:528
 msgid "Beep on click"
@@ -612,6 +616,10 @@ msgid "Discard changes?"
 msgstr "האם להתעלם מהשינויים?"
 
 #: src/clickwindowtext.cpp:210 src/clickwindowbitmap.cpp:251
+#: ../src/resources/clickWindowBitmap.xrc:98
+#: ../src/resources/clickWindowBitmapVertical.xrc:98
+#: ../src/resources/clickWindowText.xrc:70
+#: ../src/resources/clickWindowTextVertical.xrc:70
 msgid "Hide main window"
 msgstr "הסתרת החלון הראשי"
 
@@ -906,6 +914,13 @@ msgid ""
 "NOTE: the calibration assistant will enable the pointer control so that you "
 "can test your configuration."
 msgstr ""
+"תהליך הכיול עם סיוע יבקש ממך להזיז את ראשך כדי להגדיר אוטומטית את הפרמטרים "
+"המתאימים של התנועה.\n"
+"\n"
+"לאחר שלב כיול זה, ניתן להתאים ידנית את הפרמטרים של התנועה.\n"
+"\n"
+"לתשומת לבך: המסייע בכיול יפעיל את השליטה בסמן כדי שתהיה באפשרות לבחון את "
+"התצורה שלך."
 
 #: src/wwizard.cpp:550
 msgid "Perform assisted calibration"
@@ -959,7 +974,8 @@ msgstr "ללא לחיצה. תכונת הלחיצה מנוטרלת."
 msgid "Enable head tracking"
 msgstr "הפעלת מעקב אחר ראש"
 
-#: src/wwizard.cpp:1048
+#: src/wwizard.cpp:1048 ../src/resources/clickWindowBitmap.xrc:73
+#: ../src/resources/clickWindowBitmapVertical.xrc:73
 msgid "Drag"
 msgstr "רירה"
 
@@ -1240,3 +1256,59 @@ msgstr ""
 #: wxutil/warnbaroverlap.cpp:132
 msgid "Do not show this message again"
 msgstr "אין להציג הודעה זו שוב"
+
+#: ../src/resources/clickWindowBitmap.xrc:8
+#: ../src/resources/clickWindowBitmapVertical.xrc:8
+#: ../src/resources/clickWindowText.xrc:7
+#: ../src/resources/clickWindowTextVertical.xrc:7
+msgid "eViacam"
+msgstr "eViacam"
+
+#: ../src/resources/clickWindowBitmap.xrc:29
+#: ../src/resources/clickWindowBitmapVertical.xrc:29
+#: ../src/resources/clickWindowText.xrc:14
+#: ../src/resources/clickWindowTextVertical.xrc:14
+msgid "No click"
+msgstr "ללא לחיצה"
+
+#: ../src/resources/clickWindowBitmap.xrc:53
+#: ../src/resources/clickWindowBitmapVertical.xrc:53
+msgid "Middle"
+msgstr "אמצעי"
+
+#: ../src/resources/clickWindowBitmap.xrc:83
+#: ../src/resources/clickWindowBitmapVertical.xrc:83
+msgid "Double Click"
+msgstr "לחיצה כפולה"
+
+#: ../src/resources/clickWindowText.xrc:30
+#: ../src/resources/clickWindowTextVertical.xrc:30
+msgid "#Left#"
+msgstr "#שמאל#"
+
+#: ../src/resources/clickWindowText.xrc:38
+#: ../src/resources/clickWindowTextVertical.xrc:38
+msgid "#Middle#"
+msgstr "#אמצעי#"
+
+#: ../src/resources/clickWindowText.xrc:46
+#: ../src/resources/clickWindowTextVertical.xrc:46
+msgid "#Right#"
+msgstr "#ימין#"
+
+#: ../src/resources/clickWindowText.xrc:54
+#: ../src/resources/clickWindowTextVertical.xrc:54
+msgid "#Drag#"
+msgstr "#גרירה#"
+
+#: ../src/resources/clickWindowText.xrc:62
+#: ../src/resources/clickWindowTextVertical.xrc:62
+msgid "#Double Click#"
+msgstr "#לחיצה כפולה#"
+
+#~ msgid ""
+#~ "This key is used by another command.\n"
+#~ "Do you want to try another key?"
+#~ msgstr ""
+#~ "מקש זה משמש לפקודה אחרת.\n"
+#~ "האם ברצונך לנסות מקש אחר?"
