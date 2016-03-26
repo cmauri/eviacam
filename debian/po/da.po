@@ -1,28 +1,26 @@
-# Japanese Translation of eviacam package
-# Copyright (c) 2008-15 Cesar Mauri Loba <cesar@crea-si.com>
+# Danish messages for the eviacam.
+# Copyright (C) 2016 eviacam.
 # This file is distributed under the same license as the eviacam package.
-# Takuma Yamada <tyamada@takumayamada.com>, 2016.
+# Joe Hansen <joedalton2@yahoo.dk>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: eviacam\n"
 "Report-Msgid-Bugs-To: eviacam@packages.debian.org\n"
 "POT-Creation-Date: 2016-03-07 06:59+0100\n"
-"PO-Revision-Date: 2016-03-11 13:30+0900\n"
-"Last-Translator: Takuma Yamada <tyamada@takumayamada.com>\n"
-"Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
-"Language: ja\n"
+"PO-Revision-Date: 2016-03-24 17:30+01:00\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
+"Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 2.91.6\n"
 
 #. Type: boolean
 #. Description
 #: ../templates:2001
 msgid "Should eviacamloader be installed \"setuid root\"?"
-msgstr "eviacamloader を「setuid root」でインストールしますか?"
+msgstr "Skal eviacamloader installeret »setuid root«?"
 
 #. Type: boolean
 #. Description
@@ -32,9 +30,9 @@ msgid ""
 "have been added to the group \"eviacam\" to launch eviacam with a modified "
 "scheduling priority for better responsiveness."
 msgstr ""
-"SUID ビットをセットして eviacamloader をインストールすると、グループ"
-"「eviacam」に追加されたすべてのユーザは、eviacam を応答性能優先の実行優先度で"
-"起動することができます。"
+"Installation af eviacamloader med set-user-ID-bitsættet gør det muligt for "
+"alle brugere, som er blevet tilføjet gruppen »eviacam«, at starte eviacam "
+"med en ændret planlægningsprioritet for bedre lydhørhed."
 
 #. Type: boolean
 #. Description
@@ -44,6 +42,6 @@ msgid ""
 "it may have security implications in the case of vulnerabilities in "
 "eviacamloader's code."
 msgstr ""
-"この設定は eviacamloader にスーパーユーザ権限での実行を許容することになるの"
-"で、eviacamloader のコードに脆弱性があるとセキュリティに影響する恐れがありま"
-"す。"
+"Da denne indstilling giver eviacamloader mulighed for at køre med "
+"superbrugerprivilegier, så kan det have sikkerhedsmæssige implikationer i "
+"tilfælde af sårbarheder i eviacamloaderes kode."

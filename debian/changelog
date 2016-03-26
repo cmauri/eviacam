@@ -1,3 +1,21 @@
+eviacam (2.0.3-2) UNRELEASED; urgency=low
+
+  * Debconf templates and debian/control reviewed by the debian-l10n-
+    english team as part of the Smith review project. Closes: #814829
+  * [Debconf translation updates]
+  * Russian (Yuri Kozlov).  Closes: #817013
+  * Japanese (Takuma Yamada).  Closes: #817861
+  * German (Chris Leick).  Closes: #818028
+  * Czech (Michal Simunek).  Closes: #818348
+  * Catalan; (Cesar Mauri).  Closes: #818613
+  * Spanish; (Cesar Mauri).  Closes: #818614
+  * Brazilian Portuguese (Adriano Rafael Gomes).  Closes: #818682
+  * Dutch; (Frans Spiesschaert).  Closes: #818690
+  * Portuguese (Américo Monteiro).  Closes: #818720
+  * French (Julien Patriarca).  Closes: #818283
+
+ -- Christian Perrier <bubulle@debian.org>  Tue, 16 Feb 2016 05:52:01 +0100
+
 eviacam (2.0.3-1) unstable; urgency=medium
 
   * Initial release (closes: #634840)

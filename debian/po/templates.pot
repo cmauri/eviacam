@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the eviacam package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eviacam\n"
 "Report-Msgid-Bugs-To: eviacam@packages.debian.org\n"
-"POT-Creation-Date: 2016-03-21 12:57+0100\n"
+"POT-Creation-Date: 2016-03-07 06:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,13 +19,13 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../templates:1001
+#: ../templates:2001
 msgid "Should eviacamloader be installed \"setuid root\"?"
 msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../templates:1001
+#: ../templates:2001
 msgid ""
 "Installing eviacamloader with the set-user-ID bit set enables all users who "
 "have been added to the group \"eviacam\" to launch eviacam with a modified "
@@ -34,7 +34,7 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../templates:1001
+#: ../templates:2001
 msgid ""
 "Since this setting allows eviacamloader to be run with superuser privileges, "
 "it may have security implications in the case of vulnerabilities in "
