@@ -1,5 +1,6 @@
-eviacam (2.0.3-2) UNRELEASED; urgency=low
+eviacam (2.1.0-1) unstable; urgency=low
 
+  [ Christian Perrier ]
   * Debconf templates and debian/control reviewed by the debian-l10n-
     english team as part of the Smith review project. Closes: #814829
   * [Debconf translation updates]
@@ -14,7 +15,10 @@ eviacam (2.0.3-2) UNRELEASED; urgency=low
   * Portuguese (Américo Monteiro).  Closes: #818720
   * French (Julien Patriarca).  Closes: #818283
 
- -- Christian Perrier <bubulle@debian.org>  Tue, 16 Feb 2016 05:52:01 +0100
+  [ Cesar Mauri ]
+  * Upstream version 2.1.0 
+
+ -- Cesar Mauri <cesar@crea-si.com>  Sat, 26 Mar 2016 18:35:22 +0100
 
 eviacam (2.0.3-1) unstable; urgency=medium
 
