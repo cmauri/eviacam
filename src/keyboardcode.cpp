@@ -375,7 +375,9 @@ void KeyboardCode::Dump() const {
 	#if !defined(WIN32)
 		slog_write (SLOG_PRIO_DEBUG,
 			"KeySym: %d, KeyCode: %u Name: %s\n",
-			m_nativeKeyCode, XKeysymToKeycode((Display *) wxGetDisplay(), m_nativeKeyCode), GetName().mb_str());
+			m_nativeKeyCode, XKeysymToKeycode((Display *) wxGetDisplay(),
+				m_nativeKeyCode),
+			static_cast<const char*>(GetName().mb_str()));
 	#endif
 }
 #endif

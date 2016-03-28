@@ -217,7 +217,8 @@ void HotkeyManager::DisableHotKey(HotKey& hk) {
 void HotkeyManager::HotkeyEventHandler(wxKeyEvent& event) {
 	KeyboardCode kc(event.GetRawKeyCode());
 
-	SLOG_DEBUG("HotKey Handler called, KeyboardCode: %d (%s)", kc.get_native(), kc.GetName().mb_str());
+	SLOG_DEBUG("HotKey Handler called, KeyboardCode: %d (%s)", kc.get_native(),
+		static_cast<const char*>(kc.GetName().mb_str()));
 
 	int i= FindByKeyboardCode(kc);
 	if (i== -1) return;
