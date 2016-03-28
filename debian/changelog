@@ -1,21 +1,33 @@
 eviacam (2.0.3-2) UNRELEASED; urgency=low
 
+  * Acknowledge previos NMU, thanks Tobias!
+
+  [ Christian Perrier ]
   * Debconf templates and debian/control reviewed by the debian-l10n-
     english team as part of the Smith review project. Closes: #814829
-  * [Debconf translation updates]
-  * Russian (Yuri Kozlov).  Closes: #817013
-  * Japanese (Takuma Yamada).  Closes: #817861
-  * German (Chris Leick).  Closes: #818028
-  * Czech (Michal Simunek).  Closes: #818348
-  * Catalan; (Cesar Mauri).  Closes: #818613
-  * Spanish; (Cesar Mauri).  Closes: #818614
-  * Brazilian Portuguese (Adriano Rafael Gomes).  Closes: #818682
-  * Dutch; (Frans Spiesschaert).  Closes: #818690
-  * Portuguese (Américo Monteiro).  Closes: #818720
-  * French (Julien Patriarca).  Closes: #818283
-  * Italian (Gianfranco Costamagna).
 
- -- Christian Perrier <bubulle@debian.org>  Tue, 16 Feb 2016 05:52:01 +0100
+  * [Debconf translation updates]
+    - Russian (Yuri Kozlov).  Closes: #817013
+    - Japanese (Takuma Yamada).  Closes: #817861
+    - German (Chris Leick).  Closes: #818028
+    - Czech (Michal Simunek).  Closes: #818348
+    - Catalan; (Cesar Mauri).  Closes: #818613
+    - Spanish; (Cesar Mauri).  Closes: #818614
+    - Brazilian Portuguese (Adriano Rafael Gomes).  Closes: #818682
+    - Dutch; (Frans Spiesschaert).  Closes: #818690
+    - Portuguese (Américo Monteiro).  Closes: #818720
+    - French (Julien Patriarca).  Closes: #818283
+    - Italian (Gianfranco Costamagna).
+
+ -- Cesar Mauri <cesar@crea-si.com>  Tue, 16 Feb 2016 05:52:01 +0100
+
+eviacam (2.0.3-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * libpng transition: Change B-D from libpng12-dev to libpng-dev.
+    (Closes: #819434)
+
+ -- Tobias Frost <tobi@debian.org>  Mon, 28 Mar 2016 15:48:29 +0200
 
 eviacam (2.0.3-1) unstable; urgency=medium
 
