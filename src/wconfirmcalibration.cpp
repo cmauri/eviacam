@@ -65,13 +65,9 @@ BEGIN_EVENT_TABLE( WConfirmCalibration, wxDialog )
 ////@begin WConfirmCalibration event table entries
     EVT_MOTION( WConfirmCalibration::OnWindowMotion )
     EVT_LEAVE_WINDOW( WConfirmCalibration::OnLeaveWindow )
-
     EVT_BUTTON( ID_BUTTON1, WConfirmCalibration::OnButton1Click )
-
     EVT_BUTTON( ID_BUTTON2, WConfirmCalibration::OnButton2Click )
-
     EVT_BUTTON( ID_BUTTON3, WConfirmCalibration::OnButton3Click )
-
 ////@end WConfirmCalibration event table entries
 
 	EVT_TIMER(TIMER_ID, WConfirmCalibration::OnTimer)
@@ -113,7 +109,6 @@ bool WConfirmCalibration::Create( wxWindow* parent, wxWindowID id, const wxStrin
         GetSizer()->SetSizeHints(this);
     }
     Centre();
-   // ShowModal();
 ////@end WConfirmCalibration creation
     return true;
 }

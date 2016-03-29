@@ -24,7 +24,7 @@
     <ClCompile Include="checkupdates_ui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ckeyboardcode.cpp">
+    <ClCompile Include="keyboardcode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="clickwindow.cpp">
@@ -33,16 +33,10 @@
     <ClCompile Include="clickwindowbitmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="clickwindowbitmapvertical.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="clickwindowcontroller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="clickwindowtext.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="clickwindowvertical.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="cmotioncalibration.cpp">
@@ -125,7 +119,7 @@
     <ClInclude Include="checkupdates_ui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ckeyboardcode.h">
+    <ClInclude Include="keyboardcode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="clickwindow.h">
@@ -134,16 +128,10 @@
     <ClInclude Include="clickwindowbitmap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="clickwindowbitmapvertical.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="clickwindowcontroller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="clickwindowtext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="clickwindowvertical.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cmotioncalibration.h">

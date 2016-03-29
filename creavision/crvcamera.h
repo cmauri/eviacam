@@ -51,9 +51,8 @@ public:
 	//
 	bool Open();
 	void Close();
-	IplImage* QueryFrame();	// TODO: return const ptr
-	bool QueryFrame (CIplImage& image);
-
+	// TODO: return const ptr
+	IplImage* QueryFrame();
 
 	//
 	// Capture information. Intended only for informational
@@ -88,7 +87,7 @@ protected:
 	virtual bool DoOpen()= 0;
 	virtual void DoClose()= 0;
 	virtual IplImage* DoQueryFrame()= 0;
-	virtual bool DoQueryFrame(CIplImage& image)= 0;
+	//virtual bool DoQueryFrame(CIplImage& image)= 0;
 
 private:
 	// Make CCamera non-copyable

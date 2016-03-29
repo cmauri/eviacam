@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     1/10/2010
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-15 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -21,46 +21,60 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #ifdef WIN32
-	#include "crvcamera_wdm.h"
+#include "crvcamera_cv.h"
+#include "crvcamera_wdm.h"
+#define NATIVE_CAM_CLASS CCameraWDM
 
-	#define CAMCLASS CCameraWDM
-#else
-	#include <string.h>
-	#include "webcam.h"
-	#include "crvcamera_cv.h"
-	#include "crvcamera_v4l2.h"
+#else // linux
+#include <string.h>
+#include "webcam.h"
+#include "crvcamera_cv.h"
+#include "crvcamera_v4l2.h"
+#define NATIVE_CAM_CLASS CCameraV4L2
 
-	#define CAMCLASS CCameraV4L2
 #endif
+
 #include "crvcamera_enum.h"
 #include "simplelog.h"
 
-// 
-// Static member functions
-//
-int CCameraEnum::GetNumDevices()
+#define CAMERA_CV_ID 1
+
+int CCameraEnum::getNumDevices(int driverId)
 {
-	return CAMCLASS::GetNumDevices();
+	if (driverId == CAMERA_CV_ID) {
+		return CCameraCV::GetNumDevices();
+	}
+	else {
+		return NATIVE_CAM_CLASS::GetNumDevices();
+	}
 }
 
-const char* CCameraEnum::GetDeviceName (unsigned int id)
+const char* CCameraEnum::getDeviceName(int driverId, int camId)
 {
-	return CAMCLASS::GetDeviceName((int) id);
+	if (driverId == CAMERA_CV_ID) {
+		return CCameraCV::GetDeviceName(camId);
+	}
+	else {
+		return NATIVE_CAM_CLASS::GetDeviceName(camId);
+	}
 }
 
-#define _unused(x) ((void)x)
-
-CCamera* CCameraEnum::GetCamera (unsigned int id, unsigned int width,
-		unsigned int height, float frameRate)
+CCamera* CCameraEnum::getCamera(int driverId, int camId, unsigned int width, unsigned int height, float frameRate)
 {
-	if ((int) id>= GetNumDevices()) return NULL;
+	if (camId>= getNumDevices(driverId)) return NULL;
 
 	try{
-		return new CAMCLASS(id, width, height, frameRate);		
-	} 
+		if (driverId == CAMERA_CV_ID) {
+			return new CCameraCV(camId, width, height, frameRate);
+		}
+		else {
+			return new NATIVE_CAM_CLASS(camId, width, height, frameRate);
+		}
+	}
 	catch (camera_exception &e)	{
 		slog_write (SLOG_PRIO_ERR, "error initializing camera: %s\n", e.what());
 	}
-	
+
 	return NULL;
 }
+

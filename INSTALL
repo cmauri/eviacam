@@ -10,14 +10,14 @@ Linux
 
 - Pre-requisites
   --------------
-  wxWidgets >= 2.8
-  opencv >= 1.0
+  wxWidgets >= 2.8.x (recommended 3.0.1 or higher)
+  opencv >= 2.4
   gtk+-2.0
   libxtst
   libxext 
 
   For Debian/Ubuntu see file debian/control for exact dependencies.
- 
+
 - Generic compilation and installation
   ------------------------------------
   ./autogen.sh
@@ -30,7 +30,37 @@ Linux
   ./autogen.sh
   ./configure --enable-debug
   make 
-  make install  
+  make install
+
+- Notes on using Eclipse CDT
+  --------------------------
+  To import the project into a workspace:
+
+    File > Import... > General > Existing projects into workspace
+
+    Do not select an archive file. Set the root directory to where the
+    .project and .cproject files are located.
+
+  If Eclipse finds a lot of undefined symbols in .h/.cpp files click
+  project context menu and select Index->Rebuild and Index->Freshen All Files
+
+  To develop using Eclipse, first run from the console:
+
+  ./autogen.sh
+  ./configure --enable-debug --prefix=/tmp/eviacam
+  make -j <number of processor cores>
+  make install
+    
+  Run manually to see if it works
+  /tmp/eviacam/bin/eviacam
+
+  Click project context menu -> Debug As -> Debug Configurations...
+  Expand C/C++ Application, click eviacam entry
+  In C/C++ Application textbox put /tmp/eviacam/bin/eviacam
+  Click Close and Yes to save changes
+
+  Click Bug icon to debug to start a debug session.
+  
 
 - Source package generation
   -------------------------
@@ -74,8 +104,8 @@ Windows
 - Pre-requisites
   --------------
   Visual Studio 2013
-  wxWidgets >= 2.8.x (tested with 3.0.1)
-  opencv >= 1.0 (tested with 2.4.9, custom compilation recommended)
+  wxWidgets >= 2.8.x (recommended 3.0.1 or higher)
+  opencv >= 2.4 (tested with 2.4.9, custom compilation recommended)
   Windows SDK for Windows 7 and .NET Framework 4 7.1 (tested 7.1.7600.0.30514)
 
 - Building using Visual Studio 2013

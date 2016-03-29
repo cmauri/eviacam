@@ -27,6 +27,7 @@
 #include "visionpipeline.h"
 #include "configbase.h"
 #include "wwizardmanager.h"
+#include "hotkeymanager.h"
 
 class WViacam;
 class CPointerAction;
@@ -34,7 +35,6 @@ class WConfiguration;
 class CMotionCalibration;
 class wxWindow;
 class CConfigManager;
-class CHotkeyManager;
 class CCamera;
 class CAutostart;
 class wxLocale;
@@ -106,7 +106,7 @@ public:
 
 	CCamera& GetCamera() { assert(m_pCamera); return *m_pCamera; }
 
-	CHotkeyManager& getHotkeyManager() { 
+	eviacam::HotkeyManager& getHotkeyManager() {
 		assert (m_hotKeyManager); return *m_hotKeyManager;
 	}
 
@@ -170,7 +170,7 @@ private:
 	CCaptureThread* m_pCaptureThread;	
 	CPointerAction* m_pointerAction;
 	CVisionPipeline m_visionPipeline;
-	CHotkeyManager* m_hotKeyManager;
+	eviacam::HotkeyManager* m_hotKeyManager;
 	CConfigManager* m_configManager;
 	wxLocale* m_locale;
 	CAutostart* m_pAutostart;

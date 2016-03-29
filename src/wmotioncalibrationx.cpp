@@ -37,7 +37,7 @@
 #include "wmotioncalibrationx.h"
 
 ////@begin XPM images
-#include "icons/usermoveh64.xpm"
+#include "resources/usermoveh64.xpm"
 ////@end XPM images
 
 #define TIMER_ID 1234
@@ -142,7 +142,7 @@ void WMotionCalibrationX::CreateControls()
     wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
     itemDialog1->SetSizer(itemBoxSizer2);
 
-    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, itemDialog1->GetBitmapResource(wxT("icons/usermoveh64.xpm")), wxDefaultPosition, wxSize(64, 64), 0 );
+    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, itemDialog1->GetBitmapResource(wxT("resources/usermoveh64.xpm")), wxDefaultPosition, wxSize(64, 64), 0 );
     itemBoxSizer2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5);
 
     m_staticText = new wxStaticText( itemDialog1, wxID_STATIC, _("Move your head left and right."), wxDefaultPosition, wxDefaultSize, 0 );
@@ -174,7 +174,7 @@ wxBitmap WMotionCalibrationX::GetBitmapResource( const wxString& name )
     // Bitmap retrieval
 ////@begin WMotionCalibrationX bitmap retrieval
     wxUnusedVar(name);
-    if (name == wxT("icons/usermoveh64.xpm"))
+    if (name == wxT("resources/usermoveh64.xpm"))
     {
         wxBitmap bitmap(usermoveh64);
         return bitmap;

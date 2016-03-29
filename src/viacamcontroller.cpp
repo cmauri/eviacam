@@ -40,6 +40,7 @@
 #include <wx/msgdlg.h>
 #include <wx/choicdlg.h>
 #include <wx/filename.h>
+#include <wx/stdpaths.h>
 
 using namespace eviacam;
 
@@ -110,7 +111,9 @@ void CViacamController::SetUpLanguage ()
 	m_locale->AddCatalogLookupPathPrefix(wxT("."));
 	
 #if defined(__WXGTK__)	
-	m_locale->AddCatalogLookupPathPrefix(wxT("/usr/local/share/locale/"));
+	wxString prefix= wxStandardPaths::Get().GetInstallPrefix();
+	prefix+= wxT("/share/locale/");
+	m_locale->AddCatalogLookupPathPrefix(prefix);
 #endif
 
 	if (!m_locale->Init(m_languageId))
@@ -134,40 +137,79 @@ void CViacamController::SetLanguage (const int id)
 	}
 }
 
+bool testCamera(CCamera* cam) {
+	if (cam == NULL) return false;
+
+	IplImage* img = NULL;
+	if (cam->Open()) {
+		/*
+			Try to capture one frame
+		*/
+		for (int i = 0; i < 10; i++) {
+			img = cam->QueryFrame();
+			if (img) break;
+		}
+
+		cam->Close();
+	}
+
+	return (img != NULL);
+}
+
 CCamera* CViacamController::SetUpCamera()
 {
-	CCamera* cam;
-	int numDevices;
-	int camId= -1;
-
 	// Load app local data
 	ReadAppData(wxConfigBase::Get());
 
-	numDevices= CCameraEnum::GetNumDevices ();
-	if (numDevices== 0) {
-		wxMessageDialog errorMsg (NULL, _("Not detected any camera. Aborting"), _T("Enable Viacam"), wxOK | wxICON_ERROR);
-		errorMsg.ShowModal();
-
-		return NULL;
-	}	
-	
-	// Try to find previously used camera
-	if (m_cameraName.Length()> 0) {
-		for (camId= 0; camId< numDevices; camId++)
-			if (wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc)== m_cameraName) break;			
-		if (camId== numDevices) camId= -1;	// Not found
+	/* 
+		Check if cameras detected
+	*/
+	int driverId = 0;
+	for (; driverId < CCameraEnum::NUM_DRIVERS; driverId++) {
+		if (CCameraEnum::getNumDevices(driverId) > 0) break;
 	}
 
-	// Show selection dialog when needed
-	if (camId== -1) {
-		if(numDevices > 1) {
+	if (driverId == CCameraEnum::NUM_DRIVERS) {
+		/*
+			No cameras found, aborting.
+		*/
+		wxMessageDialog errorMsg (NULL, _("Not detected any camera. Aborting"), 
+			_T("Enable Viacam"), wxOK | wxICON_ERROR);
+		errorMsg.ShowModal();
+		return NULL;
+	}
+	
+	/*
+		Try to find previously used camera with the same name
+		(only check native driver)
+	*/
+	int camId = -1;
+	const char * camName= NULL;
+	if (m_cameraName.Length()> 0) {
+		for (camId = 0; camId < CCameraEnum::getNumDevices(0); camId++) {
+			camName = CCameraEnum::getDeviceName(0, camId);
+			if (wxString(camName, wxConvLibc) == m_cameraName) {
+				break;
+			}
+		}
+
+		if (camId == CCameraEnum::getNumDevices(0)) camId = -1;
+	}
+
+	/*
+		Show selection dialog when needed (use native driver names)
+	*/
+	if (camId == -1) {
+		if (CCameraEnum::getNumDevices(0) > 1) {
 			wxArrayString strArray;
 
-			for (camId= 0; camId< numDevices; camId++)
-				strArray.Add (wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc));
+			for (int i = 0; i < CCameraEnum::getNumDevices(0); i++) {
+				strArray.Add(wxString(CCameraEnum::getDeviceName(0, i), wxConvLibc));
+			}
 
-			wxSingleChoiceDialog choiceDlg(NULL, _("Choose the camera to use"), _T("Enable Viacam"), strArray, 
-								(char**)NULL, wxDEFAULT_DIALOG_STYLE | wxOK | wxCANCEL | wxCENTRE);
+			wxSingleChoiceDialog choiceDlg(
+				NULL, _("Choose the camera to use"), _T("Enable Viacam"), strArray, 
+				(char**)NULL, wxDEFAULT_DIALOG_STYLE | wxOK | wxCANCEL | wxCENTRE);
 
 			if (choiceDlg.ShowModal ()!= wxID_OK) return NULL;
 
@@ -176,25 +218,34 @@ CCamera* CViacamController::SetUpCamera()
 		} 
 		else {
 			camId= 0;
-			m_cameraName= wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc);
+			m_cameraName = wxString(CCameraEnum::getDeviceName(0, camId), wxConvLibc);
 		}
 	}
 
-	cam= CCameraEnum::GetCamera(camId);
-	if (!cam) return NULL;
-	cam->SetHorizontalFlip (true);
-
-	// Try to open the camera to ensure it works
-	if (!cam->Open ()) {
-		wxMessageDialog errorMsg (NULL, _("Can not initialize the camera.\nPerhaps is being used by other application."), _T("Enable Viacam"), wxOK | wxICON_ERROR);
-		errorMsg.ShowModal();
+	/*
+		Try to open the camera to make sure it works
+	*/
+	// native driver first
+	CCamera* cam = CCameraEnum::getCamera(0, camId);
+	if (!testCamera(cam)) {
+		// Failed. Now try the openCV driver
 		delete cam;
-		cam= NULL;
-		ChangeCamera();
+		cam = CCameraEnum::getCamera(1, camId);
+		if (!testCamera(cam)) {
+			// no way
+			delete cam;
+			cam = NULL;
 
+			wxMessageDialog errorMsg(
+				NULL, _("Can not initialize the camera.\nPerhaps is being used by other application."),
+				_T("Enable Viacam"), wxOK | wxICON_ERROR);
+			errorMsg.ShowModal();
+
+			ChangeCamera();
+		}
 	}
-	else
-		cam->Close();
+
+	if (cam) cam->SetHorizontalFlip(true);
 	
 	WriteAppData(wxConfigBase::Get());
 	wxConfigBase::Get()->Flush();
@@ -237,7 +288,7 @@ bool CViacamController::Initialize ()
 	// Create hotkey manager
 	if (retval) {
 		assert (!m_hotKeyManager);
-		m_hotKeyManager= new CHotkeyManager();
+		m_hotKeyManager= new eviacam::HotkeyManager();
 	}
 
 	// Create pointer action object

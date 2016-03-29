@@ -20,6 +20,6 @@
   Resources file
 
  */
-appicon ICON   "icons/eviacam.ico"
+appicon ICON   "resources/eviacam.ico"
 
 #include "wx/msw/wx.rc"

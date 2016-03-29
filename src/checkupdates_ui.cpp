@@ -58,9 +58,7 @@ BEGIN_EVENT_TABLE( CheckUpdatesUI, wxDialog )
 
 ////@begin CheckUpdatesUI event table entries
     EVT_HYPERLINK( ID_HYPERLINKCTRL_WEBSITE, CheckUpdatesUI::OnHyperlinkctrlWebsiteHyperlinkClicked )
-
     EVT_BUTTON( ID_BUTTON_CHECKUPDATE_CLOSE, CheckUpdatesUI::OnButtonCheckupdateCloseClick )
-
 ////@end CheckUpdatesUI event table entries
 
 	EVT_TIMER( -1, CheckUpdatesUI::OnTimer )
@@ -153,11 +151,11 @@ void CheckUpdatesUI::CreateControls()
     itemBoxSizer3->Add(itemBoxSizer5, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_msg1 = new wxStaticText( itemDialog1, wxID_STATIC, _("Checking for updates. Please wait."), wxDefaultPosition, wxDefaultSize, 0 );
-    m_msg1->SetFont(wxFont(int(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetPointSize()*1.2), wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFamily(), wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetStyle(), wxBOLD, false, wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName()));
+    m_msg1->SetFont(wxFont(int(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetPointSize()*1.2), wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFamily(), wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetStyle(), wxFONTWEIGHT_BOLD, false, wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName()));
     itemBoxSizer5->Add(m_msg1, 0, wxALIGN_LEFT|wxALL, 5);
 
     m_msg2 = new wxStaticText( itemDialog1, wxID_STATIC, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-    m_msg2->SetFont(wxFont(int(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetPointSize()*1.2), wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFamily(), wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetStyle(), wxBOLD, false, wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName()));
+    m_msg2->SetFont(wxFont(int(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetPointSize()*1.2), wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFamily(), wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetStyle(), wxFONTWEIGHT_BOLD, false, wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName()));
     itemBoxSizer5->Add(m_msg2, 0, wxALIGN_LEFT|wxALL, 5);
 
     m_link = new wxHyperlinkCtrl( itemDialog1, ID_HYPERLINKCTRL_WEBSITE, _("Visit Enable Viacam website"), wxEmptyString, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );

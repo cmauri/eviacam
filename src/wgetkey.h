@@ -29,7 +29,8 @@
 
 //#include <wx/timer.h>
 #include <wx/dialog.h>
-#include "ckeyboardcode.h"
+
+#include "keyboardcode.h"
 
 ////@begin includes
 ////@end includes
@@ -75,7 +76,7 @@ public:
     /// Destructor
     ~WGetKey();
 
-	CKeyboardCode GetKeyCode();
+	KeyboardCode GetKeyCode();
 
 private:
     /// Initialises member variables
@@ -93,7 +94,6 @@ private:
     void OnKeyUp( wxKeyEvent& event );
 
 ////@end WGetKey event handler declarations
-//	void OnTimer(wxTimerEvent& event);
 
 ////@begin WGetKey member function declarations
 
@@ -110,9 +110,8 @@ private:
 ////@begin WGetKey member variables
     wxTextCtrl* m_txtKey;
 ////@end WGetKey member variables
-private:
-	//wxTimer m_timer;
-	CKeyboardCode m_keyCode;
+
+	KeyboardCode m_keyCode;
 };
 
 #endif

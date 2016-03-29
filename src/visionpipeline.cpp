@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008-14 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-15 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -49,22 +49,18 @@
 #define DEFAULT_FACE_DETECTION_TIMEOUT 5000
 #define COLOR_DEGRADATION_TIME 5000
 
-
-/**
- * Load haar cascade managing exceptions
- *
- * @param file filename to open
- * @return pointer to the newly loaded cascade or NULL if error
- */
-static CvHaarClassifierCascade* loadCascade (const char* file)
-{
-	CvHaarClassifierCascade* result= NULL;
+static bool safeHaarCascadeLoad(cv::CascadeClassifier& c, const char *fileName) {
+	std::string fileName0(fileName);
+	bool result = false;
 
 	try {
-		result = (CvHaarClassifierCascade*) cvLoad(file, 0, 0, 0);
+		result= c.load(fileName0);
 	}
 	catch (cv::Exception& e) {
-		slog_write(SLOG_PRIO_WARNING, "%s:%d %s\n", __FILE__, __LINE__, e.what());
+		SLOG_WARNING("Cannot load haar cascade: %s", e.what());
+	}
+	catch (...) {
+		SLOG_WARNING("Error loading haar cascade");
 	}
 
 	return result;
@@ -76,8 +72,6 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 // we use it because we need a timeout based wait call. The associated mutex
 // is not used at all.
 , m_condition(m_mutex)
-, m_faceCascade(NULL)
-, m_storage(NULL)
 , m_faceLocationStatus(0) // 0 -> not available, 1 -> available
 , m_corner_count(0)
 {
@@ -91,20 +85,18 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 	// Load face haarcascade
 	// 
 	wxString cascadePath (eviacam::GetDataDir() + _T("/haarcascade_frontalface_default.xml"));
-	m_faceCascade = loadCascade (cascadePath.mb_str(wxConvUTF8));
-	
-	if (!m_faceCascade) {
-		m_faceCascade = loadCascade (
+	bool result = safeHaarCascadeLoad(m_faceCascade, cascadePath.mb_str(wxConvUTF8));
+	if (!result) {
+		result = safeHaarCascadeLoad(m_faceCascade,
 			"/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml");
 	}
 	
-	if (!m_faceCascade) {
-		wxMessageDialog dlg (NULL, _("The face localization option is not enabled."), _T("Enable Viacam"), wxICON_ERROR | wxOK );
+	if (!result) {
+		wxMessageDialog dlg (NULL, _("The face localization option is not enabled."),
+			_T("Enable Viacam"), wxICON_ERROR | wxOK );
 		dlg.ShowModal();
 		return;
 	}
-
-	m_storage = cvCreateMemStorage(0);
 
 	// Create and start face detection thread
 	if (Create() == wxTHREAD_NO_ERROR) {
@@ -119,19 +111,13 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 	}
 }
 
-CVisionPipeline::~CVisionPipeline ()
-{
-	if (m_faceCascade) {
+CVisionPipeline::~CVisionPipeline () {
+	if (!m_faceCascade.empty()) {
 		m_isRunning= false;
 		m_condition.Signal();
 		Wait();
-		cvReleaseHaarClassifierCascade(&m_faceCascade);
-		m_faceCascade = NULL;
-	}
-
-	if (m_storage) {
-		cvReleaseMemStorage(&m_storage);
-		m_storage = NULL;
+		//cvReleaseHaarClassifierCascade(&m_faceCascade);
+		//m_faceCascade = NULL;
 	}
 }
 
@@ -219,28 +205,21 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 {
 	if (!m_trackFace) return;
 	if (m_faceLocationStatus) return;	// Already available
+	cv::Mat image0(image.ptr());
+	std::vector<cv::Rect> faces;
 
-	CvSeq *face = cvHaarDetectObjects(
-		image.ptr(),
-		m_faceCascade,
-		m_storage,
-		1.5, 2, CV_HAAR_DO_CANNY_PRUNING,
-		cvSize(65, 65)
-	);
+	m_faceCascade.detectMultiScale(
+		image0, faces, 1.5, 2,
+		cv::CASCADE_FIND_BIGGEST_OBJECT | cv::CASCADE_DO_CANNY_PRUNING,
+		cvSize(65, 65));
 	
-	if (face->total>0) {
-		CvRect* faceRect = (CvRect*) cvGetSeqElem(face, 0);
-		m_faceLocation = *faceRect;
+	if (faces.size()> 0) {
+		m_faceLocation = faces[0];
 		m_faceLocationStatus = 1;
-
-		SLOG_DEBUG("face detected: location (%d, %d) size (%d, %d)",
-			faceRect->x, faceRect->y, faceRect->width, faceRect->height);
 
 		m_waitTime.Reset();
 		m_trackAreaTimeout.Reset();
 	}
-
-	cvClearMemStorage(m_storage);
 }
 
 bool CVisionPipeline::IsFaceDetected () const
@@ -332,9 +311,11 @@ void CVisionPipeline::OldTracker(CIplImage &image, float &xVel, float &yVel)
 		sy = ((float)m_faceLocation.height * 0.1f + (float)curBox.height * 0.9f);
 		m_trackArea.SetSizeImg(&image, (int)sx, (int)sy);
 
-		// Computer new face position
-		cx = (int)((float)(m_faceLocation.x + m_faceLocation.width / 2) * 0.5f + (float)(curBox.x + curBox.width / 2) * 0.5f);
-		cy = (int)((float)(m_faceLocation.y + m_faceLocation.height / 2) * 0.5f + (float)(curBox.y + curBox.height / 2) * 0.5f);
+		// Compute new face position
+		cx = (int)((float)(m_faceLocation.x + m_faceLocation.width / 2) * 0.5f +
+			(float)(curBox.x + curBox.width / 2) * 0.5f);
+		cy = (int)((float)(m_faceLocation.y + m_faceLocation.height / 2) * 0.5f +
+			(float)(curBox.y + curBox.height / 2) * 0.5f);
 		m_trackArea.SetCenterImg(&image, cx, cy);
 
 		m_faceLocationStatus = 0;
@@ -488,8 +469,6 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 			m_corners[i].x += featuresTrackArea.x;
 			m_corners[i].y += featuresTrackArea.y;
 		}
-
-		SLOG_DEBUG("Features updated\n");
 	}
 
 	if (slog_get_priority() >= SLOG_PRIO_DEBUG)
