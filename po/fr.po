@@ -3,16 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# seblecointre <sebastien.lecointre@free.fr>, 2014
+# seblecointre <sebastien.lecointre@free.fr>, 2014,2016
 # Sébastien Lecointre <sebastien.lecointre@gmail.com>, 2010
+# seblecointre <sebastien.lecointre@free.fr>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Enable Viacam (eviacam)\n"
 "Report-Msgid-Bugs-To: cesar@crea-si.com\n"
 "POT-Creation-Date: 2016-03-26 13:44+0100\n"
-"PO-Revision-Date: 2014-12-25 18:32+0000\n"
+"PO-Revision-Date: 2016-03-27 15:49+0000\n"
 "Last-Translator: seblecointre <sebastien.lecointre@free.fr>\n"
-"Language-Team: French (http://www.transifex.com/projects/p/eviacam/language/"
+"Language-Team: French (http://www.transifex.com/cmauri/eviacam/language/"
 "fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -529,7 +530,7 @@ msgstr "Vérifier les mises à jour"
 
 #: src/wconfiguration.cpp:849
 msgid "Automatically check for updates at startup"
-msgstr ""
+msgstr "Vérification automatique des mises à jour au démarrage "
 
 #: src/wconfiguration.cpp:853
 msgid "General options"
@@ -1321,10 +1322,3 @@ msgstr "#Clic maintenu#"
 #: ../src/resources/clickWindowTextVertical.xrc:62
 msgid "#Double Click#"
 msgstr "#Double clic#"
-
-#~ msgid ""
-#~ "This key is used by another command.\n"
-#~ "Do you want to try another key?"
-#~ msgstr ""
-#~ "Cette touche est utilisée par une autre commande.\n"
-#~ "Voulez-vous essayer une autre touche ?"
