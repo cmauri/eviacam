@@ -1,0 +1,48 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the eviacam package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: eviacam\n"
+"Report-Msgid-Bugs-To: eviacam@packages.debian.org\n"
+"POT-Creation-Date: 2016-03-07 06:59+0100\n"
+"PO-Revision-Date: 2016-03-28 13:23+0200\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid "Should eviacamloader be installed \"setuid root\"?"
+msgstr "Deve eviacamloader essere installato con \"setuid root\"?"
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"Installing eviacamloader with the set-user-ID bit set enables all users who "
+"have been added to the group \"eviacam\" to launch eviacam with a modified "
+"scheduling priority for better responsiveness."
+msgstr ""
+"Installare eviacamloader con il bit set-user-ID impostato, abilita tutti gli "
+"utenti che sono stati aggiunti al gruppo \"eviacam\" ad avviare eviacam con "
+"una priorità di scheduling modificata per tempi di risposta migliori."
+
+#. Type: boolean
+#. Description
+#: ../templates:2001
+msgid ""
+"Since this setting allows eviacamloader to be run with superuser privileges, "
+"it may have security implications in the case of vulnerabilities in "
+"eviacamloader's code."
+msgstr ""
+"Visto che questa impostazione permette ad eviacamloader di essere avviato "
+"con i privilegi di superuser, può avere implicazioni di sicurezza nel caso "
+"di vulnerabilità nel codice di eviacamloader."
