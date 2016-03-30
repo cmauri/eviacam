@@ -73,7 +73,7 @@ tar xJf "../$TARBALL"
 cd "$PREFIX"
 cp -a "$DIR/debian" .
 if [ -z "$NO_SOURCES" ]; then
-    dpkg-buildpackage -S -i -rfakeroot --force-sign
+    dpkg-buildpackage -S -i -rfakeroot --force-sign --changes-option=-sa
 else
     dpkg-buildpackage -S -i -rfakeroot --force-sign --changes-option=-sd
 fi
