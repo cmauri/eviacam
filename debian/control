@@ -12,7 +12,7 @@ Build-Depends: debhelper (>= 9),
                libxext-dev,
                libxtst-dev,
                po-debconf
-Standards-Version: 3.9.6
+Standards-Version: 3.9.7
 Homepage: http://viacam.org
 
 Package: eviacam
