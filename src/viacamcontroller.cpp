@@ -71,6 +71,7 @@ CViacamController::CViacamController(void)
 , m_runWizardAtStartup(false)
 , m_newTrackerDialogAtStartup(true)
 , m_checkUpdatesAtStartup(true)
+, m_minimisedAtStartup(false)
 {
 	m_locale= new wxLocale ();
 	m_configManager= new CConfigManager(this);	
@@ -82,7 +83,8 @@ void CViacamController::InitDefaults()
 {
 	m_runWizardAtStartup= true;
 	m_languageId= wxLANGUAGE_DEFAULT;
-	m_enabledAtStartup= false;	
+	m_enabledAtStartup= false;
+	m_minimisedAtStartup = false;
 #if defined(__WXMSW__)
 	m_onScreenKeyboardCommand= _T("osk.exe");
 #endif
@@ -282,7 +284,6 @@ bool CViacamController::Initialize ()
 	if (retval) {
 		m_pMainWindow = new WViacam( NULL, ID_WVIACAM );
 		assert (m_pMainWindow);
-		m_pMainWindow->Show (true);	
 	}
 
 	// Create hotkey manager
@@ -316,6 +317,9 @@ bool CViacamController::Initialize ()
 
 	// Load configuration
 	if (retval) m_configManager->ReadAll ();
+
+	// Show main window unless it was set to be minimised at startup
+	if (retval && !m_minimisedAtStartup) m_pMainWindow->Show(true);
 	
 	// Enable pointeraction object
 	if (retval && m_enabledAtStartup) SetEnabled(true);
@@ -401,6 +405,7 @@ void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("enabledAtStartup"), m_enabledAtStartup);
 	pConfObj->Write(_T("onScreenKeyboardCommand"), m_onScreenKeyboardCommand);
 	pConfObj->Write(_T("runWizardAtStartup"), m_runWizardAtStartup);
+	pConfObj->Write(_T("minimisedAtStartup"), m_minimisedAtStartup);
 
 	// Propagates calls
 	m_pointerAction->WriteProfileData (pConfObj);
@@ -422,6 +427,7 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
 	pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
 	pConfObj->Read(_T("runWizardAtStartup"), &m_runWizardAtStartup);
+	pConfObj->Read(_T("minimisedAtStartup"), &m_minimisedAtStartup);
 	
 	// Propagates calls
 	m_pointerAction->ReadProfileData (pConfObj);
