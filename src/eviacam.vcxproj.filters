@@ -102,9 +102,6 @@
     <ClCompile Include="wwizardmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="newtrackerinformationdlg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="checkupdates_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -207,9 +204,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="wwizardmanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="newtrackerinformationdlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="checkupdates_manager.h">

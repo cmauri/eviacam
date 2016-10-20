@@ -45,7 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\build&quot;;&quot;$(CVPATH)\include&quot;;&quot;$(CVPATH)\include\opencv&quot;;&quot;$(CVPATH)\modules\core\include&quot;;&quot;$(CVPATH)\modules\imgproc\include&quot;;&quot;$(CVPATH)\modules\features2d\include&quot;;&quot;$(CVPATH)\modules\objdetect\include&quot;;&quot;$(CVPATH)\modules\video\include&quot;;&quot;$(CVPATH)\modules\highgui\include&quot;;&quot;$(CVPATH)\modules\ml\include&quot;;&quot;$(CVPATH)\modules\legacy\include&quot;;&quot;$(CVPATH)\modules\contrib\include&quot;;&quot;$(CVPATH)\modules\flann\include&quot;;&quot;$(CVPATH)\modules\gpu\include&quot;;&quot;$(CVPATH)\modules\calib3d\include&quot;;..\wxutil;..\wxcamwindow;..\creavision;..\simplelog;$(NOINHERIT)"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\build&quot;;&quot;$(CVPATH)\include&quot;;&quot;$(CVPATH)\include\opencv&quot;;&quot;$(CVPATH)\modules\core\include&quot;;&quot;$(CVPATH)\modules\imgproc\include&quot;;&quot;$(CVPATH)\modules\features2d\include&quot;;&quot;$(CVPATH)\modules\objdetect\include&quot;;&quot;$(CVPATH)\modules\video\include&quot;;&quot;$(CVPATH)\modules\highgui\include&quot;;&quot;$(CVPATH)\modules\ml\include&quot;;&quot;$(CVPATH)\modules\contrib\include&quot;;&quot;$(CVPATH)\modules\flann\include&quot;;&quot;$(CVPATH)\modules\gpu\include&quot;;&quot;$(CVPATH)\modules\calib3d\include&quot;;..\wxutil;..\wxcamwindow;..\creavision;..\simplelog;$(NOINHERIT)"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;NOPCH;__WXMSW__;__WXDEBUG__"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -134,7 +134,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\build&quot;;&quot;$(CVPATH)\include&quot;;&quot;$(CVPATH)\include\opencv&quot;;&quot;$(CVPATH)\modules\core\include&quot;;&quot;$(CVPATH)\modules\imgproc\include&quot;;&quot;$(CVPATH)\modules\features2d\include&quot;;&quot;$(CVPATH)\modules\objdetect\include&quot;;&quot;$(CVPATH)\modules\video\include&quot;;&quot;$(CVPATH)\modules\highgui\include&quot;;&quot;$(CVPATH)\modules\ml\include&quot;;&quot;$(CVPATH)\modules\legacy\include&quot;;&quot;$(CVPATH)\modules\contrib\include&quot;;&quot;$(CVPATH)\modules\flann\include&quot;;&quot;$(CVPATH)\modules\gpu\include&quot;;&quot;$(CVPATH)\modules\calib3d\include&quot;;..\creavision;..\wxcamwindow;..\wxutil;..\simplelog;$(NOINHERIT)"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(WXWIN)\include&quot;;&quot;$(CVPATH)\build&quot;;&quot;$(CVPATH)\include&quot;;&quot;$(CVPATH)\include\opencv&quot;;&quot;$(CVPATH)\modules\core\include&quot;;&quot;$(CVPATH)\modules\imgproc\include&quot;;&quot;$(CVPATH)\modules\features2d\include&quot;;&quot;$(CVPATH)\modules\objdetect\include&quot;;&quot;$(CVPATH)\modules\video\include&quot;;&quot;$(CVPATH)\modules\highgui\include&quot;;&quot;$(CVPATH)\modules\ml\include&quot;;&quot;$(CVPATH)\modules\contrib\include&quot;;&quot;$(CVPATH)\modules\flann\include&quot;;&quot;$(CVPATH)\modules\gpu\include&quot;;&quot;$(CVPATH)\modules\calib3d\include&quot;;..\creavision;..\wxcamwindow;..\wxutil;..\simplelog;$(NOINHERIT)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;NOPCH;__WXMSW__"
 				StringPooling="true"
 				RuntimeLibrary="2"

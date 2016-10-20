@@ -34,7 +34,6 @@
 #include "cautostart.h"
 #include "hotkeymanager.h"
 #include "simplelog.h"
-#include "newtrackerinformationdlg.h"
 #include "checkupdates_manager.h"
 
 #include <wx/msgdlg.h>
@@ -69,7 +68,6 @@ CViacamController::CViacamController(void)
 , m_frameRate(0)
 , m_motionCalibrationEnabled(false)
 , m_runWizardAtStartup(false)
-, m_newTrackerDialogAtStartup(true)
 , m_checkUpdatesAtStartup(true)
 , m_minimisedAtStartup(false)
 {
@@ -262,10 +260,6 @@ bool CViacamController::Initialize ()
 
 	SetUpLanguage ();
 
-	// Is the first time eviacam is executed on this computer?
-	if (!wxConfigBase::Get()->Exists(_T("/settings/default")))
-		m_newTrackerDialogAtStartup = false;
-
 	// Create camera object
 	m_pCamera= SetUpCamera();	
 	if (m_pCamera== NULL) retval= false;
@@ -334,12 +328,6 @@ bool CViacamController::Initialize ()
 	}
 #endif
 
-	// Show new tracker information dialog when needed
-	if (retval && m_newTrackerDialogAtStartup) {
-		NewTrackerInformationDlg dlg(m_pMainWindow);
-		dlg.ShowModal();
-	}
-
 	// Run the wizard at startup
 	if (retval && m_runWizardAtStartup)
 		StartWizard();
@@ -396,7 +384,6 @@ void CViacamController::WriteAppData(wxConfigBase* pConfObj)
 	// General options
 	m_configManager->WriteLanguage (m_languageId);
 	pConfObj->Write(_T("cameraName"), m_cameraName);
-	pConfObj->Write(_T("newTrackerDialogAtStartup"), m_newTrackerDialogAtStartup);
 	pConfObj->Write(_T("checkUpdatesAtStartup"), m_checkUpdatesAtStartup);
 }
 
@@ -418,7 +405,6 @@ void CViacamController::ReadAppData(wxConfigBase* pConfObj)
 	// General options
 	SetLanguage (m_configManager->ReadLanguage());	// Only load, dont't apply
 	pConfObj->Read(_T("cameraName"), &m_cameraName);
-	pConfObj->Read(_T("newTrackerDialogAtStartup"), &m_newTrackerDialogAtStartup);
 	pConfObj->Read(_T("checkUpdatesAtStartup"), &m_checkUpdatesAtStartup);
 }
 

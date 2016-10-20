@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008-14 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-16 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -53,9 +53,6 @@ public:
 	bool GetEnableWhenFaceDetected () const { return m_enableWhenFaceDetected; }
 	void SetEnableWhenFaceDetected (bool state) { m_enableWhenFaceDetected= state; }
 
-	bool GetUseLegacyTracker() const { return m_useLegacyTracker; }
-	void SetUseLegacyTracker(bool state) { m_useLegacyTracker = state; }
-
 	bool IsFaceDetected () const;
 
 	unsigned int GetTimeout () const { return (unsigned int) (m_waitTime.GetWaitTimeMs()/1000); }
@@ -82,14 +79,12 @@ private:
 	bool m_trackFace;
 	bool m_enableWhenFaceDetected;
 	bool m_isRunning;
-	bool m_useLegacyTracker;
+
 	CWaitTime m_waitTime;
 	CWaitTime m_trackAreaTimeout;
 		
 	CIplImage m_imgThread;
-	CIplImage m_imgPrevProc, m_imgCurrProc;
 	CIplImage m_imgPrev, m_imgCurr;
-	CIplImage m_imgVelX, m_imgVelY;
 	TCrvLookupTable m_prevLut;
 	
 	cv::CascadeClassifier m_faceCascade;
@@ -113,7 +108,6 @@ private:
 	int PreprocessImage ();
 	void ComputeFaceTrackArea (CIplImage &image);
 	void SetThreadPeriod (int value);
-	void OldTracker(CIplImage &image, float &xVel, float &yVel);
 	void NewTracker(CIplImage &image, float &xVel, float &yVel);
 };
 
