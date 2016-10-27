@@ -1,3 +1,9 @@
+eviacam (2.1.1-1) unstable; urgency=low
+
+  * Upstream version 2.1.1
+
+ -- Cesar Mauri <cesar@crea-si.com>  Thu, 27 Oct 2016 19:58:42 +0200
+
 eviacam (2.1.0-1) unstable; urgency=low
 
   * Acknowledge previous NMU, thanks Tobias!
