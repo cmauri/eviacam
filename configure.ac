@@ -190,7 +190,11 @@ if test "x$WITH_DEPENDENCIES_CHECK" = "xyes"; then
 	OPENCVVERSION=`echo $opencvversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
 	AC_SUBST(OPENCVVERSION)
 	OPENCV_CPPFLAGS="`$OPENCVCONFIG --cflags`"
-	OPENCV_LIBS=" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_video"
+	if test "$OPENCVVERSION" -ge 3000000; then
+		OPENCV_LIBS=" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_video -lopencv_videoio -lopencv_imgcodecs"
+	else
+		OPENCV_LIBS=" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_video"
+	fi
 fi
 # -----------------       opencv  --------------------
 

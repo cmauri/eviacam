@@ -28,6 +28,7 @@
 #include "configbase.h"
 #include "visiblenormroi.h"
 #include "waittime.h"
+#include "opencv2/objdetect/objdetect.hpp"
 
 #include <wx/thread.h>
 

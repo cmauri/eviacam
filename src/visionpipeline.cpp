@@ -33,6 +33,7 @@
 
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/video/tracking.hpp>
+#include <opencv2/core/mat.hpp>
 
 #include <math.h>
 #include <wx/msgdlg.h>
@@ -84,8 +85,15 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 	wxString cascadePath (eviacam::GetDataDir() + _T("/haarcascade_frontalface_default.xml"));
 	bool result = safeHaarCascadeLoad(m_faceCascade, cascadePath.mb_str(wxConvUTF8));
 	if (!result) {
+		// For OpenCV 2 on linux
 		result = safeHaarCascadeLoad(m_faceCascade,
 			"/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml");
+	}
+
+	if (!result) {
+		// For OpenCV 3	on linux
+		result = safeHaarCascadeLoad(m_faceCascade,
+			"/usr/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml");
 	}
 	
 	if (!result) {
@@ -113,8 +121,6 @@ CVisionPipeline::~CVisionPipeline () {
 		m_isRunning= false;
 		m_condition.Signal();
 		Wait();
-		//cvReleaseHaarClassifierCascade(&m_faceCascade);
-		//m_faceCascade = NULL;
 	}
 }
 
@@ -186,7 +192,8 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 {
 	if (!m_trackFace) return;
 	if (m_faceLocationStatus) return;	// Already available
-	cv::Mat image0(image.ptr());
+
+	cv::Mat image0 = cv::cvarrToMat(image.ptr());
 	std::vector<cv::Rect> faces;
 
 	m_faceCascade.detectMultiScale(
