@@ -38,6 +38,8 @@
 #include <wx/stdpaths.h>
 #include <wx/cmdline.h>
 #include <wx/xrc/xmlres.h>
+#include <wx/fileconf.h>
+#include <wx/string.h>
 
 #include "eviacamapp.h"
 #include "paths.h"
@@ -185,6 +187,8 @@ static const wxCmdLineEntryDesc g_cmdLineDesc [] =
           wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
      { wxCMD_LINE_SWITCH, wxT_2("d"), wxT_2("debug"), wxT_2("debug mode. Print debug messages to the console."),
           wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
+     { wxCMD_LINE_OPTION, wxT_2("c"), wxT_2("custom-config"), wxT_2("Use custom configuration file."),
+          wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
       
      { wxCMD_LINE_NONE }
 };
@@ -214,6 +218,15 @@ bool EViacamApp::OnCmdLineParsed(wxCmdLineParser& parser)
 		slog_write (SLOG_PRIO_INFO, "debug mode enabled");
 #endif
 	}	
+
+	wxString custom_config_path;
+	bool custom_config= parser.Found(wxT("c"), &custom_config_path);
+	if (custom_config) {
+		wxFileConfig* customFileConfig = new wxFileConfig(wxEmptyString, wxEmptyString,
+                                                          custom_config_path, custom_config_path,
+                                                          wxCONFIG_USE_LOCAL_FILE);
+		wxConfigBase::Set(customFileConfig);
+	}
 
 	return true;
 }

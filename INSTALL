@@ -11,12 +11,12 @@ Linux
 - Pre-requisites
   --------------
   wxWidgets >= 2.8.x (recommended 3.0.1 or higher)
-  opencv >= 2.4
+  opencv >= 2.4 (version 3 also supported)
   gtk+-2.0
   libxtst
   libxext 
 
-  For Debian/Ubuntu see file debian/control for exact dependencies.
+  For Debian/Ubuntu, see file debian/control for exact dependencies.
 
 - Generic compilation and installation
   ------------------------------------
@@ -68,8 +68,26 @@ Linux
 
   The optional TAG parameter can be used to selected a commit given its tag.
 
+- DEB source packages
+  -------------------
+  To build a debian source package, first switch to debian branch:
+
+    git checkout debian
+
+  Make sure that debian/changelog is up to date. Run the following command
+  and check that contents are correct:
+
+    dch -i
+
+  The run gen.sh script with the appropriate tag (version in tag and
+  changelog file SHOULD match):
+
+    ./gen.sh v2.1.0
+
+
 - DEB Packages
   -------------
+  (obsolete method)
   Before generating any .deb package make sure file debian/changelog is up
   to date. Run the following command and check that contents are correct:
 
@@ -99,14 +117,18 @@ Linux
 
   make rpm
 
+
 Windows
 =======
+
 - Pre-requisites
   --------------
   Visual Studio 2013
   wxWidgets >= 2.8.x (recommended 3.0.1 or higher)
   opencv >= 2.4 (tested with 2.4.9, custom compilation recommended)
   Windows SDK for Windows 7 and .NET Framework 4 7.1 (tested 7.1.7600.0.30514)
+  MinGW (bash, autoconf, automake, m4)
+  Inno Setup (to create the installer)
 
 - Building using Visual Studio 2013
   ---------------------------------
@@ -116,5 +138,11 @@ Windows
     DSHOW_SAMPLES to point DirectShow samples directory usually at:
     %PROGRAMFILES%\Microsoft SDKs\Windows\v7.1\Samples\multimedia
 
-  Once the program is compiled, you may wish to create the installer. 
-  Inno Setup is used for installer generation on Windows
+  From a bash shell, cd to the source code directory and run:
+    ./autogen.sh
+    ./configure
+
+  Open the .sln file.
+
+  Once the program is compiled, you may wish to create the installer using
+  Inno Setup.

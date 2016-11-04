@@ -111,7 +111,6 @@ class wxPanel;
 #define ID_CHECKBOX_ENABLE_AT_STARTUP 10023
 #define ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND 10036
 #define ID_BUTTON_ONSCREENKEYBOARDCOMMAND 10049
-#define ID_CHECKBO_LEGACY_TRACKER 10009
 #define ID_CHECKBOX_AUTO_LOCATE_FACE 10038
 #define ID_CHOICE4 10109
 #define ID_CHECKBOX_ENABLE_WHEN_FACE_DETECTED 10039
@@ -282,9 +281,6 @@ private:
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON_ONSCREENKEYBOARDCOMMAND
     void OnButtonOnscreenkeyboardcommandClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBO_LEGACY_TRACKER
-    void OnCheckboLegacyTrackerClick( wxCommandEvent& event );
-
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_AUTO_LOCATE_FACE
     void OnCheckboxAutoLocateFaceClick( wxCommandEvent& event );
 
@@ -447,7 +443,6 @@ private:
     wxTextCtrl* m_txtOnScreenKeyboardCommand;
     wxButton* m_btntOnScreenKeyboardCommand;
     wxStaticBox* m_sizerFaceLocalization;
-    wxCheckBox* m_chkLegacyTracker;
     wxCheckBox* m_chkAutoLocateFace;
     wxStaticText* m_staticCpuUsage;
     wxChoice* m_choCpuUsage;

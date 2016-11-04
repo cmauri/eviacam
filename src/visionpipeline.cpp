@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008-15 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-16 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -31,11 +31,9 @@
 #include "paths.h"
 #include "simplelog.h"
 
-#if WIN32 || OPENCVVERSION >= 2004000
-# include <opencv2/legacy/legacy.hpp>
-#endif
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/video/tracking.hpp>
+#include <opencv2/core/mat.hpp>
 
 #include <math.h>
 #include <wx/msgdlg.h>
@@ -87,8 +85,15 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 	wxString cascadePath (eviacam::GetDataDir() + _T("/haarcascade_frontalface_default.xml"));
 	bool result = safeHaarCascadeLoad(m_faceCascade, cascadePath.mb_str(wxConvUTF8));
 	if (!result) {
+		// For OpenCV 2 on linux
 		result = safeHaarCascadeLoad(m_faceCascade,
 			"/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml");
+	}
+
+	if (!result) {
+		// For OpenCV 3	on linux
+		result = safeHaarCascadeLoad(m_faceCascade,
+			"/usr/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml");
 	}
 	
 	if (!result) {
@@ -116,8 +121,6 @@ CVisionPipeline::~CVisionPipeline () {
 		m_isRunning= false;
 		m_condition.Signal();
 		Wait();
-		//cvReleaseHaarClassifierCascade(&m_faceCascade);
-		//m_faceCascade = NULL;
 	}
 }
 
@@ -126,9 +129,9 @@ void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
 {
 	bool retval;
 
-	if (!m_imgVelX.Initialized () ||
-		image.Width() != m_imgVelX.Width() ||
-		image.Height() != m_imgVelX.Height() ) {
+	if (!m_imgPrev.Initialized () ||
+		image.Width() != m_imgPrev.Width() ||
+		image.Height() != m_imgPrev.Height() ) {
 
 		m_imageCopyMutex.Enter();
 		retval= m_imgPrev.Create (image.Width(), image.Height(), 
@@ -139,22 +142,6 @@ void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
 		retval= m_imgCurr.Create (image.Width(), image.Height(), 
 								  IPL_DEPTH_8U, "GRAY");
 		assert (retval);
-
-		retval= m_imgPrevProc.Create (image.Width(), image.Height(), 
-								  IPL_DEPTH_8U, "GRAY");
-		assert (retval);
-
-		retval= m_imgCurrProc.Create (image.Width(), image.Height(), 
-					      IPL_DEPTH_8U, "GRAY");
-		assert (retval);
-
-		retval= m_imgVelX.Create (image.Width(), image.Height(), 
-								  IPL_DEPTH_32F, "GRAY");
-		assert (retval);
-
-		retval= m_imgVelY.Create (image.Width(), image.Height(), 
-								  IPL_DEPTH_32F, "GRAY");
-		assert (retval);
 	}
 }
 
@@ -163,7 +150,7 @@ wxThreadError CVisionPipeline::Create(unsigned int stackSize)
 	return wxThread::Create (stackSize);
 }
 
-// Low-priority secondary thead where face localization occurs
+// Low-priority secondary thread where face localization occurs
 wxThread::ExitCode CVisionPipeline::Entry( )
 {
 	bool retval;
@@ -205,7 +192,8 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 {
 	if (!m_trackFace) return;
 	if (m_faceLocationStatus) return;	// Already available
-	cv::Mat image0(image.ptr());
+
+	cv::Mat image0 = cv::cvarrToMat(image.ptr());
 	std::vector<cv::Rect> faces;
 
 	m_faceCascade.detectMultiScale(
@@ -225,177 +213,6 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 bool CVisionPipeline::IsFaceDetected () const
 {
 	return !m_waitTime.HasExpired();
-}
-
-int CVisionPipeline::PreprocessImage ()
-{
-#if 1
-	TCrvHistogram his;
-	int range;
-		
-	crvHistogram (m_imgCurr.ptr(), his);
-	range= crvNormalizeHistogram (his, m_prevLut, 50);
-
-	crvLUTTransform (m_imgPrev.ptr(), m_imgPrevProc.ptr(), m_prevLut);
-	crvLUTTransform (m_imgCurr.ptr(), m_imgCurrProc.ptr(), m_prevLut);		
-#else
-	cvEqualizeHist(m_imgPrev.ptr(), m_imgPrevProc.ptr());
-	cvEqualizeHist(m_imgCurr.ptr(), m_imgCurrProc.ptr());
-#endif
-
-	return 0;
-}
-
-#define COMP_MATRIX_WIDTH	15
-#define COMP_MATRIX_HEIGHT	15
-typedef float TAnalisysMatrix[COMP_MATRIX_WIDTH][COMP_MATRIX_HEIGHT];
-
-void MatrixMeanImageCells (CIplImage *pCImg, TAnalisysMatrix &m)
-{
-	int x, y, mx, my, xCount, yCount, xIni, yIni, xLim, yLim;
-	float *pSrc;
-
-	assert (pCImg->ptr()->depth== IPL_DEPTH_32F);
-
-	// Limits where function should be applied
-	crvGetROILimits (pCImg->ptr(), xIni, yIni, xLim, yLim);
-
-	float compBoxWidth= ((float) (xLim - xIni + 1)) / COMP_MATRIX_WIDTH;
-	int iCompBoxWidth= (int) compBoxWidth;
-	float compBoxHeight= ((float) (yLim - yIni + 1)) / COMP_MATRIX_HEIGHT;
-	int iCompBoxHeight= (int) compBoxHeight;
-
-	for (my= 0; my< COMP_MATRIX_HEIGHT; ++my) {
-		for (mx= 0; mx< COMP_MATRIX_WIDTH; ++mx) {
-			m[mx][my]= 0.0f;
-
-			y= yIni + (int)((float) my * compBoxHeight);
-			for (yCount= 0; yCount< iCompBoxHeight; ++yCount) {
-				x= xIni + (int) ((float) mx * compBoxWidth);
-				pSrc= (float *) crvImgOffset (pCImg->ptr(), x, y);
-
-				for (xCount= 0; xCount< iCompBoxWidth; ++xCount) {
-					m[mx][my]+= *pSrc;
-					++pSrc;
-				}
-				m[mx][my]/= (float) (iCompBoxWidth * iCompBoxHeight);
-				++y;
-			}			
-		}
-	}
-}
-
-void CVisionPipeline::OldTracker(CIplImage &image, float &xVel, float &yVel)
-{
-	CvRect box;
-	TAnalisysMatrix velXMatrix, velYMatrix, velModulusMatrix;
-
-	// Save ROIs
-	m_imgPrev.PushROI();
-	m_imgPrevProc.PushROI();
-	m_imgCurr.PushROI();
-	m_imgCurrProc.PushROI();
-	m_imgVelX.PushROI();
-	m_imgVelY.PushROI();
-
-	// Update track area
-	if (m_faceLocationStatus) {
-		int cx, cy;
-		float sx, sy;
-		CvRect curBox;
-
-		m_trackArea.GetBoxImg(&image, curBox);
-
-		// Compute new face area size averaging with old area
-		sx = ((float)m_faceLocation.width  * 0.15f + (float)curBox.width  * 0.9f);
-		sy = ((float)m_faceLocation.height * 0.1f + (float)curBox.height * 0.9f);
-		m_trackArea.SetSizeImg(&image, (int)sx, (int)sy);
-
-		// Compute new face position
-		cx = (int)((float)(m_faceLocation.x + m_faceLocation.width / 2) * 0.5f +
-			(float)(curBox.x + curBox.width / 2) * 0.5f);
-		cy = (int)((float)(m_faceLocation.y + m_faceLocation.height / 2) * 0.5f +
-			(float)(curBox.y + curBox.height / 2) * 0.5f);
-		m_trackArea.SetCenterImg(&image, cx, cy);
-
-		m_faceLocationStatus = 0;
-	}
-	
-
-	// Get face ROI
-	m_trackArea.GetBoxImg(&image, box);
-	m_imgPrev.SetROI(box);
-	m_imgCurr.SetROI(box);
-	m_imgPrevProc.SetROI(box);
-	m_imgCurrProc.SetROI(box);
-	m_imgVelX.SetROI(box);
-	m_imgVelY.SetROI(box);
-
-	// Pre-processing
-	PreprocessImage();
-
-
-	// Compute optical flow
-	CvTermCriteria term;
-	term.type = CV_TERMCRIT_ITER;
-	term.max_iter = 6;
-	cvCalcOpticalFlowHS(m_imgPrevProc.ptr(), m_imgCurrProc.ptr(), 0,
-		m_imgVelX.ptr(), m_imgVelY.ptr(), 0.001, term);
-
-	MatrixMeanImageCells(&m_imgVelX, velXMatrix);
-	MatrixMeanImageCells(&m_imgVelY, velYMatrix);
-
-	int x, y;
-	float velModulusMax = 0;
-
-	// Compute modulus for every motion cell
-	for (x = 0; x< COMP_MATRIX_WIDTH; ++x) {
-		for (y = 0; y< COMP_MATRIX_HEIGHT; ++y) {
-			velModulusMatrix[x][y] =
-				(velXMatrix[x][y] * velXMatrix[x][y] + velYMatrix[x][y] * velYMatrix[x][y]);
-
-			if (velModulusMax< velModulusMatrix[x][y]) velModulusMax = velModulusMatrix[x][y];
-		}
-	}
-
-	// Select valid cells (i.e. those with enough motion)
-	int validCells = 0;
-	xVel = yVel = 0;
-	for (x = 0; x< COMP_MATRIX_WIDTH; ++x) {
-		for (y = 0; y< COMP_MATRIX_HEIGHT; ++y) {
-			if (velModulusMatrix[x][y]>(0.05 * velModulusMax)) {
-				++validCells;
-				xVel += velXMatrix[x][y];
-				yVel += velYMatrix[x][y];
-			}
-		}
-	}
-
-	// Ensure minimal area to avoid extremely high values
-	int cellArea = (box.width * box.height) / (COMP_MATRIX_WIDTH * COMP_MATRIX_HEIGHT);
-	if (cellArea == 0) cellArea = 1;
-	int minValidCells = (3000 / cellArea);
-	if (validCells< minValidCells) validCells = minValidCells;
-
-	// Compute speed
-	xVel = -(xVel / (float)validCells) * 40;
-	yVel = (yVel / (float)validCells) * 80;
-
-	/*
-	It seems that in debug mode Win32/VS2013 weird too large values are 
-	sometimes reported
-	if (fabs(xVel) > 10.0f || fabs(yVel) > 10.0f) {
-		SLOG_DEBUG("xvel: %f, yvel: %f\n", xVel, yVel);
-	}
-	*/
-
-	// Restore ROI's
-	m_imgPrevProc.PopROI();
-	m_imgPrev.PopROI();
-	m_imgCurrProc.PopROI();
-	m_imgCurr.PopROI();
-	m_imgVelX.PopROI();
-	m_imgVelY.PopROI();
 }
 
 static 
@@ -579,10 +396,7 @@ bool CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 		// TODO: fine grained synchronization
 		m_imageCopyMutex.Enter();
 
-		if (m_useLegacyTracker)
-			OldTracker(image, xVel, yVel);
-		else
-			NewTracker(image, xVel, yVel);
+		NewTracker(image, xVel, yVel);
 
 		// Store current image as previous
 		m_imgPrev.Swap(&m_imgCurr);
@@ -682,7 +496,6 @@ void CVisionPipeline::InitDefaults()
 {
 	m_trackFace= true;
 	m_enableWhenFaceDetected= false;
-	m_useLegacyTracker= false;
 	m_waitTime.SetWaitTimeMs(DEFAULT_FACE_DETECTION_TIMEOUT);
 	SetThreadPeriod(CPU_NORMAL);
 	m_trackArea.SetSize (DEFAULT_TRACK_AREA_WIDTH_PERCENT, DEFAULT_TRACK_AREA_HEIGHT_PERCENT);
@@ -698,7 +511,6 @@ void CVisionPipeline::WriteProfileData(wxConfigBase* pConfObj)
 
 	pConfObj->Write(_T("trackFace"), m_trackFace);
 	pConfObj->Write(_T("enableWhenFaceDetected"), m_enableWhenFaceDetected);
-	pConfObj->Write(_T("useLegacyTracker"), m_useLegacyTracker);
 	pConfObj->Write(_T("locateFaceTimeout"), (int) m_waitTime.GetWaitTimeMs());
 	pConfObj->Write(_T("threadPeriod"), (int) m_threadPeriod);
 
@@ -730,7 +542,6 @@ void CVisionPipeline::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->SetPath (_T("motionTracker"));
 	pConfObj->Read(_T("trackFace"), &m_trackFace);
 	pConfObj->Read(_T("enableWhenFaceDetected"), &m_enableWhenFaceDetected);
-	pConfObj->Read(_T("useLegacyTracker"), &m_useLegacyTracker);
 	pConfObj->Read(_T("locateFaceTimeout"), &locateFaceTimeout);
 	pConfObj->Read (_T("trackAreaWidth"), &width);
 	pConfObj->Read (_T("trackAreaHeight"), &height);

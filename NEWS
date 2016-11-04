@@ -1,4 +1,10 @@
-﻿2016-03-24 - Release 2.1.0
+﻿2016-11-04 - Release 2.1.1
+* Added config option to minimize the main window at startup and added cmd line
+  option to load custom configuration file (thanks to Bartosz Jura)
+* Remove old tracker
+* Add support for OpenCV 3 on linux (OpenCV 2 is still supported)
+
+2016-03-24 - Release 2.1.0
 * Add hotkeys for Windows (bugs #21, #42, #52)
 * Fix support for some cameras, most notability those models integrated
   in tablets (e.g. MS Surface) (bug #51)

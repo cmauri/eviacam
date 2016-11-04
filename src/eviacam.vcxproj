@@ -132,7 +132,7 @@ if %ERRORLEVEL% LEQ 1 exit 0
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>wxmsw30ud_richtext.lib;wxmsw30ud_aui.lib;wxmsw30ud_core.lib;wxbase30ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxmsw30ud_adv.lib;wxmsw30ud_html.lib;wxmsw30ud_xrc.lib;wxbase30ud_net.lib;wxbase30ud_xml.lib;opencv_core2411d.lib;opencv_legacy2411d.lib;opencv_objdetect2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib;opencv_video2411d.lib;wxexpatd.lib;comctl32.lib;rpcrt4.lib;winmm.lib;simplelog.lib;wxcamwindow.lib;wxutil.lib;strmiids.lib;uuid.lib;quartz.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wxmsw30ud_richtext.lib;wxmsw30ud_aui.lib;wxmsw30ud_core.lib;wxbase30ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxmsw30ud_adv.lib;wxmsw30ud_html.lib;wxmsw30ud_xrc.lib;wxbase30ud_net.lib;wxbase30ud_xml.lib;opencv_core2411d.lib;opencv_objdetect2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib;opencv_video2411d.lib;wxexpatd.lib;comctl32.lib;rpcrt4.lib;winmm.lib;simplelog.lib;wxcamwindow.lib;wxutil.lib;strmiids.lib;uuid.lib;quartz.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)eviacam.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(CVPATH)\build\x86\vc12\lib;$(WXWIN)\lib\vc_lib;$(DSHOW_SAMPLES)\baseclasses\$(Configuration);$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -153,7 +153,6 @@ if %ERRORLEVEL% LEQ 1 exit 0
 	opencv_imgproc2411d.dll
 	opencv_objdetect2411d.dll
 	opencv_highgui2411d.dll
-	opencv_legacy2411d.dll
 	opencv_flann2411d.dll
 	opencv_features2d2411d.dll
 	opencv_calib3d2411d.dll
@@ -242,7 +241,7 @@ if %ERRORLEVEL% LEQ 1 exit 0
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>wxmsw30u_richtext.lib;wxmsw30u_aui.lib;wxmsw30u_core.lib;wxbase30u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxmsw30u_adv.lib;wxmsw30u_html.lib;wxmsw30u_xrc.lib;wxbase30u_net.lib;wxbase30u_xml.lib;opencv_core2411.lib;opencv_legacy2411.lib;opencv_objdetect2411.lib;opencv_highgui2411.lib;opencv_imgproc2411.lib;opencv_video2411.lib;wxexpat.lib;comctl32.lib;rpcrt4.lib;winmm.lib;simplelog.lib;wxcamwindow.lib;wxutil.lib;strmiids.lib;uuid.lib;quartz.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wxmsw30u_richtext.lib;wxmsw30u_aui.lib;wxmsw30u_core.lib;wxbase30u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxmsw30u_adv.lib;wxmsw30u_html.lib;wxmsw30u_xrc.lib;wxbase30u_net.lib;wxbase30u_xml.lib;opencv_core2411.lib;opencv_objdetect2411.lib;opencv_highgui2411.lib;opencv_imgproc2411.lib;opencv_video2411.lib;wxexpat.lib;comctl32.lib;rpcrt4.lib;winmm.lib;simplelog.lib;wxcamwindow.lib;wxutil.lib;strmiids.lib;uuid.lib;quartz.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)eviacam.exe</OutputFile>
       <AdditionalLibraryDirectories>$(CVPATH)\build\x86\vc12\lib;$(WXWIN)\lib\vc_lib;$(DSHOW_SAMPLES)\baseclasses\$(Configuration);$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
@@ -261,7 +260,6 @@ if %ERRORLEVEL% LEQ 1 exit 0
 	opencv_imgproc2411.dll
 	opencv_objdetect2411.dll
 	opencv_highgui2411.dll
-	opencv_legacy2411.dll
 	opencv_flann2411.dll
 	opencv_features2d2411.dll
 	opencv_calib3d2411.dll
@@ -295,7 +293,6 @@ if not exist $(TargetDir)msvcr120.dll copy "$(VCInstallDir)redist\x86\Microsoft.
     <ClCompile Include="eviacamapp.cpp" />
     <ClCompile Include="gestureclick.cpp" />
     <ClCompile Include="hotkeymanager.cpp" />
-    <ClCompile Include="newtrackerinformationdlg.cpp" />
     <ClCompile Include="paths.cpp" />
     <ClCompile Include="pointeraction.cpp" />
     <ClCompile Include="viacamcontroller.cpp" />
@@ -331,7 +328,6 @@ if not exist $(TargetDir)msvcr120.dll copy "$(VCInstallDir)redist\x86\Microsoft.
     <ClInclude Include="hotkeymanager.h" />
     <ClInclude Include="langnames-utf8.h" />
     <ClInclude Include="mousecommand.h" />
-    <ClInclude Include="newtrackerinformationdlg.h" />
     <ClInclude Include="paths.h" />
     <ClInclude Include="pointeraction.h" />
     <ClInclude Include="version.h" />

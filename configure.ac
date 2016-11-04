@@ -1,4 +1,4 @@
-AC_INIT([eviacam], 2.1.0)
+AC_INIT([eviacam], 2.1.1)
 AC_CONFIG_SRCDIR([src/eviacamapp.cpp])
 AC_PREREQ(2.61)
 AM_CONFIG_HEADER(config.h)
@@ -190,7 +190,11 @@ if test "x$WITH_DEPENDENCIES_CHECK" = "xyes"; then
 	OPENCVVERSION=`echo $opencvversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
 	AC_SUBST(OPENCVVERSION)
 	OPENCV_CPPFLAGS="`$OPENCVCONFIG --cflags`"
-	OPENCV_LIBS=" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_objdetect -lopencv_video"
+	if test "$OPENCVVERSION" -ge 3000000; then
+		OPENCV_LIBS=" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_video -lopencv_videoio -lopencv_imgcodecs"
+	else
+		OPENCV_LIBS=" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_video"
+	fi
 fi
 # -----------------       opencv  --------------------
 
@@ -221,7 +225,7 @@ else
 	COMPFLAGS="$COMPFLAGS -Wall -Wconversion -DDEBUG -g -O0"
 fi
 
-CXXFLAGS="$CXXFLAGS $COMPFLAGS"
+CXXFLAGS="$CXXFLAGS $COMPFLAGS -std=c++11"
 LDFLAGS="$LDFLAGS -Wl,--as-needed"
 
 AC_SUBST(WX_LIBS)

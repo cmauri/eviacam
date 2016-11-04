@@ -34,7 +34,6 @@
 #include "cautostart.h"
 #include "hotkeymanager.h"
 #include "simplelog.h"
-#include "newtrackerinformationdlg.h"
 #include "checkupdates_manager.h"
 
 #include <wx/msgdlg.h>
@@ -69,8 +68,8 @@ CViacamController::CViacamController(void)
 , m_frameRate(0)
 , m_motionCalibrationEnabled(false)
 , m_runWizardAtStartup(false)
-, m_newTrackerDialogAtStartup(true)
 , m_checkUpdatesAtStartup(true)
+, m_minimisedAtStartup(false)
 {
 	m_locale= new wxLocale ();
 	m_configManager= new CConfigManager(this);	
@@ -82,7 +81,8 @@ void CViacamController::InitDefaults()
 {
 	m_runWizardAtStartup= true;
 	m_languageId= wxLANGUAGE_DEFAULT;
-	m_enabledAtStartup= false;	
+	m_enabledAtStartup= false;
+	m_minimisedAtStartup = false;
 #if defined(__WXMSW__)
 	m_onScreenKeyboardCommand= _T("osk.exe");
 #endif
@@ -260,10 +260,6 @@ bool CViacamController::Initialize ()
 
 	SetUpLanguage ();
 
-	// Is the first time eviacam is executed on this computer?
-	if (!wxConfigBase::Get()->Exists(_T("/settings/default")))
-		m_newTrackerDialogAtStartup = false;
-
 	// Create camera object
 	m_pCamera= SetUpCamera();	
 	if (m_pCamera== NULL) retval= false;
@@ -282,7 +278,6 @@ bool CViacamController::Initialize ()
 	if (retval) {
 		m_pMainWindow = new WViacam( NULL, ID_WVIACAM );
 		assert (m_pMainWindow);
-		m_pMainWindow->Show (true);	
 	}
 
 	// Create hotkey manager
@@ -316,6 +311,9 @@ bool CViacamController::Initialize ()
 
 	// Load configuration
 	if (retval) m_configManager->ReadAll ();
+
+	// Show main window unless it was set to be minimised at startup
+	if (retval && !m_minimisedAtStartup) m_pMainWindow->Show(true);
 	
 	// Enable pointeraction object
 	if (retval && m_enabledAtStartup) SetEnabled(true);
@@ -329,12 +327,6 @@ bool CViacamController::Initialize ()
 		m_pCheckUpdateManager->LaunchBackground();
 	}
 #endif
-
-	// Show new tracker information dialog when needed
-	if (retval && m_newTrackerDialogAtStartup) {
-		NewTrackerInformationDlg dlg(m_pMainWindow);
-		dlg.ShowModal();
-	}
 
 	// Run the wizard at startup
 	if (retval && m_runWizardAtStartup)
@@ -392,7 +384,6 @@ void CViacamController::WriteAppData(wxConfigBase* pConfObj)
 	// General options
 	m_configManager->WriteLanguage (m_languageId);
 	pConfObj->Write(_T("cameraName"), m_cameraName);
-	pConfObj->Write(_T("newTrackerDialogAtStartup"), m_newTrackerDialogAtStartup);
 	pConfObj->Write(_T("checkUpdatesAtStartup"), m_checkUpdatesAtStartup);
 }
 
@@ -401,6 +392,7 @@ void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("enabledAtStartup"), m_enabledAtStartup);
 	pConfObj->Write(_T("onScreenKeyboardCommand"), m_onScreenKeyboardCommand);
 	pConfObj->Write(_T("runWizardAtStartup"), m_runWizardAtStartup);
+	pConfObj->Write(_T("minimisedAtStartup"), m_minimisedAtStartup);
 
 	// Propagates calls
 	m_pointerAction->WriteProfileData (pConfObj);
@@ -413,7 +405,6 @@ void CViacamController::ReadAppData(wxConfigBase* pConfObj)
 	// General options
 	SetLanguage (m_configManager->ReadLanguage());	// Only load, dont't apply
 	pConfObj->Read(_T("cameraName"), &m_cameraName);
-	pConfObj->Read(_T("newTrackerDialogAtStartup"), &m_newTrackerDialogAtStartup);
 	pConfObj->Read(_T("checkUpdatesAtStartup"), &m_checkUpdatesAtStartup);
 }
 
@@ -422,6 +413,7 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
 	pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
 	pConfObj->Read(_T("runWizardAtStartup"), &m_runWizardAtStartup);
+	pConfObj->Read(_T("minimisedAtStartup"), &m_minimisedAtStartup);
 	
 	// Propagates calls
 	m_pointerAction->ReadProfileData (pConfObj);

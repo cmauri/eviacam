@@ -56,6 +56,9 @@ public:
 	const bool GetEnabledAtStartup () const { return m_enabledAtStartup; }
 	void SetEnabledAtStartup (bool value) { m_enabledAtStartup= value; }
 
+	const bool GetMinimisedAtStartup () const { return m_minimisedAtStartup; }
+	void SetMinimisedAtStartup (bool value) { m_minimisedAtStartup = value; }
+
 	const bool GetMotionCalibrationEnabled () const {
 		return m_motionCalibrationEnabled;
 	}
@@ -111,13 +114,6 @@ public:
 	}
 
 	wxLocale* GetLocale() { return m_locale; }
-
-	bool GetNewTrackerDialogAtStartup() const {
-		return m_newTrackerDialogAtStartup;
-	}
-	void SetNewTrackerDialogAtStartup(bool value) {
-		m_newTrackerDialogAtStartup = value;
-	}
 
 	// Configuration methods
 	virtual void InitDefaults();
@@ -191,8 +187,8 @@ private:
 	float m_frameRate;
 	bool m_motionCalibrationEnabled;
 	bool m_runWizardAtStartup;
-	bool m_newTrackerDialogAtStartup;
 	bool m_checkUpdatesAtStartup;
+	bool m_minimisedAtStartup;
 
 };
 
