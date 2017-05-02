@@ -11,7 +11,7 @@ Linux
 - Pre-requisites
   --------------
   wxWidgets >= 2.8.x (recommended 3.0.1 or higher)
-  opencv >= 2.4 (version 3 also supported)
+  opencv >= 2.4 (version 3.x also supported)
   gtk+-2.0
   libxtst
   libxext 
@@ -140,7 +140,7 @@ Windows
 
   From a bash shell, cd to the source code directory and run:
     ./autogen.sh
-    ./configure
+    ./configure --disable-dependencies-check
 
   Open the .sln file.
 
