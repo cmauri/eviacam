@@ -1,4 +1,7 @@
-﻿2016-11-04 - Release 2.1.1
+﻿2017-05-02 - Release 2.1.2
+* Workaround for camera that does not start on Windows
+
+2016-11-04 - Release 2.1.1
 * Added config option to minimize the main window at startup and added cmd line
   option to load custom configuration file (thanks to Bartosz Jura)
 * Remove old tracker
