@@ -249,7 +249,8 @@ CCamera* CViacamController::SetUpCamera()
 	SLOG_INFO("Selected camera: %d", camId);
 	SLOG_INFO("Try to open the camera to make sure it works...");
 	// native driver first
-	CCamera* cam = CCameraEnum::getCamera(0, camId);
+	CCamera* cam = CCameraEnum::getCamera(1, camId);
+	/*
 	SLOG_INFO("Testing with WDM driver...");
 	if (!testCamera(cam)) {
 		SLOG_INFO("Failed. Now try the OpenCV driver...");
@@ -268,7 +269,7 @@ CCamera* CViacamController::SetUpCamera()
 			ChangeCamera();
 		}
 	}
-
+	*/
 	if (cam) cam->SetHorizontalFlip(true);
 	
 	WriteAppData(wxConfigBase::Get());
