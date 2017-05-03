@@ -1,9 +1,9 @@
-AC_INIT([eviacam], 2.0.3)
+AC_INIT([eviacam], 2.1.2)
 AC_CONFIG_SRCDIR([src/eviacamapp.cpp])
 AC_PREREQ(2.61)
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE
-COPYRIGHT="© 2008-15"
+COPYRIGHT="© 2008-17"
 PUBLISHER="César Mauri Loba"
 
 AC_SUBST(COPYRIGHT, [`echo $COPYRIGHT`])
@@ -54,7 +54,7 @@ AC_ARG_ENABLE(updates_check,
      yes | no ) WITH_UPDATES_CHECK="${enableval}" ;;
      *) AC_MSG_ERROR(bad value ${enableval} for --disable-updates-check) ;;
    esac],
-  [WITH_UPDATES_CHECK="yes"]
+  [WITH_UPDATES_CHECK="no"]
 )
 AM_CONDITIONAL([WITH_UPDATES_CHECK], [test "x$WITH_UPDATES_CHECK" = "xyes"])
 
@@ -67,14 +67,36 @@ else
 fi
 # ------------- Check for updates switch  ----------------
 
+# ------------- Check dependencies switch  ----------------
+# This adds the option of compiling without automatic check for
+# updates which is undesired for some builds (e.g. debian)
+AC_ARG_ENABLE(dependencies_check,
+  [  --disable-dependencies-check do not check dependencies (e.g. if building for Win)],
+  [case "${enableval}" in
+     yes | no ) WITH_DEPENDENCIES_CHECK="${enableval}" ;;
+     *) AC_MSG_ERROR(bad value ${enableval} for --disable-dependencies-check) ;;
+   esac],
+  [WITH_DEPENDENCIES_CHECK="yes"]
+)
+AM_CONDITIONAL([WITH_DEPENDENCIES_CHECK], [test "x$WITH_DEPENDENCIES_CHECK" = "xyes"])
+
+if test "x$WITH_DEPENDENCIES_CHECK" = "xyes"; then
+    AC_MSG_NOTICE([check dependencies... yes])
+else
+    AC_MSG_NOTICE([check dependencies... no])
+fi
+# ------------- Check dependencies switch  ----------------
+
 # Checks for libraries.
 # FIXME: Replace `main' with a function of each library
 
-AC_CHECK_LIB([X11], [main])
-AC_CHECK_LIB([Xext], [main], , AC_MSG_ERROR([libXext is required.]) )
-AC_CHECK_LIB([Xtst], [main], , AC_MSG_ERROR([libXtst is required.]) )
-AC_CHECK_FUNCS([pow])
-AC_CHECK_FUNCS([sqrt])
+if test "x$WITH_DEPENDENCIES_CHECK" = "xyes"; then
+	AC_CHECK_LIB([X11], [main])
+	AC_CHECK_LIB([Xext], [main], , AC_MSG_ERROR([libXext is required.]) )
+	AC_CHECK_LIB([Xtst], [main], , AC_MSG_ERROR([libXtst is required.]) )
+	AC_CHECK_FUNCS([pow])
+	AC_CHECK_FUNCS([sqrt])
+fi
 
 # -----------------       gtk+-2.0  --------------------
 # TODO: check if gtk-2.0-devel is really needed
@@ -93,11 +115,13 @@ AC_DEFUN([GTKTEST],
 		AC_MSG_ERROR([gtk+-2.0 is required.])
 	fi])
 
-# Call test func
-GTKTEST
+if test "x$WITH_DEPENDENCIES_CHECK" = "xyes"; then
+	# Call test func
+	GTKTEST
 
-GTK_CPPFLAGS="`$GTKCONFIG --cflags`"
-GTK_LIBS="`$GTKCONFIG --libs`"
+	GTK_CPPFLAGS="`$GTKCONFIG --cflags`"
+	GTK_LIBS="`$GTKCONFIG --libs`"
+fi
 # -----------------   gtk+-2.0      --------------------
 
 # -----------------       wxWidgets --------------------
@@ -124,23 +148,25 @@ AC_DEFUN([WXTEST],
 		AC_MSG_ERROR([wxWidgets is required. Try --with-wx-config.])
 	fi])
 
-# Call WXTEST func
-WXTEST
+if test "x$WITH_DEPENDENCIES_CHECK" = "xyes"; then
+	# Call WXTEST func
+	WXTEST
 
-# Verify minimum requires
-vers=`echo $wxversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
-if test -n "$vers" && test "$vers" -ge 2006003; then
-	if ! "$debug"; then
-		WX_CPPFLAGS="`$WXCONFIG --cppflags`"
-		WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
-		WX_LIBS="`$WXCONFIG --libs`"
+	# Verify minimum requires
+	vers=`echo $wxversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
+	if test -n "$vers" && test "$vers" -ge 2008003; then
+		if ! "$debug"; then
+			WX_CPPFLAGS="`$WXCONFIG --cppflags`"
+			WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
+			WX_LIBS="`$WXCONFIG --libs`"
+		else
+			WX_CPPFLAGS="`$WXCONFIG --cppflags`"
+			WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
+			WX_LIBS="`$WXCONFIG --libs`"
+		fi
 	else
-		WX_CPPFLAGS="`$WXCONFIG --cppflags`"
-		WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
-		WX_LIBS="`$WXCONFIG --libs`"
+		AC_MSG_ERROR([wxWidgets 2.8.3 or newer is required])
 	fi
-else
-	AC_MSG_ERROR([wxWidgets 2.6.3 or newer is required])
 fi
 # -----------------       wxWidgets --------------------
 
@@ -157,13 +183,19 @@ AC_DEFUN([OPENCVTEST],
 		AC_MSG_ERROR([opencv is required.])
 	fi])
 
-# Call OPENCVTEST func
-OPENCVTEST
+if test "x$WITH_DEPENDENCIES_CHECK" = "xyes"; then
+	# Call OPENCVTEST func
+	OPENCVTEST
 
-OPENCVVERSION=`echo $opencvversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
-AC_SUBST(OPENCVVERSION)
-OPENCV_CPPFLAGS="`$OPENCVCONFIG --cflags`"
-OPENCV_LIBS=" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_objdetect -lopencv_video"
+	OPENCVVERSION=`echo $opencvversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
+	AC_SUBST(OPENCVVERSION)
+	OPENCV_CPPFLAGS="`$OPENCVCONFIG --cflags`"
+	if test "$OPENCVVERSION" -ge 3000000; then
+		OPENCV_LIBS=" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_video -lopencv_videoio -lopencv_imgcodecs"
+	else
+		OPENCV_LIBS=" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_video"
+	fi
+fi
 # -----------------       opencv  --------------------
 
 # Checks for header files.
@@ -171,14 +203,16 @@ AC_PATH_X
 AC_CHECK_HEADERS([float.h])
 AC_CHECK_HEADERS([sys/timeb.h])
 
-AC_CHECK_HEADER([libv4l1-videodev.h],
-	[AC_SUBST(VIDEODEV_INCLUDE_FILE, libv4l1-videodev.h)],
-	[AC_CHECK_HEADER([linux/videodev.h],
-		[AC_SUBST(VIDEODEV_INCLUDE_FILE, linux/videodev.h)],
-		[AC_MSG_ERROR([Couldn't find linux/videodev.h nor libv4l1-videodev.h])])
-	]
+if test "x$WITH_DEPENDENCIES_CHECK" = "xyes"; then
+	AC_CHECK_HEADER([libv4l1-videodev.h],
+		[AC_SUBST(VIDEODEV_INCLUDE_FILE, libv4l1-videodev.h)],
+		[AC_CHECK_HEADER([linux/videodev.h],
+			[AC_SUBST(VIDEODEV_INCLUDE_FILE, linux/videodev.h)],
+			[AC_MSG_ERROR([Could not find linux/videodev.h nor libv4l1-videodev.h])])
+		]
 	)
-
+fi
+		
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
 AC_C_CONST
@@ -191,7 +225,7 @@ else
 	COMPFLAGS="$COMPFLAGS -Wall -Wconversion -DDEBUG -g -O0"
 fi
 
-CXXFLAGS="$CXXFLAGS $COMPFLAGS"
+CXXFLAGS="$CXXFLAGS $COMPFLAGS -std=c++11"
 LDFLAGS="$LDFLAGS -Wl,--as-needed"
 
 AC_SUBST(WX_LIBS)

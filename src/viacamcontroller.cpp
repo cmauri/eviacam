@@ -34,12 +34,13 @@
 #include "cautostart.h"
 #include "hotkeymanager.h"
 #include "simplelog.h"
-#include "newtrackerinformationdlg.h"
 #include "checkupdates_manager.h"
 
 #include <wx/msgdlg.h>
 #include <wx/choicdlg.h>
 #include <wx/filename.h>
+#include <wx/stdpaths.h>
+#include <wx/utils.h>
 
 using namespace eviacam;
 
@@ -68,8 +69,8 @@ CViacamController::CViacamController(void)
 , m_frameRate(0)
 , m_motionCalibrationEnabled(false)
 , m_runWizardAtStartup(false)
-, m_newTrackerDialogAtStartup(true)
 , m_checkUpdatesAtStartup(true)
+, m_minimisedAtStartup(false)
 {
 	m_locale= new wxLocale ();
 	m_configManager= new CConfigManager(this);	
@@ -81,7 +82,8 @@ void CViacamController::InitDefaults()
 {
 	m_runWizardAtStartup= true;
 	m_languageId= wxLANGUAGE_DEFAULT;
-	m_enabledAtStartup= false;	
+	m_enabledAtStartup= false;
+	m_minimisedAtStartup = false;
 #if defined(__WXMSW__)
 	m_onScreenKeyboardCommand= _T("osk.exe");
 #endif
@@ -110,7 +112,9 @@ void CViacamController::SetUpLanguage ()
 	m_locale->AddCatalogLookupPathPrefix(wxT("."));
 	
 #if defined(__WXGTK__)	
-	m_locale->AddCatalogLookupPathPrefix(wxT("/usr/local/share/locale/"));
+	wxString prefix= wxStandardPaths::Get().GetInstallPrefix();
+	prefix+= wxT("/share/locale/");
+	m_locale->AddCatalogLookupPathPrefix(prefix);
 #endif
 
 	if (!m_locale->Init(m_languageId))
@@ -134,40 +138,99 @@ void CViacamController::SetLanguage (const int id)
 	}
 }
 
+bool testCamera(CCamera* cam) {
+	if (cam == NULL) return false;
+
+	IplImage* img = NULL;
+	if (cam->Open()) {
+		/*
+			Try to capture one frame
+		*/
+		SLOG_DEBUG("Camera successfully openned. Try to capture 1 frame...");
+		for (int i = 0; i < 10; i++) {
+			SLOG_DEBUG(" Wait a little bit");
+			wxMilliSleep(500);  // Try not the stress the camera too much
+			SLOG_DEBUG(" Call QueryFrane");
+			img = cam->QueryFrame();
+			if (img) {
+				SLOG_DEBUG(" Frame capture: SUCCESS");
+				break;
+			}
+			else {
+				SLOG_DEBUG(" Frame capture: FAIL");
+			}
+		}
+
+		cam->Close();
+	}
+	else {
+		SLOG_DEBUG("Camera open failed");
+	}
+	wxMilliSleep(1000);  // Try not the stress the camera too much
+
+	return (img != NULL);
+}
+
 CCamera* CViacamController::SetUpCamera()
 {
-	CCamera* cam;
-	int numDevices;
-	int camId= -1;
-
 	// Load app local data
 	ReadAppData(wxConfigBase::Get());
 
-	numDevices= CCameraEnum::GetNumDevices ();
-	if (numDevices== 0) {
-		wxMessageDialog errorMsg (NULL, _("Not detected any camera. Aborting"), _T("Enable Viacam"), wxOK | wxICON_ERROR);
-		errorMsg.ShowModal();
-
-		return NULL;
-	}	
-	
-	// Try to find previously used camera
-	if (m_cameraName.Length()> 0) {
-		for (camId= 0; camId< numDevices; camId++)
-			if (wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc)== m_cameraName) break;			
-		if (camId== numDevices) camId= -1;	// Not found
+	/* 
+		Check if cameras detected
+	*/
+	int driverId = 0;
+	for (; driverId < CCameraEnum::NUM_DRIVERS; driverId++) {
+		if (CCameraEnum::getNumDevices(driverId) > 0) break;
 	}
 
-	// Show selection dialog when needed
-	if (camId== -1) {
-		if(numDevices > 1) {
+	if (driverId == CCameraEnum::NUM_DRIVERS) {
+		/*
+			No cameras found, aborting.
+		*/
+		wxMessageDialog errorMsg (NULL, _("Not detected any camera. Aborting"), 
+			_T("Enable Viacam"), wxOK | wxICON_ERROR);
+		errorMsg.ShowModal();
+		return NULL;
+	}
+	
+	/*
+		Try to find previously used camera with the same name
+		(only check native driver)
+	*/
+	int camId = -1;
+	const char * camName= NULL;
+	if (m_cameraName.Length()> 0) {
+		SLOG_INFO("Previous used camera: %s... ", (const char *) m_cameraName.mb_str());
+		for (camId = 0; camId < CCameraEnum::getNumDevices(0); camId++) {
+			camName = CCameraEnum::getDeviceName(0, camId);
+			if (wxString(camName, wxConvLibc) == m_cameraName) {
+				SLOG_INFO("FOUND");
+				break;
+			}
+		}
+
+		if (camId == CCameraEnum::getNumDevices(0)) {
+			SLOG_INFO("NOT FOUND");
+			camId = -1;
+		}
+	}
+
+	/*
+		Show selection dialog when needed (use native driver names)
+	*/
+	SLOG_INFO("Detected %d camera(s)", CCameraEnum::getNumDevices(0));
+	if (camId == -1) {
+		if (CCameraEnum::getNumDevices(0) > 1) {
 			wxArrayString strArray;
 
-			for (camId= 0; camId< numDevices; camId++)
-				strArray.Add (wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc));
+			for (int i = 0; i < CCameraEnum::getNumDevices(0); i++) {
+				strArray.Add(wxString(CCameraEnum::getDeviceName(0, i), wxConvLibc));
+			}
 
-			wxSingleChoiceDialog choiceDlg(NULL, _("Choose the camera to use"), _T("Enable Viacam"), strArray, 
-								(char**)NULL, wxDEFAULT_DIALOG_STYLE | wxOK | wxCANCEL | wxCENTRE);
+			wxSingleChoiceDialog choiceDlg(
+				NULL, _("Choose the camera to use"), _T("Enable Viacam"), strArray, 
+				(char**)NULL, wxDEFAULT_DIALOG_STYLE | wxOK | wxCANCEL | wxCENTRE);
 
 			if (choiceDlg.ShowModal ()!= wxID_OK) return NULL;
 
@@ -176,25 +239,38 @@ CCamera* CViacamController::SetUpCamera()
 		} 
 		else {
 			camId= 0;
-			m_cameraName= wxString(CCameraEnum::GetDeviceName (camId), wxConvLibc);
+			m_cameraName = wxString(CCameraEnum::getDeviceName(0, camId), wxConvLibc);
 		}
 	}
 
-	cam= CCameraEnum::GetCamera(camId);
-	if (!cam) return NULL;
-	cam->SetHorizontalFlip (true);
-
-	// Try to open the camera to ensure it works
-	if (!cam->Open ()) {
-		wxMessageDialog errorMsg (NULL, _("Can not initialize the camera.\nPerhaps is being used by other application."), _T("Enable Viacam"), wxOK | wxICON_ERROR);
-		errorMsg.ShowModal();
+	/*
+		Try to open the camera to make sure it works
+	*/
+	SLOG_INFO("Selected camera: %d", camId);
+	SLOG_INFO("Try to open the camera to make sure it works...");
+	// native driver first
+	CCamera* cam = CCameraEnum::getCamera(1, camId);
+	/*
+	SLOG_INFO("Testing with WDM driver...");
+	if (!testCamera(cam)) {
+		SLOG_INFO("Failed. Now try the OpenCV driver...");
 		delete cam;
-		cam= NULL;
-		ChangeCamera();
+		cam = CCameraEnum::getCamera(1, camId);
+		if (!testCamera(cam)) {
+			SLOG_INFO("Failed. Can not initialize the camera.");
+			delete cam;
+			cam = NULL;
 
+			wxMessageDialog errorMsg(
+				NULL, _("Can not initialize the camera.\nPerhaps is being used by other application."),
+				_T("Enable Viacam"), wxOK | wxICON_ERROR);
+			errorMsg.ShowModal();
+
+			ChangeCamera();
+		}
 	}
-	else
-		cam->Close();
+	*/
+	if (cam) cam->SetHorizontalFlip(true);
 	
 	WriteAppData(wxConfigBase::Get());
 	wxConfigBase::Get()->Flush();
@@ -208,10 +284,6 @@ bool CViacamController::Initialize ()
 	assert (!m_pMainWindow && !m_pCamera && !m_pCaptureThread);
 
 	SetUpLanguage ();
-
-	// Is the first time eviacam is executed on this computer?
-	if (!wxConfigBase::Get()->Exists(_T("/settings/default")))
-		m_newTrackerDialogAtStartup = false;
 
 	// Create camera object
 	m_pCamera= SetUpCamera();	
@@ -231,13 +303,12 @@ bool CViacamController::Initialize ()
 	if (retval) {
 		m_pMainWindow = new WViacam( NULL, ID_WVIACAM );
 		assert (m_pMainWindow);
-		m_pMainWindow->Show (true);	
 	}
 
 	// Create hotkey manager
 	if (retval) {
 		assert (!m_hotKeyManager);
-		m_hotKeyManager= new CHotkeyManager();
+		m_hotKeyManager= new eviacam::HotkeyManager();
 	}
 
 	// Create pointer action object
@@ -265,6 +336,9 @@ bool CViacamController::Initialize ()
 
 	// Load configuration
 	if (retval) m_configManager->ReadAll ();
+
+	// Show main window unless it was set to be minimised at startup
+	if (retval && !m_minimisedAtStartup) m_pMainWindow->Show(true);
 	
 	// Enable pointeraction object
 	if (retval && m_enabledAtStartup) SetEnabled(true);
@@ -278,12 +352,6 @@ bool CViacamController::Initialize ()
 		m_pCheckUpdateManager->LaunchBackground();
 	}
 #endif
-
-	// Show new tracker information dialog when needed
-	if (retval && m_newTrackerDialogAtStartup) {
-		NewTrackerInformationDlg dlg(m_pMainWindow);
-		dlg.ShowModal();
-	}
 
 	// Run the wizard at startup
 	if (retval && m_runWizardAtStartup)
@@ -341,7 +409,6 @@ void CViacamController::WriteAppData(wxConfigBase* pConfObj)
 	// General options
 	m_configManager->WriteLanguage (m_languageId);
 	pConfObj->Write(_T("cameraName"), m_cameraName);
-	pConfObj->Write(_T("newTrackerDialogAtStartup"), m_newTrackerDialogAtStartup);
 	pConfObj->Write(_T("checkUpdatesAtStartup"), m_checkUpdatesAtStartup);
 }
 
@@ -350,6 +417,7 @@ void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 	pConfObj->Write(_T("enabledAtStartup"), m_enabledAtStartup);
 	pConfObj->Write(_T("onScreenKeyboardCommand"), m_onScreenKeyboardCommand);
 	pConfObj->Write(_T("runWizardAtStartup"), m_runWizardAtStartup);
+	pConfObj->Write(_T("minimisedAtStartup"), m_minimisedAtStartup);
 
 	// Propagates calls
 	m_pointerAction->WriteProfileData (pConfObj);
@@ -362,7 +430,6 @@ void CViacamController::ReadAppData(wxConfigBase* pConfObj)
 	// General options
 	SetLanguage (m_configManager->ReadLanguage());	// Only load, dont't apply
 	pConfObj->Read(_T("cameraName"), &m_cameraName);
-	pConfObj->Read(_T("newTrackerDialogAtStartup"), &m_newTrackerDialogAtStartup);
 	pConfObj->Read(_T("checkUpdatesAtStartup"), &m_checkUpdatesAtStartup);
 }
 
@@ -371,6 +438,7 @@ void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 	pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
 	pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
 	pConfObj->Read(_T("runWizardAtStartup"), &m_runWizardAtStartup);
+	pConfObj->Read(_T("minimisedAtStartup"), &m_minimisedAtStartup);
 	
 	// Propagates calls
 	m_pointerAction->ReadProfileData (pConfObj);

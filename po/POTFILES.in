@@ -35,10 +35,8 @@ src/checkupdates_ui.h
 src/checkupdates_ui.cpp
 src/checkupdates_manager.cpp
 src/checkupdates_manager.h
-src/newtrackerinformationdlg.h
-src/newtrackerinformationdlg.cpp
 wxcamwindow/capturethread.cpp
 wxcamwindow/camwindow.cpp
 wxutil/warnbaroverlap.h
 wxutil/warnbaroverlap.cpp
-
+po/xrc.cpp

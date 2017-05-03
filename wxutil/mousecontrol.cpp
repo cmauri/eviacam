@@ -381,12 +381,33 @@ void CMouseControl::SendMouseCommand (long x, long y, int flags)
 	// with native flags under windows
 	flags|= MOUSEEVENTF_MOVE;
 
-	if (flags & MOUSE_MOVE_ABS)
-	{
+	if (flags & MOUSE_MOVE_ABS)	{
 		// Normalize absolute motion
 		x= (x * 65535) / (m_ScreenWidth - 1);
 		y= (y * 65535) / (m_ScreenHeight - 1);
 	}
+	
+	/* Need to swap buttons? */
+	if (flags & (MOUSE_LEFTDOWN | MOUSE_LEFTUP | MOUSE_RIGHTDOWN | MOUSE_RIGHTUP) &&
+		::GetSystemMetrics(SM_SWAPBUTTON)) {
+		if (flags & MOUSE_LEFTDOWN) {
+			flags &= ~MOUSE_LEFTDOWN;
+			flags |= MOUSE_RIGHTDOWN;
+		}
+		else if (flags & MOUSE_RIGHTDOWN) {
+			flags &= ~MOUSE_RIGHTDOWN;
+			flags |= MOUSE_LEFTDOWN;
+		}
+		if (flags & MOUSE_LEFTUP) {
+			flags &= ~MOUSE_LEFTUP;
+			flags |= MOUSE_RIGHTUP;
+		}
+		else if (flags & MOUSE_RIGHTUP) {
+			flags &= ~MOUSE_RIGHTUP;
+			flags |= MOUSE_LEFTUP;
+		}
+	}
+
 	ip.type = INPUT_MOUSE;
 	ip.mi.dwFlags = flags;
 	ip.mi.mouseData = 0;

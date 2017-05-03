@@ -27,6 +27,7 @@
 #include "visionpipeline.h"
 #include "configbase.h"
 #include "wwizardmanager.h"
+#include "hotkeymanager.h"
 
 class WViacam;
 class CPointerAction;
@@ -34,7 +35,6 @@ class WConfiguration;
 class CMotionCalibration;
 class wxWindow;
 class CConfigManager;
-class CHotkeyManager;
 class CCamera;
 class CAutostart;
 class wxLocale;
@@ -55,6 +55,9 @@ public:
 	
 	const bool GetEnabledAtStartup () const { return m_enabledAtStartup; }
 	void SetEnabledAtStartup (bool value) { m_enabledAtStartup= value; }
+
+	const bool GetMinimisedAtStartup () const { return m_minimisedAtStartup; }
+	void SetMinimisedAtStartup (bool value) { m_minimisedAtStartup = value; }
 
 	const bool GetMotionCalibrationEnabled () const {
 		return m_motionCalibrationEnabled;
@@ -106,18 +109,11 @@ public:
 
 	CCamera& GetCamera() { assert(m_pCamera); return *m_pCamera; }
 
-	CHotkeyManager& getHotkeyManager() { 
+	eviacam::HotkeyManager& getHotkeyManager() {
 		assert (m_hotKeyManager); return *m_hotKeyManager;
 	}
 
 	wxLocale* GetLocale() { return m_locale; }
-
-	bool GetNewTrackerDialogAtStartup() const {
-		return m_newTrackerDialogAtStartup;
-	}
-	void SetNewTrackerDialogAtStartup(bool value) {
-		m_newTrackerDialogAtStartup = value;
-	}
 
 	// Configuration methods
 	virtual void InitDefaults();
@@ -170,7 +166,7 @@ private:
 	CCaptureThread* m_pCaptureThread;	
 	CPointerAction* m_pointerAction;
 	CVisionPipeline m_visionPipeline;
-	CHotkeyManager* m_hotKeyManager;
+	eviacam::HotkeyManager* m_hotKeyManager;
 	CConfigManager* m_configManager;
 	wxLocale* m_locale;
 	CAutostart* m_pAutostart;
@@ -191,8 +187,8 @@ private:
 	float m_frameRate;
 	bool m_motionCalibrationEnabled;
 	bool m_runWizardAtStartup;
-	bool m_newTrackerDialogAtStartup;
 	bool m_checkUpdatesAtStartup;
+	bool m_minimisedAtStartup;
 
 };
 

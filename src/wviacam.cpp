@@ -48,15 +48,15 @@
 #include "checkupdates_manager.h"
 
 ////@begin XPM images
-#include "icons/eviacam_mini.xpm"
-#include "icons/on.xpm"
-#include "icons/off.xpm"
-#include "icons/clickwindow.xpm"
-#include "icons/keyboard.xpm"
-#include "icons/preferences.xpm"
-#include "icons/help.xpm"
+#include "resources/eviacam_mini.xpm"
+#include "resources/on.xpm"
+#include "resources/off.xpm"
+#include "resources/clickwindow.xpm"
+#include "resources/keyboard.xpm"
+#include "resources/preferences.xpm"
+#include "resources/help.xpm"
 ////@end XPM images
-#include "icons/clickwindowoff.xpm"
+#include "resources/clickwindowoff.xpm"
 
 #include <wx/html/helpctrl.h>
 #include <wx/stdpaths.h>
@@ -139,7 +139,7 @@ bool WViacam::Create( wxWindow* parent, wxWindowID id, const wxString& caption, 
     wxFrame::Create( parent, id, caption, pos, size, style );
 
     CreateControls();
-    SetIcon(GetIconResource(wxT("icons/eviacam_mini.xpm")));
+    SetIcon(GetIconResource(wxT("resources/eviacam_mini.xpm")));
 ////@end WViacam creation
 	
     return true;
@@ -207,25 +207,25 @@ void WViacam::CreateControls()
 
     m_toolBar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL, ID_TOOLBAR );
     m_toolBar->SetToolBitmapSize(wxSize(32, 32));
-    wxBitmap itemtool17Bitmap(itemFrame1->GetBitmapResource(wxT("icons/on.xpm")));
+    wxBitmap itemtool17Bitmap(itemFrame1->GetBitmapResource(wxT("resources/on.xpm")));
     wxBitmap itemtool17BitmapDisabled;
     m_toolBar->AddTool(ID_TOOL_ENABLE, _("Enable"), itemtool17Bitmap, itemtool17BitmapDisabled, wxITEM_NORMAL, _("Enable"), wxEmptyString);
-    wxBitmap itemtool18Bitmap(itemFrame1->GetBitmapResource(wxT("icons/off.xpm")));
+    wxBitmap itemtool18Bitmap(itemFrame1->GetBitmapResource(wxT("resources/off.xpm")));
     wxBitmap itemtool18BitmapDisabled;
     m_toolBar->AddTool(ID_TOOL_DISABLE, _("Disable"), itemtool18Bitmap, itemtool18BitmapDisabled, wxITEM_NORMAL, _("Disable"), wxEmptyString);
     m_toolBar->EnableTool(ID_TOOL_DISABLE, false);
-    wxBitmap itemtool19Bitmap(itemFrame1->GetBitmapResource(wxT("icons/clickwindow.xpm")));
+    wxBitmap itemtool19Bitmap(itemFrame1->GetBitmapResource(wxT("resources/clickwindow.xpm")));
     wxBitmap itemtool19BitmapDisabled;
     m_toolBar->AddTool(ID_TOOL_CLICKWIN, _("Click Window"), itemtool19Bitmap, itemtool19BitmapDisabled, wxITEM_CHECK, _("Click Window"), wxEmptyString);
-    wxBitmap itemtool20Bitmap(itemFrame1->GetBitmapResource(wxT("icons/keyboard.xpm")));
+    wxBitmap itemtool20Bitmap(itemFrame1->GetBitmapResource(wxT("resources/keyboard.xpm")));
     wxBitmap itemtool20BitmapDisabled;
     m_toolBar->AddTool(ID_TOOL_KEYBOARD, _("On-screen keyboard"), itemtool20Bitmap, itemtool20BitmapDisabled, wxITEM_NORMAL, _("On-screen keyboard"), wxEmptyString);
     m_toolBar->AddSeparator();
-    wxBitmap itemtool22Bitmap(itemFrame1->GetBitmapResource(wxT("icons/preferences.xpm")));
+    wxBitmap itemtool22Bitmap(itemFrame1->GetBitmapResource(wxT("resources/preferences.xpm")));
     wxBitmap itemtool22BitmapDisabled;
     m_toolBar->AddTool(ID_TOOL_OPTIONS, _("Options"), itemtool22Bitmap, itemtool22BitmapDisabled, wxITEM_NORMAL, _("Options"), wxEmptyString);
     m_toolBar->AddSeparator();
-    wxBitmap itemtool24Bitmap(itemFrame1->GetBitmapResource(wxT("icons/help.xpm")));
+    wxBitmap itemtool24Bitmap(itemFrame1->GetBitmapResource(wxT("resources/help.xpm")));
     wxBitmap itemtool24BitmapDisabled;
     m_toolBar->AddTool(ID_TOOL_HELP, _("Help"), itemtool24Bitmap, itemtool24BitmapDisabled, wxITEM_NORMAL, _("Help"), wxEmptyString);
     m_toolBar->Realize();
@@ -240,7 +240,7 @@ void WViacam::CreateControls()
 ////@end WViacam content construction
 	// Create taskbar icon
 	m_taskBarIcon= new wxTaskBarIcon ();
-	m_taskBarIcon->SetIcon (GetIconResource (_T("icons/eviacam_mini.xpm")), _T("Enable Viacam"));
+	m_taskBarIcon->SetIcon (GetIconResource (_T("resources/eviacam_mini.xpm")), _T("Enable Viacam"));
 	m_taskBarIcon->Connect 
 		(wxID_ANY, wxEVT_TASKBAR_LEFT_UP, wxTaskBarIconEventHandler(WViacam::OnTaskBarIconLeftUp), NULL, this);
 	m_pCamWindow = new CCamWindow ( itemFrame1, wxID_ANY, wxPoint(0,0), wxSize(160, 144));
@@ -264,32 +264,32 @@ wxBitmap WViacam::GetBitmapResource( const wxString& name )
     // Bitmap retrieval
 ////@begin WViacam bitmap retrieval
     wxUnusedVar(name);
-    if (name == wxT("icons/on.xpm"))
+    if (name == wxT("resources/on.xpm"))
     {
         wxBitmap bitmap(on);
         return bitmap;
     }
-    else if (name == wxT("icons/off.xpm"))
+    else if (name == wxT("resources/off.xpm"))
     {
         wxBitmap bitmap(off);
         return bitmap;
     }
-    else if (name == wxT("icons/clickwindow.xpm"))
+    else if (name == wxT("resources/clickwindow.xpm"))
     {
         wxBitmap bitmap(clickwindow);
         return bitmap;
     }
-    else if (name == wxT("icons/keyboard.xpm"))
+    else if (name == wxT("resources/keyboard.xpm"))
     {
         wxBitmap bitmap(keyboard);
         return bitmap;
     }
-    else if (name == wxT("icons/preferences.xpm"))
+    else if (name == wxT("resources/preferences.xpm"))
     {
         wxBitmap bitmap(preferences);
         return bitmap;
     }
-    else if (name == wxT("icons/help.xpm"))
+    else if (name == wxT("resources/help.xpm"))
     {
         wxBitmap bitmap(help);
         return bitmap;
@@ -307,7 +307,7 @@ wxIcon WViacam::GetIconResource( const wxString& name )
     // Icon retrieval
 ////@begin WViacam icon retrieval
     wxUnusedVar(name);
-    if (name == wxT("icons/eviacam_mini.xpm"))
+    if (name == wxT("resources/eviacam_mini.xpm"))
     {
         wxIcon icon(eviacam_mini);
         return icon;
@@ -450,13 +450,14 @@ void WViacam::OnMenuOptionsClick( wxCommandEvent& event )
 
 void WViacam::OnIconize( wxIconizeEvent& event )
 {
-	if (event.Iconized())
-	{
-		// Cancel actual iconization and hide window.
+#if defined(WIN32)
+	if (event.Iconized()) {
+		// Cancel current iconization and hide window.
 		Iconize (false);
 		Show(false);
 		event.Skip(false);
 	}
+#endif
 }
 
 bool WViacam::Show(bool show)

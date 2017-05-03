@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     1/10/2010
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-15 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -27,25 +27,51 @@ class CCamera;
 class CCameraEnum
 {
 public:
-	// Return the number of cameras detected 
-	static int GetNumDevices();
+	enum { NUM_DRIVERS = 2 };
+
+	/**
+		Get the number of cameras detected 
+
+		@param driverId driver identifier
+			0: "native driver"
+			1: openCV driver
+
+		@return the name of the device or NULL if does not exists
+	*/
+	static int getNumDevices(int driverId);
 	
-	// Return the name of a camera given its number or NULL
-	// if the camera doesn't exist.
-	static const char *GetDeviceName (unsigned int id);
+	/**
+		Return the name of a camera
+
+		@param driverId driver identifier
+			0: "native driver"
+			1: openCV driver
+		@param camId number of camera
+
+		@return the name of the device or NULL if does not exists
+	*/
+	static const char *getDeviceName(int driverId, int camId);
 	
-	// Create a camera instace given its number. 
-	// Expects the desired frame size and rate.
-	// Returns NULL if the camera doesn't exist or another
-	// error occurred.
-	static CCamera* GetCamera 
-		(unsigned int id,
-		unsigned int width= 320,
-		unsigned int height= 240,
-		float frameRate= 30.0f);
+	/**
+		Create a camera instace
 		
+		@param driverId driver identifier
+			0: "native driver"
+			1: openCV driver
+		@param camId number of camera
+		@width
+		@height
+		@frameRate
+
+		@return instance of CCamera or NULL if the camera doesn't 
+			exist or another
+	*/
+	static CCamera* getCamera(
+		int driverId, int camId, unsigned int width = 320, unsigned int height = 240,
+		float frameRate = 30.0f);
+
 private:
-	CCameraEnum();	// Object instantation forbiden	
+	CCameraEnum();
 };
 
 

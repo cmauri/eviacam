@@ -37,6 +37,9 @@
 #include <wx/socket.h>
 #include <wx/stdpaths.h>
 #include <wx/cmdline.h>
+#include <wx/xrc/xmlres.h>
+#include <wx/fileconf.h>
+#include <wx/string.h>
 
 #include "eviacamapp.h"
 #include "paths.h"
@@ -152,13 +155,8 @@ bool EViacamApp::OnInit()
 #endif		
 /* ////@end EViacamApp initialisation */
 
-// Set up globals
-#ifndef NDEBUG
-	// Assume project runs from src/ 
-	eviacam::SetDataDir(wxGetCwd() + _T("/../doc/"));
-#else
+	// Set up globals (TODO: remove paths.cpp)
 	eviacam::SetDataDir(wxStandardPaths::Get().GetDataDir());
-#endif
 	
 	// Initialize sockets support
 	// Note: (Workaround for implementation limitation for wxWidgets up to 2.5.x) 
@@ -169,14 +167,18 @@ bool EViacamApp::OnInit()
 	// http://www.litwindow.com/knowhow/knowhow.html for more details.
 	wxSocketBase::Initialize();
 
+	// Initialize resources
+	wxXmlResource::Get()->InitAllHandlers();
+	wxXmlResource::Get()->LoadAllFiles(eviacam::GetDataDir() + wxT("/resources"));
+
+	// Start main controller
 	m_pController= new CViacamController();
-	assert (m_pController);
-	if (!m_pController->Initialize()) 
-	{
+	if (!m_pController->Initialize()) {
 		OnExit();
 		return false;
 	}
-	else return true;
+	else
+		return true;
 }
 
 static const wxCmdLineEntryDesc g_cmdLineDesc [] =
@@ -185,6 +187,8 @@ static const wxCmdLineEntryDesc g_cmdLineDesc [] =
           wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
      { wxCMD_LINE_SWITCH, wxT_2("d"), wxT_2("debug"), wxT_2("debug mode. Print debug messages to the console."),
           wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
+     { wxCMD_LINE_OPTION, wxT_2("c"), wxT_2("custom-config"), wxT_2("Use custom configuration file."),
+          wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
       
      { wxCMD_LINE_NONE }
 };
@@ -214,6 +218,15 @@ bool EViacamApp::OnCmdLineParsed(wxCmdLineParser& parser)
 		slog_write (SLOG_PRIO_INFO, "debug mode enabled");
 #endif
 	}	
+
+	wxString custom_config_path;
+	bool custom_config= parser.Found(wxT("c"), &custom_config_path);
+	if (custom_config) {
+		wxFileConfig* customFileConfig = new wxFileConfig(wxEmptyString, wxEmptyString,
+                                                          custom_config_path, custom_config_path,
+                                                          wxCONFIG_USE_LOCAL_FILE);
+		wxConfigBase::Set(customFileConfig);
+	}
 
 	return true;
 }

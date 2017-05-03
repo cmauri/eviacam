@@ -154,7 +154,6 @@ IplImage *CCameraCV::DoQueryFrame()
 	if (m_pCvCapture== NULL) return NULL;
 
 	IplImage *pImage= cvQueryFrame( m_pCvCapture );
-	assert (pImage);
 	if (pImage== NULL) return NULL;
 	
 #if defined(linux)

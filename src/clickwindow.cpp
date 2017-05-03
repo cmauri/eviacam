@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008-09 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-15 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -36,20 +36,11 @@
 #include "clickwindowcontroller.h"
 
 /*!
- * CClickWindow type definition
- */
-
-//IMPLEMENT_DYNAMIC_CLASS( CClickWindow, WXAppBar )
-
-
-/*!
  * CClickWindow event table definition
  */
 
 BEGIN_EVENT_TABLE( CClickWindow, WXAppBar )
-
 	EVT_CLOSE( CClickWindow::OnCloseWindow )
-
 END_EVENT_TABLE()
 
 /*!
@@ -58,31 +49,26 @@ END_EVENT_TABLE()
 
 CClickWindow::CClickWindow()
 {
-    Init();
+	m_pController= NULL;
 }
 
-CClickWindow::CClickWindow( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
-{
-	Init();
-	Create(parent, id, caption, pos, size, style);
-}
-
-
-/*!
- * CClickWindow creator
- */
-
-bool CClickWindow::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
+bool CClickWindow::Create(wxWindow* parent, const wxString& name)
 {
 	SetExtraStyle(wxWS_EX_BLOCK_EVENTS);
-	bool retval= WXAppBar::Create( parent, id, caption, pos, size, style );
-	//SetSticky(true);
-	SetEntryInTaskBar (false);
-	SetEntryInPager (false);
-	SetAcceptFocus (false);
-	return retval;
-}
+	SetParent(parent);
+	CreateControls(name);
 
+	SetSticky(true);
+	SetEntryInTaskBar(false);
+	SetEntryInPager(false);
+	SetAcceptFocus(false);
+
+	if (GetSizer())
+	{
+		GetSizer()->SetSizeHints(this);
+	}
+	return true;
+}
 
 /*!
  * CClickWindow destructor
@@ -92,58 +78,33 @@ CClickWindow::~CClickWindow()
 {
 }
 
-
-/*!
- * Member initialisation
+/*
+ * Connect events to button
  */
+void CClickWindow::ConnectButtonEvents(wxControl* c) {
+	int id = c->GetId();
 
-void CClickWindow::Init()
-{
-	m_pController= NULL;
+	c->Connect(id, wxEVT_LEFT_DOWN, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
+	c->Connect(id, wxEVT_LEFT_UP, wxMouseEventHandler(CClickWindow::OnLeftUp), NULL, this);
+	c->Connect(id, wxEVT_RIGHT_DOWN, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
+	c->Connect(id, wxEVT_RIGHT_UP, wxMouseEventHandler(CClickWindow::OnLeftUp), NULL, this);
+	c->Connect(id, wxEVT_LEFT_DCLICK, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
+	c->Connect(id, wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindow::OnEnterWindow), NULL, this);
+	c->Connect(id, wxEVT_SET_FOCUS, wxFocusEventHandler(CClickWindow::OnEventSkipperFocus), NULL, this);
 }
-
 
 /*!
  * Control creation for CClickWindow
  */
 
-void CClickWindow::ConnectEvents()
-{  
-    GetNoClickButton()->Connect(GetNoClickButton()->GetId(), wxEVT_LEFT_DOWN, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetNoClickButton()->Connect(GetNoClickButton()->GetId(), wxEVT_LEFT_UP, wxMouseEventHandler(CClickWindow::OnLeftUp), NULL, this);
-    GetNoClickButton()->Connect(GetNoClickButton()->GetId(), wxEVT_LEFT_DCLICK, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetNoClickButton()->Connect(GetNoClickButton()->GetId(), wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindow::OnEnterWindow), NULL, this);
-    GetNoClickButton()->Connect(GetNoClickButton()->GetId(), wxEVT_SET_FOCUS, wxFocusEventHandler(CClickWindow::OnEventSkipperFocus), NULL, this);
-    GetLeftButton()->Connect(GetLeftButton()->GetId(), wxEVT_LEFT_DOWN, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetLeftButton()->Connect(GetLeftButton()->GetId(), wxEVT_LEFT_UP, wxMouseEventHandler(CClickWindow::OnLeftUp), NULL, this);
-    GetLeftButton()->Connect(GetLeftButton()->GetId(), wxEVT_LEFT_DCLICK, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetLeftButton()->Connect(GetLeftButton()->GetId(), wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindow::OnEnterWindow), NULL, this);
-    GetLeftButton()->Connect(GetLeftButton()->GetId(), wxEVT_SET_FOCUS, wxFocusEventHandler(CClickWindow::OnEventSkipperFocus), NULL, this);
-   GetMiddleButton()->Connect(GetMiddleButton()->GetId(), wxEVT_LEFT_DOWN, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetMiddleButton()->Connect(GetMiddleButton()->GetId(), wxEVT_LEFT_UP, wxMouseEventHandler(CClickWindow::OnLeftUp), NULL, this);
-    GetMiddleButton()->Connect(GetMiddleButton()->GetId(), wxEVT_LEFT_DCLICK, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetMiddleButton()->Connect(GetMiddleButton()->GetId(), wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindow::OnEnterWindow), NULL, this);
-    GetMiddleButton()->Connect(GetMiddleButton()->GetId(), wxEVT_SET_FOCUS, wxFocusEventHandler(CClickWindow::OnEventSkipperFocus), NULL, this);
-    GetRightButton()->Connect(GetRightButton()->GetId(), wxEVT_LEFT_DOWN, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetRightButton()->Connect(GetRightButton()->GetId(), wxEVT_LEFT_UP, wxMouseEventHandler(CClickWindow::OnLeftUp), NULL, this);
-    GetRightButton()->Connect(GetRightButton()->GetId(), wxEVT_LEFT_DCLICK, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetRightButton()->Connect(GetRightButton()->GetId(), wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindow::OnEnterWindow), NULL, this);
-    GetRightButton()->Connect(GetRightButton()->GetId(), wxEVT_SET_FOCUS, wxFocusEventHandler(CClickWindow::OnEventSkipperFocus), NULL, this);
-    GetDragButton()->Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetDragButton()->Connect(wxEVT_LEFT_UP, wxMouseEventHandler(CClickWindow::OnLeftUp), NULL, this);
-    GetDragButton()->Connect(wxEVT_LEFT_DCLICK, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetDragButton()->Connect(wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindow::OnEnterWindow), NULL, this);
-    GetDragButton()->Connect(wxEVT_SET_FOCUS, wxFocusEventHandler(CClickWindow::OnEventSkipperFocus), NULL, this);
-    GetDblClickButton()->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetDblClickButton()->Connect( wxEVT_LEFT_UP, wxMouseEventHandler(CClickWindow::OnLeftUp), NULL, this);
-    GetDblClickButton()->Connect( wxEVT_LEFT_DCLICK, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetDblClickButton()->Connect( wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindow::OnEnterWindow), NULL, this);
-    GetDblClickButton()->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler(CClickWindow::OnEventSkipperFocus), NULL, this);
-    GetShowFrame()->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetShowFrame()->Connect( wxEVT_LEFT_UP, wxMouseEventHandler(CClickWindow::OnLeftUp), NULL, this);
-    GetShowFrame()->Connect( wxEVT_LEFT_DCLICK, wxMouseEventHandler(CClickWindow::OnEventSkipperMouse), NULL, this);
-    GetShowFrame()->Connect( wxEVT_ENTER_WINDOW, wxMouseEventHandler(CClickWindow::OnEnterWindow), NULL, this);
-    GetShowFrame()->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler(CClickWindow::OnEventSkipperFocus), NULL, this);
+void CClickWindow::ConnectEvents() {
+	ConnectButtonEvents(GetNoClickButton());
+	ConnectButtonEvents(GetLeftButton());
+	ConnectButtonEvents(GetMiddleButton());
+	ConnectButtonEvents(GetRightButton());
+	ConnectButtonEvents(GetDragButton());
+	ConnectButtonEvents(GetDblClickButton());
+	ConnectButtonEvents(GetShowFrame());
 }
 
 CClickWindowController::EButton CClickWindow::ButtonId2EButton (int id)
@@ -156,7 +117,7 @@ CClickWindowController::EButton CClickWindow::ButtonId2EButton (int id)
     if (id== GetDblClickButton()->GetId()) return CClickWindowController::DBLCLICK;
 	
     assert (false);
-	return CClickWindowController::NO_CLICK;	// Avoid warning
+	return CClickWindowController::NO_CLICK;	// Avoid compilation warning
 }
 
 void CClickWindow::OnCloseWindow( wxCloseEvent& event )
