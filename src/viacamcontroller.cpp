@@ -40,6 +40,7 @@
 #include <wx/choicdlg.h>
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
+#include <wx/utils.h>
 
 using namespace eviacam;
 
@@ -145,13 +146,27 @@ bool testCamera(CCamera* cam) {
 		/*
 			Try to capture one frame
 		*/
+		SLOG_DEBUG("Camera successfully openned. Try to capture 1 frame...");
 		for (int i = 0; i < 10; i++) {
+			SLOG_DEBUG(" Wait a little bit");
+			wxMilliSleep(500);  // Try not the stress the camera too much
+			SLOG_DEBUG(" Call QueryFrane");
 			img = cam->QueryFrame();
-			if (img) break;
+			if (img) {
+				SLOG_DEBUG(" Frame capture: SUCCESS");
+				break;
+			}
+			else {
+				SLOG_DEBUG(" Frame capture: FAIL");
+			}
 		}
 
 		cam->Close();
 	}
+	else {
+		SLOG_DEBUG("Camera open failed");
+	}
+	wxMilliSleep(1000);  // Try not the stress the camera too much
 
 	return (img != NULL);
 }
@@ -186,19 +201,25 @@ CCamera* CViacamController::SetUpCamera()
 	int camId = -1;
 	const char * camName= NULL;
 	if (m_cameraName.Length()> 0) {
+		SLOG_INFO("Previous used camera: %s... ", (const char *) m_cameraName.mb_str());
 		for (camId = 0; camId < CCameraEnum::getNumDevices(0); camId++) {
 			camName = CCameraEnum::getDeviceName(0, camId);
 			if (wxString(camName, wxConvLibc) == m_cameraName) {
+				SLOG_INFO("FOUND");
 				break;
 			}
 		}
 
-		if (camId == CCameraEnum::getNumDevices(0)) camId = -1;
+		if (camId == CCameraEnum::getNumDevices(0)) {
+			SLOG_INFO("NOT FOUND");
+			camId = -1;
+		}
 	}
 
 	/*
 		Show selection dialog when needed (use native driver names)
 	*/
+	SLOG_INFO("Detected %d camera(s)", CCameraEnum::getNumDevices(0));
 	if (camId == -1) {
 		if (CCameraEnum::getNumDevices(0) > 1) {
 			wxArrayString strArray;
@@ -225,14 +246,17 @@ CCamera* CViacamController::SetUpCamera()
 	/*
 		Try to open the camera to make sure it works
 	*/
+	SLOG_INFO("Selected camera: %d", camId);
+	SLOG_INFO("Try to open the camera to make sure it works...");
 	// native driver first
 	CCamera* cam = CCameraEnum::getCamera(0, camId);
+	SLOG_INFO("Testing with WDM driver...");
 	if (!testCamera(cam)) {
-		// Failed. Now try the openCV driver
+		SLOG_INFO("Failed. Now try the OpenCV driver...");
 		delete cam;
 		cam = CCameraEnum::getCamera(1, camId);
 		if (!testCamera(cam)) {
-			// no way
+			SLOG_INFO("Failed. Can not initialize the camera.");
 			delete cam;
 			cam = NULL;
 
