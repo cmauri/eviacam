@@ -34,7 +34,6 @@
 #endif
 
 #ifdef __WXMSW__
-//#include <shellapi.h>
 #endif
 
 // X11 includes
@@ -45,7 +44,6 @@
 #include <X11/Xatom.h>
 
 #include <gdk/gdkx.h>
-#include <gtk/gtkwidget.h>
 #include <gtk/gtk.h>
 
 #endif
@@ -667,7 +665,7 @@ void WXAppBar::SetDockedModeStep1()
 	// Get X11 handle for our window
 	//
 	GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
-	Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
+	Window w= GDK_WINDOW_XID (gtk_widget_get_window (gtkWidget));
 	
 	// Get original dimensions of the bar
 	wxSize proposedSize= GetBestSize();
@@ -745,7 +743,7 @@ void WXAppBar::UnSetDockedModeStep1()
 
 	// Window X11 handle
 	GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
-	Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
+	Window w= GDK_WINDOW_XID (gtk_widget_get_window (gtkWidget));
 	
 	// Disables struts
 	SetStrutArea (w, NON_DOCKED, 0);
@@ -757,7 +755,7 @@ void WXAppBar::UnSetDockedModeStep2()
 
 	// Window X11 handle
 	GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
-	Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
+	Window w= GDK_WINDOW_XID (gtk_widget_get_window (gtkWidget));
 	
 	Refresh();
 	Update();
@@ -808,7 +806,7 @@ void WXAppBar::SetAutohideModeStep ()
 	// Get X11 handle for our window
 	//
 	GtkWidget *gtkWidget= (GtkWidget *) this->GetHandle();
-	Window w= GDK_WINDOW_XWINDOW (gtkWidget->window);
+	Window w= GDK_WINDOW_XID (gtk_widget_get_window (gtkWidget));
 	
 	// Get original dimensions of the bar
 	wxSize proposedSize= GetBestSize();
