@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-18 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -19,16 +19,40 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
-
-
 #include "clickwindowtext.h"
 #include "clickwindowbitmap.h"
 #include "wviacam.h"
 #include "clickwindowcontroller.h"
 #include "viacamcontroller.h"
+#include "simplelog.h"
 #include <wx/gdicmn.h>
 #include <wx/window.h>
 
+// Class to notify actions executed on a certain point of the screen
+class ActionDoneEvent;
+
+wxDEFINE_EVENT(ACTION_DONE_EVENT, ActionDoneEvent);
+ 
+class ActionDoneEvent: public wxCommandEvent
+{
+public:
+	ActionDoneEvent(wxEventType commandType = ACTION_DONE_EVENT, int id = 0)
+    : wxCommandEvent(commandType, id) { }
+
+	ActionDoneEvent(const ActionDoneEvent& event)
+    : wxCommandEvent(event) { this->SetPoint(event.GetPoint()); }
+ 
+	wxEvent* Clone() const { return new ActionDoneEvent(*this); }
+ 
+	wxPoint GetPoint() const { return m_Point; }
+	void SetPoint(const wxPoint& rp) { m_Point = rp; }
+ 
+private:
+	wxPoint m_Point;
+};
+
+
+// Constructor
 CClickWindowController::CClickWindowController(CViacamController & pViacamController)
 {
 	m_pViacamController= &pViacamController;
@@ -51,6 +75,8 @@ CClickWindowController::CClickWindowController(CViacamController & pViacamContro
 	
 	// Set current window
 	m_pWindow= m_pWindowBitmap;
+
+    Bind(ACTION_DONE_EVENT, &CClickWindowController::OnActionDoneEvent, this);
 	
 	// FIXME: implement this using the observer pattern
 	m_pViacamController->GetMainWindow()->Connect 
@@ -66,8 +92,11 @@ CClickWindowController::~CClickWindowController()
 	Finalize();
 }
 
-void CClickWindowController::Finalize ()
-{
+void CClickWindowController::Finalize () {
+
+    Unbind(ACTION_DONE_EVENT, &CClickWindowController::OnActionDoneEvent, this);
+    DeletePendingEvents();
+    
 	if (m_pViacamController->GetMainWindow())
 	{
 		m_pViacamController->GetMainWindow()->Disconnect 
@@ -147,7 +176,6 @@ bool CClickWindowController::IsCursorOverWindow(long x, long y)
 		return false;
 }
 
-// Get the next action that should be sent
 mousecmd::mousecmd CClickWindowController::GetAction(long x, long y)
 {
 	mousecmd::mousecmd retval= mousecmd::CMD_NO_CLICK;
@@ -295,13 +323,19 @@ void CClickWindowController::SetLocation(CClickWindowController::ELocation locat
 	m_location= location;	
 }
 
+void CClickWindowController::ActionDone(long x, long y) {
+    // Run UI code in the main thread
+    ActionDoneEvent event;
+    wxPoint point(x, y);
+    event.SetPoint(point);
+    wxPostEvent(this, event);
+}
 
-// Called from mouse controller. Notifies click bar that the click action has 
-// to be sent and where. Updates internal state.
-void CClickWindowController::ActionDone(long x, long y) 
-{
-	//wxMutexGuiEnter();
-	// If cursor is over click window the notification takes place when
+void CClickWindowController::OnActionDoneEvent(const ActionDoneEvent& event) {
+    long x= event.GetPoint().x;
+    long y= event.GetPoint().y;
+   
+    // If cursor is over click window the notification takes place when
 	// mouse event is received otherwise update internal state
 	if (!IsCursorOverWindow(x,y))
 	{
@@ -319,7 +353,6 @@ void CClickWindowController::ActionDone(long x, long y)
 
 		m_pWindow->UpdateButtons(GetEnabled(),GetCurrentButton(), GetLockedButton());
 	}
-	//wxMutexGuiLeave();
 }
 
 // Called from window. Notifies that button has been clicked.
@@ -392,8 +425,6 @@ bool CClickWindowController::IsCursorOverNoClickButton(long x, long y)
 	else	
 		return false;	
 }
-
-
 
 void CClickWindowController::NotifyShowMainWindowClick ()
 {

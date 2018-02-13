@@ -4,7 +4,7 @@
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
 // Created:     
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-18 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -22,14 +22,16 @@
 #ifndef CLICKWINDOWCONTROLLER_H
 #define CLICKWINDOWCONTROLLER_H
 
+#include <wx/event.h>
 #include "configbase.h"
 #include "mousecommand.h"
 
 class CViacamController;
 class CClickWindow;
 class WXAppBar;
+class ActionDoneEvent;
 
-class CClickWindowController  : public CConfigBase
+class CClickWindowController : public wxEvtHandler, public CConfigBase
 {
 public:
 	enum EButton { NO_CLICK= 0, LEFT, MIDDLE, RIGHT, DRAG, DBLCLICK };
@@ -44,15 +46,15 @@ public:
 	void Show (bool show);
 	const bool IsShown () const;
 
-	//Return to default state
+	// Reset the internal state
 	void Reset();
 
-	// Get the next action that should be sent. Called by the mouse controller.
+	// Get the next action that should be sent.
 	mousecmd::mousecmd GetAction(long x, long y);
-	
-	// Notifies click bar that the click action has to be sent
-	// and where. Updates internal state. Called by the mouse controller.
+
+    // Notifies a click action has been executed and where. Thread-safe
 	void ActionDone(long x, long y);
+    void OnActionDoneEvent(const ActionDoneEvent& event);
 
 	inline const EDesign GetDesign();
 	void SetDesign(EDesign design);
@@ -73,16 +75,11 @@ public:
 	
 	void SetWarnBarOverlap(bool enable);
 
-//	void AutohideClickWindow(long x, long y);
-
 	// Configuration methods
 	virtual void InitDefaults();
 	virtual void ReadProfileData(wxConfigBase* pConfObj);
 	virtual void WriteProfileData(wxConfigBase* pConfObj);
 
-	//
-	// Called from window. 
-	//
 	// Notifies that button has been clicked.
 	void NotifyButtonClick (EButton button);
 	// Notifies that button has been entered
