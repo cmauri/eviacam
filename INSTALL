@@ -12,7 +12,7 @@ Linux
   --------------
   wxWidgets >= 2.8.x (recommended 3.0.1 or higher)
   opencv >= 2.4 (version 3.x also supported)
-  gtk+-2.0
+  gtk+-2.0 or gtk+-3.0
   libxtst
   libxext 
 
