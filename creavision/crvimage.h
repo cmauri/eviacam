@@ -23,7 +23,7 @@
 #define CRVIMAGE_H
 
 #include <assert.h>
-#include <cv.h>
+#include <opencv2/opencv.hpp>
 
 class CIplImage
 {

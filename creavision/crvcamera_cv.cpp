@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "crvcamera_cv.h"
-#include <highgui.h>
+#include <opencv2/highgui.hpp>
 #include <sys/timeb.h>
 #include <sys/types.h>
 #include <stdio.h>

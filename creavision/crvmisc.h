@@ -22,7 +22,7 @@
 #ifndef CRVMISC_H
 #define CRVMISC_H
 
-#include <cv.h>
+#include <opencv2/opencv.hpp>
 
 /*
 typedef struct {

@@ -22,7 +22,7 @@
 #ifndef CRVHISTOGRAM_H
 #define CRVHISTOGRAM_H
 
-#include <cv.h>
+#include <opencv2/opencv.hpp>
 
 typedef unsigned char TCrvLookupTable[256];
 typedef int TCrvHistogram[256];
@@ -30,12 +30,12 @@ typedef int TCrvHistogram[256];
 // Calcula l'histograma d'una imatge
 void crvHistogram (IplImage *srcImg, TCrvHistogram &his);
 
-// Calcula on comença i acaba un histograma. Retorna
-// false si l'histograma és buit (tot zeros)
+// Calcula on comenï¿½a i acaba un histograma. Retorna
+// false si l'histograma ï¿½s buit (tot zeros)
 bool crvHistogramBeginEnd (TCrvHistogram &his, unsigned char &begin, unsigned char &end);
 
-// Aplica a una imatge de grisos la transformació que imposa la
-// lookup-table passada com a paràmetre (té en compte ROI)
+// Aplica a una imatge de grisos la transformaciï¿½ que imposa la
+// lookup-table passada com a parï¿½metre (tï¿½ en compte ROI)
 void crvLUTTransform (IplImage *srcImg, IplImage *dstImg, TCrvLookupTable &lut);
 
 // Genera la LUT per normalitzar una imatge a partir del seu

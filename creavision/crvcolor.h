@@ -22,7 +22,7 @@
 #ifndef CRVCOLOR_H
 #define CRVCOLOR_H
 
-#include <cv.h>
+#include <opencv2/opencv.hpp>
 
 class CRGBCubicColor
 {

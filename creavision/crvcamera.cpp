@@ -21,7 +21,7 @@
 /////////////////////////////////////////////////////////////////////////////
 #include "crvcamera.h"
 #include "crvimage.h"
-#include <cv.h>
+#include <opencv2/opencv.hpp>
 #include <sys/timeb.h>
 #include <sys/types.h>
 #include <cassert>

@@ -22,7 +22,7 @@
 #ifndef CRVSKINDETECTION_H
 #define CRVSKINDETECTION_H
 
-#include <cv.h>
+#include <opencv2/opencv.hpp>
 
 class CSkinRegionModel
 {
