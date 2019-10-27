@@ -1,9 +1,4 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        crvskindetection.cpp
-// Purpose:  
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     23/02/2008
 // Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
@@ -23,6 +18,7 @@
 #include "crvskindetection.h"
 #include <assert.h>
 #include <string.h>
+#include <opencv2/core/core_c.h>
 
 void CSkinRegionModel::crvBinarizeSkin_KToyama (IplImage *pIpl, float &krg_min, 
 												  float &krg_max, float &krb_min, 

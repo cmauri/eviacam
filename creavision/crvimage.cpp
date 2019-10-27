@@ -20,9 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "crvimage.h"
-#include <highgui.h>
 #include <string.h>
 #include <assert.h>
+#include <opencv2/core/core_c.h>
 
 // Construction
 CIplImage::CIplImage ()
@@ -294,6 +294,7 @@ void CIplImage::PopROI ()
 	m_pIplImage->roi= &m_roiStack[m_roiStackPtr];
 }
 
+/*
 bool CIplImage::Load (char *pFilename)
 {
 	Free ();
@@ -323,3 +324,4 @@ void CIplImage::Show (char *id)
 	cvWaitKey (1);
 #endif
 }
+*/

@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        crvcolor.h
-// Purpose:  
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-19 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -23,6 +18,7 @@
 #define CRVCOLOR_H
 
 #include <opencv2/opencv.hpp>
+#include <opencv2/core/types_c.h>
 
 class CRGBCubicColor
 {

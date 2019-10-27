@@ -29,7 +29,7 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
-#include <cv.h>
+#include <opencv2/opencv.hpp>
 
 #include "capturethread.h"
 #include "crvcamera.h"

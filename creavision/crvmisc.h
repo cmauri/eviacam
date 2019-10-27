@@ -23,12 +23,7 @@
 #define CRVMISC_H
 
 #include <opencv2/opencv.hpp>
-
-/*
-typedef struct {
-	double x, y;
-} RPoint;
-*/
+#include <opencv2/core/types_c.h>
 
 // Dona l'adre�a de mem�ria del p�xel a la posici� X, Y
 void *crvImgOffset (const IplImage *img, int x, int y);

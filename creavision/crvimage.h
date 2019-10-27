@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        crvimage.h
-// Purpose:  
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     10/01/2008
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-19 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -24,6 +19,8 @@
 
 #include <assert.h>
 #include <opencv2/opencv.hpp>
+#include <opencv2/core/types.hpp>
+#include <opencv2/core/types_c.h>
 
 class CIplImage
 {
@@ -72,16 +69,18 @@ public:
 	const IplImage *ptr () const { return m_pIplImage; }
 	int Width () const { assert (m_pIplImage); return m_pIplImage->width; }
 	int Height () const { assert (m_pIplImage); return m_pIplImage->height; }
-	CvSize GetSize() const { assert (m_pIplImage); return cvSize (m_pIplImage->width, m_pIplImage->height); }
+	cv::Size GetSize() const { assert (m_pIplImage); return cv::Size (m_pIplImage->width, m_pIplImage->height); }
 	// 0 - top-left origin, 1 - bottom-left origin (Windows bitmaps style) 
 	int Origin () const {	assert (m_pIplImage); return m_pIplImage->origin; }
 	int Depth () const { assert (m_pIplImage); return m_pIplImage->depth; }
 	int Align() const { assert (m_pIplImage); return m_pIplImage->align; }
 	
 	// IO
+    /*
 	bool Load (char *pFilename);
 	bool Save (char *pFilename);
 	void Show (char *id);
+    */
 
 private:
 	enum { ROI_STACK_SIZE= 10 };

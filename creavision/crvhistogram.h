@@ -23,6 +23,7 @@
 #define CRVHISTOGRAM_H
 
 #include <opencv2/opencv.hpp>
+#include <opencv2/core/types_c.h>
 
 typedef unsigned char TCrvLookupTable[256];
 typedef int TCrvHistogram[256];

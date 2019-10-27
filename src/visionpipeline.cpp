@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        visionpipeline.cpp
-// Purpose:  
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     
-// Copyright:   (C) 2008-16 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-19 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -32,8 +27,11 @@
 #include "simplelog.h"
 
 #include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/imgproc/imgproc_c.h>
 #include <opencv2/video/tracking.hpp>
 #include <opencv2/core/mat.hpp>
+#include <opencv2/core/core_c.h>
+#include <opencv2/video/tracking.hpp>
 
 #include <math.h>
 #include <wx/msgdlg.h>
@@ -47,7 +45,9 @@
 #define DEFAULT_FACE_DETECTION_TIMEOUT 5000
 #define COLOR_DEGRADATION_TIME 5000
 
-static bool safeHaarCascadeLoad(cv::CascadeClassifier& c, const char *fileName) {
+using namespace cv;
+
+static bool safeHaarCascadeLoad(CascadeClassifier& c, const char *fileName) {
 	std::string fileName0(fileName);
 	bool result = false;
 
@@ -71,13 +71,11 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 // is not used at all.
 , m_condition(m_mutex)
 , m_faceLocationStatus(0) // 0 -> not available, 1 -> available
-, m_corner_count(0)
 {
 	InitDefaults();
 
 	m_isRunning= false;
 	m_trackAreaTimeout.SetWaitTimeMs(COLOR_DEGRADATION_TIME);
-	memset(m_corners, 0, sizeof(m_corners));
 
 	//
 	// Load face haarcascade
@@ -94,6 +92,12 @@ CVisionPipeline::CVisionPipeline (wxThreadKind kind)
 		// For OpenCV 3	on linux
 		result = safeHaarCascadeLoad(m_faceCascade,
 			"/usr/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml");
+	}
+
+    if (!result) {
+		// For OpenCV 4	on linux
+		result = safeHaarCascadeLoad(m_faceCascade,
+			"/usr/share/opencv4/haarcascades/haarcascade_frontalface_default.xml");
 	}
 	
 	if (!result) {
@@ -193,8 +197,8 @@ void CVisionPipeline::ComputeFaceTrackArea (CIplImage &image)
 	if (!m_trackFace) return;
 	if (m_faceLocationStatus) return;	// Already available
 
-	cv::Mat image0 = cv::cvarrToMat(image.ptr());
-	std::vector<cv::Rect> faces;
+	Mat image0 = cvarrToMat(image.ptr());
+	std::vector<Rect> faces;
 
 	m_faceCascade.detectMultiScale(
 		image0, faces, 1.5, 2,
@@ -216,9 +220,8 @@ bool CVisionPipeline::IsFaceDetected () const
 }
 
 static 
-void DrawCorners(CIplImage &image, CvPoint2D32f corners[], int num_corners, CvScalar color)
-{
-	for (int i = 0; i < num_corners; i++)
+void DrawCorners(CIplImage &image, const std::vector<Point2f> corners, CvScalar color) {
+	for (int i = 0; i < corners.size(); i++)
 		cvCircle(image.ptr(), cvPoint(corners[i].x, corners[i].y), 1, color);
 }
 
@@ -245,7 +248,7 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 		trackAreaSize.width = box.width;
 		trackAreaSize.height = box.height;
 		// Need to update corners?
-		if (m_corner_count< NUM_CORNERS) updateFeatures = true;
+		if (m_corners.size()< NUM_CORNERS) updateFeatures = true;
 	}	
 
 	if (updateFeatures) {
@@ -270,37 +273,57 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 
 		m_imgPrev.SetROI(featuresTrackArea);
 		m_imgCurr.SetROI(featuresTrackArea);
-		m_corner_count = NUM_CORNERS;
-		cvGoodFeaturesToTrack(m_imgPrev.ptr(), NULL, NULL, m_corners,
-			&m_corner_count, QUALITY_LEVEL, MIN_DISTANTE);
-		CvTermCriteria termcrit = { CV_TERMCRIT_ITER | CV_TERMCRIT_EPS, 20, 0.03 };
-		cvFindCornerSubPix(m_imgPrev.ptr(), m_corners, m_corner_count,
-			cvSize(5, 5), cvSize(-1, -1), termcrit);
+
+        Mat prevImg = cvarrToMat(m_imgPrev.ptr());
+        Mat currImg = cvarrToMat(m_imgCurr.ptr());
+
+        //	cvGoodFeaturesToTrack(m_imgPrev.ptr(), NULL, NULL, m_corners,
+        //	    &m_corner_count, QUALITY_LEVEL, MIN_DISTANTE);
+
+        // void goodFeaturesToTrack(InputArray image, OutputArray corners, int maxCorners, 
+        //      double qualityLevel, double minDistance, InputArray mask=noArray(), 
+        //      int blockSize=3, bool useHarrisDetector=false, double k=0.04 )
+
+        goodFeaturesToTrack(prevImg, m_corners, NUM_CORNERS, QUALITY_LEVEL, MIN_DISTANTE);
+
+		// CvTermCriteria termcrit = { CV_TERMCRIT_ITER | CV_TERMCRIT_EPS, 20, 0.03 };
+        TermCriteria termcrit(TermCriteria::COUNT|TermCriteria::EPS,20,0.03);
+        if (m_corners.size()) {
+		    cornerSubPix(prevImg, m_corners, Size(5, 5), Size(-1, -1), termcrit);
+        }
+
 		m_imgPrev.ResetROI();
 		m_imgCurr.ResetROI();
 
 		//
 		// Update features location
 		//
-		for (int i = 0; i < m_corner_count; i++) {
+		for (int i = 0; i < m_corners.size(); i++) {
 			m_corners[i].x += featuresTrackArea.x;
 			m_corners[i].y += featuresTrackArea.y;
 		}
 	}
 
-	if (slog_get_priority() >= SLOG_PRIO_DEBUG)
-		DrawCorners(image, m_corners, m_corner_count, cvScalar(255, 0, 0));
+	if (slog_get_priority() >= SLOG_PRIO_DEBUG) {
+	//	DrawCorners(image, m_corners, cvScalar(255, 0, 0));
+    }
+
+    DrawCorners(image, m_corners, cvScalar(255, 0, 0));
 
 	//
 	// Track corners
 	//
-	CvPoint2D32f new_corners[NUM_CORNERS];
-	char status[NUM_CORNERS];
+    
+	// cv::Point2f new_corners[NUM_CORNERS];
+
+	//char status[NUM_CORNERS];
 	
+    /*
 	CvTermCriteria termcrit;
 	termcrit.type = CV_TERMCRIT_ITER | CV_TERMCRIT_EPS;
 	termcrit.max_iter = 14;
 	termcrit.epsilon = 0.03;
+    */
 	
 	CvRect ofTrackArea;
 	ofTrackArea.x = trackAreaLocation.x;
@@ -310,21 +333,37 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 	m_imgPrev.SetROI(ofTrackArea);
 	m_imgCurr.SetROI(ofTrackArea);
 
+    Mat prevImg = cvarrToMat(m_imgPrev.ptr());
+    Mat currImg = cvarrToMat(m_imgCurr.ptr());
+
 	// Update corners location for the new ROI
-	for (int i = 0; i < m_corner_count; i++) {
+	for (int i = 0; i < m_corners.size(); i++) {
 		m_corners[i].x -= ofTrackArea.x;
 		m_corners[i].y -= ofTrackArea.y;
 	}
 	
-	cvCalcOpticalFlowPyrLK(m_imgPrev.ptr(), m_imgCurr.ptr(), NULL,
-		NULL, m_corners, new_corners, m_corner_count, cvSize(11, 11), 0, status,
-		NULL, termcrit, 0);	
+	//cvCalcOpticalFlowPyrLK(m_imgPrev.ptr(), m_imgCurr.ptr(), NULL,
+	//	NULL, m_corners, new_corners, m_corner_count, cvSize(11, 11), 0, status,
+	//	NULL, termcrit, 0);	
+
+    // calcOpticalFlowPyrLK(InputArray prevImg, InputArray nextImg, InputArray prevPts, 
+    //      InputOutputArray nextPts, OutputArray status, OutputArray err, 
+    //      Size winSize=Size(21,21), int maxLevel=3, 
+    //      TermCriteria criteria=TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 0.01), 
+    //      int flags=0, double minEigThreshold=1e-4 )
+
+    vector<Point2f> new_corners;
+    vector<uchar> status;
+    vector<float> err;
+    TermCriteria termcrit(TermCriteria::COUNT|TermCriteria::EPS,14,0.03);
+    if (m_corners.size())
+        calcOpticalFlowPyrLK(prevImg, currImg, m_corners, new_corners, status, err, Size(11, 11), 0, termcrit); 
 	
 	m_imgPrev.ResetROI();
 	m_imgCurr.ResetROI();
 
 	// Update corners location
-	for (int i = 0; i < m_corner_count; i++) {
+	for (int i = 0; i < m_corners.size(); i++) {
 		m_corners[i].x += ofTrackArea.x;
 		m_corners[i].y += ofTrackArea.y;
 		new_corners[i].x += ofTrackArea.x;
@@ -337,7 +376,7 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 	int valid_corners = 0;
 	float dx = 0, dy = 0;
 
-	for (int i = 0; i< m_corner_count; i++) {
+	for (int i = 0; i< m_corners.size(); i++) {
 		if (status[i] &&
 			m_corners[i].x >= trackAreaLocation.x &&
 			m_corners[i].x < trackAreaLocation.x + trackAreaSize.width &&
@@ -350,7 +389,7 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 			m_corners[valid_corners++] = new_corners[i];
 		}
 	}
-	m_corner_count = valid_corners;
+    m_corners.resize(valid_corners);
 
 	if (valid_corners) {
 		dx = dx / (float) valid_corners;
@@ -382,7 +421,7 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 	//
 	// Draw corners
 	//
-	DrawCorners(image, m_corners, m_corner_count, cvScalar(0, 255, 0));
+//	DrawCorners(image, m_corners, cvScalar(0, 255, 0));
 }
 
 
