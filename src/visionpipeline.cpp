@@ -18,9 +18,6 @@
 #include "eviacamapp.h"
 #include "viacamcontroller.h"
 
-#include "crvcolor.h"
-#include "crvmisc.h"
-#include "crvskindetection.h"
 #include "crvimage.h"
 #include "timeutil.h"
 #include "paths.h"
@@ -127,7 +124,6 @@ CVisionPipeline::~CVisionPipeline () {
 		Wait();
 	}
 }
-
 
 void CVisionPipeline::AllocWorkingSpace (CIplImage &image)
 {
@@ -247,7 +243,8 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 		trackAreaLocation.y = box.y;
 		trackAreaSize.width = box.width;
 		trackAreaSize.height = box.height;
-		// Need to update corners?
+		
+        // Need to update corners?
 		if (m_corners.size()< NUM_CORNERS) updateFeatures = true;
 	}	
 
@@ -277,16 +274,7 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
         Mat prevImg = cvarrToMat(m_imgPrev.ptr());
         Mat currImg = cvarrToMat(m_imgCurr.ptr());
 
-        //	cvGoodFeaturesToTrack(m_imgPrev.ptr(), NULL, NULL, m_corners,
-        //	    &m_corner_count, QUALITY_LEVEL, MIN_DISTANTE);
-
-        // void goodFeaturesToTrack(InputArray image, OutputArray corners, int maxCorners, 
-        //      double qualityLevel, double minDistance, InputArray mask=noArray(), 
-        //      int blockSize=3, bool useHarrisDetector=false, double k=0.04 )
-
         goodFeaturesToTrack(prevImg, m_corners, NUM_CORNERS, QUALITY_LEVEL, MIN_DISTANTE);
-
-		// CvTermCriteria termcrit = { CV_TERMCRIT_ITER | CV_TERMCRIT_EPS, 20, 0.03 };
         TermCriteria termcrit(TermCriteria::COUNT|TermCriteria::EPS,20,0.03);
         if (m_corners.size()) {
 		    cornerSubPix(prevImg, m_corners, Size(5, 5), Size(-1, -1), termcrit);
@@ -305,26 +293,12 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 	}
 
 	if (slog_get_priority() >= SLOG_PRIO_DEBUG) {
-	//	DrawCorners(image, m_corners, cvScalar(255, 0, 0));
+	    DrawCorners(image, m_corners, cvScalar(255, 0, 0));
     }
-
-    DrawCorners(image, m_corners, cvScalar(255, 0, 0));
 
 	//
 	// Track corners
 	//
-    
-	// cv::Point2f new_corners[NUM_CORNERS];
-
-	//char status[NUM_CORNERS];
-	
-    /*
-	CvTermCriteria termcrit;
-	termcrit.type = CV_TERMCRIT_ITER | CV_TERMCRIT_EPS;
-	termcrit.max_iter = 14;
-	termcrit.epsilon = 0.03;
-    */
-	
 	CvRect ofTrackArea;
 	ofTrackArea.x = trackAreaLocation.x;
 	ofTrackArea.y = trackAreaLocation.y;
@@ -341,23 +315,15 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 		m_corners[i].x -= ofTrackArea.x;
 		m_corners[i].y -= ofTrackArea.y;
 	}
-	
-	//cvCalcOpticalFlowPyrLK(m_imgPrev.ptr(), m_imgCurr.ptr(), NULL,
-	//	NULL, m_corners, new_corners, m_corner_count, cvSize(11, 11), 0, status,
-	//	NULL, termcrit, 0);	
-
-    // calcOpticalFlowPyrLK(InputArray prevImg, InputArray nextImg, InputArray prevPts, 
-    //      InputOutputArray nextPts, OutputArray status, OutputArray err, 
-    //      Size winSize=Size(21,21), int maxLevel=3, 
-    //      TermCriteria criteria=TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 0.01), 
-    //      int flags=0, double minEigThreshold=1e-4 )
 
     vector<Point2f> new_corners;
     vector<uchar> status;
     vector<float> err;
     TermCriteria termcrit(TermCriteria::COUNT|TermCriteria::EPS,14,0.03);
-    if (m_corners.size())
-        calcOpticalFlowPyrLK(prevImg, currImg, m_corners, new_corners, status, err, Size(11, 11), 0, termcrit); 
+    if (m_corners.size()) {
+        calcOpticalFlowPyrLK(
+            prevImg, currImg, m_corners, new_corners, status, err, Size(11, 11), 0, termcrit);
+    }
 	
 	m_imgPrev.ResetROI();
 	m_imgCurr.ResetROI();
@@ -421,9 +387,8 @@ void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 	//
 	// Draw corners
 	//
-//	DrawCorners(image, m_corners, cvScalar(0, 255, 0));
+	DrawCorners(image, m_corners, cvScalar(0, 255, 0));
 }
-
 
 bool CVisionPipeline::ProcessImage (CIplImage& image, float& xVel, float& yVel)
 {

@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        crvcamera_wdm.cpp
-// Purpose:  
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     30/01/2009
-// Copyright:   (C) 2009-15 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2009-19 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -24,15 +19,15 @@
 #include <sys/timeb.h>
 #include <sys/types.h>
 #include <cassert>
-#include <cv.h>
+#include <opencv2/opencv.hpp>
 #include "crvimage.h"
 #include "videoInput.h"
 #include "simplelog.h"
 
-CCameraWDM::CCameraWDM(int cameraId, unsigned int width, unsigned int height,
-		float fr) throw(camera_exception)
+CCameraWDM::CCameraWDM(int cameraId, unsigned int width, unsigned int height, float fr)
 {
 	if (cameraId>= GetNumDevices()) throw camera_exception("wrong camera id");
+    
 	m_Id= cameraId;
 	m_Width= width;
 	m_Height= height;

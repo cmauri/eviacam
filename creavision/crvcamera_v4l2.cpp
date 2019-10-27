@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        crvcamera_v4l2.cpp
-// Purpose:	Provide a camera capture class around v4l2 and libwebcam
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     17/05/2010
-// Copyright:   (C) 2008-11 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-19 Cesar Mauri Loba - CREA Software Systems
 //              Portions of guvcview are (c) of Paulo Assis and others
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -134,8 +129,7 @@
 #define V4L2_PIX_FMT_RGB24   v4l2_fourcc('R', 'G', 'B', '3') /* 24  RGB-8-8-8    */
 #endif
 
-CCameraV4L2::CCameraV4L2(int cameraId, unsigned int width, unsigned int height, 
-		float fr) throw(camera_exception)
+CCameraV4L2::CCameraV4L2(int cameraId, unsigned int width, unsigned int height, float fr)
 {
 	InstanceCreated();
 	if (cameraId>= GetNumDevices()) {
@@ -1670,7 +1664,7 @@ char CCameraV4L2::g_deviceShortNames[MAX_CAM_DEVICES][CAM_DEVICE_SHORT_NAME_LENG
 char CCameraV4L2::g_deviceDriverNames[MAX_CAM_DEVICES][CAM_DEVICE_DRIVER_NAME_LENGHT];
 int CCameraV4L2::g_numInstances= 0;
 
-void CCameraV4L2::InstanceCreated() throw(camera_exception)
+void CCameraV4L2::InstanceCreated()
 {
 	// TODO: thread safety
 	if (g_numInstances== 0) {

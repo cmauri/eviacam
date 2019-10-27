@@ -19,7 +19,6 @@
 #define VISIONPIPELINE_H
 
 #include "crvimage.h"
-#include "crvhistogram.h"
 #include "configbase.h"
 #include "visiblenormroi.h"
 #include "waittime.h"
@@ -30,12 +29,17 @@
 
 class CVisionPipeline : public CConfigBase, wxThread
 {
-	// Methods
 public:
 	CVisionPipeline (wxThreadKind kind = wxTHREAD_JOINABLE);
 	~CVisionPipeline();
 
-	enum ECpuUsage {CPU_LOWEST= 0, CPU_LOW, CPU_NORMAL, CPU_HIGH, CPU_HIGHEST};
+	enum ECpuUsage { 
+        CPU_LOWEST= 0, 
+        CPU_LOW, 
+        CPU_NORMAL, 
+        CPU_HIGH, 
+        CPU_HIGHEST
+    };
 
 	// Thread entry point
 	virtual wxThread::ExitCode Entry();
@@ -69,7 +73,6 @@ public:
 	virtual void ReadProfileData(wxConfigBase* pConfObj);
 
 private:
-	// Track area
 	CVisibleNormROI m_trackArea;
 
 	bool m_trackFace;
@@ -81,7 +84,6 @@ private:
 		
 	CIplImage m_imgThread;
 	CIplImage m_imgPrev, m_imgCurr;
-	TCrvLookupTable m_prevLut;
 	
 	cv::CascadeClassifier m_faceCascade;
 	int m_threadPeriod;
@@ -94,12 +96,9 @@ private:
 	CvRect m_faceLocation;
 	int m_faceLocationStatus; // 0 -> not available, 1 -> available
 
-	// Corner array
 	enum { NUM_CORNERS = 20 };
     std::vector<cv::Point2f> m_corners;
-	// int m_corner_count;
 	
-	// Private methods
 	void AllocWorkingSpace (CIplImage &image);
 	int PreprocessImage ();
 	void ComputeFaceTrackArea (CIplImage &image);

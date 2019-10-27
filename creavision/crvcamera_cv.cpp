@@ -1,5 +1,4 @@
 /////////////////////////////////////////////////////////////////////////////
-// Created:     30/05/2008
 // Copyright:   (C) 2008-19 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
@@ -17,7 +16,6 @@
 /////////////////////////////////////////////////////////////////////////////
 #include "crvcamera_cv.h"
 #include <opencv2/core/types.hpp>
-//#include <opencv2/videoio.hpp>
 #include <opencv2/videoio/videoio_c.h>
 #include <sys/timeb.h>
 #include <sys/types.h>
@@ -104,8 +102,7 @@ int VfwCamFpsWorkaround ()
 
 #endif
 
-CCameraCV::CCameraCV(int cameraId, unsigned int width, int unsigned height, 
-		float fr) throw (camera_exception)
+CCameraCV::CCameraCV(int cameraId, unsigned int width, int unsigned height, float fr)
 {
 	if (cameraId>= GetNumDevices()) throw camera_exception("wrong camera id");
 	m_Id= cameraId;
@@ -167,7 +164,6 @@ IplImage *CCameraCV::DoQueryFrame()
 int CCameraCV::GetNumDevices()
 {
 	if (!g_cvInitialized) {		
-		// cvInitSystem (0, NULL); 
 		g_cvInitialized= true; 
 
 		int i;

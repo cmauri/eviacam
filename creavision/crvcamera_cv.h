@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        crvcamera_cv.h
-// Purpose:  
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     30/05/2008
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-19 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -30,9 +25,8 @@ class CCameraCV : public CCamera
 {	
 public:
 	enum { MAX_CV_DEVICES= 10 };
-	CCameraCV(int cameraId= -1, 
-		unsigned int width= 320, unsigned int height= 240,
-		float fr= 30.0f) throw (camera_exception);
+	CCameraCV(int cameraId= -1, unsigned int width= 320, 
+              unsigned int height= 240, float fr= 30.0f);
 	virtual ~CCameraCV (void);
 
 protected:

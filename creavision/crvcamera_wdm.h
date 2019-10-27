@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        crvcamera_wdm.h
-// Purpose:  
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     30/01/2009
-// Copyright:   (C) 2009 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2009-19 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -30,7 +25,7 @@ class CCameraWDM : public CCamera
 {
 public:
 	CCameraWDM(int cameraId= -1, unsigned int width= 320, 
-		unsigned int height= 240, float fr= 30.0f) throw(camera_exception);
+		unsigned int height= 240, float fr= 30.0f);
 	virtual ~CCameraWDM (void);
 
 	static int GetNumDevices();
@@ -45,9 +40,9 @@ public:
 	virtual void ShowSettingsDialog ();
 
 private:
-	enum { MAX_CAM_DEVICES= 10, CAM_DEVICE_NAME_LENGHT= 50 };
+	enum { MAX_CAM_DEVICES= 10, CAM_DEVICE_NAME_LENGTH= 50 };
 	static int g_numDevices;
-	static char g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGHT];
+	static char g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGTH];
 
 	int m_Id;
 	unsigned int m_Width, m_Height;

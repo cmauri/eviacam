@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        crvcamera.cpp
-// Purpose:  
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     30/05/2008
-// Copyright:   (C) 2008-10 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-19 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -36,7 +31,7 @@ static long long GetTime (void)
 	return now.time*1000 + now.millitm;
 }
 
-CCamera::CCamera() throw (camera_exception)
+CCamera::CCamera()
 {
 	m_RealWidth=0;
 	m_RealHeight= 0;
