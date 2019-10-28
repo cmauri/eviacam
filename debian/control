@@ -2,8 +2,8 @@ Source: eviacam
 Section: x11
 Priority: optional
 Maintainer: Cesar Mauri <cesar@crea-si.com>
-Build-Depends: debhelper (>= 9),
-               dh-autoreconf,
+Rules-Requires-Root: no
+Build-Depends: debhelper (>= 11),
                libopencv-dev (>= 2.0),
                libpng-dev,
                libv4l-dev,
@@ -12,7 +12,7 @@ Build-Depends: debhelper (>= 9),
                libxext-dev,
                libxtst-dev,
                po-debconf
-Standards-Version: 4.1.3
+Standards-Version: 4.4.1
 Homepage: http://viacam.org
 
 Package: eviacam
