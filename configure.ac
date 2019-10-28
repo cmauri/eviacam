@@ -1,4 +1,4 @@
-AC_INIT([eviacam], 2.1.3)
+AC_INIT([eviacam], 2.1.4)
 AC_CONFIG_SRCDIR([src/eviacamapp.cpp])
 AC_PREREQ(2.61)
 AM_CONFIG_HEADER(config.h)
