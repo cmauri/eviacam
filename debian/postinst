@@ -14,7 +14,7 @@ case "$1" in
 		if [ "$RET" = true ]; then
 			
 			# Create group when necessary
-			if ! sg "$GROUP" true 2>/dev/null; then
+			if ! getent group "$GROUP" >/dev/null; then
 				addgroup --system "$GROUP"
 			fi
 			

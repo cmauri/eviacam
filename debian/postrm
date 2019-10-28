@@ -10,7 +10,7 @@ GROUP="eviacam"
 
 case "$1" in
 	purge)
-		if sg "$GROUP" true 2>/dev/null; then
+		if getent group "$GROUP" >/dev/null; then
 			delgroup --quiet --only-if-empty "$GROUP" >/dev/null 2>&1 || true
 		fi
 		;;	
