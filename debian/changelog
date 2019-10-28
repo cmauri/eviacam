@@ -1,3 +1,9 @@
+eviacam (2.1.4-1) unstable; urgency=medium
+
+  * Upstream version 2.1.4
+
+ -- Cesar Mauri <cesar@crea-si.com>  Mon, 28 Oct 2019 21:08:21 +0100
+
 eviacam (2.1.3-4.1) unstable; urgency=medium
 
   * Non-maintainer upload.
