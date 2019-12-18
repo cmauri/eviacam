@@ -1,9 +1,9 @@
-AC_INIT([eviacam], 2.1.2)
+AC_INIT([eviacam], 2.1.4)
 AC_CONFIG_SRCDIR([src/eviacamapp.cpp])
 AC_PREREQ(2.61)
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE
-COPYRIGHT="© 2008-17"
+COPYRIGHT="© 2008-19"
 PUBLISHER="César Mauri Loba"
 
 AC_SUBST(COPYRIGHT, [`echo $COPYRIGHT`])
@@ -98,31 +98,32 @@ if test "x$WITH_DEPENDENCIES_CHECK" = "xyes"; then
 	AC_CHECK_FUNCS([sqrt])
 fi
 
-# -----------------       gtk+-2.0  --------------------
-# TODO: check if gtk-2.0-devel is really needed
+# -----------------       gtk+  --------------------
 # Put this early on, since gtk may rely on it.
 AC_PATH_XTRA
 
-GTKCONFIG='pkg-config gtk+-2.0'
 AC_DEFUN([GTKTEST],
 [
 	AC_REQUIRE([AC_PROG_AWK])
-	AC_MSG_CHECKING([gdk version])
-	if gdkversion=`pkg-config gtk+-2.0 --modversion`; then
-		AC_MSG_RESULT([$gdkversion])
+	AC_MSG_CHECKING([gtk version])
+	if gtkversion=`pkg-config gtk+-3.0 --silence-errors --modversion`; then
+		AC_MSG_RESULT([$gtkversion])
+		GTKCONFIG='pkg-config gtk+-3.0'
+	elif gtkversion=`pkg-config gtk+-2.0 --silence-errors --modversion`; then
+		AC_MSG_RESULT([$gtkversion])
+		GTKCONFIG='pkg-config gtk+-2.0'
 	else
 		AC_MSG_RESULT([not found])
-		AC_MSG_ERROR([gtk+-2.0 is required.])
-	fi])
+		AC_MSG_ERROR([gtk+-2 or 3 is required.])
+	fi
+])
 
 if test "x$WITH_DEPENDENCIES_CHECK" = "xyes"; then
-	# Call test func
-	GTKTEST
-
+    GTKTEST()
 	GTK_CPPFLAGS="`$GTKCONFIG --cflags`"
 	GTK_LIBS="`$GTKCONFIG --libs`"
 fi
-# -----------------   gtk+-2.0      --------------------
+# -----------------   gtk+      --------------------
 
 # -----------------       wxWidgets --------------------
 WXCONFIG=wx-config
@@ -171,12 +172,15 @@ fi
 # -----------------       wxWidgets --------------------
 
 # -----------------       opencv  --------------------
-OPENCVCONFIG='pkg-config opencv'
 AC_DEFUN([OPENCVTEST],
 [
 	AC_REQUIRE([AC_PROG_AWK])
 	AC_MSG_CHECKING([opencv version])
 	if opencvversion=`pkg-config opencv --modversion`; then
+        OPENCVCONFIG='pkg-config opencv'
+		AC_MSG_RESULT([$opencvversion])
+    elif opencvversion=`pkg-config opencv4 --modversion`; then
+        OPENCVCONFIG='pkg-config opencv4'
 		AC_MSG_RESULT([$opencvversion])
 	else
 		AC_MSG_RESULT([not found])

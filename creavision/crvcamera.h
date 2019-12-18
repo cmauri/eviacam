@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        crvcamera.h
-// Purpose:  
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     30/05/2008
-// Copyright:   (C) 2008-10 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-19 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -43,7 +38,7 @@ public:
 class CCamera
 {
 public:
-	CCamera() throw (camera_exception);
+	CCamera();
 	virtual ~CCamera (void);
 
 	// 
@@ -87,7 +82,6 @@ protected:
 	virtual bool DoOpen()= 0;
 	virtual void DoClose()= 0;
 	virtual IplImage* DoQueryFrame()= 0;
-	//virtual bool DoQueryFrame(CIplImage& image)= 0;
 
 private:
 	// Make CCamera non-copyable
@@ -143,7 +137,7 @@ public:
 		CAM_PRIVACY,		// Temporarily prevent image from being acquired
 		CAM_PAN_RESET,		// Reset pan angle to a safe default value.
 		CAM_TILT_RESET,		// Reset tilt angle to a safe default value.
-		// Logitech custom contols
+		// Logitech custom controls
 		CAM_LOGITECH_PANTILT_RELATIVE,	// Relative change to the current pan and tilt angles.
 		CAM_LOGITECH_PANTILT_RESET,	// Reset pan and tilt angles to a safe default value.
 		CAM_LOGITECH_LED1_MODE, 		// Illumination mode of the first LED.
@@ -184,7 +178,5 @@ public:
 	// For choices only
 	virtual const char* GetChoiceName(unsigned int) const { return 0; }
 };
-
-
 
 #endif

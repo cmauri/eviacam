@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        crvcamera_cv.cpp
-// Purpose:  
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     30/05/2008
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-19 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,7 +15,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "crvcamera_cv.h"
-#include <highgui.h>
+#include <opencv2/core/types.hpp>
+#include <opencv2/videoio/videoio_c.h>
 #include <sys/timeb.h>
 #include <sys/types.h>
 #include <stdio.h>
@@ -106,8 +102,7 @@ int VfwCamFpsWorkaround ()
 
 #endif
 
-CCameraCV::CCameraCV(int cameraId, unsigned int width, int unsigned height, 
-		float fr) throw (camera_exception)
+CCameraCV::CCameraCV(int cameraId, unsigned int width, int unsigned height, float fr)
 {
 	if (cameraId>= GetNumDevices()) throw camera_exception("wrong camera id");
 	m_Id= cameraId;
@@ -129,7 +124,7 @@ CCameraCV::~CCameraCV(void)
 bool CCameraCV::DoOpen ()
 {
 	if (m_pCvCapture!= NULL) return true;	// Already opened
-	m_pCvCapture= cvCaptureFromCAM (m_Id);
+	m_pCvCapture= cvCreateCameraCapture(m_Id);
 	if (m_pCvCapture== NULL) return false;
 	
 	// Try to set capture parameters although not always works
@@ -169,7 +164,6 @@ IplImage *CCameraCV::DoQueryFrame()
 int CCameraCV::GetNumDevices()
 {
 	if (!g_cvInitialized) {		
-		cvInitSystem (0, NULL); 
 		g_cvInitialized= true; 
 
 		int i;

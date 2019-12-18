@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        crvcamera_v4l2.h
-// Purpose:	Provide a camera capture class around v4l2 and libwebcam
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     17/05/2010
-// Copyright:   (C) 2008-10 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-19 Cesar Mauri Loba - CREA Software Systems
 //              Portions of guvcview are (c) of Paulo Assis and others
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -39,7 +34,7 @@ class CCameraV4L2 : public CCamera
 {
 public:
 	CCameraV4L2(int cameraId= -1, unsigned int width= 320, 
-		unsigned int height= 240, float fr= 30.0f) throw(camera_exception);
+		unsigned int height= 240, float fr= 30.0f);
 	virtual ~CCameraV4L2 (void);
 
 	
@@ -93,7 +88,7 @@ private:
 	// Instance count for automatic libwebcam cleanup
 	static int g_numInstances;
 	// Instances inc/dec
-	void InstanceCreated() throw(camera_exception);
+	void InstanceCreated();
 	void InstanceDestroyed();
 
 	// Private methods

@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        camwindow.cpp
-// Purpose:		wxPanel derived class to show live camera image
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     
-// Copyright:   (C) 2008-2010 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-19 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,7 +15,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 
-// For compilers that support precompilation, includes "wx/wx.h".
 #include <wx/wxprec.h>
 
 #ifdef __BORLANDC__
@@ -33,12 +27,13 @@
 #endif
 
 #include <string.h>
-#include <cvaux.h>
-#include <highgui.h>
 
 #include "camwindow.h"
 #include "visiblenormroi.h"
 #include "wxnormroi.h"
+#include <opencv2/core/core_c.h>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/imgproc/imgproc_c.h>
 
 #define MIN_WIDTH 160
 #define MIN_HEIGHT 144
@@ -106,7 +101,7 @@ void CCamWindow::ResizeParentClientArea(int width, int height)
 	assert ((width % VP_ALIGNMENT)== 0);
 
 	// TODO: parent should set size automatically changing own size
-	// as a workdaround size is propagated to parent if is top level window
+	// as a workaround size is propagated to parent if is top level window
 	wxWindow* pParent= GetParent();
 	if (pParent && pParent->IsTopLevel()) pParent->SetClientSize (width, height);		
 }
@@ -141,7 +136,7 @@ void CCamWindow::OnSize (wxSizeEvent& event)
 // DrawCam. Called from the worker thread
 void CCamWindow::DrawCam (IplImage* pImg)
 {	
-	int convertFlags= 0;
+	//int convertFlags= 0;
 
 	// If last image not shown yet don't update
 	assert (pImg);
@@ -181,11 +176,10 @@ void CCamWindow::DrawCam (IplImage* pImg)
 		assert (pImg->origin== 0);
 		if (pImg->channelSeq[0]== 'B' && pImg->channelSeq[1]== 'G' && pImg->channelSeq[2]== 'R')
 		{
-			convertFlags|= CV_CVTIMG_SWAP_RB;
-		//	pImg->channelSeq[0]= 'R';
-		//	pImg->channelSeq[2]= 'B';
-		}
-		if (convertFlags) cvConvertImage ( pImg, m_SharedImage.ptr(), convertFlags );
+            //cvConvertImage ( pImg, m_SharedImage.ptr(), convertFlags );
+            cvCvtColor(pImg, m_SharedImage.ptr(), cv::COLOR_BGR2RGB);
+
+        }        
 		else cvCopy( pImg, m_SharedImage.ptr() );
 		m_ImageShowed= false;
 		
@@ -194,7 +188,7 @@ void CCamWindow::DrawCam (IplImage* pImg)
 
 		// When calling a GUI function from a thread different than 
 		// the main one (this method is usually called from a worker thread)
-		// synchonization is needed (under GTK+ is mandatory, for example).
+		// synchronization is needed (under GTK+ is mandatory, for example).
 		// but it seems that under Windows no GUI Mutex is needed. Futhermore,
 		// wxMutexGuiEnter() blocks when pull down a menu from the menu bar
 		// For more info check WX source thread sample 
@@ -205,7 +199,7 @@ void CCamWindow::DrawCam (IplImage* pImg)
 		// wxWakeUpIdle() inside wxPostEvent. See, for instance:
 		// http://osdir.com/ml/lib.wxwindows.general/2003-10/msg00026.html
 		// In theory if the macro __WXGTK20__ is defined this must not happen.
-		// Since version 2.9.0 there is another funtion to post events "wxQueueEvent"
+		// Since version 2.9.0 there is another function to post events "wxQueueEvent"
 		// That should be investigated
 		wxCommandEvent event(wxEVT_MY_REFRESH);
 		wxPostEvent(this, event);		
@@ -215,7 +209,7 @@ void CCamWindow::DrawCam (IplImage* pImg)
 // OnPaint. Called on paint event
 void CCamWindow::OnPaint (wxPaintEvent& event)
 {
-	event.Skip();	// Avoid compilation warning. This is the defaul behavior
+	event.Skip();	// Avoid compilation warning. This is the default behavior
 
 	// Create and check DC 
 	// Note that In a paint event handler, the application must always create a wxPaintDC object, 

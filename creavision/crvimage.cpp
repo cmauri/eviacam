@@ -1,10 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        crvimage.cpp
-// Purpose:  
-// Author:      Cesar Mauri Loba (cesar at crea-si dot com)
-// Modified by: 
-// Created:     10/01/2008
-// Copyright:   (C) 2008 Cesar Mauri Loba - CREA Software Systems
+// Copyright:   (C) 2008-19 Cesar Mauri Loba - CREA Software Systems
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -20,9 +15,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "crvimage.h"
-#include <highgui.h>
 #include <string.h>
 #include <assert.h>
+#include <opencv2/core/core_c.h>
 
 // Construction
 CIplImage::CIplImage ()
@@ -73,7 +68,8 @@ void CIplImage::InitROIStack (int width, int height)
 }
 
 // Creation
-bool CIplImage::Create (int width, int height, unsigned int depth, const char *pColorOrder, int origin, int align )
+bool CIplImage::Create (int width, int height, unsigned int depth, 
+                        const char *pColorOrder, int origin, int align)
 {
 	int nChannels= 0;
 	const char *pColorModel= NULL;
@@ -182,7 +178,7 @@ void CIplImage::Swap (CIplImage *pOtherImg)
 {
 	int i;
 
-	if (this== pOtherImg) return;	// Nohing to do
+	if (this== pOtherImg) return;	// Nothing to do
 
 	// Copy other image to tmp
 	IplImage *tmp_pIplImage= pOtherImg->m_pIplImage;
@@ -225,9 +221,7 @@ void CIplImage::Reset ()
 	cvSetZero(m_pIplImage);
 }
 
-// ROI
-bool CIplImage::SetROI (int x, int y, int width, 
-						int height, unsigned int coi)
+bool CIplImage::SetROI (int x, int y, int width, int height, unsigned int coi)
 {
 	assert (m_pIplImage);
 	assert (m_pIplImage->roi== &m_roiStack[m_roiStackPtr]);
@@ -287,39 +281,8 @@ void CIplImage::PushROI ()
 void CIplImage::PopROI ()
 {
 	assert (m_pIplImage);
-//	assert (m_pIplImage->roi== &m_roiStack[m_roiStackPtr]);
 	assert (m_roiStackPtr> 0);
 
 	m_roiStackPtr--;
 	m_pIplImage->roi= &m_roiStack[m_roiStackPtr];
-}
-
-bool CIplImage::Load (char *pFilename)
-{
-	Free ();
-
-	m_pIplImage = cvvLoadImage( pFilename );
-
-	if (m_pIplImage== NULL) return false;
-
-	return true;
-}
-
-bool CIplImage::Save (char *pFilename)
-{
-	assert (m_pIplImage);
-	assert (pFilename);
-
-	return (cvvSaveImage (pFilename, m_pIplImage)== 0 ? false : true);
-}
-
-void CIplImage::Show (char *id)
-{
-    assert (m_pIplImage);
-	
-	cvvNamedWindow(id, CV_WINDOW_AUTOSIZE );  
-    cvvShowImage( id, m_pIplImage );
-#ifndef linux
-	cvWaitKey (1);
-#endif
 }
