@@ -187,7 +187,7 @@ void CNormROI::SetP1Resize (const float x, const float y)
 {
 	float min_p1x, min_p1y, max_p1x, max_p1y;
 
-	CvPoint2D32f p2_lim;
+	cv::Point2d p2_lim;
 
 	p2_lim.x= m_x + m_width;
 	p2_lim.y= m_y + m_height;
@@ -335,7 +335,7 @@ void CNormROI::GetSize (float& width, float& height)
 //
 // Working with generic integer coordinates
 //
-inline void CNormROI::Integer2Normalized (const CvSize& size, const int ix, const int iy, float &nx, float &ny)
+inline void CNormROI::Integer2Normalized (const cv::Size& size, const int ix, const int iy, float &nx, float &ny)
 {
 	assert (size.width> 0);
 	assert (size.height> 0);
@@ -344,7 +344,7 @@ inline void CNormROI::Integer2Normalized (const CvSize& size, const int ix, cons
 	ny= (float) iy / (float) size.height;
 }
 
-inline void CNormROI::Normalized2Integer (const CvSize& size, const float nx, const float ny, int &ix, int &iy)
+inline void CNormROI::Normalized2Integer (const cv::Size& size, const float nx, const float ny, int &ix, int &iy)
 {
 	assert (size.width> 0);
 	assert (size.height> 0);
@@ -356,7 +356,7 @@ inline void CNormROI::Normalized2Integer (const CvSize& size, const float nx, co
 }
 
 //inline 
-void CNormROI::SetP1ResizeInteger (const CvSize& size, const int x, const int y)
+void CNormROI::SetP1ResizeInteger (const cv::Size& size, const int x, const int y)
 {
 	float new_x, new_y;
 
@@ -366,7 +366,7 @@ void CNormROI::SetP1ResizeInteger (const CvSize& size, const int x, const int y)
 }
 
 //inline 
-void CNormROI::SetP1MoveInteger (const CvSize& size, const int x, const int y)
+void CNormROI::SetP1MoveInteger (const cv::Size& size, const int x, const int y)
 {
 	float new_x, new_y;
 
@@ -376,7 +376,7 @@ void CNormROI::SetP1MoveInteger (const CvSize& size, const int x, const int y)
 }
 
 //inline 
-void CNormROI::SetP2ResizeInteger (const CvSize& size, const int x, const int y)
+void CNormROI::SetP2ResizeInteger (const cv::Size& size, const int x, const int y)
 {
 	float new_x, new_y;
 
@@ -386,7 +386,7 @@ void CNormROI::SetP2ResizeInteger (const CvSize& size, const int x, const int y)
 }
 
 //inline 
-void CNormROI::SetCenterInteger (const CvSize& size, const int x, const int y)
+void CNormROI::SetCenterInteger (const cv::Size& size, const int x, const int y)
 {
 	float new_x, new_y;
 
@@ -395,7 +395,7 @@ void CNormROI::SetCenterInteger (const CvSize& size, const int x, const int y)
 	SetCenter (new_x, new_y);
 }
 
-void CNormROI::GetCenterInteger (const CvSize& size, int& x, int& y)
+void CNormROI::GetCenterInteger (const cv::Size& size, int& x, int& y)
 {
 	float fx, fy;
 
@@ -405,7 +405,7 @@ void CNormROI::GetCenterInteger (const CvSize& size, int& x, int& y)
 }
 
 //inline 
-void CNormROI::SetSizeInteger (const CvSize& size, const int width, const int height)
+void CNormROI::SetSizeInteger (const cv::Size& size, const int width, const int height)
 {
 	float new_width, new_height;
 
@@ -415,7 +415,7 @@ void CNormROI::SetSizeInteger (const CvSize& size, const int width, const int he
 }
 
 //inline 
-void CNormROI::GetBoxInteger (const CvSize& size, int& x, int& y, int& width, int& height)
+void CNormROI::GetBoxInteger (const cv::Size& size, int& x, int& y, int& width, int& height)
 {
 	// DEBUG, 
 	CheckInvariant();
@@ -427,12 +427,12 @@ void CNormROI::GetBoxInteger (const CvSize& size, int& x, int& y, int& width, in
 	assert (y + height<= size.height);
 }
 
-void CNormROI::GetBoxInteger (const CvSize& size, CvRect& box)
+void CNormROI::GetBoxInteger (const cv::Size& size, CvRect& box)
 {
 	GetBoxInteger (size, box.x, box.y, box.width, box.height);
 }
 
-void CNormROI::GetP1P2Integer (const CvSize& size, CvPoint& p1, CvPoint& p2)
+void CNormROI::GetP1P2Integer (const cv::Size& size, CvPoint& p1, CvPoint& p2)
 {
 	Normalized2Integer (size, m_x, m_y, p1.x, p1.y);
 	Normalized2Integer (size, m_x + m_width, m_y + m_height, p2.x, p2.y);

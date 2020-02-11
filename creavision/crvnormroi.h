@@ -43,15 +43,15 @@ public:
 	void GetSize (float& width, float& height);
 	
 	// Get/Set position using relative arbitrary integer coordinates
-	void SetP1ResizeInteger (const CvSize& size, const int x, const int y);
-	void SetP1MoveInteger (const CvSize& size, const int x, const int y);
-	void SetP2ResizeInteger (const CvSize& size, const int x, const int y);
-	void SetCenterInteger (const CvSize& size, const int x, const int y);
-	void GetCenterInteger (const CvSize& size, int& x, int& y);
-	void SetSizeInteger (const CvSize& size, const int width, const int height);
-	void GetBoxInteger (const CvSize& size, int& x, int& y, int& width, int& height);
-	void GetBoxInteger (const CvSize& size, CvRect& box);
-	void GetP1P2Integer (const CvSize& size, CvPoint& p1, CvPoint& p2);
+	void SetP1ResizeInteger (const cv::Size& size, const int x, const int y);
+	void SetP1MoveInteger (const cv::Size& size, const int x, const int y);
+	void SetP2ResizeInteger (const cv::Size& size, const int x, const int y);
+	void SetCenterInteger (const cv::Size& size, const int x, const int y);
+	void GetCenterInteger (const cv::Size& size, int& x, int& y);
+	void SetSizeInteger (const cv::Size& size, const int width, const int height);
+	void GetBoxInteger (const cv::Size& size, int& x, int& y, int& width, int& height);
+	void GetBoxInteger (const cv::Size& size, CvRect& box);
+	void GetP1P2Integer (const cv::Size& size, CvPoint& p1, CvPoint& p2);
 
 	float GetRotation () { return m_rotation; }
 	void SetRotation (float value) { m_rotation= value; }
@@ -83,8 +83,8 @@ protected:
 	virtual void Destroy();
 
 	// Coordinate conversion
-	void Integer2Normalized (const CvSize& size, const int ix, const int iy, float &nx, float &ny);
-	void Normalized2Integer (const CvSize& size, const float nx, const float ny, int &ix, int &iy);
+	void Integer2Normalized (const cv::Size& size, const int ix, const int iy, float &nx, float &ny);
+	void Normalized2Integer (const cv::Size& size, const float nx, const float ny, int &ix, int &iy);
 
 	// ROI hierarchy
 	typedef std::list<CNormROI *> TNormROIList;
