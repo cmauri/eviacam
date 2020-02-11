@@ -93,7 +93,7 @@ private:
 	wxCondition m_condition;
 
 	// Face location detection
-	CvRect m_faceLocation;
+	cv::Rect m_faceLocation;
 	int m_faceLocationStatus; // 0 -> not available, 1 -> available
 
 	enum { NUM_CORNERS = 20 };

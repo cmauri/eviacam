@@ -223,7 +223,7 @@ void DrawCorners(CIplImage &image, const std::vector<Point2f> corners, CvScalar 
 
 void CVisionPipeline::NewTracker(CIplImage &image, float &xVel, float &yVel)
 {
-	CvPoint2D32f trackAreaLocation;
+	cv::Point2d trackAreaLocation;
 	CvSize2D32f trackAreaSize;
 	bool updateFeatures = false;
 
