@@ -67,24 +67,24 @@ public:
 		   OVER_ORIENTER, OVER_UL_CORNER, OVER_BR_CORNER };
 
 	// Returns where is the cursor over
-	int OnMouseMovedNoClick (const CvSize& winSize, const CvPoint& cursor);
-	bool OnMouseMovedClick (const CvSize& winSize, const CvPoint& cursor, const CvPoint& prevCursor);
-	void OnPaint (const CvSize& winSize, CIplImage *pImg);
+	int OnMouseMovedNoClick (const cv::Size& winSize, const cv::Point& cursor);
+	bool OnMouseMovedClick (const cv::Size& winSize, const cv::Point& cursor, const cv::Point& prevCursor);
+	void OnPaint (const cv::Size& winSize, CIplImage *pImg);
 
 	bool RegisterChildROI (CVisibleNormROI* pNormROI);
 	bool UnregisterChildROI (CVisibleNormROI* pNormROI);
 	
 private:
-	void GetDirectionSegment (const CvSize& winSize, CvPoint& p1, CvPoint& p2);
+	void GetDirectionSegment (const cv::Size& winSize, CvPoint& p1, CvPoint& p2);
 
-	int OnMouseMovedNoClickRec (const CvSize& winSize, const CvPoint& cursor);
-	int OnMouseMovedNoClick0 (const CvSize& winSize, const CvPoint& cursor);
+	int OnMouseMovedNoClickRec (const cv::Size& winSize, const cv::Point& cursor);
+	int OnMouseMovedNoClick0 (const cv::Size& winSize, const cv::Point& cursor);
 
-	bool OnMouseMovedClickRec (const CvSize& winSize, const CvPoint& cursor, const CvPoint& prevCursor);
-	bool OnMouseMovedClick0 (const CvSize& winSize, const CvPoint& cursor, const CvPoint& prevCursor);
+	bool OnMouseMovedClickRec (const cv::Size& winSize, const cv::Point& cursor, const cv::Point& prevCursor);
+	bool OnMouseMovedClick0 (const cv::Size& winSize, const cv::Point& cursor, const cv::Point& prevCursor);
 	
-	void OnPaintRec (const CvSize& winSize, CIplImage *pImg);
-	void OnPaint0 (const CvSize& winSize, CIplImage *pImg);
+	void OnPaintRec (const cv::Size& winSize, CIplImage *pImg);
+	void OnPaint0 (const cv::Size& winSize, CIplImage *pImg);
 	
 	void Lock();
 	void Unlock();

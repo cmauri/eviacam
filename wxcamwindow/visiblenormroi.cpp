@@ -237,7 +237,7 @@ bool CVisibleNormROI::UnregisterChildROI (CVisibleNormROI* pNormROI)
 //
 // Interaction code
 //
-void CVisibleNormROI::GetDirectionSegment (const CvSize& winSize, CvPoint& p1, CvPoint& p2)
+void CVisibleNormROI::GetDirectionSegment (const cv::Size& winSize, CvPoint& p1, CvPoint& p2)
 {
 	GetP1P2Integer (winSize, p1, p2);
 	float line_lenght= sqrtf (
@@ -254,7 +254,7 @@ void CVisibleNormROI::GetDirectionSegment (const CvSize& winSize, CvPoint& p1, C
 }
 
 // Cursor motion, no click
-int CVisibleNormROI::OnMouseMovedNoClick (const CvSize& winSize, const CvPoint& cursor)
+int CVisibleNormROI::OnMouseMovedNoClick (const cv::Size& winSize, const cv::Point& cursor)
 {
 	Lock ();
 
@@ -265,7 +265,7 @@ int CVisibleNormROI::OnMouseMovedNoClick (const CvSize& winSize, const CvPoint& 
 	return retval;
 }
 
-int CVisibleNormROI::OnMouseMovedNoClickRec (const CvSize& winSize, const CvPoint& cursor)
+int CVisibleNormROI::OnMouseMovedNoClickRec (const cv::Size& winSize, const cv::Point& cursor)
 {
 	int retval;
 	TNormROIListIterator i;
@@ -283,7 +283,7 @@ int CVisibleNormROI::OnMouseMovedNoClickRec (const CvSize& winSize, const CvPoin
 	return OVER_NONE;
 }
 
-int CVisibleNormROI::OnMouseMovedNoClick0 (const CvSize& winSize, const CvPoint& cursor)
+int CVisibleNormROI::OnMouseMovedNoClick0 (const cv::Size& winSize, const cv::Point& cursor)
 {
 	CvPoint p1, p2, or_p1, or_p2;
 	
@@ -332,7 +332,7 @@ int CVisibleNormROI::OnMouseMovedNoClick0 (const CvSize& winSize, const CvPoint&
 }
 
 // Cursor motion, left button down
-bool CVisibleNormROI::OnMouseMovedClick (const CvSize& winSize, const CvPoint& cursor, const CvPoint& prevCursor)
+bool CVisibleNormROI::OnMouseMovedClick (const cv::Size& winSize, const cv::Point& cursor, const cv::Point& prevCursor)
 {
 	Lock ();
 
@@ -343,7 +343,7 @@ bool CVisibleNormROI::OnMouseMovedClick (const CvSize& winSize, const CvPoint& c
 	return retval;
 }
 
-bool CVisibleNormROI::OnMouseMovedClickRec (const CvSize& winSize, const CvPoint& cursor, const CvPoint& prevCursor)
+bool CVisibleNormROI::OnMouseMovedClickRec (const cv::Size& winSize, const cv::Point& cursor, const cv::Point& prevCursor)
 {
 	TNormROIListIterator i;
 
@@ -358,7 +358,7 @@ bool CVisibleNormROI::OnMouseMovedClickRec (const CvSize& winSize, const CvPoint
 	return false;
 }
 
-bool CVisibleNormROI::OnMouseMovedClick0 (const CvSize& winSize, const CvPoint& cursor, const CvPoint& prevCursor)
+bool CVisibleNormROI::OnMouseMovedClick0 (const cv::Size& winSize, const cv::Point& cursor, const cv::Point& prevCursor)
 {
 	CvPoint p1, p2, or_p1, or_p2;
 	
@@ -403,14 +403,14 @@ bool CVisibleNormROI::OnMouseMovedClick0 (const CvSize& winSize, const CvPoint& 
 }
 
 // Painting
-void CVisibleNormROI::OnPaint (const CvSize& winSize, CIplImage *pImg)
+void CVisibleNormROI::OnPaint (const cv::Size& winSize, CIplImage *pImg)
 {
 	Lock ();
 	OnPaintRec (winSize, pImg);
 	Unlock();
 }
 
-void CVisibleNormROI::OnPaintRec (const CvSize& winSize, CIplImage *pImg)
+void CVisibleNormROI::OnPaintRec (const cv::Size& winSize, CIplImage *pImg)
 {		
 	TNormROIListIterator i;
 
@@ -423,7 +423,7 @@ void CVisibleNormROI::OnPaintRec (const CvSize& winSize, CIplImage *pImg)
 	OnPaint0 (winSize, pImg);
 }
 
-void CVisibleNormROI::OnPaint0 (const CvSize& winSize, CIplImage *pImg)
+void CVisibleNormROI::OnPaint0 (const cv::Size& winSize, CIplImage *pImg)
 {
 	int thickness;
 	
@@ -432,7 +432,7 @@ void CVisibleNormROI::OnPaint0 (const CvSize& winSize, CIplImage *pImg)
 
 	if (m_cursorOver>= OVER_LEFT_LINE && m_cursorOver<= OVER_BR_CORNER)  thickness= 3;
 	else thickness= 1;
-	cvRectangle (pImg->ptr(), p1, p2, CV_RGB( 255-m_degradation, 255-m_degradation, m_degradation ), thickness, 4);
+	cvRectangle (pImg->ptr(), p1, p2, cvScalar(m_degradation, 255-m_degradation, 255-m_degradation, 0), thickness, 4);
 
 	// Affordances
 	CvPoint pa, pb;
@@ -441,14 +441,14 @@ void CVisibleNormROI::OnPaint0 (const CvSize& winSize, CIplImage *pImg)
 	pb.x= p1.x + thickness;
 	pb.y= p1.y + thickness;
 
-	cvRectangle (pImg->ptr(), pa, pb, CV_RGB( 255-m_degradation, 255-m_degradation, m_degradation ), CV_FILLED );
+	cvRectangle (pImg->ptr(), pa, pb, cvScalar(m_degradation, 255-m_degradation, 255-m_degradation, 0), CV_FILLED );
 
 	pa.x= p2.x - thickness;
 	pa.y= p2.y - thickness;
 	pb.x= p2.x + thickness;
 	pb.y= p2.y + thickness;
 
-	cvRectangle (pImg->ptr(), pa, pb, CV_RGB( 255-m_degradation, 255-m_degradation, m_degradation ), CV_FILLED );
+	cvRectangle (pImg->ptr(), pa, pb, cvScalar(m_degradation, 255-m_degradation, 255-m_degradation, 0), CV_FILLED );
 
 	GetDirectionSegment (winSize, p1, p2);
 	
@@ -456,7 +456,7 @@ void CVisibleNormROI::OnPaint0 (const CvSize& winSize, CIplImage *pImg)
 	{
 		if (m_cursorOver== OVER_ORIENTER)  thickness= 3;
 		else thickness= 1;
-		cvLine (pImg->ptr(), p1, p2, CV_RGB( 255,255,0 ), thickness, CV_AA );
-		cvCircle(pImg->ptr(), p2, SELECTION_TOLERANCE, CV_RGB( 255,255,0 ), thickness, CV_AA );
+		cvLine (pImg->ptr(), p1, p2, cvScalar(0, 255, 255, 0), thickness, CV_AA );
+		cvCircle(pImg->ptr(), p2, SELECTION_TOLERANCE, cvScalar(0, 255, 255, 0), thickness, CV_AA );
 	}
 }

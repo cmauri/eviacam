@@ -40,7 +40,7 @@ CWXNormROI::~CWXNormROI(void)
 
 bool CWXNormROI::OnEvtMotion ( wxMouseEvent& event, wxPoint prevCursor )
 {
-	CvSize winSize;
+	cv::Size winSize;
 	bool processed;
 
 	m_pWindow->GetClientSize (&winSize.width, &winSize.height);
@@ -97,7 +97,7 @@ bool CWXNormROI::OnEvtLeftDClick ( wxMouseEvent& WXUNUSED(event) )
 
 void CWXNormROI::OnPaint (CIplImage *pImg)
 {
-	CvSize winSize;
+	cv::Size winSize;
 	m_pWindow->GetClientSize(&winSize.width, &winSize.height);
 	m_pVisibleNormROI->OnPaint (winSize, pImg);
 }
