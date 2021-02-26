@@ -62,7 +62,7 @@ wxWidgets development snapshot and should uncomment the line before compiling
     // #define ENABLE_ASTURIAN
 in
     src/langnames-utf8.h
-Note that this file use special enconding.
+Note that this file use special encoding.
 
  License
 =========
@@ -84,7 +84,7 @@ a la Innovación en Telecomunicaciones.
 This software has been developed with the support of different collaborators
 and sponsored by:
     - Consorcio Fernando de los Rios (Junta de Andalucía)
-    - Seceretaría de Telecomunicacions i Societat de la Informació del 
+    - Secretaría de Telecomunicacions i Societat de la Informació del 
       Departament de Governació i Administracions Públiques de la Generalitat
       de Catalunya
     - Associació Provincial de Paràlisi Cerebral (APPC) de Tarragona.
