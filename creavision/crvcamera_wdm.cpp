@@ -84,8 +84,7 @@ bool CCameraWDM::DoQueryFrame(cv::Mat &frame)
 
 	const int width = m_VI->getWidth(m_Id);
 	const int height = m_VI->getHeight(m_Id);
-	const int size = m_VI->getSize(m_Id);
-
+	
 	frame.create(height, width, CV_8UC3);
 
 	m_VI->getPixels(m_Id, frame.data, false, false);

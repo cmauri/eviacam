@@ -1053,8 +1053,7 @@ bool videoInput::getVideoSettingFilter(int deviceID, long Property, long &min, l
 	if( !isDeviceSetup(deviceID) )return false;
 
 	HRESULT hr;	
-	bool isSuccessful = false;
-	
+		
 	videoDevice * VD = VDList[deviceID];
 	
 	hr = getDevice(&VD->pVideoInputFilter, deviceID, VD->wDeviceName, VD->nDeviceName);	
@@ -1129,8 +1128,7 @@ bool videoInput::setVideoSettingFilter(int deviceID, long Property, long lValue,
 	if( !isDeviceSetup(deviceID) )return false;
 
 	HRESULT hr;	
-	bool isSuccessful = false;
-	
+		
 	videoDevice * VD = VDList[deviceID];
 	
 	hr = getDevice(&VD->pVideoInputFilter, deviceID, VD->wDeviceName, VD->nDeviceName);	
@@ -1252,8 +1250,7 @@ bool videoInput::getVideoSettingCamera(int deviceID, long Property, long &min, l
 	if( !isDeviceSetup(deviceID) )return false;
 
 	HRESULT hr;	
-	bool isSuccessful = false;
-	
+		
 	videoDevice * VD = VDList[deviceID];
 	
 	hr = getDevice(&VD->pVideoInputFilter, deviceID, VD->wDeviceName, VD->nDeviceName);	
@@ -1681,8 +1678,6 @@ static bool setSizeAndSubtype(videoDevice * VD, int attemptWidth, int attemptHei
 	VIDEOINFOHEADER *pVih =  reinterpret_cast<VIDEOINFOHEADER*>(VD->pAmMediaType->pbFormat);
 
 	//store current size
-	int tmpWidth  = HEADER(pVih)->biWidth;
-	int tmpHeight = HEADER(pVih)->biHeight;	
 	AM_MEDIA_TYPE * tmpType = NULL;
 	
 	HRESULT	hr = VD->streamConf->GetFormat(&tmpType);

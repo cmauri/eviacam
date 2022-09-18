@@ -133,7 +133,6 @@ wxThreadError CVisionPipeline::Create(unsigned int stackSize)
 // Low-priority secondary thread where face localization occurs
 wxThread::ExitCode CVisionPipeline::Entry( )
 {
-	bool retval;
 	unsigned long ts1 = 0;
 	for (;;) {
 		m_condition.WaitTimeout(1000);
