@@ -315,10 +315,10 @@ void CVisionPipeline::NewTracker(cv::Mat &image, float &xVel, float &yVel)
 	//
 	// Update visible tracking area
 	//
-	m_trackArea.SetSizeImg(image, trackArea.width, trackArea.height);
+	m_trackArea.SetSizeImg(image, cvRound(trackArea.width), cvRound(trackArea.height));
 	m_trackArea.SetCenterImg(image, 
-		trackArea.x + trackArea.width / 2.0f, 
-		trackArea.y + trackArea.height / 2.0f);
+		cvRound(trackArea.x + trackArea.width / 2.0f),
+		cvRound(trackArea.y + trackArea.height / 2.0f));
 
 	//
 	// Draw corners
