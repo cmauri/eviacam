@@ -125,7 +125,7 @@ void CCameraWDM::ShowSettingsDialog ()
 }
 
 int CCameraWDM::g_numDevices= -1;
-char CCameraWDM::g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGHT];
+char CCameraWDM::g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGTH];
 
 int CCameraWDM::GetNumDevices() 
 { 
@@ -136,7 +136,7 @@ int CCameraWDM::GetNumDevices()
 		if (g_numDevices> MAX_CAM_DEVICES) g_numDevices= MAX_CAM_DEVICES;		
 		for (int i= 0; i< g_numDevices; ++i) {
 			// Prepend device number and append device name
-			_snprintf (g_deviceNames[i], CAM_DEVICE_NAME_LENGHT, " (Id:%d) %s\0", i, videoInput::getDeviceName(i));
+			_snprintf (g_deviceNames[i], CAM_DEVICE_NAME_LENGTH, " (Id:%d) %s\0", i, videoInput::getDeviceName(i));
 		}		
 	}
 

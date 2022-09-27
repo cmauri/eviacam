@@ -223,11 +223,11 @@ void CCameraV4L2::DoClose ()
 
 bool CCameraV4L2::InternalOpen()
 {
-	char devName[CAM_DEVICE_SHORT_NAME_LENGHT+5];
+	char devName[CAM_DEVICE_SHORT_NAME_LENGTH+5];
 	struct stat st;	
 
 	// Create device name
-	snprintf (devName, CAM_DEVICE_SHORT_NAME_LENGHT+5, "/dev/%s", g_deviceShortNames[m_Id]);
+	snprintf (devName, CAM_DEVICE_SHORT_NAME_LENGTH+5, "/dev/%s", g_deviceShortNames[m_Id]);
 
 	// Check if exists and if it is a device
 	if (stat (devName, &st)== -1) {
@@ -1659,9 +1659,9 @@ void CCameraControlV4L2::Dump()
 // Static attributes
 //
 int CCameraV4L2::g_numDevices= -1;
-char CCameraV4L2::g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGHT];
-char CCameraV4L2::g_deviceShortNames[MAX_CAM_DEVICES][CAM_DEVICE_SHORT_NAME_LENGHT];
-char CCameraV4L2::g_deviceDriverNames[MAX_CAM_DEVICES][CAM_DEVICE_DRIVER_NAME_LENGHT];
+char CCameraV4L2::g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGTH];
+char CCameraV4L2::g_deviceShortNames[MAX_CAM_DEVICES][CAM_DEVICE_SHORT_NAME_LENGTH];
+char CCameraV4L2::g_deviceDriverNames[MAX_CAM_DEVICES][CAM_DEVICE_DRIVER_NAME_LENGTH];
 int CCameraV4L2::g_numInstances= 0;
 
 void CCameraV4L2::InstanceCreated()
@@ -1718,9 +1718,9 @@ int CCameraV4L2::GetNumDevices()
 				
 				// Prepend device number and append device name
 				unsigned int j= count - 1 - i;
-				snprintf (g_deviceNames[j], CAM_DEVICE_NAME_LENGHT, " (Id:%d) %s", j, device->name);		
-				snprintf (g_deviceShortNames[j], CAM_DEVICE_SHORT_NAME_LENGHT, "%s", device->shortName);
-				snprintf (g_deviceDriverNames[j], CAM_DEVICE_DRIVER_NAME_LENGHT, "%s", device->driver);
+				snprintf (g_deviceNames[j], CAM_DEVICE_NAME_LENGTH, " (Id:%d) %s", j, device->name);
+				snprintf (g_deviceShortNames[j], CAM_DEVICE_SHORT_NAME_LENGTH, "%s", device->shortName);
+				snprintf (g_deviceDriverNames[j], CAM_DEVICE_DRIVER_NAME_LENGTH, "%s", device->driver);
 
 				if (slog_get_priority ()>= SLOG_PRIO_DEBUG) {
 					CHandle handle = c_open_device(device->shortName);
