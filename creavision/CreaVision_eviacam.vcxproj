@@ -188,13 +188,8 @@
     <ClCompile Include="crvcamera_cv.cpp" />
     <ClCompile Include="crvcamera_enum.cpp" />
     <ClCompile Include="crvcamera_wdm.cpp" />
-    <ClCompile Include="crvcolor.cpp" />
-    <ClCompile Include="crvgeomtry.cpp" />
-    <ClCompile Include="crvhistogram.cpp" />
     <ClCompile Include="crvimage.cpp" />
-    <ClCompile Include="crvmisc.cpp" />
     <ClCompile Include="crvnormroi.cpp" />
-    <ClCompile Include="crvskindetection.cpp" />
     <ClCompile Include="videoInput.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -202,13 +197,8 @@
     <ClInclude Include="crvcamera_cv.h" />
     <ClInclude Include="crvcamera_enum.h" />
     <ClInclude Include="crvcamera_wdm.h" />
-    <ClInclude Include="crvcolor.h" />
-    <ClInclude Include="crvgeomtry.h" />
-    <ClInclude Include="crvhistogram.h" />
     <ClInclude Include="crvimage.h" />
-    <ClInclude Include="crvmisc.h" />
     <ClInclude Include="crvnormroi.h" />
-    <ClInclude Include="crvskindetection.h" />
     <ClInclude Include="videoInput.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
