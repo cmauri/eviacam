@@ -58,7 +58,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\;..\simplelog;..\creavision;..\wxcamwindow;..\wxutil;$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(CVPATH)\build\include;$(CVPATH)\build\include\opencv</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\;..\simplelog;..\creavision;..\wxcamwindow;..\wxutil;$(WXWIN)\lib\vc_lib\mswud;$(WXWIN)\include;$(CVPATH)\build\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;NOPCH;__WXMSW__;__WXDEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -132,7 +132,7 @@ if %ERRORLEVEL% LEQ 1 exit 0
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>wxmsw30ud_richtext.lib;wxmsw30ud_aui.lib;wxmsw30ud_core.lib;wxbase30ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxmsw30ud_adv.lib;wxmsw30ud_html.lib;wxmsw30ud_xrc.lib;wxbase30ud_net.lib;wxbase30ud_xml.lib;opencv_core2411d.lib;opencv_objdetect2411d.lib;opencv_highgui2411d.lib;opencv_imgproc2411d.lib;opencv_video2411d.lib;wxexpatd.lib;comctl32.lib;rpcrt4.lib;winmm.lib;simplelog.lib;wxcamwindow.lib;wxutil.lib;strmiids.lib;uuid.lib;quartz.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wxmsw32ud_richtext.lib;wxmsw32ud_aui.lib;wxmsw32ud_core.lib;wxbase32ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxmsw32ud_adv.lib;wxmsw32ud_html.lib;wxmsw32ud_xrc.lib;wxbase32ud_net.lib;wxbase32ud_xml.lib;opencv_world460d.lib;wxexpatd.lib;comctl32.lib;rpcrt4.lib;winmm.lib;simplelog.lib;wxcamwindow.lib;wxutil.lib;strmiids.lib;uuid.lib;quartz.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)eviacam.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>$(CVPATH)\build\x86\vc12\lib;$(WXWIN)\lib\vc_lib;$(DSHOW_SAMPLES)\baseclasses\$(Configuration);$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -149,15 +149,7 @@ if %ERRORLEVEL% LEQ 1 exit 0
     </Link>
     <PostBuildEvent>
       <Command>for %%x in (
-	opencv_core2411d.dll
-	opencv_imgproc2411d.dll
-	opencv_objdetect2411d.dll
-	opencv_highgui2411d.dll
-	opencv_flann2411d.dll
-	opencv_features2d2411d.dll
-	opencv_calib3d2411d.dll
-	opencv_ml2411d.dll
-	opencv_video2411d.dll
+	opencv_world460d.dll
 ) do (
 	if not exist $(TargetDir)%%x copy $(CVPATH)\build\x86\vc12\bin\%%x $(TargetDir)
 )
@@ -166,9 +158,113 @@ if not exist $(TargetDir)haarcascade_frontalface_default.xml copy "$(CVPATH)\sou
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\;..\simplelog;..\creavision;..\wxcamwindow;..\wxutil;$(WXWIN)\lib\vc_x64_lib\mswud;$(WXWIN)\include;$(CVPATH)\build\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;NOPCH;__WXMSW__;__WXDEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PreLinkEvent>
+      <Command>mkdir $(TargetDir)ca
+mkdir $(TargetDir)es
+mkdir $(TargetDir)gl
+mkdir $(TargetDir)it
+mkdir $(TargetDir)tr
+mkdir $(TargetDir)de
+mkdir $(TargetDir)oc
+mkdir $(TargetDir)fr
+mkdir $(TargetDir)ar
+mkdir $(TargetDir)he
+mkdir $(TargetDir)ru
+mkdir $(TargetDir)pt_BR
+mkdir $(TargetDir)ja
+mkdir $(TargetDir)el
+mkdir $(TargetDir)lt
+mkdir $(TargetDir)zh_TW
+mkdir $(TargetDir)zh_CN
+
+echo F | xcopy "$(SolutionDir)..\po\ca.gmo" $(TargetDir)ca\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\es.gmo" $(TargetDir)es\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\gl.gmo" $(TargetDir)gl\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\it.gmo" $(TargetDir)it\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\tr.gmo" $(TargetDir)tr\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\de.gmo" $(TargetDir)de\eviacam.mo /D
+echo F |  xcopy "$(SolutionDir)..\po\oc.gmo" $(TargetDir)oc\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\fr.gmo" $(TargetDir)fr\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ar.gmo" $(TargetDir)ar\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\he.gmo" $(TargetDir)he\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ru.gmo" $(TargetDir)ru\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\pt_BR.gmo" $(TargetDir)pt_BR\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ja.gmo" $(TargetDir)ja\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\el.gmo" $(TargetDir)el\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\lt.gmo" $(TargetDir)lt\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\zh_TW.gmo" $(TargetDir)zh_TW\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\zh_CN.gmo" $(TargetDir)zh_CN\eviacam.mo /D
+
+if not exist $(TargetDir)ca\wxstd.mo copy "%25WXWIN%25\locale\ca.mo" $(TargetDir)ca\wxstd.mo
+if not exist $(TargetDir)es\wxstd.mo copy "%25WXWIN%25\locale\es.mo" $(TargetDir)es\wxstd.mo
+if not exist $(TargetDir)gl\wxstd.mo copy "%25WXWIN%25\locale\gl_ES.mo" $(TargetDir)gl\wxstd.mo
+if not exist $(TargetDir)it\wxstd.mo copy "%25WXWIN%25\locale\it.mo" $(TargetDir)it\wxstd.mo
+if not exist $(TargetDir)tr\wxstd.mo copy "%25WXWIN%25\locale\tr.mo" $(TargetDir)tr\wxstd.mo
+if not exist $(TargetDir)de\wxstd.mo copy "%25WXWIN%25\locale\de.mo" $(TargetDir)de\wxstd.mo
+rem if not exist $(TargetDir)oc\wxstd.mo copy "%25WXWIN%25\locale\oc.mo" $(TargetDir)oc\wxstd.mo
+if not exist $(TargetDir)fr\wxstd.mo copy "%25WXWIN%25\locale\fr.mo" $(TargetDir)fr\wxstd.mo
+rem if not exist $(TargetDir)ar\wxstd.mo copy "%25WXWIN%25\locale\ar.mo" $(TargetDir)ar\wxstd.mo
+rem if not exist $(TargetDir)he\wxstd.mo copy "%25WXWIN%25\locale\he.mo" $(TargetDir)he\wxstd.mo
+if not exist $(TargetDir)ru\wxstd.mo copy "%25WXWIN%25\locale\ru.mo" $(TargetDir)ru\wxstd.mo
+if not exist $(TargetDir)pt_BR\wxstd.mo copy "%25WXWIN%25\locale\pt_BR.mo" $(TargetDir)pt_BR\wxstd.mo
+if not exist $(TargetDir)ja\wxstd.mo copy "%25WXWIN%25\locale\ja.mo" $(TargetDir)ja\wxstd.mo
+if not exist $(TargetDir)el\wxstd.mo copy "%25WXWIN%25\locale\el.mo" $(TargetDir)el\wxstd.mo
+if not exist $(TargetDir)zh_TW\wxstd.mo copy "%25WXWIN%25\locale\zh_TW.mo" $(TargetDir)zh_TW\wxstd.mo
+if not exist $(TargetDir)zh_CN\wxstd.mo copy "%25WXWIN%25\locale\zh_CN.mo" $(TargetDir)zh_CN\wxstd.mo
+
+mkdir $(TargetDir)\resources
+robocopy "$(SolutionDir)..\src\resources" "$(TargetDir)\resources" /E /Xo
+if %ERRORLEVEL% LEQ 1 exit 0
+</Command>
+    </PreLinkEvent>
+    <Link>
+      <AdditionalDependencies>wxmsw32ud_richtext.lib;wxmsw32ud_aui.lib;wxmsw32ud_core.lib;wxbase32ud.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;wxregexud.lib;wxmsw32ud_adv.lib;wxmsw32ud_html.lib;wxmsw32ud_xrc.lib;wxbase32ud_net.lib;wxbase32ud_xml.lib;opencv_world460d.lib;wxexpatd.lib;comctl32.lib;rpcrt4.lib;winmm.lib;simplelog.lib;wxcamwindow.lib;wxutil.lib;strmiids.lib;uuid.lib;quartz.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)eviacam.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>$(CVPATH)\build\x64\vc15\lib;$(WXWIN)\lib\vc_x64_lib;$(DSHOW_SAMPLES)\baseclasses\$(Configuration);$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+      <UACUIAccess>false</UACUIAccess>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>LIBCMTD;MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)$(Configuration)/evicam.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+    </Link>
+    <PostBuildEvent>
+      <Command>for %%x in (
+	opencv_world460d.dll
+) do (
+	if not exist $(TargetDir)%%x copy $(CVPATH)\build\x64\vc15\bin\%%x $(TargetDir)
+)
+
+if not exist $(TargetDir)haarcascade_frontalface_default.xml copy "$(CVPATH)\sources\data\haarcascades\haarcascade_frontalface_default.xml" $(TargetDir)
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\;..\simplelog;..\creavision;..\wxcamwindow;..\wxutil;$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(CVPATH)\build\include;$(CVPATH)\build\include\opencv</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\;..\simplelog;..\creavision;..\wxcamwindow;..\wxutil;$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(CVPATH)\build\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;NOPCH;__WXMSW__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -241,7 +337,7 @@ if %ERRORLEVEL% LEQ 1 exit 0
 </Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>wxmsw30u_richtext.lib;wxmsw30u_aui.lib;wxmsw30u_core.lib;wxbase30u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxmsw30u_adv.lib;wxmsw30u_html.lib;wxmsw30u_xrc.lib;wxbase30u_net.lib;wxbase30u_xml.lib;opencv_core2411.lib;opencv_objdetect2411.lib;opencv_highgui2411.lib;opencv_imgproc2411.lib;opencv_video2411.lib;wxexpat.lib;comctl32.lib;rpcrt4.lib;winmm.lib;simplelog.lib;wxcamwindow.lib;wxutil.lib;strmiids.lib;uuid.lib;quartz.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wxmsw32u_richtext.lib;wxmsw32u_aui.lib;wxmsw32u_core.lib;wxbase32u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxmsw32u_adv.lib;wxmsw32u_html.lib;wxmsw32u_xrc.lib;wxbase32u_net.lib;wxbase32u_xml.lib;opencv_world460.lib;wxexpat.lib;comctl32.lib;rpcrt4.lib;winmm.lib;simplelog.lib;wxcamwindow.lib;wxutil.lib;strmiids.lib;uuid.lib;quartz.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)eviacam.exe</OutputFile>
       <AdditionalLibraryDirectories>$(CVPATH)\build\x86\vc12\lib;$(WXWIN)\lib\vc_lib;$(DSHOW_SAMPLES)\baseclasses\$(Configuration);$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
@@ -256,23 +352,113 @@ if %ERRORLEVEL% LEQ 1 exit 0
     </Link>
     <PostBuildEvent>
       <Command>for %%x in (
-	opencv_core2411.dll
-	opencv_imgproc2411.dll
-	opencv_objdetect2411.dll
-	opencv_highgui2411.dll
-	opencv_flann2411.dll
-	opencv_features2d2411.dll
-	opencv_calib3d2411.dll
-	opencv_ml2411.dll
-	opencv_video2411.dll
+	opencv_world460.dll
 ) do (
 	if not exist $(TargetDir)%%x copy $(CVPATH)\build\x86\vc12\bin\%%x $(TargetDir)
 )
 
 if not exist $(TargetDir)haarcascade_frontalface_default.xml copy "$(CVPATH)\sources\data\haarcascades\haarcascade_frontalface_default.xml" $(TargetDir)
 
-if not exist $(TargetDir)msvcp120.dll copy "$(VCInstallDir)redist\x86\Microsoft.VC120.CRT\msvcp120.dll" $(TargetDir)
-if not exist $(TargetDir)msvcr120.dll copy "$(VCInstallDir)redist\x86\Microsoft.VC120.CRT\msvcr120.dll" $(TargetDir)
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\;..\simplelog;..\creavision;..\wxcamwindow;..\wxutil;$(WXWIN)\lib\vc_x64_lib\mswu;$(WXWIN)\include;$(CVPATH)\build\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;NOPCH;__WXMSW__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PreLinkEvent>
+      <Command>mkdir $(TargetDir)ca
+mkdir $(TargetDir)es
+mkdir $(TargetDir)gl
+mkdir $(TargetDir)it
+mkdir $(TargetDir)tr
+mkdir $(TargetDir)de
+mkdir $(TargetDir)oc
+mkdir $(TargetDir)fr
+mkdir $(TargetDir)ar
+mkdir $(TargetDir)he
+mkdir $(TargetDir)ru
+mkdir $(TargetDir)pt_BR
+mkdir $(TargetDir)ja
+mkdir $(TargetDir)el
+mkdir $(TargetDir)lt
+mkdir $(TargetDir)zh_TW
+mkdir $(TargetDir)zh_CN
+
+echo F | xcopy "$(SolutionDir)..\po\ca.gmo" $(TargetDir)ca\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\es.gmo" $(TargetDir)es\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\gl.gmo" $(TargetDir)gl\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\it.gmo" $(TargetDir)it\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\tr.gmo" $(TargetDir)tr\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\de.gmo" $(TargetDir)de\eviacam.mo /D
+echo F |  xcopy "$(SolutionDir)..\po\oc.gmo" $(TargetDir)oc\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\fr.gmo" $(TargetDir)fr\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ar.gmo" $(TargetDir)ar\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\he.gmo" $(TargetDir)he\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ru.gmo" $(TargetDir)ru\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\pt_BR.gmo" $(TargetDir)pt_BR\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ja.gmo" $(TargetDir)ja\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\el.gmo" $(TargetDir)el\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\lt.gmo" $(TargetDir)lt\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\zh_TW.gmo" $(TargetDir)zh_TW\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\zh_CN.gmo" $(TargetDir)zh_CN\eviacam.mo /D
+
+if not exist $(TargetDir)ca\wxstd.mo copy "%25WXWIN%25\locale\ca.mo" $(TargetDir)ca\wxstd.mo
+if not exist $(TargetDir)es\wxstd.mo copy "%25WXWIN%25\locale\es.mo" $(TargetDir)es\wxstd.mo
+if not exist $(TargetDir)gl\wxstd.mo copy "%25WXWIN%25\locale\gl_ES.mo" $(TargetDir)gl\wxstd.mo
+if not exist $(TargetDir)it\wxstd.mo copy "%25WXWIN%25\locale\it.mo" $(TargetDir)it\wxstd.mo
+if not exist $(TargetDir)tr\wxstd.mo copy "%25WXWIN%25\locale\tr.mo" $(TargetDir)tr\wxstd.mo
+if not exist $(TargetDir)de\wxstd.mo copy "%25WXWIN%25\locale\de.mo" $(TargetDir)de\wxstd.mo
+rem if not exist $(TargetDir)oc\wxstd.mo copy "%25WXWIN%25\locale\oc.mo" $(TargetDir)oc\wxstd.mo
+if not exist $(TargetDir)fr\wxstd.mo copy "%25WXWIN%25\locale\fr.mo" $(TargetDir)fr\wxstd.mo
+rem if not exist $(TargetDir)ar\wxstd.mo copy "%25WXWIN%25\locale\ar.mo" $(TargetDir)ar\wxstd.mo
+rem if not exist $(TargetDir)he\wxstd.mo copy "%25WXWIN%25\locale\he.mo" $(TargetDir)he\wxstd.mo
+if not exist $(TargetDir)ru\wxstd.mo copy "%25WXWIN%25\locale\ru.mo" $(TargetDir)ru\wxstd.mo
+if not exist $(TargetDir)pt_BR\wxstd.mo copy "%25WXWIN%25\locale\pt_BR.mo" $(TargetDir)pt_BR\wxstd.mo
+if not exist $(TargetDir)ja\wxstd.mo copy "%25WXWIN%25\locale\ja.mo" $(TargetDir)ja\wxstd.mo
+if not exist $(TargetDir)el\wxstd.mo copy "%25WXWIN%25\locale\el.mo" $(TargetDir)el\wxstd.mo
+if not exist $(TargetDir)zh_TW\wxstd.mo copy "%25WXWIN%25\locale\zh_TW.mo" $(TargetDir)zh_TW\wxstd.mo
+if not exist $(TargetDir)zh_CN\wxstd.mo copy "%25WXWIN%25\locale\zh_CN.mo" $(TargetDir)zh_CN\wxstd.mo
+
+mkdir $(TargetDir)\resources
+robocopy "$(SolutionDir)..\src\resources" "$(TargetDir)\resources" /E /Xo
+if %ERRORLEVEL% LEQ 1 exit 0
+</Command>
+    </PreLinkEvent>
+    <Link>
+      <AdditionalDependencies>wxmsw32u_richtext.lib;wxmsw32u_aui.lib;wxmsw32u_core.lib;wxbase32u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxmsw32u_adv.lib;wxmsw32u_html.lib;wxmsw32u_xrc.lib;wxbase32u_net.lib;wxbase32u_xml.lib;opencv_world460.lib;wxexpat.lib;comctl32.lib;rpcrt4.lib;winmm.lib;simplelog.lib;wxcamwindow.lib;wxutil.lib;strmiids.lib;uuid.lib;quartz.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)eviacam.exe</OutputFile>
+      <AdditionalLibraryDirectories>$(CVPATH)\build\x64\vc15\lib;$(WXWIN)\lib\vc_x64_lib;$(DSHOW_SAMPLES)\baseclasses\$(Configuration);$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+      <UACUIAccess>false</UACUIAccess>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+    </Link>
+    <PostBuildEvent>
+      <Command>for %%x in (
+	opencv_world460.dll
+) do (
+	if not exist $(TargetDir)%%x copy $(CVPATH)\build\x64\vc15\bin\%%x $(TargetDir)
+)
+
+if not exist $(TargetDir)haarcascade_frontalface_default.xml copy "$(CVPATH)\sources\data\haarcascades\haarcascade_frontalface_default.xml" $(TargetDir)
 
 </Command>
     </PostBuildEvent>
