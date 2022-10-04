@@ -5,9 +5,17 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -21,7 +29,19 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <UseOfAtl>false</UseOfAtl>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
@@ -35,7 +55,15 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
   </ImportGroup>
@@ -49,9 +77,17 @@
     <ExtensionsToDeleteOnClean>*.dll%3b*.obj%3b*.ilk%3b*.pdb%3b*.tlb%3b*.tli%3b*.tlh%3b*.tmp%3b*.rsp%3b*.bat%3b$(TargetPath)</ExtensionsToDeleteOnClean>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ExtensionsToDeleteOnClean>*.dll%3b*.obj%3b*.ilk%3b*.pdb%3b*.tlb%3b*.tli%3b*.tlh%3b*.tmp%3b*.rsp%3b*.bat%3b$(TargetPath)</ExtensionsToDeleteOnClean>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\bin\</OutDir>
     <IntDir>$(SolutionDir)$(Configuration)\evicam\</IntDir>
+    <ExtensionsToDeleteOnClean>*.dll%3b*.obj%3b*.ilk%3b*.pdb%3b*.tlb%3b*.tli%3b*.tlh%3b*.tmp%3b*.rsp%3b*.bat%3b$(TargetPath)</ExtensionsToDeleteOnClean>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ExtensionsToDeleteOnClean>*.dll%3b*.obj%3b*.ilk%3b*.pdb%3b*.tlb%3b*.tli%3b*.tlh%3b*.tmp%3b*.rsp%3b*.bat%3b$(TargetPath)</ExtensionsToDeleteOnClean>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
@@ -460,6 +496,106 @@ if %ERRORLEVEL% LEQ 1 exit 0
 
 if not exist $(TargetDir)haarcascade_frontalface_default.xml copy "$(CVPATH)\sources\data\haarcascades\haarcascade_frontalface_default.xml" $(TargetDir)
 
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\;..\simplelog;..\creavision;..\wxcamwindow;..\wxutil;$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(CVPATH)\build\include;$(CVPATH)\build\include\opencv</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;NOPCH;__WXMSW__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PreLinkEvent>
+      <Command>mkdir $(TargetDir)ca
+mkdir $(TargetDir)es
+mkdir $(TargetDir)gl
+mkdir $(TargetDir)it
+mkdir $(TargetDir)tr
+mkdir $(TargetDir)de
+mkdir $(TargetDir)oc
+mkdir $(TargetDir)fr
+mkdir $(TargetDir)ar
+mkdir $(TargetDir)he
+mkdir $(TargetDir)ru
+mkdir $(TargetDir)pt_BR
+mkdir $(TargetDir)ja
+mkdir $(TargetDir)el
+mkdir $(TargetDir)lt
+mkdir $(TargetDir)zh_TW
+mkdir $(TargetDir)zh_CN
+
+echo F | xcopy "$(SolutionDir)..\po\ca.gmo" $(TargetDir)ca\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\es.gmo" $(TargetDir)es\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\gl.gmo" $(TargetDir)gl\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\it.gmo" $(TargetDir)it\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\tr.gmo" $(TargetDir)tr\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\de.gmo" $(TargetDir)de\eviacam.mo /D
+echo F |  xcopy "$(SolutionDir)..\po\oc.gmo" $(TargetDir)oc\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\fr.gmo" $(TargetDir)fr\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ar.gmo" $(TargetDir)ar\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\he.gmo" $(TargetDir)he\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ru.gmo" $(TargetDir)ru\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\pt_BR.gmo" $(TargetDir)pt_BR\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\ja.gmo" $(TargetDir)ja\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\el.gmo" $(TargetDir)el\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\lt.gmo" $(TargetDir)lt\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\zh_TW.gmo" $(TargetDir)zh_TW\eviacam.mo /D
+echo F | xcopy "$(SolutionDir)..\po\zh_CN.gmo" $(TargetDir)zh_CN\eviacam.mo /D
+
+if not exist $(TargetDir)ca\wxstd.mo copy "%25WXWIN%25\locale\ca.mo" $(TargetDir)ca\wxstd.mo
+if not exist $(TargetDir)es\wxstd.mo copy "%25WXWIN%25\locale\es.mo" $(TargetDir)es\wxstd.mo
+if not exist $(TargetDir)gl\wxstd.mo copy "%25WXWIN%25\locale\gl_ES.mo" $(TargetDir)gl\wxstd.mo
+if not exist $(TargetDir)it\wxstd.mo copy "%25WXWIN%25\locale\it.mo" $(TargetDir)it\wxstd.mo
+if not exist $(TargetDir)tr\wxstd.mo copy "%25WXWIN%25\locale\tr.mo" $(TargetDir)tr\wxstd.mo
+if not exist $(TargetDir)de\wxstd.mo copy "%25WXWIN%25\locale\de.mo" $(TargetDir)de\wxstd.mo
+rem if not exist $(TargetDir)oc\wxstd.mo copy "%25WXWIN%25\locale\oc.mo" $(TargetDir)oc\wxstd.mo
+if not exist $(TargetDir)fr\wxstd.mo copy "%25WXWIN%25\locale\fr.mo" $(TargetDir)fr\wxstd.mo
+rem if not exist $(TargetDir)ar\wxstd.mo copy "%25WXWIN%25\locale\ar.mo" $(TargetDir)ar\wxstd.mo
+rem if not exist $(TargetDir)he\wxstd.mo copy "%25WXWIN%25\locale\he.mo" $(TargetDir)he\wxstd.mo
+if not exist $(TargetDir)ru\wxstd.mo copy "%25WXWIN%25\locale\ru.mo" $(TargetDir)ru\wxstd.mo
+if not exist $(TargetDir)pt_BR\wxstd.mo copy "%25WXWIN%25\locale\pt_BR.mo" $(TargetDir)pt_BR\wxstd.mo
+if not exist $(TargetDir)ja\wxstd.mo copy "%25WXWIN%25\locale\ja.mo" $(TargetDir)ja\wxstd.mo
+if not exist $(TargetDir)el\wxstd.mo copy "%25WXWIN%25\locale\el.mo" $(TargetDir)el\wxstd.mo
+if not exist $(TargetDir)zh_TW\wxstd.mo copy "%25WXWIN%25\locale\zh_TW.mo" $(TargetDir)zh_TW\wxstd.mo
+if not exist $(TargetDir)zh_CN\wxstd.mo copy "%25WXWIN%25\locale\zh_CN.mo" $(TargetDir)zh_CN\wxstd.mo
+
+mkdir $(TargetDir)\resources
+robocopy "$(SolutionDir)..\src\resources" "$(TargetDir)\resources" /E /Xo
+if %ERRORLEVEL% LEQ 1 exit 0
+</Command>
+    </PreLinkEvent>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)eviacam.exe</OutputFile>
+      <AdditionalLibraryDirectories>$(CVPATH)\build\x64\vc15\lib;$(WXWIN)\lib\vc_x64_lib;$(DSHOW_SAMPLES)\baseclasses\$(Configuration);$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+      <UACUIAccess>false</UACUIAccess>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+    </Link>
+    <PostBuildEvent>
+      <Command>for %%x in (
+	opencv_world460.dll
+) do (
+	if not exist $(TargetDir)%%x copy $(CVPATH)\build\x64\vc15\bin\%%x $(TargetDir)
+)
+
+if not exist $(TargetDir)haarcascade_frontalface_default.xml copy "$(CVPATH)\sources\data\haarcascades\haarcascade_frontalface_default.xml" $(TargetDir)
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
