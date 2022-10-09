@@ -451,7 +451,7 @@ void WViacam::OnMenuOptionsClick( wxCommandEvent& event )
 void WViacam::OnIconize( wxIconizeEvent& event )
 {
 #if defined(WIN32)
-	if (event.Iconized()) {
+	if (event.IsIconized()) {
 		// Cancel current iconization and hide window.
 		Iconize (false);
 		Show(false);
