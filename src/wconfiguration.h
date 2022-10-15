@@ -80,6 +80,7 @@ class wxPanel;
 #define ID_CHECKBOX2 10067
 #define ID_PANEL_CLICK 10024
 #define ID_CHECKBOX_ENABLE_DWELL 10031
+#define ID_CHECKBOX_ENABLE_DWELL_ON_START 10040
 #define ID_STATIC_DWELL_TIME 10072
 #define ID_SPINCTRL_DWELL_TIME 10005
 #define ID_STATIC_DWELL_AREA 10073
@@ -205,6 +206,9 @@ private:
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_DWELL
     void OnCheckboxEnableDwellClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_DWELL_ON_START
+    void OnCheckboxEnableDwellClickOnStart( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL_DWELL_TIME
     void OnSpinctrlDwellTimeUpdated( wxSpinEvent& event );
@@ -380,6 +384,7 @@ private:
     wxCheckBox* m_chkWrapPointer;
     wxPanel* m_panelClick;
     wxCheckBox* m_chkDwellClickEnabled;
+    wxCheckBox* m_chkDwellClickEnabledOnStart;
     wxStaticText* m_stDwellTime;
     wxSpinCtrl* m_spinDwellTime;
     wxStaticText* m_stDwellArea;

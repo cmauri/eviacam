@@ -148,6 +148,7 @@ void CClickWindowController::Show(bool show)
 void CClickWindowController::Reset() 
 {
 	m_enabled= true;
+	m_enabledOnStart= true;
 	m_currentButton= LEFT;
 	m_lockedButton= LEFT;
 	m_halfDragClick= false;
@@ -402,6 +403,11 @@ void CClickWindowController::SetFastMode(bool enable)
 	m_fastMode= enable;
 }
 
+void CClickWindowController::SetEnabledOnStart(bool enable)
+{
+	m_enabledOnStart= enable;
+}
+
 void CClickWindowController::SetAutohide(bool enable) 
 {
 	// TODO
@@ -439,6 +445,7 @@ void CClickWindowController::SetWarnBarOverlap (bool value)
 // Configuration methods
 void CClickWindowController::InitDefaults()
 {
+	m_enabledOnStart = true;
 	SetFastMode (false);
 	SetDesign (CClickWindowController::NORMAL);	
 	//SetDockingMode(CClickWindowController::TOP_DOCKING);
@@ -451,6 +458,7 @@ void CClickWindowController::WriteProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->SetPath (_T("clickWindow"));	
 
+	pConfObj->Write(_T("enabledOnStart"), m_enabledOnStart);
 	pConfObj->Write(_T("fastMode"), m_fastMode);
 	pConfObj->Write(_T("design"), (long) m_design);
 	pConfObj->Write(_T("location"), (long) m_location);
@@ -466,6 +474,8 @@ void CClickWindowController::ReadProfileData(wxConfigBase* pConfObj)
 	long design, location;
 	bool warnBarOverlap= true;
 	
+	pConfObj->Read(_T("enabledOnStart"), &m_enabledOnStart);
+		m_enabled = m_enabledOnStart;
 	pConfObj->Read(_T("fastMode"), &m_fastMode);
 	if (pConfObj->Read(_T("design"), &design))
 		SetDesign ((CClickWindowController::EDesign) design);

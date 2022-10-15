@@ -81,6 +81,7 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
     EVT_SPINCTRL( ID_SPINCTRL_BOTTOM_WORKSPACE, WConfiguration::OnSpinctrlBottomWorkspaceUpdated )
     EVT_CHECKBOX( ID_CHECKBOX2, WConfiguration::OnCheckboxWrapPointer )
     EVT_CHECKBOX( ID_CHECKBOX_ENABLE_DWELL, WConfiguration::OnCheckboxEnableDwellClick )
+    EVT_CHECKBOX( ID_CHECKBOX_ENABLE_DWELL_ON_START, WConfiguration::OnCheckboxEnableDwellClickOnStart )
     EVT_SPINCTRL( ID_SPINCTRL_DWELL_TIME, WConfiguration::OnSpinctrlDwellTimeUpdated )
     EVT_SPINCTRL( ID_SPINCTRL_DWELL_AREA, WConfiguration::OnSpinctrlDwellAreaUpdated )
     EVT_CHECKBOX( ID_CHECKBOX_ALLOW_CONSECUTIVE, WConfiguration::OnCheckboxAllowConsecutiveClick )
@@ -225,6 +226,7 @@ void WConfiguration::Init()
     m_chkWrapPointer = NULL;
     m_panelClick = NULL;
     m_chkDwellClickEnabled = NULL;
+    m_chkDwellClickEnabledOnStart = NULL;
     m_stDwellTime = NULL;
     m_spinDwellTime = NULL;
     m_stDwellArea = NULL;
@@ -494,6 +496,12 @@ void WConfiguration::CreateControls()
     if (WConfiguration::ShowToolTips())
         m_chkDwellClickEnabled->SetToolTip(_("Enable/Disable automatic (dwell)\nclick generation mechanism."));
     itemStaticBoxSizer47->Add(m_chkDwellClickEnabled, 0, wxALIGN_LEFT|wxALL, 5);
+
+    m_chkDwellClickEnabledOnStart = new wxCheckBox(itemStaticBoxSizer47->GetStaticBox(), ID_CHECKBOX_ENABLE_DWELL_ON_START, _("Enable click on start"));
+    m_chkDwellClickEnabledOnStart->SetValue(true);
+    if (WConfiguration::ShowToolTips())
+        m_chkDwellClickEnabled->SetToolTip(_("Click is enabled when application starts."));
+    itemStaticBoxSizer47->Add(m_chkDwellClickEnabledOnStart, 0, wxALIGN_LEFT | wxALL, 5);
 
     wxGridSizer* itemGridSizer49 = new wxGridSizer(0, 2, 0, 0);
     itemStaticBoxSizer47->Add(itemGridSizer49, 0, wxGROW, 5);
@@ -990,6 +998,8 @@ void WConfiguration::InitializeData ()
 	// Clic
 	m_chkDwellClickEnabled->SetValue (
 		wxGetApp().GetController().GetPointerAction().GetClickMode()!= CPointerAction::NONE);
+    m_chkDwellClickEnabledOnStart->SetValue(
+        wxGetApp().GetController().GetPointerAction().GetDwellClick().GetClickWindowController().GetEnabledOnStart());
 #if defined(__WXGTK__)
 	m_chkEnableGestureClick->SetValue (
 		wxGetApp().GetController().GetPointerAction().GetClickMode()== CPointerAction::GESTURE);
@@ -1113,6 +1123,7 @@ void WConfiguration::UpdateGUIClickOptions()
 
 void WConfiguration::EnableGUIGeneralClickOptions (bool enable)
 {
+    m_chkDwellClickEnabledOnStart->Enable(enable);
 	m_spinDwellTime->Enable(enable);
 	m_spinDwellArea->Enable(enable);
 	m_chkAllowConsecutiveClick->Enable(enable);
@@ -1307,6 +1318,19 @@ void WConfiguration::OnCheckboxEnableDwellClick( wxCommandEvent& event )
 	}		
 	m_chkDwellClickEnabled->SetValue (wxGetApp().GetController().GetPointerAction().GetClickMode()!= CPointerAction::NONE);
 	event.Skip(false);	
+}
+
+
+/*!
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_DWELL_ON_START
+ */
+
+void WConfiguration::OnCheckboxEnableDwellClickOnStart(wxCommandEvent& event)
+{
+    wxGetApp().GetController().GetPointerAction().GetDwellClick().
+        GetClickWindowController().SetEnabledOnStart(m_chkDwellClickEnabledOnStart->GetValue());
+    event.Skip(false);
+    Changed();
 }
 
 #if defined(__WXGTK__)

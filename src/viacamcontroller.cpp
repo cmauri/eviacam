@@ -64,6 +64,7 @@ CViacamController::CViacamController(void)
 , m_cameraName()
 , m_enabled(false)
 , m_enabledAtStartup(false)
+, m_enabledClickAtStartup(false)
 , m_languageId(wxLANGUAGE_DEFAULT)
 , m_onScreenKeyboardCommand()
 , m_frameRate(0)
@@ -83,6 +84,7 @@ void CViacamController::InitDefaults()
 	m_runWizardAtStartup= true;
 	m_languageId= wxLANGUAGE_DEFAULT;
 	m_enabledAtStartup= false;
+	m_enabledClickAtStartup = false;
 	m_minimisedAtStartup = false;
 #if defined(__WXMSW__)
 	m_onScreenKeyboardCommand= _T("osk.exe");
@@ -414,6 +416,7 @@ void CViacamController::WriteAppData(wxConfigBase* pConfObj)
 void CViacamController::WriteProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->Write(_T("enabledAtStartup"), m_enabledAtStartup);
+	pConfObj->Write(_T("enabledClickAtStartup"), m_enabledClickAtStartup);
 	pConfObj->Write(_T("onScreenKeyboardCommand"), m_onScreenKeyboardCommand);
 	pConfObj->Write(_T("runWizardAtStartup"), m_runWizardAtStartup);
 	pConfObj->Write(_T("minimisedAtStartup"), m_minimisedAtStartup);
@@ -435,6 +438,7 @@ void CViacamController::ReadAppData(wxConfigBase* pConfObj)
 void CViacamController::ReadProfileData(wxConfigBase* pConfObj)
 {
 	pConfObj->Read(_T("enabledAtStartup"), &m_enabledAtStartup);
+	pConfObj->Read(_T("enabledClickAtStartup"), &m_enabledClickAtStartup);
 	pConfObj->Read(_T("onScreenKeyboardCommand"), &m_onScreenKeyboardCommand);
 	pConfObj->Read(_T("runWizardAtStartup"), &m_runWizardAtStartup);
 	pConfObj->Read(_T("minimisedAtStartup"), &m_minimisedAtStartup);

@@ -69,6 +69,9 @@ public:
 	inline const EButton GetLockedButton () const;
 
 	bool GetEnabled () const { return  m_enabled; }
+
+	bool GetEnabledOnStart() const { return m_enabledOnStart; }
+	void SetEnabledOnStart(bool enable);
 	
 	bool GetAutohide() const { return m_autohide; }
 	void SetAutohide(bool enable);
@@ -102,6 +105,7 @@ private:
 	CViacamController * m_pViacamController;
 	
 	bool m_enabled;
+	bool m_enabledOnStart;
 	EButton m_currentButton;
 	EButton m_lockedButton;
 	bool m_halfDragClick;

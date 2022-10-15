@@ -59,6 +59,9 @@ public:
 	const bool GetEnabledAtStartup () const { return m_enabledAtStartup; }
 	void SetEnabledAtStartup (bool value) { m_enabledAtStartup= value; }
 
+	const bool GetEnabledClickAtStartup () const { return m_enabledClickAtStartup; }
+	void SetEnabledClickAtStartup (bool value) { m_enabledClickAtStartup = value; }
+
 	const bool GetMinimisedAtStartup () const { return m_minimisedAtStartup; }
 	void SetMinimisedAtStartup (bool value) { m_minimisedAtStartup = value; }
 
@@ -185,6 +188,7 @@ private:
 	wxString m_cameraName;
 	volatile bool m_enabled;
 	bool m_enabledAtStartup;
+	bool m_enabledClickAtStartup;
 	int m_languageId;
 	wxString m_onScreenKeyboardCommand;
 	float m_frameRate;
