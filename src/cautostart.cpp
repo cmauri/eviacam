@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
-#include "cautostart.h"
+#include "cautostart_xdg.h"
 #include <wx/string.h>
 #include <wx/stdpaths.h>
 #include <wx/utils.h>

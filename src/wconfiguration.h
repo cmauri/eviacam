@@ -267,11 +267,9 @@ private:
     void OnDownGestureChoiceSelected( wxCommandEvent& event );
 
 #endif
-#if defined(__WXGTK__)
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_STARTUP
     void OnCheckboxStartupClick( wxCommandEvent& event );
 
-#endif
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_ENABLE_AT_STARTUP
     void OnCheckboxEnableAtStartupClick( wxCommandEvent& event );
 
@@ -436,9 +434,7 @@ private:
 #endif
     wxStaticBox* m_panelKeys;
     wxFlexGridSizer* m_hotkeysSizer;
-#if defined(__WXGTK__)
     wxCheckBox* m_chkStartup;
-#endif
     wxCheckBox* m_chkEnabledAtStartup;
     wxTextCtrl* m_txtOnScreenKeyboardCommand;
     wxButton* m_btntOnScreenKeyboardCommand;
