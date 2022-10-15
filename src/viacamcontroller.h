@@ -29,6 +29,9 @@
 #include "wwizardmanager.h"
 #include "hotkeymanager.h"
 
+namespace cv {
+	class Mat;
+}
 class WViacam;
 class CPointerAction;
 class WConfiguration;
@@ -129,7 +132,7 @@ public:
 	void Finalize ();
 
 	// Image callback
-	virtual void ProcessImage (IplImage *pImage);
+	virtual void ProcessImage (cv::Mat& iamge);
 private:
 	void ReleaseResources();
 	void SetUpLanguage();		

@@ -46,7 +46,7 @@ public:
 	virtual ~CCamWindow(void);
 
 	// Draw method
-	void DrawCam (IplImage* pImg);
+	void DrawCam (cv::Mat &frame);
 
 	// True if all ok, false if control already registered
 	bool RegisterControl (CVisibleNormROI* pVisibleNormROI);
@@ -83,8 +83,8 @@ private:
 	// Previous captured image size
 	int		m_nImgWidth;
 	int		m_nImgHeight;
-	CIplImage m_SharedImage;
-	CIplImage m_DisplayImage;	
+	cv::Mat m_SharedImage;
+	cv::Mat m_DisplayImage;	
 	TWXNormROIList m_ControlList;
 	wxPoint m_prevCursor;
 };

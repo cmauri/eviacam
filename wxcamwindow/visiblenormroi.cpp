@@ -15,7 +15,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "visiblenormroi.h"
-#include <opencv2/imgproc/imgproc_c.h>
+#include <opencv2/imgproc.hpp>
 
 #define SELECTION_TOLERANCE 3
 
@@ -150,11 +150,11 @@ void CVisibleNormROI::SetP2ResizeImg (const CIplImage *pImg, const int x, const 
 	Unlock();
 }
 
-void CVisibleNormROI::SetCenterImg (const CIplImage *pImg, const int x, const int y)
+void CVisibleNormROI::SetCenterImg (const cv::Mat& image, const int x, const int y)
 {
 	Lock();
 
-	CNormROI::SetCenterImg (pImg, x, y);
+	CNormROI::SetCenterImg (image, x, y);
 
 	Unlock();
 }
@@ -168,29 +168,29 @@ void CVisibleNormROI::GetCenterImg (const CIplImage *pImg, int& x, int& y)
 	Unlock();
 }
 
-void CVisibleNormROI::SetSizeImg (const CIplImage *pImg, const int width, const int height)
+void CVisibleNormROI::SetSizeImg (const cv::Mat& image, const int width, const int height)
 {
 	Lock();
 
-	CNormROI::SetSizeImg (pImg, width, height);
+	CNormROI::SetSizeImg (image, width, height);
 
 	Unlock();
 }
 
-void CVisibleNormROI::GetBoxImg (const CIplImage *pImg, int& x, int& y, int& width, int& height)
+void CVisibleNormROI::GetBoxImg (const cv::Mat& image, int& x, int& y, int& width, int& height)
 {
 	Lock();
 
-	CNormROI::GetBoxImg (pImg, x, y, width, height);
+	CNormROI::GetBoxImg (image, x, y, width, height);
 
 	Unlock();
 }
 
-void CVisibleNormROI::GetBoxImg (const CIplImage *pImg, CvRect& box)
+void CVisibleNormROI::GetBoxImg (const cv::Mat& image, cv::Rect& box)
 {
 	Lock();
 
-	CNormROI::GetBoxImg (pImg, box);
+	CNormROI::GetBoxImg (image, box);
 
 	Unlock();
 }
@@ -403,14 +403,14 @@ bool CVisibleNormROI::OnMouseMovedClick0 (const cv::Size& winSize, const cv::Poi
 }
 
 // Painting
-void CVisibleNormROI::OnPaint (const cv::Size& winSize, CIplImage *pImg)
+void CVisibleNormROI::OnPaint (const cv::Size& winSize, cv::Mat& image)
 {
 	Lock ();
-	OnPaintRec (winSize, pImg);
+	OnPaintRec (winSize, image);
 	Unlock();
 }
 
-void CVisibleNormROI::OnPaintRec (const cv::Size& winSize, CIplImage *pImg)
+void CVisibleNormROI::OnPaintRec (const cv::Size& winSize, cv::Mat& image)
 {		
 	TNormROIListIterator i;
 
@@ -418,12 +418,12 @@ void CVisibleNormROI::OnPaintRec (const cv::Size& winSize, CIplImage *pImg)
 	{
 		CVisibleNormROI* pChild= dynamic_cast<CVisibleNormROI *>(*i);
 		assert (pChild);
-		pChild->OnPaintRec (winSize, pImg);
+		pChild->OnPaintRec (winSize, image);
 	}	
-	OnPaint0 (winSize, pImg);
+	OnPaint0 (winSize, image);
 }
 
-void CVisibleNormROI::OnPaint0 (const cv::Size& winSize, CIplImage *pImg)
+void CVisibleNormROI::OnPaint0 (const cv::Size& winSize, cv::Mat& image)
 {
 	int thickness;
 	
@@ -432,7 +432,7 @@ void CVisibleNormROI::OnPaint0 (const cv::Size& winSize, CIplImage *pImg)
 
 	if (m_cursorOver>= OVER_LEFT_LINE && m_cursorOver<= OVER_BR_CORNER)  thickness= 3;
 	else thickness= 1;
-	cvRectangle (pImg->ptr(), p1, p2, cvScalar(m_degradation, 255-m_degradation, 255-m_degradation, 0), thickness, 4);
+	cv::rectangle(image, p1, p2, cv::Scalar(m_degradation, 255 - m_degradation, 255 - m_degradation, 0), thickness, 4);
 
 	// Affordances
 	CvPoint pa, pb;
@@ -441,22 +441,22 @@ void CVisibleNormROI::OnPaint0 (const cv::Size& winSize, CIplImage *pImg)
 	pb.x= p1.x + thickness;
 	pb.y= p1.y + thickness;
 
-	cvRectangle (pImg->ptr(), pa, pb, cvScalar(m_degradation, 255-m_degradation, 255-m_degradation, 0), CV_FILLED );
+	cv::rectangle(image, pa, pb, cv::Scalar(m_degradation, 255 - m_degradation, 255 - m_degradation, 0), cv::FILLED);
 
 	pa.x= p2.x - thickness;
 	pa.y= p2.y - thickness;
 	pb.x= p2.x + thickness;
 	pb.y= p2.y + thickness;
 
-	cvRectangle (pImg->ptr(), pa, pb, cvScalar(m_degradation, 255-m_degradation, 255-m_degradation, 0), CV_FILLED );
-
+	cv::rectangle(image, pa, pb, cv::Scalar(m_degradation, 255 - m_degradation, 255 - m_degradation, 0), cv::FILLED);
+	
 	GetDirectionSegment (winSize, p1, p2);
 	
 	if (m_showOrientation)
 	{
 		if (m_cursorOver== OVER_ORIENTER)  thickness= 3;
 		else thickness= 1;
-		cvLine (pImg->ptr(), p1, p2, cvScalar(0, 255, 255, 0), thickness, CV_AA );
-		cvCircle(pImg->ptr(), p2, SELECTION_TOLERANCE, cvScalar(0, 255, 255, 0), thickness, CV_AA );
+		cv::line(image, p1, p2, cv::Scalar(0, 255, 255, 0), thickness, cv::LINE_AA);
+		cv::circle(image, p2, SELECTION_TOLERANCE, cv::Scalar(0, 255, 255, 0), thickness, cv::LINE_AA);
 	}
 }

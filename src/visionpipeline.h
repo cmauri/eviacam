@@ -45,7 +45,7 @@ public:
 	virtual wxThread::ExitCode Entry();
 	virtual wxThreadError Create(unsigned int stackSize = 0);
 
-	bool ProcessImage (CIplImage& image, float& xVel, float& yVel);
+	bool ProcessImage (cv::Mat& image, float& xVel, float& yVel);
 
 	bool GetTrackFace () const { return m_trackFace; }
 	void SetTrackFace (bool state) { m_trackFace= state; }
@@ -82,8 +82,8 @@ private:
 	CWaitTime m_waitTime;
 	CWaitTime m_trackAreaTimeout;
 		
-	CIplImage m_imgThread;
-	CIplImage m_imgPrev, m_imgCurr;
+	cv::Mat m_imgThread;
+	cv::Mat m_imgPrev, m_imgCurr;
 	
 	cv::CascadeClassifier m_faceCascade;
 	int m_threadPeriod;
@@ -99,11 +99,10 @@ private:
 	enum { NUM_CORNERS = 20 };
     std::vector<cv::Point2f> m_corners;
 	
-	void AllocWorkingSpace (CIplImage &image);
 	int PreprocessImage ();
-	void ComputeFaceTrackArea (CIplImage &image);
+	void ComputeFaceTrackArea (const cv::Mat& image);
 	void SetThreadPeriod (int value);
-	void NewTracker(CIplImage &image, float &xVel, float &yVel);
+	void NewTracker(cv::Mat &image, float &xVel, float &yVel);
 };
 
 #endif

@@ -28,9 +28,11 @@
 
 #include <wx/event.h>
 
+namespace cv {
+	class Mat;
+}
 class CVisibleNormROI;
 class wxWindow;
-class CIplImage;
 
 class CWXNormROI
 {
@@ -43,7 +45,7 @@ public:
 	// Returns true if event was processed
 	bool OnEvtMotion ( wxMouseEvent& event, wxPoint prevCursor );
 	bool OnEvtLeftDClick ( wxMouseEvent& event );	
-	void OnPaint (CIplImage *pImg);
+	void OnPaint (cv::Mat& image);
 private:
 	CVisibleNormROI* m_pVisibleNormROI;
 	wxWindow* m_pWindow;

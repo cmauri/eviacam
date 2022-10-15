@@ -1288,14 +1288,7 @@ bool CCameraV4L2::DecodeToRGB (void* src, void* dst, int width, int height, uint
 	return true;
 }
 
-IplImage *CCameraV4L2::DoQueryFrame()
-{
-	if (!DoQueryFrame(m_resultImage)) return NULL;
-	
-	return m_resultImage.ptr();
-}
-
-bool CCameraV4L2::DoQueryFrame(CIplImage& image)
+bool CCameraV4L2::DoQueryFrame(cv::Mat& image)
 {
 	if (!m_isStreaming) return false;
 	fd_set rdset;
@@ -1334,33 +1327,24 @@ bool CCameraV4L2::DoQueryFrame(CIplImage& image)
 			}
 			
 			// Allocate result image when necessary
-			bool allocFailed= false;
-			if (!image.Initialized() || 
-				m_currentFormat.width!= static_cast<unsigned int>(image.Width()) || 
-				m_currentFormat.height!= static_cast<unsigned int>(image.Height())) {
-				
-				// TODO: correct the V4L2_PIX_FMT_YUV420 conversion routine
-				const char* planeOrder;
-				if (m_currentFormat.pixelformat== V4L2_PIX_FMT_YUV420) planeOrder= "BGR";
-				else planeOrder= "RGB";
-				// TODO: make sure that image is not initialized with padded rows
-				if (!image.Create (m_currentFormat.width, m_currentFormat.height, IPL_DEPTH_8U, planeOrder, IPL_ORIGIN_TL, IPL_ALIGN_DWORD )) {
-					slog_write (SLOG_PRIO_ERR, "Cannot create result image\n");
-					allocFailed= true;					
-				}
+			if (image.empty()) {
+				image.create(m_currentFormat.height, m_currentFormat.width, CV_8UC3);
 			}
+			// TODO: correct the V4L2_PIX_FMT_YUV420 conversion routine
+			const char* planeOrder;
+			if (m_currentFormat.pixelformat== V4L2_PIX_FMT_YUV420) planeOrder= "BGR";
+			else planeOrder= "RGB";
 			// Convert to destination format (always RGB 24bit)
 			// TODO: check return value
-			if (!allocFailed) 
-				DecodeToRGB (m_captureBuffersPtr[buffer.index], (BYTE*) image.ptr()->imageData, 
-				     image.Width(), image.Height(), m_currentFormat.pixelformat);
+			DecodeToRGB (m_captureBuffersPtr[buffer.index], (BYTE*) image.data,
+			     image.cols, image.rows, m_currentFormat.pixelformat);
 			
 			// Queue buffer again
 			if (xioctl(c_get_file_descriptor (m_libWebcamHandle), VIDIOC_QBUF, &buffer)!= 0) {
 				slog_write (SLOG_PRIO_ERR, "VIDIOC_QBUF - Unable to queue buffer: %s\n", strerror (errno));
 				return false;
 			}
-			return (!allocFailed);
+			return true;
 		}
 		case CAP_STREAMING_USR:
 			slog_write (SLOG_PRIO_CRIT, "CAP_STREAMING_USR Capture method not implemented yet\n");

@@ -78,14 +78,7 @@ void CCameraWDM::DoClose ()
 	}
 }
 
-IplImage *CCameraWDM::DoQueryFrame()
-{
-	if (!CCameraWDM::DoQueryFrame(m_Image)) return NULL;
-
-	return m_Image.ptr();
-}
-
-bool CCameraWDM::DoQueryFrame(CIplImage& image)
+bool CCameraWDM::DoQueryFrame(cv::Mat &frame)
 {
 	if (!m_VI) return false;
 
@@ -93,28 +86,9 @@ bool CCameraWDM::DoQueryFrame(CIplImage& image)
 	const int height = m_VI->getHeight(m_Id);
 	const int size = m_VI->getSize(m_Id);
 
-	if (!image.Initialized() || width!= image.Width()
-		|| height!= image.Height() || size> image.ptr()->imageSize) {
-		// Allocate image in case is not properly set up
-		if (!image.Create(width, height, IPL_DEPTH_8U, "BGR", 1)) {
-			assert (!"CCameraWDM::DoQueryFrame: cannot create image");
-			return false;
-		}
-	}		
-	assert (image.Initialized());
-	assert (image.ptr()->imageSize== m_VI->getSize(m_Id));
+	frame.create(height, width, CV_8UC3);
 
-	// make sure that both images have the same size
-	if (image.ptr()->imageSize != m_VI->getSize(m_Id)) {
-		// size mismatch
-		slog_write(SLOG_PRIO_DEBUG, "%s: %d. image size mismatch", __FILE__, __LINE__);
-		return false;
-	}
-
-	m_VI->getPixels(m_Id, reinterpret_cast<unsigned char *>(image.ptr()->imageData), false, false);
-
-	// Set appropriate origin
-	image.ptr()->origin= 1;
+	m_VI->getPixels(m_Id, frame.data, false, false);
 
 	return true;
 }

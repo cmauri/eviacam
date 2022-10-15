@@ -33,8 +33,7 @@ public:
 
 	virtual bool DoOpen();
 	virtual void DoClose();	
-	virtual IplImage *DoQueryFrame();
-	virtual bool DoQueryFrame(CIplImage& image);
+	virtual bool DoQueryFrame(cv::Mat& frame);
 
 	virtual bool HasSettingsDialog() { return true; }
 	virtual void ShowSettingsDialog ();

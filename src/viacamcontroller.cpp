@@ -141,7 +141,7 @@ void CViacamController::SetLanguage (const int id)
 bool testCamera(CCamera* cam) {
 	if (cam == NULL) return false;
 
-	IplImage* img = NULL;
+	cv::Mat frame;
 	if (cam->Open()) {
 		/*
 			Try to capture one frame
@@ -151,8 +151,7 @@ bool testCamera(CCamera* cam) {
 			SLOG_DEBUG(" Wait a little bit");
 			wxMilliSleep(500);  // Try not the stress the camera too much
 			SLOG_DEBUG(" Call QueryFrane");
-			img = cam->QueryFrame();
-			if (img) {
+			if (cam->QueryFrame(frame)) {
 				SLOG_DEBUG(" Frame capture: SUCCESS");
 				break;
 			}
@@ -168,7 +167,7 @@ bool testCamera(CCamera* cam) {
 	}
 	wxMilliSleep(1000);  // Try not the stress the camera too much
 
-	return (img != NULL);
+	return !frame.empty();
 }
 
 CCamera* CViacamController::SetUpCamera()
@@ -499,12 +498,12 @@ void CViacamController::OpenOnScreenKeyboard()
 	}
 }
 
-void CViacamController::ProcessImage (IplImage *pImage)
+void CViacamController::ProcessImage (cv::Mat& image)
 {
 	WViacam::EFPSCondition cond;
 	long iFrameRate;
 	float vx, vy;
-	CIplImage image(pImage);
+	//CIplImage image(pImage);
 	bool allowedByFaceLocalizationSystem;
 
 	// Refresh fps meter

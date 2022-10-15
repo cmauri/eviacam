@@ -88,8 +88,8 @@ void CCamWindow::Init()
 	m_ImageShowed= true;
 	m_AccessingImage= false;
 
-	m_SharedImage.Create (1, 1);
-	m_DisplayImage.Create (1, 1);	
+	//m_SharedImage.Create (1, 1);
+	//m_DisplayImage.Create (1, 1);	
 
 	m_prevCursor.x= 0;
 	m_prevCursor.y= 0;
@@ -134,13 +134,13 @@ void CCamWindow::OnSize (wxSizeEvent& event)
 }
 
 // DrawCam. Called from the worker thread
-void CCamWindow::DrawCam (IplImage* pImg)
+void CCamWindow::DrawCam (cv::Mat &frame)
 {	
 	//int convertFlags= 0;
 
 	// If last image not shown yet don't update
-	assert (pImg);
-	if (m_ImageShowed && pImg)
+	assert (!frame.empty());
+	if (m_ImageShowed && !frame.empty())
 	{
 		m_ImageCopyMutex.Enter();
 
@@ -158,29 +158,21 @@ void CCamWindow::DrawCam (IplImage* pImg)
 		m_ImageCopyMutex.Leave();
 		
 		// Check that image is RGB with channel order RGB or BGR
-		wxASSERT_MSG 
-			(pImg->nChannels== 3 &&
-			((pImg->channelSeq[0]== 'R' && pImg->channelSeq[1]== 'G' && pImg->channelSeq[2]== 'B') ||
-			(pImg->channelSeq[0]== 'B' && pImg->channelSeq[1]== 'G' && pImg->channelSeq[2]== 'R')),
+		wxASSERT_MSG (
+			frame.channels() == 3 && frame.type() == CV_8UC3,
 			_T("Wrong image format. It should be RGB or BGR") );
+		//wxASSERT_MSG 
+		//	(pImg->nChannels== 3 &&
+		//	((pImg->channelSeq[0]== 'R' && pImg->channelSeq[1]== 'G' && pImg->channelSeq[2]== 'B') ||
+		//	(pImg->channelSeq[0]== 'B' && pImg->channelSeq[1]== 'G' && pImg->channelSeq[2]== 'R')),
+		//	_T("Wrong image format. It should be RGB or BGR") );
 		
 		//
 		// Adapt image format to show on the screen
 		//			
 		
-		// Allocate shared image if size changed	
-		if (pImg->width!= m_SharedImage.Width() || pImg->height!= m_SharedImage.Height())
-			m_SharedImage.Create (pImg->width, pImg->height, pImg->depth, "RGB", pImg->origin, pImg->align);
-		
-		
-		assert (pImg->origin== 0);
-		if (pImg->channelSeq[0]== 'B' && pImg->channelSeq[1]== 'G' && pImg->channelSeq[2]== 'R')
-		{
-            //cvConvertImage ( pImg, m_SharedImage.ptr(), convertFlags );
-            cvCvtColor(pImg, m_SharedImage.ptr(), cv::COLOR_BGR2RGB);
-
-        }        
-		else cvCopy( pImg, m_SharedImage.ptr() );
+		cv::cvtColor(frame, m_SharedImage, cv::COLOR_BGR2RGB);
+				
 		m_ImageShowed= false;
 		
 		// Release exclusive access to image
@@ -245,26 +237,19 @@ void CCamWindow::OnPaint (wxPaintEvent& event)
 	m_ImageCopyMutex.Leave();
 
 	// Image size changed
-	if (m_nImgWidth!= m_SharedImage.Width() || m_nImgHeight!= m_SharedImage.Height())
+	if (m_nImgWidth!= m_SharedImage.cols || m_nImgHeight!= m_SharedImage.rows)
 	{
-		m_nImgWidth= m_SharedImage.Width();
-		m_nImgHeight= m_SharedImage.Height();
+		m_nImgWidth= m_SharedImage.cols;
+		m_nImgHeight= m_SharedImage.rows;
 		ResizeParentClientArea(m_nImgWidth, m_nImgHeight);
 		//NotifyResizeParent();
 	}
 
-	// Allocate DisplayImage when needed
+	// Scale image
 	int vpWidth, vpHeight;
 	GetSize(&vpWidth, &vpHeight);
 	if (vpWidth % 4) vpWidth= vpWidth + 4 - (vpWidth % 4);
-	if (vpWidth!= m_DisplayImage.Width() || vpHeight!= m_DisplayImage.Height())
-	{
-		// Allocate shared image if size changed
-		m_DisplayImage.Create (vpWidth, vpHeight, m_SharedImage.Depth(), "RGB", m_SharedImage.Origin(), m_SharedImage.Align());		
-	}
-
-	// Scale image
-	cvResize( m_SharedImage.ptr(), m_DisplayImage.ptr(), CV_INTER_NN );
+	cv::resize(m_SharedImage, m_DisplayImage, cv::Size(vpWidth, vpHeight), 0, 0, CV_INTER_NN);
 	
    	// Working with shared image finished
 	m_AccessingImage= false;
@@ -274,17 +259,18 @@ void CCamWindow::OnPaint (wxPaintEvent& event)
 	TWXNormROIListIterator i;
 	for(i= m_ControlList.begin(); i != m_ControlList.end(); ++i)
 	{
-		(*i).OnPaint (&m_DisplayImage);
+		(*i).OnPaint (m_DisplayImage);
 	}
 	m_ListMutex.Leave();
 
 	// To wxWidgets
-	unsigned char *rawData;
-	CvSize roiSize;
-	int step = 0;
-	cvGetRawData( m_DisplayImage.ptr(), &rawData, &step, &roiSize );
+	//unsigned char *rawData;
+	//CvSize roiSize;
+	//int step = 0;
+	//cvGetRawData( m_DisplayImage.ptr(), &rawData, &step, &roiSize );
 	
-	wxImage wxImg= wxImage(vpWidth, vpHeight, rawData, true );
+	//wxImage wxImg= wxImage(vpWidth, vpHeight, rawData, true );
+	wxImage wxImg(vpWidth, vpHeight, m_DisplayImage.data, true);
 	
 	// convert to bitmap to be used by the window to draw
 	m_Bitmap= wxBitmap( wxImg );

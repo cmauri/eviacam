@@ -62,11 +62,11 @@ public:
 	void SetP1ResizeImg (const CIplImage *pImg, const int x, const int y);
 	void SetP1MoveImg (const CIplImage *pImg, const int x, const int y);
 	void SetP2ResizeImg (const CIplImage *pImg, const int x, const int y);
-	void SetCenterImg (const CIplImage *pImg, const int x, const int y);
+	void SetCenterImg (const cv::Mat& image, const int x, const int y);
 	void GetCenterImg (const CIplImage *pImg, int& x, int& y);
-	void SetSizeImg (const CIplImage *pImg, const int width, const int height);
-	void GetBoxImg (const CIplImage *pImg, int& x, int& y, int& width, int& height);
-	void GetBoxImg (const CIplImage *pImg, CvRect& box);
+	void SetSizeImg (const cv::Mat& image, const int width, const int height);
+	void GetBoxImg (const cv::Mat& image, int& x, int& y, int& width, int& height);
+	void GetBoxImg (const cv::Mat& image, cv::Rect& box);
 	
 	
 	// True if all ok, false if error

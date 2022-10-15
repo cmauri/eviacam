@@ -25,8 +25,9 @@
 #define _CAPTURETHREAD_H_
 
 #include <wx/thread.h>
-//#include <cv.h>
-typedef struct _IplImage IplImage;
+namespace cv {
+	class Mat;
+}
 
 // Forward class definitions
 class CCamera;
@@ -36,7 +37,7 @@ class CCamWindow;
 class CProcessImage
 {
 public:
-	virtual void ProcessImage (IplImage *pImage)= 0;
+	virtual void ProcessImage (cv::Mat& image)= 0;
 	virtual ~CProcessImage() {}
 };
 

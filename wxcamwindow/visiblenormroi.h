@@ -49,11 +49,11 @@ public:
 	void SetP1ResizeImg (const CIplImage *pImg, const int x, const int y);
 	void SetP1MoveImg (const CIplImage *pImg, const int x, const int y);
 	void SetP2ResizeImg (const CIplImage *pImg, const int x, const int y);
-	void SetCenterImg (const CIplImage *pImg, const int x, const int y);
+	void SetCenterImg (const cv::Mat& image, const int x, const int y);
 	void GetCenterImg (const CIplImage *pImg, int& x, int& y);
-	void SetSizeImg (const CIplImage *pImg, const int width, const int height);
-	void GetBoxImg (const CIplImage *pImg, int& x, int& y, int& width, int& height);
-	void GetBoxImg (const CIplImage *pImg, CvRect& box);
+	void SetSizeImg (const cv::Mat& image, const int width, const int height);
+	void GetBoxImg (const cv::Mat& image, int& x, int& y, int& width, int& height);
+	void GetBoxImg (const cv::Mat& image, cv::Rect& box);
 
 	float GetRotation () { return CNormROI::GetRotation(); }
 	void SetRotation (float value) { CNormROI::SetRotation(value); }
@@ -69,7 +69,7 @@ public:
 	// Returns where is the cursor over
 	int OnMouseMovedNoClick (const cv::Size& winSize, const cv::Point& cursor);
 	bool OnMouseMovedClick (const cv::Size& winSize, const cv::Point& cursor, const cv::Point& prevCursor);
-	void OnPaint (const cv::Size& winSize, CIplImage *pImg);
+	void OnPaint (const cv::Size& winSize, cv::Mat& image);
 
 	bool RegisterChildROI (CVisibleNormROI* pNormROI);
 	bool UnregisterChildROI (CVisibleNormROI* pNormROI);
@@ -83,8 +83,8 @@ private:
 	bool OnMouseMovedClickRec (const cv::Size& winSize, const cv::Point& cursor, const cv::Point& prevCursor);
 	bool OnMouseMovedClick0 (const cv::Size& winSize, const cv::Point& cursor, const cv::Point& prevCursor);
 	
-	void OnPaintRec (const cv::Size& winSize, CIplImage *pImg);
-	void OnPaint0 (const cv::Size& winSize, CIplImage *pImg);
+	void OnPaintRec (const cv::Size& winSize, cv::Mat& image);
+	void OnPaint0 (const cv::Size& winSize, cv::Mat& image);
 	
 	void Lock();
 	void Unlock();
