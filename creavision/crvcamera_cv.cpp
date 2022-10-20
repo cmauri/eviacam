@@ -133,7 +133,7 @@ bool CCameraCV::DoOpen ()
 	m_pCvCapture->set(cv::CAP_PROP_FRAME_WIDTH, static_cast<double>(m_Width));
 	m_pCvCapture->set(cv::CAP_PROP_FRAME_HEIGHT, static_cast<double>(m_Height));
 	// The following line does nothing under MS Windows
-	m_pCvCapture->set(cv::CAP_PROP_FPS, static_cast<double>(m_FrameRate));
+	//m_pCvCapture->set(cv::CAP_PROP_FPS, static_cast<double>(m_FrameRate));
 
 	return true;
 }
