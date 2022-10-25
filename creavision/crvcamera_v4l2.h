@@ -79,12 +79,12 @@ private:
 	//
 	// Static members
 	//
-	enum { MAX_CAM_DEVICES= 10, CAM_DEVICE_NAME_LENGHT= 50 };
+	enum { MAX_CAM_DEVICES= 10, CAM_DEVICE_NAME_LENGTH= 50 };
 	static int g_numDevices;
-	static char g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGHT];
-	enum { CAM_DEVICE_SHORT_NAME_LENGHT= 32, CAM_DEVICE_DRIVER_NAME_LENGHT= 20 };
-	static char g_deviceShortNames[MAX_CAM_DEVICES][CAM_DEVICE_SHORT_NAME_LENGHT];
-	static char g_deviceDriverNames[MAX_CAM_DEVICES][CAM_DEVICE_DRIVER_NAME_LENGHT];
+	static char g_deviceNames[MAX_CAM_DEVICES][CAM_DEVICE_NAME_LENGTH];
+	enum { CAM_DEVICE_SHORT_NAME_LENGTH= 32, CAM_DEVICE_DRIVER_NAME_LENGTH= 20 };
+	static char g_deviceShortNames[MAX_CAM_DEVICES][CAM_DEVICE_SHORT_NAME_LENGTH];
+	static char g_deviceDriverNames[MAX_CAM_DEVICES][CAM_DEVICE_DRIVER_NAME_LENGTH];
 	// Instance count for automatic libwebcam cleanup
 	static int g_numInstances;
 	// Instances inc/dec
