@@ -197,36 +197,38 @@ CCamera* CViacamController::SetUpCamera()
 		Try to find previously used camera with the same name
 		(only check native driver)
 	*/
+	driverId = 0;
 	int camId = -1;
 	const char * camName= NULL;
 	if (m_cameraName.Length()> 0) {
 		SLOG_INFO("Previous used camera: %s... ", (const char *) m_cameraName.mb_str());
-		for (camId = 0; camId < CCameraEnum::getNumDevices(0); camId++) {
-			camName = CCameraEnum::getDeviceName(0, camId);
+		for (camId = 0; camId < CCameraEnum::getNumDevices(driverId); camId++) {
+			camName = CCameraEnum::getDeviceName(driverId, camId);
 			if (wxString(camName, wxConvLibc) == m_cameraName) {
 				SLOG_INFO("FOUND");
 				break;
 			}
 		}
 
-		if (camId == CCameraEnum::getNumDevices(0)) {
+		if (camId == CCameraEnum::getNumDevices(driverId)) {
 			SLOG_INFO("NOT FOUND");
 			camId = -1;
 		}
 	}
 
 	/*
-		Show selection dialog when needed (use native driver names)
+		Show selection dialog when needed
 	*/
-	SLOG_INFO("Detected %d camera(s)", CCameraEnum::getNumDevices(0));
 	if (camId == -1) {
-		if (CCameraEnum::getNumDevices(0) > 1) {
-			wxArrayString strArray;
-
-			for (int i = 0; i < CCameraEnum::getNumDevices(0); i++) {
-				strArray.Add(wxString(CCameraEnum::getDeviceName(0, i), wxConvLibc));
+		wxArrayString strArray;
+		for (driverId = 0; driverId < 2; driverId++) {
+			SLOG_INFO("Driver %d detected %d camera(s)", driverId, CCameraEnum::getNumDevices(driverId));
+			for (int i = 0; i < CCameraEnum::getNumDevices(driverId); i++) {
+				strArray.Add(wxString(CCameraEnum::getDeviceName(driverId, i), wxConvLibc));
 			}
+		}
 
+		if (strArray.GetCount() > 1) {
 			wxSingleChoiceDialog choiceDlg(
 				NULL, _("Choose the camera to use"), _T("Enable Viacam"), strArray, 
 				(void**)NULL, wxDEFAULT_DIALOG_STYLE | wxOK | wxCANCEL | wxCENTRE);
@@ -238,17 +240,24 @@ CCamera* CViacamController::SetUpCamera()
 		} 
 		else {
 			camId= 0;
-			m_cameraName = wxString(CCameraEnum::getDeviceName(0, camId), wxConvLibc);
+			m_cameraName = strArray[0];
+		}
+
+		if (camId >= CCameraEnum::getNumDevices(0)) {
+			camId -= CCameraEnum::getNumDevices(0);
+			driverId = 1;
+		}
+		else {
+			driverId = 0;
 		}
 	}
 
 	/*
 		Try to open the camera to make sure it works
 	*/
-	SLOG_INFO("Selected camera: %d", camId);
+	SLOG_INFO("Selected camera: Driver:%d Id:%d", driverId, camId);
 	SLOG_INFO("Try to open the camera to make sure it works...");
-	// native driver first
-	CCamera* cam = CCameraEnum::getCamera(1, camId);
+	CCamera* cam = CCameraEnum::getCamera(driverId, camId);
 	/*
 	SLOG_INFO("Testing with WDM driver...");
 	if (!testCamera(cam)) {
