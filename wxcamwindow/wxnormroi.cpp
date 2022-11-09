@@ -95,10 +95,10 @@ bool CWXNormROI::OnEvtLeftDClick ( wxMouseEvent& WXUNUSED(event) )
 	return true;
 }
 
-void CWXNormROI::OnPaint (CIplImage *pImg)
+void CWXNormROI::OnPaint (cv::Mat& image)
 {
 	cv::Size winSize;
 	m_pWindow->GetClientSize(&winSize.width, &winSize.height);
-	m_pVisibleNormROI->OnPaint (winSize, pImg);
+	m_pVisibleNormROI->OnPaint (winSize, image);
 }
 

@@ -15,8 +15,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
 #include "crvcamera_cv.h"
-#include <opencv2/core/types.hpp>
-#include <opencv2/videoio/videoio_c.h>
+#include <opencv2/core/mat.hpp>
+#include <opencv2/videoio.hpp>
 #include <sys/timeb.h>
 #include <sys/types.h>
 #include <stdio.h>
@@ -109,7 +109,7 @@ CCameraCV::CCameraCV(int cameraId, unsigned int width, int unsigned height, floa
 	m_Width= width;
 	m_Height= height;
 	m_FrameRate= fr;
-	m_pCvCapture= NULL;
+	m_pCvCapture = new cv::VideoCapture();
 
 #if defined(WIN32)
 	VfwCamFpsWorkaround ();
@@ -119,46 +119,48 @@ CCameraCV::CCameraCV(int cameraId, unsigned int width, int unsigned height, floa
 CCameraCV::~CCameraCV(void)
 {
 	Close ();	
+	delete m_pCvCapture;
+	m_pCvCapture = nullptr;
 }
 
 bool CCameraCV::DoOpen ()
 {
-	if (m_pCvCapture!= NULL) return true;	// Already opened
-	m_pCvCapture= cvCreateCameraCapture(m_Id);
-	if (m_pCvCapture== NULL) return false;
+	if (m_pCvCapture->isOpened()) return true;	// Already opened
+	m_pCvCapture->open(m_Id);
+	if (!m_pCvCapture->isOpened()) return false;
 	
 	// Try to set capture parameters although not always works
-	cvSetCaptureProperty( m_pCvCapture, CV_CAP_PROP_FRAME_WIDTH, (double) m_Width );
-	cvSetCaptureProperty( m_pCvCapture, CV_CAP_PROP_FRAME_HEIGHT, (double) m_Height );
+	m_pCvCapture->set(cv::CAP_PROP_FRAME_WIDTH, static_cast<double>(m_Width));
+	m_pCvCapture->set(cv::CAP_PROP_FRAME_HEIGHT, static_cast<double>(m_Height));
 	// The following line does nothing under MS Windows
-	cvSetCaptureProperty( m_pCvCapture, CV_CAP_PROP_FPS, (double) m_FrameRate );
+	//m_pCvCapture->set(cv::CAP_PROP_FPS, static_cast<double>(m_FrameRate));
 
 	return true;
 }
 
 void CCameraCV::DoClose ()
 {
-	if (m_pCvCapture== NULL) return;	// Already closed
-	cvReleaseCapture (&m_pCvCapture);
-	m_pCvCapture= NULL;
+	m_pCvCapture->release();
 }
 
-IplImage *CCameraCV::DoQueryFrame()
+bool CCameraCV::DoQueryFrame(cv::Mat& frame)
 {
-	assert (m_pCvCapture);
-	if (m_pCvCapture== NULL) return NULL;
+	assert (m_pCvCapture->isOpened());
+	if (!m_pCvCapture->isOpened()) return false; // FIXME(silhusk): could remove this check?
 
-	IplImage *pImage= cvQueryFrame( m_pCvCapture );
-	if (pImage== NULL) return NULL;
+	if (!m_pCvCapture->read(frame)) {
+		return false;
+	};
 	
 #if defined(linux)
+	// FIXME(silhusk): reimplement for `frame` instead of `pImage`
 	// It seems that under Linux no proper channelSeq is reported
 	// Tested with Logitech Quickcam pro 4000 
 	pImage->channelSeq[0]= 'B';
 	pImage->channelSeq[2]= 'R';
 #endif
 
-	return pImage;
+	return true;
 }
 
 int CCameraCV::GetNumDevices()
@@ -167,14 +169,13 @@ int CCameraCV::GetNumDevices()
 		g_cvInitialized= true; 
 
 		int i;
-		CvCapture* tmpCapture;
+		cv::VideoCapture tmpCapture;
 
 		// Detect number of connected devices
 		for (i= 0; i< MAX_CV_DEVICES; ++i) {
-			tmpCapture= cvCreateCameraCapture (i);
-			if (tmpCapture== NULL) break;
+			if (!tmpCapture.open(i)) break;
 
-			cvReleaseCapture (&tmpCapture);
+			tmpCapture.release();
 
 			// Generate device name
 			sprintf (g_deviceNames[i], "Camera (Id:%d)", i);

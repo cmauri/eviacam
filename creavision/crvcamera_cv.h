@@ -19,7 +19,9 @@
 
 #include "crvcamera.h"
 
-typedef struct CvCapture CvCapture;
+namespace cv {
+	class VideoCapture;
+}
 
 class CCameraCV : public CCamera
 {	
@@ -31,8 +33,9 @@ public:
 
 protected:
 	virtual bool DoOpen();
-	virtual void DoClose();	
-	virtual IplImage *DoQueryFrame();
+	virtual void DoClose();
+
+	virtual bool DoQueryFrame(cv::Mat& frame);
 
 public:
 	static int GetNumDevices();
@@ -42,7 +45,7 @@ private:
 	int m_Id;
 	unsigned int m_Width, m_Height;
 	float m_FrameRate;
-	CvCapture* m_pCvCapture;
+	cv::VideoCapture* m_pCvCapture;
 	static bool g_cvInitialized;
 	static int g_numDevices;
 	static char g_deviceNames[MAX_CV_DEVICES][50];

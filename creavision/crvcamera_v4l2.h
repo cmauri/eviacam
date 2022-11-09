@@ -49,8 +49,7 @@ public:
 protected:
 	virtual bool DoOpen();
 	virtual void DoClose();	
-	virtual IplImage *DoQueryFrame();
-	virtual bool DoQueryFrame(CIplImage& image);
+	virtual bool DoQueryFrame(cv::Mat& image);
 
 private:
 	// Private types
@@ -72,7 +71,7 @@ private:
 	bool m_buffersReady;
 	struct v4l2_buffer m_captureBuffersInfo[STREAMING_CAPTURE_NBUFFERS];
 	void* m_captureBuffersPtr[STREAMING_CAPTURE_NBUFFERS];
-	CIplImage m_resultImage;	
+	cv::Mat m_resultImage;
 	std::vector<uint32_t> m_supportedPixelFormats;
 	std::vector<CCameraControlV4L2> m_cameraControls;
 

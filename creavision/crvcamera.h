@@ -20,6 +20,9 @@
 #include <stdexcept>
 
 // Forward declarations
+namespace cv {
+	class Mat;
+}
 class CCameraControl;
 typedef struct _IplImage IplImage;
 class CIplImage;
@@ -46,8 +49,7 @@ public:
 	//
 	bool Open();
 	void Close();
-	// TODO: return const ptr
-	IplImage* QueryFrame();
+	bool QueryFrame(cv::Mat& frame);
 
 	//
 	// Capture information. Intended only for informational
@@ -81,14 +83,14 @@ protected:
 	// Open, close and capture operations implemented using NVI idiom
 	virtual bool DoOpen()= 0;
 	virtual void DoClose()= 0;
-	virtual IplImage* DoQueryFrame()= 0;
+	virtual bool DoQueryFrame(cv::Mat&)= 0;
 
 private:
 	// Make CCamera non-copyable
 	CCamera( const CCamera& );	// not implemented
 	CCamera& operator=( const CCamera& );     // not implemented
 
-	void PostQueryFrame(IplImage* pImage);
+	void PostQueryFrame(cv::Mat &frame);
 
 	int m_RealWidth, m_RealHeight;
 	float m_RealFrameRate, m_LastRealFrameRate;

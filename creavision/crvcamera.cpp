@@ -60,21 +60,20 @@ void CCamera::Close()
 	DoClose();
 }
 
-IplImage* CCamera::QueryFrame()
+bool CCamera::QueryFrame(cv::Mat& frame)
 {
-	IplImage* pImage= DoQueryFrame();
-	if (!pImage) return NULL;
+	if (!DoQueryFrame(frame)) return false;
 
-	PostQueryFrame(pImage);
+	PostQueryFrame(frame);
 
-	return pImage;
+	return true;
 }
 
-void CCamera::PostQueryFrame(IplImage* pImage)
+void CCamera::PostQueryFrame(cv::Mat &frame)
 {
 	// Update real size
-	m_RealWidth= pImage->width;
-	m_RealHeight= pImage->height;
+	m_RealWidth= frame.cols;
+	m_RealHeight= frame.rows;
 
 	// Update real FPS
 	long long now= GetTime();
@@ -90,15 +89,6 @@ void CCamera::PostQueryFrame(IplImage* pImage)
 		m_RealFrameRate= 0;
 
 	// Flip image when needed to provide an image with top-left origin
-	if ( pImage->origin == 1 ) {
-		if (m_horizontalFlip) 
-			cvFlip (pImage, NULL, -1);
-		else 
-			cvFlip (pImage, NULL, 0);
-
-		pImage->origin= 0;
-	}
-	else 
-		if (m_horizontalFlip) 
-			cvFlip (pImage, NULL, 1);
+	if (m_horizontalFlip)
+		cv::flip(frame, frame, 1);
 }

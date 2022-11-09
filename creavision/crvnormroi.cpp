@@ -465,12 +465,9 @@ void CNormROI::SetP2ResizeImg (const CIplImage *pImg, const int x, const int y)
 	SetP2ResizeInteger (pImg->GetSize(), x, y);	
 }
 
-void CNormROI::SetCenterImg (const CIplImage *pImg, const int x, const int y)
+void CNormROI::SetCenterImg (const cv::Mat& image, const int x, const int y)
 {
-	assert (pImg);
-	assert (pImg->Origin()== IPL_ORIGIN_TL);
-	
-	SetCenterInteger (pImg->GetSize(), x, y);
+	SetCenterInteger (image.size(), x, y);
 }
 
 void CNormROI::GetCenterImg (const CIplImage *pImg, int& x, int& y)
@@ -481,25 +478,19 @@ void CNormROI::GetCenterImg (const CIplImage *pImg, int& x, int& y)
 	GetCenterInteger (pImg->GetSize(), x, y);	
 }
 
-void CNormROI::SetSizeImg (const CIplImage *pImg, const int width, const int height)
+void CNormROI::SetSizeImg (const cv::Mat& image, const int width, const int height)
 {
-	assert (pImg);
-	assert (pImg->Origin()== IPL_ORIGIN_TL);
-
-	SetSizeInteger (pImg->GetSize(), width, height);
+	SetSizeInteger (image.size(), width, height);
 }
 
-void CNormROI::GetBoxImg (const CIplImage *pImg, int& x, int& y, int& width, int& height)
+void CNormROI::GetBoxImg (const cv::Mat& image, int& x, int& y, int& width, int& height)
 {
-	assert (pImg);
-	assert (pImg->Origin()== IPL_ORIGIN_TL);
-
-	GetBoxInteger (pImg->GetSize(), x, y, width, height);
+	GetBoxInteger (image.size(), x, y, width, height);
 }
 
-void CNormROI::GetBoxImg (const CIplImage *pImg, CvRect& box)
+void CNormROI::GetBoxImg (const cv::Mat& image, cv::Rect& box)
 {
-	GetBoxImg (pImg, box.x, box.y, box.width, box.height);
+	GetBoxImg (image, box.x, box.y, box.width, box.height);
 }
 
 //

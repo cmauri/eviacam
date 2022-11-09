@@ -72,16 +72,17 @@ wxThread::ExitCode CCaptureThread::Entry( )
 	}
 
 	// Start thread main loop
+	cv::Mat frame;
 	while (m_Life)
 	{
 		if (TestDestroy()) break;
 		
-		IplImage* pImg= m_pCamera->QueryFrame();
+		m_pCamera->QueryFrame(frame);
 
-		if (pImg== NULL) wxMilliSleep(20); // If no result wait some time to avoid consuming all CPU
+		if (frame.empty()) wxMilliSleep(20); // If no result wait some time to avoid consuming all CPU
 		else {
-			if (m_pProcessImage) m_pProcessImage->ProcessImage (pImg);
-			if (m_pCamWindow) m_pCamWindow->DrawCam (pImg);	
+			if (m_pProcessImage) m_pProcessImage->ProcessImage (frame);
+			if (m_pCamWindow) m_pCamWindow->DrawCam (frame);
 		}
 	}
 

@@ -82,6 +82,38 @@
       <OutputFile>$(SolutionDir)$(Configuration)\$(ProjectName).lib</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <PreprocessorDefinitions>NOPCH;WIN32;__WXMSW__;_WINDOWS;__WXDEBUG__;_DEBUG;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>$(SolutionDir)$(Configuration)\wxcamwindow.tlb</TypeLibraryName>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/EHsc %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_x64_lib\mswud;$(WXWIN)\include;$(CVPATH)\build\include;..\creavision;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOPCH;WIN32;__WXMSW__;_WINDOWS;__WXDEBUG__;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <AssemblerListingLocation>$(SolutionDir)$(Configuration)\wxcamwindow\</AssemblerListingLocation>
+      <ObjectFileName>$(SolutionDir)$(Configuration)\wxcamwindow\</ObjectFileName>
+      <ProgramDataBaseFileName>$(SolutionDir)$(Configuration)\wxcamwindow.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NOPCH;WIN32;__WXMSW__;_WINDOWS;__WXDEBUG__;_DEBUG;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0405</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(SolutionDir)$(Configuration)\$(ProjectName).lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
       <PreprocessorDefinitions>NOPCH;WIN32;__WXMSW__;_WINDOWS;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -96,6 +128,40 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_lib\mswu;$(WXWIN)\include;$(CVPATH)\build\include;$(CVPATH)\build\include\opencv;..\creavision;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOPCH;WIN32;__WXMSW__;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <AssemblerListingLocation>$(SolutionDir)$(Configuration)\wxcamwindow\</AssemblerListingLocation>
+      <ObjectFileName>$(SolutionDir)$(Configuration)\wxcamwindow\</ObjectFileName>
+      <ProgramDataBaseFileName>$(SolutionDir)$(Configuration)\wxcamwindow.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NOPCH;WIN32;__WXMSW__;_WINDOWS;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0405</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>$(SolutionDir)$(Configuration)\$(ProjectName).lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <PreprocessorDefinitions>NOPCH;WIN32;__WXMSW__;_WINDOWS;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>$(SolutionDir)$(Configuration)\wxcamwindow.tlb</TypeLibraryName>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/EHsc  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>$(WXWIN)\lib\vc_x64_lib\mswu;$(WXWIN)\include;$(CVPATH)\build\include;$(CVPATH)\build\include\opencv;..\creavision;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOPCH;WIN32;__WXMSW__;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
