@@ -88,6 +88,7 @@ bool CCameraWDM::DoQueryFrame(cv::Mat &frame)
 	frame.create(height, width, CV_8UC3);
 
 	m_VI->getPixels(m_Id, frame.data, false, false);
+	cv::flip(frame, frame, 0);
 
 	return true;
 }
