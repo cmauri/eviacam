@@ -120,10 +120,7 @@ BEGIN_EVENT_TABLE( WConfiguration, wxDialog )
     EVT_CHOICE( ID_CHOICE3, WConfiguration::OnDownGestureChoiceSelected )
 #endif
 
-#if defined(__WXGTK__)
     EVT_CHECKBOX( ID_CHECKBOX_STARTUP, WConfiguration::OnCheckboxStartupClick )
-#endif
-
     EVT_CHECKBOX( ID_CHECKBOX_ENABLE_AT_STARTUP, WConfiguration::OnCheckboxEnableAtStartupClick )
     EVT_TEXT( ID_TEXTCTRL_ONSCREENKEYBOARDCOMMAND, WConfiguration::OnTextctrlOnscreenkeyboardcommandTextUpdated )
     EVT_BUTTON( ID_BUTTON_ONSCREENKEYBOARDCOMMAND, WConfiguration::OnButtonOnscreenkeyboardcommandClick )
@@ -281,9 +278,7 @@ void WConfiguration::Init()
 #endif
     m_panelKeys = NULL;
     m_hotkeysSizer = NULL;
-#if defined(__WXGTK__)
     m_chkStartup = NULL;
-#endif
     m_chkEnabledAtStartup = NULL;
     m_txtOnScreenKeyboardCommand = NULL;
     m_btntOnScreenKeyboardCommand = NULL;
@@ -685,11 +680,9 @@ void WConfiguration::CreateControls()
     wxStaticBox* itemStaticBoxSizer87Static = new wxStaticBox(itemPanel85, wxID_ANY, _("Startup"));
     wxStaticBoxSizer* itemStaticBoxSizer87 = new wxStaticBoxSizer(itemStaticBoxSizer87Static, wxVERTICAL);
     itemBoxSizer86->Add(itemStaticBoxSizer87, 0, wxGROW|wxALL, 5);
-#if defined(__WXGTK__)
     m_chkStartup = new wxCheckBox( itemStaticBoxSizer87->GetStaticBox(), ID_CHECKBOX_STARTUP, _("Start eViacam at user logon"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkStartup->SetValue(false);
     itemStaticBoxSizer87->Add(m_chkStartup, 0, wxALIGN_LEFT|wxALL, 5);
-#endif
 
     m_chkEnabledAtStartup = new wxCheckBox( itemStaticBoxSizer87->GetStaticBox(), ID_CHECKBOX_ENABLE_AT_STARTUP, _("Enable eViacam at startup"), wxDefaultPosition, wxDefaultSize, 0 );
     m_chkEnabledAtStartup->SetValue(false);
@@ -1043,15 +1036,14 @@ void WConfiguration::InitializeData ()
 	m_txtOnScreenKeyboardCommand->SetValue(
 		wxGetApp().GetController().GetOnScreenKeyboardCommand());
 	m_spinSendActionWait->SetValue(wxGetApp().GetController().GetPointerAction().GetSendActionWait());
-#if defined(__WXGTK__)
 
-	    
+
 	// 
 	// App data
 	//
 
 	m_chkStartup->SetValue(wxGetApp().GetController().GetAutostart().IsEnabled());
-#endif
+
 	// Profile combo
 	m_choProfile->Clear();
 	m_choProfile->Append (
@@ -1735,7 +1727,6 @@ void WConfiguration::OnCheckboxWorkspaceLimitClick( wxCommandEvent& event )
 }
 
 
-#if defined(__WXGTK__)
 /*!
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX_STARTUP
  */
@@ -1746,7 +1737,6 @@ void WConfiguration::OnCheckboxStartupClick( wxCommandEvent& event )
     event.Skip();
     Changed ();
 }
-#endif
 
 
 /*!

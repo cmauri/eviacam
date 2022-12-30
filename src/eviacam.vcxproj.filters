@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cautostart.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="checkupdates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,11 +102,11 @@
     <ClCompile Include="checkupdates_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cautostart_win.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cautostart.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="checkupdates.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -207,6 +204,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="checkupdates_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cautostart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cautostart_win.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

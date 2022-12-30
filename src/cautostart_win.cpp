@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        cautostart.h
+// Name:        cautostart_win.cpp
 // Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
@@ -19,13 +19,36 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
-#ifndef CAUTOSTART_H
-#define CAUTOSTART_H
+#include "cautostart_win.h"
+#include <wx/string.h>
+#include "wx/stdpaths.h"
+#include <wx/msw/registry.h>
 
-#if defined(WIN32)
-	#include "cautostart_win.h"
-#else
-	#include "cautostart_xdg.h"
-#endif
+constexpr wxStringCharType appName[] = wxT("eviacam");
+constexpr wxStringCharType keyName[] = wxT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
 
-#endif
+CAutostart::CAutostart(wxString fileName)
+{
+	wxUnusedVar(fileName);
+}
+
+CAutostart::~CAutostart()
+{
+}
+
+bool CAutostart::IsEnabled()
+{
+	wxRegKey key(wxRegKey::HKCU, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
+	return key.HasValue(wxT("eviacam"));
+}
+
+void CAutostart::Enable(bool value)
+{
+	wxRegKey key(wxRegKey::HKCU, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
+	if (value) {
+		key.SetValue("eviacam", wxStandardPaths::Get().GetExecutablePath());
+	}
+	else {
+		key.DeleteValue("eviacam");
+	}
+}

@@ -464,7 +464,7 @@ if not exist $(TargetDir)haarcascade_frontalface_default.xml copy "$(CVPATH)\sou
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cautostart.cpp" />
+    <ClCompile Include="cautostart_win.cpp" />
     <ClCompile Include="checkupdates.cpp" />
     <ClCompile Include="checkupdates_manager.cpp" />
     <ClCompile Include="checkupdates_ui.cpp" />
@@ -497,6 +497,7 @@ if not exist $(TargetDir)haarcascade_frontalface_default.xml copy "$(CVPATH)\sou
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cautostart.h" />
+    <ClInclude Include="cautostart_win.h" />
     <ClInclude Include="checkupdates.h" />
     <ClInclude Include="checkupdates_manager.h" />
     <ClInclude Include="checkupdates_ui.h" />

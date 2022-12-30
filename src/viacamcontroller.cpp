@@ -94,9 +94,7 @@ CViacamController::~CViacamController(void)
 {
 	assert (!m_pCaptureThread && !m_pCamera && !m_pCaptureThread);
 	delete m_pointerAction;
-#if defined(__WXGTK__) 
 	delete m_pAutostart;
-#endif
 	delete m_locale;
 	delete m_configManager;
 	delete m_pMotionCalibration;
@@ -292,10 +290,8 @@ bool CViacamController::Initialize ()
 		// TODO: check this!!!
 		assert (!m_pMotionCalibration);
 		m_pMotionCalibration= new CMotionCalibration(); //this);	
-#if defined(__WXGTK__) 
 		assert (!m_pAutostart);
 		m_pAutostart = new CAutostart(wxT("eviacam.desktop"));
-#endif
 	}
 	
 	// Create main window

@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        cautostart.h
+// Name:        cautostart_win.h
 // Purpose:  
 // Author:      Cesar Mauri Loba (cesar at crea-si dot com)
 // Modified by: 
@@ -19,13 +19,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////////////
-#ifndef CAUTOSTART_H
-#define CAUTOSTART_H
+#ifndef CAUTOSTART_WIN_H
+#define CAUTOSTART_WIN_H
 
-#if defined(WIN32)
-	#include "cautostart_win.h"
-#else
-	#include "cautostart_xdg.h"
-#endif
+#include <wx/string.h>
+
+class CAutostart{
+public:
+	CAutostart(wxString fileName);
+	~CAutostart();
+
+	bool IsEnabled();
+	void Enable(bool value);
+
+private:
+	wxString m_fileName;
+};
 
 #endif
