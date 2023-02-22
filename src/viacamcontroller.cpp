@@ -195,22 +195,25 @@ CCamera* CViacamController::SetUpCamera()
 	
 	/*
 		Try to find previously used camera with the same name
-		(only check native driver)
 	*/
-	driverId = 0;
 	int camId = -1;
 	const char * camName= NULL;
 	if (m_cameraName.Length()> 0) {
 		SLOG_INFO("Previous used camera: %s... ", (const char *) m_cameraName.mb_str());
-		for (camId = 0; camId < CCameraEnum::getNumDevices(driverId); camId++) {
-			camName = CCameraEnum::getDeviceName(driverId, camId);
-			if (wxString(camName, wxConvLibc) == m_cameraName) {
-				SLOG_INFO("FOUND");
+		for (driverId = 0; driverId < CCameraEnum::NUM_DRIVERS; driverId++) {
+			for (camId = 0; camId < CCameraEnum::getNumDevices(driverId); camId++) {
+				camName = CCameraEnum::getDeviceName(driverId, camId);
+				if (wxString(camName, wxConvLibc) == m_cameraName) {
+					SLOG_INFO("FOUND");
+					break;
+				}
+			}
+			if (camId < CCameraEnum::getNumDevices(driverId)) {
 				break;
 			}
 		}
 
-		if (camId == CCameraEnum::getNumDevices(driverId)) {
+		if (driverId == CCameraEnum::NUM_DRIVERS) {
 			SLOG_INFO("NOT FOUND");
 			camId = -1;
 		}
@@ -221,7 +224,7 @@ CCamera* CViacamController::SetUpCamera()
 	*/
 	if (camId == -1) {
 		wxArrayString strArray;
-		for (driverId = 0; driverId < 2; driverId++) {
+		for (driverId = 0; driverId < CCameraEnum::NUM_DRIVERS; driverId++) {
 			SLOG_INFO("Driver %d detected %d camera(s)", driverId, CCameraEnum::getNumDevices(driverId));
 			for (int i = 0; i < CCameraEnum::getNumDevices(driverId); i++) {
 				strArray.Add(wxString(CCameraEnum::getDeviceName(driverId, i), wxConvLibc));
