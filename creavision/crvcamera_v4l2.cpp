@@ -1702,7 +1702,7 @@ int CCameraV4L2::GetNumDevices()
 				
 				// Prepend device number and append device name
 				unsigned int j= count - 1 - i;
-				snprintf (g_deviceNames[j], CAM_DEVICE_NAME_LENGTH, " (Id:%d) %s", j, device->name);
+				snprintf (g_deviceNames[j], CAM_DEVICE_NAME_LENGTH, " (Dr:v4l,Id:%d) %s", j, device->name);
 				snprintf (g_deviceShortNames[j], CAM_DEVICE_SHORT_NAME_LENGTH, "%s", device->shortName);
 				snprintf (g_deviceDriverNames[j], CAM_DEVICE_DRIVER_NAME_LENGTH, "%s", device->driver);
 

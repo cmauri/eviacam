@@ -88,6 +88,7 @@ bool CCameraWDM::DoQueryFrame(cv::Mat &frame)
 	frame.create(height, width, CV_8UC3);
 
 	m_VI->getPixels(m_Id, frame.data, false, false);
+	cv::flip(frame, frame, 0);
 
 	return true;
 }
@@ -109,7 +110,7 @@ int CCameraWDM::GetNumDevices()
 		if (g_numDevices> MAX_CAM_DEVICES) g_numDevices= MAX_CAM_DEVICES;		
 		for (int i= 0; i< g_numDevices; ++i) {
 			// Prepend device number and append device name
-			_snprintf (g_deviceNames[i], CAM_DEVICE_NAME_LENGTH, " (Id:%d) %s\0", i, videoInput::getDeviceName(i));
+			_snprintf (g_deviceNames[i], CAM_DEVICE_NAME_LENGTH, " (Dr:wdm,Id:%d) %s\0", i, videoInput::getDeviceName(i));
 		}		
 	}
 

@@ -61,9 +61,15 @@ src/gui-autosave.pjd
 *~
 
 *.vcproj.*.user
+*.vcxproj.user
 *.opensdf
 *.sdf
 *.suo
 
 # Eclipse CDT
 .settings/
+
+# Visual Studio
+.vs
+*/x64/Debug
+*/x64/Release

@@ -23,25 +23,10 @@
     <ClCompile Include="crvcamera_wdm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="crvcolor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="crvgeomtry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="crvhistogram.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="crvimage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="crvmisc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="crvnormroi.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="crvskindetection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="videoInput.cpp">
@@ -61,25 +46,10 @@
     <ClInclude Include="crvcamera_wdm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="crvcolor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="crvgeomtry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="crvhistogram.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="crvimage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="crvmisc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="crvnormroi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="crvskindetection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="videoInput.h">

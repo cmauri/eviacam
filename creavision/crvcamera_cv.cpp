@@ -178,7 +178,7 @@ int CCameraCV::GetNumDevices()
 			tmpCapture.release();
 
 			// Generate device name
-			sprintf (g_deviceNames[i], "Camera (Id:%d)", i);
+			sprintf (g_deviceNames[i], "Camera (Dr:ocv,Id:%d)", i);
 		}		
 		g_numDevices= i;
 	}
